@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of GenericResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, Plan plan, object properties, string kind, string managedBy, Models.Sku sku, ManagedServiceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, type, systemData, tags, location, extendedLocation)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, object properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
         {
             Plan = plan;
             Properties = properties;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The plan of the resource. </summary>
-        public Plan Plan { get; set; }
+        public ArmPlan Plan { get; set; }
         /// <summary> The resource properties. </summary>
         public object Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> ID of the resource that manages this resource. </summary>
         public string ManagedBy { get; set; }
         /// <summary> The SKU of the resource. </summary>
-        public Models.Sku Sku { get; set; }
+        public ResourcesSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>

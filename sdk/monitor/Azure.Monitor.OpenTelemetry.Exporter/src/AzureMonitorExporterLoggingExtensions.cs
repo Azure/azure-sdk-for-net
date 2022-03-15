@@ -3,12 +3,10 @@
 
 using System;
 
-using Azure.Monitor.OpenTelemetry.Exporter;
-
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
-namespace Microsoft.Extensions.Logging
+namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
     /// Extension methods to simplify registering of Azure Monitor Log Exporter.

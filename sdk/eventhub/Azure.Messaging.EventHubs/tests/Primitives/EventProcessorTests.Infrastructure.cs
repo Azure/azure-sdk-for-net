@@ -169,9 +169,9 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProcessorStorageManagerDelegatesCalls()
+        public async Task ProcessorCheckpointStoreDelegatesCalls()
         {
-            var listCheckpointsDelegated = false;
+            var getCheckpointDelegated = false;
             var listOwnershipDelegated = false;
             var claimOwnershipDelegated = false;
             var fqNamespace = "fqns";
@@ -181,9 +181,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Protected()
-                .Setup<Task<IEnumerable<EventProcessorCheckpoint>>>("ListCheckpointsAsync", ItExpr.IsAny<CancellationToken>())
-                .Callback(() => listCheckpointsDelegated = true)
-                .Returns(Task.FromResult(default(IEnumerable<EventProcessorCheckpoint>)));
+                .Setup<Task<EventProcessorCheckpoint>>("GetCheckpointAsync", ItExpr.IsAny<string>(), ItExpr.IsAny<CancellationToken>())
+                .Callback(() => getCheckpointDelegated = true)
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
 
             mockProcessor
                 .Protected()
@@ -197,17 +197,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Callback(() => claimOwnershipDelegated = true)
                 .Returns(Task.FromResult(default(IEnumerable<EventProcessorPartitionOwnership>)));
 
-            var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
-            Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
+            var checkpointStore = EventProcessor<EventProcessorPartition>.CreateCheckpointStore(mockProcessor.Object);
+            Assert.That(checkpointStore, Is.Not.Null, "The storage manager should have been created.");
 
-            await storageManager.ListCheckpointsAsync("na", "na", "na", CancellationToken.None);
-            Assert.That(listCheckpointsDelegated, Is.True, $"The call to { nameof(storageManager.ListCheckpointsAsync) } should have been delegated.");
+            await checkpointStore.GetCheckpointAsync("na", "na", "na", "na", CancellationToken.None);
+            Assert.That(getCheckpointDelegated, Is.True, $"The call to { nameof(checkpointStore.GetCheckpointAsync) } should have been delegated.");
 
-            await storageManager.ListOwnershipAsync("na", "na", "na", CancellationToken.None);
-            Assert.That(listOwnershipDelegated, Is.True, $"The call to { nameof(storageManager.ListOwnershipAsync) } should have been delegated.");
+            await checkpointStore.ListOwnershipAsync("na", "na", "na", CancellationToken.None);
+            Assert.That(listOwnershipDelegated, Is.True, $"The call to { nameof(checkpointStore.ListOwnershipAsync) } should have been delegated.");
 
-            await storageManager.ClaimOwnershipAsync(default(IEnumerable<EventProcessorPartitionOwnership>), CancellationToken.None);
-            Assert.That(claimOwnershipDelegated, Is.True, $"The call to { nameof(storageManager.ClaimOwnershipAsync) } should have been delegated.");
+            await checkpointStore.ClaimOwnershipAsync(default(IEnumerable<EventProcessorPartitionOwnership>), CancellationToken.None);
+            Assert.That(claimOwnershipDelegated, Is.True, $"The call to { nameof(checkpointStore.ClaimOwnershipAsync) } should have been delegated.");
         }
 
         /// <summary>
@@ -216,17 +216,17 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ProcessorStorageManagerDoesNotAllowCheckpointUpdate()
+        public void ProcessorCheckpointStoreDoesNotAllowCheckpointUpdate()
         {
             var fqNamespace = "fqns";
             var eventHub = "eh";
             var consumerGroup = "cg";
+            var partitionId = "p0";
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(25, consumerGroup, fqNamespace, eventHub, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+            var checkpointStore = EventProcessor<EventProcessorPartition>.CreateCheckpointStore(mockProcessor.Object);
 
-            var storageManager = EventProcessor<EventProcessorPartition>.CreateStorageManager(mockProcessor.Object);
-            Assert.That(storageManager, Is.Not.Null, "The storage manager should have been created.");
-
-            Assert.That(() => storageManager.UpdateCheckpointAsync(new EventProcessorCheckpoint(), new EventData(new BinaryData(Array.Empty<byte>())), CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
+            Assert.That(checkpointStore, Is.Not.Null, "The storage manager should have been created.");
+            Assert.That(() => checkpointStore.UpdateCheckpointAsync(fqNamespace, eventHub, consumerGroup, partitionId, 0, 0, CancellationToken.None), Throws.InstanceOf<NotImplementedException>(), "Calling to update checkpoints should not be implemented.");
         }
 
         /// <summary>

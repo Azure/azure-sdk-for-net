@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of TableData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tableName"> Table name under the specified account. </param>
-        internal TableData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string tableName) : base(id, name, type, systemData)
+        internal TableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tableName) : base(id, name, resourceType, systemData)
         {
             TableName = tableName;
         }

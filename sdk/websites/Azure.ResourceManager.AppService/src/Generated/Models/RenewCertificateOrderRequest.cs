@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RenewCertificateOrderRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        internal RenewCertificateOrderRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? keySize, string csr, bool? isPrivateKeyExternal) : base(id, name, type, systemData, kind)
+        internal RenewCertificateOrderRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? keySize, string csr, bool? isPrivateKeyExternal) : base(id, name, resourceType, systemData, kind)
         {
             KeySize = keySize;
             Csr = csr;

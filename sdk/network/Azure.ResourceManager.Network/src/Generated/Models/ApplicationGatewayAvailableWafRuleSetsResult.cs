@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ApplicationGatewayAvailableWafRuleSets API service call. </summary>
-    public partial class ApplicationGatewayAvailableWafRuleSetsResult
+    internal partial class ApplicationGatewayAvailableWafRuleSetsResult
     {
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableWafRuleSetsResult. </summary>
         internal ApplicationGatewayAvailableWafRuleSetsResult()

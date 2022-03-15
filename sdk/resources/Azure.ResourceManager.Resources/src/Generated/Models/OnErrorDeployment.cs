@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment. </summary>
-        public OnErrorDeploymentType? Type { get; set; }
+        public OnErrorDeploymentType? OnErrorDeploymentType { get; set; }
         /// <summary> The deployment to be used on error case. </summary>
         public string DeploymentName { get; set; }
     }

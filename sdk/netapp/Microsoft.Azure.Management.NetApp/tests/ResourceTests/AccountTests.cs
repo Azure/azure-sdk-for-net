@@ -34,8 +34,7 @@ namespace NetApp.Tests.ResourceTests
                 };
 
                 var resource = netAppMgmtClient.Accounts.CreateOrUpdate(netAppAccount, ResourceUtils.resourceGroup, ResourceUtils.accountName1);
-                Assert.Equal(resource.Name, ResourceUtils.accountName1);
-                Assert.Null(resource.Tags);
+                Assert.Equal(resource.Name, ResourceUtils.accountName1);                
                 Assert.Null(resource.ActiveDirectories);
 
                 // get all accounts and check

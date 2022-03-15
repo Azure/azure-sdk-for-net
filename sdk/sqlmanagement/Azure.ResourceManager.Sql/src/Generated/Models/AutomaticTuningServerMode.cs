@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Automatic tuning desired state. </summary>
     public enum AutomaticTuningServerMode
     {
+        /// <summary> Unspecified. </summary>
+        Unspecified,
         /// <summary> Custom. </summary>
         Custom,
         /// <summary> Auto. </summary>
-        Auto,
-        /// <summary> Unspecified. </summary>
-        Unspecified
+        Auto
     }
 }

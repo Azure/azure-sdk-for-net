@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(testFeature.Data.Id);
             Assert.IsNotNull(testFeature.Data.Name);
             Assert.IsNotNull(testFeature.Data.Properties);
-            Assert.IsNotNull(testFeature.Data.Type);
+            Assert.IsNotNull(testFeature.Data.ResourceType);
         }
 
         [RecordedTest]
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(feature.Data.Id);
             Assert.AreEqual("Microsoft.Compute/AHUB", feature.Data.Name);
             Assert.IsNotNull(feature.Data.Properties);
-            Assert.IsNotNull(feature.Data.Type);
+            Assert.IsNotNull(feature.Data.ResourceType);
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await provider.GetFeatures().GetAsync("DoesNotExist"));
             Assert.AreEqual(404, ex.Status);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(feature.Data.Id);
             Assert.AreEqual("Microsoft.Compute/AHUB", feature.Data.Name);
             Assert.IsNotNull(feature.Data.Properties);
-            Assert.IsNotNull(feature.Data.Type);
+            Assert.IsNotNull(feature.Data.ResourceType);
 
             var response = await provider.GetFeatures().GetIfExistsAsync("DoesNotExist");
             Assert.IsNull(response.Value);

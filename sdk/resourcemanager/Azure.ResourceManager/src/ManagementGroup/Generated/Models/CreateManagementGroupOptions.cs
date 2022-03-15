@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
         /// <summary> The type of the resource.  For example, Microsoft.Management/managementGroups. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
         public string Name { get; set; }
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
