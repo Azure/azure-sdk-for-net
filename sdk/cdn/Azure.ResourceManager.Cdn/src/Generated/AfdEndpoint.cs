@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of AfdRoutes and their operations over a AfdRoute. </returns>
         public virtual AfdRouteCollection GetAfdRoutes()
         {
-            return new AfdRouteCollection(Client, Id);
+            return GetCachedClient(Client => new AfdRouteCollection(Client, Id));
         }
 
         /// <summary>

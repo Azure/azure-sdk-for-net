@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of MhsmPrivateEndpointConnections and their operations over a MhsmPrivateEndpointConnection. </returns>
         public virtual MhsmPrivateEndpointConnectionCollection GetMhsmPrivateEndpointConnections()
         {
-            return new MhsmPrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new MhsmPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of SqlStoredProcedures and their operations over a SqlStoredProcedure. </returns>
         public virtual SqlStoredProcedureCollection GetSqlStoredProcedures()
         {
-            return new SqlStoredProcedureCollection(Client, Id);
+            return GetCachedClient(Client => new SqlStoredProcedureCollection(Client, Id));
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of SqlUserDefinedFunctions and their operations over a SqlUserDefinedFunction. </returns>
         public virtual SqlUserDefinedFunctionCollection GetSqlUserDefinedFunctions()
         {
-            return new SqlUserDefinedFunctionCollection(Client, Id);
+            return GetCachedClient(Client => new SqlUserDefinedFunctionCollection(Client, Id));
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of SqlTriggers and their operations over a SqlTrigger. </returns>
         public virtual SqlTriggerCollection GetSqlTriggers()
         {
-            return new SqlTriggerCollection(Client, Id);
+            return GetCachedClient(Client => new SqlTriggerCollection(Client, Id));
         }
 
         /// <summary>

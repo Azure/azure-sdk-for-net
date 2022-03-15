@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerJobAgentJobVersionSteps and their operations over a ServerJobAgentJobVersionStep. </returns>
         public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
         {
-            return new ServerJobAgentJobVersionStepCollection(Client, Id);
+            return GetCachedClient(Client => new ServerJobAgentJobVersionStepCollection(Client, Id));
         }
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a HubVirtualNetworkConnection. </returns>
         public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
         {
-            return new HubVirtualNetworkConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new HubVirtualNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHubRouteTableV2. </returns>
         public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
         {
-            return new VirtualHubRouteTableV2Collection(Client, Id);
+            return GetCachedClient(Client => new VirtualHubRouteTableV2Collection(Client, Id));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BgpConnections and their operations over a BgpConnection. </returns>
         public virtual BgpConnectionCollection GetBgpConnections()
         {
-            return new BgpConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new BgpConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubIPConfigurations and their operations over a HubIPConfiguration. </returns>
         public virtual HubIPConfigurationCollection GetHubIPConfigurations()
         {
-            return new HubIPConfigurationCollection(Client, Id);
+            return GetCachedClient(Client => new HubIPConfigurationCollection(Client, Id));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubRouteTables and their operations over a HubRouteTable. </returns>
         public virtual HubRouteTableCollection GetHubRouteTables()
         {
-            return new HubRouteTableCollection(Client, Id);
+            return GetCachedClient(Client => new HubRouteTableCollection(Client, Id));
         }
 
         /// <summary>

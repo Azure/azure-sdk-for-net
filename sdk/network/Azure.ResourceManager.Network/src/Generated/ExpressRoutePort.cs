@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteLinks and their operations over a ExpressRouteLink. </returns>
         public virtual ExpressRouteLinkCollection GetExpressRouteLinks()
         {
-            return new ExpressRouteLinkCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteLinkCollection(Client, Id));
         }
 
         /// <summary>

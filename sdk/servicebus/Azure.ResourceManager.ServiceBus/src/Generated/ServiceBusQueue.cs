@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of NamespaceQueueAuthorizationRules and their operations over a NamespaceQueueAuthorizationRule. </returns>
         public virtual NamespaceQueueAuthorizationRuleCollection GetNamespaceQueueAuthorizationRules()
         {
-            return new NamespaceQueueAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceQueueAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>

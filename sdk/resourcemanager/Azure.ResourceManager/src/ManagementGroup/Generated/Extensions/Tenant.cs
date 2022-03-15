@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ManagementGroups and their operations over a ManagementGroup. </returns>
         public virtual ManagementGroupCollection GetManagementGroups()
         {
-            return new ManagementGroupCollection(Client, Id);
+            return GetCachedClient(Client => new ManagementGroupCollection(Client, Id));
         }
 
         /// <summary>

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of SqlContainers and their operations over a SqlContainer. </returns>
         public virtual SqlContainerCollection GetSqlContainers()
         {
-            return new SqlContainerCollection(Client, Id);
+            return GetCachedClient(Client => new SqlContainerCollection(Client, Id));
         }
 
         /// <summary>

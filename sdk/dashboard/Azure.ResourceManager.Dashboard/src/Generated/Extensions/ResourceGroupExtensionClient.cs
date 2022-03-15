@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <returns> An object representing collection of GrafanaResources and their operations over a GrafanaResource. </returns>
         public virtual GrafanaResourceCollection GetGrafanaResources()
         {
-            return new GrafanaResourceCollection(Client, Id);
+            return GetCachedClient(Client => new GrafanaResourceCollection(Client, Id));
         }
     }
 }

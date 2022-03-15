@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnSiteLinks and their operations over a VpnSiteLink. </returns>
         public virtual VpnSiteLinkCollection GetVpnSiteLinks()
         {
-            return new VpnSiteLinkCollection(Client, Id);
+            return GetCachedClient(Client => new VpnSiteLinkCollection(Client, Id));
         }
 
         /// <summary>
