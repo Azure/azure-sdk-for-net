@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    /// <summary> Properties(top level) of AmlCompute. </summary>
+    /// <summary> An Azure Machine Learning compute. </summary>
     public partial class AmlCompute : Compute
     {
         /// <summary> Initializes a new instance of AmlCompute. </summary>

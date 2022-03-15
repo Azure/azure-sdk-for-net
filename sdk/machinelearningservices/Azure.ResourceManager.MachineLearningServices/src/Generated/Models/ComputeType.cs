@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The type of compute. </summary>
-    public readonly partial struct ComputeType : IEquatable<ComputeType>
+    internal readonly partial struct ComputeType : IEquatable<ComputeType>
     {
         private readonly string _value;
 

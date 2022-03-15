@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Identity that will be used to access key vault for encryption at rest. </summary>
-    public partial class IdentityForCmk
+    internal partial class IdentityForCmk
     {
         /// <summary> Initializes a new instance of IdentityForCmk. </summary>
         public IdentityForCmk()

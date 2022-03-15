@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="properties"> Compute properties. </param>
-        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Identity identity, string location, IDictionary<string, string> tags, Models.Sku sku, Compute properties) : base(id, name, type, systemData)
+        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, Compute properties) : base(id, name, type, systemData)
         {
             Identity = identity;
             Location = location;
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Specifies the location of the resource. </summary>
         public string Location { get; set; }
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
-        public Models.Sku Sku { get; set; }
+        public MachineLearningServicesSku Sku { get; set; }
         /// <summary> Compute properties. </summary>
         public Compute Properties { get; set; }
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class ExternalFqdnResponse
+    internal partial class ExternalFqdnResponse
     {
         internal static ExternalFqdnResponse DeserializeExternalFqdnResponse(JsonElement element)
         {

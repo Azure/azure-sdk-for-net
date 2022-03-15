@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Properties of Databricks Compute Secrets. </summary>
-    public partial class DatabricksComputeSecretsProperties
+    internal partial class DatabricksComputeSecretsProperties
     {
         /// <summary> Initializes a new instance of DatabricksComputeSecretsProperties. </summary>
         internal DatabricksComputeSecretsProperties()

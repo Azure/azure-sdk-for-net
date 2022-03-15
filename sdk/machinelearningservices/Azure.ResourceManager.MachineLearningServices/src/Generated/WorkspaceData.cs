@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="description"> The description of this workspace. </param>
         /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
         /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. This cannot be changed once the workspace has been created. </param>
+        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
+        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
         /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
         /// <param name="discoveryUrl"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
         /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="tenantId"> The tenant id associated with this workspace. </param>
         /// <param name="storageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
         /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, Identity identity, string location, IDictionary<string, string> tags, Models.Sku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, string discoveryUrl, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, string tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, type, systemData)
+        internal WorkspaceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, string workspaceId, string description, string friendlyName, string keyVault, string applicationInsights, string containerRegistry, string storageAccount, string discoveryUrl, ProvisioningState? provisioningState, EncryptionProperty encryption, bool? hbiWorkspace, string serviceProvisionedResourceGroup, int? privateLinkCount, string imageBuildCompute, bool? allowPublicAccessWhenBehindVnet, PublicNetworkAccess? publicNetworkAccess, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IList<SharedPrivateLinkResource> sharedPrivateLinkResources, NotebookResourceInfo notebookInfo, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, string tenantId, bool? storageHnsEnabled, Uri mlFlowTrackingUri) : base(id, name, type, systemData)
         {
             Identity = identity;
             Location = location;
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Specifies the location of the resource. </summary>
         public string Location { get; set; }
         /// <summary> Contains resource tags defined as key/value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The sku of the workspace. </summary>
-        public Models.Sku Sku { get; set; }
+        public MachineLearningServicesSku Sku { get; set; }
         /// <summary> The immutable id associated with this workspace. </summary>
         public string WorkspaceId { get; }
         /// <summary> The description of this workspace. </summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.MachineLearningServices
         public string FriendlyName { get; set; }
         /// <summary> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         public string KeyVault { get; set; }
-        /// <summary> ARM id of the application insights associated with this workspace. This cannot be changed once the workspace has been created. </summary>
+        /// <summary> ARM id of the application insights associated with this workspace. </summary>
         public string ApplicationInsights { get; set; }
-        /// <summary> ARM id of the container registry associated with this workspace. This cannot be changed once the workspace has been created. </summary>
+        /// <summary> ARM id of the container registry associated with this workspace. </summary>
         public string ContainerRegistry { get; set; }
         /// <summary> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </summary>
         public string StorageAccount { get; set; }
@@ -136,7 +136,19 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> The notebook info of Azure ML workspace. </summary>
         public NotebookResourceInfo NotebookInfo { get; }
         /// <summary> The service managed resource settings. </summary>
-        public ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
+        internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        public int? CosmosDbCollectionsThroughput
+        {
+            get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
+            set
+            {
+                if (ServiceManagedResourcesSettings is null)
+                    ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
+                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
+            }
+        }
+
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         public string PrimaryUserAssignedIdentity { get; set; }
         /// <summary> The tenant id associated with this workspace. </summary>

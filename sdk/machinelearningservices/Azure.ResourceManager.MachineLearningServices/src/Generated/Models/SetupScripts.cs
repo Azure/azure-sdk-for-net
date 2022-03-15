@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
-    public partial class SetupScripts
+    internal partial class SetupScripts
     {
         /// <summary> Initializes a new instance of SetupScripts. </summary>
         public SetupScripts()

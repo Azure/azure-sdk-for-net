@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             EncryptionStatus status = default;
             Optional<IdentityForCmk> identity = default;
-            KeyVaultProperties keyVaultProperties = default;
+            EncryptionKeyVaultProperties keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
                 if (property.NameEquals("keyVaultProperties"))
                 {
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = EncryptionKeyVaultProperties.DeserializeEncryptionKeyVaultProperties(property.Value);
                     continue;
                 }
             }

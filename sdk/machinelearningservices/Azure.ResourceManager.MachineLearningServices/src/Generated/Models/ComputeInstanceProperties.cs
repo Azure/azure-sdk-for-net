@@ -20,6 +20,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         {
             Applications = new ChangeTrackingList<ComputeInstanceApplication>();
             Errors = new ChangeTrackingList<ErrorResponse>();
+            Containers = new ChangeTrackingList<ComputeInstanceContainer>();
+            DataDisks = new ChangeTrackingList<ComputeInstanceDataDisk>();
+            DataMounts = new ChangeTrackingList<ComputeInstanceDataMount>();
         }
 
         /// <summary> Initializes a new instance of ComputeInstanceProperties. </summary>
@@ -36,7 +39,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
         /// <param name="setupScripts"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
-        internal ComputeInstanceProperties(string vmSize, WritableSubResource subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScripts, ComputeInstanceLastOperation lastOperation)
+        /// <param name="schedules"> The list of schedules to be applied on the computes. </param>
+        /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
+        /// <param name="containers"> Describes informations of containers on this ComputeInstance. </param>
+        /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
+        /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
+        /// <param name="versions"> ComputeInstance version. </param>
+        internal ComputeInstanceProperties(string vmSize, WritableSubResource subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScripts, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIp, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -51,12 +60,30 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
             SetupScripts = setupScripts;
             LastOperation = lastOperation;
+            Schedules = schedules;
+            EnableNodePublicIp = enableNodePublicIp;
+            Containers = containers;
+            DataDisks = dataDisks;
+            DataMounts = dataMounts;
+            Versions = versions;
         }
 
         /// <summary> Virtual Machine Size. </summary>
         public string VmSize { get; set; }
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>
         public ApplicationSharingPolicy? ApplicationSharingPolicy { get; set; }
         /// <summary> Specifies policy and settings for SSH access. </summary>
@@ -74,10 +101,57 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
         public ComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get; set; }
         /// <summary> Settings for a personal compute instance. </summary>
-        public PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get; set; }
+        internal PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get; set; }
+        /// <summary> A user explicitly assigned to a personal compute instance. </summary>
+        public AssignedUser PersonalComputeInstanceAssignedUser
+        {
+            get => PersonalComputeInstanceSettings is null ? default : PersonalComputeInstanceSettings.AssignedUser;
+            set
+            {
+                if (PersonalComputeInstanceSettings is null)
+                    PersonalComputeInstanceSettings = new PersonalComputeInstanceSettings();
+                PersonalComputeInstanceSettings.AssignedUser = value;
+            }
+        }
+
         /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
-        public SetupScripts SetupScripts { get; set; }
+        internal SetupScripts SetupScripts { get; set; }
+        /// <summary> Customized setup scripts. </summary>
+        public ScriptsToExecute SetupScripts
+        {
+            get => SetupScripts is null ? default(ScriptsToExecute) : SetupScripts.Scripts;
+            set
+            {
+                if (SetupScripts is null)
+                    SetupScripts = new SetupScripts();
+                SetupScripts.Scripts = value;
+            }
+        }
+
         /// <summary> The last operation on ComputeInstance. </summary>
         public ComputeInstanceLastOperation LastOperation { get; }
+        /// <summary> The list of schedules to be applied on the computes. </summary>
+        internal ComputeSchedules Schedules { get; }
+        /// <summary> The list of compute start stop schedules to be applied. </summary>
+        public IReadOnlyList<ComputeStartStopSchedule> SchedulesComputeStartStop
+        {
+            get => Schedules.ComputeStartStop;
+        }
+
+        /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
+        public bool? EnableNodePublicIp { get; set; }
+        /// <summary> Describes informations of containers on this ComputeInstance. </summary>
+        public IReadOnlyList<ComputeInstanceContainer> Containers { get; }
+        /// <summary> Describes informations of dataDisks on this ComputeInstance. </summary>
+        public IReadOnlyList<ComputeInstanceDataDisk> DataDisks { get; }
+        /// <summary> Describes informations of dataMounts on this ComputeInstance. </summary>
+        public IReadOnlyList<ComputeInstanceDataMount> DataMounts { get; }
+        /// <summary> ComputeInstance version. </summary>
+        internal ComputeInstanceVersion Versions { get; }
+        /// <summary> Runtime of compute instance. </summary>
+        public string VersionsRuntime
+        {
+            get => Versions.Runtime;
+        }
     }
 }

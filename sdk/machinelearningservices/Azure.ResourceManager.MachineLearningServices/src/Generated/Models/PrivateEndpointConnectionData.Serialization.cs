@@ -21,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearningServices
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsDefined(Location))
             {
@@ -62,10 +63,10 @@ namespace Azure.ResourceManager.MachineLearningServices
 
         internal static PrivateEndpointConnectionData DeserializePrivateEndpointConnectionData(JsonElement element)
         {
-            Optional<Identity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
-            Optional<Models.Sku> sku = default;
+            Optional<MachineLearningServicesSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -82,7 +83,8 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = Identity.DeserializeIdentity(property.Value);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = MachineLearningServicesSku.DeserializeMachineLearningServicesSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -178,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionData(id, name, type, systemData, identity.Value, location.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new PrivateEndpointConnectionData(id, name, type, systemData, identity, location.Value, Optional.ToDictionary(tags), sku.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

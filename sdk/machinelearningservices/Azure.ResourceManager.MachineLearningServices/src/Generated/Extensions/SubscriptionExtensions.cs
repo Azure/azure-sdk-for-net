@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Usage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MachineLearningServicesUsage> GetUsagesAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Usage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MachineLearningServicesUsage> GetUsages(this Subscription subscription, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -201,32 +201,6 @@ namespace Azure.ResourceManager.MachineLearningServices
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
             return GetExtensionClient(subscription).GetQuotas(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all skus with associated features
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces/skus
-        /// Operation Id: WorkspaceSkus_List
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WorkspaceSku> GetWorkspaceSkusAsync(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetWorkspaceSkusAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all skus with associated features
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces/skus
-        /// Operation Id: WorkspaceSkus_List
-        /// </summary>
-        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceSku" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WorkspaceSku> GetWorkspaceSkus(this Subscription subscription, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscription).GetWorkspaceSkus(cancellationToken);
         }
     }
 }

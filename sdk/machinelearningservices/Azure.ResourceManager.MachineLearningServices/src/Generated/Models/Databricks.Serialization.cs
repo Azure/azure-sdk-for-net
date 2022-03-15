@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("computeType");
             writer.WriteStringValue(ComputeType.ToString());
-            if (Optional.IsDefined(ComputeLocation))
-            {
-                writer.WritePropertyName("computeLocation");
-                writer.WriteStringValue(ComputeLocation);
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");

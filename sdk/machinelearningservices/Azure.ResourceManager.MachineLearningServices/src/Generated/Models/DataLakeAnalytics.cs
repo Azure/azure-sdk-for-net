@@ -32,13 +32,24 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
         /// <param name="properties"></param>
-        internal DataLakeAnalytics(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, DataLakeAnalyticsProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
+        internal DataLakeAnalytics(ComputeType computeType, string computeLocation, ProvisioningState? provisioningState, string description, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string resourceId, IReadOnlyList<ErrorResponse> provisioningErrors, bool? isAttachedCompute, bool? disableLocalAuth, DataLakeAnalyticsSchemaProperties properties) : base(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth)
         {
             Properties = properties;
             ComputeType = computeType;
         }
 
         /// <summary> Gets or sets the properties. </summary>
-        public DataLakeAnalyticsProperties Properties { get; set; }
+        internal DataLakeAnalyticsSchemaProperties Properties { get; set; }
+        /// <summary> DataLake Store Account Name. </summary>
+        public string DataLakeStoreAccountName
+        {
+            get => Properties is null ? default : Properties.DataLakeStoreAccountName;
+            set
+            {
+                if (Properties is null)
+                    Properties = new DataLakeAnalyticsSchemaProperties();
+                Properties.DataLakeStoreAccountName = value;
+            }
+        }
     }
 }

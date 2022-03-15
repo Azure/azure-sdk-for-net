@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<OperationName> operationName = default;
             Optional<DateTimeOffset> operationTime = default;
             Optional<OperationStatus> operationStatus = default;
+            Optional<OperationTrigger> operationTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationName"))
@@ -50,8 +51,18 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     operationStatus = new OperationStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("operationTrigger"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    operationTrigger = new OperationTrigger(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ComputeInstanceLastOperation(Optional.ToNullable(operationName), Optional.ToNullable(operationTime), Optional.ToNullable(operationStatus));
+            return new ComputeInstanceLastOperation(Optional.ToNullable(operationName), Optional.ToNullable(operationTime), Optional.ToNullable(operationStatus), Optional.ToNullable(operationTrigger));
         }
     }
 }

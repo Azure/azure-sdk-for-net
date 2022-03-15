@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             }
             writer.WritePropertyName("computeType");
             writer.WriteStringValue(ComputeType.ToString());
-            if (Optional.IsDefined(ComputeLocation))
-            {
-                writer.WritePropertyName("computeLocation");
-                writer.WriteStringValue(ComputeLocation);
-            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");
@@ -50,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
 
         internal static AKS DeserializeAKS(JsonElement element)
         {
-            Optional<AKSProperties> properties = default;
+            Optional<AKSSchemaProperties> properties = default;
             ComputeType computeType = default;
             Optional<string> computeLocation = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -70,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = AKSProperties.DeserializeAKSProperties(property.Value);
+                    properties = AKSSchemaProperties.DeserializeAKSSchemaProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("computeType"))

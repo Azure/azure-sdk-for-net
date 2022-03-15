@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The CosmosDbSettings. </summary>
-    public partial class CosmosDbSettings
+    internal partial class CosmosDbSettings
     {
         /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
         public CosmosDbSettings()

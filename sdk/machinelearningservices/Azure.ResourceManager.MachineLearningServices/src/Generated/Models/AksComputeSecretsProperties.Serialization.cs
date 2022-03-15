@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class AksComputeSecretsProperties
+    internal partial class AksComputeSecretsProperties
     {
         internal static AksComputeSecretsProperties DeserializeAksComputeSecretsProperties(JsonElement element)
         {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultProperties"/> is null. </exception>
-        public EncryptionProperty(EncryptionStatus status, KeyVaultProperties keyVaultProperties)
+        public EncryptionProperty(EncryptionStatus status, EncryptionKeyVaultProperties keyVaultProperties)
         {
             if (keyVaultProperties == null)
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
         /// <param name="identity"> The identity that will be used to access the key vault for encryption at rest. </param>
         /// <param name="keyVaultProperties"> Customer Key vault properties. </param>
-        internal EncryptionProperty(EncryptionStatus status, IdentityForCmk identity, KeyVaultProperties keyVaultProperties)
+        internal EncryptionProperty(EncryptionStatus status, IdentityForCmk identity, EncryptionKeyVaultProperties keyVaultProperties)
         {
             Status = status;
             Identity = identity;
@@ -41,8 +41,20 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
         public EncryptionStatus Status { get; set; }
         /// <summary> The identity that will be used to access the key vault for encryption at rest. </summary>
-        public IdentityForCmk Identity { get; set; }
+        internal IdentityForCmk Identity { get; set; }
+        /// <summary> The ArmId of the user assigned identity that will be used to access the customer managed key vault. </summary>
+        public string UserAssignedIdentity
+        {
+            get => Identity is null ? default : Identity.UserAssignedIdentity;
+            set
+            {
+                if (Identity is null)
+                    Identity = new IdentityForCmk();
+                Identity.UserAssignedIdentity = value;
+            }
+        }
+
         /// <summary> Customer Key vault properties. </summary>
-        public KeyVaultProperties KeyVaultProperties { get; set; }
+        public EncryptionKeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

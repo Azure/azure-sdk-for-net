@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Kubernetes Compute Schema. </summary>
-    public partial class KubernetesSchema
+    internal partial class KubernetesSchema
     {
         /// <summary> Initializes a new instance of KubernetesSchema. </summary>
         public KubernetesSchema()

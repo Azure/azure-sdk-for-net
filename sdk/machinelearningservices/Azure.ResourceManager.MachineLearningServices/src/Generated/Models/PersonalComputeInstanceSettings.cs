@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Settings for a personal compute instance. </summary>
-    public partial class PersonalComputeInstanceSettings
+    internal partial class PersonalComputeInstanceSettings
     {
         /// <summary> Initializes a new instance of PersonalComputeInstanceSettings. </summary>
         public PersonalComputeInstanceSettings()

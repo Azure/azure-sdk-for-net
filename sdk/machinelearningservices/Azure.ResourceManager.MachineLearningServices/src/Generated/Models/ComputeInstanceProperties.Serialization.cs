@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("setupScripts");
                 writer.WriteObjectValue(SetupScripts);
             }
+            if (Optional.IsDefined(EnableNodePublicIp))
+            {
+                writer.WritePropertyName("enableNodePublicIp");
+                writer.WriteBooleanValue(EnableNodePublicIp.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -71,6 +76,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<PersonalComputeInstanceSettings> personalComputeInstanceSettings = default;
             Optional<SetupScripts> setupScripts = default;
             Optional<ComputeInstanceLastOperation> lastOperation = default;
+            Optional<ComputeSchedules> schedules = default;
+            Optional<bool> enableNodePublicIp = default;
+            Optional<IReadOnlyList<ComputeInstanceContainer>> containers = default;
+            Optional<IReadOnlyList<ComputeInstanceDataDisk>> dataDisks = default;
+            Optional<IReadOnlyList<ComputeInstanceDataMount>> dataMounts = default;
+            Optional<ComputeInstanceVersion> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSize"))
@@ -195,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);
+                    setupScripts = Models.SetupScripts.DeserializeSetupScripts(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastOperation"))
@@ -208,8 +219,83 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     lastOperation = ComputeInstanceLastOperation.DeserializeComputeInstanceLastOperation(property.Value);
                     continue;
                 }
+                if (property.NameEquals("schedules"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    schedules = ComputeSchedules.DeserializeComputeSchedules(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("enableNodePublicIp"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableNodePublicIp = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("containers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ComputeInstanceContainer> array = new List<ComputeInstanceContainer>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeInstanceContainer.DeserializeComputeInstanceContainer(item));
+                    }
+                    containers = array;
+                    continue;
+                }
+                if (property.NameEquals("dataDisks"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ComputeInstanceDataDisk> array = new List<ComputeInstanceDataDisk>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeInstanceDataDisk.DeserializeComputeInstanceDataDisk(item));
+                    }
+                    dataDisks = array;
+                    continue;
+                }
+                if (property.NameEquals("dataMounts"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ComputeInstanceDataMount> array = new List<ComputeInstanceDataMount>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeInstanceDataMount.DeserializeComputeInstanceDataMount(item));
+                    }
+                    dataMounts = array;
+                    continue;
+                }
+                if (property.NameEquals("versions"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    versions = ComputeInstanceVersion.DeserializeComputeInstanceVersion(property.Value);
+                    continue;
+                }
             }
-            return new ComputeInstanceProperties(vmSize.Value, subnet, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value);
+            return new ComputeInstanceProperties(vmSize.Value, subnet, Optional.ToNullable(applicationSharingPolicy), sshSettings.Value, connectivityEndpoints.Value, Optional.ToList(applications), createdBy.Value, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToNullable(computeInstanceAuthorizationType), personalComputeInstanceSettings.Value, setupScripts.Value, lastOperation.Value, schedules.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToList(containers), Optional.ToList(dataDisks), Optional.ToList(dataMounts), versions.Value);
         }
     }
 }

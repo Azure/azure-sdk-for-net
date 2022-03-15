@@ -30,8 +30,6 @@ namespace Azure.ResourceManager.MachineLearningServices
         private VirtualMachineSizesRestOperations _virtualMachineSizesRestClient;
         private ClientDiagnostics _quotasClientDiagnostics;
         private QuotasRestOperations _quotasRestClient;
-        private ClientDiagnostics _workspaceWorkspaceSkusClientDiagnostics;
-        private WorkspaceSkusRestOperations _workspaceWorkspaceSkusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class for mocking. </summary>
         protected SubscriptionExtensionClient()
@@ -46,15 +44,13 @@ namespace Azure.ResourceManager.MachineLearningServices
         }
 
         private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", Workspace.ResourceType.Namespace, DiagnosticOptions);
-        private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(WorkspaceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Workspace.ResourceType));
+        private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Workspace.ResourceType));
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(UsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(VirtualMachineSizesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private VirtualMachineSizesRestOperations VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(QuotasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics WorkspaceWorkspaceSkusClientDiagnostics => _workspaceWorkspaceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearningServices", Workspace.ResourceType.Namespace, DiagnosticOptions);
-        private WorkspaceSkusRestOperations WorkspaceWorkspaceSkusRestClient => _workspaceWorkspaceSkusRestClient ??= new WorkspaceSkusRestOperations(WorkspaceWorkspaceSkusClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Workspace.ResourceType));
+        private QuotasRestOperations QuotasRestClient => _quotasRestClient ??= new QuotasRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -155,10 +151,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningServicesUsage> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningServicesUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -173,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MachineLearningServicesUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -198,10 +194,10 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningServicesUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningServicesUsage> GetUsages(string location, CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningServicesUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -216,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearningServices
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MachineLearningServicesUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetUsages");
                 scope.Start();
@@ -425,90 +421,6 @@ namespace Azure.ResourceManager.MachineLearningServices
                 try
                 {
                     var response = QuotasRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Lists all skus with associated features
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces/skus
-        /// Operation Id: WorkspaceSkus_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceSku> GetWorkspaceSkusAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<WorkspaceSku>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = WorkspaceWorkspaceSkusClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await WorkspaceWorkspaceSkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<WorkspaceSku>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = WorkspaceWorkspaceSkusClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaceSkus");
-                scope.Start();
-                try
-                {
-                    var response = await WorkspaceWorkspaceSkusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Lists all skus with associated features
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/workspaces/skus
-        /// Operation Id: WorkspaceSkus_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceSku> GetWorkspaceSkus(CancellationToken cancellationToken = default)
-        {
-            Page<WorkspaceSku> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = WorkspaceWorkspaceSkusClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaceSkus");
-                scope.Start();
-                try
-                {
-                    var response = WorkspaceWorkspaceSkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<WorkspaceSku> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = WorkspaceWorkspaceSkusClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetWorkspaceSkus");
-                scope.Start();
-                try
-                {
-                    var response = WorkspaceWorkspaceSkusRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

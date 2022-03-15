@@ -69,6 +69,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("enableNodePublicIp");
                 writer.WriteBooleanValue(EnableNodePublicIp.Value);
             }
+            if (Optional.IsCollectionDefined(PropertyBag))
+            {
+                writer.WritePropertyName("propertyBag");
+                writer.WriteStartObject();
+                foreach (var item in PropertyBag)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
@@ -90,6 +101,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             Optional<int> targetNodeCount = default;
             Optional<NodeStateCounts> nodeStateCounts = default;
             Optional<bool> enableNodePublicIp = default;
+            Optional<IDictionary<string, object>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"))
@@ -252,8 +264,23 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     enableNodePublicIp = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("propertyBag"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    propertyBag = dictionary;
+                    continue;
+                }
             }
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp));
+            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), Optional.ToList(errors), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIp), Optional.ToDictionary(propertyBag));
         }
     }
 }

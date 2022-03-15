@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The ExternalFqdnResponse. </summary>
-    public partial class ExternalFqdnResponse
+    internal partial class ExternalFqdnResponse
     {
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>
         internal ExternalFqdnResponse()

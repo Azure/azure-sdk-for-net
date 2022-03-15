@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The ServiceManagedResourcesSettings. </summary>
-    public partial class ServiceManagedResourcesSettings
+    internal partial class ServiceManagedResourcesSettings
     {
         /// <summary> Initializes a new instance of ServiceManagedResourcesSettings. </summary>
         public ServiceManagedResourcesSettings()
@@ -23,6 +23,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> The settings for the service managed cosmosdb account. </summary>
-        public CosmosDbSettings CosmosDb { get; set; }
+        internal CosmosDbSettings CosmosDb { get; set; }
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        public int? CosmosDbCollectionsThroughput
+        {
+            get => CosmosDb is null ? default : CosmosDb.CollectionsThroughput;
+            set
+            {
+                if (CosmosDb is null)
+                    CosmosDb = new CosmosDbSettings();
+                CosmosDb.CollectionsThroughput = value;
+            }
+        }
     }
 }

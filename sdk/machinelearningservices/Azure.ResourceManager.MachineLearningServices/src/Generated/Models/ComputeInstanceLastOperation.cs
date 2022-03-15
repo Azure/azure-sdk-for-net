@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="operationName"> Name of the last operation. </param>
         /// <param name="operationTime"> Time of the last operation. </param>
         /// <param name="operationStatus"> Operation status. </param>
-        internal ComputeInstanceLastOperation(OperationName? operationName, DateTimeOffset? operationTime, OperationStatus? operationStatus)
+        /// <param name="operationTrigger"> Trigger of operation. </param>
+        internal ComputeInstanceLastOperation(OperationName? operationName, DateTimeOffset? operationTime, OperationStatus? operationStatus, OperationTrigger? operationTrigger)
         {
             OperationName = operationName;
             OperationTime = operationTime;
             OperationStatus = operationStatus;
+            OperationTrigger = operationTrigger;
         }
 
         /// <summary> Name of the last operation. </summary>
@@ -34,5 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         public DateTimeOffset? OperationTime { get; }
         /// <summary> Operation status. </summary>
         public OperationStatus? OperationStatus { get; }
+        /// <summary> Trigger of operation. </summary>
+        public OperationTrigger? OperationTrigger { get; }
     }
 }

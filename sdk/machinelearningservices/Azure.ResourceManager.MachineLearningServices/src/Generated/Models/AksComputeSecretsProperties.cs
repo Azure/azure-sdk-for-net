@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> Properties of AksComputeSecrets. </summary>
-    public partial class AksComputeSecretsProperties
+    internal partial class AksComputeSecretsProperties
     {
         /// <summary> Initializes a new instance of AksComputeSecretsProperties. </summary>
         internal AksComputeSecretsProperties()

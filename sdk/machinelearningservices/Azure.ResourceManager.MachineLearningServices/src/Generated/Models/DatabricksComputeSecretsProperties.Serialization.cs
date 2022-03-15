@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class DatabricksComputeSecretsProperties
+    internal partial class DatabricksComputeSecretsProperties
     {
         internal static DatabricksComputeSecretsProperties DeserializeDatabricksComputeSecretsProperties(JsonElement element)
         {
