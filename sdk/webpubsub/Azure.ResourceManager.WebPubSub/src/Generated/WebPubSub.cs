@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of WebPubSubHubs and their operations over a WebPubSubHub. </returns>
         public virtual WebPubSubHubCollection GetWebPubSubHubs()
         {
-            return new WebPubSubHubCollection(Client, Id);
+            return GetCachedClient(Client => new WebPubSubHubCollection(Client, Id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of SharedPrivateLinks and their operations over a SharedPrivateLink. </returns>
         public virtual SharedPrivateLinkCollection GetSharedPrivateLinks()
         {
-            return new SharedPrivateLinkCollection(Client, Id);
+            return GetCachedClient(Client => new SharedPrivateLinkCollection(Client, Id));
         }
 
         /// <summary>

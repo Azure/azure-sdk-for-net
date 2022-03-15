@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of AppServiceCertificateResources and their operations over a AppServiceCertificateResource. </returns>
         public virtual AppServiceCertificateResourceCollection GetAppServiceCertificateResources()
         {
-            return new AppServiceCertificateResourceCollection(Client, Id);
+            return GetCachedClient(Client => new AppServiceCertificateResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of CertificateOrderDetectors and their operations over a CertificateOrderDetector. </returns>
         public virtual CertificateOrderDetectorCollection GetCertificateOrderDetectors()
         {
-            return new CertificateOrderDetectorCollection(Client, Id);
+            return GetCachedClient(Client => new CertificateOrderDetectorCollection(Client, Id));
         }
 
         /// <summary>

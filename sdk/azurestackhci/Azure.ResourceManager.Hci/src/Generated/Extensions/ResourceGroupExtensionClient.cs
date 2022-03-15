@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of HciClusters and their operations over a HciCluster. </returns>
         public virtual HciClusterCollection GetHciClusters()
         {
-            return new HciClusterCollection(Client, Id);
+            return GetCachedClient(Client => new HciClusterCollection(Client, Id));
         }
     }
 }

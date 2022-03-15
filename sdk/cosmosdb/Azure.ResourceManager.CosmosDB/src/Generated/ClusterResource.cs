@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of DataCenterResources and their operations over a DataCenterResource. </returns>
         public virtual DataCenterResourceCollection GetDataCenterResources()
         {
-            return new DataCenterResourceCollection(Client, Id);
+            return GetCachedClient(Client => new DataCenterResourceCollection(Client, Id));
         }
 
         /// <summary>

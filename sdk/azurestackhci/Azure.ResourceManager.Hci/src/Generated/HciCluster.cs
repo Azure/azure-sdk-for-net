@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of ArcSettings and their operations over a ArcSetting. </returns>
         public virtual ArcSettingCollection GetArcSettings()
         {
-            return new ArcSettingCollection(Client, Id);
+            return GetCachedClient(Client => new ArcSettingCollection(Client, Id));
         }
 
         /// <summary>

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BackendAddressPools and their operations over a BackendAddressPool. </returns>
         public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
-            return new BackendAddressPoolCollection(Client, Id);
+            return GetCachedClient(Client => new BackendAddressPoolCollection(Client, Id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FrontendIPConfigurations and their operations over a FrontendIPConfiguration. </returns>
         public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
-            return new FrontendIPConfigurationCollection(Client, Id);
+            return GetCachedClient(Client => new FrontendIPConfigurationCollection(Client, Id));
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of InboundNatRules and their operations over a InboundNatRule. </returns>
         public virtual InboundNatRuleCollection GetInboundNatRules()
         {
-            return new InboundNatRuleCollection(Client, Id);
+            return GetCachedClient(Client => new InboundNatRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LoadBalancingRules and their operations over a LoadBalancingRule. </returns>
         public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
-            return new LoadBalancingRuleCollection(Client, Id);
+            return GetCachedClient(Client => new LoadBalancingRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of OutboundRules and their operations over a OutboundRule. </returns>
         public virtual OutboundRuleCollection GetOutboundRules()
         {
-            return new OutboundRuleCollection(Client, Id);
+            return GetCachedClient(Client => new OutboundRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of Probes and their operations over a Probe. </returns>
         public virtual ProbeCollection GetProbes()
         {
-            return new ProbeCollection(Client, Id);
+            return GetCachedClient(Client => new ProbeCollection(Client, Id));
         }
 
         /// <summary>

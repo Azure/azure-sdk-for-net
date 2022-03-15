@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnectionGateways and their operations over a SiteSlotVirtualNetworkConnectionGateway. </returns>
         public virtual SiteSlotVirtualNetworkConnectionGatewayCollection GetSiteSlotVirtualNetworkConnectionGateways()
         {
-            return new SiteSlotVirtualNetworkConnectionGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotVirtualNetworkConnectionGatewayCollection(Client, Id));
         }
 
         /// <summary>
