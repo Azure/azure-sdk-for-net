@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" TreatAsLocalProperty="DefineConstants">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!-- Setup project type properties -->
   <PropertyGroup>
@@ -87,6 +87,7 @@
     <InheritDocTrimLevel>private</InheritDocTrimLevel>
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
+    <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">

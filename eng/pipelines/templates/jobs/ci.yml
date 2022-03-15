@@ -17,7 +17,7 @@ parameters:
 - name: ServiceToTest
   type: string
   default: ''
-- name: TestDocSnippets
+- name: BuildSnippets
   type: boolean
   default: false
 - name: TestSetupSteps
@@ -202,9 +202,9 @@ jobs:
           /p:IncludeStress=false
           /p:PublicSign=false
           /p:Configuration=$(BuildConfiguration)
-          /p:DefineConstants=SNIPPET
+          /p:BuildSnippets=true
         displayName: Build snippets
-        condition: and(succeeded(), eq(${{ parameters.TestDocSnippets }}, true))
+        condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - job: Compliance
