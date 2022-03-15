@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         public VaultCheckNameAvailabilityParameters(string name) { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class VaultCreateOrUpdateParameters
     {

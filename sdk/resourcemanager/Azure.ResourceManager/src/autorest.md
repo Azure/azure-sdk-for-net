@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-save-inputs: true
 arm-core: true
 clear-output-folder: true
 skip-csproj: true
@@ -13,10 +12,10 @@ public-clients: false
 head-as-boolean: false
 mgmt-debug:
   show-request-path: true
-#batch:
-#  - tag: package-common-type
-tag: package-resources
-#  - tag: package-management
+batch:
+  - tag: package-common-type
+  - tag: package-resources
+  - tag: package-management
 ```
 
 ### Tag: package-common-type
@@ -40,6 +39,7 @@ directive:
   - remove-model: "locationData"
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
+  - remove-model: "ErrorResponse"
   - from: types.json
     where: $.definitions['Resource']
     transform: >
@@ -74,6 +74,9 @@ directive:
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+  - from: managedidentity.json
+    where: $.definitions.SystemAssignedServiceIdentity.properties.type
+    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
 ```
 
 ### Tag: package-resources
@@ -99,8 +102,6 @@ list-exception:
   - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
-  # model of ResourceLink has id, type and name, but its type has the type of `object` instead of `string`
-  /{linkId}: ResourceLink
   # subscription does not have name and type
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
@@ -151,7 +152,7 @@ override-operation-name:
   Resources_ListByResourceGroup: GetGenericResources
   Providers_RegisterAtManagementGroupScope: RegisterProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider
+no-property-type-replacement: ProviderData;Provider;
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -397,6 +398,11 @@ directive:
   - from: locks.json
     where: $.definitions.ManagementLockObject
     transform: $["x-ms-client-name"] = "ManagementLock"
+  - from: links.json
+    where: $.definitions.ResourceLink.properties.type
+    transform: >
+      $["x-ms-client-name"] = "ResourceType";
+      $["type"] = "string";
 ```
 
 ### Tag: package-management
@@ -433,6 +439,10 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityRequest.properties.type
+    transform: >
+      $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
       to: CheckNameAvailabilityOptions

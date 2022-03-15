@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Location, getResult.Data.Location);
             if (model.Data.Properties != null || getResult.Data.Properties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources.Tests
                     Assert.NotNull(getResult.Data.Properties.OnErrorDeployment);
                     Assert.AreEqual(model.Data.Properties.OnErrorDeployment.DeploymentName, getResult.Data.Properties.OnErrorDeployment.DeploymentName);
                     Assert.AreEqual(model.Data.Properties.OnErrorDeployment.ProvisioningState, getResult.Data.Properties.OnErrorDeployment.ProvisioningState);
-                    Assert.AreEqual(model.Data.Properties.OnErrorDeployment.Type, getResult.Data.Properties.OnErrorDeployment.Type);
+                    Assert.AreEqual(model.Data.Properties.OnErrorDeployment.OnErrorDeploymentType, getResult.Data.Properties.OnErrorDeployment.OnErrorDeploymentType);
                 }
                 Assert.AreEqual(model.Data.Properties.TemplateHash, getResult.Data.Properties.TemplateHash);
                 if (model.Data.Properties.OutputResources != null || getResult.Data.Properties.OutputResources != null)

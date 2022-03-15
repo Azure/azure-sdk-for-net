@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of ResourceHealthMetadataData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
         /// <param name="signalAvailability"> Is there a health signal for the resource. </param>
-        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string category, bool? signalAvailability) : base(id, name, type, systemData, kind)
+        internal ResourceHealthMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string category, bool? signalAvailability) : base(id, name, resourceType, systemData, kind)
         {
             Category = category;
             SignalAvailability = signalAvailability;

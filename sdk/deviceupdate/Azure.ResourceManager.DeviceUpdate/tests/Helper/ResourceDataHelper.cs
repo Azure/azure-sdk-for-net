@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Location, getResult.Data.Location);
             if (model.Data.Identity != null || getResult.Data.Identity != null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
                 Assert.NotNull(getResult.Data.Identity);
                 Assert.AreEqual(model.Data.Identity.PrincipalId, getResult.Data.Identity.PrincipalId);
                 Assert.AreEqual(model.Data.Identity.TenantId, getResult.Data.Identity.TenantId);
-                Assert.AreEqual(model.Data.Identity.Type, getResult.Data.Identity.Type);
+                Assert.AreEqual(model.Data.Identity.ManagedServiceIdentityType, getResult.Data.Identity.ManagedServiceIdentityType);
                 Assert.AreEqual(model.Data.Identity.UserAssignedIdentities.Count, getResult.Data.Identity.UserAssignedIdentities.Count);
                 foreach (var kv in model.Data.Identity.UserAssignedIdentities)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.AccountName, getResult.Data.AccountName);
             for (int i = 0; i < model.Data.IotHubs.Count; ++i)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Helper
             {
                 Assert.NotNull(updatedAccount.Data.Identity);
                 Assert.NotNull(updateParameters.Identity);
-                Assert.AreEqual(updatedAccount.Data.Identity.Type, updateParameters.Identity.Type);
+                Assert.AreEqual(updatedAccount.Data.Identity.ManagedServiceIdentityType, updateParameters.Identity.ManagedServiceIdentityType);
             }
         }
 

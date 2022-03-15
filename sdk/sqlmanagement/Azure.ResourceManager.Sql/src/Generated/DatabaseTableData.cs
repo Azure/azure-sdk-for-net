@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of DatabaseTableData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="temporalType"> The table temporal type. </param>
         /// <param name="memoryOptimized"> Whether or not the table is memory optimized. </param>
-        internal DatabaseTableData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, TableTemporalType? temporalType, bool? memoryOptimized) : base(id, name, type, systemData)
+        internal DatabaseTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TableTemporalType? temporalType, bool? memoryOptimized) : base(id, name, resourceType, systemData)
         {
             TemporalType = temporalType;
             MemoryOptimized = memoryOptimized;

@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     {
         public CheckNameAvailabilityRequest() { }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public string ResourceType { get { throw null; } set { } }
     }
     public partial class CheckNameAvailabilityResponse
     {
