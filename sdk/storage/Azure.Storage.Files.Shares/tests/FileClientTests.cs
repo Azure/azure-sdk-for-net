@@ -1724,9 +1724,10 @@ namespace Azure.Storage.Files.Shares.Tests
                 sourcePropertiesResponse.Value.SmbProperties.FileAttributes,
                 destPropertiesResponse.Value.SmbProperties.FileAttributes);
 
-            Assert.AreEqual(
-                sourcePropertiesResponse.Value.SmbProperties.FileChangedOn,
-                destPropertiesResponse.Value.SmbProperties.FileChangedOn);
+            //TODO https://github.com/Azure/azure-sdk-for-net/issues/27564
+            //Assert.AreEqual(
+            //    sourcePropertiesResponse.Value.SmbProperties.FileChangedOn,
+            //    destPropertiesResponse.Value.SmbProperties.FileChangedOn);
         }
 
         [RecordedTest]
