@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of FlowLogFormatParameters. </summary>
-        /// <param name="type"> The file type of flow log. </param>
+        /// <param name="flowLogFormatType"> The file type of flow log. </param>
         /// <param name="version"> The version (revision) of the flow log. </param>
-        internal FlowLogFormatParameters(FlowLogFormatType? type, int? version)
+        internal FlowLogFormatParameters(FlowLogFormatType? flowLogFormatType, int? version)
         {
-            Type = type;
+            FlowLogFormatType = flowLogFormatType;
             Version = version;
         }
 
         /// <summary> The file type of flow log. </summary>
-        public FlowLogFormatType? Type { get; set; }
+        public FlowLogFormatType? FlowLogFormatType { get; set; }
         /// <summary> The version (revision) of the flow log. </summary>
         public int? Version { get; set; }
     }

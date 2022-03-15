@@ -8,8 +8,8 @@
         "Content-Length": "61",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211024.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "238b0aada316157815639f13573875c0",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220314.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "eddecbe475c6d37410b0ec0552bfd0c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -17,40 +17,32 @@
       },
       "StatusCode": 401,
       "ResponseHeaders": {
-        "apim-request-id": "6bf6a000-3c55-4bf9-aaec-9d0cb934a829",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "5f4c6b12-488c-4533-8941-e762741b12e3",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json",
-        "Date": "Sun, 24 Oct 2021 11:11:02 GMT",
-        "pragma": "no-cache",
-        "request-id": "6bf6a000-3c55-4bf9-aaec-9d0cb934a829",
+        "Date": "Mon, 14 Mar 2022 15:35:16 GMT",
+        "Pragma": "no-cache",
+        "request-id": "5f4c6b12-488c-4533-8941-e762741b12e3",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "155"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "146"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022error\u0022: {\n",
-        "    \u0022code\u0022: \u0022Unauthorized\u0022,\n",
-        "    \u0022message\u0022: \u0022One or more authorization parameter is invalid or missing.\u0022,\n",
-        "    \u0022innerError\u0022: {\n",
-        "      \u0022code\u0022: \u0022Forbidden\u0022,\n",
-        "      \u0022message\u0022: \u0022The provided authorization parameters cannot access the requested resource.\u0022\n",
-        "    }\n",
-        "  }\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "One or more authorization parameter is invalid or missing.",
+          "innerError": {
+            "code": "Forbidden",
+            "message": "The provided authorization parameters cannot access the requested resource."
+          }
+        }
+      }
     }
   ],
   "Variables": {
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "376930274"
+    "RandomSeed": "776501990"
   }
 }

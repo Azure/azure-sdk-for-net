@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Sql
         }
 
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(LongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of InstancePools and their operations over a InstancePool. </returns>
         public virtual InstancePoolCollection GetInstancePools()
         {
-            return new InstancePoolCollection(Client, Id);
+            return GetCachedClient(Client => new InstancePoolCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackups in the ResourceGroupLongTermRetentionBackup. </summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstances and their operations over a ManagedInstance. </returns>
         public virtual ManagedInstanceCollection GetManagedInstances()
         {
-            return new ManagedInstanceCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ServerTrustGroups in the ServerTrustGroup. </summary>
@@ -103,14 +103,14 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of VirtualClusters and their operations over a VirtualCluster. </returns>
         public virtual VirtualClusterCollection GetVirtualClusters()
         {
-            return new VirtualClusterCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SqlServers in the SqlServer. </summary>
         /// <returns> An object representing collection of SqlServers and their operations over a SqlServer. </returns>
         public virtual SqlServerCollection GetSqlServers()
         {
-            return new SqlServerCollection(Client, Id);
+            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
         }
 
         /// <summary>

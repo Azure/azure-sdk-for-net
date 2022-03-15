@@ -14,19 +14,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
-        private readonly AzureMonitorExporterOptions _options;
         private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(options, new AzureMonitorTransmitter(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
         }
 
-        internal AzureMonitorLogExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
+        internal AzureMonitorLogExporter(ITransmitter transmitter)
         {
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-            ConnectionString.ConnectionStringParser.GetValues(_options.ConnectionString, out _instrumentationKey, out _);
             _transmitter = transmitter;
+            _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
         }
 
@@ -38,8 +36,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var resource = ParentProvider.GetResource();
-                _resourceParser.UpdateRoleNameAndInstance(resource);
+                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                {
+                    var resource = ParentProvider.GetResource();
+                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                }
+
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
 
                 // TODO: Handle return value, it can be converted as metrics.

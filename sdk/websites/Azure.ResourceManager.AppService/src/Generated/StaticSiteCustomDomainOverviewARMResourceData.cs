@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewARMResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="domainName"> The domain name for the static site custom domain. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="status"> The status of the custom domain. </param>
         /// <param name="validationToken"> The TXT record validation token. </param>
         /// <param name="errorMessage"></param>
-        internal StaticSiteCustomDomainOverviewARMResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage) : base(id, name, type, systemData, kind)
+        internal StaticSiteCustomDomainOverviewARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string domainName, DateTimeOffset? createdOn, CustomDomainStatus? status, string validationToken, string errorMessage) : base(id, name, resourceType, systemData, kind)
         {
             DomainName = domainName;
             CreatedOn = createdOn;

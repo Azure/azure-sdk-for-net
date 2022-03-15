@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -40,6 +41,36 @@ namespace Azure.ResourceManager.AppService
         public static SourceControlCollection GetSourceControls(this Tenant tenant)
         {
             return GetExtensionClient(tenant).GetSourceControls();
+        }
+
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="sourceControlType"> Type of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        public static async Task<Response<SourceControl>> GetSourceControlAsync(this Tenant tenant, string sourceControlType, CancellationToken cancellationToken = default)
+        {
+            return await tenant.GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets source control token
+        /// Request Path: /providers/Microsoft.Web/sourcecontrols/{sourceControlType}
+        /// Operation Id: GetSourceControl
+        /// </summary>
+        /// <param name="tenant"> The <see cref="Tenant" /> instance the method will execute against. </param>
+        /// <param name="sourceControlType"> Type of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        public static Response<SourceControl> GetSourceControl(this Tenant tenant, string sourceControlType, CancellationToken cancellationToken = default)
+        {
+            return tenant.GetSourceControls().Get(sourceControlType, cancellationToken);
         }
 
         /// <summary>

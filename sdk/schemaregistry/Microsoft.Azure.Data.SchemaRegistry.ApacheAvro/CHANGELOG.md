@@ -1,5 +1,29 @@
 # Release History
 
+## 1.0.0-beta.8 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.7 (2022-03-11)
+
+### Features Added
+
+- Added logging of cache size.
+- Non-generic overloads are available for serializing and deserializing.
+
+### Breaking Changes
+
+- `SchemaRegistryAvroEncoder` has been renamed to `SchemaRegistryAvroSerializer`
+- The `DecodeMessageData` method has been renamed to `Deserialize`.
+- The `EncodeMessageData` method has been renamed to `Serialize`.
+- The type `MessageWithMetadata` has been renamed to `BinaryContent`.
+
 ## 1.0.0-beta.6 (2022-02-10)
 
 ### Features Added

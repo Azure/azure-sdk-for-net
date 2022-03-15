@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the WebApplicationFirewallPolicy data model. </summary>
-    public partial class WebApplicationFirewallPolicyData : Resource
+    public partial class WebApplicationFirewallPolicyData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
         public WebApplicationFirewallPolicyData()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="managedRules"> Describes the managedRules structure. </param>
         /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
-        internal WebApplicationFirewallPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, ProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules) : base(id, name, type, location, tags)
+        internal WebApplicationFirewallPolicyData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, ProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             PolicySettings = policySettings;

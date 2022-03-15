@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         {
             _cloudServiceRoleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cloudServiceRoleApiVersion);
-            _cloudServiceRoleRestClient = new CloudServiceRolesRestOperations(_cloudServiceRoleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceRoleApiVersion);
+            _cloudServiceRoleRestClient = new CloudServiceRolesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceRoleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceRoles_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CloudServiceRole>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CloudServiceRole>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRole.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _cloudServiceRoleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cloudServiceRoleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudServiceRole(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _cloudServiceRoleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _cloudServiceRoleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CloudServiceRole(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

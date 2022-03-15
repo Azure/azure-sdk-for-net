@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of DeploymentScriptManagedIdentity. </summary>
-        /// <param name="type"> Type of the managed identity. </param>
+        /// <param name="deploymentScriptManagedIdentityType"> Type of the managed identity. </param>
         /// <param name="tenantId"> ID of the Azure Active Directory. </param>
         /// <param name="userAssignedIdentities"> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </param>
-        internal DeploymentScriptManagedIdentity(DeploymentScriptManagedIdentityType? type, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal DeploymentScriptManagedIdentity(DeploymentScriptManagedIdentityType? deploymentScriptManagedIdentityType, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
-            Type = type;
+            DeploymentScriptManagedIdentityType = deploymentScriptManagedIdentityType;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> Type of the managed identity. </summary>
-        public DeploymentScriptManagedIdentityType? Type { get; set; }
+        public DeploymentScriptManagedIdentityType? DeploymentScriptManagedIdentityType { get; set; }
         /// <summary> ID of the Azure Active Directory. </summary>
         public string TenantId { get; }
         /// <summary> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </summary>

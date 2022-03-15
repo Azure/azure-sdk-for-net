@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccount account = await CreateAccount(rg, accountName);
-            await account.DeleteAsync(true);
+            await account.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await account.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
                 Location = AzureLocation.WestUS2,
                 Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
             };
-            var lro = await account.UpdateAsync(true, updateOptions);
+            var lro = await account.UpdateAsync(WaitUntil.Completed, updateOptions);
             DeviceUpdateAccount updatedAccount = lro.Value;
             ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
         }

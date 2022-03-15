@@ -52,7 +52,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             updateSourcesOperation.WaitForCompletion();
 #else
             // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = InstrumentOperation(client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent));
+            Operation<BinaryData> updateSourcesOperation = InstrumentOperation(client.UpdateSources(WaitUntil.Started, testProjectName, updateSourcesRequestContent));
             await updateSourcesOperation.WaitForCompletionAsync();
 #endif
 
@@ -91,7 +91,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(waitForCompletion: true, testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
             // QnAs can be retrieved as follows
             Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
@@ -200,7 +200,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
+            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
             await updateSourcesOperation.WaitForCompletionAsync();
 
             // Wait for operation completion
@@ -242,7 +242,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(waitForCompletion: true, testProjectName, updateQnasRequestContent);
+            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
             await updateQnasOperation.WaitForCompletionAsync();
 
             // QnAs can be retrieved as follows

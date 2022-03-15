@@ -407,8 +407,7 @@ try {
         Write-Verbose "Location was not set. Using default location for environment: '$Location'"
     }
 
-    if (!$CI) {
-
+    if (!$CI -and $PSCmdlet.ParameterSetName -ne "Provisioner") {
         # Make sure the user is logged in to create a service principal.
         $context = Get-AzContext;
         if (!$context) {

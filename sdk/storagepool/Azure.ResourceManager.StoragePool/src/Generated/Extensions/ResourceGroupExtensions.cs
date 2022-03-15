@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StoragePool
@@ -27,6 +31,36 @@ namespace Azure.ResourceManager.StoragePool
         public static DiskPoolCollection GetDiskPools(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDiskPools();
+        }
+
+        /// <summary>
+        /// Get a Disk pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public static async Task<Response<DiskPool>> GetDiskPoolAsync(this ResourceGroup resourceGroup, string diskPoolName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetDiskPools().GetAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Disk pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
+        /// Operation Id: DiskPools_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="diskPoolName"> The name of the Disk Pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
+        public static Response<DiskPool> GetDiskPool(this ResourceGroup resourceGroup, string diskPoolName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetDiskPools().Get(diskPoolName, cancellationToken);
         }
     }
 }

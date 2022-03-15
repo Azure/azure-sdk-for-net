@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of JitApproverDefinition. </summary>
         /// <param name="id"> The approver service principal Id. </param>
-        /// <param name="type"> The approver type. </param>
+        /// <param name="jitApproverType"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
-        internal JitApproverDefinition(string id, JitApproverType? type, string displayName)
+        internal JitApproverDefinition(string id, JitApproverType? jitApproverType, string displayName)
         {
             Id = id;
-            Type = type;
+            JitApproverType = jitApproverType;
             DisplayName = displayName;
         }
 
         /// <summary> The approver service principal Id. </summary>
         public string Id { get; set; }
         /// <summary> The approver type. </summary>
-        public JitApproverType? Type { get; set; }
+        public JitApproverType? JitApproverType { get; set; }
         /// <summary> The approver display name. </summary>
         public string DisplayName { get; set; }
     }
