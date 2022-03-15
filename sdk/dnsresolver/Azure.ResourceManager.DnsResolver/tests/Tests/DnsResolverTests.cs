@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             this.dnsResolverCollection = resourceGroup.Value.GetDnsResolvers();
         }
 
+        [Test]
         [RecordedTest]
         public async Task CreateDnsResolverAsync()
         {
@@ -48,12 +50,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             };
 
             // ACT
-            var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData);
+            var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ASSERT
             Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
+        [Test]
         [RecordedTest]
         public async Task GetDnsResolverAsync()
         {
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 Id = new ResourceIdentifier(vnetId)
             };
 
-            await this.dnsResolverCollection.CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData);
+            await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ACT
             var retrievedDnsResolver = await this.dnsResolverCollection.GetAsync(dnsResolverName);
@@ -82,7 +85,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedDnsResolver.Value.Data.Name, dnsResolverName);
         }
 
+        [Test]
         [RecordedTest]
+        [Ignore("Lack of testing resources")]
         public async Task UpdateDnsResolverAsync()
         {
             // ARRANGE
@@ -101,21 +106,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 Id = new ResourceIdentifier(vnetId)
             };
 
-            var createdDnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData);
+            var createdDnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var dnsResolverUpdateOptions = new DnsResolverUpdateOptions();
-            dnsResolverUpdateOptions.Tags.Add(newTagKey, newTagValue);
-
             // ACT
-            var patchedDnsResolver = await createdDnsResolver.Value.UpdateAsync(true, dnsResolverUpdateOptions);
+            var patchedDnsResolver = await createdDnsResolver.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedDnsResolver.Value.Data.Tags, dnsResolverUpdateOptions.Tags);
+            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedDnsResolver.Value.Data.Tags);
         }
 
+        [Test]
         [RecordedTest]
         public async Task RemoveDnsResolverAsync()
         {
@@ -135,10 +138,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 Id = new ResourceIdentifier(vnetId)
             };
 
-            var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData);
+            var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ACT
-            await dnsResolver.Value.DeleteAsync(true);
+            await dnsResolver.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
             var getDnsResolverResult = await this.dnsResolverCollection.ExistsAsync(dnsResolverName);

@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using System.Linq;
 using System.Collections.Generic;
+using NUnit.Framework.Internal;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
@@ -46,9 +47,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
             var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
 
-            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData)).Value;
+            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
         }
 
+        [Test]
         [RecordedTest]
         public async Task CreateInboundEndpoint()
         {
@@ -67,12 +69,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
 
             // ACT
-            var inboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(true, inboundEndpointName, inboundEndpointData);
+            var inboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ASSERT
             Assert.AreEqual(inboundEndpoint.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
+        [Test]
         [RecordedTest]
         public async Task GetInboundEndpoint()
         {
@@ -89,7 +92,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(true, inboundEndpointName, inboundEndpointData);
+            await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ACT
             var retrievedInboundEndpoint = await dnsResolver.GetInboundEndpoints().GetAsync(inboundEndpointName);
@@ -98,7 +101,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedInboundEndpoint.Value.Data.Name, inboundEndpointName);
         }
 
+        [Test]
         [RecordedTest]
+        [Ignore("Lack of testing resources")]
         public async Task UpdateInboundEndpoint()
         {
             // ARRANGE
@@ -114,21 +119,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            var createdInboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(true, inboundEndpointName, inboundEndpointData);
+            var createdInboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var inboundEndpointUpdateOptions = new InboundEndpointUpdateOptions();
-            inboundEndpointUpdateOptions.Tags.Add(newTagKey, newTagValue);
-
             // ACT
-            var patchedInboundEndpoint = await createdInboundEndpoint.Value.UpdateAsync(true, inboundEndpointUpdateOptions);
+            var patchedInboundEndpoint = await createdInboundEndpoint.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedInboundEndpoint.Value.Data.Tags, inboundEndpointUpdateOptions.Tags);
+            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedInboundEndpoint.Value.Data.Tags);
         }
 
+        [Test]
         [RecordedTest]
         public async Task RemoveInboundEndpoint()
         {
@@ -145,10 +148,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             });
 
             var inboundEndpointName = Recording.GenerateAssetName("inboundEndpoint-");
-            var createdInboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(true, inboundEndpointName, inboundEndpointData);
+            var createdInboundEndpoint = await dnsResolver.GetInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
 
             // ACT
-            await createdInboundEndpoint.Value.DeleteAsync(true);
+            await createdInboundEndpoint.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
             var getInboundEndpointResult = await dnsResolver.GetInboundEndpoints().ExistsAsync(inboundEndpointName);

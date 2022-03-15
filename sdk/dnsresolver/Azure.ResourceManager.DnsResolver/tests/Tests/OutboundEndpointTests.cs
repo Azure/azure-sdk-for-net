@@ -46,9 +46,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
             var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
 
-            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(true, dnsResolverName, dnsResolverData)).Value;
+            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
         }
 
+        [Test]
         [RecordedTest]
         public async Task CreateOutboundEndpoint()
         {
@@ -63,12 +64,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
 
             // ACT
-            var outboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(true, outboundEndpointName, outboundEndpointData);
+            var outboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             // ASSERT
             Assert.AreEqual(outboundEndpoint.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
         }
 
+        [Test]
         [RecordedTest]
         public async Task GetOutboundEndpoint()
         {
@@ -81,7 +83,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             };
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(true, outboundEndpointName, outboundEndpointData);
+            await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             // ACT
             var retrievedOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().GetAsync(outboundEndpointName);
@@ -90,7 +92,9 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             Assert.AreEqual(retrievedOutboundEndpoint.Value.Data.Name, outboundEndpointName);
         }
 
+        [Test]
         [RecordedTest]
+        [Ignore("Lack of testing resources")]
         public async Task UpdateOutboundEndpoint()
         {
             // ARRANGE
@@ -102,21 +106,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             };
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            var createdOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(true, outboundEndpointName, outboundEndpointData);
+            var createdOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
 
-            var outboundEndpointUpdateOptions = new OutboundEndpointUpdateOptions();
-            outboundEndpointUpdateOptions.Tags.Add(newTagKey, newTagValue);
-
             // ACT
-            var patchedOutboundEndpoint = await createdOutboundEndpoint.Value.UpdateAsync(true, outboundEndpointUpdateOptions);
+            var patchedOutboundEndpoint = await createdOutboundEndpoint.Value.AddTagAsync(newTagKey, newTagValue);
 
             // ASSERT
-            CollectionAssert.AreEquivalent(patchedOutboundEndpoint.Value.Data.Tags, outboundEndpointUpdateOptions.Tags);
+            CollectionAssert.AreEquivalent(new Dictionary<string, string> { { newTagKey, newTagValue } }, patchedOutboundEndpoint.Value.Data.Tags);
         }
 
+        [Test]
         [RecordedTest]
         public async Task RemoveOutboundEndpoint()
         {
@@ -129,10 +131,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             };
 
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            var createdOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(true, outboundEndpointName, outboundEndpointData);
+            var createdOutboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
             // ACT
-            await createdOutboundEndpoint.Value.DeleteAsync(true);
+            await createdOutboundEndpoint.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
             var getOutboundEndpointResult = await dnsResolver.GetOutboundEndpoints().ExistsAsync(outboundEndpointName);
