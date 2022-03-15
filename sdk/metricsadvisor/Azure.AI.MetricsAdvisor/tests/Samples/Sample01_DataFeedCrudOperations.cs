@@ -185,7 +185,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             int dataFeedCount = 0;
 
-            await foreach (DataFeed dataFeed in adminClient.GetDataFeedsAsync(options))
+            await foreach (DataFeed dataFeed in adminClient.GetDataFeedValuesAsync(options))
             {
                 Console.WriteLine($"Data feed ID: {dataFeed.Id}");
                 Console.WriteLine($"Name: {dataFeed.Name}");

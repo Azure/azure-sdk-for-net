@@ -27,5 +27,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             writer.WriteEndObject();
         }
+
+        internal static RequestContent ToRequestContent(DataSourceCredentialEntity model)
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            return content;
+        }
     }
 }

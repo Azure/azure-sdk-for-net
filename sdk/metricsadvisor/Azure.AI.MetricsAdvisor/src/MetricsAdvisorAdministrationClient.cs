@@ -140,7 +140,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
-        public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataFeed> GetDataFeedValuesAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
             DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
@@ -179,7 +179,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
-        public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataFeed> GetDataFeedValues(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
             DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
@@ -479,5 +479,241 @@ namespace Azure.AI.MetricsAdvisor.Administration
         }
 
         #endregion DataFeed
+
+        #region Credential
+
+        /// <summary>
+        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
+        /// </summary>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataSourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response<DataSourceCredentialEntity>> GetDataSourceCredentialAsync(string dataSourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(dataSourceCredentialId, nameof(dataSourceCredentialId));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataSourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                var response = await GetCredentialAsync(credentialGuid, context).ConfigureAwait(false);
+                DataSourceCredentialEntity value = DataSourceCredentialEntity.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets an existing <see cref="DataSourceCredentialEntity"/>.
+        /// </summary>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing the requested information.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataSourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual Response<DataSourceCredentialEntity> GetDataSourceCredential(string dataSourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(dataSourceCredentialId, nameof(dataSourceCredentialId));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataSourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                var response = GetCredential(credentialGuid, context);
+                DataSourceCredentialEntity value = DataSourceCredentialEntity.FromResponse(response);
+                return Response.FromValue(value, response);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
+        /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
+        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
+        /// </summary>
+        /// <param name="dataSourceCredential">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing information about the created data source credential entity.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredential"/> is null.</exception>
+        public virtual async Task<Response<DataSourceCredentialEntity>> CreateDataSourceCredentialAsync(DataSourceCredentialEntity dataSourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataSourceCredential, nameof(dataSourceCredential));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataSourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                RequestContent content = DataSourceCredentialEntity.ToRequestContent(dataSourceCredential);
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                Response response = await CreateCredentialAsync(content, context).ConfigureAwait(false);
+
+                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+                string credentialId = ClientCommon.GetCredentialId(location);
+
+                try
+                {
+                    var createdCredential = await GetDataSourceCredentialAsync(credentialId, cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(createdCredential, response);
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The data source credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="DataSourceCredentialEntity"/> and assigns it a unique ID. This API provides different ways of
+        /// authenticating to a <see cref="DataFeedSource"/> for data ingestion when the default authentication method does not suffice.
+        /// Please see <see cref="DataSourceCredentialEntity"/> for a list of supported credentials.
+        /// </summary>
+        /// <param name="dataSourceCredential">Specifies how the created <see cref="DataSourceCredentialEntity"/> should be configured.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response{T}"/> containing the result of the operation. The result is a <see cref="DataSourceCredentialEntity"/>
+        /// instance containing information about the created data source credential entity.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredential"/> is null.</exception>
+        public virtual Response<DataSourceCredentialEntity> CreateDataSourceCredential(DataSourceCredentialEntity dataSourceCredential, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(dataSourceCredential, nameof(dataSourceCredential));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataSourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                RequestContent content = DataSourceCredentialEntity.ToRequestContent(dataSourceCredential);
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                Response response = CreateCredential(content, context);
+
+                var location = response.Headers.TryGetValue("Location", out string value) ? value : null;
+                string credentialId = ClientCommon.GetCredentialId(location);
+
+                try
+                {
+                    var createdCredential = GetDataSourceCredential(credentialId, cancellationToken);
+
+                    return Response.FromValue(createdCredential, response);
+                }
+                catch (Exception ex)
+                {
+                    throw new RequestFailedException($"The data source credential has been created successfully, but the client failed to fetch its data. Datasource Credential ID: {credentialId}", ex);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
+        /// </summary>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataSourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual async Task<Response> DeleteDataSourceCredentialAsync(string dataSourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(dataSourceCredentialId, nameof(dataSourceCredentialId));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDataSourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                return await DeleteCredentialAsync(credentialGuid, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an existing <see cref="DataSourceCredentialEntity"/>.
+        /// </summary>
+        /// <param name="dataSourceCredentialId">The unique identifier of the <see cref="DataSourceCredentialEntity"/> to be deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="Response"/> containing the result of the operation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="dataSourceCredentialId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dataSourceCredentialId"/> is empty or not a valid GUID.</exception>
+        public virtual Response DeleteDataSourceCredential(string dataSourceCredentialId, CancellationToken cancellationToken = default)
+        {
+            Guid credentialGuid = ClientCommon.ValidateGuid(dataSourceCredentialId, nameof(dataSourceCredentialId));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDataSourceCredential)}");
+            scope.Start();
+
+            try
+            {
+                RequestContext context = new RequestContext()
+                {
+                    CancellationToken = cancellationToken,
+                };
+                return DeleteCredential(credentialGuid, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion Credential
     }
 }

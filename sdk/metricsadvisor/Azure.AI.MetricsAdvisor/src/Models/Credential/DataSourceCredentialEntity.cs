@@ -146,6 +146,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
             return new UnknownCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
         }
 
+        internal static DataSourceCredentialEntity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataSourceCredentialEntity(document.RootElement);
+        }
+
         private class UnknownCredentialEntity : DataSourceCredentialEntity
         {
             public UnknownCredentialEntity(DataSourceCredentialKind dataSourceCredentialType, string id, string name, string description)
