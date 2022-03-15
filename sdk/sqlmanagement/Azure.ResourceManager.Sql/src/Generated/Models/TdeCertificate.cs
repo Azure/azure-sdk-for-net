@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of TdeCertificate. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
         /// <param name="certPassword"> The certificate password. </param>
-        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string privateBlob, string certPassword) : base(id, name, type, systemData)
+        internal TdeCertificate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string privateBlob, string certPassword) : base(id, name, resourceType, systemData)
         {
             PrivateBlob = privateBlob;
             CertPassword = certPassword;

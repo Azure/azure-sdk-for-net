@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the domain to create. </summary>
-    public partial class AfdCustomDomainProperties : AfdCustomDomainUpdatePropertiesParameters
+    internal partial class AfdCustomDomainProperties : AfdCustomDomainUpdatePropertiesParameters
     {
         /// <summary> Initializes a new instance of AfdCustomDomainProperties. </summary>
         /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>

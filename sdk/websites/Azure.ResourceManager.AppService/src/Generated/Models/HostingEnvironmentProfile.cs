@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of HostingEnvironmentProfile. </summary>
         /// <param name="id"> Resource ID of the App Service Environment. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="type"> Resource type of the App Service Environment. </param>
-        internal HostingEnvironmentProfile(string id, string name, string type)
+        /// <param name="resourceType"> Resource type of the App Service Environment. </param>
+        internal HostingEnvironmentProfile(string id, string name, string resourceType)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Resource ID of the App Service Environment. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Name of the App Service Environment. </summary>
         public string Name { get; }
         /// <summary> Resource type of the App Service Environment. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
     }
 }

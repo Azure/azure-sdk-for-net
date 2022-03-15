@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the PrivateEndpoint data model. </summary>
-    public partial class PrivateEndpointData : Resource
+    public partial class PrivateEndpointData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
         public PrivateEndpointData()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="privateLinkServiceConnections"> A grouping of information about the connection to the remote resource. </param>
         /// <param name="manualPrivateLinkServiceConnections"> A grouping of information about the connection to the remote resource. Used when the network admin does not have access to approve connections to the remote resource. </param>
         /// <param name="customDnsConfigs"> An array of custom dns configurations. </param>
-        internal PrivateEndpointData(string id, string name, string type, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs) : base(id, name, type, location, tags)
+        internal PrivateEndpointData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, string etag, SubnetData subnet, IReadOnlyList<NetworkInterfaceData> networkInterfaces, ProvisioningState? provisioningState, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<CustomDnsConfigPropertiesFormat> customDnsConfigs) : base(id, name, resourceType, location, tags)
         {
             ExtendedLocation = extendedLocation;
             Etag = etag;

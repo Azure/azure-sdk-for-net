@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -792,7 +793,10 @@ namespace Azure.Storage.Blobs.Test
             {
                 Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
                     content: stream,
-                    transactionalContentHash: MD5.Create().ComputeHash(data));
+                    transactionalContentHash: MD5.Create().ComputeHash(data),
+                    conditions: null,
+                    progressHandler: null,
+                    cancellationToken: CancellationToken.None);
 
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -815,7 +819,10 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.AppendBlockAsync(
                         content: stream,
-                        transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage"))),
+                        transactionalContentHash: MD5.Create().ComputeHash(Encoding.UTF8.GetBytes("garbage")),
+                        conditions: null,
+                        progressHandler: null,
+                        cancellationToken: CancellationToken.None),
                     e => Assert.AreEqual("Md5Mismatch", e.ErrorCode));
             }
         }
@@ -1011,7 +1018,9 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.AppendBlockAsync(stream, progressHandler: progressHandler);
+                await blobFaulty.AppendBlockAsync(
+                    content: stream,
+                    progressHandler: progressHandler);
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
                 // Changing from Assert.AreEqual because these don't always update fast enough
@@ -1047,7 +1056,9 @@ namespace Azure.Storage.Blobs.Test
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await blob.AppendBlockAsync(stream, progressHandler: progress);
+                await blob.AppendBlockAsync(
+                    content: stream,
+                    progressHandler: progress);
             }
 
             // Assert

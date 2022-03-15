@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="authorizationKey"> The authorization key. </param>
         /// <param name="authorizationUseStatus"> The authorization use status. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        internal ExpressRouteCircuitAuthorizationData(string id, string name, string etag, string type, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, ProvisioningState? provisioningState) : base(id)
+        internal ExpressRouteCircuitAuthorizationData(string id, string name, string etag, string resourceType, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;
             ProvisioningState = provisioningState;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The authorization key. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The authorization use status. </summary>

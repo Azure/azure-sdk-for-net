@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/4a93ab078fba7f087116283c8ed169f9b8e30397/specification/storage/data-plane/Microsoft.StorageDataLake/stable/2020-06-12/DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b95d2a5d89e4042720bbf0199bc2b6748de9d89f/specification/storage/data-plane/Microsoft.StorageDataLake/preview/2021-06-08/DataLakeStorage.json
 modelerfour:
     seal-single-value-enum-by-default: true
 ```
@@ -60,6 +60,9 @@ directive:
     delete $.SourceIfNoneMatch["x-ms-parameter-grouping"];
     delete $.SourceIfUnmodifiedSince["x-ms-parameter-grouping"];
     delete $.SourceLeaseId["x-ms-parameter-grouping"];
+    delete $.EncryptionKey["x-ms-parameter-grouping"];
+    delete $.EncryptionKeySha256["x-ms-parameter-grouping"];
+    delete $.EncryptionAlgorithm["x-ms-parameter-grouping"];
 ```
 
 ### Fix Path
@@ -130,4 +133,17 @@ directive:
             delete $[oldName];
         }
     }
+```
+
+### Fix EncryptionAlgorithm
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.EncryptionAlgorithm.enum;
+    $.EncryptionAlgorithm.enum = [
+      "None",
+      "AES256"
+    ];
 ```

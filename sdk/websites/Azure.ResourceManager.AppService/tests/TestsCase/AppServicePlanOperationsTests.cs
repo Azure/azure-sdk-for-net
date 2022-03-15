@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var container = (await CreateResourceGroupAsync()).GetAppServicePlans();
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
-            var lro = await container.CreateOrUpdateAsync(true, appServicePlanName, input);
+            var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, appServicePlanName, input);
             return lro.Value;
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var planName = Recording.GenerateAssetName("testAppServicePlan-");
             var plan = await CreateAppServicePlanAsync(planName);
-            await plan.DeleteAsync(true);
+            await plan.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]

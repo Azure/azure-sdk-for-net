@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static ApplicationData DeserializeApplicationData(JsonElement element)
         {
-            Optional<Plan> plan = default;
+            Optional<ArmPlan> plan = default;
             string kind = default;
             Optional<ApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<Plan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("kind"))

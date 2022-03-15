@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "ba7ce578-2e97-35c6-9b11-1cf342b6580f",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 401,
@@ -24,7 +24,7 @@
         "x-ms-client-request-id": "ba7ce578-2e97-35c6-9b11-1cf342b6580f",
         "x-ms-error-code": "NoAuthenticationInformation",
         "x-ms-request-id": "5f974047-d01e-0004-69a1-d19334000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",

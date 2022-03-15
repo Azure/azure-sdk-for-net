@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ResourceModelWithAllowedPropertySet. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="identity"></param>
         /// <param name="sku"></param>
         /// <param name="plan"></param>
-        internal ResourceModelWithAllowedPropertySet(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan) : base(id, name, type, systemData, tags, location)
+        internal ResourceModelWithAllowedPropertySet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             Kind = kind;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Gets or sets the sku. </summary>
         public ResourceModelWithAllowedPropertySetSku Sku { get; set; }
         /// <summary> Gets or sets the plan. </summary>
-        public Plan Plan { get; set; }
+        public ArmPlan Plan { get; set; }
     }
 }

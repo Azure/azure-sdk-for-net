@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
         internal static void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options = default)
         {
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, model.Type, options);
+            JsonSerializer.Serialize(writer, model.ManagedServiceIdentityType, options);
             if (Optional.IsCollectionDefined(model.UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");

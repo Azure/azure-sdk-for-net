@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci
         {
             _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ArcSetting.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ArcSetting.ResourceType, out string arcSettingApiVersion);
-            _arcSettingRestClient = new ArcSettingsRestOperations(_arcSettingClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
+            _arcSettingRestClient = new ArcSettingsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Hci
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
         /// Operation Id: ArcSettings_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="arcSetting"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
-        public async virtual Task<ArmOperation<ArcSetting>> CreateOrUpdateAsync(bool waitForCompletion, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcSetting>> CreateOrUpdateAsync(WaitUntil waitUntil, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
             Argument.AssertNotNull(arcSetting, nameof(arcSetting));
@@ -71,8 +71,13 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, arcSetting, cancellationToken).ConfigureAwait(false);
+<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcSettingCollection.cs
                 var operation = new HciArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
+=======
+                var operation = new StackHCIArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+>>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcSettingCollection.cs
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +93,13 @@ namespace Azure.ResourceManager.Hci
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}
         /// Operation Id: ArcSettings_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="arcSettingName"> The name of the proxy resource holding details of HCI ArcSetting information. </param>
         /// <param name="arcSetting"> Parameters supplied to the Create ArcSetting resource for this HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> or <paramref name="arcSetting"/> is null. </exception>
-        public virtual ArmOperation<ArcSetting> CreateOrUpdate(bool waitForCompletion, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcSetting> CreateOrUpdate(WaitUntil waitUntil, string arcSettingName, ArcSettingData arcSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
             Argument.AssertNotNull(arcSetting, nameof(arcSetting));
@@ -104,8 +109,13 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, arcSetting, cancellationToken);
+<<<<<<< HEAD:sdk/azurestackhci/Azure.ResourceManager.Hci/src/Generated/ArcSettingCollection.cs
                 var operation = new HciArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
                 if (waitForCompletion)
+=======
+                var operation = new StackHCIArmOperation<ArcSetting>(Response.FromValue(new ArcSetting(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
+>>>>>>> 873de4b2fa081a2653b10527e1bfd190f4c8d496:sdk/azurestackhci/Azure.ResourceManager.StackHCI/src/Generated/ArcSettingCollection.cs
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +135,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public async virtual Task<Response<ArcSetting>> GetAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcSetting>> GetAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
@@ -135,7 +145,7 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = await _arcSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _arcSettingClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArcSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +174,7 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = _arcSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, arcSettingName, cancellationToken);
                 if (response.Value == null)
-                    throw _arcSettingClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArcSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +277,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 
@@ -321,7 +331,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public async virtual Task<Response<ArcSetting>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcSetting>> GetIfExistsAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
 

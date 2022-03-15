@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> etag = default;
             Optional<SystemAssignedServiceIdentity> identity = default;
             Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
-            Optional<Plan> plan = default;
+            Optional<ArmPlan> plan = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<Plan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))

@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -56,7 +56,7 @@ var input = new DiskData(resourceGroup.Data.Location)
     CreationData = new CreationData(DiskCreateOption.Empty),
     DiskSizeGB = 1,
 };
-ArmOperation<Disk> lro = await diskCollection.CreateOrUpdateAsync(true, diskName, input);
+ArmOperation<Disk> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
 Disk disk = lro.Value;
 ```
 
@@ -90,7 +90,7 @@ ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rg
 DiskCollection diskCollection = resourceGroup.GetDisks();
 string diskName = "myDisk";
 Disk disk = await diskCollection.GetAsync(diskName);
-await disk.DeleteAsync(true);
+await disk.DeleteAsync(WaitUntil.Completed);
 ```
 
 

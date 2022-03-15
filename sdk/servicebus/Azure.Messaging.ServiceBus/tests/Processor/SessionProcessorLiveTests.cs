@@ -693,6 +693,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
 
                     var initialLockedUntil = args.SessionLockedUntil;
+                    // introduce a small delay so that the service honors the renewal request
+                    await Task.Delay(500);
                     await args.RenewSessionLockAsync();
                     Assert.Greater(args.SessionLockedUntil, initialLockedUntil);
                 }
