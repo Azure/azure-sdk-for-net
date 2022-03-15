@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Describes a DNS resolver for PATCH operation. </summary>
-    public partial class DnsResolverUpdateOptions
+    /// <summary> Describes an outbound endpoint for a DNS resolver for PATCH operation. </summary>
+    internal partial class PatchableOutboundEndpointData
     {
-        /// <summary> Initializes a new instance of DnsResolverUpdateOptions. </summary>
-        public DnsResolverUpdateOptions()
+        /// <summary> Initializes a new instance of PatchableOutboundEndpointData. </summary>
+        public PatchableOutboundEndpointData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Tags for DNS Resolver. </summary>
+        /// <summary> Tags for outbound endpoint. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

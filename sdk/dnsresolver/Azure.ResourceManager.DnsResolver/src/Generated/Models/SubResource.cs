@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Reference to another ARM resource. </summary>
-    public partial class SubResource
+    internal partial class SubResource
     {
         /// <summary> Initializes a new instance of SubResource. </summary>
         public SubResource()

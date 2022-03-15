@@ -17,7 +17,7 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to Subscription. </summary>
     internal partial class SubscriptionExtensionClient : ArmResource
     {
         private ClientDiagnostics _dnsResolverClientDiagnostics;
@@ -31,27 +31,28 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal SubscriptionExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolver.ResourceType.Namespace, DiagnosticOptions);
-        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(DnsResolverClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsResolver.ResourceType));
+        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsResolver.ResourceType));
         private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRuleset.ResourceType.Namespace, DiagnosticOptions);
-        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(DnsForwardingRulesetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsForwardingRuleset.ResourceType));
+        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsForwardingRuleset.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsResolvers_List
-        /// <summary> Lists DNS resolvers in all resource groups of a subscription. </summary>
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
+        /// Operation Id: DnsResolvers_List
+        /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DnsResolver" /> that may take multiple service requests to iterate over. </returns>
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = await DnsResolverRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = await DnsResolverRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -90,10 +91,11 @@ namespace Azure.ResourceManager.DnsResolver
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsResolvers_List
-        /// <summary> Lists DNS resolvers in all resource groups of a subscription. </summary>
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
+        /// Operation Id: DnsResolvers_List
+        /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsResolver" /> that may take multiple service requests to iterate over. </returns>
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = DnsResolverRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -121,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = DnsResolverRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsResolver(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,10 +134,11 @@ namespace Azure.ResourceManager.DnsResolver
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsForwardingRulesets_List
-        /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
+        /// <summary>
+        /// Lists DNS forwarding rulesets in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_List
+        /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
@@ -148,7 +151,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = await DnsForwardingRulesetRestClient.ListAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -163,7 +166,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = await DnsForwardingRulesetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,10 +177,11 @@ namespace Azure.ResourceManager.DnsResolver
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsForwardingRulesets_List
-        /// <summary> Lists DNS forwarding rulesets in all resource groups of a subscription. </summary>
+        /// <summary>
+        /// Lists DNS forwarding rulesets in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_List
+        /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = DnsForwardingRulesetRestClient.List(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,7 +209,7 @@ namespace Azure.ResourceManager.DnsResolver
                 try
                 {
                     var response = DnsForwardingRulesetRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleset(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

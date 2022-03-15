@@ -15,73 +15,97 @@ namespace Azure.ResourceManager.DnsResolver
     {
         #region DnsResolver
         /// <summary> Gets an object representing a DnsResolver along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DnsResolver" /> object. </returns>
-        public static DnsResolver GetDnsResolver(this ArmClient armClient, ResourceIdentifier id)
+        public static DnsResolver GetDnsResolver(this ArmClient client, ResourceIdentifier id)
         {
-            DnsResolver.ValidateResourceId(id);
-            return new DnsResolver(armClient, id);
+            return client.GetClient(() =>
+            {
+                DnsResolver.ValidateResourceId(id);
+                return new DnsResolver(client, id);
+            }
+            );
         }
         #endregion
 
         #region InboundEndpoint
         /// <summary> Gets an object representing a InboundEndpoint along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InboundEndpoint" /> object. </returns>
-        public static InboundEndpoint GetInboundEndpoint(this ArmClient armClient, ResourceIdentifier id)
+        public static InboundEndpoint GetInboundEndpoint(this ArmClient client, ResourceIdentifier id)
         {
-            InboundEndpoint.ValidateResourceId(id);
-            return new InboundEndpoint(armClient, id);
+            return client.GetClient(() =>
+            {
+                InboundEndpoint.ValidateResourceId(id);
+                return new InboundEndpoint(client, id);
+            }
+            );
         }
         #endregion
 
         #region OutboundEndpoint
         /// <summary> Gets an object representing a OutboundEndpoint along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OutboundEndpoint" /> object. </returns>
-        public static OutboundEndpoint GetOutboundEndpoint(this ArmClient armClient, ResourceIdentifier id)
+        public static OutboundEndpoint GetOutboundEndpoint(this ArmClient client, ResourceIdentifier id)
         {
-            OutboundEndpoint.ValidateResourceId(id);
-            return new OutboundEndpoint(armClient, id);
+            return client.GetClient(() =>
+            {
+                OutboundEndpoint.ValidateResourceId(id);
+                return new OutboundEndpoint(client, id);
+            }
+            );
         }
         #endregion
 
         #region DnsForwardingRuleset
         /// <summary> Gets an object representing a DnsForwardingRuleset along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DnsForwardingRuleset" /> object. </returns>
-        public static DnsForwardingRuleset GetDnsForwardingRuleset(this ArmClient armClient, ResourceIdentifier id)
+        public static DnsForwardingRuleset GetDnsForwardingRuleset(this ArmClient client, ResourceIdentifier id)
         {
-            DnsForwardingRuleset.ValidateResourceId(id);
-            return new DnsForwardingRuleset(armClient, id);
+            return client.GetClient(() =>
+            {
+                DnsForwardingRuleset.ValidateResourceId(id);
+                return new DnsForwardingRuleset(client, id);
+            }
+            );
         }
         #endregion
 
         #region ForwardingRule
         /// <summary> Gets an object representing a ForwardingRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ForwardingRule" /> object. </returns>
-        public static ForwardingRule GetForwardingRule(this ArmClient armClient, ResourceIdentifier id)
+        public static ForwardingRule GetForwardingRule(this ArmClient client, ResourceIdentifier id)
         {
-            ForwardingRule.ValidateResourceId(id);
-            return new ForwardingRule(armClient, id);
+            return client.GetClient(() =>
+            {
+                ForwardingRule.ValidateResourceId(id);
+                return new ForwardingRule(client, id);
+            }
+            );
         }
         #endregion
 
         #region VirtualNetworkLink
         /// <summary> Gets an object representing a VirtualNetworkLink along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="armClient"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkLink" /> object. </returns>
-        public static VirtualNetworkLink GetVirtualNetworkLink(this ArmClient armClient, ResourceIdentifier id)
+        public static VirtualNetworkLink GetVirtualNetworkLink(this ArmClient client, ResourceIdentifier id)
         {
-            VirtualNetworkLink.ValidateResourceId(id);
-            return new VirtualNetworkLink(armClient, id);
+            return client.GetClient(() =>
+            {
+                VirtualNetworkLink.ValidateResourceId(id);
+                return new VirtualNetworkLink(client, id);
+            }
+            );
         }
         #endregion
     }

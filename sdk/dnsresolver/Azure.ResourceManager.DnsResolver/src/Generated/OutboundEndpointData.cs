@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary> A class representing the OutboundEndpoint data model. </summary>
-    public partial class OutboundEndpointData : TrackedResource
+    public partial class OutboundEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OutboundEndpointData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> Initializes a new instance of OutboundEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
-        internal OutboundEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, WritableSubResource subnet, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, systemData, tags, location)
+        internal OutboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, WritableSubResource subnet, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
             Subnet = subnet;
@@ -44,7 +44,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> ETag of the outbound endpoint. </summary>
         public string Etag { get; }
         /// <summary> The reference to the subnet used for the outbound endpoint. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> The current provisioning state of the outbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The resourceGuid property of the outbound endpoint resource. </summary>

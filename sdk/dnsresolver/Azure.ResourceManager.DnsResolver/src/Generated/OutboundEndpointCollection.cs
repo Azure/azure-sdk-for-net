@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DnsResolver.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Initializes a new instance of the <see cref="OutboundEndpointCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal OutboundEndpointCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal OutboundEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _outboundEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", OutboundEndpoint.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(OutboundEndpoint.ResourceType, out string outboundEndpointApiVersion);
-            _outboundEndpointRestClient = new OutboundEndpointsRestOperations(_outboundEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundEndpointApiVersion);
+            TryGetApiVersion(OutboundEndpoint.ResourceType, out string outboundEndpointApiVersion);
+            _outboundEndpointRestClient = new OutboundEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,72 +50,31 @@ namespace Azure.ResourceManager.DnsResolver
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsResolver.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: OutboundEndpoints_CreateOrUpdate
-        /// <summary> Creates or updates an outbound endpoint for a DNS resolver. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual OutboundEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string outboundEndpointName, OutboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OutboundEndpoint>> CreateOrUpdateAsync(WaitUntil waitUntil, string outboundEndpointName, OutboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _outboundEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new OutboundEndpointCreateOrUpdateOperation(ArmClient, _outboundEndpointClientDiagnostics, Pipeline, _outboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: OutboundEndpoints_CreateOrUpdate
-        /// <summary> Creates or updates an outbound endpoint for a DNS resolver. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<OutboundEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string outboundEndpointName, OutboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _outboundEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new OutboundEndpointCreateOrUpdateOperation(ArmClient, _outboundEndpointClientDiagnostics, Pipeline, _outboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response);
-                if (waitForCompletion)
+                var operation = new DnsResolverArmOperation<OutboundEndpoint>(new OutboundEndpointOperationSource(Client), _outboundEndpointClientDiagnostics, Pipeline, _outboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -125,13 +85,78 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: OutboundEndpoints_Get
-        /// <summary> Gets properties of an outbound endpoint for a DNS resolver. </summary>
+        /// <summary>
+        /// Creates or updates an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<OutboundEndpoint> CreateOrUpdate(WaitUntil waitUntil, string outboundEndpointName, OutboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _outboundEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<OutboundEndpoint>(new OutboundEndpointOperationSource(Client), _outboundEndpointClientDiagnostics, Pipeline, _outboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets properties of an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual async Task<Response<OutboundEndpoint>> GetAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+
+            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _outboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OutboundEndpoint(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets properties of an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
         public virtual Response<OutboundEndpoint> Get(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +168,8 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = _outboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken);
                 if (response.Value == null)
-                    throw _outboundEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OutboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OutboundEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,26 +178,111 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: OutboundEndpoints_Get
-        /// <summary> Gets properties of an outbound endpoint for a DNS resolver. </summary>
+        /// <summary>
+        /// Lists outbound endpoints for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints
+        /// Operation Id: OutboundEndpoints_List
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="OutboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OutboundEndpoint> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<OutboundEndpoint>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _outboundEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<OutboundEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _outboundEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists outbound endpoints for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints
+        /// Operation Id: OutboundEndpoints_List
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OutboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OutboundEndpoint> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<OutboundEndpoint> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _outboundEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<OutboundEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _outboundEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
-        public async virtual Task<Response<OutboundEndpoint>> GetAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
 
-            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.Get");
+            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _outboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _outboundEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OutboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(outboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,60 +291,14 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
-        public virtual Response<OutboundEndpoint> GetIfExists(string outboundEndpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-
-            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _outboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<OutboundEndpoint>(null, response.GetRawResponse());
-                return Response.FromValue(new OutboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
-        public async virtual Task<Response<OutboundEndpoint>> GetIfExistsAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
-
-            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _outboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<OutboundEndpoint>(null, response.GetRawResponse());
-                return Response.FromValue(new OutboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -254,21 +318,27 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OutboundEndpoint>> GetIfExistsAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
 
-            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.Exists");
+            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(outboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _outboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<OutboundEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new OutboundEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,88 +347,33 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: OutboundEndpoints_List
-        /// <summary> Lists outbound endpoints for a DNS resolver. </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OutboundEndpoint> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual Response<OutboundEndpoint> GetIfExists(string outboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Page<OutboundEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _outboundEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OutboundEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _outboundEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: OutboundEndpoints_List
-        /// <summary> Lists outbound endpoints for a DNS resolver. </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OutboundEndpoint> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<OutboundEndpoint>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _outboundEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _outboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<OutboundEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new OutboundEndpoint(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<OutboundEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _outboundEndpointClientDiagnostics.CreateScope("OutboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _outboundEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OutboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<OutboundEndpoint> IEnumerable<OutboundEndpoint>.GetEnumerator()

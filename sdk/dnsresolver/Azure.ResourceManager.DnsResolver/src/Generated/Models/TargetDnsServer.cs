@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> Initializes a new instance of TargetDnsServer. </summary>
-        /// <param name="iPAddress"> DNS server IP address. </param>
+        /// <param name="ipAddress"> DNS server IP address. </param>
         /// <param name="port"> DNS server port. </param>
-        internal TargetDnsServer(string iPAddress, int? port)
+        internal TargetDnsServer(string ipAddress, int? port)
         {
-            IPAddress = iPAddress;
+            IPAddress = ipAddress;
             Port = port;
         }
 

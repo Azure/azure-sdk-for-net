@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    public partial class InboundEndpointUpdateOptions : IUtf8JsonSerializable
+    internal partial class PatchableDnsResolverData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

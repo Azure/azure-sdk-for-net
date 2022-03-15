@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DnsResolver.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Initializes a new instance of the <see cref="InboundEndpointCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal InboundEndpointCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal InboundEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _inboundEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", InboundEndpoint.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(InboundEndpoint.ResourceType, out string inboundEndpointApiVersion);
-            _inboundEndpointRestClient = new InboundEndpointsRestOperations(_inboundEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inboundEndpointApiVersion);
+            TryGetApiVersion(InboundEndpoint.ResourceType, out string inboundEndpointApiVersion);
+            _inboundEndpointRestClient = new InboundEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inboundEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,72 +50,31 @@ namespace Azure.ResourceManager.DnsResolver
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsResolver.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: InboundEndpoints_CreateOrUpdate
-        /// <summary> Creates or updates an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates an inbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual InboundEndpointCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string inboundEndpointName, InboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<InboundEndpoint>> CreateOrUpdateAsync(WaitUntil waitUntil, string inboundEndpointName, InboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _inboundEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new InboundEndpointCreateOrUpdateOperation(ArmClient, _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: InboundEndpoints_CreateOrUpdate
-        /// <summary> Creates or updates an inbound endpoint for a DNS resolver. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<InboundEndpointCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string inboundEndpointName, InboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _inboundEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new InboundEndpointCreateOrUpdateOperation(ArmClient, _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response);
-                if (waitForCompletion)
+                var operation = new DnsResolverArmOperation<InboundEndpoint>(new InboundEndpointOperationSource(Client), _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -125,13 +85,78 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: InboundEndpoints_Get
-        /// <summary> Gets properties of an inbound endpoint for a DNS resolver. </summary>
+        /// <summary>
+        /// Creates or updates an inbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
+        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<InboundEndpoint> CreateOrUpdate(WaitUntil waitUntil, string inboundEndpointName, InboundEndpointData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _inboundEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<InboundEndpoint>(new InboundEndpointOperationSource(Client), _inboundEndpointClientDiagnostics, Pipeline, _inboundEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, parameters, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets properties of an inbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        public virtual async Task<Response<InboundEndpoint>> GetAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new InboundEndpoint(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets properties of an inbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual Response<InboundEndpoint> Get(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +168,8 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken);
                 if (response.Value == null)
-                    throw _inboundEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new InboundEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,26 +178,111 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: InboundEndpoints_Get
-        /// <summary> Gets properties of an inbound endpoint for a DNS resolver. </summary>
+        /// <summary>
+        /// Lists inbound endpoints for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints
+        /// Operation Id: InboundEndpoints_List
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="InboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InboundEndpoint> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<InboundEndpoint>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _inboundEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<InboundEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _inboundEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists inbound endpoints for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints
+        /// Operation Id: InboundEndpoints_List
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InboundEndpoint> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<InboundEndpoint> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _inboundEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<InboundEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _inboundEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
-        public async virtual Task<Response<InboundEndpoint>> GetAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.Get");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _inboundEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new InboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(inboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,60 +291,14 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
-        public virtual Response<InboundEndpoint> GetIfExists(string inboundEndpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
-
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<InboundEndpoint>(null, response.GetRawResponse());
-                return Response.FromValue(new InboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
-        public async virtual Task<Response<InboundEndpoint>> GetIfExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
-
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<InboundEndpoint>(null, response.GetRawResponse());
-                return Response.FromValue(new InboundEndpoint(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
@@ -254,21 +318,27 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
         /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InboundEndpoint>> GetIfExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
 
-            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.Exists");
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(inboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _inboundEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<InboundEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new InboundEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,88 +347,33 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: InboundEndpoints_List
-        /// <summary> Lists inbound endpoints for a DNS resolver. </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InboundEndpoint> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        public virtual Response<InboundEndpoint> GetIfExists(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Page<InboundEndpoint> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _inboundEndpointRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<InboundEndpoint> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _inboundEndpointRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: InboundEndpoints_List
-        /// <summary> Lists inbound endpoints for a DNS resolver. </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InboundEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InboundEndpoint> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<InboundEndpoint>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _inboundEndpointRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _inboundEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inboundEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<InboundEndpoint>(null, response.GetRawResponse());
+                return Response.FromValue(new InboundEndpoint(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<InboundEndpoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _inboundEndpointClientDiagnostics.CreateScope("InboundEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _inboundEndpointRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InboundEndpoint(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<InboundEndpoint> IEnumerable<InboundEndpoint>.GetEnumerator()

@@ -5,8 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -16,92 +19,164 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class to add extension methods to ResourceGroup. </summary>
     public static partial class ResourceGroupExtensions
     {
-        #region DnsResolver
-        /// <summary> Gets an object representing a DnsResolverCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DnsResolverCollection" /> object. </returns>
-        public static DnsResolverCollection GetDnsResolvers(this ResourceGroup resourceGroup)
-        {
-            return new DnsResolverCollection(resourceGroup);
-        }
-        #endregion
-
-        #region DnsForwardingRuleset
-        /// <summary> Gets an object representing a DnsForwardingRulesetCollection along with the instance operations that can be performed on it. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="DnsForwardingRulesetCollection" /> object. </returns>
-        public static DnsForwardingRulesetCollection GetDnsForwardingRulesets(this ResourceGroup resourceGroup)
-        {
-            return new DnsForwardingRulesetCollection(resourceGroup);
-        }
-        #endregion
-
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
-            return resourceGroup.GetCachedClient((armClient) =>
+            return resourceGroup.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(armClient, resourceGroup.Id);
+                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
             }
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsResolvers_ListByVirtualNetwork
+        /// <summary> Gets a collection of DnsResolvers in the DnsResolver. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolver. </returns>
+        public static DnsResolverCollection GetDnsResolvers(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDnsResolvers();
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        public static async Task<Response<DnsResolver>> GetDnsResolverAsync(this ResourceGroup resourceGroup, string dnsResolverName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetDnsResolvers().GetAsync(dnsResolverName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="dnsResolverName"> The name of the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverName"/> is null. </exception>
+        public static Response<DnsResolver> GetDnsResolver(this ResourceGroup resourceGroup, string dnsResolverName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetDnsResolvers().Get(dnsResolverName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DnsForwardingRulesets in the DnsForwardingRuleset. </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of DnsForwardingRulesets and their operations over a DnsForwardingRuleset. </returns>
+        public static DnsForwardingRulesetCollection GetDnsForwardingRulesets(this ResourceGroup resourceGroup)
+        {
+            return GetExtensionClient(resourceGroup).GetDnsForwardingRulesets();
+        }
+
+        /// <summary>
+        /// Gets a DNS forwarding ruleset properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
+        /// Operation Id: DnsForwardingRulesets_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        public static async Task<Response<DnsForwardingRuleset>> GetDnsForwardingRulesetAsync(this ResourceGroup resourceGroup, string dnsForwardingRulesetName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetDnsForwardingRulesets().GetAsync(dnsForwardingRulesetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a DNS forwarding ruleset properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
+        /// Operation Id: DnsForwardingRulesets_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        public static Response<DnsForwardingRuleset> GetDnsForwardingRuleset(this ResourceGroup resourceGroup, string dnsForwardingRulesetName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetDnsForwardingRulesets().Get(dnsForwardingRulesetName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolver resource IDs linked to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
+        /// Operation Id: DnsResolvers_ListByVirtualNetwork
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="WritableSubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WritableSubResource> GetDnsResolversByVirtualNetworkAsync(this ResourceGroup resourceGroup, string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return GetExtensionClient(resourceGroup).GetDnsResolversByVirtualNetworkAsync(virtualNetworkName, top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsResolvers_ListByVirtualNetwork
+        /// <summary>
+        /// Lists DNS resolver resource IDs linked to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
+        /// Operation Id: DnsResolvers_ListByVirtualNetwork
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <returns> A collection of <see cref="WritableSubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WritableSubResource> GetDnsResolversByVirtualNetwork(this ResourceGroup resourceGroup, string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return GetExtensionClient(resourceGroup).GetDnsResolversByVirtualNetwork(virtualNetworkName, top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsForwardingRulesets_ListByVirtualNetwork
+        /// <summary>
+        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_ListByVirtualNetwork
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="VirtualNetworkDnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetworkAsync(this ResourceGroup resourceGroup, string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return GetExtensionClient(resourceGroup).GetDnsForwardingRulesetsByVirtualNetworkAsync(virtualNetworkName, top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsForwardingRulesets_ListByVirtualNetwork
+        /// <summary>
+        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_ListByVirtualNetwork
+        /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="System.ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <returns> A collection of <see cref="VirtualNetworkDnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetwork(this ResourceGroup resourceGroup, string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
             return GetExtensionClient(resourceGroup).GetDnsForwardingRulesetsByVirtualNetwork(virtualNetworkName, top, cancellationToken);
         }
     }

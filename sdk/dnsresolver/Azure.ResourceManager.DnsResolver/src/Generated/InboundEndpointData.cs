@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary> A class representing the InboundEndpoint data model. </summary>
-    public partial class InboundEndpointData : TrackedResource
+    public partial class InboundEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
         /// <param name="location"> The location. </param>
@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> Initializes a new instance of InboundEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="etag"> ETag of the inbound endpoint. </param>
-        /// <param name="iPConfigurations"> IP configurations for the inbound endpoint. </param>
+        /// <param name="ipConfigurations"> IP configurations for the inbound endpoint. </param>
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
-        internal InboundEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, IList<IPConfiguration> iPConfigurations, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, systemData, tags, location)
+        internal InboundEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, IList<IPConfiguration> ipConfigurations, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
-            IPConfigurations = iPConfigurations;
+            IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
         }

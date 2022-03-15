@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary> A class representing the DnsForwardingRuleset data model. </summary>
-    public partial class DnsForwardingRulesetData : TrackedResource
+    public partial class DnsForwardingRulesetData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
         /// <param name="location"> The location. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
-        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, IList<WritableSubResource> dnsResolverOutboundEndpoints, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, type, systemData, tags, location)
+        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string etag, IList<WritableSubResource> dnsResolverOutboundEndpoints, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, systemData, tags, location)
         {
             Etag = etag;
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;

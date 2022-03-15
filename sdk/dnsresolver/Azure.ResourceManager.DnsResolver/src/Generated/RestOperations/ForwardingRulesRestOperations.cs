@@ -19,25 +19,22 @@ namespace Azure.ResourceManager.DnsResolver
 {
     internal partial class ForwardingRulesRestOperations
     {
-        private Uri endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
         private readonly string _userAgent;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ForwardingRulesRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public ForwardingRulesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ForwardingRulesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            this.endpoint = endpoint ?? new Uri("https://management.azure.com");
-            this.apiVersion = apiVersion ?? "2020-04-01-preview";
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2020-04-01-preview";
             _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
         }
 
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath(dnsForwardingRulesetName, true);
             uri.AppendPath("/forwardingRules/", false);
             uri.AppendPath(forwardingRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -84,29 +81,15 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForwardingRuleData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, ForwardingRuleData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, parameters, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -121,7 +104,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -134,29 +117,15 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/>, or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForwardingRuleData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, ForwardingRuleData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, parameters, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
@@ -171,17 +140,17 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, ForwardingRuleUpdateOptions options, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, PatchableForwardingRuleData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -190,7 +159,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath(dnsForwardingRulesetName, true);
             uri.AppendPath("/forwardingRules/", false);
             uri.AppendPath(forwardingRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -199,7 +168,7 @@ namespace Azure.ResourceManager.DnsResolver
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(options);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             message.SetProperty("SDKUserAgent", _userAgent);
             return message;
@@ -210,34 +179,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="options"> Parameters supplied to the Update operation. </param>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/>, or <paramref name="options"/> is null. </exception>
-        public async Task<Response<ForwardingRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, ForwardingRuleUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ForwardingRuleData>> UpdateAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, PatchableForwardingRuleData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, options, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, data, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -249,7 +204,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -258,34 +213,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
-        /// <param name="options"> Parameters supplied to the Update operation. </param>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/>, or <paramref name="options"/> is null. </exception>
-        public Response<ForwardingRuleData> Update(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, ForwardingRuleUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="forwardingRuleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ForwardingRuleData> Update(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, PatchableForwardingRuleData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, options, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, data, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -297,7 +238,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -307,7 +248,7 @@ namespace Azure.ResourceManager.DnsResolver
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -316,7 +257,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath(dnsForwardingRulesetName, true);
             uri.AppendPath("/forwardingRules/", false);
             uri.AppendPath(forwardingRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (ifMatch != null)
             {
@@ -334,25 +275,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -362,7 +292,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -373,25 +303,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -401,7 +320,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -411,7 +330,7 @@ namespace Azure.ResourceManager.DnsResolver
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -420,7 +339,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath(dnsForwardingRulesetName, true);
             uri.AppendPath("/forwardingRules/", false);
             uri.AppendPath(forwardingRuleName, true);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             message.SetProperty("SDKUserAgent", _userAgent);
@@ -433,25 +352,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForwardingRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,7 +375,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 404:
                     return Response.FromValue((ForwardingRuleData)null, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -477,25 +385,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="forwardingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForwardingRuleData> Get(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string forwardingRuleName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
-            if (forwardingRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(forwardingRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
+            Argument.AssertNotNullOrEmpty(forwardingRuleName, nameof(forwardingRuleName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, forwardingRuleName);
             _pipeline.Send(message, cancellationToken);
@@ -511,7 +408,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case 404:
                     return Response.FromValue((ForwardingRuleData)null, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -521,7 +418,7 @@ namespace Azure.ResourceManager.DnsResolver
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
@@ -529,7 +426,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
             uri.AppendPath(dnsForwardingRulesetName, true);
             uri.AppendPath("/forwardingRules", false);
-            uri.AppendQuery("api-version", apiVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
                 uri.AppendQuery("$top", top.Value, true);
@@ -546,21 +443,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForwardingRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -574,7 +463,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -584,21 +473,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForwardingRuleListResult> List(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
             _pipeline.Send(message, cancellationToken);
@@ -612,7 +493,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -622,7 +503,7 @@ namespace Azure.ResourceManager.DnsResolver
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(endpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -637,25 +518,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ForwardingRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -669,7 +539,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -680,25 +550,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ForwardingRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (dnsForwardingRulesetName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsForwardingRulesetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
             _pipeline.Send(message, cancellationToken);
@@ -712,7 +571,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DnsResolver.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -39,22 +38,22 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DnsResolver"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DnsResolver(ArmClient armClient, DnsResolverData data) : this(armClient, data.Id)
+        internal DnsResolver(ArmClient client, DnsResolverData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="DnsResolver"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DnsResolver(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal DnsResolver(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dnsResolverClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(ResourceType, out string dnsResolverApiVersion);
-            _dnsResolverRestClient = new DnsResolversRestOperations(_dnsResolverClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dnsResolverApiVersion);
+            TryGetApiVersion(ResourceType, out string dnsResolverApiVersion);
+            _dnsResolverRestClient = new DnsResolversRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dnsResolverApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -84,12 +83,83 @@ namespace Azure.ResourceManager.DnsResolver
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: DnsResolvers_Get
-        /// <summary> Gets properties of a DNS resolver. </summary>
+        /// <summary> Gets a collection of InboundEndpoints in the InboundEndpoint. </summary>
+        /// <returns> An object representing collection of InboundEndpoints and their operations over a InboundEndpoint. </returns>
+        public virtual InboundEndpointCollection GetInboundEndpoints()
+        {
+            return new InboundEndpointCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets properties of an inbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DnsResolver>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        public virtual async Task<Response<InboundEndpoint>> GetInboundEndpointAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            return await GetInboundEndpoints().GetAsync(inboundEndpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of an inbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}
+        /// Operation Id: InboundEndpoints_Get
+        /// </summary>
+        /// <param name="inboundEndpointName"> The name of the inbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
+        public virtual Response<InboundEndpoint> GetInboundEndpoint(string inboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            return GetInboundEndpoints().Get(inboundEndpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OutboundEndpoints in the OutboundEndpoint. </summary>
+        /// <returns> An object representing collection of OutboundEndpoints and their operations over a OutboundEndpoint. </returns>
+        public virtual OutboundEndpointCollection GetOutboundEndpoints()
+        {
+            return new OutboundEndpointCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Gets properties of an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual async Task<Response<OutboundEndpoint>> GetOutboundEndpointAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            return await GetOutboundEndpoints().GetAsync(outboundEndpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of an outbound endpoint for a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}
+        /// Operation Id: OutboundEndpoints_Get
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual Response<OutboundEndpoint> GetOutboundEndpoint(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            return GetOutboundEndpoints().Get(outboundEndpointName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DnsResolver>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Get");
             scope.Start();
@@ -97,8 +167,8 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = await _dnsResolverRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _dnsResolverClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DnsResolver(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,10 +177,11 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: DnsResolvers_Get
-        /// <summary> Gets properties of a DNS resolver. </summary>
+        /// <summary>
+        /// Gets properties of a DNS resolver.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DnsResolver> Get(CancellationToken cancellationToken = default)
         {
@@ -120,8 +191,8 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = _dnsResolverRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _dnsResolverClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DnsResolver(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,58 +201,23 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: DnsResolvers_Delete
-        /// <summary> Deletes a DNS resolver. WARNING: This operation cannot be undone. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes a DNS resolver. WARNING: This operation cannot be undone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DnsResolverDeleteOperation> DeleteAsync(bool waitForCompletion, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Delete");
             scope.Start();
             try
             {
                 var response = await _dnsResolverRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverDeleteOperation(_dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response);
-                if (waitForCompletion)
+                var operation = new DnsResolverArmOperation(_dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -192,22 +228,23 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: DnsResolvers_Delete
-        /// <summary> Deletes a DNS resolver. WARNING: This operation cannot be undone. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes a DNS resolver. WARNING: This operation cannot be undone.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DnsResolverDeleteOperation Delete(bool waitForCompletion, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Delete");
             scope.Start();
             try
             {
                 var response = _dnsResolverRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
-                var operation = new DnsResolverDeleteOperation(_dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response);
-                if (waitForCompletion)
+                var operation = new DnsResolverArmOperation(_dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -218,24 +255,29 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
-        public async virtual Task<Response<DnsResolver>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<DnsResolver>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _dnsResolverRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DnsResolver(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -244,24 +286,29 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag added. </returns>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DnsResolver> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _dnsResolverRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DnsResolver(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,27 +317,28 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
-        public async virtual Task<Response<DnsResolver>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<DnsResolver>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _dnsResolverRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DnsResolver(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -299,27 +347,28 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tags replaced. </returns>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DnsResolver> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags), $"{nameof(tags)} provided cannot be null.");
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _dnsResolverRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DnsResolver(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -328,23 +377,27 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
-        public async virtual Task<Response<DnsResolver>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<DnsResolver>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _dnsResolverRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DnsResolver(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -353,23 +406,27 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key of the tag to remove. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> The updated resource with the tag removed. </returns>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
+        /// Operation Id: DnsResolvers_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DnsResolver> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _dnsResolverRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DnsResolver(ArmClient, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new DnsResolver(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -377,91 +434,5 @@ namespace Azure.ResourceManager.DnsResolver
                 throw;
             }
         }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: DnsResolvers_Update
-        /// <summary> Updates a DNS resolver. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Parameters supplied to the Update operation. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<DnsResolverUpdateOperation> UpdateAsync(bool waitForCompletion, DnsResolverUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Update");
-            scope.Start();
-            try
-            {
-                var response = await _dnsResolverRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DnsResolverUpdateOperation(ArmClient, _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch).Request, response);
-                if (waitForCompletion)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}
-        /// OperationId: DnsResolvers_Update
-        /// <summary> Updates a DNS resolver. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> Parameters supplied to the Update operation. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual DnsResolverUpdateOperation Update(bool waitForCompletion, DnsResolverUpdateOptions options, string ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            using var scope = _dnsResolverClientDiagnostics.CreateScope("DnsResolver.Update");
-            scope.Start();
-            try
-            {
-                var response = _dnsResolverRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch, cancellationToken);
-                var operation = new DnsResolverUpdateOperation(ArmClient, _dnsResolverClientDiagnostics, Pipeline, _dnsResolverRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, ifMatch).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #region InboundEndpoint
-
-        /// <summary> Gets a collection of InboundEndpoints in the DnsResolver. </summary>
-        /// <returns> An object representing collection of InboundEndpoints and their operations over a DnsResolver. </returns>
-        public virtual InboundEndpointCollection GetInboundEndpoints()
-        {
-            return new InboundEndpointCollection(this);
-        }
-        #endregion
-
-        #region OutboundEndpoint
-
-        /// <summary> Gets a collection of OutboundEndpoints in the DnsResolver. </summary>
-        /// <returns> An object representing collection of OutboundEndpoints and their operations over a DnsResolver. </returns>
-        public virtual OutboundEndpointCollection GetOutboundEndpoints()
-        {
-            return new OutboundEndpointCollection(this);
-        }
-        #endregion
     }
 }

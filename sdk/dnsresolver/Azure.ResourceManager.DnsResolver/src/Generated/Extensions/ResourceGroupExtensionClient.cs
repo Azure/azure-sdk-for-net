@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> An internal class to add extension methods to. </summary>
+    /// <summary> A class to add extension methods to ResourceGroup. </summary>
     internal partial class ResourceGroupExtensionClient : ArmResource
     {
         private ClientDiagnostics _dnsResolverClientDiagnostics;
@@ -32,37 +32,48 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupExtensionClient"/> class. </summary>
-        /// <param name="armClient"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupExtensionClient(ArmClient armClient, ResourceIdentifier id) : base(armClient, id)
+        internal ResourceGroupExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
         private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolver.ResourceType.Namespace, DiagnosticOptions);
-        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(DnsResolverClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsResolver.ResourceType));
+        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsResolver.ResourceType));
         private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRuleset.ResourceType.Namespace, DiagnosticOptions);
-        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(DnsForwardingRulesetClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsForwardingRuleset.ResourceType));
+        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DnsForwardingRuleset.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            ArmClient.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsResolvers_ListByVirtualNetwork
-        /// <summary> Lists DNS resolver resource IDs linked to a virtual network. </summary>
+        /// <summary> Gets a collection of DnsResolvers in the DnsResolver. </summary>
+        /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolver. </returns>
+        public virtual DnsResolverCollection GetDnsResolvers()
+        {
+            return new DnsResolverCollection(Client, Id);
+        }
+
+        /// <summary> Gets a collection of DnsForwardingRulesets in the DnsForwardingRuleset. </summary>
+        /// <returns> An object representing collection of DnsForwardingRulesets and their operations over a DnsForwardingRuleset. </returns>
+        public virtual DnsForwardingRulesetCollection GetDnsForwardingRulesets()
+        {
+            return new DnsForwardingRulesetCollection(Client, Id);
+        }
+
+        /// <summary>
+        /// Lists DNS resolver resource IDs linked to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
+        /// Operation Id: DnsResolvers_ListByVirtualNetwork
+        /// </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <returns> An async collection of <see cref="WritableSubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WritableSubResource> GetDnsResolversByVirtualNetworkAsync(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
             async Task<Page<WritableSubResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsResolversByVirtualNetwork");
@@ -96,20 +107,17 @@ namespace Azure.ResourceManager.DnsResolver
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsResolvers_ListByVirtualNetwork
-        /// <summary> Lists DNS resolver resource IDs linked to a virtual network. </summary>
+        /// <summary>
+        /// Lists DNS resolver resource IDs linked to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers
+        /// Operation Id: DnsResolvers_ListByVirtualNetwork
+        /// </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <returns> A collection of <see cref="WritableSubResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WritableSubResource> GetDnsResolversByVirtualNetwork(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
             Page<WritableSubResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DnsResolverClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsResolversByVirtualNetwork");
@@ -143,20 +151,17 @@ namespace Azure.ResourceManager.DnsResolver
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsForwardingRulesets_ListByVirtualNetwork
-        /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
+        /// <summary>
+        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_ListByVirtualNetwork
+        /// </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualNetworkDnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetworkAsync(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
             async Task<Page<VirtualNetworkDnsForwardingRuleset>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");
@@ -190,20 +195,17 @@ namespace Azure.ResourceManager.DnsResolver
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}
-        /// OperationId: DnsForwardingRulesets_ListByVirtualNetwork
-        /// <summary> Lists DNS forwarding ruleset resource IDs attached to a virtual network. </summary>
+        /// <summary>
+        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_ListByVirtualNetwork
+        /// </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualNetworkDnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetwork(string virtualNetworkName, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
             Page<VirtualNetworkDnsForwardingRuleset> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DnsForwardingRulesetClientDiagnostics.CreateScope("ResourceGroupExtensionClient.GetDnsForwardingRulesetsByVirtualNetwork");

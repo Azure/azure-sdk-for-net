@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -29,6 +30,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> DNS Forwarding Ruleset Resource ID. </summary>
         public string Id { get; }
         /// <summary> The reference to the virtual network link. </summary>
-        public WritableSubResource VirtualNetworkLink { get; }
+        internal WritableSubResource VirtualNetworkLink { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkLinkId
+        {
+            get => VirtualNetworkLink.Id;
+            set => VirtualNetworkLink.Id = value;
+        }
     }
 }

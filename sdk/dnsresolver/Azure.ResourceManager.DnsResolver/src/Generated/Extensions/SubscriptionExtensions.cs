@@ -16,56 +16,64 @@ namespace Azure.ResourceManager.DnsResolver
     {
         private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
         {
-            return subscription.GetCachedClient((armClient) =>
+            return subscription.GetCachedClient((client) =>
             {
-                return new SubscriptionExtensionClient(armClient, subscription.Id);
+                return new SubscriptionExtensionClient(client, subscription.Id);
             }
             );
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsResolvers_List
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
+        /// Operation Id: DnsResolvers_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsResolver" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsResolver> GetDnsResolversAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDnsResolversAsync(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsResolvers_List
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
+        /// Operation Id: DnsResolvers_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsResolver" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsResolver> GetDnsResolvers(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDnsResolvers(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsForwardingRulesets_List
+        /// <summary>
+        /// Lists DNS forwarding rulesets in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsForwardingRuleset> GetDnsForwardingRulesetsAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDnsForwardingRulesetsAsync(top, cancellationToken);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
-        /// ContextualPath: /subscriptions/{subscriptionId}
-        /// OperationId: DnsForwardingRulesets_List
+        /// <summary>
+        /// Lists DNS forwarding rulesets in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_List
+        /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsForwardingRuleset> GetDnsForwardingRulesets(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDnsForwardingRulesets(top, cancellationToken);

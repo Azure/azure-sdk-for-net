@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Models
@@ -29,7 +30,19 @@ namespace Azure.ResourceManager.DnsResolver.Models
         }
 
         /// <summary> The reference to the subnet bound to the IP configuration. </summary>
-        public WritableSubResource Subnet { get; set; }
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
+
         /// <summary> Private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> Private IP address allocation method. </summary>

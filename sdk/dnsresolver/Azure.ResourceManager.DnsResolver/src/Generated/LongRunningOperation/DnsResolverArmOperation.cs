@@ -11,22 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.DnsResolver.Models
+namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> Deletes an outbound endpoint for a DNS resolver. WARNING: This operation cannot be undone. </summary>
-    public partial class OutboundEndpointDeleteOperation : Operation
+#pragma warning disable SA1649 // File name should match first type name
+    internal class DnsResolverArmOperation : ArmOperation
+#pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationOrResponseInternals _operation;
 
-        /// <summary> Initializes a new instance of OutboundEndpointDeleteOperation for mocking. </summary>
-        protected OutboundEndpointDeleteOperation()
+        /// <summary> Initializes a new instance of DnsResolverArmOperation for mocking. </summary>
+        protected DnsResolverArmOperation()
         {
         }
 
-        internal OutboundEndpointDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        internal DnsResolverArmOperation(Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "OutboundEndpointDeleteOperation");
+            _operation = new OperationOrResponseInternals(response);
+        }
+
+        internal DnsResolverArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        {
+            _operation = new OperationOrResponseInternals(clientDiagnostics, pipeline, request, response, finalStateVia, "DnsResolverArmOperation");
         }
 
         /// <inheritdoc />
@@ -43,6 +50,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <inheritdoc />
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
+
+        /// <inheritdoc />
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
         public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);

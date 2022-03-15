@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes a virtual network link for PATCH operation. </summary>
-    public partial class VirtualNetworkLinkUpdateOptions
+    public partial class PatchableVirtualNetworkLinkData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkLinkUpdateOptions. </summary>
-        public VirtualNetworkLinkUpdateOptions()
+        /// <summary> Initializes a new instance of PatchableVirtualNetworkLinkData. </summary>
+        public PatchableVirtualNetworkLinkData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }

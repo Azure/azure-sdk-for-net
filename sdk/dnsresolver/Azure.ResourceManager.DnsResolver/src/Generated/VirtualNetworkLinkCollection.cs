@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.DnsResolver.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -32,12 +32,13 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Initializes a new instance of the <see cref="VirtualNetworkLinkCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
-        internal VirtualNetworkLinkCollection(ArmResource parent) : base(parent)
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        internal VirtualNetworkLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", VirtualNetworkLink.ResourceType.Namespace, DiagnosticOptions);
-            ArmClient.TryGetApiVersion(VirtualNetworkLink.ResourceType, out string virtualNetworkLinkApiVersion);
-            _virtualNetworkLinkRestClient = new VirtualNetworkLinksRestOperations(_virtualNetworkLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkLinkApiVersion);
+            TryGetApiVersion(VirtualNetworkLink.ResourceType, out string virtualNetworkLinkApiVersion);
+            _virtualNetworkLinkRestClient = new VirtualNetworkLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,72 +50,31 @@ namespace Azure.ResourceManager.DnsResolver
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DnsForwardingRuleset.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
-        /// OperationId: VirtualNetworkLinks_CreateOrUpdate
-        /// <summary> Creates or updates a virtual network link to a DNS forwarding ruleset. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Creates or updates a virtual network link to a DNS forwarding ruleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual VirtualNetworkLinkCreateOrUpdateOperation CreateOrUpdate(bool waitForCompletion, string virtualNetworkLinkName, VirtualNetworkLinkData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualNetworkLink>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _virtualNetworkLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new VirtualNetworkLinkCreateOrUpdateOperation(ArmClient, _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
-        /// OperationId: VirtualNetworkLinks_CreateOrUpdate
-        /// <summary> Creates or updates a virtual network link to a DNS forwarding ruleset. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
-        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<VirtualNetworkLinkCreateOrUpdateOperation> CreateOrUpdateAsync(bool waitForCompletion, string virtualNetworkLinkName, VirtualNetworkLinkData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _virtualNetworkLinkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new VirtualNetworkLinkCreateOrUpdateOperation(ArmClient, _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch).Request, response);
-                if (waitForCompletion)
+                var operation = new DnsResolverArmOperation<VirtualNetworkLink>(new VirtualNetworkLinkOperationSource(Client), _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -125,13 +85,78 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
-        /// OperationId: VirtualNetworkLinks_Get
-        /// <summary> Gets properties of a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <summary>
+        /// Creates or updates a virtual network link to a DNS forwarding ruleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
+        /// <param name="parameters"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="parameters"/> is null. </exception>
+        public virtual ArmOperation<VirtualNetworkLink> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkLinkName, VirtualNetworkLinkData parameters, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _virtualNetworkLinkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<VirtualNetworkLink>(new VirtualNetworkLinkOperationSource(Client), _virtualNetworkLinkClientDiagnostics, Pipeline, _virtualNetworkLinkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, parameters, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets properties of a virtual network link to a DNS forwarding ruleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_Get
+        /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkLink>> GetAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+
+            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Get");
+            scope.Start();
+            try
+            {
+                var response = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLink(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets properties of a virtual network link to a DNS forwarding ruleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_Get
+        /// </summary>
+        /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual Response<VirtualNetworkLink> Get(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +168,8 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualNetworkLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLink(ArmClient, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,26 +178,111 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
-        /// OperationId: VirtualNetworkLinks_Get
-        /// <summary> Gets properties of a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <summary>
+        /// Lists virtual network links to a DNS forwarding ruleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks
+        /// Operation Id: VirtualNetworkLinks_List
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualNetworkLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkLink> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualNetworkLink>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualNetworkLinkRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VirtualNetworkLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _virtualNetworkLinkRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists virtual network links to a DNS forwarding ruleset.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks
+        /// Operation Id: VirtualNetworkLinks_List
+        /// </summary>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualNetworkLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkLink> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        {
+            Page<VirtualNetworkLink> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualNetworkLinkRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualNetworkLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _virtualNetworkLinkRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_Get
+        /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkLink>> GetAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Get");
+            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw await _virtualNetworkLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualNetworkLink(ArmClient, response.Value), response.GetRawResponse());
+                var response = await GetIfExistsAsync(virtualNetworkLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,60 +291,14 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_Get
+        /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        public virtual Response<VirtualNetworkLink> GetIfExists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
-
-            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualNetworkLink>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLink(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        public async virtual Task<Response<VirtualNetworkLink>> GetIfExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
-
-            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetIfExists");
-            scope.Start();
-            try
-            {
-                var response = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<VirtualNetworkLink>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualNetworkLink(ArmClient, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
@@ -254,21 +318,27 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_Get
+        /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkLink>> GetIfExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.Exists");
+            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await GetIfExistsAsync(virtualNetworkLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                var response = await _virtualNetworkLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<VirtualNetworkLink>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,88 +347,33 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
-        /// OperationId: VirtualNetworkLinks_List
-        /// <summary> Lists virtual network links to a DNS forwarding ruleset. </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks/{virtualNetworkLinkName}
+        /// Operation Id: VirtualNetworkLinks_Get
+        /// </summary>
+        /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkLink> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        public virtual Response<VirtualNetworkLink> GetIfExists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            Page<VirtualNetworkLink> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualNetworkLinkRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualNetworkLink> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _virtualNetworkLinkRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}/virtualNetworkLinks
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}
-        /// OperationId: VirtualNetworkLinks_List
-        /// <summary> Lists virtual network links to a DNS forwarding ruleset. </summary>
-        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkLink> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VirtualNetworkLink>> FirstPageFunc(int? pageSizeHint)
+            using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetIfExists");
+            scope.Start();
+            try
             {
-                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkLinkRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                var response = _virtualNetworkLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualNetworkLinkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<VirtualNetworkLink>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualNetworkLink(Client, response.Value), response.GetRawResponse());
             }
-            async Task<Page<VirtualNetworkLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            catch (Exception e)
             {
-                using var scope = _virtualNetworkLinkClientDiagnostics.CreateScope("VirtualNetworkLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _virtualNetworkLinkRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualNetworkLink(ArmClient, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
+                scope.Failed(e);
+                throw;
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         IEnumerator<VirtualNetworkLink> IEnumerable<VirtualNetworkLink>.GetEnumerator()

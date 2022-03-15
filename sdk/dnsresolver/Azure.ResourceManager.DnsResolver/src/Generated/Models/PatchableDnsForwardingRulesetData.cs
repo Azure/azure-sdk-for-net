@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.DnsResolver.Models
 {
     /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
-    public partial class DnsForwardingRulesetUpdateOptions
+    internal partial class PatchableDnsForwardingRulesetData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetUpdateOptions. </summary>
-        public DnsForwardingRulesetUpdateOptions()
+        /// <summary> Initializes a new instance of PatchableDnsForwardingRulesetData. </summary>
+        public PatchableDnsForwardingRulesetData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

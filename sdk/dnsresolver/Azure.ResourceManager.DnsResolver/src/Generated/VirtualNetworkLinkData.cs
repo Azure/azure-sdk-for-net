@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary> A class representing the VirtualNetworkLink data model. </summary>
-    public partial class VirtualNetworkLinkData : Resource
+    public partial class VirtualNetworkLinkData : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
         public VirtualNetworkLinkData()
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> Initializes a new instance of VirtualNetworkLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> ETag of the virtual network link. </param>
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <param name="metadata"> Metadata attached to the virtual network link. </param>
         /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
-        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string etag, WritableSubResource virtualNetwork, IDictionary<string, string> metadata, ProvisioningState? provisioningState) : base(id, name, type, systemData)
+        internal VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, WritableSubResource virtualNetwork, IDictionary<string, string> metadata, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             VirtualNetwork = virtualNetwork;
@@ -42,7 +42,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <summary> ETag of the virtual network link. </summary>
         public string Etag { get; }
         /// <summary> The reference to the virtual network. This cannot be changed after creation. </summary>
-        public WritableSubResource VirtualNetwork { get; set; }
+        internal WritableSubResource VirtualNetwork { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
+            set
+            {
+                if (VirtualNetwork is null)
+                    VirtualNetwork = new WritableSubResource();
+                VirtualNetwork.Id = value;
+            }
+        }
+
         /// <summary> Metadata attached to the virtual network link. </summary>
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </summary>
