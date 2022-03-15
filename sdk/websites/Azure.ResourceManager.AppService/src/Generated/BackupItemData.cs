@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of BackupItemData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="backupId"> Id of the backup. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="finishedTimeStamp"> Timestamp when this backup finished. </param>
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
-        internal BackupItemData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? backupId, string storageAccountUrl, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes) : base(id, name, type, systemData, kind)
+        internal BackupItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? backupId, string storageAccountUrl, string blobName, string namePropertiesName, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes) : base(id, name, resourceType, systemData, kind)
         {
             BackupId = backupId;
             StorageAccountUrl = storageAccountUrl;

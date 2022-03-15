@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of Rendering. </summary>
-        /// <param name="type"> Rendering Type. </param>
+        /// <param name="renderingType"> Rendering Type. </param>
         /// <param name="title"> Title of data. </param>
         /// <param name="description"> Description of the data that will help it be interpreted. </param>
-        internal Rendering(RenderingType? type, string title, string description)
+        internal Rendering(RenderingType? renderingType, string title, string description)
         {
-            Type = type;
+            RenderingType = renderingType;
             Title = title;
             Description = description;
         }
 
         /// <summary> Rendering Type. </summary>
-        public RenderingType? Type { get; set; }
+        public RenderingType? RenderingType { get; set; }
         /// <summary> Title of data. </summary>
         public string Title { get; set; }
         /// <summary> Description of the data that will help it be interpreted. </summary>

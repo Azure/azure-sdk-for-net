@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         public CheckNameAvailabilityInput(string name) { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public partial class CheckNameAvailabilityOutput
     {

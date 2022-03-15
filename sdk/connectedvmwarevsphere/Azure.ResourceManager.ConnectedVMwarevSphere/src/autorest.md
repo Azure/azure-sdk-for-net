@@ -43,4 +43,10 @@ directive:
   - rename-model:
       from: Host
       to: VMwareHost
+  - from: connectedvmware.json
+    where: $.definitions.MachineExtensionUpdateProperties.properties.type
+    transform: $["x-ms-client-name"] = "MachineExtensionType"
+  - from: connectedvmware.json
+    where: $.definitions.MachineExtensionProperties.properties.type
+    transform: $["x-ms-client-name"] = "MachineExtensionType"
 ```

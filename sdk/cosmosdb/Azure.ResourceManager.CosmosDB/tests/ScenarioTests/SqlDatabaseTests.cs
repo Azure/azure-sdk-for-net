@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyDatabases(database, database2);
 
-            SqlDatabaseCreateUpdateData updateOptions = new SqlDatabaseCreateUpdateData(database.Id, _databaseName, database.Data.Type, null,
+            SqlDatabaseCreateUpdateData updateOptions = new SqlDatabaseCreateUpdateData(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, database.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
