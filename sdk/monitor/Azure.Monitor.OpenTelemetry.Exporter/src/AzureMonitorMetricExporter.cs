@@ -17,6 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
+        private readonly AzureMonitorPersistentStorage _persistentStorage;
 
         public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
@@ -27,11 +28,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
+
+            // TODO: Add check if offline storage is enabled by user via options
+            // If disabled do not initialize AzureMonitorPersistentStorage
+            _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
         }
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Metric> batch)
         {
+            _persistentStorage?.StartExporterTimer();
+
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
@@ -44,10 +51,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
 
                 var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
-
-                // TODO: Handle return value, it can be converted as metrics.
-                // TODO: Validate CancellationToken and async pattern here.
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
 
                 return exportResult;
             }
