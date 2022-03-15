@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of DeliveryRuleAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        internal DeliveryRuleAction(DeliveryRuleActionName name)
+        internal DeliveryRuleAction(DeliveryRuleActionType name)
         {
             Name = name;
         }
 
         /// <summary> The name of the action for the delivery rule. </summary>
-        internal DeliveryRuleActionName Name { get; set; }
+        internal DeliveryRuleActionType Name { get; set; }
     }
 }

@@ -677,6 +677,24 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
+        /// </summary>
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusRuleManager"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to create
+        /// a <see cref="ServiceBusRuleManager"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusRuleManager"/> scoped to the specified subscription and topic.</returns>
+        public virtual ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusRuleManager(
+                connection: Connection,
+                subscriptionPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
+        }
+
+        /// <summary>
         /// Validates that the specified entity name matches the entity path in the Connection,
         /// if an entity path is specified in the connection.
         /// </summary>

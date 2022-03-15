@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public CompressionReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "CompressionReadSettings";
         }
 
         /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
@@ -25,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal CompressionReadSettings(string type, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "CompressionReadSettings";
+            Type = type;
             AdditionalProperties = additionalProperties;
         }
 

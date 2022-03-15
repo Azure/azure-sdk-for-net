@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Parameters = parameters;
-            Name = DeliveryRuleActionName.CacheExpiration;
+            Name = DeliveryRuleActionType.CacheExpiration;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleCacheExpirationAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionName name, CacheExpirationActionParameters parameters) : base(name)
+        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, CacheExpirationActionParameters parameters) : base(name)
         {
             Parameters = parameters;
             Name = name;

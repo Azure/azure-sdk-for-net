@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of DiskData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        internal DiskData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, systemData, tags, location)
+        internal DiskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, IReadOnlyList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIopsReadWrite, long? diskMBpsReadWrite, long? diskIopsReadOnly, long? diskMBpsReadOnly, DiskState? diskState, Encryption encryption, int? maxShares, IReadOnlyList<ShareInfoElement> shareInfo, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled, PropertyUpdatesInProgress propertyUpdatesInProgress, bool? supportsHibernation, DiskSecurityProfile securityProfile, float? completionPercent, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;

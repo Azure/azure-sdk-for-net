@@ -50,6 +50,10 @@ namespace Azure.Storage.Files.DataLake
         public string LeaseState => _response.Headers.TryGetValue("x-ms-lease-state", out string value) ? value : null;
         /// <summary> The lease status of the resource. </summary>
         public string LeaseStatus => _response.Headers.TryGetValue("x-ms-lease-status", out string value) ? value : null;
+        /// <summary> The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. </summary>
+        public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? value) ? value : null;
+        /// <summary> The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key. </summary>
+        public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
         /// <summary> The MD5 hash of complete file stored in storage. If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the complete file&apos;s MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
         public string XMsContentMd5 => _response.Headers.TryGetValue("x-ms-content-md5", out string value) ? value : null;
     }

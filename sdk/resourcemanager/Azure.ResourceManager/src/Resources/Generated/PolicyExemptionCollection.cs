@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyExemption.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(PolicyExemption.ResourceType, out string policyExemptionApiVersion);
-            _policyExemptionRestClient = new PolicyExemptionsRestOperations(_policyExemptionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
+            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
         }
 
         /// <summary>
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
         /// Operation Id: PolicyExemptions_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<PolicyExemption>> CreateOrUpdateAsync(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyExemption>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _policyExemptionRestClient.CreateOrUpdateAsync(Id, policyExemptionName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation<PolicyExemption>(Response.FromValue(new PolicyExemption(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
         /// Operation Id: PolicyExemptions_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
         /// <param name="parameters"> Parameters for the policy exemption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<PolicyExemption> CreateOrUpdate(bool waitForCompletion, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyExemption> CreateOrUpdate(WaitUntil waitUntil, string policyExemptionName, PolicyExemptionData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _policyExemptionRestClient.CreateOrUpdate(Id, policyExemptionName, parameters, cancellationToken);
                 var operation = new ResourcesArmOperation<PolicyExemption>(Response.FromValue(new PolicyExemption(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<PolicyExemption>> GetAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyExemption>> GetAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _policyExemptionRestClient.GetAsync(Id, policyExemptionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _policyExemptionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _policyExemptionRestClient.Get(Id, policyExemptionName, cancellationToken);
                 if (response.Value == null)
-                    throw _policyExemptionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
-        public async virtual Task<Response<PolicyExemption>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyExemption>> GetIfExistsAsync(string policyExemptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyExemptionName, nameof(policyExemptionName));
 

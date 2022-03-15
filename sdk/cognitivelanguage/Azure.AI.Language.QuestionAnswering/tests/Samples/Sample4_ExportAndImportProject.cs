@@ -24,7 +24,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             CreateProject(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProject
-            Operation<BinaryData> exportOperation = client.Export(waitForCompletion: true, exportedProjectName, format: "json");
+            Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, exportedProjectName, format: "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -58,7 +58,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = client.Import(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
+            Operation<BinaryData> importOperation = client.Import(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
 
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             await CreateProjectAsync(exportedProjectName);
 
             #region Snippet:QuestionAnsweringProjectsClient_ExportProjectAsync
-            Operation<BinaryData> exportOperation = await client.ExportAsync(waitForCompletion: true, exportedProjectName, format : "json");
+            Operation<BinaryData> exportOperation = await client.ExportAsync(WaitUntil.Completed, exportedProjectName, format : "json");
 
             // retrieve export operation response, and extract url of exported file
             JsonDocument operationValueJson = JsonDocument.Parse(exportOperation.Value);
@@ -120,7 +120,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 }
             });
 
-            Operation<BinaryData> importOperation = await client.ImportAsync(waitForCompletion: true, importedProjectName, importRequestContent, format: "json");
+            Operation<BinaryData> importOperation = await client.ImportAsync(WaitUntil.Completed, importedProjectName, importRequestContent, format: "json");
             Console.WriteLine($"Operation status: {importOperation.GetRawResponse().Status}");
             #endregion
 

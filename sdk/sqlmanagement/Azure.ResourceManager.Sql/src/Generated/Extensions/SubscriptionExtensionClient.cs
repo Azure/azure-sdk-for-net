@@ -56,25 +56,25 @@ namespace Azure.ResourceManager.Sql
         }
 
         private ClientDiagnostics DeletedServerClientDiagnostics => _deletedServerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServer.ResourceType.Namespace, DiagnosticOptions);
-        private DeletedServersRestOperations DeletedServerRestClient => _deletedServerRestClient ??= new DeletedServersRestOperations(DeletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedServer.ResourceType));
+        private DeletedServersRestOperations DeletedServerRestClient => _deletedServerRestClient ??= new DeletedServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedServer.ResourceType));
         private ClientDiagnostics InstancePoolClientDiagnostics => _instancePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePool.ResourceType.Namespace, DiagnosticOptions);
-        private InstancePoolsRestOperations InstancePoolRestClient => _instancePoolRestClient ??= new InstancePoolsRestOperations(InstancePoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(InstancePool.ResourceType));
+        private InstancePoolsRestOperations InstancePoolRestClient => _instancePoolRestClient ??= new InstancePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(InstancePool.ResourceType));
         private ClientDiagnostics CapabilitiesClientDiagnostics => _capabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private CapabilitiesRestOperations CapabilitiesRestClient => _capabilitiesRestClient ??= new CapabilitiesRestOperations(CapabilitiesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private CapabilitiesRestOperations CapabilitiesRestClient => _capabilitiesRestClient ??= new CapabilitiesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(LongTermRetentionBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstance.ResourceType.Namespace, DiagnosticOptions);
-        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(ManagedInstanceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ManagedInstance.ResourceType));
+        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ManagedInstance.ResourceType));
         private ClientDiagnostics OperationsHealthClientDiagnostics => _operationsHealthClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private OperationsHealthRestOperations OperationsHealthRestClient => _operationsHealthRestClient ??= new OperationsHealthRestOperations(OperationsHealthClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private OperationsHealthRestOperations OperationsHealthRestClient => _operationsHealthRestClient ??= new OperationsHealthRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics SyncGroupClientDiagnostics => _syncGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroup.ResourceType.Namespace, DiagnosticOptions);
-        private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(SyncGroupClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SyncGroup.ResourceType));
+        private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SyncGroup.ResourceType));
         private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualCluster.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(VirtualClusterClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualCluster.ResourceType));
+        private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualCluster.ResourceType));
         private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServer.ResourceType.Namespace, DiagnosticOptions);
-        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(SqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SqlServer.ResourceType));
+        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SqlServer.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The location name whose capabilities are retrieved. </param>
         /// <param name="include"> If specified, restricts the response to only include the selected item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationCapabilities>> GetByLocationCapabilityAsync(string locationName, CapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
             using var scope = CapabilitiesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetByLocationCapability");
             scope.Start();
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="parameters"> The name availability request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityServerAsync(CheckNameAvailabilityRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityServer");
             scope.Start();

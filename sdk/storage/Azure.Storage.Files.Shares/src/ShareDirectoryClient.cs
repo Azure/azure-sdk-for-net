@@ -569,6 +569,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -581,6 +582,7 @@ namespace Azure.Storage.Files.Shares
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1385,6 +1387,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1396,6 +1399,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
                             filePermissionKey: smbProps.FilePermissionKey,
+                            fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -2465,6 +2469,7 @@ namespace Azure.Storage.Files.Shares
                         FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
                         FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
                         FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
+                        FileChangeTime = options?.SmbProperties?.FileChangedOn.ToFileDateTimeString(),
                         IgnoreReadOnly = options?.IgnoreReadOnly
                     };
 
@@ -3190,7 +3195,7 @@ namespace Azure.Storage.Files.Shares
         /// <see cref="ShareFileClient"/>.
         /// </summary>
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
-        protected internal virtual ShareDirectoryClient GetParentShareDirectoryClientCore()
+        protected internal virtual ShareDirectoryClient GetParentDirectoryClientCore()
         {
             if (_parentShareDirectoryClient == null)
             {
@@ -3244,9 +3249,9 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="client">The <see cref="ShareDirectoryClient"/>.</param>
             /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
-            public static ShareDirectoryClient GetParentShareDirectoryClient(this ShareDirectoryClient client)
+            public static ShareDirectoryClient GetParentDirectoryClient(this ShareDirectoryClient client)
             {
-                return client.GetParentShareDirectoryClientCore();
+                return client.GetParentDirectoryClientCore();
             }
         }
     }

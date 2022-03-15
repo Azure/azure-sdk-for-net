@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the trusted root certificate that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Certificate public data. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the trusted root certificate resource. </param>
-        internal ApplicationGatewayTrustedRootCertificate(string id, string name, string etag, string type, string data, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayTrustedRootCertificate(string id, string name, string etag, string resourceType, string data, string keyVaultSecretId, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             Data = data;
             KeyVaultSecretId = keyVaultSecretId;
             ProvisioningState = provisioningState;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Certificate public data. </summary>
         public string Data { get; set; }
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </summary>

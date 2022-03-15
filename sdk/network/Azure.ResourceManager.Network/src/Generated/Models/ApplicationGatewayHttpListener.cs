@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the HTTP listener that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="frontendIPConfiguration"> Frontend IP configuration resource of an application gateway. </param>
         /// <param name="frontendPort"> Frontend port resource of an application gateway. </param>
         /// <param name="protocol"> Protocol of the HTTP listener. </param>
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customErrorConfigurations"> Custom error configurations of the HTTP listener. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
         /// <param name="hostNames"> List of Host names for HTTP Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayHttpListener(string id, string name, string etag, string type, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id)
+        internal ApplicationGatewayHttpListener(string id, string name, string etag, string resourceType, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, string hostName, WritableSubResource sslCertificate, WritableSubResource sslProfile, bool? requireServerNameIndication, ProvisioningState? provisioningState, IList<ApplicationGatewayCustomError> customErrorConfigurations, WritableSubResource firewallPolicy, IList<string> hostNames) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             FrontendIPConfiguration = frontendIPConfiguration;
             FrontendPort = frontendPort;
             Protocol = protocol;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> Frontend IP configuration resource of an application gateway. </summary>
         internal WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>

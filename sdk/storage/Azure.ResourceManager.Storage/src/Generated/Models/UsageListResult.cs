@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of UsageListResult. </summary>
         internal UsageListResult()
         {
-            Value = new ChangeTrackingList<Usage>();
+            Value = new ChangeTrackingList<StorageUsage>();
         }
 
         /// <summary> Initializes a new instance of UsageListResult. </summary>
         /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
-        internal UsageListResult(IReadOnlyList<Usage> value)
+        internal UsageListResult(IReadOnlyList<StorageUsage> value)
         {
             Value = value;
         }
 
         /// <summary> Gets or sets the list of Storage Resource Usages. </summary>
-        public IReadOnlyList<Usage> Value { get; }
+        public IReadOnlyList<StorageUsage> Value { get; }
     }
 }

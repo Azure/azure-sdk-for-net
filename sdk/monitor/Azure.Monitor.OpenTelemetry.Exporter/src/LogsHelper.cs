@@ -24,9 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             foreach (var logRecord in batchLogRecord)
             {
-                telemetryItem = new TelemetryItem(logRecord);
-                telemetryItem.InstrumentationKey = instrumentationKey;
-                telemetryItem.SetResource(roleName, roleInstance);
+                telemetryItem = new TelemetryItem(logRecord, roleName, roleInstance, instrumentationKey);
                 if (logRecord.Exception != null)
                 {
                     telemetryItem.Data = new MonitorBase
@@ -89,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exceptionType = exception.GetType().FullName;
             var strackTrace = new StackTrace(exception);
-            var exceptionStackFrame = strackTrace.GetFrame(1);
+            var exceptionStackFrame = strackTrace.GetFrame(0);
 
             if (exceptionStackFrame != null)
             {

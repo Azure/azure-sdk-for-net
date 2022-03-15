@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, type, systemData)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, WritableSubResource privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;

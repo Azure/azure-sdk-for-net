@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData)).Value;
-            await applicationDefinition.DeleteAsync(true);
+            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
+            await applicationDefinition.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await applicationDefinition.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

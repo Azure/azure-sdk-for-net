@@ -70,6 +70,11 @@ namespace Azure.Core.Tests
                 Assert.False(beforeTransportRan);
             }), HttpPipelinePosition.PerRetry);
 
+            // Intentionally add some null policies to ensure it does not break indexing
+            options.AddPolicy(null, HttpPipelinePosition.PerCall);
+            options.AddPolicy(null, HttpPipelinePosition.PerRetry);
+            options.AddPolicy(null, HttpPipelinePosition.BeforeTransport);
+
             options.AddPolicy(new CallbackPolicy(m =>
             {
                 beforeTransportRan = true;
@@ -132,7 +137,8 @@ namespace Azure.Core.Tests
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             var message = pipeline.CreateMessage();
-            message.SetUserAgentString(UserAgentValue.FromType<string>());
+            var userAgent = new TelemetryDetails(typeof(string).Assembly);
+            userAgent.Apply(message);
             using Request request = message.Request;
             request.Method = RequestMethod.Get;
             request.Uri.Reset(new Uri("http://example.com"));

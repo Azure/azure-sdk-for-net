@@ -29,12 +29,15 @@ namespace Azure.Storage.Blobs
             IProgress<long> progressHandler,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
-            IDictionary<string, string> tags,
-            UploadTransactionalHashingOptions hashingOptions) : base(
+            IDictionary<string, string> tags
+            // TODO #27253
+            //UploadTransactionalHashingOptions hashingOptions
+            ) : base(
                 position,
                 bufferSize,
-                progressHandler,
-                hashingOptions)
+                progressHandler
+                //hashingOptions
+                )
         {
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
@@ -66,12 +69,16 @@ namespace Azure.Storage.Blobs
                 await _blockBlobClient.StageBlockInternal(
                     base64BlockId: blockId,
                     content: _buffer,
-                    new BlockBlobStageBlockOptions()
-                    {
-                        TransactionalHashingOptions = _hashingOptions,
-                        Conditions = conditions,
-                        ProgressHandler = _progressHandler
-                    },
+                    // TODO #27253
+                    //new BlockBlobStageBlockOptions()
+                    //{
+                    //    TransactionalHashingOptions = _hashingOptions,
+                    //    Conditions = conditions,
+                    //    ProgressHandler = _progressHandler
+                    //},
+                    blockContentTransactionalMD5: default,
+                    conditions: conditions,
+                    progressHandler: _progressHandler,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

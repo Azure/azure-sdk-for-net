@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("peerAsn");
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsDefined(PeerIp))
+            if (Optional.IsDefined(PeerIP))
             {
                 writer.WritePropertyName("peerIp");
-                writer.WriteStringValue(PeerIp);
+                writer.WriteStringValue(PeerIP);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

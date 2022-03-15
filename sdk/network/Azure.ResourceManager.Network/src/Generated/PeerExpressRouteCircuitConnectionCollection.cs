@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             _peerExpressRouteCircuitConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PeerExpressRouteCircuitConnection.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(PeerExpressRouteCircuitConnection.ResourceType, out string peerExpressRouteCircuitConnectionApiVersion);
-            _peerExpressRouteCircuitConnectionRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(_peerExpressRouteCircuitConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, peerExpressRouteCircuitConnectionApiVersion);
+            _peerExpressRouteCircuitConnectionRestClient = new PeerExpressRouteCircuitConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, peerExpressRouteCircuitConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<PeerExpressRouteCircuitConnection>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PeerExpressRouteCircuitConnection>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _peerExpressRouteCircuitConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _peerExpressRouteCircuitConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PeerExpressRouteCircuitConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _peerExpressRouteCircuitConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
-                    throw _peerExpressRouteCircuitConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PeerExpressRouteCircuitConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        public async virtual Task<Response<PeerExpressRouteCircuitConnection>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PeerExpressRouteCircuitConnection>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 

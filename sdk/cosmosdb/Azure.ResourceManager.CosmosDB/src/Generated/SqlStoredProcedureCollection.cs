@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _sqlStoredProcedureSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlStoredProcedure.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlStoredProcedure.ResourceType, out string sqlStoredProcedureSqlResourcesApiVersion);
-            _sqlStoredProcedureSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlStoredProcedureSqlResourcesApiVersion);
+            _sqlStoredProcedureSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlStoredProcedureSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}
         /// Operation Id: SqlResources_CreateUpdateSqlStoredProcedure
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlStoredProcedure>> CreateOrUpdateAsync(bool waitForCompletion, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlStoredProcedure>> CreateOrUpdateAsync(WaitUntil waitUntil, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
             Argument.AssertNotNull(createUpdateSqlStoredProcedureParameters, nameof(createUpdateSqlStoredProcedureParameters));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation<SqlStoredProcedure>(new SqlStoredProcedureOperationSource(Client), _sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _sqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}
         /// Operation Id: SqlResources_CreateUpdateSqlStoredProcedure
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
         /// <param name="createUpdateSqlStoredProcedureParameters"> The parameters to provide for the current SQL storedProcedure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> or <paramref name="createUpdateSqlStoredProcedureParameters"/> is null. </exception>
-        public virtual ArmOperation<SqlStoredProcedure> CreateOrUpdate(bool waitForCompletion, string storedProcedureName, SqlStoredProcedureCreateUpdateOptions createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlStoredProcedure> CreateOrUpdate(WaitUntil waitUntil, string storedProcedureName, SqlStoredProcedureCreateUpdateData createUpdateSqlStoredProcedureParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
             Argument.AssertNotNull(createUpdateSqlStoredProcedureParameters, nameof(createUpdateSqlStoredProcedureParameters));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlStoredProcedureSqlResourcesRestClient.CreateUpdateSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters, cancellationToken);
                 var operation = new CosmosDBArmOperation<SqlStoredProcedure>(new SqlStoredProcedureOperationSource(Client), _sqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, _sqlStoredProcedureSqlResourcesRestClient.CreateCreateUpdateSqlStoredProcedureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, createUpdateSqlStoredProcedureParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<SqlStoredProcedure>> GetAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlStoredProcedure>> GetAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedureAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlStoredProcedure(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlStoredProcedureSqlResourcesRestClient.GetSqlStoredProcedure(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, storedProcedureName, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlStoredProcedureSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlStoredProcedure(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
-        public async virtual Task<Response<SqlStoredProcedure>> GetIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlStoredProcedure>> GetIfExistsAsync(string storedProcedureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storedProcedureName, nameof(storedProcedureName));
 

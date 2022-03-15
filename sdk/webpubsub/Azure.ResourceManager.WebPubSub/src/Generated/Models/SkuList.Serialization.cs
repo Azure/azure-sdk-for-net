@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class SkuList
+    internal partial class SkuList
     {
         internal static SkuList DeserializeSkuList(JsonElement element)
         {
-            Optional<IReadOnlyList<Sku>> value = default;
+            Optional<IReadOnlyList<WebPubSubResourceSku>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Sku> array = new List<Sku>();
+                    List<WebPubSubResourceSku> array = new List<WebPubSubResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Sku.DeserializeSku(item));
+                        array.Add(WebPubSubResourceSku.DeserializeWebPubSubResourceSku(item));
                     }
                     value = array;
                     continue;

@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSitesWorkflowPreviewRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="repositoryUrl"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
-        internal StaticSitesWorkflowPreviewRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string repositoryUrl, string branch, StaticSiteBuildProperties buildProperties) : base(id, name, type, systemData, kind)
+        internal StaticSitesWorkflowPreviewRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string repositoryUrl, string branch, StaticSiteBuildProperties buildProperties) : base(id, name, resourceType, systemData, kind)
         {
             RepositoryUrl = repositoryUrl;
             Branch = branch;

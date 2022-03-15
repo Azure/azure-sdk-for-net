@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of DeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="status"> Deployment status. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End time. </param>
         /// <param name="active"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? active, string details) : base(id, name, type, systemData, kind)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? active, string details) : base(id, name, resourceType, systemData, kind)
         {
             Status = status;
             Message = message;

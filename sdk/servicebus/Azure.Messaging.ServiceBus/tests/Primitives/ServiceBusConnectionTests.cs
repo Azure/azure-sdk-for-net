@@ -550,6 +550,11 @@ namespace Azure.Messaging.ServiceBus.Tests
             {
                 throw new NotImplementedException();
             }
+
+            public override TransportRuleManager CreateRuleManager(string subscriptionPath, ServiceBusRetryPolicy retryPolicy, string identifier)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
             AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             Assert.AreEqual(afdRuleSetName, afdRuleSet.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdRuleSets().CreateOrUpdateAsync(true, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await afdProfile.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, null));
         }
 
         [TestCase]
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
             _ = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             int count = 0;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, SkuName.StandardAzureFrontDoor);
+            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             string afdRuleSetName = Recording.GenerateAssetName("AFDRuleSet");
             AfdRuleSet afdRuleSet = await CreateAfdRuleSet(afdProfile, afdRuleSetName);
             AfdRuleSet getAfdRuleSet = await afdProfile.GetAfdRuleSets().GetAsync(afdRuleSetName);

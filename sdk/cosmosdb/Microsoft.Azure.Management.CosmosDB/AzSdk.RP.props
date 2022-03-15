@@ -2,6 +2,7 @@
   <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
   <PropertyGroup>
     <AzureApiTag>CosmosDB_2021-11-15-preview</AzureApiTag>
+    <AzureApiTag>DocumentDB_2021-10-15;</AzureApiTag>
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 </Project>

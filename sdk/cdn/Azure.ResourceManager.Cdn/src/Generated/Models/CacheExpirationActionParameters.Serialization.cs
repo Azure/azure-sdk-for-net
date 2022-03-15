@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (CacheDuration != null)
                 {
                     writer.WritePropertyName("cacheDuration");
-                    writer.WriteStringValue(CacheDuration);
+                    writer.WriteStringValue(CacheDuration.Value, "c");
                 }
                 else
                 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheExpirationActionParametersOdataType odataType = default;
             CacheBehavior cacheBehavior = default;
             CacheType cacheType = default;
-            Optional<string> cacheDuration = default;
+            Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
@@ -66,11 +67,11 @@ namespace Azure.ResourceManager.Cdn.Models
                         cacheDuration = null;
                         continue;
                     }
-                    cacheDuration = property.Value.GetString();
+                    cacheDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
             }
-            return new CacheExpirationActionParameters(odataType, cacheBehavior, cacheType, cacheDuration.Value);
+            return new CacheExpirationActionParameters(odataType, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
         }
     }
 }

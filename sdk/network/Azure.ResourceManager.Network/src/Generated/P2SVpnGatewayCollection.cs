@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGateway.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(P2SVpnGateway.ResourceType, out string p2SVpnGatewayP2sVpnGatewaysApiVersion);
-            _p2SVpnGatewayP2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(_p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, p2SVpnGatewayP2sVpnGatewaysApiVersion);
+            _p2SVpnGatewayP2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, p2SVpnGatewayP2sVpnGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
         /// Operation Id: P2sVpnGateways_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to create or Update a virtual wan p2s vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<P2SVpnGateway>> CreateOrUpdateAsync(bool waitForCompletion, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<P2SVpnGateway>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(p2SVpnGatewayParameters, nameof(p2SVpnGatewayParameters));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken).ConfigureAwait(false);
                 var operation = new NetworkArmOperation<P2SVpnGateway>(new P2SVpnGatewayOperationSource(Client), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
         /// Operation Id: P2sVpnGateways_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="p2SVpnGatewayParameters"> Parameters supplied to create or Update a virtual wan p2s vpn gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="p2SVpnGatewayParameters"/> is null. </exception>
-        public virtual ArmOperation<P2SVpnGateway> CreateOrUpdate(bool waitForCompletion, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<P2SVpnGateway> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, P2SVpnGatewayData p2SVpnGatewayParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(p2SVpnGatewayParameters, nameof(p2SVpnGatewayParameters));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters, cancellationToken);
                 var operation = new NetworkArmOperation<P2SVpnGateway>(new P2SVpnGatewayOperationSource(Client), _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, _p2SVpnGatewayP2sVpnGatewaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, p2SVpnGatewayParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public async virtual Task<Response<P2SVpnGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<P2SVpnGateway>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _p2SVpnGatewayP2sVpnGatewaysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new P2SVpnGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _p2SVpnGatewayP2sVpnGatewaysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
                 if (response.Value == null)
-                    throw _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new P2SVpnGateway(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public async virtual Task<Response<P2SVpnGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<P2SVpnGateway>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
