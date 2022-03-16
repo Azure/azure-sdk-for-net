@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -27,6 +27,7 @@ const string AssemblyFileMask = "*.dll";
 LogInformation($"Smoke Test run starting...{ Environment.NewLine }");
 
 var returnCode = 0;
+var totalTypeCount = 0;
 
 // Starting with the entry assembly as the root, walk all references, both
 // direct and transient to process them.
@@ -54,12 +55,13 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
         LogError($"{Environment.NewLine }[{ assembly.FullName }] could not be fully processed.  Error: { ex }{ Environment.NewLine }");
     }
 
-    LogInformation($"Completed assembly: [{ assembly.FullName }].  { typeCount } types inspected.{ Environment.NewLine }");
+    totalTypeCount += typeCount;
+    LogInformation($"Completed assembly: [{ assembly.FullName }].  {typeCount:n0} types inspected.{ Environment.NewLine }");
 }
 
 // End the test run and report on the state.
 
-LogInformation($"{ Environment.NewLine }Smoke Test run complete.");
+LogInformation($"{ Environment.NewLine }Smoke Test run complete.  Total types inspected: {totalTypeCount:n0}");
 
 if (returnCode == 0)
 {
@@ -78,16 +80,32 @@ void ReportError() => returnCode = -1;
 
 void LogError(string message, ConsoleColor? color = default)
 {
+    var previousForeground = Console.ForegroundColor;
     Console.ForegroundColor = color ?? ConsoleColor.Red;
-    Console.Error.WriteLine(message);
-    Console.ResetColor();
+
+    try
+    {
+        Console.Error.WriteLine(message);
+    }
+    finally
+    {
+        Console.ForegroundColor = previousForeground;
+    }
 }
 
 void LogInformation(string message, ConsoleColor? color = default)
 {
+    var previousForeground = Console.ForegroundColor;
     Console.ForegroundColor = color ?? Console.ForegroundColor;
-    Console.WriteLine(message);
-    Console.ResetColor();
+
+    try
+    {
+        Console.WriteLine(message);
+    }
+    finally
+    {
+        Console.ForegroundColor = previousForeground;
+    }
 }
 
 void ProcessType(Type type)
@@ -121,16 +139,10 @@ void ProcessType(Type type)
                     Console.WriteLine($"\tConstructed: '{ type.FullName }'");
                 }
             }
-            catch (TargetInvocationException ex) when (ex.InnerException is NotImplementedException)
+            catch (TargetInvocationException ex) when (ShouldIgnoreInvocationException(ex))
             {
-                // Expected; this occurs when the parameterless constructor is present but has been marked obsolete.  Since we do
-                // not report types without a parameterless constructor, ignore the type and do not log.
-            }
-            catch (TargetInvocationException ex) when (ex.InnerException is ArgumentException)
-            {
-                // Expected; this occurs when the parameterless constructor is present but the type cannot be constructed due to failing
-                // an internal state validation.  Since we do not report types without a parameterless constructor, ignore the type
-                // and do not log.
+                // Expected; this is a known scenario where the type is not impactful to the
+                // Azure SDK experience and cane be safely ignored.
             }
             catch (TargetInvocationException ex) when (ex.InnerException is FileNotFoundException fileEx)
             {
@@ -205,11 +217,21 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
 
         foreach (var refAssembly in assembly.GetReferencedAssemblies())
         {
-            if (!processedAssemblies.Contains(refAssembly.FullName))
+            // Skip assemblies that have already been processed or that are system assemblies.
+
+            if ((!refAssembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(refAssembly.FullName)))
             {
                 try
                 {
                     assembliesToProcess.Push(Assembly.Load(refAssembly.FullName));
+                }
+                catch (FileNotFoundException)
+                {
+                    // Expected; this occurs when an assembly is transitively referenced but not available
+                    // for the current framework or platform and is most often seen for platform-specific interop
+                    // assemblies.
+
+                    LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
                 }
                 catch (BadImageFormatException)
                 {
@@ -231,3 +253,20 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
 }
 
 bool IsAzureClientType(Type type) => (type.Namespace?.Contains("Azure.") ?? false) && (type.Name?.EndsWith("Client") ?? false);
+
+bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationException) => targetInvocationException.InnerException switch
+{
+    // Occurs when the parameterless constructor is present but has been marked obsolete.
+    NotImplementedException => true,
+    InvalidOperationException => true,
+
+    // Occurs when the parameterless constructor is present but the type cannot be constructed due to failing an internal state validation.
+    ArgumentException => true,
+    NullReferenceException => true,
+
+    // Occurs when the assembly is locked; this is most likely a framework assembly.
+    IOException ioEx when (ioEx.Message.Contains("being used by another process.", StringComparison.CurrentCultureIgnoreCase)) => true,
+
+    // By default, do not ignore.
+    _ => false
+};
