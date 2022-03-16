@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Initializes a new instance of BlobInventoryPolicySchema. </summary>
         /// <param name="enabled"> Policy is enabled if set to true. </param>
-        /// <param name="type"> The valid value is Inventory. </param>
+        /// <param name="inventoryRuleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public BlobInventoryPolicySchema(bool enabled, InventoryRuleType type, IEnumerable<BlobInventoryPolicyRule> rules)
+        public BlobInventoryPolicySchema(bool enabled, InventoryRuleType inventoryRuleType, IEnumerable<BlobInventoryPolicyRule> rules)
         {
             if (rules == null)
             {
@@ -27,25 +27,25 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             Enabled = enabled;
-            Type = type;
+            InventoryRuleType = inventoryRuleType;
             Rules = rules.ToList();
         }
 
         /// <summary> Initializes a new instance of BlobInventoryPolicySchema. </summary>
         /// <param name="enabled"> Policy is enabled if set to true. </param>
-        /// <param name="type"> The valid value is Inventory. </param>
+        /// <param name="inventoryRuleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
-        internal BlobInventoryPolicySchema(bool enabled, InventoryRuleType type, IList<BlobInventoryPolicyRule> rules)
+        internal BlobInventoryPolicySchema(bool enabled, InventoryRuleType inventoryRuleType, IList<BlobInventoryPolicyRule> rules)
         {
             Enabled = enabled;
-            Type = type;
+            InventoryRuleType = inventoryRuleType;
             Rules = rules;
         }
 
         /// <summary> Policy is enabled if set to true. </summary>
         public bool Enabled { get; set; }
         /// <summary> The valid value is Inventory. </summary>
-        public InventoryRuleType Type { get; set; }
+        public InventoryRuleType InventoryRuleType { get; set; }
         /// <summary> The storage account blob inventory policy rules. The rule is applied when it is enabled. </summary>
         public IList<BlobInventoryPolicyRule> Rules { get; }
     }

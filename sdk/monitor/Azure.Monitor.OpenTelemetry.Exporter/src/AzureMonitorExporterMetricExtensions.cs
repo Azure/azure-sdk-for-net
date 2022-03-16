@@ -9,7 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     /// <summary>
     /// Extension methods to simplify registering of Azure Monitor Metrics Exporter.
     /// </summary>
-    internal static class AzureMonitorExporterMetricExtensions
+    public static class AzureMonitorExporterMetricExtensions
     {
         /// <summary>
         /// Adds Azure Monitor Metric exporter.

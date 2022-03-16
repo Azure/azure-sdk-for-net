@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "subnets", subnets }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, vnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
             return operation.Value;
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, subnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetId, input);
             return operation.Value;
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     }
                 }
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, nicId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicId, input);
             return operation.Value;
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(true, vmName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             return lro.Value;
         }
     }

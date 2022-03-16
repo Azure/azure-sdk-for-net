@@ -22,7 +22,9 @@ steps:
       }
       Set-Content "${{ parameters.SourceDirectory }}/credscan.tsv" -Value "${{ parameters.SourceDirectory }}/$scanFolder"
     }
-    Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
+    if(Test-Path "${{ parameters.SourceDirectory }}/credscan.tsv") {
+      Get-Content "${{ parameters.SourceDirectory }}/credscan.tsv"
+    }
   displayName: CredScan setup
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
   displayName: CredScan running

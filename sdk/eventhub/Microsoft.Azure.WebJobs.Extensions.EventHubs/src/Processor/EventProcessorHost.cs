@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
     {
         private readonly Action<ExceptionReceivedEventArgs> _exceptionHandler;
         private IEventProcessorFactory _processorFactory;
-        private BlobsCheckpointStore _checkpointStore;
+        private BlobCheckpointStoreInternal _checkpointStore;
 
         /// <summary>
         /// Mocking constructor
@@ -52,11 +52,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             return await _checkpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken)
-        {
-            return await _checkpointStore.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
-        }
-
         protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken)
         {
             return await _checkpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
@@ -69,13 +64,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
         {
-            await _checkpointStore.UpdateCheckpointAsync(new EventProcessorCheckpoint()
-            {
-                PartitionId = partitionId,
-                ConsumerGroup = ConsumerGroup,
-                EventHubName = EventHubName,
-                FullyQualifiedNamespace = FullyQualifiedNamespace
-            }, checkpointEvent, cancellationToken).ConfigureAwait(false);
+            await _checkpointStore.UpdateCheckpointAsync(
+                FullyQualifiedNamespace,
+                EventHubName,
+                ConsumerGroup,
+                partitionId,
+                checkpointEvent.Offset,
+                checkpointEvent.SequenceNumber,
+                cancellationToken).ConfigureAwait(false);
         }
 
         protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorHostPartition partition, string operationDescription, CancellationToken cancellationToken)
@@ -104,7 +100,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 return Task.CompletedTask;
             }
 
-            return partition.EventProcessor.ProcessEventsAsync(partition, events);
+            return partition.EventProcessor.ProcessEventsAsync(partition, events, cancellationToken);
         }
 
         protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
@@ -129,7 +125,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         public async Task StartProcessingAsync(
             IEventProcessorFactory processorFactory,
-            BlobsCheckpointStore checkpointStore,
+            BlobCheckpointStoreInternal checkpointStore,
             CancellationToken cancellationToken)
         {
             _processorFactory = processorFactory;

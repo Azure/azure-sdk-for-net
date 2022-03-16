@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Monitor
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,7 +22,7 @@ namespace Microsoft.Azure.Management.Monitor
     public static partial class ActivityLogAlertsOperationsExtensions
     {
             /// <summary>
-            /// Create a new activity log alert or update an existing one.
+            /// Create a new Activity Log Alert rule or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,18 +31,18 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
-            /// <param name='activityLogAlert'>
-            /// The activity log alert to create or use for the update.
+            /// <param name='activityLogAlertRule'>
+            /// The Activity Log Alert rule to create or use for the update.
             /// </param>
-            public static ActivityLogAlertResource CreateOrUpdate(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResource activityLogAlert)
+            public static ActivityLogAlertResource CreateOrUpdate(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResource activityLogAlertRule)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, activityLogAlertName, activityLogAlert).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, activityLogAlertName, activityLogAlertRule).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create a new activity log alert or update an existing one.
+            /// Create a new Activity Log Alert rule or update an existing one.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,24 +51,24 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
-            /// <param name='activityLogAlert'>
-            /// The activity log alert to create or use for the update.
+            /// <param name='activityLogAlertRule'>
+            /// The Activity Log Alert rule to create or use for the update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActivityLogAlertResource> CreateOrUpdateAsync(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResource activityLogAlert, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActivityLogAlertResource> CreateOrUpdateAsync(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertResource activityLogAlertRule, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, activityLogAlertName, activityLogAlert, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, activityLogAlertName, activityLogAlertRule, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get an activity log alert.
+            /// Get an Activity Log Alert rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +77,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
             public static ActivityLogAlertResource Get(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName)
             {
@@ -87,7 +85,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Get an activity log alert.
+            /// Get an Activity Log Alert rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -96,7 +94,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -110,7 +108,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Delete an activity log alert.
+            /// Delete an Activity Log Alert rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -119,7 +117,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
             public static void Delete(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName)
             {
@@ -127,7 +125,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Delete an activity log alert.
+            /// Delete an Activity Log Alert rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -136,7 +134,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -147,8 +145,9 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Updates an existing ActivityLogAlertResource's tags. To update other fields
-            /// use the CreateOrUpdate method.
+            /// Updates 'tags' and 'enabled' fields in an existing Alert rule. This method
+            /// is used to update the Alert rule tags, and to enable or disable the Alert
+            /// rule. To update other fields use CreateOrUpdate operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -157,19 +156,20 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
-            /// <param name='activityLogAlertPatch'>
+            /// <param name='activityLogAlertRulePatch'>
             /// Parameters supplied to the operation.
             /// </param>
-            public static ActivityLogAlertResource Update(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBody activityLogAlertPatch)
+            public static ActivityLogAlertResource Update(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, AlertRulePatchObject activityLogAlertRulePatch)
             {
-                return operations.UpdateAsync(resourceGroupName, activityLogAlertName, activityLogAlertPatch).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, activityLogAlertName, activityLogAlertRulePatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates an existing ActivityLogAlertResource's tags. To update other fields
-            /// use the CreateOrUpdate method.
+            /// Updates 'tags' and 'enabled' fields in an existing Alert rule. This method
+            /// is used to update the Alert rule tags, and to enable or disable the Alert
+            /// rule. To update other fields use CreateOrUpdate operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -178,35 +178,35 @@ namespace Microsoft.Azure.Management.Monitor
             /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='activityLogAlertName'>
-            /// The name of the activity log alert.
+            /// The name of the Activity Log Alert rule.
             /// </param>
-            /// <param name='activityLogAlertPatch'>
+            /// <param name='activityLogAlertRulePatch'>
             /// Parameters supplied to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActivityLogAlertResource> UpdateAsync(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, ActivityLogAlertPatchBody activityLogAlertPatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActivityLogAlertResource> UpdateAsync(this IActivityLogAlertsOperations operations, string resourceGroupName, string activityLogAlertName, AlertRulePatchObject activityLogAlertRulePatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, activityLogAlertName, activityLogAlertPatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, activityLogAlertName, activityLogAlertRulePatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get a list of all activity log alerts in a subscription.
+            /// Get a list of all Activity Log Alert rules in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<ActivityLogAlertResource> ListBySubscriptionId(this IActivityLogAlertsOperations operations)
+            public static IPage<ActivityLogAlertResource> ListBySubscriptionId(this IActivityLogAlertsOperations operations)
             {
                 return operations.ListBySubscriptionIdAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a list of all activity log alerts in a subscription.
+            /// Get a list of all Activity Log Alert rules in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<ActivityLogAlertResource>> ListBySubscriptionIdAsync(this IActivityLogAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ActivityLogAlertResource>> ListBySubscriptionIdAsync(this IActivityLogAlertsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionIdWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Monitor
             }
 
             /// <summary>
-            /// Get a list of all activity log alerts in a resource group.
+            /// Get a list of all Activity Log Alert rules in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -231,13 +231,13 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
             /// </param>
-            public static IEnumerable<ActivityLogAlertResource> ListByResourceGroup(this IActivityLogAlertsOperations operations, string resourceGroupName)
+            public static IPage<ActivityLogAlertResource> ListByResourceGroup(this IActivityLogAlertsOperations operations, string resourceGroupName)
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a list of all activity log alerts in a resource group.
+            /// Get a list of all Activity Log Alert rules in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -248,9 +248,77 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<ActivityLogAlertResource>> ListByResourceGroupAsync(this IActivityLogAlertsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ActivityLogAlertResource>> ListByResourceGroupAsync(this IActivityLogAlertsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get a list of all Activity Log Alert rules in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ActivityLogAlertResource> ListBySubscriptionIdNext(this IActivityLogAlertsOperations operations, string nextPageLink)
+            {
+                return operations.ListBySubscriptionIdNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a list of all Activity Log Alert rules in a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ActivityLogAlertResource>> ListBySubscriptionIdNextAsync(this IActivityLogAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionIdNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get a list of all Activity Log Alert rules in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ActivityLogAlertResource> ListByResourceGroupNext(this IActivityLogAlertsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a list of all Activity Log Alert rules in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ActivityLogAlertResource>> ListByResourceGroupNextAsync(this IActivityLogAlertsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

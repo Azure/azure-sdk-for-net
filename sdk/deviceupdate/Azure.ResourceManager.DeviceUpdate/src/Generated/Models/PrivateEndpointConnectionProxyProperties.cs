@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Private endpoint connection proxy object properties. </summary>
-    public partial class PrivateEndpointConnectionProxyProperties
+    internal partial class PrivateEndpointConnectionProxyProperties
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyProperties. </summary>
         public PrivateEndpointConnectionProxyProperties()

@@ -25,6 +25,12 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary>
         /// Indicates the range of bytes returned if the client requested a subset of the file by setting the Range request header.
+        ///
+        /// The format of the Content-Range is expected to comeback in the following format.
+        /// [unit] [start]-[end]/[fileSize]
+        /// (e.g. bytes 1024-3071/10240)
+        ///
+        /// The [end] value will be the inclusive last byte (e.g. header "bytes 0-7/8" is the entire 8-byte file).
         /// </summary>
         public string ContentRange { get; internal set; }
 

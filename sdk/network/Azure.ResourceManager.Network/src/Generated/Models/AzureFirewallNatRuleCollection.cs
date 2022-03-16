@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The action type of a NAT rule collection. </summary>
         internal AzureFirewallNatRCAction Action { get; set; }
         /// <summary> The type of action. </summary>
-        public AzureFirewallNatRCActionType? ActionType
+        public AzureFirewallNatRCActionType? AzureFirewallNatRCActionType
         {
-            get => Action is null ? default : Action.Type;
+            get => Action is null ? default : Action.AzureFirewallNatRCActionType;
             set
             {
                 if (Action is null)
                     Action = new AzureFirewallNatRCAction();
-                Action.Type = value;
+                Action.AzureFirewallNatRCActionType = value;
             }
         }
 

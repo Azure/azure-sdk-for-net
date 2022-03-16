@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The CdnCertificateSourceParametersOdataType. </summary>
-    public readonly partial struct CdnCertificateSourceParametersOdataType : IEquatable<CdnCertificateSourceParametersOdataType>
+    internal readonly partial struct CdnCertificateSourceParametersOdataType : IEquatable<CdnCertificateSourceParametersOdataType>
     {
         private readonly string _value;
 

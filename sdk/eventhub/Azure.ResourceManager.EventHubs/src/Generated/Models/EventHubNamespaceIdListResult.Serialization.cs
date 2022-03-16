@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubNamespaceIdListResult
+    internal partial class EventHubNamespaceIdListResult
     {
         internal static EventHubNamespaceIdListResult DeserializeEventHubNamespaceIdListResult(JsonElement element)
         {
