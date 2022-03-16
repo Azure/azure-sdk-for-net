@@ -310,32 +310,11 @@ namespace Azure.Search.Documents
             Debug.Assert(source != null);
             Debug.Assert(destination != null);
 
-            destination.Facets = source.Facets;
-            destination.Filter = source.Filter;
-            destination.HighlightFields = source.HighlightFields;
-            destination.HighlightPostTag = source.HighlightPostTag;
-            destination.HighlightPreTag = source.HighlightPreTag;
-            destination.IncludeTotalCount = source.IncludeTotalCount;
-            destination.MinimumCoverage = source.MinimumCoverage;
-            destination.OrderBy = source.OrderBy;
-            destination.QueryAnswer = source.QueryAnswer;
-            destination.QueryAnswerCount = source.QueryAnswerCount;
-            destination.QueryCaption = source.QueryCaption;
-            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
-            destination.QueryLanguage = source.QueryLanguage;
-            destination.QuerySpeller = source.QuerySpeller;
-            destination.QueryType = source.QueryType;
-            destination.ScoringParameters = source.ScoringParameters;
-            destination.ScoringProfile = source.ScoringProfile;
-            destination.ScoringStatistics = source.ScoringStatistics;
-            destination.SearchFields = source.SearchFields;
-            destination.SearchMode = source.SearchMode;
-            destination.SearchText = source.SearchText;
-            destination.Select = source.Select;
-            destination.SemanticConfigurationName = source.SemanticConfigurationName;
-            destination.SemanticFields = source.SemanticFields;
-            destination.Size = source.Size;
-            destination.Skip = source.Skip;
+            foreach (System.Reflection.PropertyInfo sourcePropertyInfo in source.GetType().GetProperties())
+            {
+                System.Reflection.PropertyInfo destinationPropertyInfo = destination.GetType().GetProperty(sourcePropertyInfo.Name);
+                destinationPropertyInfo.SetValue(destination, sourcePropertyInfo.GetValue(source));
+            }
         }
 
         /// <summary>
