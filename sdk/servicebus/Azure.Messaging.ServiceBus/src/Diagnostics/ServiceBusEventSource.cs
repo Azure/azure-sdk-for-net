@@ -886,30 +886,37 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         }
 
         [Event(ProcessorMessageHandlerExceptionEvent, Level = EventLevel.Error, Message = "{0}: User message handler complete: Message: SequenceNumber: {1}, Exception: {2}, LockToken: {3}")]
-        private unsafe void ProcessorMessageHandlerExceptionCore(string identifier, long sequenceNumber, string exception, string lockToken)
+        private void ProcessorMessageHandlerExceptionCore(string identifier, long sequenceNumber, string exception, string lockToken)
         {
             if (IsEnabled())
             {
-                fixed (char* identifierPtr = identifier)
-                fixed (char* exceptionPtr = exception)
-                fixed (char* lockTokenPtr = lockToken)
-                {
-                    var eventPayload = stackalloc EventData[4];
+                ProcessorMessageHandlerExceptionCore(ProcessorMessageHandlerExceptionEvent, identifier, sequenceNumber, exception, lockToken);
+            }
+        }
 
-                    eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
-                    eventPayload[0].DataPointer = (IntPtr)identifierPtr;
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void ProcessorMessageHandlerExceptionCore(int eventId, string identifier, long sequenceNumber, string exception, string lockToken)
+        {
+            fixed (char* identifierPtr = identifier)
+            fixed (char* exceptionPtr = exception)
+            fixed (char* lockTokenPtr = lockToken)
+            {
+                var eventPayload = stackalloc EventData[4];
 
-                    eventPayload[1].Size = Unsafe.SizeOf<long>();
-                    eventPayload[1].DataPointer = (IntPtr)Unsafe.AsPointer(ref sequenceNumber);
+                eventPayload[0].Size = (identifier.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)identifierPtr;
 
-                    eventPayload[2].Size = (exception.Length + 1) * sizeof(char);
-                    eventPayload[2].DataPointer = (IntPtr)exceptionPtr;
+                eventPayload[1].Size = Unsafe.SizeOf<long>();
+                eventPayload[1].DataPointer = (IntPtr)Unsafe.AsPointer(ref sequenceNumber);
 
-                    eventPayload[3].Size = (lockToken.Length + 1) * sizeof(char);
-                    eventPayload[3].DataPointer = (IntPtr)lockTokenPtr;
+                eventPayload[2].Size = (exception.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)exceptionPtr;
 
-                    WriteEventCore(ProcessorMessageHandlerExceptionEvent, 4, eventPayload);
-                }
+                eventPayload[3].Size = (lockToken.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)lockTokenPtr;
+
+                WriteEventCore(eventId, 4, eventPayload);
             }
         }
 
