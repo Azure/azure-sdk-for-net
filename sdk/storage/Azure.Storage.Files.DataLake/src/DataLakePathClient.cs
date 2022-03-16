@@ -774,7 +774,6 @@ namespace Azure.Storage.Files.DataLake
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.TimeToExpire,
-                setExpiryRelativeTo: options?.SetExpiryRelativeTo,
                 expiresOn: options?.ExpiresOn,
                 conditions: options?.Conditions,
                 async: false,
@@ -824,7 +823,6 @@ namespace Azure.Storage.Files.DataLake
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.TimeToExpire,
-                setExpiryRelativeTo: options?.SetExpiryRelativeTo,
                 expiresOn: options?.ExpiresOn,
                 conditions: options?.Conditions,
                 async: true,
@@ -905,7 +903,6 @@ namespace Azure.Storage.Files.DataLake
                 leaseId: null,
                 leaseDuration: null,
                 timeToExpire: null,
-                setExpiryRelativeTo: null,
                 expiresOn: null,
                 conditions: conditions,
                 async: false,
@@ -986,7 +983,6 @@ namespace Azure.Storage.Files.DataLake
                 leaseId: null,
                 leaseDuration: null,
                 timeToExpire: null,
-                setExpiryRelativeTo: null,
                 expiresOn: null,
                 conditions: conditions,
                 async: true,
@@ -995,7 +991,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DataLakeFileExpirationOrigin?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken)"/>
+        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken)"/>
         /// operation creates a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1043,11 +1039,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeToExpire">
         /// Duration before file should be deleted.
         /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if TimeToExpire should be
-        /// set relative to the file's creation time, or the current
-        /// time.  Defaults to current time.
-        /// </param>
         /// <param name="expiresOn">
         /// The <see cref="DateTimeOffset"/> to set for when
         /// the file will be deleted.  If null, the existing
@@ -1084,7 +1075,6 @@ namespace Azure.Storage.Files.DataLake
             string leaseId,
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
-            DataLakeFileExpirationOrigin? setExpiryRelativeTo,
             DateTimeOffset? expiresOn,
             DataLakeRequestConditions conditions,
             bool async,
@@ -1120,37 +1110,15 @@ namespace Azure.Storage.Files.DataLake
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} does not apply to directories.");
                     }
 
-                    if (setExpiryRelativeTo.HasValue)
-                    {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.SetExpiryRelativeTo)} does not apply to directories.");
-                    }
-
                     if (expiresOn.HasValue)
                     {
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} does not apply to directories.");
                     }
                 }
 
-                if (expiresOn.HasValue)
+                if (expiresOn.HasValue && timeToExpire.HasValue)
                 {
-                    if (timeToExpire.HasValue)
-                    {
                         throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} cannot both be set.");
-                    }
-                    if (setExpiryRelativeTo.HasValue)
-                    {
-                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} and {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.SetExpiryRelativeTo)} cannot both be set.");
-                    }
-                }
-
-                if (timeToExpire.HasValue && !setExpiryRelativeTo.HasValue)
-                {
-                    throw new ArgumentException($"If {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} is set, {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.SetExpiryRelativeTo)} must be set");
-                }
-
-                if (setExpiryRelativeTo.HasValue && !timeToExpire.HasValue)
-                {
-                    throw new ArgumentException($"If {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.SetExpiryRelativeTo)} is set, {nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} must be set");
                 }
 
                 try
@@ -1167,34 +1135,17 @@ namespace Azure.Storage.Files.DataLake
                     PathExpiryOptions? pathExpiryOptions = null;
                     string expiresOnString = null;
 
-                    if (setExpiryRelativeTo.HasValue)
+                    // Relative
+                    if (timeToExpire.HasValue)
                     {
-                        // Relative
-                        if (timeToExpire.HasValue)
-                        {
-                            if (setExpiryRelativeTo.Value == DataLakeFileExpirationOrigin.CreationTime)
-                            {
-                                pathExpiryOptions = PathExpiryOptions.RelativeToCreation;
-                            }
-                            else
-                            {
-                                pathExpiryOptions = PathExpiryOptions.RelativeToNow;
-                            }
-                            expiresOnString = timeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
-                        }
-                        // Absolute
-                        else
-                        {
-                            if (expiresOn.HasValue)
-                            {
-                                pathExpiryOptions = PathExpiryOptions.Absolute;
-                                expiresOnString = expiresOn?.ToString("R", CultureInfo.InvariantCulture);
-                            }
-                            else
-                            {
-                                pathExpiryOptions = PathExpiryOptions.NeverExpire;
-                            }
-                        }
+                        pathExpiryOptions = PathExpiryOptions.RelativeToNow;
+                        expiresOnString = timeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
+                    }
+                    // Absolute
+                    else if (expiresOn.HasValue)
+                    {
+                        pathExpiryOptions = PathExpiryOptions.Absolute;
+                        expiresOnString = expiresOn?.ToString("R", CultureInfo.InvariantCulture);
                     }
 
                     if (async)
@@ -1317,7 +1268,6 @@ namespace Azure.Storage.Files.DataLake
                     leaseId: options?.LeaseId,
                     leaseDuration: options?.LeaseDuration,
                     timeToExpire: options?.TimeToExpire,
-                    setExpiryRelativeTo: options?.SetExpiryRelativeTo,
                     expiresOn: options?.ExpiresOn,
                     async: false,
                     cancellationToken: cancellationToken)
@@ -1363,7 +1313,6 @@ namespace Azure.Storage.Files.DataLake
                 leaseId: options?.LeaseId,
                 leaseDuration: options?.LeaseDuration,
                 timeToExpire: options?.TimeToExpire,
-                setExpiryRelativeTo: options?.SetExpiryRelativeTo,
                 expiresOn: options?.ExpiresOn,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -1434,7 +1383,6 @@ namespace Azure.Storage.Files.DataLake
                     leaseId: null,
                     leaseDuration: null,
                     timeToExpire: null,
-                    setExpiryRelativeTo: null,
                     expiresOn: null,
                     async: false,
                     cancellationToken: cancellationToken)
@@ -1505,14 +1453,13 @@ namespace Azure.Storage.Files.DataLake
                 leaseId: null,
                 leaseDuration: null,
                 timeToExpire: null,
-                setExpiryRelativeTo: null,
                 expiresOn: null,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DataLakeFileExpirationOrigin?, DateTimeOffset?, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, bool, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1560,11 +1507,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeToExpire">
         /// Duration before file should be deleted.
         /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if TimeToExpire should be
-        /// set relative to the file's creation time, or the current
-        /// time.  Defaults to current time.
-        /// </param>
         /// <param name="expiresOn">
         /// The <see cref="DateTimeOffset"/> to set for when
         /// the file will be deleted.  If null, the existing
@@ -1597,7 +1539,6 @@ namespace Azure.Storage.Files.DataLake
             string leaseId,
             TimeSpan? leaseDuration,
             TimeSpan? timeToExpire,
-            DataLakeFileExpirationOrigin? setExpiryRelativeTo,
             DateTimeOffset? expiresOn,
             bool async,
             CancellationToken cancellationToken)
@@ -1618,7 +1559,6 @@ namespace Azure.Storage.Files.DataLake
                     leaseId: leaseId,
                     leaseDuration: leaseDuration,
                     timeToExpire: timeToExpire,
-                    setExpiryRelativeTo: setExpiryRelativeTo,
                     expiresOn: expiresOn,
                     conditions: conditions,
                     async: async,

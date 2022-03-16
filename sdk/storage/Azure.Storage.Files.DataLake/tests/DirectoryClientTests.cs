@@ -332,6 +332,148 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task CreateAsync_Owner()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            string owner = Recording.Random.NewGuid().ToString();
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Owner = owner,
+            };
+
+            // Act
+            await directory.CreateAsync(options: options);
+
+            // Assert
+            Response<PathAccessControl> response = await directory.GetAccessControlAsync();
+            Assert.AreEqual(owner, response.Value.Owner);
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_Group()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            string group = Recording.Random.NewGuid().ToString();
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                Group = group,
+            };
+
+            // Act
+            await directory.CreateAsync(options: options);
+
+            // Assert
+            Response<PathAccessControl> response = await directory.GetAccessControlAsync();
+            Assert.AreEqual(group, response.Value.Group);
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_Acl()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                AccessControlList = AccessControlList
+            };
+
+            // Act
+            await directory.CreateAsync(options: options);
+
+            // Assert
+            Response<PathAccessControl> response = await directory.GetAccessControlAsync();
+            AssertAccessControlListEquality(AccessControlList, response.Value.AccessControlList.ToList());
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_LeaseId()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                LeaseId = "leaseId"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                directory.CreateAsync(options: options),
+                e => Assert.AreEqual(
+                    $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.",
+                    e.Message));
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_LeaseDuration()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                LeaseDuration = new TimeSpan(5, 5, 5)
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                directory.CreateAsync(options: options),
+                e => Assert.AreEqual(
+                    $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.",
+                    e.Message));
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_TimeToExpire()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                TimeToExpire = new TimeSpan(5, 5, 5)
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                directory.CreateAsync(options: options),
+                e => Assert.AreEqual(
+                    $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} does not apply to directories.",
+                    e.Message));
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_ExpiresOn()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            DataLakePathCreateOptions options = new DataLakePathCreateOptions
+            {
+                ExpiresOn = Recording.UtcNow
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                directory.CreateAsync(options: options),
+                e => Assert.AreEqual(
+                    $"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} does not apply to directories.",
+                    e.Message));
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();

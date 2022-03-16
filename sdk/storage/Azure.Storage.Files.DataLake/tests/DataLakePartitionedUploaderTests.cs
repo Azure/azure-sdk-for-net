@@ -299,11 +299,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                     default,
                     default,
                     default,
-                    default,
                     s_conditions,
                     _async,
                     s_cancellationToken
-                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, string, string, IList<PathAccessControlItem>, string, TimeSpan?, TimeSpan?, DataLakeFileExpirationOrigin?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
+                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, string, string, IList<PathAccessControlItem>, string, TimeSpan?, TimeSpan?, DateTimeOffset?, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
 
             clientMock.Setup(
                 c => c.AppendInternal(
@@ -361,7 +360,6 @@ namespace Azure.Storage.Files.DataLake.Tests
                 string leaseId,
                 TimeSpan? leaseDuration,
                 TimeSpan? timeToExpire,
-                DataLakeFileExpirationOrigin? setExpiryRelativeTo,
                 DateTimeOffset? expiresOn,
                 DataLakeRequestConditions conditions,
                 bool async,

@@ -78,19 +78,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Duration before file should be deleted.
         /// Does not apply to directories.
-        /// If <see cref="TimeToExpire"/> is set, <see cref="SetExpiryRelativeTo"/> must be set.
         /// <see cref="TimeToExpire"/> and <see cref="ExpiresOn"/> cannot both be set.
         /// </summary>
-        public TimeSpan? TimeToExpire { get; private set; }
-
-        /// <summary>
-        /// Specifies if TimeToExpire should be
-        /// set relative to the file's creation time, or the current
-        /// time.  Defaults to current time.
-        /// Does not apply to directories.
-        /// If <see cref="SetExpiryRelativeTo"/> is set, <see cref="TimeToExpire"/> must be set.
-        /// </summary>
-        public DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get; private set; }
+        public TimeSpan? TimeToExpire { get; set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> to set for when
@@ -99,7 +89,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Does not apply to directories.
         /// <see cref="ExpiresOn"/> and <see cref="TimeToExpire"/> cannot both be set.
         /// </summary>
-        public DateTimeOffset? ExpiresOn { get; private set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary>
         /// Optional <see cref="DataLakeRequestConditions"/> to add
