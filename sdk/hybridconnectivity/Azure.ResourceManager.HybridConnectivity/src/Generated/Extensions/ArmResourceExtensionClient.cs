@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public virtual EndpointResourceCollection GetEndpointResources()
         {
-            return new EndpointResourceCollection(Client, Id);
+            return GetCachedClient(Client => new EndpointResourceCollection(Client, Id));
         }
     }
 }
