@@ -1,38 +1,39 @@
 # Developer driven evolution
-To grow up a protocol method that returns raw JSON to a model, steps are:
+To add a convenience API that returns raw JSON to a model, steps are:
 
-**Pick the best grow-up method name fitting your scenario.** You could use the same method name as the initial protocol method only when your grow-up method has different **required** parameter list. E.g.,
-- ```(string feedId, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have the same required parameter list. You cannot add the grow-up method as an overload method by leveraging the initial method name, because it will cause an ambiguous compile error when you call it without `RequestContext`/`CancellationToken`.
+**Pick the best convenience method name fitting your scenario.** You could use the same method name as the initial protocol method only when your convenience method has different **required** parameter list. E.g.,
+- ```(string feedId, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have the same required parameter list. You cannot add the convenience method as an overload method by leveraging the initial method name, because it will cause an ambiguous compile error when you call it without `RequestContext`/`CancellationToken`.
 - ```(RequestContent content, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have different required parameter list. You are safe to use same method name with the initial protocol name.
 
-If your grow-up method has the same parameter list as that of the protocol method, we suggest 
-- Adding a suffix `Value` to the initial method name as the grow-up method name, if the initial method is singular (e.g., `GetMetricFeedbackAsync`).
-- Adding a suffix `Values` to the initial method name as the grow-up method name, if the initial method is plural (e.g., `GetMetricFeedbacksAsync`).
+If your convenience method has the same parameter list as that of the protocol method, we suggest 
+- Adding a suffix `Value` to the initial method name as the convenience method name, if the initial method is singular (e.g., `GetMetricFeedbackAsync`).
+- Adding a suffix `Values` to the initial method name as the convenience method name, if the initial method is plural (e.g., `GetMetricFeedbacksAsync`).
 
-**Add implict casting or helper method in generated or handcrafted model.** Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
+**Add helper method mapping between raw response and model in generated or handcrafted model.** Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
 ```C#
 namespace Azure.AI.MetricsAdvisor
 {
     public partial class MetricFeedback
     {
-        // Add implicit casting
-        public static implicit operator MetricFeedback(Response response)
-        {
-            // Add your deserialization logic in DeserializeMetricFeedback
-            return DeserializeMetricFeedback(JsonDocument.Parse(response.Content.ToMemory()).RootElement);
-        }
-
-        // Add helper method 
+        // Mapping raw response to model
         internal static MetricFeedback FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             // Add your deserialization logic in DeserializeMetricFeedback
             return DeserializeMetricFeedback(document.RootElement);
         }
+
+        // Mapping model to raw response
+        internal static RequestContent ToRequestContent(MetricFeedback metricFeedback)
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(metricFeedback);
+            return content;
+        }
     }
 }
 ```
-**Call the protocol method and map returned raw response to model.** You could call the protocol method inside your grow-up method and map the returned raw response to model. See different scenarios and corresponding examples below. 
+**Call the protocol method and map returned raw response to model.** You could call the protocol method inside your convenience method and map the returned raw response to model. See different scenarios and corresponding examples below. 
 
 
 ## Improve a GET method that returns raw JSON to return a model
@@ -49,7 +50,7 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Improve the GET method**
+**Improve the GET method (MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
 {
@@ -61,8 +62,6 @@ namespace Azure.AI.MetricsAdvisor
             // Call protocol method
             Response response = await GetMetricFeedbackAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
 
-            // Casting Response to Model
-            MetricFeedback value = response;
             // Calling deserialization helper
             MetricFeedback value = MetricFeedback.FromResponse(response);
         }
@@ -84,7 +83,7 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Improve the GET paging method**
+**Improve the GET paging method (MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
 {
@@ -96,8 +95,6 @@ namespace Azure.AI.MetricsAdvisor
             // Call protocol method
             AsyncPageable<BinaryData> pageableBindaryData = GetMetricFeedbacksAsync(feedbackId, new RequestContext() { CancellationToken = cancellationToken });
 
-            // Casting Response to Model
-            return PageableHelpers.Select(pageableBindaryData, response => ((MetricFeedback)response).Values);
             // Calling deserialization helper
             return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
         }
@@ -118,7 +115,7 @@ namespace Azure.AI.MetricsAdvisor
     }
 }
 ```
-**Improve the POST method**
+**Improve the POST method (MetricsAdvisorClient.cs):**
 ``` C#
 namespace Azure.AI.MetricsAdvisor
 {
@@ -128,14 +125,11 @@ namespace Azure.AI.MetricsAdvisor
         public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default)
         {
             // Convert model to binary content
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(feedback);
+            RequestContent requestContent = MetricFeedback.ToRequestContent(feedback);
 
             // Call protocol method
-            Response response = await CreateMetricFeedbackAsync(content, new RequestContext() { CancellationToken = cancellationToken });
+            Response response = await CreateMetricFeedbackAsync(requestContent, new RequestContext() { CancellationToken = cancellationToken });
 
-            // Casting Response to Model
-            MetricFeedback value = response;
             // Calling deserialization helper
             MetricFeedback value = MetricFeedback.FromResponse(response);
         }
