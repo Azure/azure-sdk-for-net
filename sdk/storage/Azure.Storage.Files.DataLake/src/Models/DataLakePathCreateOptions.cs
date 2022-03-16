@@ -63,6 +63,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary>
         /// Optional.  Proposed LeaseId.
+        /// Does not apply to directories.
         /// </summary>
         public string LeaseId { get; set; }
 
@@ -70,11 +71,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Optional.  Specifies the duration of the lease, in seconds, or specify
         /// <see cref="DataLakePathClient.InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
+        /// Does not apply to directories.
         /// </summary>
         public TimeSpan? LeaseDuration { get; set; }
 
         /// <summary>
         /// Duration before file should be deleted.
+        /// Does not apply to directories.
         /// If <see cref="TimeToExpire"/> is set, <see cref="SetExpiryRelativeTo"/> must be set.
         /// <see cref="TimeToExpire"/> and <see cref="ExpiresOn"/> cannot both be set.
         /// </summary>
@@ -84,6 +87,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Specifies if TimeToExpire should be
         /// set relative to the file's creation time, or the current
         /// time.  Defaults to current time.
+        /// Does not apply to directories.
         /// If <see cref="SetExpiryRelativeTo"/> is set, <see cref="TimeToExpire"/> must be set.
         /// </summary>
         public DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get; private set; }
@@ -92,6 +96,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The <see cref="DateTimeOffset"/> to set for when
         /// the file will be deleted.  If null, the existing
         /// ExpiresOn time on the file will be removed, if it exists.
+        /// Does not apply to directories.
         /// <see cref="ExpiresOn"/> and <see cref="TimeToExpire"/> cannot both be set.
         /// </summary>
         public DateTimeOffset? ExpiresOn { get; private set; }
