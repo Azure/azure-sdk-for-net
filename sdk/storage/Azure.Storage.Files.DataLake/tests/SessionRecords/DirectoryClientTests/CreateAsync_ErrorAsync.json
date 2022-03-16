@@ -1,46 +1,40 @@
-﻿{
+{
   "Entries": [
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-e7fd8cc0-a419-cd4e-0a5b-117b0bde0404/test-directory-6cb4f058-590e-f4eb-788c-45df789a2015?resource=directory",
+      "RequestUri": "https://cgcxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-5d8df4d7-5f7c-6778-3eb3-6ab48c00d72f/test-directory-24e001cd-33b2-6b1f-f9ac-f37093372d84?resource=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ef3894e294d04e43ab93583d8c8dc545-0b61aa32a46b1e45-00",
-        "User-Agent": [
-          "azsdk-net-Storage.Files.DataLake/12.7.0-alpha.20210202.1",
-          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
-        ],
-        "x-ms-client-request-id": "1a224e87-972a-0ef5-3398-9334584c236f",
-        "x-ms-date": "Tue, 02 Feb 2021 21:42:27 GMT",
+        "Content-Length": "0",
+        "traceparent": "00-e784f7bba61ccd45b3dfeaebd4558b4e-8e8ce7b4455ccc4a-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.10.0-alpha.20220316.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "8be60c9a-b320-2d7c-fa22-a57e390a53f4",
+        "x-ms-date": "Wed, 16 Mar 2022 20:29:16 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-06-08"
+        "x-ms-version": "2021-08-06"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "175",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 02 Feb 2021 21:42:27 GMT",
-        "Server": [
-          "Windows-Azure-HDFS/1.0",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "x-ms-client-request-id": "1a224e87-972a-0ef5-3398-9334584c236f",
+        "Date": "Wed, 16 Mar 2022 20:29:15 GMT",
+        "x-ms-client-request-id": "8be60c9a-b320-2d7c-fa22-a57e390a53f4",
         "x-ms-error-code": "FilesystemNotFound",
-        "x-ms-request-id": "80e42bc5-501f-0065-14ac-f9d11b000000",
-        "x-ms-version": "2021-06-08"
+        "x-ms-request-id": "bdd31620-a01f-0005-7074-39f0c9000000",
+        "x-ms-version": "2021-08-06"
       },
       "ResponseBody": {
         "error": {
           "code": "FilesystemNotFound",
-          "message": "The specified filesystem does not exist.\nRequestId:80e42bc5-501f-0065-14ac-f9d11b000000\nTime:2021-02-02T21:42:27.9702977Z"
+          "message": "The specified filesystem does not exist.\nRequestId:bdd31620-a01f-0005-7074-39f0c9000000\nTime:2022-03-16T20:29:16.1905359Z"
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "547266223",
-    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\nseannse\nU2FuaXRpemVk\nhttps://seannse.blob.core.windows.net\nhttps://seannse.file.core.windows.net\nhttps://seannse.queue.core.windows.net\nhttps://seannse.table.core.windows.net\n\n\n\n\nhttps://seannse-secondary.blob.core.windows.net\nhttps://seannse-secondary.file.core.windows.net\nhttps://seannse-secondary.queue.core.windows.net\nhttps://seannse-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seannse.blob.core.windows.net/;QueueEndpoint=https://seannse.queue.core.windows.net/;FileEndpoint=https://seannse.file.core.windows.net/;BlobSecondaryEndpoint=https://seannse-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seannse-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seannse-secondary.file.core.windows.net/;AccountName=seannse;AccountKey=Sanitized\n\n\n"
+    "RandomSeed": "476910862",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\ncgcxscnapby3pev24a\nU2FuaXRpemVk\nhttps://cgcxscnapby3pev24a.blob.preprod.core.windows.net\nhttps://cgcxscnapby3pev24a.file.core.windows.net\nhttps://cgcxscnapby3pev24a.queue.core.windows.net\nhttps://cgcxscnapby3pev24a.table.core.windows.net\n\n\n\n\nhttps://cgcxscnapby3pev24a-secondary.blob.core.windows.net\nhttps://cgcxscnapby3pev24a-secondary.file.core.windows.net\nhttps://cgcxscnapby3pev24a-secondary.queue.core.windows.net\nhttps://cgcxscnapby3pev24a-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://cgcxscnapby3pev24a.blob.preprod.core.windows.net/;QueueEndpoint=https://cgcxscnapby3pev24a.queue.core.windows.net/;FileEndpoint=https://cgcxscnapby3pev24a.file.core.windows.net/;BlobSecondaryEndpoint=https://cgcxscnapby3pev24a-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://cgcxscnapby3pev24a-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://cgcxscnapby3pev24a-secondary.file.core.windows.net/;AccountName=cgcxscnapby3pev24a;AccountKey=Sanitized\n\n\n"
   }
 }

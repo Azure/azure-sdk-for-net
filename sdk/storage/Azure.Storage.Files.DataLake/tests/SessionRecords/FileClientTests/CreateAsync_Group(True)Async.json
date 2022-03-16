@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://cgcxscnapby3pev24a.blob.preprod.core.windows.net/test-filesystem-5a631963-1e89-61e0-0e79-48e0fc586228?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-24a6f66ab2a6e449ae30345319f9f355-391fa20717db064f-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.10.0-alpha.20220316.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-blob-public-access": "container",
+        "x-ms-client-request-id": "78d954c1-df28-eb96-e1f1-6f9c27e364a2",
+        "x-ms-date": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Date": "Wed, 16 Mar 2022 20:29:45 GMT",
+        "ETag": "\u00220x8DA078BB60AC4AA\u0022",
+        "Last-Modified": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "78d954c1-df28-eb96-e1f1-6f9c27e364a2",
+        "x-ms-request-id": "5cd5e3c6-601e-0002-4774-39e805000000",
+        "x-ms-version": "2021-08-06"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://cgcxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-5a631963-1e89-61e0-0e79-48e0fc586228/test-directory-460b7afa-c4b2-f060-8749-691c770bd40b?resource=directory",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-239b612159ec8f4d833d3293ea91a586-cbd26cf422cce040-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.10.0-alpha.20220316.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "13da0408-7ef7-fcf3-f4e8-f0de767a73d5",
+        "x-ms-date": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 16 Mar 2022 20:29:45 GMT",
+        "ETag": "\u00220x8DA078BB619840E\u0022",
+        "Last-Modified": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-client-request-id": "13da0408-7ef7-fcf3-f4e8-f0de767a73d5",
+        "x-ms-request-id": "bdd316c8-a01f-0005-1574-39f0c9000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://cgcxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-5a631963-1e89-61e0-0e79-48e0fc586228/test-directory-460b7afa-c4b2-f060-8749-691c770bd40b/test-file-84e7641d-bdc4-0f22-7a8a-e4719eb0ed91?resource=file",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "If-None-Match": "*",
+        "traceparent": "00-6954e3226eabde4c880231448ddb504f-ec1509cf321d5e48-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.10.0-alpha.20220316.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "1b885efa-0066-5ca4-50b1-d5a00a8a1558",
+        "x-ms-date": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-group": "73135b56-c031-3613-ae23-b297fa210ae7",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Wed, 16 Mar 2022 20:29:45 GMT",
+        "ETag": "\u00220x8DA078BB6253F56\u0022",
+        "Last-Modified": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-client-request-id": "1b885efa-0066-5ca4-50b1-d5a00a8a1558",
+        "x-ms-request-id": "bdd316c9-a01f-0005-1674-39f0c9000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://cgcxscnapby3pev24a.dfs.preprod.core.windows.net/test-filesystem-5a631963-1e89-61e0-0e79-48e0fc586228/test-directory-460b7afa-c4b2-f060-8749-691c770bd40b/test-file-84e7641d-bdc4-0f22-7a8a-e4719eb0ed91?action=getAccessControl",
+      "RequestMethod": "HEAD",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6510413401452e46aa690e91f4d8f821-45fa4ce05d7db747-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.10.0-alpha.20220316.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9b9d6ec5-ee99-cc80-ab36-4e5c97a94157",
+        "x-ms-date": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Date": "Wed, 16 Mar 2022 20:29:45 GMT",
+        "ETag": "\u00220x8DA078BB6253F56\u0022",
+        "Last-Modified": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-acl": "user::rw-,group::r--,other::---",
+        "x-ms-client-request-id": "9b9d6ec5-ee99-cc80-ab36-4e5c97a94157",
+        "x-ms-group": "73135b56-c031-3613-ae23-b297fa210ae7",
+        "x-ms-owner": "$superuser",
+        "x-ms-permissions": "rw-r-----",
+        "x-ms-request-id": "bdd316ca-a01f-0005-1774-39f0c9000000",
+        "x-ms-version": "2021-08-06"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://cgcxscnapby3pev24a.blob.preprod.core.windows.net/test-filesystem-5a631963-1e89-61e0-0e79-48e0fc586228?restype=container",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7e448a6bd7aee24caa13209e6b834c34-0da89cf40acc8f43-00",
+        "User-Agent": "azsdk-net-Storage.Files.DataLake/12.10.0-alpha.20220316.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "9bdba814-7aed-91bf-7cd6-a2e7ff275167",
+        "x-ms-date": "Wed, 16 Mar 2022 20:29:46 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2021-08-06"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Date": "Wed, 16 Mar 2022 20:29:45 GMT",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "9bdba814-7aed-91bf-7cd6-a2e7ff275167",
+        "x-ms-request-id": "5cd5e3c8-601e-0002-4874-39e805000000",
+        "x-ms-version": "2021-08-06"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1501337287",
+    "Storage_TestConfigHierarchicalNamespace": "NamespaceTenant\ncgcxscnapby3pev24a\nU2FuaXRpemVk\nhttps://cgcxscnapby3pev24a.blob.preprod.core.windows.net\nhttps://cgcxscnapby3pev24a.file.core.windows.net\nhttps://cgcxscnapby3pev24a.queue.core.windows.net\nhttps://cgcxscnapby3pev24a.table.core.windows.net\n\n\n\n\nhttps://cgcxscnapby3pev24a-secondary.blob.core.windows.net\nhttps://cgcxscnapby3pev24a-secondary.file.core.windows.net\nhttps://cgcxscnapby3pev24a-secondary.queue.core.windows.net\nhttps://cgcxscnapby3pev24a-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://cgcxscnapby3pev24a.blob.preprod.core.windows.net/;QueueEndpoint=https://cgcxscnapby3pev24a.queue.core.windows.net/;FileEndpoint=https://cgcxscnapby3pev24a.file.core.windows.net/;BlobSecondaryEndpoint=https://cgcxscnapby3pev24a-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://cgcxscnapby3pev24a-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://cgcxscnapby3pev24a-secondary.file.core.windows.net/;AccountName=cgcxscnapby3pev24a;AccountKey=Sanitized\n\n\n"
+  }
+}
