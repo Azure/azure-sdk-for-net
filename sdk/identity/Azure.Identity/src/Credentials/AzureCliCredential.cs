@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -162,12 +163,14 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException($"{AzureCliFailedError} {Troubleshoot} {exception.Message}");
             }
 
+            AccessToken token = DeserializeOutput(output);
             if (_logAccountDetails)
             {
-                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
+                var accountDetails = TokenHelper.ParseAccountInfoFromToken(token.Token);
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
             }
 
-            return DeserializeOutput(output);
+            return token;
         }
 
         private ProcessStartInfo GetAzureCliProcessStartInfo(string fileName, string argument) =>

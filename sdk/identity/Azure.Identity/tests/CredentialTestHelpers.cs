@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
 
             var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
             var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
-            var token = Guid.NewGuid().ToString();
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
             var json = $"{{ \"accessToken\": \"{token}\", \"expiresOn\": \"{expiresOnString}\" }}";
             return (token, expiresOn, json);
         }
@@ -32,7 +32,7 @@ namespace Azure.Identity.Tests
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
         {
             var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
-            var token = Guid.NewGuid().ToString();
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
             var json = $"{{ \"accessToken\": \"{token}\", \"expiresIn\": {seconds} }}";
             return (token, expiresOn, json);
         }
@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
         {
             var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
             var expiresOn = DateTimeOffset.Parse(expiresOnString,  CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
-            var token = Guid.NewGuid().ToString();
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
             var xml = @$"<Object Type=""Microsoft.Azure.Commands.Profile.Models.PSAccessToken""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.DateTimeOffset"">{expiresOnString}</Property><Property Name=""TenantId"" Type=""System.String"">{Guid.NewGuid().ToString()}</Property><Property Name=""UserId"" Type=""System.String"">foo@contoso.com</Property><Property Name=""Type"" Type=""System.String"">Bearer</Property></Object>";
             return (token, expiresOn, xml);
         }
@@ -52,7 +52,7 @@ namespace Azure.Identity.Tests
         {
             var expiresOnString = DateTimeOffset.UtcNow.Add(expiresOffset).ToString("s");
             var expiresOn = DateTimeOffset.Parse(expiresOnString);
-            var token = Guid.NewGuid().ToString();
+            var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
             var json = $"{{ \"access_token\": \"{token}\", \"expires_on\": \"{expiresOnString}\" }}";
             return (token, expiresOn, json);
         }

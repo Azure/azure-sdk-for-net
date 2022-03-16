@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -89,7 +90,8 @@ namespace Azure.Identity
 
                 if (_logAccountDetails)
                 {
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
+                    var accountDetails = TokenHelper.ParseAccountInfoFromToken(accessToken.Token);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
 
                 return scope.Succeeded(accessToken);
