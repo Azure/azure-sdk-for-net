@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Avro.Specific;
 using Azure;
 using Azure.Messaging;
 using Azure.Messaging.EventHubs;
@@ -32,6 +33,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee { Age = 42, Name = "Caketown" };
 
             #region Snippet:SchemaRegistryAvroEncodeDecodeBinaryContent
+
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             BinaryContent content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
 
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
-            var employee = new Employee() { Age = 42, Name = "Caketown"};
+            var employee = new Employee() { Age = 42, Name = "Caketown" };
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             var content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
@@ -82,7 +84,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
                 async () => await serializer.DeserializeAsync<Employee_V2>(content),
-                Throws.InstanceOf<AvroException>());
+                Throws.InstanceOf<AvroSerializationException>().And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
+        }
+
+        [RecordedTest]
+        public void ThrowsAvroSerializationExceptionForInvalidAvro()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+            var invalid = new InvalidAvroModel();
+
+            var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
+            Assert.That(
+                async () => await serializer.SerializeAsync<BinaryContent, InvalidAvroModel>(invalid),
+                Throws.InstanceOf<AvroSerializationException>().And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
         }
 
         [RecordedTest]
@@ -98,10 +113,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var content = await serializer.SerializeAsync<BinaryContent, GenericRecord>(record);
 
             var deserializedObject = await serializer.DeserializeAsync<GenericRecord>(content);
-            var readRecord = deserializedObject as GenericRecord;
-            Assert.IsNotNull(readRecord);
-            Assert.AreEqual("Caketown", readRecord.GetValue(0));
-            Assert.AreEqual(42, readRecord.GetValue(1));
+            Assert.IsNotNull(deserializedObject);
+            Assert.AreEqual("Caketown", deserializedObject.GetValue(0));
+            Assert.AreEqual(42, deserializedObject.GetValue(1));
         }
 
         [RecordedTest]
@@ -169,7 +183,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 #endif
             #endregion
 
-            Assert.IsFalse(((BinaryContent) eventData).IsReadOnly);
+            Assert.IsFalse(eventData.IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
             Assert.AreEqual(2, contentType.Length);
             Assert.AreEqual("avro/binary", contentType[0]);
@@ -272,6 +286,15 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.IsNotNull(deserialized);
             Assert.AreEqual("Caketown", deserialized.Name);
             Assert.AreEqual(42, deserialized.Age);
+        }
+
+        private class InvalidAvroModel : ISpecificRecord
+        {
+            public virtual Schema Schema => Schema.Parse("{\"type\":\"record\",\"name\":\"Invalid\"}");
+
+            public virtual object Get(int fieldPos) => throw new NotImplementedException();
+
+            public virtual void Put(int fieldPos, object fieldValue) => throw new NotImplementedException();
         }
     }
 }

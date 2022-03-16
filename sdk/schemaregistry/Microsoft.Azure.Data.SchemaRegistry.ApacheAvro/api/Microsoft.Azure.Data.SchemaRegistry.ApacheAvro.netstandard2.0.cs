@@ -1,5 +1,12 @@
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 {
+    public partial class AvroSerializationException : System.Exception
+    {
+        public AvroSerializationException() { }
+        protected AvroSerializationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public AvroSerializationException(string message) { }
+        public AvroSerializationException(string message, System.Exception innerException) { }
+    }
     public partial class SchemaRegistryAvroSerializer
     {
         public SchemaRegistryAvroSerializer(Azure.Data.SchemaRegistry.SchemaRegistryClient client, string groupName, Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.SchemaRegistryAvroSerializerOptions options = null) { }

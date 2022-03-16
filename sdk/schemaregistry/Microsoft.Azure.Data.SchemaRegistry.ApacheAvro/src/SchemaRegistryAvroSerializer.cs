@@ -146,23 +146,31 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             dataType ??= value?.GetType() ?? typeof(object);
 
             var supportedType = GetSupportedTypeOrThrow(dataType);
-            var writer = GetWriterAndSchema(value, supportedType, out var schema);
 
-            using Stream stream = new MemoryStream();
-            var binaryEncoder = new BinaryEncoder(stream);
-
-            writer.Write(value, binaryEncoder);
-            binaryEncoder.Flush();
-            stream.Position = 0;
-            BinaryData data = BinaryData.FromStream(stream);
-
-            if (async)
+            try
             {
-                return (await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false), data);
+                var writer = GetWriterAndSchema(value, supportedType, out var schema);
+
+                using Stream stream = new MemoryStream();
+                var binaryEncoder = new BinaryEncoder(stream);
+
+                writer.Write(value, binaryEncoder);
+                binaryEncoder.Flush();
+                stream.Position = 0;
+                BinaryData data = BinaryData.FromStream(stream);
+
+                if (async)
+                {
+                    return (await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false), data);
+                }
+                else
+                {
+                    return (GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted(), data);
+                }
             }
-            else
+            catch (AvroException ex)
             {
-                return (GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted(), data);
+                throw new AvroSerializationException("An error occurred while attempting to serialize to Avro.", ex);
             }
         }
 
@@ -350,28 +358,36 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             SupportedType supportedType = GetSupportedTypeOrThrow(dataType);
 
-            Schema writerSchema;
-            if (async)
+            try
             {
-                writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
-            }
+                Schema writerSchema;
+                if (async)
+                {
+                    writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
+                }
 
-            var binaryDecoder = new BinaryDecoder(data.ToStream());
+                var binaryDecoder = new BinaryDecoder(data.ToStream());
 
-            if (supportedType == SupportedType.SpecificRecord)
-            {
-                object returnInstance = Activator.CreateInstance(dataType);
-                DatumReader<object> reader = GetReader(writerSchema, ((ISpecificRecord)returnInstance).Schema, SupportedType.SpecificRecord);
-                return reader.Read(reuse: returnInstance, binaryDecoder);
+                if (supportedType == SupportedType.SpecificRecord)
+                {
+                    object returnInstance = Activator.CreateInstance(dataType);
+                    DatumReader<object> reader = GetReader(writerSchema, ((ISpecificRecord)returnInstance).Schema,
+                        SupportedType.SpecificRecord);
+                    return reader.Read(reuse: returnInstance, binaryDecoder);
+                }
+                else
+                {
+                    DatumReader<object> reader = GetReader(writerSchema, writerSchema, supportedType);
+                    return reader.Read(reuse: null, binaryDecoder);
+                }
             }
-            else
+            catch (AvroException ex)
             {
-                DatumReader<object> reader = GetReader(writerSchema, writerSchema, supportedType);
-                return reader.Read(reuse: null, binaryDecoder);
+                throw new AvroSerializationException("An error occurred while attempting to deserialize Avro.", ex);
             }
         }
 
