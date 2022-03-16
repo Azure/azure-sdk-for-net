@@ -514,16 +514,6 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 StorageProfile.Validate();
             }
-            if (Resources != null)
-            {
-                foreach (var element in Resources)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
         }
     }
 }
