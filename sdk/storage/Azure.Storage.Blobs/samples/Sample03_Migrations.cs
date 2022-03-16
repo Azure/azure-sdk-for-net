@@ -950,7 +950,16 @@ namespace Azure.Storage.Blobs.Samples
                 await blockBlobClient.StageBlockAsync(
                     blockId,
                     blockContentStream,
-                    transactionalContentHash: precalculatedBlockHash);
+                    new BlockBlobStageBlockOptions
+                    {
+                        TransactionalValidationOptions = new UploadTransferValidationOptions
+                        {
+                            Algorithm = ValidationAlgorithm.MD5,
+                            // a precalculated hash can be provided as follows,
+                            // the sdk will calculate one for you otherwise
+                            PrecalculatedChecksum = precalculatedBlockHash
+                        }
+                    });
 
                 // upload more blocks as needed
 
