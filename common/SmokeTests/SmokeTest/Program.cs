@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 // The goal of the smoke tests is to ensure that each of the Azure SDK
 // packages can be used in the same project without causing conflicts.
@@ -144,27 +146,6 @@ void ProcessType(Type type)
                 // Expected; this is a known scenario where the type is not impactful to the
                 // Azure SDK experience and cane be safely ignored.
             }
-            catch (TargetInvocationException ex) when (ex.InnerException is FileNotFoundException fileEx)
-            {
-                // Expected; this indicates that a library is not available on a platform.  For
-                // example, System.Windows.Forms on macOS.
-
-                LogInformation($"\t[{ fileEx.FileName }] needed for type [{ type.FullName }] was not found.  This is expected for some platform-specific types, such as those in System.Windows.Forms when running on a non-Windows platform.");
-            }
-            catch (TargetInvocationException ex) when (ex.InnerException is DllNotFoundException dllEx)
-            {
-                // Expected; this indicates that a library is not available on a platform.  For
-                // example, System.Windows.Forms on macOS.
-
-                LogInformation($"\tThe assembly needed for type [{ type.FullName }] was not found.  This is expected for some platform-specific types, such as those in System.Windows.Forms when running on a non-Windows platform.");
-            }
-            catch (TargetInvocationException ex)
-                when ((ex.InnerException is PlatformNotSupportedException) || (ex.InnerException is NotSupportedException) || (ex.InnerException is TypeLoadException) || (ex.InnerException is TypeInitializationException))
-            {
-                // Expected; this indicates that a type is not available on a platform.  For example, Windows Principal-related types on Linux.
-
-                LogInformation($"\t[{ type.FullName }] is not available on this platform.  This is expected for some platform-specific types.");
-            }
         }
     }
     catch (Exception ex)
@@ -279,6 +260,16 @@ bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationE
     // Occurs when the parameterless constructor is present but the type cannot be constructed due to failing an internal state validation.
     ArgumentException => true,
     NullReferenceException => true,
+
+    // Occurs when the type is not supported on the current target/platform.
+    FileNotFoundException => true,
+    DllNotFoundException => true,
+    PlatformNotSupportedException => true,
+    NotSupportedException => true,
+    TypeLoadException => true,
+    TypeInitializationException => true,
+    ThreadStateException => true,
+    COMException => true,
 
     // Occurs when the assembly is locked; this is most likely a framework assembly.
     IOException ioEx when (ioEx.Message.ToLower().Contains("being used by another process.")) => true,
