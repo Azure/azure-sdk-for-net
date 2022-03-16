@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identitiy;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -88,12 +89,8 @@ namespace Azure.Identity
         {
             if (_logAccountDetails)
             {
-                string clientId = null;
-                if (result?.ClaimsPrincipal?.Identity is ClaimsIdentity claimsIdentity)
-                {
-                    clientId = claimsIdentity.Claims.FirstOrDefault(c => c.Type == "aud")?.Value;
-                }
-                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(clientId, result.TenantId, result.Account?.Username, result.UniqueId);
+                var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.AccessToken);
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? result.TenantId, accountDetails.Upn ?? result.Account?.Username, accountDetails.ObjectId ?? result.UniqueId);
             }
         }
     }

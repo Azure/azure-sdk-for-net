@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -113,6 +112,7 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
                 AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
+
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (Exception e)

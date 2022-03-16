@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
             expectedReplyUri = null;
             authCode = Guid.NewGuid().ToString();
             options = options ?? new TokenCredentialOptions();
-            expectedToken = Guid.NewGuid().ToString();
+            expectedToken = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.UtcNow.AddHours(1));
             expectedUserAssertion = Guid.NewGuid().ToString();
             expiresOn = DateTimeOffset.Now.AddHours(1);
             result = new AuthenticationResult(

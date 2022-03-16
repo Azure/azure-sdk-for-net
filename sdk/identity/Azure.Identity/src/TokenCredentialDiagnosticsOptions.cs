@@ -20,7 +20,7 @@ namespace Azure.Identity
         /// <item><description>The Application or Client Identifier</description></item>
         /// <item><description>User Principal Name</description></item>
         /// <item><description>Tenant Identifier</description></item>
-        /// <item><description>Object Identifier of the authenticated user</description></item>
+        /// <item><description>Object Identifier of the authenticated user or application</description></item>
         /// </list>
         /// </summary>
         public bool IsAccountIdentifierLoggingEnabled { get; set; }
