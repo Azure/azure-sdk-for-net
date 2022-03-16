@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
             Optional<object> mainTemplate = default;
             Optional<object> createUiDefinition = default;
             Optional<ApplicationNotificationPolicy> notificationPolicy = default;
-            Optional<ApplicationPackageLockingPolicyDefinition> lockingPolicy = default;
+            Optional<ApplicationPackageLockingPolicy> lockingPolicy = default;
             Optional<ApplicationDeploymentPolicy> deploymentPolicy = default;
             Optional<ApplicationManagementPolicy> managementPolicy = default;
             Optional<IList<ApplicationPolicy>> policies = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lockingPolicy = ApplicationPackageLockingPolicyDefinition.DeserializeApplicationPackageLockingPolicyDefinition(property0.Value);
+                            lockingPolicy = ApplicationPackageLockingPolicy.DeserializeApplicationPackageLockingPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("deploymentPolicy"))

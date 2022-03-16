@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Resources.Tests
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-C-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-"), Recording.GenerateAssetName("s1"));
-            Application application = (await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-"), Recording.GenerateAssetName("s1"));
+            ArmApplication application = (await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
             Assert.AreEqual(appName, application.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, null));
         }
 
         [TestCase]
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Resources.Tests
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-L-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-2-"), Recording.GenerateAssetName("s2"));
-            _ = await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData);
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-2-"), Recording.GenerateAssetName("s2"));
+            _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData);
             int count = 0;
-            await foreach (var tempApplication in rg.GetApplications().GetAllAsync())
+            await foreach (var tempApplication in rg.GetArmApplications().GetAllAsync())
             {
                 count++;
             }
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.Resources.Tests
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-L-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-3-"), Recording.GenerateAssetName("s3"));
-            _ = await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData);
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-3-"), Recording.GenerateAssetName("s3"));
+            _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData);
             int count = 0;
-            await foreach (var tempApplication in subscription.GetApplicationsAsync())
+            await foreach (var tempApplication in subscription.GetArmApplicationsAsync())
             {
                 if (tempApplication.Data.ApplicationDefinitionId == appDef.Id)
                 {
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Resources.Tests
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-G-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-4-"), Recording.GenerateAssetName("s4"));
-            Application application = (await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
-            Application getApplication = await rg.GetApplications().GetAsync(appName);
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-4-"), Recording.GenerateAssetName("s4"));
+            ArmApplication application = (await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
+            ArmApplication getApplication = await rg.GetArmApplications().GetAsync(appName);
             AssertValidApplication(application, getApplication);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplications().GetAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplications().GetAsync(null));
         }
 
-        private static void AssertValidApplication(Application model, Application getResult)
+        private static void AssertValidApplication(ArmApplication model, ArmApplication getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);

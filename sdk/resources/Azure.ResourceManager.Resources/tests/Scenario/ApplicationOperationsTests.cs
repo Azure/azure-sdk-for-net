@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Resources.Tests
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinition appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-D-");
-            ApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-5-"), Recording.GenerateAssetName("s5"));
-            Application application = (await rg.GetApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-5-"), Recording.GenerateAssetName("s5"));
+            ArmApplication application = (await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
             await application.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await application.GetAsync());
             Assert.AreEqual(404, ex.Status);

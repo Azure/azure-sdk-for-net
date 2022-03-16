@@ -9,11 +9,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationData : IUtf8JsonSerializable
+    public partial class PatchableArmApplicationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,8 +22,11 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("plan");
                 JsonSerializer.Serialize(writer, Plan);
             }
-            writer.WritePropertyName("kind");
-            writer.WriteStringValue(Kind);
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind");
+                writer.WriteStringValue(Kind);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
@@ -76,10 +78,10 @@ namespace Azure.ResourceManager.Resources
             writer.WriteEndObject();
         }
 
-        internal static ApplicationData DeserializeApplicationData(JsonElement element)
+        internal static PatchableArmApplicationData DeserializePatchableArmApplicationData(JsonElement element)
         {
             Optional<ArmPlan> plan = default;
-            string kind = default;
+            Optional<string> kind = default;
             Optional<ApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ApplicationSku> sku = default;
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Resources
             Optional<object> parameters = default;
             Optional<object> outputs = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<ApplicationBillingDetailsDefinition> billingDetails = default;
+            Optional<ApplicationBillingDetails> billingDetails = default;
             Optional<ApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<string> publisherTenantId = default;
             Optional<IReadOnlyList<ApplicationAuthorization>> authorizations = default;
@@ -237,7 +239,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            billingDetails = ApplicationBillingDetailsDefinition.DeserializeApplicationBillingDetailsDefinition(property0.Value);
+                            billingDetails = ApplicationBillingDetails.DeserializeApplicationBillingDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"))
@@ -339,7 +341,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new PatchableArmApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

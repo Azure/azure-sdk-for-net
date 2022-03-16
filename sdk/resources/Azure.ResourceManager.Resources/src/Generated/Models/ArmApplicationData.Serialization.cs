@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
-    public partial class PatchableApplicationData : IUtf8JsonSerializable
+    public partial class ArmApplicationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,11 +23,8 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("plan");
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind);
-            }
+            writer.WritePropertyName("kind");
+            writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
@@ -78,10 +76,10 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static PatchableApplicationData DeserializePatchableApplicationData(JsonElement element)
+        internal static ArmApplicationData DeserializeArmApplicationData(JsonElement element)
         {
             Optional<ArmPlan> plan = default;
-            Optional<string> kind = default;
+            string kind = default;
             Optional<ApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ApplicationSku> sku = default;
@@ -96,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<object> parameters = default;
             Optional<object> outputs = default;
             Optional<ProvisioningState> provisioningState = default;
-            Optional<ApplicationBillingDetailsDefinition> billingDetails = default;
+            Optional<ApplicationBillingDetails> billingDetails = default;
             Optional<ApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<string> publisherTenantId = default;
             Optional<IReadOnlyList<ApplicationAuthorization>> authorizations = default;
@@ -239,7 +237,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            billingDetails = ApplicationBillingDetailsDefinition.DeserializeApplicationBillingDetailsDefinition(property0.Value);
+                            billingDetails = ApplicationBillingDetails.DeserializeApplicationBillingDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"))
@@ -341,7 +339,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PatchableApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
     }
 }

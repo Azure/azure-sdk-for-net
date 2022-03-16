@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Resources
             return resourceGroup.GetDeployments().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Applications in the Application. </summary>
+        /// <summary> Gets a collection of ArmApplications in the ArmApplication. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Applications and their operations over a Application. </returns>
-        public static ApplicationCollection GetApplications(this ResourceGroup resourceGroup)
+        /// <returns> An object representing collection of ArmApplications and their operations over a ArmApplication. </returns>
+        public static ArmApplicationCollection GetArmApplications(this ResourceGroup resourceGroup)
         {
-            return GetExtensionClient(resourceGroup).GetApplications();
+            return GetExtensionClient(resourceGroup).GetArmApplications();
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public static async Task<Response<Application>> GetApplicationAsync(this ResourceGroup resourceGroup, string applicationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ArmApplication>> GetArmApplicationAsync(this ResourceGroup resourceGroup, string applicationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroup.GetArmApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        public static Response<Application> GetApplication(this ResourceGroup resourceGroup, string applicationName, CancellationToken cancellationToken = default)
+        public static Response<ArmApplication> GetArmApplication(this ResourceGroup resourceGroup, string applicationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetApplications().Get(applicationName, cancellationToken);
+            return resourceGroup.GetArmApplications().Get(applicationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>

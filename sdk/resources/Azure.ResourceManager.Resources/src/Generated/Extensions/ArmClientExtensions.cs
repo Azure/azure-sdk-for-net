@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region Application
-        /// <summary> Gets an object representing a Application along with the instance operations that can be performed on it but with no data. </summary>
+        #region ArmApplication
+        /// <summary> Gets an object representing a ArmApplication along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Application" /> object. </returns>
-        public static Application GetApplication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArmApplication" /> object. </returns>
+        public static ArmApplication GetArmApplication(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                Application.ValidateResourceId(id);
-                return new Application(client, id);
+                ArmApplication.ValidateResourceId(id);
+                return new ArmApplication(client, id);
             }
             );
         }

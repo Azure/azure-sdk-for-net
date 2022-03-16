@@ -147,6 +147,10 @@ directive:
       $["Operation"]["properties"]["display"] = undefined;
       $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
       $["JitRequestDefinitionListResult"]["x-ms-client-name"] = "JitRequestListResult";
+      $["Application"]["x-ms-client-name"] = "ArmApplication";
+      $["ApplicationPackageLockingPolicyDefinition"]["x-ms-client-name"] = "ApplicationPackageLockingPolicy";
+      $["ApplicationBillingDetailsDefinition"]["x-ms-client-name"] = "ApplicationBillingDetails";
+      $["JitApproverDefinition"]["x-ms-client-name"] = "JitApprover";
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -156,6 +160,12 @@ directive:
   - from: resources.json
     where: $.definitions.DeploymentWhatIf.properties.location
     transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
+  - from: managedapplications.json
+    where: $.definitions
+    transform: >
+      $.Application['x-ms-client-name'] = 'ArmApplication';
+      $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ApplicationPackageLockingPolicy';
+      $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ApplicationBillingDetails';
   - from: managedapplications.json
     where: $.definitions
     transform: >

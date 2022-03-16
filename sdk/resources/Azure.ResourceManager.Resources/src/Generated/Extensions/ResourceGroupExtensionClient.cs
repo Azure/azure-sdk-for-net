@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Resources
             return GetCachedClient(Client => new DeploymentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of Applications in the Application. </summary>
-        /// <returns> An object representing collection of Applications and their operations over a Application. </returns>
-        public virtual ApplicationCollection GetApplications()
+        /// <summary> Gets a collection of ArmApplications in the ArmApplication. </summary>
+        /// <returns> An object representing collection of ArmApplications and their operations over a ArmApplication. </returns>
+        public virtual ArmApplicationCollection GetArmApplications()
         {
-            return GetCachedClient(Client => new ApplicationCollection(Client, Id));
+            return GetCachedClient(Client => new ArmApplicationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>

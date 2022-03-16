@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()
         {
-            Value = new ChangeTrackingList<ApplicationData>();
+            Value = new ChangeTrackingList<ArmApplicationData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         /// <param name="value"> The array of managed applications. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ApplicationListResult(IReadOnlyList<ApplicationData> value, string nextLink)
+        internal ApplicationListResult(IReadOnlyList<ArmApplicationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The array of managed applications. </summary>
-        public IReadOnlyList<ApplicationData> Value { get; }
+        public IReadOnlyList<ArmApplicationData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }
