@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> An object representing collection of PolicyAssignments and their operations over a PolicyAssignment. </returns>
         public virtual PolicyAssignmentCollection GetPolicyAssignments()
         {
-            return new PolicyAssignmentCollection(Client, Id);
+            return GetCachedClient(Client => new PolicyAssignmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> An object representing collection of PolicyExemptions and their operations over a PolicyExemption. </returns>
         public virtual PolicyExemptionCollection GetPolicyExemptions()
         {
-            return new PolicyExemptionCollection(Client, Id);
+            return GetCachedClient(Client => new PolicyExemptionCollection(Client, Id));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> An object representing collection of ManagementLocks and their operations over a ManagementLock. </returns>
         public virtual ManagementLockCollection GetManagementLocks()
         {
-            return new ManagementLockCollection(Client, Id);
+            return GetCachedClient(Client => new ManagementLockCollection(Client, Id));
         }
 
         /// <summary>

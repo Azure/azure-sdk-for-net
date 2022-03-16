@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FirewallPolicyRuleCollectionGroups and their operations over a FirewallPolicyRuleCollectionGroup. </returns>
         public virtual FirewallPolicyRuleCollectionGroupCollection GetFirewallPolicyRuleCollectionGroups()
         {
-            return new FirewallPolicyRuleCollectionGroupCollection(Client, Id);
+            return GetCachedClient(Client => new FirewallPolicyRuleCollectionGroupCollection(Client, Id));
         }
 
         /// <summary>

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of UserSessions and their operations over a UserSession. </returns>
         public virtual UserSessionCollection GetUserSessions()
         {
-            return new UserSessionCollection(Client, Id);
+            return GetCachedClient(Client => new UserSessionCollection(Client, Id));
         }
 
         /// <summary>

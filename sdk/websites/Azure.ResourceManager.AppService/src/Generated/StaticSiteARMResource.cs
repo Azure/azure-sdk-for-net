@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSitePrivateEndpointConnections and their operations over a StaticSitePrivateEndpointConnection. </returns>
         public virtual StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections()
         {
-            return new StaticSitePrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new StaticSitePrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSiteBuildARMResources and their operations over a StaticSiteBuildARMResource. </returns>
         public virtual StaticSiteBuildARMResourceCollection GetStaticSiteBuildARMResources()
         {
-            return new StaticSiteBuildARMResourceCollection(Client, Id);
+            return GetCachedClient(Client => new StaticSiteBuildARMResourceCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSiteUserProvidedFunctionApps and their operations over a StaticSiteUserProvidedFunctionApp. </returns>
         public virtual StaticSiteUserProvidedFunctionAppCollection GetStaticSiteUserProvidedFunctionApps()
         {
-            return new StaticSiteUserProvidedFunctionAppCollection(Client, Id);
+            return GetCachedClient(Client => new StaticSiteUserProvidedFunctionAppCollection(Client, Id));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSiteCustomDomainOverviewARMResources and their operations over a StaticSiteCustomDomainOverviewARMResource. </returns>
         public virtual StaticSiteCustomDomainOverviewARMResourceCollection GetStaticSiteCustomDomainOverviewARMResources()
         {
-            return new StaticSiteCustomDomainOverviewARMResourceCollection(Client, Id);
+            return GetCachedClient(Client => new StaticSiteCustomDomainOverviewARMResourceCollection(Client, Id));
         }
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkGatewayNatRules and their operations over a VirtualNetworkGatewayNatRule. </returns>
         public virtual VirtualNetworkGatewayNatRuleCollection GetVirtualNetworkGatewayNatRules()
         {
-            return new VirtualNetworkGatewayNatRuleCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkGatewayNatRuleCollection(Client, Id));
         }
 
         /// <summary>

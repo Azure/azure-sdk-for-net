@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of GremlinGraphs and their operations over a GremlinGraph. </returns>
         public virtual GremlinGraphCollection GetGremlinGraphs()
         {
-            return new GremlinGraphCollection(Client, Id);
+            return GetCachedClient(Client => new GremlinGraphCollection(Client, Id));
         }
 
         /// <summary>

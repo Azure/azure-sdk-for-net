@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerJobAgentJobExecutions and their operations over a ServerJobAgentJobExecution. </returns>
         public virtual ServerJobAgentJobExecutionCollection GetServerJobAgentJobExecutions()
         {
-            return new ServerJobAgentJobExecutionCollection(Client, Id);
+            return GetCachedClient(Client => new ServerJobAgentJobExecutionCollection(Client, Id));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerJobAgentJobSteps and their operations over a ServerJobAgentJobStep. </returns>
         public virtual ServerJobAgentJobStepCollection GetServerJobAgentJobSteps()
         {
-            return new ServerJobAgentJobStepCollection(Client, Id);
+            return GetCachedClient(Client => new ServerJobAgentJobStepCollection(Client, Id));
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of JobVersions and their operations over a JobVersion. </returns>
         public virtual JobVersionCollection GetJobVersions()
         {
-            return new JobVersionCollection(Client, Id);
+            return GetCachedClient(Client => new JobVersionCollection(Client, Id));
         }
 
         /// <summary>

@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of DatabaseAccounts and their operations over a DatabaseAccount. </returns>
         public virtual DatabaseAccountCollection GetDatabaseAccounts()
         {
-            return new DatabaseAccountCollection(Client, Id);
+            return GetCachedClient(Client => new DatabaseAccountCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ClusterResources in the ClusterResource. </summary>
         /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
         public virtual ClusterResourceCollection GetClusterResources()
         {
-            return new ClusterResourceCollection(Client, Id);
+            return GetCachedClient(Client => new ClusterResourceCollection(Client, Id));
         }
     }
 }

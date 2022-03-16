@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PrivateDnsZoneGroups and their operations over a PrivateDnsZoneGroup. </returns>
         public virtual PrivateDnsZoneGroupCollection GetPrivateDnsZoneGroups()
         {
-            return new PrivateDnsZoneGroupCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateDnsZoneGroupCollection(Client, Id));
         }
 
         /// <summary>
