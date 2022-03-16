@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             );
         }
 
-        /// <summary> Gets a collection of DeletedServers in the DeletedServer. </summary>
+        /// <summary> Gets a collection of DeletedServerResources in the DeletedServerResource. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of DeletedServers and their operations over a DeletedServer. </returns>
+        /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
         public static DeletedServerCollection GetDeletedServers(this Subscription subscription, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is null. </exception>
-        public static async Task<Response<DeletedServer>> GetDeletedServerAsync(this Subscription subscription, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeletedServerResource>> GetDeletedServerAsync(this Subscription subscription, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
             return await subscription.GetDeletedServers(locationName).GetAsync(deletedServerName, cancellationToken).ConfigureAwait(false);
         }
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="deletedServerName"/> is null. </exception>
-        public static Response<DeletedServer> GetDeletedServer(this Subscription subscription, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
+        public static Response<DeletedServerResource> GetDeletedServer(this Subscription subscription, string locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
             return subscription.GetDeletedServers(locationName).Get(deletedServerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackups in the SubscriptionLongTermRetentionBackup. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionLongTermRetentionBackupResource. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/> or <paramref name="longTermRetentionDatabaseName"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackups and their operations over a SubscriptionLongTermRetentionBackup. </returns>
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
         public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static async Task<Response<SubscriptionLongTermRetentionBackup>> GetSubscriptionLongTermRetentionBackupAsync(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionLongTermRetentionBackupResource>> GetSubscriptionLongTermRetentionBackupAsync(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
             return await subscription.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
@@ -121,19 +121,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static Response<SubscriptionLongTermRetentionBackup> GetSubscriptionLongTermRetentionBackup(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionLongTermRetentionBackupResource> GetSubscriptionLongTermRetentionBackup(this Subscription subscription, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
             return subscription.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackups in the SubscriptionLongTermRetentionManagedInstanceBackup. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionLongTermRetentionManagedInstanceBackupResource. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackups and their operations over a SubscriptionLongTermRetentionManagedInstanceBackup. </returns>
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
         public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this Subscription subscription, string locationName, string managedInstanceName, string databaseName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackup>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this Subscription subscription, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this Subscription subscription, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
             return await subscription.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
         }
@@ -174,17 +174,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
-        public static Response<SubscriptionLongTermRetentionManagedInstanceBackup> GetSubscriptionLongTermRetentionManagedInstanceBackup(this Subscription subscription, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetSubscriptionLongTermRetentionManagedInstanceBackup(this Subscription subscription, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
             return subscription.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionUsages in the SubscriptionUsage. </summary>
+        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionUsageResource. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of SubscriptionUsages and their operations over a SubscriptionUsage. </returns>
+        /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
         public static SubscriptionUsageCollection GetSubscriptionUsages(this Subscription subscription, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
-        public static async Task<Response<SubscriptionUsage>> GetSubscriptionUsageAsync(this Subscription subscription, string locationName, string usageName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SubscriptionUsageResource>> GetSubscriptionUsageAsync(this Subscription subscription, string locationName, string usageName, CancellationToken cancellationToken = default)
         {
             return await subscription.GetSubscriptionUsages(locationName).GetAsync(usageName, cancellationToken).ConfigureAwait(false);
         }
@@ -219,17 +219,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="usageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="usageName"/> is null. </exception>
-        public static Response<SubscriptionUsage> GetSubscriptionUsage(this Subscription subscription, string locationName, string usageName, CancellationToken cancellationToken = default)
+        public static Response<SubscriptionUsageResource> GetSubscriptionUsage(this Subscription subscription, string locationName, string usageName, CancellationToken cancellationToken = default)
         {
             return subscription.GetSubscriptionUsages(locationName).Get(usageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlTimeZones in the SqlTimeZone. </summary>
+        /// <summary> Gets a collection of SqlTimeZoneResources in the SqlTimeZoneResource. </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An object representing collection of SqlTimeZones and their operations over a SqlTimeZone. </returns>
+        /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public static SqlTimeZoneCollection GetSqlTimeZones(this Subscription subscription, string locationName)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public static async Task<Response<SqlTimeZone>> GetSqlTimeZoneAsync(this Subscription subscription, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlTimeZoneResource>> GetSqlTimeZoneAsync(this Subscription subscription, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
             return await subscription.GetSqlTimeZones(locationName).GetAsync(timeZoneId, cancellationToken).ConfigureAwait(false);
         }
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="timeZoneId"/> is null. </exception>
-        public static Response<SqlTimeZone> GetSqlTimeZone(this Subscription subscription, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
+        public static Response<SqlTimeZoneResource> GetSqlTimeZone(this Subscription subscription, string locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
             return subscription.GetSqlTimeZones(locationName).Get(timeZoneId, cancellationToken);
         }
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedServer> GetDeletedServersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeletedServerResource> GetDeletedServersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDeletedServersAsync(cancellationToken);
         }
@@ -289,8 +289,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedServer> GetDeletedServers(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeletedServerResource> GetDeletedServers(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDeletedServers(cancellationToken);
         }
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InstancePool> GetInstancePoolsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<InstancePoolResource> GetInstancePoolsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetInstancePoolsAsync(cancellationToken);
         }
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InstancePool> GetInstancePools(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<InstancePoolResource> GetInstancePools(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetInstancePools(cancellationToken);
         }
@@ -369,8 +369,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByLocationAsync(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -389,8 +389,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByLocation(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -410,8 +410,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByServerAsync(this Subscription subscription, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(this Subscription subscription, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="longTermRetentionServerName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByServer(this Subscription subscription, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(this Subscription subscription, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
@@ -454,8 +454,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this Subscription subscription, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(this Subscription subscription, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
@@ -476,8 +476,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="managedInstanceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByInstance(this Subscription subscription, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(this Subscription subscription, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
@@ -497,8 +497,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -517,8 +517,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByLocation(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(this Subscription subscription, string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -533,8 +533,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ManagedInstance> GetManagedInstancesAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetManagedInstancesAsync(expand, cancellationToken);
         }
@@ -547,8 +547,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ManagedInstance> GetManagedInstances(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedInstanceResource> GetManagedInstances(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetManagedInstances(expand, cancellationToken);
         }
@@ -632,8 +632,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualCluster> GetVirtualClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualClustersAsync(cancellationToken);
         }
@@ -645,8 +645,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualCluster> GetVirtualClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualClusterResource> GetVirtualClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualClusters(cancellationToken);
         }
@@ -659,8 +659,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SqlServer> GetSqlServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SqlServerResource> GetSqlServersAsync(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetSqlServersAsync(expand, cancellationToken);
         }
@@ -673,8 +673,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SqlServer> GetSqlServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SqlServerResource> GetSqlServers(this Subscription subscription, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetSqlServers(expand, cancellationToken);
         }

@@ -22,7 +22,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of SqlServer and their operations over its parent. </summary>
-    public partial class SqlServerCollection : ArmCollection, IEnumerable<SqlServer>, IAsyncEnumerable<SqlServer>
+    public partial class SqlServerCollection : ArmCollection, IEnumerable<SqlServerResource>, IAsyncEnumerable<SqlServerResource>
     {
         private readonly ClientDiagnostics _sqlServerServersClientDiagnostics;
         private readonly ServersRestOperations _sqlServerServersRestClient;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SqlServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServer.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SqlServer.ResourceType, out string sqlServerServersApiVersion);
+            _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(SqlServerResource.ResourceType, out string sqlServerServersApiVersion);
             _sqlServerServersRestClient = new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServer>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, SqlServerData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverName, SqlServerData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerServersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerResource>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<SqlServer> CreateOrUpdate(WaitUntil waitUntil, string serverName, SqlServerData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerResource> CreateOrUpdate(WaitUntil waitUntil, string serverName, SqlServerData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerServersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serverName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<SqlServerResource>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serverName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual async Task<Response<SqlServer>> GetAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerResource>> GetAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual Response<SqlServer> Get(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerResource> Get(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServer> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServer>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlServerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sqlServerServersRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SqlServer>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sqlServerServersRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,17 +227,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServer> GetAll(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlServer> FirstPageFunc(int? pageSizeHint)
+            Page<SqlServerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sqlServerServersRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SqlServer> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sqlServerServersRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual async Task<Response<SqlServer>> GetIfExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerResource>> GetIfExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
@@ -339,8 +339,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SqlServer>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SqlServerResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        public virtual Response<SqlServer> GetIfExists(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerResource> GetIfExists(string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
@@ -369,8 +369,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SqlServer>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SqlServerResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<SqlServer> IEnumerable<SqlServer>.GetEnumerator()
+        IEnumerator<SqlServerResource> IEnumerable<SqlServerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SqlServer> IAsyncEnumerable<SqlServer>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SqlServerResource> IAsyncEnumerable<SqlServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

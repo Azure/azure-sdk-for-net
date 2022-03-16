@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
     public class Sample2_ManagingManagedDatabases
     {
         private ResourceGroup resourceGroup;
-        private ManagedInstance managedInstance;
+        private ManagedInstanceResource managedInstance;
 
         [SetUp]
         protected async Task initialize()
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             };
             string databaseName = "myDatabase";
             var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
-            ManagedDatabase managedDatabase = managedDatabaseLro.Value;
+            ManagedDatabaseResource managedDatabase = managedDatabaseLro.Value;
             #endregion
         }
 
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_ListAllManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            AsyncPageable<ManagedDatabase> response = managedDatabaseCollection.GetAllAsync();
-            await foreach (ManagedDatabase managedDatabase in response)
+            AsyncPageable<ManagedDatabaseResource> response = managedDatabaseCollection.GetAllAsync();
+            await foreach (ManagedDatabaseResource managedDatabase in response)
             {
                 Console.WriteLine(managedDatabase.Data.Name);
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_GetAManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
+            ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsync("myManagedDatabase");
             Console.WriteLine(managedDatabase.Data.Name);
             #endregion
         }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_GetAManagedDatabasesIfExists
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            ManagedDatabase managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
+            ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetIfExistsAsync("foo");
             if (managedInstance != null)
             {
                 Console.WriteLine(managedDatabase.Data.Name);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             #region Snippet:Managing_Sql_DeleteAManagedDatabases
             ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
-            ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
+            ManagedDatabaseResource managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
             await managedDatabase.DeleteAsync(WaitUntil.Completed);
             #endregion
         }

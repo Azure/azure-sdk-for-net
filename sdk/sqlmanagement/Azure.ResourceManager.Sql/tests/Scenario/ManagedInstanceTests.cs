@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<ManagedInstance> CreateOrUpdateManagedInstance(string managedInstanceName)
+        private async Task<ManagedInstanceResource> CreateOrUpdateManagedInstance(string managedInstanceName)
         {
             ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
             {

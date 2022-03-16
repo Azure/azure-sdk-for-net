@@ -13,1169 +13,1169 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region RecoverableDatabase
-        /// <summary> Gets an object representing a RecoverableDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecoverableDatabaseResource
+        /// <summary> Gets an object representing a RecoverableDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoverableDatabase" /> object. </returns>
-        public static RecoverableDatabase GetRecoverableDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecoverableDatabaseResource" /> object. </returns>
+        public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RecoverableDatabase.ValidateResourceId(id);
-                return new RecoverableDatabase(client, id);
+                RecoverableDatabaseResource.ValidateResourceId(id);
+                return new RecoverableDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataMaskingPolicy
-        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataMaskingPolicyResource
+        /// <summary> Gets an object representing a DataMaskingPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
-        public static DataMaskingPolicy GetDataMaskingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMaskingPolicyResource" /> object. </returns>
+        public static DataMaskingPolicyResource GetDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DataMaskingPolicy.ValidateResourceId(id);
-                return new DataMaskingPolicy(client, id);
+                DataMaskingPolicyResource.ValidateResourceId(id);
+                return new DataMaskingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GeoBackupPolicy
-        /// <summary> Gets an object representing a GeoBackupPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region GeoBackupPolicyResource
+        /// <summary> Gets an object representing a GeoBackupPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GeoBackupPolicy" /> object. </returns>
-        public static GeoBackupPolicy GetGeoBackupPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GeoBackupPolicyResource" /> object. </returns>
+        public static GeoBackupPolicyResource GetGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                GeoBackupPolicy.ValidateResourceId(id);
-                return new GeoBackupPolicy(client, id);
+                GeoBackupPolicyResource.ValidateResourceId(id);
+                return new GeoBackupPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlDatabase
-        /// <summary> Gets an object representing a SqlDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlDatabaseResource
+        /// <summary> Gets an object representing a SqlDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
-        public static SqlDatabase GetSqlDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
+        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlDatabase.ValidateResourceId(id);
-                return new SqlDatabase(client, id);
+                SqlDatabaseResource.ValidateResourceId(id);
+                return new SqlDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ElasticPool
-        /// <summary> Gets an object representing a ElasticPool along with the instance operations that can be performed on it but with no data. </summary>
+        #region ElasticPoolResource
+        /// <summary> Gets an object representing a ElasticPoolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ElasticPool" /> object. </returns>
-        public static ElasticPool GetElasticPool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticPoolResource" /> object. </returns>
+        public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ElasticPool.ValidateResourceId(id);
-                return new ElasticPool(client, id);
+                ElasticPoolResource.ValidateResourceId(id);
+                return new ElasticPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ReplicationLink
-        /// <summary> Gets an object representing a ReplicationLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ReplicationLinkResource
+        /// <summary> Gets an object representing a ReplicationLinkResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicationLink" /> object. </returns>
-        public static ReplicationLink GetReplicationLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationLinkResource" /> object. </returns>
+        public static ReplicationLinkResource GetReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ReplicationLink.ValidateResourceId(id);
-                return new ReplicationLink(client, id);
+                ReplicationLinkResource.ValidateResourceId(id);
+                return new ReplicationLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerCommunicationLink
-        /// <summary> Gets an object representing a ServerCommunicationLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerCommunicationLinkResource
+        /// <summary> Gets an object representing a ServerCommunicationLinkResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerCommunicationLink" /> object. </returns>
-        public static ServerCommunicationLink GetServerCommunicationLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerCommunicationLinkResource" /> object. </returns>
+        public static ServerCommunicationLinkResource GetServerCommunicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerCommunicationLink.ValidateResourceId(id);
-                return new ServerCommunicationLink(client, id);
+                ServerCommunicationLinkResource.ValidateResourceId(id);
+                return new ServerCommunicationLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceObjective
-        /// <summary> Gets an object representing a ServiceObjective along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServiceObjectiveResource
+        /// <summary> Gets an object representing a ServiceObjectiveResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceObjective" /> object. </returns>
-        public static ServiceObjective GetServiceObjective(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceObjectiveResource" /> object. </returns>
+        public static ServiceObjectiveResource GetServiceObjectiveResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServiceObjective.ValidateResourceId(id);
-                return new ServiceObjective(client, id);
+                ServiceObjectiveResource.ValidateResourceId(id);
+                return new ServiceObjectiveResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExtendedDatabaseBlobAuditingPolicy
-        /// <summary> Gets an object representing a ExtendedDatabaseBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ExtendedDatabaseBlobAuditingPolicyResource
+        /// <summary> Gets an object representing a ExtendedDatabaseBlobAuditingPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicy" /> object. </returns>
-        public static ExtendedDatabaseBlobAuditingPolicy GetExtendedDatabaseBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> object. </returns>
+        public static ExtendedDatabaseBlobAuditingPolicyResource GetExtendedDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ExtendedDatabaseBlobAuditingPolicy.ValidateResourceId(id);
-                return new ExtendedDatabaseBlobAuditingPolicy(client, id);
+                ExtendedDatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new ExtendedDatabaseBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExtendedServerBlobAuditingPolicy
-        /// <summary> Gets an object representing a ExtendedServerBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ExtendedServerBlobAuditingPolicyResource
+        /// <summary> Gets an object representing a ExtendedServerBlobAuditingPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicy" /> object. </returns>
-        public static ExtendedServerBlobAuditingPolicy GetExtendedServerBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource" /> object. </returns>
+        public static ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ExtendedServerBlobAuditingPolicy.ValidateResourceId(id);
-                return new ExtendedServerBlobAuditingPolicy(client, id);
+                ExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new ExtendedServerBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerBlobAuditingPolicy
-        /// <summary> Gets an object representing a ServerBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerBlobAuditingPolicyResource
+        /// <summary> Gets an object representing a ServerBlobAuditingPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerBlobAuditingPolicy" /> object. </returns>
-        public static ServerBlobAuditingPolicy GetServerBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerBlobAuditingPolicyResource" /> object. </returns>
+        public static ServerBlobAuditingPolicyResource GetServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerBlobAuditingPolicy.ValidateResourceId(id);
-                return new ServerBlobAuditingPolicy(client, id);
+                ServerBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new ServerBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseBlobAuditingPolicy
-        /// <summary> Gets an object representing a DatabaseBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseBlobAuditingPolicyResource
+        /// <summary> Gets an object representing a DatabaseBlobAuditingPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicy" /> object. </returns>
-        public static DatabaseBlobAuditingPolicy GetDatabaseBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicyResource" /> object. </returns>
+        public static DatabaseBlobAuditingPolicyResource GetDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseBlobAuditingPolicy.ValidateResourceId(id);
-                return new DatabaseBlobAuditingPolicy(client, id);
+                DatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
+                return new DatabaseBlobAuditingPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseAdvisor
-        /// <summary> Gets an object representing a ServerDatabaseAdvisor along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseAdvisorResource
+        /// <summary> Gets an object representing a ServerDatabaseAdvisorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseAdvisor" /> object. </returns>
-        public static ServerDatabaseAdvisor GetServerDatabaseAdvisor(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseAdvisorResource" /> object. </returns>
+        public static ServerDatabaseAdvisorResource GetServerDatabaseAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseAdvisor.ValidateResourceId(id);
-                return new ServerDatabaseAdvisor(client, id);
+                ServerDatabaseAdvisorResource.ValidateResourceId(id);
+                return new ServerDatabaseAdvisorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAdvisor
-        /// <summary> Gets an object representing a ServerAdvisor along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAdvisorResource
+        /// <summary> Gets an object representing a ServerAdvisorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAdvisor" /> object. </returns>
-        public static ServerAdvisor GetServerAdvisor(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAdvisorResource" /> object. </returns>
+        public static ServerAdvisorResource GetServerAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerAdvisor.ValidateResourceId(id);
-                return new ServerAdvisor(client, id);
+                ServerAdvisorResource.ValidateResourceId(id);
+                return new ServerAdvisorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAutomaticTuning
-        /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAutomaticTuningResource
+        /// <summary> Gets an object representing a DatabaseAutomaticTuningResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
-        public static DatabaseAutomaticTuning GetDatabaseAutomaticTuning(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAutomaticTuningResource" /> object. </returns>
+        public static DatabaseAutomaticTuningResource GetDatabaseAutomaticTuningResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAutomaticTuning.ValidateResourceId(id);
-                return new DatabaseAutomaticTuning(client, id);
+                DatabaseAutomaticTuningResource.ValidateResourceId(id);
+                return new DatabaseAutomaticTuningResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchemaTableColumn
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumn along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaTableColumnResource
+        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumn" /> object. </returns>
-        public static ServerDatabaseSchemaTableColumn GetServerDatabaseSchemaTableColumn(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnResource" /> object. </returns>
+        public static ServerDatabaseSchemaTableColumnResource GetServerDatabaseSchemaTableColumnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseSchemaTableColumn.ValidateResourceId(id);
-                return new ServerDatabaseSchemaTableColumn(client, id);
+                ServerDatabaseSchemaTableColumnResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaTableColumnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaTableColumn
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumn along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaTableColumnResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaTableColumn GetManagedInstanceDatabaseSchemaTableColumn(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaTableColumnResource GetManagedInstanceDatabaseSchemaTableColumnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseSchemaTableColumn.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaTableColumn(client, id);
+                ManagedInstanceDatabaseSchemaTableColumnResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaTableColumnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RecommendedAction
-        /// <summary> Gets an object representing a RecommendedAction along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecommendedActionResource
+        /// <summary> Gets an object representing a RecommendedActionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecommendedAction" /> object. </returns>
-        public static RecommendedAction GetRecommendedAction(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecommendedActionResource" /> object. </returns>
+        public static RecommendedActionResource GetRecommendedActionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RecommendedAction.ValidateResourceId(id);
-                return new RecommendedAction(client, id);
+                RecommendedActionResource.ValidateResourceId(id);
+                return new RecommendedActionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchema
-        /// <summary> Gets an object representing a ServerDatabaseSchema along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaResource
+        /// <summary> Gets an object representing a ServerDatabaseSchemaResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchema" /> object. </returns>
-        public static ServerDatabaseSchema GetServerDatabaseSchema(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaResource" /> object. </returns>
+        public static ServerDatabaseSchemaResource GetServerDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseSchema.ValidateResourceId(id);
-                return new ServerDatabaseSchema(client, id);
+                ServerDatabaseSchemaResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchema
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchema along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchema" /> object. </returns>
-        public static ManagedInstanceDatabaseSchema GetManagedInstanceDatabaseSchema(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaResource GetManagedInstanceDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseSchema.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchema(client, id);
+                ManagedInstanceDatabaseSchemaResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseSecurityAlertPolicy
-        /// <summary> Gets an object representing a DatabaseSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseSecurityAlertPolicyResource
+        /// <summary> Gets an object representing a DatabaseSecurityAlertPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicy" /> object. </returns>
-        public static DatabaseSecurityAlertPolicy GetDatabaseSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicyResource" /> object. </returns>
+        public static DatabaseSecurityAlertPolicyResource GetDatabaseSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseSecurityAlertPolicy.ValidateResourceId(id);
-                return new DatabaseSecurityAlertPolicy(client, id);
+                DatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new DatabaseSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchemaTable
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTable along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaTableResource
+        /// <summary> Gets an object representing a ServerDatabaseSchemaTableResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTable" /> object. </returns>
-        public static ServerDatabaseSchemaTable GetServerDatabaseSchemaTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableResource" /> object. </returns>
+        public static ServerDatabaseSchemaTableResource GetServerDatabaseSchemaTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseSchemaTable.ValidateResourceId(id);
-                return new ServerDatabaseSchemaTable(client, id);
+                ServerDatabaseSchemaTableResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaTable
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTable along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaTableResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTable" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaTable GetManagedInstanceDatabaseSchemaTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaTableResource GetManagedInstanceDatabaseSchemaTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseSchemaTable.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaTable(client, id);
+                ManagedInstanceDatabaseSchemaTableResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseVulnerabilityAssessmentRuleBaseline
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentRuleBaseline along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseVulnerabilityAssessmentRuleBaselineResource
+        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentRuleBaselineResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
-        public static ServerDatabaseVulnerabilityAssessmentRuleBaseline GetServerDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        public static ServerDatabaseVulnerabilityAssessmentRuleBaselineResource GetServerDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
-                return new ServerDatabaseVulnerabilityAssessmentRuleBaseline(client, id);
+                ServerDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+                return new ServerDatabaseVulnerabilityAssessmentRuleBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
-        public static ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        public static ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(client, id);
+                ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaselineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseVulnerabilityAssessment
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseVulnerabilityAssessmentResource
+        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessment" /> object. </returns>
-        public static ServerDatabaseVulnerabilityAssessment GetServerDatabaseVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentResource" /> object. </returns>
+        public static ServerDatabaseVulnerabilityAssessmentResource GetServerDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseVulnerabilityAssessment.ValidateResourceId(id);
-                return new ServerDatabaseVulnerabilityAssessment(client, id);
+                ServerDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ServerDatabaseVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseVulnerabilityAssessment
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseVulnerabilityAssessmentResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> object. </returns>
-        public static ManagedInstanceDatabaseVulnerabilityAssessment GetManagedInstanceDatabaseVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentResource" /> object. </returns>
+        public static ManagedInstanceDatabaseVulnerabilityAssessmentResource GetManagedInstanceDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseVulnerabilityAssessment.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseVulnerabilityAssessment(client, id);
+                ManagedInstanceDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseVulnerabilityAssessmentScan
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentScan along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseVulnerabilityAssessmentScanResource
+        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentScanResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> object. </returns>
-        public static ServerDatabaseVulnerabilityAssessmentScan GetServerDatabaseVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static ServerDatabaseVulnerabilityAssessmentScanResource GetServerDatabaseVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
-                return new ServerDatabaseVulnerabilityAssessmentScan(client, id);
+                ServerDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new ServerDatabaseVulnerabilityAssessmentScanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseVulnerabilityAssessmentScan
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentScan along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseVulnerabilityAssessmentScanResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentScanResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> object. </returns>
-        public static ManagedInstanceDatabaseVulnerabilityAssessmentScan GetManagedInstanceDatabaseVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScanResource" /> object. </returns>
+        public static ManagedInstanceDatabaseVulnerabilityAssessmentScanResource GetManagedInstanceDatabaseVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseVulnerabilityAssessmentScan(client, id);
+                ManagedInstanceDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseVulnerabilityAssessmentScanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DataWarehouseUserActivities
-        /// <summary> Gets an object representing a DataWarehouseUserActivities along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataWarehouseUserActivitiesResource
+        /// <summary> Gets an object representing a DataWarehouseUserActivitiesResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataWarehouseUserActivities" /> object. </returns>
-        public static DataWarehouseUserActivities GetDataWarehouseUserActivities(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataWarehouseUserActivitiesResource" /> object. </returns>
+        public static DataWarehouseUserActivitiesResource GetDataWarehouseUserActivitiesResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DataWarehouseUserActivities.ValidateResourceId(id);
-                return new DataWarehouseUserActivities(client, id);
+                DataWarehouseUserActivitiesResource.ValidateResourceId(id);
+                return new DataWarehouseUserActivitiesResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DeletedServer
-        /// <summary> Gets an object representing a DeletedServer along with the instance operations that can be performed on it but with no data. </summary>
+        #region DeletedServerResource
+        /// <summary> Gets an object representing a DeletedServerResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedServer" /> object. </returns>
-        public static DeletedServer GetDeletedServer(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedServerResource" /> object. </returns>
+        public static DeletedServerResource GetDeletedServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DeletedServer.ValidateResourceId(id);
-                return new DeletedServer(client, id);
+                DeletedServerResource.ValidateResourceId(id);
+                return new DeletedServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EncryptionProtector
-        /// <summary> Gets an object representing a EncryptionProtector along with the instance operations that can be performed on it but with no data. </summary>
+        #region EncryptionProtectorResource
+        /// <summary> Gets an object representing a EncryptionProtectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EncryptionProtector" /> object. </returns>
-        public static EncryptionProtector GetEncryptionProtector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EncryptionProtectorResource" /> object. </returns>
+        public static EncryptionProtectorResource GetEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                EncryptionProtector.ValidateResourceId(id);
-                return new EncryptionProtector(client, id);
+                EncryptionProtectorResource.ValidateResourceId(id);
+                return new EncryptionProtectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FailoverGroup
-        /// <summary> Gets an object representing a FailoverGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region FailoverGroupResource
+        /// <summary> Gets an object representing a FailoverGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FailoverGroup" /> object. </returns>
-        public static FailoverGroup GetFailoverGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FailoverGroupResource" /> object. </returns>
+        public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                FailoverGroup.ValidateResourceId(id);
-                return new FailoverGroup(client, id);
+                FailoverGroupResource.ValidateResourceId(id);
+                return new FailoverGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallRule
-        /// <summary> Gets an object representing a FirewallRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region FirewallRuleResource
+        /// <summary> Gets an object representing a FirewallRuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRule" /> object. </returns>
-        public static FirewallRule GetFirewallRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
+        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                FirewallRule.ValidateResourceId(id);
-                return new FirewallRule(client, id);
+                FirewallRuleResource.ValidateResourceId(id);
+                return new FirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InstanceFailoverGroup
-        /// <summary> Gets an object representing a InstanceFailoverGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region InstanceFailoverGroupResource
+        /// <summary> Gets an object representing a InstanceFailoverGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstanceFailoverGroup" /> object. </returns>
-        public static InstanceFailoverGroup GetInstanceFailoverGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InstanceFailoverGroupResource" /> object. </returns>
+        public static InstanceFailoverGroupResource GetInstanceFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                InstanceFailoverGroup.ValidateResourceId(id);
-                return new InstanceFailoverGroup(client, id);
+                InstanceFailoverGroupResource.ValidateResourceId(id);
+                return new InstanceFailoverGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InstancePool
-        /// <summary> Gets an object representing a InstancePool along with the instance operations that can be performed on it but with no data. </summary>
+        #region InstancePoolResource
+        /// <summary> Gets an object representing a InstancePoolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstancePool" /> object. </returns>
-        public static InstancePool GetInstancePool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InstancePoolResource" /> object. </returns>
+        public static InstancePoolResource GetInstancePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                InstancePool.ValidateResourceId(id);
-                return new InstancePool(client, id);
+                InstancePoolResource.ValidateResourceId(id);
+                return new InstancePoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobAgent
-        /// <summary> Gets an object representing a JobAgent along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobAgentResource
+        /// <summary> Gets an object representing a JobAgentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobAgent" /> object. </returns>
-        public static JobAgent GetJobAgent(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobAgentResource" /> object. </returns>
+        public static JobAgentResource GetJobAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                JobAgent.ValidateResourceId(id);
-                return new JobAgent(client, id);
+                JobAgentResource.ValidateResourceId(id);
+                return new JobAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobCredential
-        /// <summary> Gets an object representing a JobCredential along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobCredentialResource
+        /// <summary> Gets an object representing a JobCredentialResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobCredential" /> object. </returns>
-        public static JobCredential GetJobCredential(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobCredentialResource" /> object. </returns>
+        public static JobCredentialResource GetJobCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                JobCredential.ValidateResourceId(id);
-                return new JobCredential(client, id);
+                JobCredentialResource.ValidateResourceId(id);
+                return new JobCredentialResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobExecution
-        /// <summary> Gets an object representing a ServerJobAgentJobExecution along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobExecutionResource
+        /// <summary> Gets an object representing a ServerJobAgentJobExecutionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobExecution" /> object. </returns>
-        public static ServerJobAgentJobExecution GetServerJobAgentJobExecution(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionResource" /> object. </returns>
+        public static ServerJobAgentJobExecutionResource GetServerJobAgentJobExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerJobAgentJobExecution.ValidateResourceId(id);
-                return new ServerJobAgentJobExecution(client, id);
+                ServerJobAgentJobExecutionResource.ValidateResourceId(id);
+                return new ServerJobAgentJobExecutionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobExecutionStep
-        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStep along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobExecutionStepResource
+        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStepResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStep" /> object. </returns>
-        public static ServerJobAgentJobExecutionStep GetServerJobAgentJobExecutionStep(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepResource" /> object. </returns>
+        public static ServerJobAgentJobExecutionStepResource GetServerJobAgentJobExecutionStepResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerJobAgentJobExecutionStep.ValidateResourceId(id);
-                return new ServerJobAgentJobExecutionStep(client, id);
+                ServerJobAgentJobExecutionStepResource.ValidateResourceId(id);
+                return new ServerJobAgentJobExecutionStepResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobExecutionStepTarget
-        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStepTarget along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobExecutionStepTargetResource
+        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStepTargetResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTarget" /> object. </returns>
-        public static ServerJobAgentJobExecutionStepTarget GetServerJobAgentJobExecutionStepTarget(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTargetResource" /> object. </returns>
+        public static ServerJobAgentJobExecutionStepTargetResource GetServerJobAgentJobExecutionStepTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerJobAgentJobExecutionStepTarget.ValidateResourceId(id);
-                return new ServerJobAgentJobExecutionStepTarget(client, id);
+                ServerJobAgentJobExecutionStepTargetResource.ValidateResourceId(id);
+                return new ServerJobAgentJobExecutionStepTargetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlJob
-        /// <summary> Gets an object representing a SqlJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlJobResource
+        /// <summary> Gets an object representing a SqlJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlJob" /> object. </returns>
-        public static SqlJob GetSqlJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlJobResource" /> object. </returns>
+        public static SqlJobResource GetSqlJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlJob.ValidateResourceId(id);
-                return new SqlJob(client, id);
+                SqlJobResource.ValidateResourceId(id);
+                return new SqlJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobVersionStep
-        /// <summary> Gets an object representing a ServerJobAgentJobVersionStep along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobVersionStepResource
+        /// <summary> Gets an object representing a ServerJobAgentJobVersionStepResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobVersionStep" /> object. </returns>
-        public static ServerJobAgentJobVersionStep GetServerJobAgentJobVersionStep(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobVersionStepResource" /> object. </returns>
+        public static ServerJobAgentJobVersionStepResource GetServerJobAgentJobVersionStepResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerJobAgentJobVersionStep.ValidateResourceId(id);
-                return new ServerJobAgentJobVersionStep(client, id);
+                ServerJobAgentJobVersionStepResource.ValidateResourceId(id);
+                return new ServerJobAgentJobVersionStepResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerJobAgentJobStep
-        /// <summary> Gets an object representing a ServerJobAgentJobStep along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerJobAgentJobStepResource
+        /// <summary> Gets an object representing a ServerJobAgentJobStepResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerJobAgentJobStep" /> object. </returns>
-        public static ServerJobAgentJobStep GetServerJobAgentJobStep(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerJobAgentJobStepResource" /> object. </returns>
+        public static ServerJobAgentJobStepResource GetServerJobAgentJobStepResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerJobAgentJobStep.ValidateResourceId(id);
-                return new ServerJobAgentJobStep(client, id);
+                ServerJobAgentJobStepResource.ValidateResourceId(id);
+                return new ServerJobAgentJobStepResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobTargetGroup
-        /// <summary> Gets an object representing a JobTargetGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobTargetGroupResource
+        /// <summary> Gets an object representing a JobTargetGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobTargetGroup" /> object. </returns>
-        public static JobTargetGroup GetJobTargetGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobTargetGroupResource" /> object. </returns>
+        public static JobTargetGroupResource GetJobTargetGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                JobTargetGroup.ValidateResourceId(id);
-                return new JobTargetGroup(client, id);
+                JobTargetGroupResource.ValidateResourceId(id);
+                return new JobTargetGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region JobVersion
-        /// <summary> Gets an object representing a JobVersion along with the instance operations that can be performed on it but with no data. </summary>
+        #region JobVersionResource
+        /// <summary> Gets an object representing a JobVersionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobVersion" /> object. </returns>
-        public static JobVersion GetJobVersion(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="JobVersionResource" /> object. </returns>
+        public static JobVersionResource GetJobVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                JobVersion.ValidateResourceId(id);
-                return new JobVersion(client, id);
+                JobVersionResource.ValidateResourceId(id);
+                return new JobVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubscriptionLongTermRetentionBackup
-        /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionLongTermRetentionBackupResource
+        /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackup" /> object. </returns>
-        public static SubscriptionLongTermRetentionBackup GetSubscriptionLongTermRetentionBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource" /> object. </returns>
+        public static SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SubscriptionLongTermRetentionBackup.ValidateResourceId(id);
-                return new SubscriptionLongTermRetentionBackup(client, id);
+                SubscriptionLongTermRetentionBackupResource.ValidateResourceId(id);
+                return new SubscriptionLongTermRetentionBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ResourceGroupLongTermRetentionBackup
-        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupLongTermRetentionBackupResource
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackup" /> object. </returns>
-        public static ResourceGroupLongTermRetentionBackup GetResourceGroupLongTermRetentionBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource" /> object. </returns>
+        public static ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ResourceGroupLongTermRetentionBackup.ValidateResourceId(id);
-                return new ResourceGroupLongTermRetentionBackup(client, id);
+                ResourceGroupLongTermRetentionBackupResource.ValidateResourceId(id);
+                return new ResourceGroupLongTermRetentionBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubscriptionLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionLongTermRetentionManagedInstanceBackupResource
+        /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> object. </returns>
-        public static SubscriptionLongTermRetentionManagedInstanceBackup GetSubscriptionLongTermRetentionManagedInstanceBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> object. </returns>
+        public static SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SubscriptionLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
-                return new SubscriptionLongTermRetentionManagedInstanceBackup(client, id);
+                SubscriptionLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
+                return new SubscriptionLongTermRetentionManagedInstanceBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ResourceGroupLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupLongTermRetentionManagedInstanceBackupResource
+        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> object. </returns>
-        public static ResourceGroupLongTermRetentionManagedInstanceBackup GetResourceGroupLongTermRetentionManagedInstanceBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> object. </returns>
+        public static ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ResourceGroupLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
-                return new ResourceGroupLongTermRetentionManagedInstanceBackup(client, id);
+                ResourceGroupLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
+                return new ResourceGroupLongTermRetentionManagedInstanceBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LongTermRetentionPolicy
-        /// <summary> Gets an object representing a LongTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region LongTermRetentionPolicyResource
+        /// <summary> Gets an object representing a LongTermRetentionPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LongTermRetentionPolicy" /> object. </returns>
-        public static LongTermRetentionPolicy GetLongTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LongTermRetentionPolicyResource" /> object. </returns>
+        public static LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                LongTermRetentionPolicy.ValidateResourceId(id);
-                return new LongTermRetentionPolicy(client, id);
+                LongTermRetentionPolicyResource.ValidateResourceId(id);
+                return new LongTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceWindowOptions
-        /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it but with no data. </summary>
+        #region MaintenanceWindowOptionsResource
+        /// <summary> Gets an object representing a MaintenanceWindowOptionsResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
-        public static MaintenanceWindowOptions GetMaintenanceWindowOptions(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowOptionsResource" /> object. </returns>
+        public static MaintenanceWindowOptionsResource GetMaintenanceWindowOptionsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MaintenanceWindowOptions.ValidateResourceId(id);
-                return new MaintenanceWindowOptions(client, id);
+                MaintenanceWindowOptionsResource.ValidateResourceId(id);
+                return new MaintenanceWindowOptionsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MaintenanceWindows
-        /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it but with no data. </summary>
+        #region MaintenanceWindowsResource
+        /// <summary> Gets an object representing a MaintenanceWindowsResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
-        public static MaintenanceWindows GetMaintenanceWindows(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
+        public static MaintenanceWindowsResource GetMaintenanceWindowsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MaintenanceWindows.ValidateResourceId(id);
-                return new MaintenanceWindows(client, id);
+                MaintenanceWindowsResource.ValidateResourceId(id);
+                return new MaintenanceWindowsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> object. </returns>
-        public static ManagedInstanceDatabaseBackupShortTermRetentionPolicy GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" /> object. </returns>
+        public static ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource GetManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseBackupShortTermRetentionPolicy.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(client, id);
+                ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedRestorableDroppedDbBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource
+        /// <summary> Gets an object representing a ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> object. </returns>
-        public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" /> object. </returns>
+        public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ValidateResourceId(id);
-                return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(client, id);
+                ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
+                return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedDatabaseRestoreDetailsResult
-        /// <summary> Gets an object representing a ManagedDatabaseRestoreDetailsResult along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedDatabaseRestoreDetailsResultResource
+        /// <summary> Gets an object representing a ManagedDatabaseRestoreDetailsResultResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResult" /> object. </returns>
-        public static ManagedDatabaseRestoreDetailsResult GetManagedDatabaseRestoreDetailsResult(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResultResource" /> object. </returns>
+        public static ManagedDatabaseRestoreDetailsResultResource GetManagedDatabaseRestoreDetailsResultResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedDatabaseRestoreDetailsResult.ValidateResourceId(id);
-                return new ManagedDatabaseRestoreDetailsResult(client, id);
+                ManagedDatabaseRestoreDetailsResultResource.ValidateResourceId(id);
+                return new ManagedDatabaseRestoreDetailsResultResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedDatabase
-        /// <summary> Gets an object representing a ManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedDatabaseResource
+        /// <summary> Gets an object representing a ManagedDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabase" /> object. </returns>
-        public static ManagedDatabase GetManagedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseResource" /> object. </returns>
+        public static ManagedDatabaseResource GetManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedDatabase.ValidateResourceId(id);
-                return new ManagedDatabase(client, id);
+                ManagedDatabaseResource.ValidateResourceId(id);
+                return new ManagedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedDatabaseSecurityAlertPolicy
-        /// <summary> Gets an object representing a ManagedDatabaseSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedDatabaseSecurityAlertPolicyResource
+        /// <summary> Gets an object representing a ManagedDatabaseSecurityAlertPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicy" /> object. </returns>
-        public static ManagedDatabaseSecurityAlertPolicy GetManagedDatabaseSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> object. </returns>
+        public static ManagedDatabaseSecurityAlertPolicyResource GetManagedDatabaseSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedDatabaseSecurityAlertPolicy.ValidateResourceId(id);
-                return new ManagedDatabaseSecurityAlertPolicy(client, id);
+                ManagedDatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new ManagedDatabaseSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource
+        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public static ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" /> object. </returns>
+        public static ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
-                return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(client, id);
+                ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource.ValidateResourceId(id);
+                return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDatabaseSchemaTableColumnSensitivityLabel
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDatabaseSchemaTableColumnSensitivityLabelResource
+        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnSensitivityLabelResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
-        public static ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabelResource" /> object. </returns>
+        public static ServerDatabaseSchemaTableColumnSensitivityLabelResource GetServerDatabaseSchemaTableColumnSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
-                return new ServerDatabaseSchemaTableColumnSensitivityLabel(client, id);
+                ServerDatabaseSchemaTableColumnSensitivityLabelResource.ValidateResourceId(id);
+                return new ServerDatabaseSchemaTableColumnSensitivityLabelResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedTransparentDataEncryption
-        /// <summary> Gets an object representing a ManagedTransparentDataEncryption along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedTransparentDataEncryptionResource
+        /// <summary> Gets an object representing a ManagedTransparentDataEncryptionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedTransparentDataEncryption" /> object. </returns>
-        public static ManagedTransparentDataEncryption GetManagedTransparentDataEncryption(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedTransparentDataEncryptionResource" /> object. </returns>
+        public static ManagedTransparentDataEncryptionResource GetManagedTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedTransparentDataEncryption.ValidateResourceId(id);
-                return new ManagedTransparentDataEncryption(client, id);
+                ManagedTransparentDataEncryptionResource.ValidateResourceId(id);
+                return new ManagedTransparentDataEncryptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceAdministrator
-        /// <summary> Gets an object representing a ManagedInstanceAdministrator along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceAdministratorResource
+        /// <summary> Gets an object representing a ManagedInstanceAdministratorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceAdministrator" /> object. </returns>
-        public static ManagedInstanceAdministrator GetManagedInstanceAdministrator(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceAdministratorResource" /> object. </returns>
+        public static ManagedInstanceAdministratorResource GetManagedInstanceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceAdministrator.ValidateResourceId(id);
-                return new ManagedInstanceAdministrator(client, id);
+                ManagedInstanceAdministratorResource.ValidateResourceId(id);
+                return new ManagedInstanceAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceAzureADOnlyAuthentication
-        /// <summary> Gets an object representing a ManagedInstanceAzureADOnlyAuthentication along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceAzureADOnlyAuthenticationResource
+        /// <summary> Gets an object representing a ManagedInstanceAzureADOnlyAuthenticationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> object. </returns>
-        public static ManagedInstanceAzureADOnlyAuthentication GetManagedInstanceAzureADOnlyAuthentication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> object. </returns>
+        public static ManagedInstanceAzureADOnlyAuthenticationResource GetManagedInstanceAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceAzureADOnlyAuthentication.ValidateResourceId(id);
-                return new ManagedInstanceAzureADOnlyAuthentication(client, id);
+                ManagedInstanceAzureADOnlyAuthenticationResource.ValidateResourceId(id);
+                return new ManagedInstanceAzureADOnlyAuthenticationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceEncryptionProtector
-        /// <summary> Gets an object representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceEncryptionProtectorResource
+        /// <summary> Gets an object representing a ManagedInstanceEncryptionProtectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtector" /> object. </returns>
-        public static ManagedInstanceEncryptionProtector GetManagedInstanceEncryptionProtector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtectorResource" /> object. </returns>
+        public static ManagedInstanceEncryptionProtectorResource GetManagedInstanceEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceEncryptionProtector.ValidateResourceId(id);
-                return new ManagedInstanceEncryptionProtector(client, id);
+                ManagedInstanceEncryptionProtectorResource.ValidateResourceId(id);
+                return new ManagedInstanceEncryptionProtectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceKey
-        /// <summary> Gets an object representing a ManagedInstanceKey along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceKeyResource
+        /// <summary> Gets an object representing a ManagedInstanceKeyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceKey" /> object. </returns>
-        public static ManagedInstanceKey GetManagedInstanceKey(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceKeyResource" /> object. </returns>
+        public static ManagedInstanceKeyResource GetManagedInstanceKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceKey.ValidateResourceId(id);
-                return new ManagedInstanceKey(client, id);
+                ManagedInstanceKeyResource.ValidateResourceId(id);
+                return new ManagedInstanceKeyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceLongTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceLongTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceLongTermRetentionPolicyResource
+        /// <summary> Gets an object representing a ManagedInstanceLongTermRetentionPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicy" /> object. </returns>
-        public static ManagedInstanceLongTermRetentionPolicy GetManagedInstanceLongTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> object. </returns>
+        public static ManagedInstanceLongTermRetentionPolicyResource GetManagedInstanceLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceLongTermRetentionPolicy.ValidateResourceId(id);
-                return new ManagedInstanceLongTermRetentionPolicy(client, id);
+                ManagedInstanceLongTermRetentionPolicyResource.ValidateResourceId(id);
+                return new ManagedInstanceLongTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceOperation
-        /// <summary> Gets an object representing a ManagedInstanceOperation along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceOperationResource
+        /// <summary> Gets an object representing a ManagedInstanceOperationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceOperation" /> object. </returns>
-        public static ManagedInstanceOperation GetManagedInstanceOperation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceOperationResource" /> object. </returns>
+        public static ManagedInstanceOperationResource GetManagedInstanceOperationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceOperation.ValidateResourceId(id);
-                return new ManagedInstanceOperation(client, id);
+                ManagedInstanceOperationResource.ValidateResourceId(id);
+                return new ManagedInstanceOperationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstancePrivateEndpointConnection
-        /// <summary> Gets an object representing a ManagedInstancePrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstancePrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a ManagedInstancePrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnection" /> object. </returns>
-        public static ManagedInstancePrivateEndpointConnection GetManagedInstancePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnectionResource" /> object. </returns>
+        public static ManagedInstancePrivateEndpointConnectionResource GetManagedInstancePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstancePrivateEndpointConnection.ValidateResourceId(id);
-                return new ManagedInstancePrivateEndpointConnection(client, id);
+                ManagedInstancePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new ManagedInstancePrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstancePrivateLink
-        /// <summary> Gets an object representing a ManagedInstancePrivateLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstancePrivateLinkResource
+        /// <summary> Gets an object representing a ManagedInstancePrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstancePrivateLink" /> object. </returns>
-        public static ManagedInstancePrivateLink GetManagedInstancePrivateLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstancePrivateLinkResource" /> object. </returns>
+        public static ManagedInstancePrivateLinkResource GetManagedInstancePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstancePrivateLink.ValidateResourceId(id);
-                return new ManagedInstancePrivateLink(client, id);
+                ManagedInstancePrivateLinkResource.ValidateResourceId(id);
+                return new ManagedInstancePrivateLinkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstance
-        /// <summary> Gets an object representing a ManagedInstance along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceResource
+        /// <summary> Gets an object representing a ManagedInstanceResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstance" /> object. </returns>
-        public static ManagedInstance GetManagedInstance(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceResource" /> object. </returns>
+        public static ManagedInstanceResource GetManagedInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstance.ValidateResourceId(id);
-                return new ManagedInstance(client, id);
+                ManagedInstanceResource.ValidateResourceId(id);
+                return new ManagedInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedInstanceVulnerabilityAssessment
-        /// <summary> Gets an object representing a ManagedInstanceVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedInstanceVulnerabilityAssessmentResource
+        /// <summary> Gets an object representing a ManagedInstanceVulnerabilityAssessmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessment" /> object. </returns>
-        public static ManagedInstanceVulnerabilityAssessment GetManagedInstanceVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessmentResource" /> object. </returns>
+        public static ManagedInstanceVulnerabilityAssessmentResource GetManagedInstanceVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedInstanceVulnerabilityAssessment.ValidateResourceId(id);
-                return new ManagedInstanceVulnerabilityAssessment(client, id);
+                ManagedInstanceVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ManagedInstanceVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ManagedServerSecurityAlertPolicy
-        /// <summary> Gets an object representing a ManagedServerSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagedServerSecurityAlertPolicyResource
+        /// <summary> Gets an object representing a ManagedServerSecurityAlertPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicy" /> object. </returns>
-        public static ManagedServerSecurityAlertPolicy GetManagedServerSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicyResource" /> object. </returns>
+        public static ManagedServerSecurityAlertPolicyResource GetManagedServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ManagedServerSecurityAlertPolicy.ValidateResourceId(id);
-                return new ManagedServerSecurityAlertPolicy(client, id);
+                ManagedServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new ManagedServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
@@ -1197,465 +1197,465 @@ namespace Azure.ResourceManager.Sql
         }
         #endregion
 
-        #region RecoverableManagedDatabase
-        /// <summary> Gets an object representing a RecoverableManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RecoverableManagedDatabaseResource
+        /// <summary> Gets an object representing a RecoverableManagedDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecoverableManagedDatabase" /> object. </returns>
-        public static RecoverableManagedDatabase GetRecoverableManagedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecoverableManagedDatabaseResource" /> object. </returns>
+        public static RecoverableManagedDatabaseResource GetRecoverableManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RecoverableManagedDatabase.ValidateResourceId(id);
-                return new RecoverableManagedDatabase(client, id);
+                RecoverableManagedDatabaseResource.ValidateResourceId(id);
+                return new RecoverableManagedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorePoint
-        /// <summary> Gets an object representing a RestorePoint along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorePointResource
+        /// <summary> Gets an object representing a RestorePointResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
-        public static RestorePoint GetRestorePoint(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
+        public static RestorePointResource GetRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RestorePoint.ValidateResourceId(id);
-                return new RestorePoint(client, id);
+                RestorePointResource.ValidateResourceId(id);
+                return new RestorePointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAutomaticTuning
-        /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAutomaticTuningResource
+        /// <summary> Gets an object representing a ServerAutomaticTuningResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
-        public static ServerAutomaticTuning GetServerAutomaticTuning(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAutomaticTuningResource" /> object. </returns>
+        public static ServerAutomaticTuningResource GetServerAutomaticTuningResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerAutomaticTuning.ValidateResourceId(id);
-                return new ServerAutomaticTuning(client, id);
+                ServerAutomaticTuningResource.ValidateResourceId(id);
+                return new ServerAutomaticTuningResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAzureADAdministrator
-        /// <summary> Gets an object representing a ServerAzureADAdministrator along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAzureADAdministratorResource
+        /// <summary> Gets an object representing a ServerAzureADAdministratorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAzureADAdministrator" /> object. </returns>
-        public static ServerAzureADAdministrator GetServerAzureADAdministrator(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAzureADAdministratorResource" /> object. </returns>
+        public static ServerAzureADAdministratorResource GetServerAzureADAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerAzureADAdministrator.ValidateResourceId(id);
-                return new ServerAzureADAdministrator(client, id);
+                ServerAzureADAdministratorResource.ValidateResourceId(id);
+                return new ServerAzureADAdministratorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerAzureADOnlyAuthentication
-        /// <summary> Gets an object representing a ServerAzureADOnlyAuthentication along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerAzureADOnlyAuthenticationResource
+        /// <summary> Gets an object representing a ServerAzureADOnlyAuthenticationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerAzureADOnlyAuthentication" /> object. </returns>
-        public static ServerAzureADOnlyAuthentication GetServerAzureADOnlyAuthentication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerAzureADOnlyAuthenticationResource" /> object. </returns>
+        public static ServerAzureADOnlyAuthenticationResource GetServerAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerAzureADOnlyAuthentication.ValidateResourceId(id);
-                return new ServerAzureADOnlyAuthentication(client, id);
+                ServerAzureADOnlyAuthenticationResource.ValidateResourceId(id);
+                return new ServerAzureADOnlyAuthenticationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDevOpsAuditingSettings
-        /// <summary> Gets an object representing a ServerDevOpsAuditingSettings along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDevOpsAuditingSettingsResource
+        /// <summary> Gets an object representing a ServerDevOpsAuditingSettingsResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDevOpsAuditingSettings" /> object. </returns>
-        public static ServerDevOpsAuditingSettings GetServerDevOpsAuditingSettings(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDevOpsAuditingSettingsResource" /> object. </returns>
+        public static ServerDevOpsAuditingSettingsResource GetServerDevOpsAuditingSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDevOpsAuditingSettings.ValidateResourceId(id);
-                return new ServerDevOpsAuditingSettings(client, id);
+                ServerDevOpsAuditingSettingsResource.ValidateResourceId(id);
+                return new ServerDevOpsAuditingSettingsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerDnsAlias
-        /// <summary> Gets an object representing a ServerDnsAlias along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerDnsAliasResource
+        /// <summary> Gets an object representing a ServerDnsAliasResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerDnsAlias" /> object. </returns>
-        public static ServerDnsAlias GetServerDnsAlias(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerDnsAliasResource" /> object. </returns>
+        public static ServerDnsAliasResource GetServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerDnsAlias.ValidateResourceId(id);
-                return new ServerDnsAlias(client, id);
+                ServerDnsAliasResource.ValidateResourceId(id);
+                return new ServerDnsAliasResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerKey
-        /// <summary> Gets an object representing a ServerKey along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerKeyResource
+        /// <summary> Gets an object representing a ServerKeyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerKey" /> object. </returns>
-        public static ServerKey GetServerKey(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerKeyResource" /> object. </returns>
+        public static ServerKeyResource GetServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerKey.ValidateResourceId(id);
-                return new ServerKey(client, id);
+                ServerKeyResource.ValidateResourceId(id);
+                return new ServerKeyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerSecurityAlertPolicy
-        /// <summary> Gets an object representing a ServerSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerSecurityAlertPolicyResource
+        /// <summary> Gets an object representing a ServerSecurityAlertPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerSecurityAlertPolicy" /> object. </returns>
-        public static ServerSecurityAlertPolicy GetServerSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerSecurityAlertPolicyResource" /> object. </returns>
+        public static ServerSecurityAlertPolicyResource GetServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerSecurityAlertPolicy.ValidateResourceId(id);
-                return new ServerSecurityAlertPolicy(client, id);
+                ServerSecurityAlertPolicyResource.ValidateResourceId(id);
+                return new ServerSecurityAlertPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerTrustGroup
-        /// <summary> Gets an object representing a ServerTrustGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerTrustGroupResource
+        /// <summary> Gets an object representing a ServerTrustGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerTrustGroup" /> object. </returns>
-        public static ServerTrustGroup GetServerTrustGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerTrustGroupResource" /> object. </returns>
+        public static ServerTrustGroupResource GetServerTrustGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerTrustGroup.ValidateResourceId(id);
-                return new ServerTrustGroup(client, id);
+                ServerTrustGroupResource.ValidateResourceId(id);
+                return new ServerTrustGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerVulnerabilityAssessment
-        /// <summary> Gets an object representing a ServerVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerVulnerabilityAssessmentResource
+        /// <summary> Gets an object representing a ServerVulnerabilityAssessmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerVulnerabilityAssessment" /> object. </returns>
-        public static ServerVulnerabilityAssessment GetServerVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource" /> object. </returns>
+        public static ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerVulnerabilityAssessment.ValidateResourceId(id);
-                return new ServerVulnerabilityAssessment(client, id);
+                ServerVulnerabilityAssessmentResource.ValidateResourceId(id);
+                return new ServerVulnerabilityAssessmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlAgentConfiguration
-        /// <summary> Gets an object representing a SqlAgentConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlAgentConfigurationResource
+        /// <summary> Gets an object representing a SqlAgentConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
-        public static SqlAgentConfiguration GetSqlAgentConfiguration(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlAgentConfigurationResource" /> object. </returns>
+        public static SqlAgentConfigurationResource GetSqlAgentConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlAgentConfiguration.ValidateResourceId(id);
-                return new SqlAgentConfiguration(client, id);
+                SqlAgentConfigurationResource.ValidateResourceId(id);
+                return new SqlAgentConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SubscriptionUsage
-        /// <summary> Gets an object representing a SubscriptionUsage along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionUsageResource
+        /// <summary> Gets an object representing a SubscriptionUsageResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionUsage" /> object. </returns>
-        public static SubscriptionUsage GetSubscriptionUsage(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionUsageResource" /> object. </returns>
+        public static SubscriptionUsageResource GetSubscriptionUsageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SubscriptionUsage.ValidateResourceId(id);
-                return new SubscriptionUsage(client, id);
+                SubscriptionUsageResource.ValidateResourceId(id);
+                return new SubscriptionUsageResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SyncAgent
-        /// <summary> Gets an object representing a SyncAgent along with the instance operations that can be performed on it but with no data. </summary>
+        #region SyncAgentResource
+        /// <summary> Gets an object representing a SyncAgentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SyncAgent" /> object. </returns>
-        public static SyncAgent GetSyncAgent(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SyncAgentResource" /> object. </returns>
+        public static SyncAgentResource GetSyncAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SyncAgent.ValidateResourceId(id);
-                return new SyncAgent(client, id);
+                SyncAgentResource.ValidateResourceId(id);
+                return new SyncAgentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SyncGroup
-        /// <summary> Gets an object representing a SyncGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SyncGroupResource
+        /// <summary> Gets an object representing a SyncGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SyncGroup" /> object. </returns>
-        public static SyncGroup GetSyncGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SyncGroupResource" /> object. </returns>
+        public static SyncGroupResource GetSyncGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SyncGroup.ValidateResourceId(id);
-                return new SyncGroup(client, id);
+                SyncGroupResource.ValidateResourceId(id);
+                return new SyncGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SyncMember
-        /// <summary> Gets an object representing a SyncMember along with the instance operations that can be performed on it but with no data. </summary>
+        #region SyncMemberResource
+        /// <summary> Gets an object representing a SyncMemberResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SyncMember" /> object. </returns>
-        public static SyncMember GetSyncMember(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SyncMemberResource" /> object. </returns>
+        public static SyncMemberResource GetSyncMemberResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SyncMember.ValidateResourceId(id);
-                return new SyncMember(client, id);
+                SyncMemberResource.ValidateResourceId(id);
+                return new SyncMemberResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlTimeZone
-        /// <summary> Gets an object representing a SqlTimeZone along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlTimeZoneResource
+        /// <summary> Gets an object representing a SqlTimeZoneResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlTimeZone" /> object. </returns>
-        public static SqlTimeZone GetSqlTimeZone(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlTimeZoneResource" /> object. </returns>
+        public static SqlTimeZoneResource GetSqlTimeZoneResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlTimeZone.ValidateResourceId(id);
-                return new SqlTimeZone(client, id);
+                SqlTimeZoneResource.ValidateResourceId(id);
+                return new SqlTimeZoneResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualCluster
-        /// <summary> Gets an object representing a VirtualCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualClusterResource
+        /// <summary> Gets an object representing a VirtualClusterResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualCluster" /> object. </returns>
-        public static VirtualCluster GetVirtualCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualClusterResource" /> object. </returns>
+        public static VirtualClusterResource GetVirtualClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualCluster.ValidateResourceId(id);
-                return new VirtualCluster(client, id);
+                VirtualClusterResource.ValidateResourceId(id);
+                return new VirtualClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetworkRule
-        /// <summary> Gets an object representing a VirtualNetworkRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualNetworkRuleResource
+        /// <summary> Gets an object representing a VirtualNetworkRuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetworkRule" /> object. </returns>
-        public static VirtualNetworkRule GetVirtualNetworkRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualNetworkRuleResource" /> object. </returns>
+        public static VirtualNetworkRuleResource GetVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualNetworkRule.ValidateResourceId(id);
-                return new VirtualNetworkRule(client, id);
+                VirtualNetworkRuleResource.ValidateResourceId(id);
+                return new VirtualNetworkRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkloadClassifier
-        /// <summary> Gets an object representing a WorkloadClassifier along with the instance operations that can be performed on it but with no data. </summary>
+        #region WorkloadClassifierResource
+        /// <summary> Gets an object representing a WorkloadClassifierResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadClassifier" /> object. </returns>
-        public static WorkloadClassifier GetWorkloadClassifier(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadClassifierResource" /> object. </returns>
+        public static WorkloadClassifierResource GetWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WorkloadClassifier.ValidateResourceId(id);
-                return new WorkloadClassifier(client, id);
+                WorkloadClassifierResource.ValidateResourceId(id);
+                return new WorkloadClassifierResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WorkloadGroup
-        /// <summary> Gets an object representing a WorkloadGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region WorkloadGroupResource
+        /// <summary> Gets an object representing a WorkloadGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadGroup" /> object. </returns>
-        public static WorkloadGroup GetWorkloadGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadGroupResource" /> object. </returns>
+        public static WorkloadGroupResource GetWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WorkloadGroup.ValidateResourceId(id);
-                return new WorkloadGroup(client, id);
+                WorkloadGroupResource.ValidateResourceId(id);
+                return new WorkloadGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LogicalDatabaseTransparentDataEncryption
-        /// <summary> Gets an object representing a LogicalDatabaseTransparentDataEncryption along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogicalDatabaseTransparentDataEncryptionResource
+        /// <summary> Gets an object representing a LogicalDatabaseTransparentDataEncryptionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryption" /> object. </returns>
-        public static LogicalDatabaseTransparentDataEncryption GetLogicalDatabaseTransparentDataEncryption(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> object. </returns>
+        public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                LogicalDatabaseTransparentDataEncryption.ValidateResourceId(id);
-                return new LogicalDatabaseTransparentDataEncryption(client, id);
+                LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
+                return new LogicalDatabaseTransparentDataEncryptionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a BackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region BackupShortTermRetentionPolicyResource
+        /// <summary> Gets an object representing a BackupShortTermRetentionPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BackupShortTermRetentionPolicy" /> object. </returns>
-        public static BackupShortTermRetentionPolicy GetBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BackupShortTermRetentionPolicyResource" /> object. </returns>
+        public static BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                BackupShortTermRetentionPolicy.ValidateResourceId(id);
-                return new BackupShortTermRetentionPolicy(client, id);
+                BackupShortTermRetentionPolicyResource.ValidateResourceId(id);
+                return new BackupShortTermRetentionPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LedgerDigestUploads
-        /// <summary> Gets an object representing a LedgerDigestUploads along with the instance operations that can be performed on it but with no data. </summary>
+        #region LedgerDigestUploadsResource
+        /// <summary> Gets an object representing a LedgerDigestUploadsResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LedgerDigestUploads" /> object. </returns>
-        public static LedgerDigestUploads GetLedgerDigestUploads(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LedgerDigestUploadsResource" /> object. </returns>
+        public static LedgerDigestUploadsResource GetLedgerDigestUploadsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                LedgerDigestUploads.ValidateResourceId(id);
-                return new LedgerDigestUploads(client, id);
+                LedgerDigestUploadsResource.ValidateResourceId(id);
+                return new LedgerDigestUploadsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region OutboundFirewallRule
-        /// <summary> Gets an object representing a OutboundFirewallRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region OutboundFirewallRuleResource
+        /// <summary> Gets an object representing a OutboundFirewallRuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OutboundFirewallRule" /> object. </returns>
-        public static OutboundFirewallRule GetOutboundFirewallRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OutboundFirewallRuleResource" /> object. </returns>
+        public static OutboundFirewallRuleResource GetOutboundFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                OutboundFirewallRule.ValidateResourceId(id);
-                return new OutboundFirewallRule(client, id);
+                OutboundFirewallRuleResource.ValidateResourceId(id);
+                return new OutboundFirewallRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorableDroppedDatabase
-        /// <summary> Gets an object representing a RestorableDroppedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorableDroppedDatabaseResource
+        /// <summary> Gets an object representing a RestorableDroppedDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDroppedDatabase" /> object. </returns>
-        public static RestorableDroppedDatabase GetRestorableDroppedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource" /> object. </returns>
+        public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RestorableDroppedDatabase.ValidateResourceId(id);
-                return new RestorableDroppedDatabase(client, id);
+                RestorableDroppedDatabaseResource.ValidateResourceId(id);
+                return new RestorableDroppedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region RestorableDroppedManagedDatabase
-        /// <summary> Gets an object representing a RestorableDroppedManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorableDroppedManagedDatabaseResource
+        /// <summary> Gets an object representing a RestorableDroppedManagedDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDroppedManagedDatabase" /> object. </returns>
-        public static RestorableDroppedManagedDatabase GetRestorableDroppedManagedDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableDroppedManagedDatabaseResource" /> object. </returns>
+        public static RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RestorableDroppedManagedDatabase.ValidateResourceId(id);
-                return new RestorableDroppedManagedDatabase(client, id);
+                RestorableDroppedManagedDatabaseResource.ValidateResourceId(id);
+                return new RestorableDroppedManagedDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlServer
-        /// <summary> Gets an object representing a SqlServer along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlServerResource
+        /// <summary> Gets an object representing a SqlServerResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlServer" /> object. </returns>
-        public static SqlServer GetSqlServer(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlServerResource" /> object. </returns>
+        public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlServer.ValidateResourceId(id);
-                return new SqlServer(client, id);
+                SqlServerResource.ValidateResourceId(id);
+                return new SqlServerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerConnectionPolicy
-        /// <summary> Gets an object representing a ServerConnectionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerConnectionPolicyResource
+        /// <summary> Gets an object representing a ServerConnectionPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>
-        public static ServerConnectionPolicy GetServerConnectionPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerConnectionPolicyResource" /> object. </returns>
+        public static ServerConnectionPolicyResource GetServerConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerConnectionPolicy.ValidateResourceId(id);
-                return new ServerConnectionPolicy(client, id);
+                ServerConnectionPolicyResource.ValidateResourceId(id);
+                return new ServerConnectionPolicyResource(client, id);
             }
             );
         }

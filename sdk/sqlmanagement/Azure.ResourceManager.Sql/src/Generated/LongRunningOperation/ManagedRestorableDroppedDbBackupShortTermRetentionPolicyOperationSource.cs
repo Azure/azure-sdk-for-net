@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>
+    internal class ManagedRestorableDroppedDbBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedRestorableDroppedDbBackupShortTermRetentionPolicy IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
-            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_client, data);
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(_client, data);
         }
 
-        async ValueTask<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy> IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> IOperationSource<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement);
-            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(_client, data);
+            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(_client, data);
         }
     }
 }

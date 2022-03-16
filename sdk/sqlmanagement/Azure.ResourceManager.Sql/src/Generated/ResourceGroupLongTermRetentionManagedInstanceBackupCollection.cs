@@ -23,7 +23,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ResourceGroupLongTermRetentionManagedInstanceBackup and their operations over its parent. </summary>
-    public partial class ResourceGroupLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>, IAsyncEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>
+    public partial class ResourceGroupLongTermRetentionManagedInstanceBackupCollection : ArmCollection, IEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackupResource>, IAsyncEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackupResource>
     {
         private readonly ClientDiagnostics _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics;
         private readonly LongTermRetentionManagedInstanceBackupsRestOperations _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Sql
             _locationName = locationName;
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
-            _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceGroupLongTermRetentionManagedInstanceBackup.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceGroupLongTermRetentionManagedInstanceBackup.ResourceType, out string resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
+            _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceGroupLongTermRetentionManagedInstanceBackupResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceGroupLongTermRetentionManagedInstanceBackupResource.ResourceType, out string resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
             _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackup>> GetAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual Response<ResourceGroupLongTermRetentionManagedInstanceBackup> Get(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroupLongTermRetentionManagedInstanceBackup> GetAllAsync(bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetAllAsync(bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGroupLongTermRetentionManagedInstanceBackup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ResourceGroupLongTermRetentionManagedInstanceBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -173,17 +173,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroupLongTermRetentionManagedInstanceBackup> GetAll(bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetAll(bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceGroupLongTermRetentionManagedInstanceBackup> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceGroupLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabase(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ResourceGroupLongTermRetentionManagedInstanceBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceGroupLongTermRetentionManagedInstanceBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupLongTermRetentionManagedInstanceBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackup>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
@@ -282,8 +282,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        public virtual Response<ResourceGroupLongTermRetentionManagedInstanceBackup> GetIfExists(string backupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
@@ -311,8 +311,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _resourceGroupLongTermRetentionManagedInstanceBackupLongTermRetentionManagedInstanceBackupsRestClient.GetByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, _locationName, _managedInstanceName, _databaseName, backupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackup>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ResourceGroupLongTermRetentionManagedInstanceBackupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupLongTermRetentionManagedInstanceBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ResourceGroupLongTermRetentionManagedInstanceBackup> IEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>.GetEnumerator()
+        IEnumerator<ResourceGroupLongTermRetentionManagedInstanceBackupResource> IEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ResourceGroupLongTermRetentionManagedInstanceBackup> IAsyncEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceGroupLongTermRetentionManagedInstanceBackupResource> IAsyncEnumerable<ResourceGroupLongTermRetentionManagedInstanceBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

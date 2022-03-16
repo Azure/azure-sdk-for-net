@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceKeyOperationSource : IOperationSource<ManagedInstanceKey>
+    internal class ManagedInstanceKeyOperationSource : IOperationSource<ManagedInstanceKeyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceKey IOperationSource<ManagedInstanceKey>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceKeyResource IOperationSource<ManagedInstanceKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement);
-            return new ManagedInstanceKey(_client, data);
+            return new ManagedInstanceKeyResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceKey> IOperationSource<ManagedInstanceKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceKeyResource> IOperationSource<ManagedInstanceKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceKeyData.DeserializeManagedInstanceKeyData(document.RootElement);
-            return new ManagedInstanceKey(_client, data);
+            return new ManagedInstanceKeyResource(_client, data);
         }
     }
 }

@@ -22,7 +22,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ExtendedServerBlobAuditingPolicy and their operations over its parent. </summary>
-    public partial class ExtendedServerBlobAuditingPolicyCollection : ArmCollection, IEnumerable<ExtendedServerBlobAuditingPolicy>, IAsyncEnumerable<ExtendedServerBlobAuditingPolicy>
+    public partial class ExtendedServerBlobAuditingPolicyCollection : ArmCollection, IEnumerable<ExtendedServerBlobAuditingPolicyResource>, IAsyncEnumerable<ExtendedServerBlobAuditingPolicyResource>
     {
         private readonly ClientDiagnostics _extendedServerBlobAuditingPolicyClientDiagnostics;
         private readonly ExtendedServerBlobAuditingPoliciesRestOperations _extendedServerBlobAuditingPolicyRestClient;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ExtendedServerBlobAuditingPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _extendedServerBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ExtendedServerBlobAuditingPolicy.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ExtendedServerBlobAuditingPolicy.ResourceType, out string extendedServerBlobAuditingPolicyApiVersion);
+            _extendedServerBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ExtendedServerBlobAuditingPolicyResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ExtendedServerBlobAuditingPolicyResource.ResourceType, out string extendedServerBlobAuditingPolicyApiVersion);
             _extendedServerBlobAuditingPolicyRestClient = new ExtendedServerBlobAuditingPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, extendedServerBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlServer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Properties of extended blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExtendedServerBlobAuditingPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExtendedServerBlobAuditingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _extendedServerBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicy>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> Properties of extended blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ExtendedServerBlobAuditingPolicy> CreateOrUpdate(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExtendedServerBlobAuditingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, ExtendedServerBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _extendedServerBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicy>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ExtendedServerBlobAuditingPolicyResource>(new ExtendedServerBlobAuditingPolicyOperationSource(Client), _extendedServerBlobAuditingPolicyClientDiagnostics, Pipeline, _extendedServerBlobAuditingPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExtendedServerBlobAuditingPolicy>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedServerBlobAuditingPolicyResource>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.Get");
             scope.Start();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _extendedServerBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExtendedServerBlobAuditingPolicy> Get(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedServerBlobAuditingPolicyResource> Get(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.Get");
             scope.Start();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _extendedServerBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,17 +169,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ExtendedServerBlobAuditingPolicies_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExtendedServerBlobAuditingPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExtendedServerBlobAuditingPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ExtendedServerBlobAuditingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExtendedServerBlobAuditingPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ExtendedServerBlobAuditingPolicy>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ExtendedServerBlobAuditingPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _extendedServerBlobAuditingPolicyRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ExtendedServerBlobAuditingPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ExtendedServerBlobAuditingPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _extendedServerBlobAuditingPolicyRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +211,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ExtendedServerBlobAuditingPolicies_ListByServer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtendedServerBlobAuditingPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExtendedServerBlobAuditingPolicy> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExtendedServerBlobAuditingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExtendedServerBlobAuditingPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ExtendedServerBlobAuditingPolicy> FirstPageFunc(int? pageSizeHint)
+            Page<ExtendedServerBlobAuditingPolicyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _extendedServerBlobAuditingPolicyRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ExtendedServerBlobAuditingPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ExtendedServerBlobAuditingPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _extendedServerBlobAuditingPolicyRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ExtendedServerBlobAuditingPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExtendedServerBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedServerBlobAuditingPolicyResource>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetIfExists");
             scope.Start();
@@ -308,8 +308,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _extendedServerBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ExtendedServerBlobAuditingPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ExtendedServerBlobAuditingPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExtendedServerBlobAuditingPolicy> GetIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedServerBlobAuditingPolicyResource> GetIfExists(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _extendedServerBlobAuditingPolicyClientDiagnostics.CreateScope("ExtendedServerBlobAuditingPolicyCollection.GetIfExists");
             scope.Start();
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _extendedServerBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, blobAuditingPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ExtendedServerBlobAuditingPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ExtendedServerBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ExtendedServerBlobAuditingPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ExtendedServerBlobAuditingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ExtendedServerBlobAuditingPolicy> IEnumerable<ExtendedServerBlobAuditingPolicy>.GetEnumerator()
+        IEnumerator<ExtendedServerBlobAuditingPolicyResource> IEnumerable<ExtendedServerBlobAuditingPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ExtendedServerBlobAuditingPolicy> IAsyncEnumerable<ExtendedServerBlobAuditingPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ExtendedServerBlobAuditingPolicyResource> IAsyncEnumerable<ExtendedServerBlobAuditingPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

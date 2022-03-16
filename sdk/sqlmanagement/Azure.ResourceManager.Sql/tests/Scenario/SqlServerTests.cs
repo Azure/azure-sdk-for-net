@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<SqlServer> CreateOrUpdateSqlServer(string sqlServerName)
+        private async Task<SqlServerResource> CreateOrUpdateSqlServer(string sqlServerName)
         {
             SqlServerData data = new SqlServerData(AzureLocation.WestUS2)
             {

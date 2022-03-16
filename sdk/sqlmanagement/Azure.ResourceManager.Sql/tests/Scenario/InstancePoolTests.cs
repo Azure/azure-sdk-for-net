@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<InstancePool> CreateInstancePool(string instancePoolName)
+        private async Task<InstancePoolResource> CreateInstancePool(string instancePoolName)
         {
             //Prerequisites: 1. create NetworkSecurityGroup
             string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             string instancePoolName = Recording.GenerateAssetName("instance-pool-");
             var collection = _resourceGroup.GetInstancePools();
-            InstancePool instancePool = await CreateInstancePool(instancePoolName);
+            InstancePoolResource instancePool = await CreateInstancePool(instancePoolName);
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
 

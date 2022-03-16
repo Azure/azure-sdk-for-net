@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
-        private async Task<InstanceFailoverGroup> CreateInstanceFailoverGroup(string locationName, string instanceFailoverGroupName)
+        private async Task<InstanceFailoverGroupResource> CreateInstanceFailoverGroup(string locationName, string instanceFailoverGroupName)
         {
             // create PrimaryManagedInstance(WestUS2) and PartnerManagedInstance(NorthEurope)
             string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");

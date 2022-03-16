@@ -97,7 +97,7 @@ ManagedInstanceData data = new ManagedInstanceData(AzureLocation.WestUS2)
 };
 string managedInstanceName = "myManagedInstance";
 var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
-ManagedInstance managedInstance = managedInstanceLro.Value;
+ManagedInstanceResource managedInstance = managedInstanceLro.Value;
 ```
 
 ***List all managed instance***
@@ -105,8 +105,8 @@ ManagedInstance managedInstance = managedInstanceLro.Value;
 ```C# Snippet:Managing_Sql_ListAllManagedInstances
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-AsyncPageable<ManagedInstance> response = managedInstanceCollection.GetAllAsync();
-await foreach (ManagedInstance managedInstance in response)
+AsyncPageable<ManagedInstanceResource> response = managedInstanceCollection.GetAllAsync();
+await foreach (ManagedInstanceResource managedInstance in response)
 {
     Console.WriteLine(managedInstance.Data.Name);
 }
@@ -117,7 +117,7 @@ await foreach (ManagedInstance managedInstance in response)
 ```C# Snippet:Managing_Sql_GetAManagedInstance
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
 Console.WriteLine(managedInstance.Data.Name);
 ```
 
@@ -126,7 +126,7 @@ Console.WriteLine(managedInstance.Data.Name);
 ```C# Snippet:Managing_Sql_GetAManagedInstanceIfExists
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-ManagedInstance managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
+ManagedInstanceResource managedInstance = await managedInstanceCollection.GetIfExistsAsync("foo");
 if (managedInstance != null)
 {
     Console.WriteLine(managedInstance.Data.Name);
@@ -143,7 +143,7 @@ if (await managedInstanceCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_Sql_DeleteAManagedInstance
 ManagedInstanceCollection managedInstanceCollection = resourceGroup.GetManagedInstances();
 
-ManagedInstance managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
+ManagedInstanceResource managedInstance = await managedInstanceCollection.GetAsync("myManagedInstance");
 await managedInstance.DeleteAsync(WaitUntil.Completed);
 ```
 

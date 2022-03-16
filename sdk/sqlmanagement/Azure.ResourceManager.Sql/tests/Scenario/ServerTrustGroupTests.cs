@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             }
         }
 
-        private async Task<ServerTrustGroup> CreateServerTrustGroup(string locationName, string serverTrustGroupName)
+        private async Task<ServerTrustGroupResource> CreateServerTrustGroup(string locationName, string serverTrustGroupName)
         {
             // create two ManagedInstanceName
             string managedInstanceName1 = Recording.GenerateAssetName("managed-instance-");

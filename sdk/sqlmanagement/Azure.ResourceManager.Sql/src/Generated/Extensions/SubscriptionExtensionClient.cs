@@ -55,26 +55,26 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        private ClientDiagnostics DeletedServerClientDiagnostics => _deletedServerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServer.ResourceType.Namespace, DiagnosticOptions);
-        private DeletedServersRestOperations DeletedServerRestClient => _deletedServerRestClient ??= new DeletedServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedServer.ResourceType));
-        private ClientDiagnostics InstancePoolClientDiagnostics => _instancePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePool.ResourceType.Namespace, DiagnosticOptions);
-        private InstancePoolsRestOperations InstancePoolRestClient => _instancePoolRestClient ??= new InstancePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(InstancePool.ResourceType));
+        private ClientDiagnostics DeletedServerClientDiagnostics => _deletedServerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServerResource.ResourceType.Namespace, DiagnosticOptions);
+        private DeletedServersRestOperations DeletedServerRestClient => _deletedServerRestClient ??= new DeletedServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedServerResource.ResourceType));
+        private ClientDiagnostics InstancePoolClientDiagnostics => _instancePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", InstancePoolResource.ResourceType.Namespace, DiagnosticOptions);
+        private InstancePoolsRestOperations InstancePoolRestClient => _instancePoolRestClient ??= new InstancePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(InstancePoolResource.ResourceType));
         private ClientDiagnostics CapabilitiesClientDiagnostics => _capabilitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private CapabilitiesRestOperations CapabilitiesRestClient => _capabilitiesRestClient ??= new CapabilitiesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstance.ResourceType.Namespace, DiagnosticOptions);
-        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ManagedInstance.ResourceType));
+        private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, DiagnosticOptions);
+        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
         private ClientDiagnostics OperationsHealthClientDiagnostics => _operationsHealthClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private OperationsHealthRestOperations OperationsHealthRestClient => _operationsHealthRestClient ??= new OperationsHealthRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics SyncGroupClientDiagnostics => _syncGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroup.ResourceType.Namespace, DiagnosticOptions);
-        private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SyncGroup.ResourceType));
-        private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualCluster.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualCluster.ResourceType));
-        private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServer.ResourceType.Namespace, DiagnosticOptions);
-        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SqlServer.ResourceType));
+        private ClientDiagnostics SyncGroupClientDiagnostics => _syncGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, DiagnosticOptions);
+        private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SyncGroupResource.ResourceType));
+        private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, DiagnosticOptions);
+        private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualClusterResource.ResourceType));
+        private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, DiagnosticOptions);
+        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(SqlServerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -82,45 +82,45 @@ namespace Azure.ResourceManager.Sql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeletedServers in the DeletedServer. </summary>
+        /// <summary> Gets a collection of DeletedServerResources in the DeletedServerResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of DeletedServers and their operations over a DeletedServer. </returns>
+        /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
         public virtual DeletedServerCollection GetDeletedServers(string locationName)
         {
             return new DeletedServerCollection(Client, Id, locationName);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackups in the SubscriptionLongTermRetentionBackup. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionLongTermRetentionBackupResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackups and their operations over a SubscriptionLongTermRetentionBackup. </returns>
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
         public virtual SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
             return new SubscriptionLongTermRetentionBackupCollection(Client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackups in the SubscriptionLongTermRetentionManagedInstanceBackup. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionLongTermRetentionManagedInstanceBackupResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
-        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackups and their operations over a SubscriptionLongTermRetentionManagedInstanceBackup. </returns>
+        /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
         public virtual SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(string locationName, string managedInstanceName, string databaseName)
         {
             return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
-        /// <summary> Gets a collection of SubscriptionUsages in the SubscriptionUsage. </summary>
+        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionUsageResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of SubscriptionUsages and their operations over a SubscriptionUsage. </returns>
+        /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
         public virtual SubscriptionUsageCollection GetSubscriptionUsages(string locationName)
         {
             return new SubscriptionUsageCollection(Client, Id, locationName);
         }
 
-        /// <summary> Gets a collection of SqlTimeZones in the SqlTimeZone. </summary>
+        /// <summary> Gets a collection of SqlTimeZoneResources in the SqlTimeZoneResource. </summary>
         /// <param name="locationName"> The String to use. </param>
-        /// <returns> An object representing collection of SqlTimeZones and their operations over a SqlTimeZone. </returns>
+        /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public virtual SqlTimeZoneCollection GetSqlTimeZones(string locationName)
         {
             return new SqlTimeZoneCollection(Client, Id, locationName);
@@ -132,17 +132,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DeletedServers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedServer> GetDeletedServersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedServerResource> GetDeletedServersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedServer>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeletedServerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DeletedServerClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedServers");
                 scope.Start();
                 try
                 {
                     var response = await DeletedServerRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<DeletedServer>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeletedServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DeletedServerClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedServers");
                 scope.Start();
                 try
                 {
                     var response = await DeletedServerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,17 +174,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DeletedServers_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedServer> GetDeletedServers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedServerResource> GetDeletedServers(CancellationToken cancellationToken = default)
         {
-            Page<DeletedServer> FirstPageFunc(int? pageSizeHint)
+            Page<DeletedServerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DeletedServerClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedServers");
                 scope.Start();
                 try
                 {
                     var response = DeletedServerRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<DeletedServer> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeletedServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DeletedServerClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeletedServers");
                 scope.Start();
                 try
                 {
                     var response = DeletedServerRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeletedServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -216,17 +216,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: InstancePools_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstancePool> GetInstancePoolsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InstancePoolResource> GetInstancePoolsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<InstancePool>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<InstancePoolResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = InstancePoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetInstancePools");
                 scope.Start();
                 try
                 {
                     var response = await InstancePoolRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -234,14 +234,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<InstancePool>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<InstancePoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = InstancePoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetInstancePools");
                 scope.Start();
                 try
                 {
                     var response = await InstancePoolRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -258,17 +258,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: InstancePools_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstancePool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstancePool> GetInstancePools(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InstancePoolResource> GetInstancePools(CancellationToken cancellationToken = default)
         {
-            Page<InstancePool> FirstPageFunc(int? pageSizeHint)
+            Page<InstancePoolResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = InstancePoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetInstancePools");
                 scope.Start();
                 try
                 {
                     var response = InstancePoolRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -276,14 +276,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<InstancePool> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<InstancePoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = InstancePoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetInstancePools");
                 scope.Start();
                 try
                 {
                     var response = InstancePoolRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InstancePool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InstancePoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -351,17 +351,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionLongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByLocationAsync(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SubscriptionLongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -396,17 +396,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionLongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByLocation(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -414,14 +414,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SubscriptionLongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -442,17 +442,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByServerAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServerAsync(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionLongTermRetentionBackup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByServer");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByServerAsync(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -460,14 +460,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SubscriptionLongTermRetentionBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByServer");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -488,17 +488,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionBackup> GetLongTermRetentionBackupsByServer(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionLongTermRetentionBackupResource> GetLongTermRetentionBackupsByServer(string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionLongTermRetentionBackup> FirstPageFunc(int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByServer");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByServer(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -506,14 +506,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SubscriptionLongTermRetentionBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionBackupsByServer");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -534,17 +534,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstanceAsync(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByInstanceAsync(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -552,14 +552,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -580,17 +580,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByInstance(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByInstance(string locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionLongTermRetentionManagedInstanceBackup> FirstPageFunc(int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByInstance(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -598,14 +598,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SubscriptionLongTermRetentionManagedInstanceBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByInstance");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -625,17 +625,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocationAsync(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByLocationAsync(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -643,14 +643,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SubscriptionLongTermRetentionManagedInstanceBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -670,17 +670,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackup> GetLongTermRetentionManagedInstanceBackupsByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetLongTermRetentionManagedInstanceBackupsByLocation(string locationName, bool? onlyLatestPerDatabase = null, DatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionLongTermRetentionManagedInstanceBackup> FirstPageFunc(int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByLocation(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -688,14 +688,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SubscriptionLongTermRetentionManagedInstanceBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SubscriptionLongTermRetentionManagedInstanceBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetLongTermRetentionManagedInstanceBackupsByLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionLongTermRetentionManagedInstanceBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -713,17 +713,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstance> GetManagedInstancesAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstance>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ManagedInstanceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetManagedInstances");
                 scope.Start();
                 try
                 {
                     var response = await ManagedInstanceRestClient.ListAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -731,14 +731,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ManagedInstanceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetManagedInstances");
                 scope.Start();
                 try
                 {
                     var response = await ManagedInstanceRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -756,17 +756,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstance> GetManagedInstances(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceResource> GetManagedInstances(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstance> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ManagedInstanceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetManagedInstances");
                 scope.Start();
                 try
                 {
                     var response = ManagedInstanceRestClient.List(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -774,14 +774,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstance> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ManagedInstanceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetManagedInstances");
                 scope.Start();
                 try
                 {
                     var response = ManagedInstanceRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -970,17 +970,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: VirtualClusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualCluster> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualCluster>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualClusters");
                 scope.Start();
                 try
                 {
                     var response = await VirtualClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -988,14 +988,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<VirtualCluster>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualClusters");
                 scope.Start();
                 try
                 {
                     var response = await VirtualClusterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1012,17 +1012,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: VirtualClusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualCluster" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualCluster> GetVirtualClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
         {
-            Page<VirtualCluster> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualClusterResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualClusters");
                 scope.Start();
                 try
                 {
                     var response = VirtualClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1030,14 +1030,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<VirtualCluster> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualClusters");
                 scope.Start();
                 try
                 {
                     var response = VirtualClusterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualCluster(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1055,17 +1055,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServer> GetSqlServersAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerResource> GetSqlServersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServer>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlServerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSqlServers");
                 scope.Start();
                 try
                 {
                     var response = await SqlServerServersRestClient.ListAsync(Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1073,14 +1073,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SqlServer>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlServerResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSqlServers");
                 scope.Start();
                 try
                 {
                     var response = await SqlServerServersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1098,17 +1098,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServer> GetSqlServers(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerResource> GetSqlServers(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlServer> FirstPageFunc(int? pageSizeHint)
+            Page<SqlServerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSqlServers");
                 scope.Start();
                 try
                 {
                     var response = SqlServerServersRestClient.List(Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1116,14 +1116,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SqlServer> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlServerResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = SqlServerServersClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetSqlServers");
                 scope.Start();
                 try
                 {
                     var response = SqlServerServersRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServer(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
