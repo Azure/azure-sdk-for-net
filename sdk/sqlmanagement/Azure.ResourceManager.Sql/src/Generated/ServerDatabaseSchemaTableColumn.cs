@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDatabaseSchemaTableColumnSensitivityLabels and their operations over a ServerDatabaseSchemaTableColumnSensitivityLabel. </returns>
         public virtual ServerDatabaseSchemaTableColumnSensitivityLabelCollection GetServerDatabaseSchemaTableColumnSensitivityLabels()
         {
-            return new ServerDatabaseSchemaTableColumnSensitivityLabelCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDatabaseSchemaTableColumnSensitivityLabelCollection(Client, Id));
         }
 
         /// <summary>

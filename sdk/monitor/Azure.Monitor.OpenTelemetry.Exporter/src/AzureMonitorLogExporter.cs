@@ -16,6 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private readonly ResourceParser _resourceParser;
+        private readonly AzureMonitorPersistentStorage _persistentStorage;
 
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
         {
@@ -26,11 +27,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
             _resourceParser = new ResourceParser();
+
+            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
+            {
+                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
+            }
         }
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<LogRecord> batch)
         {
+            _persistentStorage?.StartExporterTimer();
+
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
@@ -43,10 +51,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
 
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
-
-                // TODO: Handle return value, it can be converted as metrics.
-                // TODO: Validate CancellationToken and async pattern here.
                 var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
 
                 return exportResult;
             }

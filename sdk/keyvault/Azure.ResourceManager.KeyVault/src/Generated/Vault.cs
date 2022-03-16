@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of VaultKeys and their operations over a VaultKey. </returns>
         public virtual VaultKeyCollection GetVaultKeys()
         {
-            return new VaultKeyCollection(Client, Id);
+            return GetCachedClient(Client => new VaultKeyCollection(Client, Id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of Secrets and their operations over a Secret. </returns>
         public virtual SecretCollection GetSecrets()
         {
-            return new SecretCollection(Client, Id);
+            return GetCachedClient(Client => new SecretCollection(Client, Id));
         }
 
         /// <summary>

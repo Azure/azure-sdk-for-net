@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of DeviceUpdateInstances and their operations over a DeviceUpdateInstance. </returns>
         public virtual DeviceUpdateInstanceCollection GetDeviceUpdateInstances()
         {
-            return new DeviceUpdateInstanceCollection(Client, Id);
+            return GetCachedClient(Client => new DeviceUpdateInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of PrivateLinks and their operations over a PrivateLink. </returns>
         public virtual PrivateLinkCollection GetPrivateLinks()
         {
-            return new PrivateLinkCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateLinkCollection(Client, Id));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of PrivateEndpointConnectionProxies and their operations over a PrivateEndpointConnectionProxy. </returns>
         public virtual PrivateEndpointConnectionProxyCollection GetPrivateEndpointConnectionProxies()
         {
-            return new PrivateEndpointConnectionProxyCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionProxyCollection(Client, Id));
         }
 
         /// <summary>

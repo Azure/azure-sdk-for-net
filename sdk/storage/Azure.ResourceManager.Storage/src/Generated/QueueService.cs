@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of StorageQueues and their operations over a StorageQueue. </returns>
         public virtual StorageQueueCollection GetStorageQueues()
         {
-            return new StorageQueueCollection(Client, Id);
+            return GetCachedClient(Client => new StorageQueueCollection(Client, Id));
         }
 
         /// <summary>

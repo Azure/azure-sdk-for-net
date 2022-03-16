@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of Routes and their operations over a Route. </returns>
         public virtual RouteCollection GetRoutes()
         {
-            return new RouteCollection(Client, Id);
+            return GetCachedClient(Client => new RouteCollection(Client, Id));
         }
 
         /// <summary>

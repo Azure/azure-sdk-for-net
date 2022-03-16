@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of NamespaceDisasterRecoveryAuthorizationRules and their operations over a NamespaceDisasterRecoveryAuthorizationRule. </returns>
         public virtual NamespaceDisasterRecoveryAuthorizationRuleCollection GetNamespaceDisasterRecoveryAuthorizationRules()
         {
-            return new NamespaceDisasterRecoveryAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceDisasterRecoveryAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>

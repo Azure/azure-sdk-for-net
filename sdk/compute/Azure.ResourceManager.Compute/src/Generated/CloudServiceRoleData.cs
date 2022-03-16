@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
         /// <param name="properties"></param>
-        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, type, systemData)
+        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Sku = sku;

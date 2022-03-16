@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of StaticSiteBuildUserProvidedFunctionApps and their operations over a StaticSiteBuildUserProvidedFunctionApp. </returns>
         public virtual StaticSiteBuildUserProvidedFunctionAppCollection GetStaticSiteBuildUserProvidedFunctionApps()
         {
-            return new StaticSiteBuildUserProvidedFunctionAppCollection(Client, Id);
+            return GetCachedClient(Client => new StaticSiteBuildUserProvidedFunctionAppCollection(Client, Id));
         }
 
         /// <summary>

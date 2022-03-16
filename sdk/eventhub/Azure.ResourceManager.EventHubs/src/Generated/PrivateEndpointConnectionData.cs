@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of PrivateEndpointConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="privateEndpoint"> The Private Endpoint resource for this Connection. </param>
         /// <param name="privateLinkServiceConnectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndPointProvisioningState? provisioningState) : base(id, name, type, systemData, location)
+        internal PrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, WritableSubResource privateEndpoint, ConnectionState privateLinkServiceConnectionState, EndPointProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of Providers and their operations over a Provider. </returns>
         public virtual ProviderCollection GetProviders()
         {
-            return new ProviderCollection(Client, Id);
+            return GetCachedClient(Client => new ProviderCollection(Client, Id));
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ResourceGroups and their operations over a ResourceGroup. </returns>
         public virtual ResourceGroupCollection GetResourceGroups()
         {
-            return new ResourceGroupCollection(Client, Id);
+            return GetCachedClient(Client => new ResourceGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of SubscriptionPolicyDefinitions and their operations over a SubscriptionPolicyDefinition. </returns>
         public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
         {
-            return new SubscriptionPolicyDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new SubscriptionPolicyDefinitionCollection(Client, Id));
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of SubscriptionPolicySetDefinitions and their operations over a SubscriptionPolicySetDefinition. </returns>
         public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
         {
-            return new SubscriptionPolicySetDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new SubscriptionPolicySetDefinitionCollection(Client, Id));
         }
 
         /// <summary>

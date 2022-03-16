@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of JobCredentialData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="username"> The credential user name. </param>
         /// <param name="password"> The credential password. </param>
-        internal JobCredentialData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string username, string password) : base(id, name, type, systemData)
+        internal JobCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string username, string password) : base(id, name, resourceType, systemData)
         {
             Username = username;
             Password = password;

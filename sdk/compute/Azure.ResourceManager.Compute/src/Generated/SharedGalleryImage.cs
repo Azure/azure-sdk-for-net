@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of SharedGalleryImageVersions and their operations over a SharedGalleryImageVersion. </returns>
         public virtual SharedGalleryImageVersionCollection GetSharedGalleryImageVersions()
         {
-            return new SharedGalleryImageVersionCollection(Client, Id);
+            return GetCachedClient(Client => new SharedGalleryImageVersionCollection(Client, Id));
         }
 
         /// <summary>

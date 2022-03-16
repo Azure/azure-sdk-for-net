@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualApplications and their operations over a VirtualApplication. </returns>
         public virtual VirtualApplicationCollection GetVirtualApplications()
         {
-            return new VirtualApplicationCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualApplicationCollection(Client, Id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualDesktops and their operations over a VirtualDesktop. </returns>
         public virtual VirtualDesktopCollection GetVirtualDesktops()
         {
-            return new VirtualDesktopCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualDesktopCollection(Client, Id));
         }
 
         /// <summary>

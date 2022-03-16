@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SyncMembers and their operations over a SyncMember. </returns>
         public virtual SyncMemberCollection GetSyncMembers()
         {
-            return new SyncMemberCollection(Client, Id);
+            return GetCachedClient(Client => new SyncMemberCollection(Client, Id));
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PushSettings. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="isPushEnabled"> Gets or sets a flag indicating whether the Push endpoint is enabled. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Validation should be performed at the PushRequestHandler.
         /// </param>
         /// <param name="dynamicTagsJson"> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </param>
-        internal PushSettings(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson) : base(id, name, type, systemData, kind)
+        internal PushSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isPushEnabled, string tagWhitelistJson, string tagsRequiringAuth, string dynamicTagsJson) : base(id, name, resourceType, systemData, kind)
         {
             IsPushEnabled = isPushEnabled;
             TagWhitelistJson = tagWhitelistJson;

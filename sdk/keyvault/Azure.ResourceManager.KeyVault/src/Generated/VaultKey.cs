@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of VaultKeyVersions and their operations over a VaultKeyVersion. </returns>
         public virtual VaultKeyVersionCollection GetVaultKeyVersions()
         {
-            return new VaultKeyVersionCollection(Client, Id);
+            return GetCachedClient(Client => new VaultKeyVersionCollection(Client, Id));
         }
 
         /// <summary>

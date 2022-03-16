@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCrossConnectionPeerings and their operations over a ExpressRouteCrossConnectionPeering. </returns>
         public virtual ExpressRouteCrossConnectionPeeringCollection GetExpressRouteCrossConnectionPeerings()
         {
-            return new ExpressRouteCrossConnectionPeeringCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCrossConnectionPeeringCollection(Client, Id));
         }
 
         /// <summary>

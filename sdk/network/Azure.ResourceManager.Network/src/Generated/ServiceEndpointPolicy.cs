@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ServiceEndpointPolicyDefinitions and their operations over a ServiceEndpointPolicyDefinition. </returns>
         public virtual ServiceEndpointPolicyDefinitionCollection GetServiceEndpointPolicyDefinitions()
         {
-            return new ServiceEndpointPolicyDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceEndpointPolicyDefinitionCollection(Client, Id));
         }
 
         /// <summary>

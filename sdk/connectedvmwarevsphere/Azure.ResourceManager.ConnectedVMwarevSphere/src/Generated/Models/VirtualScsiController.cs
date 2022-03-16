@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of VirtualScsiController. </summary>
-        /// <param name="type"> Gets or sets the controller type. </param>
+        /// <param name="scsiControllerType"> Gets or sets the controller type. </param>
         /// <param name="controllerKey"> Gets or sets the key of the controller. </param>
         /// <param name="busNumber"> Gets or sets the bus number of the controller. </param>
         /// <param name="scsiCtlrUnitNumber"> Gets or sets the SCSI controller unit number. </param>
         /// <param name="sharing"> Gets or sets the sharing mode. </param>
-        internal VirtualScsiController(ScsiControllerType? type, int? controllerKey, int? busNumber, int? scsiCtlrUnitNumber, VirtualScsiSharing? sharing)
+        internal VirtualScsiController(ScsiControllerType? scsiControllerType, int? controllerKey, int? busNumber, int? scsiCtlrUnitNumber, VirtualScsiSharing? sharing)
         {
-            Type = type;
+            ScsiControllerType = scsiControllerType;
             ControllerKey = controllerKey;
             BusNumber = busNumber;
             ScsiCtlrUnitNumber = scsiCtlrUnitNumber;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Gets or sets the controller type. </summary>
-        public ScsiControllerType? Type { get; }
+        public ScsiControllerType? ScsiControllerType { get; }
         /// <summary> Gets or sets the key of the controller. </summary>
         public int? ControllerKey { get; }
         /// <summary> Gets or sets the bus number of the controller. </summary>
