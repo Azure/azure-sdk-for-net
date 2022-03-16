@@ -151,6 +151,13 @@ void ProcessType(Type type)
 
                 LogInformation($"\t[{ fileEx.FileName }] needed for type [{ type.FullName }] was not found.  This is expected for some platform-specific types, such as those in System.Windows.Forms when running on a non-Windows platform.");
             }
+            catch (TargetInvocationException ex) when (ex.InnerException is DllNotFoundException dllEx)
+            {
+                // Expected; this indicates that a library is not available on a platform.  For
+                // example, System.Windows.Forms on macOS.
+
+                LogInformation($"\tThe assembly needed for type [{ type.FullName }] was not found.  This is expected for some platform-specific types, such as those in System.Windows.Forms when running on a non-Windows platform.");
+            }
             catch (TargetInvocationException ex) when ((ex.InnerException is PlatformNotSupportedException) || (ex.InnerException is NotSupportedException))
             {
                 // Expected; this indicates that a type is not available on a platform.  For example, Windows Principal-related types on Linux.
@@ -233,6 +240,14 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
 
                     LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
                 }
+                catch (DllNotFoundException)
+                {
+                    // Expected; this occurs when an assembly is transitively referenced but not available
+                    // for the current framework or platform and is most often seen for platform-specific interop
+                    // assemblies.
+
+                    LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
+                }
                 catch (BadImageFormatException)
                 {
                     // Expected; this occurs when an assembly is not compiled for the current framework
@@ -265,7 +280,7 @@ bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationE
     NullReferenceException => true,
 
     // Occurs when the assembly is locked; this is most likely a framework assembly.
-    IOException ioEx when (ioEx.Message.Contains("being used by another process.", StringComparison.CurrentCultureIgnoreCase)) => true,
+    IOException ioEx when (ioEx.Message.ToLower().Contains("being used by another process.")) => true,
 
     // By default, do not ignore.
     _ => false
