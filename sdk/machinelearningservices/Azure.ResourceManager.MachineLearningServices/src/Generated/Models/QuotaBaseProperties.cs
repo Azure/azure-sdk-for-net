@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Specifies the resource ID. </summary>
         public string Id { get; set; }
         /// <summary> Specifies the resource type. </summary>
-        public string Type { get; set; }
+        public string QuotaBasePropertiesType { get; set; }
         /// <summary> The maximum permitted quota of the resource. </summary>
         public long? Limit { get; set; }
         /// <summary> An enum describing the unit of quota measurement. </summary>

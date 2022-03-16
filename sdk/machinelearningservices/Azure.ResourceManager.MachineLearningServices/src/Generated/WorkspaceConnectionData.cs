@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of WorkspaceConnectionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="authType"> Authorization type of the workspace connection. </param>
         /// <param name="value"> Value details of the workspace connection. </param>
         /// <param name="valueFormat"> format for the workspace connection value. </param>
-        internal WorkspaceConnectionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string category, string target, string authType, string value, ValueFormat? valueFormat) : base(id, name, type, systemData)
+        internal WorkspaceConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string category, string target, string authType, string value, ValueFormat? valueFormat) : base(id, name, resourceType, systemData)
         {
             Category = category;
             Target = target;

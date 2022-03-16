@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 }
             }
             writer.WritePropertyName("trainingData");
-            writer.WriteObjectValue(TrainingData);
+            writer.WriteObjectValue(TrainingDataSettings);
             writer.WriteEndObject();
         }
 

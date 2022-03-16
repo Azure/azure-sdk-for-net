@@ -68,4 +68,12 @@ directive:
     where: $.definitions.ComputeInstance.allOf[?(@.type=="object")].properties.properties.properties.setupScripts
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.DataSettings.properties.trainingData
+    transform: >
+        $["x-ms-client-name"] = "trainingDataSettings";
+  - from: swagger-document
+    where: $.definitions.ComputeInstanceProperties.properties.setupScripts
+    transform: >
+        $["x-ms-client-name"] = "setupScriptsSettings";
 ```

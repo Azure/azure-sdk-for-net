@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of MachineLearningServicesUsage. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
-        /// <param name="type"> Specifies the resource type. </param>
+        /// <param name="usageType"> Specifies the resource type. </param>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal MachineLearningServicesUsage(string id, string amlWorkspaceLocation, string type, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
+        internal MachineLearningServicesUsage(string id, string amlWorkspaceLocation, string usageType, UsageUnit? unit, long? currentValue, long? limit, UsageName name)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
-            Type = type;
+            UsageType = usageType;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Region of the AML workspace in the id. </summary>
         public string AmlWorkspaceLocation { get; }
         /// <summary> Specifies the resource type. </summary>
-        public string Type { get; }
+        public string UsageType { get; }
         /// <summary> An enum describing the unit of usage measurement. </summary>
         public UsageUnit? Unit { get; }
         /// <summary> The current usage of the resource. </summary>

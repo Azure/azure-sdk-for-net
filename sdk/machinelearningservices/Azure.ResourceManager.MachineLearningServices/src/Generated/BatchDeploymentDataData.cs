@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of BatchDeploymentDataData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
         /// <param name="properties"> Additional attributes of the entity. </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        internal BatchDeploymentDataData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, BatchDeploymentDetails properties, MachineLearningServicesSku sku) : base(id, name, type, systemData, tags, location)
+        internal BatchDeploymentDataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, BatchDeploymentDetails properties, MachineLearningServicesSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="state"> The current state of this ComputeInstance. </param>
         /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
-        /// <param name="setupScripts"> Details of customized scripts to execute for setting up the cluster. </param>
+        /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
         /// <param name="schedules"> The list of schedules to be applied on the computes. </param>
         /// <param name="enableNodePublicIp"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
-        internal ComputeInstanceProperties(string vmSize, WritableSubResource subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScripts, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIp, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
+        internal ComputeInstanceProperties(string vmSize, WritableSubResource subnet, ApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceSshSettings sshSettings, ComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<ComputeInstanceApplication> applications, ComputeInstanceCreatedBy createdBy, IReadOnlyList<ErrorResponse> errors, ComputeInstanceState? state, ComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, ComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIp, IReadOnlyList<ComputeInstanceContainer> containers, IReadOnlyList<ComputeInstanceDataDisk> dataDisks, IReadOnlyList<ComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
             State = state;
             ComputeInstanceAuthorizationType = computeInstanceAuthorizationType;
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
-            SetupScripts = setupScripts;
+            SetupScriptsSettings = setupScriptsSettings;
             LastOperation = lastOperation;
             Schedules = schedules;
             EnableNodePublicIp = enableNodePublicIp;
@@ -115,16 +114,16 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         }
 
         /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
-        internal SetupScripts SetupScripts { get; set; }
+        internal SetupScripts SetupScriptsSettings { get; set; }
         /// <summary> Customized setup scripts. </summary>
-        public ScriptsToExecute SetupScripts
+        public ScriptsToExecute Scripts
         {
-            get => SetupScripts is null ? default(ScriptsToExecute) : SetupScripts.Scripts;
+            get => SetupScriptsSettings is null ? default : SetupScriptsSettings.Scripts;
             set
             {
-                if (SetupScripts is null)
-                    SetupScripts = new SetupScripts();
-                SetupScripts.Scripts = value;
+                if (SetupScriptsSettings is null)
+                    SetupScriptsSettings = new SetupScripts();
+                SetupScriptsSettings.Scripts = value;
             }
         }
 

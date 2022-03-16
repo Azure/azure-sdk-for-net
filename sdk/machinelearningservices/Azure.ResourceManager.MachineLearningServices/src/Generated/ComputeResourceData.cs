@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.MachineLearningServices
         /// <summary> Initializes a new instance of ComputeResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
         /// <param name="tags"> Contains resource tags defined as key/value pairs. </param>
         /// <param name="sku"> The sku of the workspace. </param>
         /// <param name="properties"> Compute properties. </param>
-        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, Compute properties) : base(id, name, type, systemData)
+        internal ComputeResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string location, IDictionary<string, string> tags, MachineLearningServicesSku sku, Compute properties) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;

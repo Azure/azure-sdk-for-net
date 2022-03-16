@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Initializes a new instance of ResourceQuota. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
         /// <param name="amlWorkspaceLocation"> Region of the AML workspace in the id. </param>
-        /// <param name="type"> Specifies the resource type. </param>
+        /// <param name="resourceQuotaType"> Specifies the resource type. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
         /// <param name="unit"> An enum describing the unit of quota measurement. </param>
-        internal ResourceQuota(string id, string amlWorkspaceLocation, string type, ResourceName name, long? limit, QuotaUnit? unit)
+        internal ResourceQuota(string id, string amlWorkspaceLocation, string resourceQuotaType, ResourceName name, long? limit, QuotaUnit? unit)
         {
             Id = id;
             AmlWorkspaceLocation = amlWorkspaceLocation;
-            Type = type;
+            ResourceQuotaType = resourceQuotaType;
             Name = name;
             Limit = limit;
             Unit = unit;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Region of the AML workspace in the id. </summary>
         public string AmlWorkspaceLocation { get; }
         /// <summary> Specifies the resource type. </summary>
-        public string Type { get; }
+        public string ResourceQuotaType { get; }
         /// <summary> Name of the resource. </summary>
         public ResourceName Name { get; }
         /// <summary> The maximum permitted quota of the resource. </summary>

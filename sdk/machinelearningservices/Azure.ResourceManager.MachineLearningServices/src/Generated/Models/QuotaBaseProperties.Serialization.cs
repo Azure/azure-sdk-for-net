@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(QuotaBasePropertiesType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(QuotaBasePropertiesType);
             }
             if (Optional.IsDefined(Limit))
             {

@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="trainingData"> Training data input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingData"/> is null. </exception>
-        public NlpVerticalDataSettings(string targetColumnName, TrainingDataSettings trainingData) : base(targetColumnName, trainingData)
+        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
+        public NlpVerticalDataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings) : base(targetColumnName, trainingDataSettings)
         {
             if (targetColumnName == null)
             {
                 throw new ArgumentNullException(nameof(targetColumnName));
             }
-            if (trainingData == null)
+            if (trainingDataSettings == null)
             {
-                throw new ArgumentNullException(nameof(trainingData));
+                throw new ArgumentNullException(nameof(trainingDataSettings));
             }
         }
 
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Also known as label column name in context of classification tasks.
         /// </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="trainingData"> Training data input. </param>
+        /// <param name="trainingDataSettings"> Training data input. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal NlpVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingData, object validationData) : base(targetColumnName, testData, trainingData)
+        internal NlpVerticalDataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings, object validationData) : base(targetColumnName, testData, trainingDataSettings)
         {
             ValidationData = validationData;
         }

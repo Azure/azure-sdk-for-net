@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Target column name: This is prediction values column.
         /// Also known as label column name in context of classification tasks.
         /// </param>
-        /// <param name="trainingData"> Training data input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingData"/> is null. </exception>
-        public DataSettings(string targetColumnName, TrainingDataSettings trainingData)
+        /// <param name="trainingDataSettings"> Training data input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetColumnName"/> or <paramref name="trainingDataSettings"/> is null. </exception>
+        public DataSettings(string targetColumnName, TrainingDataSettings trainingDataSettings)
         {
             if (targetColumnName == null)
             {
                 throw new ArgumentNullException(nameof(targetColumnName));
             }
-            if (trainingData == null)
+            if (trainingDataSettings == null)
             {
-                throw new ArgumentNullException(nameof(trainingData));
+                throw new ArgumentNullException(nameof(trainingDataSettings));
             }
 
             TargetColumnName = targetColumnName;
-            TrainingData = trainingData;
+            TrainingDataSettings = trainingDataSettings;
         }
 
         /// <summary> Initializes a new instance of DataSettings. </summary>
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// Also known as label column name in context of classification tasks.
         /// </param>
         /// <param name="testData"> Test data input. </param>
-        /// <param name="trainingData"> Training data input. </param>
-        internal DataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingData)
+        /// <param name="trainingDataSettings"> Training data input. </param>
+        internal DataSettings(string targetColumnName, TestDataSettings testData, TrainingDataSettings trainingDataSettings)
         {
             TargetColumnName = targetColumnName;
             TestData = testData;
-            TrainingData = trainingData;
+            TrainingDataSettings = trainingDataSettings;
         }
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
         /// <summary> Test data input. </summary>
         public TestDataSettings TestData { get; set; }
         /// <summary> Training data input. </summary>
-        internal TrainingDataSettings TrainingData { get; set; }
+        internal TrainingDataSettings TrainingDataSettings { get; set; }
         /// <summary> Training data MLTable. </summary>
-        public MLTableJobInput TrainingData
+        public MLTableJobInput Data
         {
-            get => TrainingData is null ? default(MLTableJobInput) : TrainingData.Data;
-            set => TrainingData = new TrainingDataSettings(value);
+            get => TrainingDataSettings is null ? default : TrainingDataSettings.Data;
+            set => TrainingDataSettings = new TrainingDataSettings(value);
         }
     }
 }

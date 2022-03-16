@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
@@ -48,10 +47,10 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                 writer.WritePropertyName("personalComputeInstanceSettings");
                 writer.WriteObjectValue(PersonalComputeInstanceSettings);
             }
-            if (Optional.IsDefined(SetupScripts))
+            if (Optional.IsDefined(SetupScriptsSettings))
             {
                 writer.WritePropertyName("setupScripts");
-                writer.WriteObjectValue(SetupScripts);
+                writer.WriteObjectValue(SetupScriptsSettings);
             }
             if (Optional.IsDefined(EnableNodePublicIp))
             {
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ErrorResponse>(item.ToString()));
+                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
                     }
                     errors = array;
                     continue;
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    setupScripts = Models.SetupScripts.DeserializeSetupScripts(property.Value);
+                    setupScripts = SetupScripts.DeserializeSetupScripts(property.Value);
                     continue;
                 }
                 if (property.NameEquals("lastOperation"))
