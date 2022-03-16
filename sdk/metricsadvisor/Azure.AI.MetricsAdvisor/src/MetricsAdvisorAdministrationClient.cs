@@ -140,7 +140,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AsyncPageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
-        public virtual AsyncPageable<DataFeed> GetDataFeedValuesAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataFeed> GetDataFeedsAsync(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
             DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
@@ -157,17 +157,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeeds)}");
-            scope.Start();
-
             try
             {
                 AsyncPageable<BinaryData> pageableBindaryData = GetDataFeedsAsync(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
                 return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                scope.Failed(e);
                 throw;
             }
         }
@@ -179,7 +175,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         /// <param name="options">An optional set of options used to configure the request's behavior.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Pageable{T}"/> containing the collection of <see cref="DataFeed"/>s.</returns>
-        public virtual Pageable<DataFeed> GetDataFeedValues(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataFeed> GetDataFeeds(GetDataFeedsOptions options = default, CancellationToken cancellationToken = default)
         {
             string name = options?.Filter?.Name;
             DataFeedSourceKind? sourceKind = options?.Filter?.SourceKind;
@@ -196,17 +192,13 @@ namespace Azure.AI.MetricsAdvisor.Administration
             int? skip = options?.Skip;
             int? maxPageSize = options?.MaxPageSize;
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(GetDataFeeds)}");
-            scope.Start();
-
             try
             {
                 Pageable<BinaryData> pageableBindaryData = GetDataFeeds(name, sourceKindValue, granularityTypeValue, statusValue, creator, skip, maxPageSize, context);
                 return PageableHelpers.Select(pageableBindaryData, response => ConvertToDataFeeds(DataFeedList.FromResponse(response).Value));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                scope.Failed(e);
                 throw;
             }
         }
@@ -226,8 +218,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
-            scope.Start();
             try
             {
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
@@ -253,9 +243,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                scope.Failed(ex);
                 throw;
             }
         }
@@ -275,8 +264,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             ValidateDataFeedToCreate(dataFeed, nameof(dataFeed));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(CreateDataFeed)}");
-            scope.Start();
             try
             {
                 DataFeedDetail dataFeedDetail = dataFeed.GetDataFeedDetail();
@@ -301,9 +288,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     throw new RequestFailedException($"The data feed has been created successfully, but the client failed to fetch its data. Data feed ID: {dataFeedId}", ex);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                scope.Failed(ex);
                 throw;
             }
         }
@@ -330,8 +316,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             Guid dataFeedGuid = new Guid(dataFeed.Id);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
-            scope.Start();
             try
             {
                 DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
@@ -344,9 +328,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
                 return Response.FromValue(new DataFeed(dataFeedDetail), response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                scope.Failed(ex);
                 throw;
             }
         }
@@ -373,8 +356,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
             Guid dataFeedGuid = new Guid(dataFeed.Id);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(UpdateDataFeed)}");
-            scope.Start();
             try
             {
                 DataFeedDetailPatch patchModel = dataFeed.GetPatchModel();
@@ -387,9 +368,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 DataFeedDetail dataFeedDetail = DataFeedDetail.FromResponse(response);
                 return Response.FromValue(new DataFeed(dataFeedDetail), response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                scope.Failed(ex);
                 throw;
             }
         }
@@ -408,8 +388,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDataFeed)}");
-            scope.Start();
             try
             {
                 RequestContext context = new RequestContext()
@@ -418,9 +396,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 };
                 return await DeleteDataFeedAsync(dataFeedGuid, context).ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                scope.Failed(ex);
                 throw;
             }
         }
@@ -439,8 +416,6 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             Guid dataFeedGuid = ClientCommon.ValidateGuid(dataFeedId, nameof(dataFeedId));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(MetricsAdvisorAdministrationClient)}.{nameof(DeleteDataFeed)}");
-            scope.Start();
             try
             {
                 RequestContext context = new RequestContext()
@@ -449,9 +424,8 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 };
                 return DeleteDataFeed(dataFeedGuid, context);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                scope.Failed(ex);
                 throw;
             }
         }
