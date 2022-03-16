@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitConnections and their operations over a ExpressRouteCircuitConnection. </returns>
         public virtual ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
         {
-            return new ExpressRouteCircuitConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCircuitConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PeerExpressRouteCircuitConnections and their operations over a PeerExpressRouteCircuitConnection. </returns>
         public virtual PeerExpressRouteCircuitConnectionCollection GetPeerExpressRouteCircuitConnections()
         {
-            return new PeerExpressRouteCircuitConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PeerExpressRouteCircuitConnectionCollection(Client, Id));
         }
 
         /// <summary>

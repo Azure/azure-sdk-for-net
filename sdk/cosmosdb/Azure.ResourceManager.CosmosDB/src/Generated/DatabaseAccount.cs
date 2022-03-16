@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of SqlDatabases and their operations over a SqlDatabase. </returns>
         public virtual SqlDatabaseCollection GetSqlDatabases()
         {
-            return new SqlDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new SqlDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of MongoDBDatabases and their operations over a MongoDBDatabase. </returns>
         public virtual MongoDBDatabaseCollection GetMongoDBDatabases()
         {
-            return new MongoDBDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new MongoDBDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosTables and their operations over a CosmosTable. </returns>
         public virtual CosmosTableCollection GetCosmosTables()
         {
-            return new CosmosTableCollection(Client, Id);
+            return GetCachedClient(Client => new CosmosTableCollection(Client, Id));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraKeyspaces and their operations over a CassandraKeyspace. </returns>
         public virtual CassandraKeyspaceCollection GetCassandraKeyspaces()
         {
-            return new CassandraKeyspaceCollection(Client, Id);
+            return GetCachedClient(Client => new CassandraKeyspaceCollection(Client, Id));
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of GremlinDatabases and their operations over a GremlinDatabase. </returns>
         public virtual GremlinDatabaseCollection GetGremlinDatabases()
         {
-            return new GremlinDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new GremlinDatabaseCollection(Client, Id));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
         public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
-            return new PrivateLinkResourceCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateLinkResourceCollection(Client, Id));
         }
 
         /// <summary>

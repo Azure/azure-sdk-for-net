@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An object representing collection of IscsiTargets and their operations over a IscsiTarget. </returns>
         public virtual IscsiTargetCollection GetIscsiTargets()
         {
-            return new IscsiTargetCollection(Client, Id);
+            return GetCachedClient(Client => new IscsiTargetCollection(Client, Id));
         }
 
         /// <summary>

@@ -36,56 +36,56 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of ResourcePools and their operations over a ResourcePool. </returns>
         public virtual ResourcePoolCollection GetResourcePools()
         {
-            return new ResourcePoolCollection(Client, Id);
+            return GetCachedClient(Client => new ResourcePoolCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VMwareClusters in the VMwareCluster. </summary>
         /// <returns> An object representing collection of VMwareClusters and their operations over a VMwareCluster. </returns>
         public virtual VMwareClusterCollection GetVMwareClusters()
         {
-            return new VMwareClusterCollection(Client, Id);
+            return GetCachedClient(Client => new VMwareClusterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VMwareHosts in the VMwareHost. </summary>
         /// <returns> An object representing collection of VMwareHosts and their operations over a VMwareHost. </returns>
         public virtual VMwareHostCollection GetVMwareHosts()
         {
-            return new VMwareHostCollection(Client, Id);
+            return GetCachedClient(Client => new VMwareHostCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VMwareDatastores in the VMwareDatastore. </summary>
         /// <returns> An object representing collection of VMwareDatastores and their operations over a VMwareDatastore. </returns>
         public virtual VMwareDatastoreCollection GetVMwareDatastores()
         {
-            return new VMwareDatastoreCollection(Client, Id);
+            return GetCachedClient(Client => new VMwareDatastoreCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VCenters in the VCenter. </summary>
         /// <returns> An object representing collection of VCenters and their operations over a VCenter. </returns>
         public virtual VCenterCollection GetVCenters()
         {
-            return new VCenterCollection(Client, Id);
+            return GetCachedClient(Client => new VCenterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
         public virtual VirtualMachineCollection GetVirtualMachines()
         {
-            return new VirtualMachineCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualMachineTemplates in the VirtualMachineTemplate. </summary>
         /// <returns> An object representing collection of VirtualMachineTemplates and their operations over a VirtualMachineTemplate. </returns>
         public virtual VirtualMachineTemplateCollection GetVirtualMachineTemplates()
         {
-            return new VirtualMachineTemplateCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualMachineTemplateCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualNetworks in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetwork. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {
-            return new VirtualNetworkCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
         }
     }
 }

@@ -245,21 +245,21 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AzureWebCategories and their operations over a AzureWebCategory. </returns>
         public virtual AzureWebCategoryCollection GetAzureWebCategories()
         {
-            return new AzureWebCategoryCollection(Client, Id);
+            return GetCachedClient(Client => new AzureWebCategoryCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ExpressRoutePortsLocations in the ExpressRoutePortsLocation. </summary>
         /// <returns> An object representing collection of ExpressRoutePortsLocations and their operations over a ExpressRoutePortsLocation. </returns>
         public virtual ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations()
         {
-            return new ExpressRoutePortsLocationCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRoutePortsLocationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkVirtualApplianceSkus in the NetworkVirtualApplianceSku. </summary>
         /// <returns> An object representing collection of NetworkVirtualApplianceSkus and their operations over a NetworkVirtualApplianceSku. </returns>
         public virtual NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus()
         {
-            return new NetworkVirtualApplianceSkuCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkVirtualApplianceSkuCollection(Client, Id));
         }
 
         /// <summary>

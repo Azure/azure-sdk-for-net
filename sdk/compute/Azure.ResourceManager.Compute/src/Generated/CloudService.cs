@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of RoleInstances and their operations over a RoleInstance. </returns>
         public virtual RoleInstanceCollection GetRoleInstances()
         {
-            return new RoleInstanceCollection(Client, Id);
+            return GetCachedClient(Client => new RoleInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CloudServiceRoles and their operations over a CloudServiceRole. </returns>
         public virtual CloudServiceRoleCollection GetCloudServiceRoles()
         {
-            return new CloudServiceRoleCollection(Client, Id);
+            return GetCachedClient(Client => new CloudServiceRoleCollection(Client, Id));
         }
 
         /// <summary>

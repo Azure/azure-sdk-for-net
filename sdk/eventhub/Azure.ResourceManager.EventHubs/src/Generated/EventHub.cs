@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubAuthorizationRules and their operations over a EventHubAuthorizationRule. </returns>
         public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
         {
-            return new EventHubAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new EventHubAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of ConsumerGroups and their operations over a ConsumerGroup. </returns>
         public virtual ConsumerGroupCollection GetConsumerGroups()
         {
-            return new ConsumerGroupCollection(Client, Id);
+            return GetCachedClient(Client => new ConsumerGroupCollection(Client, Id));
         }
 
         /// <summary>

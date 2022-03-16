@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkInterfaceIPConfigurations and their operations over a NetworkInterfaceIPConfiguration. </returns>
         public virtual NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
         {
-            return new NetworkInterfaceIPConfigurationCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkInterfaceIPConfigurationCollection(Client, Id));
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkInterfaceTapConfigurations and their operations over a NetworkInterfaceTapConfiguration. </returns>
         public virtual NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
         {
-            return new NetworkInterfaceTapConfigurationCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkInterfaceTapConfigurationCollection(Client, Id));
         }
 
         /// <summary>

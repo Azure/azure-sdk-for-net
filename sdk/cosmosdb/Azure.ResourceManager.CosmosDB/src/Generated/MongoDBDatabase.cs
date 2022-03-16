@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of MongoDBCollections and their operations over a MongoDBCollection. </returns>
         public virtual MongoDBCollectionCollection GetMongoDBCollections()
         {
-            return new MongoDBCollectionCollection(Client, Id);
+            return GetCachedClient(Client => new MongoDBCollectionCollection(Client, Id));
         }
 
         /// <summary>

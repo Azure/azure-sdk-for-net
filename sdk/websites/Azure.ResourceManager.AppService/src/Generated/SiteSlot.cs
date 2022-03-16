@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDetectors and their operations over a SiteSlotDetector. </returns>
         public virtual SiteSlotDetectorCollection GetSiteSlotDetectors()
         {
-            return new SiteSlotDetectorCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotDetectorCollection(Client, Id));
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotPrivateEndpointConnections and their operations over a SiteSlotPrivateEndpointConnection. </returns>
         public virtual SiteSlotPrivateEndpointConnectionCollection GetSiteSlotPrivateEndpointConnections()
         {
-            return new SiteSlotPrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotHybridConnectionNamespaceRelays and their operations over a SiteSlotHybridConnectionNamespaceRelay. </returns>
         public virtual SiteSlotHybridConnectionNamespaceRelayCollection GetSiteSlotHybridConnectionNamespaceRelays()
         {
-            return new SiteSlotHybridConnectionNamespaceRelayCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotHybridConnectionNamespaceRelayCollection(Client, Id));
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnections and their operations over a SiteSlotVirtualNetworkConnection. </returns>
         public virtual SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections()
         {
-            return new SiteSlotVirtualNetworkConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotVirtualNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDiagnostics and their operations over a SiteSlotDiagnostic. </returns>
         public virtual SiteSlotDiagnosticCollection GetSiteSlotDiagnostics()
         {
-            return new SiteSlotDiagnosticCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotDiagnosticCollection(Client, Id));
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotBackups and their operations over a SiteSlotBackup. </returns>
         public virtual SiteSlotBackupCollection GetSiteSlotBackups()
         {
-            return new SiteSlotBackupCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotBackupCollection(Client, Id));
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotConfigAppSettings and their operations over a SiteSlotConfigAppSetting. </returns>
         public virtual SiteSlotConfigAppSettingCollection GetSiteSlotConfigAppSettings()
         {
-            return new SiteSlotConfigAppSettingCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotConfigAppSettingCollection(Client, Id));
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotConfigConnectionStrings and their operations over a SiteSlotConfigConnectionString. </returns>
         public virtual SiteSlotConfigConnectionStringCollection GetSiteSlotConfigConnectionStrings()
         {
-            return new SiteSlotConfigConnectionStringCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotConfigConnectionStringCollection(Client, Id));
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotContinuousWebJobs and their operations over a SiteSlotContinuousWebJob. </returns>
         public virtual SiteSlotContinuousWebJobCollection GetSiteSlotContinuousWebJobs()
         {
-            return new SiteSlotContinuousWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotContinuousWebJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDeployments and their operations over a SiteSlotDeployment. </returns>
         public virtual SiteSlotDeploymentCollection GetSiteSlotDeployments()
         {
-            return new SiteSlotDeploymentCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotDeploymentCollection(Client, Id));
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotDomainOwnershipIdentifiers and their operations over a SiteSlotDomainOwnershipIdentifier. </returns>
         public virtual SiteSlotDomainOwnershipIdentifierCollection GetSiteSlotDomainOwnershipIdentifiers()
         {
-            return new SiteSlotDomainOwnershipIdentifierCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotDomainOwnershipIdentifierCollection(Client, Id));
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotFunctions and their operations over a SiteSlotFunction. </returns>
         public virtual SiteSlotFunctionCollection GetSiteSlotFunctions()
         {
-            return new SiteSlotFunctionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotFunctionCollection(Client, Id));
         }
 
         /// <summary>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotHostNameBindings and their operations over a SiteSlotHostNameBinding. </returns>
         public virtual SiteSlotHostNameBindingCollection GetSiteSlotHostNameBindings()
         {
-            return new SiteSlotHostNameBindingCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotHostNameBindingCollection(Client, Id));
         }
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotHybridconnections and their operations over a SiteSlotHybridconnection. </returns>
         public virtual SiteSlotHybridconnectionCollection GetSiteSlotHybridconnections()
         {
-            return new SiteSlotHybridconnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotHybridconnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotInstances and their operations over a SiteSlotInstance. </returns>
         public virtual SiteSlotInstanceCollection GetSiteSlotInstances()
         {
-            return new SiteSlotInstanceCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotInstanceCollection(Client, Id));
         }
 
         /// <summary>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotProcesses and their operations over a SiteSlotProcess. </returns>
         public virtual SiteSlotProcessCollection GetSiteSlotProcesses()
         {
-            return new SiteSlotProcessCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotProcessCollection(Client, Id));
         }
 
         /// <summary>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotPremierAddOns and their operations over a SiteSlotPremierAddOn. </returns>
         public virtual SiteSlotPremierAddOnCollection GetSiteSlotPremierAddOns()
         {
-            return new SiteSlotPremierAddOnCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotPremierAddOnCollection(Client, Id));
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotPublicCertificates and their operations over a SiteSlotPublicCertificate. </returns>
         public virtual SiteSlotPublicCertificateCollection GetSiteSlotPublicCertificates()
         {
-            return new SiteSlotPublicCertificateCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotPublicCertificateCollection(Client, Id));
         }
 
         /// <summary>
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotSiteextensions and their operations over a SiteSlotSiteextension. </returns>
         public virtual SiteSlotSiteextensionCollection GetSiteSlotSiteextensions()
         {
-            return new SiteSlotSiteextensionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotSiteextensionCollection(Client, Id));
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of NetworkFeatures and their operations over a NetworkFeatures. </returns>
         public virtual NetworkFeaturesCollection GetNetworkFeatures()
         {
-            return new NetworkFeaturesCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkFeaturesCollection(Client, Id));
         }
 
         /// <summary>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteTriggeredwebJobs and their operations over a SiteTriggeredwebJob. </returns>
         public virtual SiteTriggeredwebJobCollection GetSiteTriggeredwebJobs()
         {
-            return new SiteTriggeredwebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteTriggeredwebJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotWebJobs and their operations over a SiteSlotWebJob. </returns>
         public virtual SiteSlotWebJobCollection GetSiteSlotWebJobs()
         {
-            return new SiteSlotWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotWebJobCollection(Client, Id));
         }
 
         /// <summary>

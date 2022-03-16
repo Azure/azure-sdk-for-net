@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of JobCredentials and their operations over a JobCredential. </returns>
         public virtual JobCredentialCollection GetJobCredentials()
         {
-            return new JobCredentialCollection(Client, Id);
+            return GetCachedClient(Client => new JobCredentialCollection(Client, Id));
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlJobs and their operations over a SqlJob. </returns>
         public virtual SqlJobCollection GetSqlJobs()
         {
-            return new SqlJobCollection(Client, Id);
+            return GetCachedClient(Client => new SqlJobCollection(Client, Id));
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of JobTargetGroups and their operations over a JobTargetGroup. </returns>
         public virtual JobTargetGroupCollection GetJobTargetGroups()
         {
-            return new JobTargetGroupCollection(Client, Id);
+            return GetCachedClient(Client => new JobTargetGroupCollection(Client, Id));
         }
 
         /// <summary>

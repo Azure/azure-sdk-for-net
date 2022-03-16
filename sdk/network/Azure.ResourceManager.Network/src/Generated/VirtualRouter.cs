@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualRouterPeerings and their operations over a VirtualRouterPeering. </returns>
         public virtual VirtualRouterPeeringCollection GetVirtualRouterPeerings()
         {
-            return new VirtualRouterPeeringCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualRouterPeeringCollection(Client, Id));
         }
 
         /// <summary>

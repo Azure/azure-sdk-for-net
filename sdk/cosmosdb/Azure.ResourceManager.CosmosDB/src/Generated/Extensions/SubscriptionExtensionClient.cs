@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocation. </returns>
         public virtual CosmosDBLocationCollection GetCosmosDBLocations()
         {
-            return new CosmosDBLocationCollection(Client, Id);
+            return GetCachedClient(Client => new CosmosDBLocationCollection(Client, Id));
         }
 
         /// <summary>

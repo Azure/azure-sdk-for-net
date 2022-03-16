@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of WebPubSubs and their operations over a WebPubSub. </returns>
         public virtual WebPubSubCollection GetWebPubSubs()
         {
-            return new WebPubSubCollection(Client, Id);
+            return GetCachedClient(Client => new WebPubSubCollection(Client, Id));
         }
     }
 }
