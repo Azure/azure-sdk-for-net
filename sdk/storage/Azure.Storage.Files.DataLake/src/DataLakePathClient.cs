@@ -1103,6 +1103,34 @@ namespace Azure.Storage.Files.DataLake
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Create)}");
 
+                if (resourceType == PathResourceType.Directory)
+                {
+                    if (leaseId != null)
+                    {
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseId)} does not apply to directories.");
+                    }
+
+                    if (leaseDuration.HasValue)
+                    {
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.LeaseDuration)} does not apply to directories.");
+                    }
+
+                    if (timeToExpire.HasValue)
+                    {
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.TimeToExpire)} does not apply to directories.");
+                    }
+
+                    if (setExpiryRelativeTo.HasValue)
+                    {
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.SetExpiryRelativeTo)} does not apply to directories.");
+                    }
+
+                    if (expiresOn.HasValue)
+                    {
+                        throw new ArgumentException($"{nameof(DataLakePathCreateOptions)}.{nameof(DataLakePathCreateOptions.ExpiresOn)} does not apply to directories.");
+                    }
+                }
+
                 if (expiresOn.HasValue)
                 {
                     if (timeToExpire.HasValue)
