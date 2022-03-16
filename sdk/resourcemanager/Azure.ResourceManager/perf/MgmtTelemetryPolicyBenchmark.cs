@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Perf
             var message = new HttpMessage(requestMock, new ResponseClassifier());
             if (!string.IsNullOrEmpty(SDKAgentOverride))
             {
-                message.SetProperty("SDKUserAgent", SDKAgentOverride);
+                message.SetProperty("UserAgentOverride", SDKAgentOverride);
             }
             if (CustomHeaders.Length > 0)
             {

@@ -12,20 +12,15 @@ namespace Azure.ResourceManager.Tests
 {
     public class MgmtTelemetryPolicyTests
     {
-        [TestCase("test", new string[] { }, "test")]
-        [TestCase("test", new string[] { "foo" }, "test foo")]
-        [TestCase("test", new string[] { "foo", "bar" }, "test foo bar")]
-        // default header pattern: azsdk-net-ResourceManager.Tests/1.0.0-alpha.20220124.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19043 )
-        [TestCase("", new string[] { }, "azsdk-net-ResourceManager.Tests\\/[a-zA-Z0-9.\\-]+ \\(.*\\)")]
-        [TestCase("", new string[] { "foo" }, "azsdk-net-ResourceManager.Tests\\/[a-zA-Z0-9.\\-]+ \\(.*\\) foo")]
-        [TestCase("", new string[] { "foo", "bar" }, "azsdk-net-ResourceManager.Tests\\/[a-zA-Z0-9.\\-]+ \\(.*\\) foo bar")]
+        [TestCase("test", new string[] { "foo" }, "test")]
+        [TestCase("", new string[] { "foo" }, "foo")]
         public void UserAgentOverride(string userAgentOverride, string[] customHeaders, string expect)
         {
             var requestMock = new MockRequest();
             var message = new HttpMessage(requestMock, new ResponseClassifier());
             if (!string.IsNullOrEmpty(userAgentOverride))
             {
-                message.SetProperty("SDKUserAgent", userAgentOverride);
+                message.SetProperty("UserAgentOverride", userAgentOverride);
             }
             if (customHeaders.Length > 0)
             {
