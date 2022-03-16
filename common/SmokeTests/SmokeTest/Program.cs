@@ -146,6 +146,11 @@ void ProcessType(Type type)
                 // Expected; this is a known scenario where the type is not impactful to the
                 // Azure SDK experience and cane be safely ignored.
             }
+            catch (COMException)
+            {
+                // Expected; this is a known scenario where the type is not impactful to the
+                // Azure SDK experience and cane be safely ignored.
+            }
         }
     }
     catch (Exception ex)
@@ -269,7 +274,6 @@ bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationE
     TypeLoadException => true,
     TypeInitializationException => true,
     ThreadStateException => true,
-    COMException => true,
 
     // Occurs when the assembly is locked; this is most likely a framework assembly.
     IOException ioEx when (ioEx.Message.ToLower().Contains("being used by another process.")) => true,
