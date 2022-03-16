@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Buffers;
+using System.Buffers.Binary;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using Azure.Messaging.EventHubs.Primitives;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -92,7 +95,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   the gateway hashing algorithm as closely as possible and should not be adjusted without careful
         ///   consideration.
         /// </remarks>
-        ///
+        [SkipLocalsInit]
         private static short GenerateHashCode(string partitionKey)
         {
             if (partitionKey == null)
@@ -100,7 +103,18 @@ namespace Azure.Messaging.EventHubs.Core
                 return 0;
             }
 
-            ComputeHash(Encoding.UTF8.GetBytes(partitionKey), seed1: 0, seed2: 0, out uint hash1, out uint hash2);
+            byte[] sharedBuffer = null;
+            var partitionKeySpan = partitionKey.AsSpan();
+            var partitionKeyByteLength = Encoding.UTF8.GetByteCount(partitionKeySpan);
+            Span<byte> hashBuffer = partitionKeyByteLength <= 256 ? stackalloc byte[partitionKeyByteLength] :
+                sharedBuffer = ArrayPool<byte>.Shared.Rent(partitionKeyByteLength);
+
+            var written = Encoding.UTF8.GetBytes(partitionKeySpan, hashBuffer);
+            ComputeHash(hashBuffer.Slice(0, written), seed1: 0, seed2: 0, out uint hash1, out uint hash2);
+            if (sharedBuffer != null)
+            {
+                ArrayPool<byte>.Shared.Return(sharedBuffer);
+            }
             return (short)(hash1 ^ hash2);
         }
 
@@ -120,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Core
         ///   consideration.
         /// </remarks>
         ///
-        private static void ComputeHash(byte[] data,
+        private static void ComputeHash(ReadOnlySpan<byte> data,
                                         uint seed1,
                                         uint seed2,
                                         out uint hash1,
@@ -134,9 +148,9 @@ namespace Azure.Messaging.EventHubs.Core
             int index = 0, size = data.Length;
             while (size > 12)
             {
-                a += BitConverter.ToUInt32(data, index);
-                b += BitConverter.ToUInt32(data, index + 4);
-                c += BitConverter.ToUInt32(data, index + 8);
+                a += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index) );
+                b += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index + 4));
+                c += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index + 8));
 
                 a -= c;
                 a ^= (c << 4) | (c >> 28);
@@ -169,9 +183,9 @@ namespace Azure.Messaging.EventHubs.Core
             switch (size)
             {
                 case 12:
-                    a += BitConverter.ToUInt32(data, index);
-                    b += BitConverter.ToUInt32(data, index + 4);
-                    c += BitConverter.ToUInt32(data, index + 8);
+                    a += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index));
+                    b += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index + 4));
+                    c += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index + 8));
                     break;
                 case 11:
                     c += ((uint)data[index + 10]) << 16;
@@ -183,8 +197,8 @@ namespace Azure.Messaging.EventHubs.Core
                     c += (uint)data[index + 8];
                     goto case 8;
                 case 8:
-                    b += BitConverter.ToUInt32(data, index + 4);
-                    a += BitConverter.ToUInt32(data, index);
+                    b += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index + 4));
+                    a += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index));
                     break;
                 case 7:
                     b += ((uint)data[index + 6]) << 16;
@@ -196,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Core
                     b += (uint)data[index + 4];
                     goto case 4;
                 case 4:
-                    a += BitConverter.ToUInt32(data, index);
+                    a += BinaryPrimitives.ReadUInt32BigEndian(data.Slice(index));
                     break;
                 case 3:
                     a += ((uint)data[index + 2]) << 16;
