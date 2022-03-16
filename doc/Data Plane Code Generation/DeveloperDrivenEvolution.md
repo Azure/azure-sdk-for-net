@@ -1,6 +1,11 @@
 # Developer driven evolution
 To add a convenience API that returns raw JSON to a model, steps are:
 
+**Get convenience method signiture from protocol method signiture.** Replace the optional `RequestContext` parameter with an optional `CancellationToken`. If there is an input `RequestContent`, replace it with a model type `T`. Replace the return value `Response` with `Response<T>`.
+```C#
+- public virtual async Task<Response> CreateMetricFeedbackAsync(RequestContent content, RequestContext context = null);
++ public virtual async Task<Response<MetricFeedback>> CreateMetricFeedbackAsync(MetricFeedback feedback, CancellationToken cancellationToken = default);
+```
 **Pick the best convenience method name fitting your scenario.** You could use the same method name as the initial protocol method only when your convenience method has different **required** parameter list. E.g.,
 - ```(string feedId, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have the same required parameter list. You cannot add the convenience method as an overload method by leveraging the initial method name, because it will cause an ambiguous compile error when you call it without `RequestContext`/`CancellationToken`.
 - ```(RequestContent content, RequestContext requestContext = null)``` and ```(string feedId, CancellationToken cancellationToken = default)``` have different required parameter list. You are safe to use same method name with the initial protocol name.
@@ -8,6 +13,8 @@ To add a convenience API that returns raw JSON to a model, steps are:
 If your convenience method has the same parameter list as that of the protocol method, we suggest 
 - Adding a suffix `Value` to the initial method name as the convenience method name, if the initial method is singular (e.g., `GetMetricFeedbackAsync`).
 - Adding a suffix `Values` to the initial method name as the convenience method name, if the initial method is plural (e.g., `GetMetricFeedbacksAsync`).
+
+**Create the models for the convenience APIs you've added.** Currently it can be generated manually. We will support generate it automatically.
 
 **Add helper method mapping between raw response and model in generated or handcrafted model.** Examples for model `MetricFeedback` (Models/MetricFeedback/MetricFeedback.cs) are:
 ```C#
