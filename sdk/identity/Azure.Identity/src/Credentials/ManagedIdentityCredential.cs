@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Identitiy;
 
 namespace Azure.Identity
 {
@@ -115,7 +116,8 @@ namespace Azure.Identity
                 AccessToken result = await _client.AuthenticateAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
                 if (_logAccountDetails)
                 {
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(_clientId, null, null, null);
+                    var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.Token);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId ?? _clientId, accountDetails.TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
                 return scope.Succeeded(result);
             }
