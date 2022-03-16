@@ -4,17 +4,12 @@
 using Avro;
 using Avro.Generic;
 using Azure.Core.TestFramework;
-using Azure.Data.SchemaRegistry;
 using NUnit.Framework;
 using System;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Avro.Specific;
 using Azure;
-using Azure.Messaging;
 using Azure.Messaging.EventHubs;
-using Azure.Messaging.ServiceBus;
 using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
@@ -249,38 +244,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(2, contentType.Length);
             Assert.AreEqual("avro/binary", contentType[0]);
             Assert.IsNotEmpty(contentType[1]);
-
-            // verify the payload was decoded correctly
-            Assert.IsNotNull(deserialized);
-            Assert.AreEqual("Caketown", deserialized.Name);
-            Assert.AreEqual(42, deserialized.Age);
-        }
-
-        [RecordedTest]
-        public async Task CanDecodePreamble()
-        {
-            var client = CreateClient();
-            var groupName = TestEnvironment.SchemaRegistryGroup;
-
-            var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-
-            var employee = new Employee { Age = 42, Name = "Caketown" };
-            EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
-            string schemaId = eventData.ContentType.Split('+')[1];
-            eventData.ContentType = "avro/binary";
-
-            using var stream = new MemoryStream();
-            stream.Write(new byte[] { 0, 0, 0, 0 }, 0, 4);
-            var encoding = new UTF8Encoding(false);
-            stream.Write(encoding.GetBytes(schemaId), 0, 32);
-            stream.Write(eventData.Body.ToArray(), 0, eventData.Body.Length);
-            stream.Position = 0;
-            eventData.EventBody = BinaryData.FromStream(stream);
-
-            Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
-
-            // decoding should not alter the message
-            Assert.AreEqual("avro/binary", eventData.ContentType);
 
             // verify the payload was decoded correctly
             Assert.IsNotNull(deserialized);
