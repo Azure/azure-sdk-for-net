@@ -750,6 +750,58 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task FindBlobsByTagAsync_BlobVersions()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> oldTags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                Tags = oldTags
+            };
+            await appendBlob.CreateAsync(options);
+
+            // Modify blob metadata to trigger new version
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await appendBlob.SetMetadataAsync(metadata);
+
+            // Modify blob tags of new version
+            Dictionary<string, string> newTags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue },
+                { "newKey", "newValue"}
+            };
+            await appendBlob.SetTagsAsync(newTags);
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Delay(2000);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // Act
+            List<TaggedBlobItem> blobs = new List<TaggedBlobItem>();
+            await foreach (TaggedBlobItem taggedBlobItem in service.FindBlobsByTagsAsync(
+                tagFilterSqlExpression: expression,
+                states: BlobStates.Version))
+            {
+                blobs.Add(taggedBlobItem);
+            }
+            blobs = blobs.Where(r => r.BlobName == appendBlob.Name).ToList();
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task FindBlobsByTagAsync_Error()
         {
