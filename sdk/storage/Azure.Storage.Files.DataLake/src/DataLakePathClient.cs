@@ -1164,33 +1164,36 @@ namespace Azure.Storage.Files.DataLake
                         serviceLeaseDuration = leaseDuration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(leaseDuration.Value.TotalSeconds);
                     }
 
-                    PathExpiryOptions pathExpiryOptions;
+                    PathExpiryOptions? pathExpiryOptions = null;
                     string expiresOnString = null;
 
-                    // Relative
-                    if (timeToExpire.HasValue)
+                    if (setExpiryRelativeTo.HasValue)
                     {
-                        if (setExpiryRelativeTo.Value == DataLakeFileExpirationOrigin.CreationTime)
+                        // Relative
+                        if (timeToExpire.HasValue)
                         {
-                            pathExpiryOptions = PathExpiryOptions.RelativeToCreation;
+                            if (setExpiryRelativeTo.Value == DataLakeFileExpirationOrigin.CreationTime)
+                            {
+                                pathExpiryOptions = PathExpiryOptions.RelativeToCreation;
+                            }
+                            else
+                            {
+                                pathExpiryOptions = PathExpiryOptions.RelativeToNow;
+                            }
+                            expiresOnString = timeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
                         }
+                        // Absolute
                         else
                         {
-                            pathExpiryOptions = PathExpiryOptions.RelativeToNow;
-                        }
-                        expiresOnString = timeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
-                    }
-                    // Absolute
-                    else
-                    {
-                        if (expiresOn.HasValue)
-                        {
-                            pathExpiryOptions = PathExpiryOptions.Absolute;
-                            expiresOnString = expiresOn?.ToString("R", CultureInfo.InvariantCulture);
-                        }
-                        else
-                        {
-                            pathExpiryOptions = PathExpiryOptions.NeverExpire;
+                            if (expiresOn.HasValue)
+                            {
+                                pathExpiryOptions = PathExpiryOptions.Absolute;
+                                expiresOnString = expiresOn?.ToString("R", CultureInfo.InvariantCulture);
+                            }
+                            else
+                            {
+                                pathExpiryOptions = PathExpiryOptions.NeverExpire;
+                            }
                         }
                     }
 
