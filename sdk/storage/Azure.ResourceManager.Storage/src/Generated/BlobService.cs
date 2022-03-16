@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of BlobContainers and their operations over a BlobContainer. </returns>
         public virtual BlobContainerCollection GetBlobContainers()
         {
-            return new BlobContainerCollection(Client, Id);
+            return GetCachedClient(Client => new BlobContainerCollection(Client, Id));
         }
 
         /// <summary>

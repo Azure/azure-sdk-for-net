@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             long restoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            SqlContainerCreateUpdateData updateOptions = new SqlContainerCreateUpdateData(container.Id, _containerName, container.Data.Type, null,
+            SqlContainerCreateUpdateData updateOptions = new SqlContainerCreateUpdateData(container.Id, _containerName, container.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 

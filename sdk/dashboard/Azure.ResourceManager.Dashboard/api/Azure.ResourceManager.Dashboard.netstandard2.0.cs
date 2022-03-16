@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Dashboard.Models
     public partial class ManagedIdentity
     {
         public ManagedIdentity() { }
+        public Azure.ResourceManager.Dashboard.Models.IdentityType? IdentityType { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } }
         public string TenantId { get { throw null; } }
-        public Azure.ResourceManager.Dashboard.Models.IdentityType? Type { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
     }
     public partial class PatchableGrafanaResourceData

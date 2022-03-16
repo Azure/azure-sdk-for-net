@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlTriggers(trigger, trigger2);
 
-            SqlTriggerCreateUpdateData updateOptions = new SqlTriggerCreateUpdateData(trigger.Id, _triggerName, trigger.Data.Type, null,
+            SqlTriggerCreateUpdateData updateOptions = new SqlTriggerCreateUpdateData(trigger.Id, _triggerName, trigger.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, trigger.Data.Resource, new CreateUpdateOptions());
             updateOptions = new SqlTriggerCreateUpdateData(AzureLocation.WestUS, new SqlTriggerResource(_triggerName)

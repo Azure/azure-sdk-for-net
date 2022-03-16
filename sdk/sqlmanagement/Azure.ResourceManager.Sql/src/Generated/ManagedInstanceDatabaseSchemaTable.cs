@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableColumns and their operations over a ManagedInstanceDatabaseSchemaTableColumn. </returns>
         public virtual ManagedInstanceDatabaseSchemaTableColumnCollection GetManagedInstanceDatabaseSchemaTableColumns()
         {
-            return new ManagedInstanceDatabaseSchemaTableColumnCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedInstanceDatabaseSchemaTableColumnCollection(Client, Id));
         }
 
         /// <summary>

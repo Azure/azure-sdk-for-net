@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotInstanceProcesses and their operations over a SiteSlotInstanceProcess. </returns>
         public virtual SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
         {
-            return new SiteSlotInstanceProcessCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotInstanceProcessCollection(Client, Id));
         }
 
         /// <summary>

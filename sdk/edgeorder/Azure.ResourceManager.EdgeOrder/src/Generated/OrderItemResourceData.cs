@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Initializes a new instance of OrderItemResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="startTime"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        internal OrderItemResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, DateTimeOffset? startTime, string orderId) : base(id, name, type, systemData, tags, location)
+        internal OrderItemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, OrderItemDetails orderItemDetails, AddressDetails addressDetails, DateTimeOffset? startTime, string orderId) : base(id, name, resourceType, systemData, tags, location)
         {
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;

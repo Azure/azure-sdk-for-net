@@ -1224,7 +1224,6 @@ namespace Azure.ResourceManager.AppService
         public string Hostname { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public string ResourceConnectionString { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
     }
     public partial class RemotePrivateEndpointConnectionARMResourceData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -4863,10 +4862,10 @@ namespace Azure.ResourceManager.AppService.Models
         public AzureStorageInfoValue() { }
         public string AccessKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AzureStorageType? AzureStorageType { get { throw null; } set { } }
         public string MountPath { get { throw null; } set { } }
         public string ShareName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AzureStorageState? State { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AzureStorageType? Type { get { throw null; } set { } }
     }
     public partial class AzureStoragePropertyDictionaryResource : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -4939,7 +4938,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string MeterId { get { throw null; } set { } }
         public double? Multiplier { get { throw null; } set { } }
         public string OsType { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
         public string ShortName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5143,13 +5141,13 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public ConnStringInfo() { }
         public string ConnectionString { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ConnectionStringType? ConnectionStringType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ConnectionStringType? Type { get { throw null; } set { } }
     }
     public partial class ConnStringValueTypePair
     {
-        public ConnStringValueTypePair(string value, Azure.ResourceManager.AppService.Models.ConnectionStringType type) { }
-        public Azure.ResourceManager.AppService.Models.ConnectionStringType Type { get { throw null; } set { } }
+        public ConnStringValueTypePair(string value, Azure.ResourceManager.AppService.Models.ConnectionStringType connectionStringType) { }
+        public Azure.ResourceManager.AppService.Models.ConnectionStringType ConnectionStringType { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
     public partial class ContactInformation
@@ -5416,13 +5414,13 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public DetectorAbnormalTimePeriod() { }
         public System.DateTimeOffset? EndTime { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.IssueType? IssueType { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> MetaData { get { throw null; } }
         public double? Priority { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Solution> Solutions { get { throw null; } }
         public string Source { get { throw null; } set { } }
         public System.DateTimeOffset? StartTime { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.IssueType? Type { get { throw null; } set { } }
     }
     public partial class DetectorDefinition
     {
@@ -5439,11 +5437,11 @@ namespace Azure.ResourceManager.AppService.Models
         public string Author { get { throw null; } }
         public string Category { get { throw null; } }
         public string Description { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.DetectorType? DetectorType { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public float? Score { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.SupportTopic> SupportTopicList { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DetectorType? Type { get { throw null; } }
     }
     public enum DetectorType
     {
@@ -5621,8 +5619,8 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class ExtendedLocation
     {
         public ExtendedLocation() { }
+        public string ExtendedLocationType { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public string Type { get { throw null; } }
     }
     public partial class Facebook
     {
@@ -5827,7 +5825,7 @@ namespace Azure.ResourceManager.AppService.Models
         public HostingEnvironmentProfile() { }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public enum HostingEnvironmentStatus
     {
@@ -6020,7 +6018,7 @@ namespace Azure.ResourceManager.AppService.Models
         public KubeEnvironmentProfile() { }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     public enum KubeEnvironmentProvisioningState
     {
@@ -6171,8 +6169,8 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal MsDeployLogEntry() { }
         public string Message { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.MSDeployLogEntryType? MSDeployLogEntryType { get { throw null; } }
         public System.DateTimeOffset? Time { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.MSDeployLogEntryType? Type { get { throw null; } }
     }
     public enum MSDeployLogEntryType
     {
@@ -6678,8 +6676,8 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public Rendering() { }
         public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.RenderingType? RenderingType { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.RenderingType? Type { get { throw null; } set { } }
     }
     public enum RenderingType
     {
@@ -7213,7 +7211,7 @@ namespace Azure.ResourceManager.AppService.Models
         public double? Id { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> Metadata { get { throw null; } }
         public double? Order { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.SolutionType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.SolutionType? SolutionType { get { throw null; } set { } }
     }
     public enum SolutionType
     {
@@ -7533,7 +7531,7 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class ValidateRequest
     {
-        public ValidateRequest(string name, Azure.ResourceManager.AppService.Models.ValidateResourceTypes type, string location) { }
+        public ValidateRequest(string name, Azure.ResourceManager.AppService.Models.ValidateResourceTypes validateResourceType, string location) { }
         public Azure.ResourceManager.AppService.Models.AppServiceEnvironmentAutoGenerated AppServiceEnvironment { get { throw null; } set { } }
         public int? Capacity { get { throw null; } set { } }
         public string ContainerImagePlatform { get { throw null; } set { } }
@@ -7550,7 +7548,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? NeedLinuxWorkers { get { throw null; } set { } }
         public string ServerFarmId { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.ValidateResourceTypes Type { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ValidateResourceTypes ValidateResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ValidateResourceTypes : System.IEquatable<Azure.ResourceManager.AppService.Models.ValidateResourceTypes>
@@ -7611,8 +7609,8 @@ namespace Azure.ResourceManager.AppService.Models
         public VirtualNetworkProfile(string id) { }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
         public string Subnet { get { throw null; } set { } }
-        public string Type { get { throw null; } }
     }
     public partial class VnetInfo
     {

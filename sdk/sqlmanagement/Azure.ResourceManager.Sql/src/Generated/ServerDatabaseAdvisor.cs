@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RecommendedActions and their operations over a RecommendedAction. </returns>
         public virtual RecommendedActionCollection GetRecommendedActions()
         {
-            return new RecommendedActionCollection(Client, Id);
+            return GetCachedClient(Client => new RecommendedActionCollection(Client, Id));
         }
 
         /// <summary>

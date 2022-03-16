@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.Level, getResult.Data.Level);
             Assert.AreEqual(model.Data.Notes, getResult.Data.Notes);
             if(model.Data.Owners != null || getResult.Data.Owners != null)

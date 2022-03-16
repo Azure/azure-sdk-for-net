@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnOrigins and their operations over a CdnOrigin. </returns>
         public virtual CdnOriginCollection GetCdnOrigins()
         {
-            return new CdnOriginCollection(Client, Id);
+            return GetCachedClient(Client => new CdnOriginCollection(Client, Id));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnOriginGroups and their operations over a CdnOriginGroup. </returns>
         public virtual CdnOriginGroupCollection GetCdnOriginGroups()
         {
-            return new CdnOriginGroupCollection(Client, Id);
+            return GetCachedClient(Client => new CdnOriginGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnCustomDomains and their operations over a CdnCustomDomain. </returns>
         public virtual CdnCustomDomainCollection GetCdnCustomDomains()
         {
-            return new CdnCustomDomainCollection(Client, Id);
+            return GetCachedClient(Client => new CdnCustomDomainCollection(Client, Id));
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Cdn
             try
             {
                 var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

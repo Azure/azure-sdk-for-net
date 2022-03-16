@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusRules and their operations over a ServiceBusRule. </returns>
         public virtual ServiceBusRuleCollection GetServiceBusRules()
         {
-            return new ServiceBusRuleCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusRuleCollection(Client, Id));
         }
 
         /// <summary>

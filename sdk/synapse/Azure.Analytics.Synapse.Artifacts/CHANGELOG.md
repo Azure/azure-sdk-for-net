@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.15 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.14 (2022-03-08)
 - Added ScriptActivity.
 - Added missing properties in SynapseNotebookActivity and SparkJobActivity.

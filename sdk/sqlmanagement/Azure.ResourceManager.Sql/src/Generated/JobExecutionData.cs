@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of JobExecutionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="jobVersion"> The job version number. </param>
         /// <param name="stepName"> The job step name. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="currentAttemptStartTime"> Start time of the current attempt. </param>
         /// <param name="lastMessage"> The last status or error message. </param>
         /// <param name="target"> The target that this execution is executed on. </param>
-        internal JobExecutionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, ProvisioningState? provisioningState, DateTimeOffset? createTime, DateTimeOffset? startTime, DateTimeOffset? endTime, int? currentAttempts, DateTimeOffset? currentAttemptStartTime, string lastMessage, JobExecutionTarget target) : base(id, name, type, systemData)
+        internal JobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, ProvisioningState? provisioningState, DateTimeOffset? createTime, DateTimeOffset? startTime, DateTimeOffset? endTime, int? currentAttempts, DateTimeOffset? currentAttemptStartTime, string lastMessage, JobExecutionTarget target) : base(id, name, resourceType, systemData)
         {
             JobVersion = jobVersion;
             StepName = stepName;

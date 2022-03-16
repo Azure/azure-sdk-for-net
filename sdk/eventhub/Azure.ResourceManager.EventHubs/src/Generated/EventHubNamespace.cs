@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of NamespaceAuthorizationRules and their operations over a NamespaceAuthorizationRule. </returns>
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
-            return new NamespaceAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceAuthorizationRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of EventHubs and their operations over a EventHub. </returns>
         public virtual EventHubCollection GetEventHubs()
         {
-            return new EventHubCollection(Client, Id);
+            return GetCachedClient(Client => new EventHubCollection(Client, Id));
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of DisasterRecoveries and their operations over a DisasterRecovery. </returns>
         public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
-            return new DisasterRecoveryCollection(Client, Id);
+            return GetCachedClient(Client => new DisasterRecoveryCollection(Client, Id));
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> An object representing collection of SchemaGroups and their operations over a SchemaGroup. </returns>
         public virtual SchemaGroupCollection GetSchemaGroups()
         {
-            return new SchemaGroupCollection(Client, Id);
+            return GetCachedClient(Client => new SchemaGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -491,11 +491,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityDisasterRecoveryConfigAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckNameAvailabilityDisasterRecoveryConfig");
+            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {
@@ -517,11 +517,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Alias name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityDisasterRecoveryConfig(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckDisasterRecoveryNameAvailability(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckNameAvailabilityDisasterRecoveryConfig");
+            using var scope = _disasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubNamespace.CheckDisasterRecoveryNameAvailability");
             scope.Start();
             try
             {

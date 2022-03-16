@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of FileShares and their operations over a FileShare. </returns>
         public virtual FileShareCollection GetFileShares()
         {
-            return new FileShareCollection(Client, Id);
+            return GetCachedClient(Client => new FileShareCollection(Client, Id));
         }
 
         /// <summary>
