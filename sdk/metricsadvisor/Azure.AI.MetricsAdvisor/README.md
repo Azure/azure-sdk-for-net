@@ -300,7 +300,7 @@ var dataSoure = new SqlServerDataFeedSource("<connection-string>", "<query>")
 
 Check the ingestion status of a previously created [`DataFeed`](#data-feed).
 
-```C# Snippet:GetDataFeedIngestionStatusesAsync
+```C#
 string dataFeedId = "<dataFeedId>";
 
 var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
@@ -334,7 +334,7 @@ await foreach (DataFeedIngestionStatus ingestionStatus in adminClient.GetDataFee
 
 Create an [`AnomalyDetectionConfiguration`](#data-point-anomaly) to tell the service which data points should be considered anomalies.
 
-```C# Snippet:CreateDetectionConfigurationAsync
+```C#
 string metricId = "<metricId>";
 string configurationName = "<configurationName>";
 
@@ -369,7 +369,7 @@ Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfigu
 
 Metrics Advisor supports the [`EmailNotificationHook`](#notification-hook) and the [`WebNotificationHook`](#notification-hook) classes as means of subscribing to [alert](#anomaly-alert) notifications. In this example we'll illustrate how to create an `EmailNotificationHook`. Note that you need to pass the hook to an anomaly alert configuration to start getting notifications. See the sample [Create an anomaly alert configuration](#create-an-anomaly-alert-configuration) below for more information.
 
-```C# Snippet:CreateHookAsync
+```C#
 string hookName = "<hookName>";
 
 var emailHook = new EmailNotificationHook(hookName);
@@ -388,7 +388,7 @@ Console.WriteLine($"Hook ID: {createdHook.Id}");
 
 Create an [`AnomalyAlertConfiguration`](#anomaly-alert) to tell the service which anomalies should trigger alerts.
 
-```C# Snippet:CreateAlertConfigurationAsync
+```C#
 string hookId = "<hookId>";
 string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 string configurationName = "<configurationName>";
@@ -416,7 +416,7 @@ Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
 
 Look through the [alerts](#anomaly-alert) created by a given anomaly alert configuration.
 
-```C# Snippet:GetAlertsAsync
+```C#
 string anomalyAlertConfigurationId = "<anomalyAlertConfigurationId>";
 
 var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
@@ -445,7 +445,7 @@ await foreach (AnomalyAlert alert in client.GetAlertsAsync(anomalyAlertConfigura
 
 Once you know an alert's ID, list the [anomalies](#data-point-anomaly) that triggered this alert.
 
-```C# Snippet:GetAnomaliesForAlertAsync
+```C#
 string alertConfigurationId = "<alertConfigurationId>";
 string alertId = "<alertId>";
 
