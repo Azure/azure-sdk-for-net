@@ -158,7 +158,8 @@ void ProcessType(Type type)
 
                 LogInformation($"\tThe assembly needed for type [{ type.FullName }] was not found.  This is expected for some platform-specific types, such as those in System.Windows.Forms when running on a non-Windows platform.");
             }
-            catch (TargetInvocationException ex) when ((ex.InnerException is PlatformNotSupportedException) || (ex.InnerException is NotSupportedException))
+            catch (TargetInvocationException ex)
+                when ((ex.InnerException is PlatformNotSupportedException) || (ex.InnerException is NotSupportedException) || (ex.InnerException is TypeLoadException) || (ex.InnerException is TypeInitializationException))
             {
                 // Expected; this indicates that a type is not available on a platform.  For example, Windows Principal-related types on Linux.
 
@@ -248,7 +249,7 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
 
                     LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
                 }
-                catch (BadImageFormatException)
+                catch (Exception ex) when ((ex is BadImageFormatException) || ((ex is FileLoadException fileEx) && (ShouldIgnoreFileLoadException(fileEx))))
                 {
                     // Expected; this occurs when an assembly is not compiled for the current framework
                     // or platform and is most often seen for platform-specific interop assemblies.
@@ -281,6 +282,15 @@ bool ShouldIgnoreInvocationException(TargetInvocationException targetInvocationE
 
     // Occurs when the assembly is locked; this is most likely a framework assembly.
     IOException ioEx when (ioEx.Message.ToLower().Contains("being used by another process.")) => true,
+
+    // By default, do not ignore.
+    _ => false
+};
+
+bool ShouldIgnoreFileLoadException(FileLoadException ex) => ex switch
+{
+    // Occurs when the assembly is not supported on the target framework/platform.
+    _ when (ex.Message.ToLower().Contains("operation is not supported")) => true,
 
     // By default, do not ignore.
     _ => false
