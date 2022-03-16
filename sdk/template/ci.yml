@@ -7,7 +7,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/template/
+    - sdk/template/ 
+    # eng/common code changes trigger template pipeline for basic checking.
+    - eng/common/
 
 pr:
   branches:
@@ -19,6 +21,8 @@ pr:
   paths:
     include:
     - sdk/template/
+    # eng/common code changes trigger template pipeline for basic checking.
+    - eng/common/
 #if (false)
     # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
