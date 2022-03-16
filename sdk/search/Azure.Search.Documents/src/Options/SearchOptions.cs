@@ -310,10 +310,9 @@ namespace Azure.Search.Documents
             Debug.Assert(source != null);
             Debug.Assert(destination != null);
 
-            foreach (System.Reflection.PropertyInfo sourcePropertyInfo in source.GetType().GetProperties())
+            foreach (System.Reflection.PropertyInfo propertyInfo in typeof(SearchOptions).GetProperties())
             {
-                System.Reflection.PropertyInfo destinationPropertyInfo = destination.GetType().GetProperty(sourcePropertyInfo.Name);
-                destinationPropertyInfo.SetValue(destination, sourcePropertyInfo.GetValue(source));
+                propertyInfo.SetValue(destination, propertyInfo.GetValue(source));
             }
         }
 
