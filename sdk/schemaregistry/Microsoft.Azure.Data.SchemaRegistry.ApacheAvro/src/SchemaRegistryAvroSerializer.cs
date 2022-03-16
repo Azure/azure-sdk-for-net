@@ -363,7 +363,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             }
             catch (AvroException ex)
             {
-                throw new AvroSerializationException("An error occurred while attempting to deserialize Avro.", ex);
+                throw new AvroSerializationException($"An error occurred while attempting to deserialize " +
+                                                     $"Avro that was written with schemaId: {schemaId}.", schemaId, ex);
             }
         }
 

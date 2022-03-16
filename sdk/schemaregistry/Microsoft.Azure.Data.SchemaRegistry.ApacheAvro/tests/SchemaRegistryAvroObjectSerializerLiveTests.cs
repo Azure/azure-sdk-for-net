@@ -75,11 +75,14 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             var content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            var schemaId = content.ContentType.ToString().Split('+')[1];
 
             // deserialize with the new schema, which is NOT backward compatible with the old schema as it adds a new field
             Assert.That(
                 async () => await serializer.DeserializeAsync<Employee_V2>(content),
-                Throws.InstanceOf<AvroSerializationException>().And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
+                Throws.InstanceOf<AvroSerializationException>()
+                    .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>()
+                    .And.Property(nameof(AvroSerializationException.SchemaId)).EqualTo(schemaId));
         }
 
         [RecordedTest]
