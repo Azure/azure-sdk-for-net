@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityNamespace");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckEventHubNameAvailability");
             scope.Start();
             try
             {
@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckNameAvailabilityNamespace");
+            using var scope = NamespacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckEventHubNameAvailability");
             scope.Start();
             try
             {

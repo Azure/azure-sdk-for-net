@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response from the List namespace operation. </summary>
-    public partial class NetworkRuleSetIpRules
+    public partial class NetworkRuleSetIPRules
     {
-        /// <summary> Initializes a new instance of NetworkRuleSetIpRules. </summary>
-        public NetworkRuleSetIpRules()
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRules. </summary>
+        public NetworkRuleSetIPRules()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSetIpRules. </summary>
+        /// <summary> Initializes a new instance of NetworkRuleSetIPRules. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
-        internal NetworkRuleSetIpRules(string ipMask, NetworkRuleIPAction? action)
+        internal NetworkRuleSetIPRules(string ipMask, NetworkRuleIPAction? action)
         {
-            IpMask = ipMask;
+            IPMask = ipMask;
             Action = action;
         }
 
         /// <summary> IP Mask. </summary>
-        public string IpMask { get; set; }
+        public string IPMask { get; set; }
         /// <summary> The IP Filter Action. </summary>
         public NetworkRuleIPAction? Action { get; set; }
     }
