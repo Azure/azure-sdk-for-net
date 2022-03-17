@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Communication.PhoneNumbers.SipRouting;
 using Azure.Communication.PhoneNumbers.SipRouting.Tests.Infrastructure;
+using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -23,48 +24,67 @@ namespace Azure.Communication.SipRouting.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public SipRoutingClientLiveTests(bool isAsync) : base(isAsync)
         {
-            Environment.SetEnvironmentVariable("INCLUDE_SipRouting_LIVE_TESTS", "True");
-            Environment.SetEnvironmentVariable("COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING", "endpoint=https://e2e_test.communication.azure.com/;accesskey=qGUv+J0z5Xv8TtjC0qZhy34sodSOMKG5HS7NfsjhqxaB/ZP4UnuS4FspWPo3JowuqAb+75COGi4ErREkB76/UQ==");
         }
 
-        [SetUp]
-        public void SetUp()
+        public SipRoutingClient InitializeTest()
         {
             var client = CreateClient();
             client.SetRoutesAsync(new List<SipTrunkRoute>()).Wait();
             client.SetTrunksAsync(TestData.TrunkList).Wait();
             client.SetRoutesAsync(new List<SipTrunkRoute> { TestData.RuleNavigateToTrunk1 }).Wait();
+
+            return client;
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task GetFunctionUsingTokenAuthentication()
+        {
+            var client = CreateClientWithTokenCredential();
+
+            var response = await client.GetTrunksAsync().ConfigureAwait(false);
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task SetFunctionUsingTokenAuthentication()
+        {
+            var client = CreateClientWithTokenCredential();
+
+            var response = await client.SetTrunksAsync(new List<SipTrunk> { TestData.NewTrunk }).ConfigureAwait(false);
+            Assert.AreEqual(200, response.Status);
         }
 
         [Test]
         public async Task GetSipTrunksForResource()
         {
-            var client = CreateClient();
+            var client = InitializeTest();
             var response = await client.GetTrunksAsync().ConfigureAwait(false);
             var trunks = response.Value;
 
             Assert.IsNotNull(trunks);
             Assert.AreEqual(2, trunks.Count());
-            TrunkAreEqual(TestData.TrunkList[0], trunks[0]);
-            TrunkAreEqual(TestData.TrunkList[1], trunks[1]);
+            Assert.IsTrue(TrunkAreEqual(TestData.TrunkList[0], trunks[0]));
+            Assert.IsTrue(TrunkAreEqual(TestData.TrunkList[1], trunks[1]));
         }
 
         [Test]
         public async Task GetSipRoutesForResource()
         {
-            var client = CreateClient();
+            var client = InitializeTest();
             var response = await client.GetRoutesAsync().ConfigureAwait(false);
             var routes = response.Value;
 
             Assert.IsNotNull(routes);
             Assert.AreEqual(routes.Count(), 1);
-            RouteAreEqual(TestData.RuleNavigateToTrunk1, routes[0]);
+            Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToTrunk1, routes[0]));
         }
 
         [Test]
         public async Task AddSipTrunkForResource()
         {
-            var client = CreateClient();
+            var client = InitializeTest();
             var response = await client.SetTrunkAsync(TestData.NewTrunk).ConfigureAwait(false);
             var actualTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
 
@@ -75,22 +95,22 @@ namespace Azure.Communication.SipRouting.Tests
         [Test]
         public async Task AddSipRouteForResource()
         {
-            var client = CreateClient();
+            var client = InitializeTest();
             await client.SetRouteAsync(TestData.RuleNavigateToAllTrunks).ConfigureAwait(false);
             var response = await client.GetRoutesAsync().ConfigureAwait(false);
 
             var actualRoutes = response.Value;
 
             Assert.AreEqual(2, actualRoutes.Count());
-            RouteAreEqual(TestData.RuleNavigateToAllTrunks, actualRoutes[1]);
+            Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToAllTrunks, actualRoutes[1]));
         }
 
         [Test]
         public async Task SetSipTrunkForResource()
         {
             var modifiedTrunk = new SipTrunk(TestData.TrunkList[0].Fqdn, 9999);
+            var client = InitializeTest();
 
-            var client = CreateClient();
             await client.SetTrunkAsync(modifiedTrunk).ConfigureAwait(false);
 
             var actualTrunk = await client.GetTrunkAsync(TestData.TrunkList[0].Fqdn).ConfigureAwait(false);
@@ -101,8 +121,8 @@ namespace Azure.Communication.SipRouting.Tests
         public async Task SetSipRouteForResource()
         {
             var modifiedRoute = new SipTrunkRoute(TestData.RuleNavigateToTrunk1.Name, TestData.RuleNavigateToAllTrunks.NumberPattern, TestData.RuleNavigateToTrunk1.Description, TestData.RuleNavigateToTrunk1.Trunks);
+            var client = InitializeTest();
 
-            var client = CreateClient();
             await client.SetRouteAsync(modifiedRoute).ConfigureAwait(false);
 
             var actualRoute = await client.GetRouteAsync(TestData.RuleNavigateToTrunk1.Name).ConfigureAwait(false);
@@ -112,7 +132,8 @@ namespace Azure.Communication.SipRouting.Tests
         [Test]
         public async Task DeleteSipTrunkForResource()
         {
-            var client = CreateClient();
+            var client = InitializeTest();
+
             await client.DeleteTrunkAsync(TestData.TrunkList[1].Fqdn).ConfigureAwait(false);
 
             var actualTrunks = await client.GetTrunksAsync().ConfigureAwait(false);
@@ -124,7 +145,8 @@ namespace Azure.Communication.SipRouting.Tests
         public async Task DeleteSipRouteForResource()
         {
             var expectedRoutes = new List<SipTrunkRoute>();
-            var client = CreateClient();
+            var client = InitializeTest();
+
             await client.DeleteRouteAsync(TestData.RuleNavigateToTrunk1.Name).ConfigureAwait(false);
             var actualRoutes = await client.GetRoutesAsync().ConfigureAwait(false);
 
@@ -134,78 +156,54 @@ namespace Azure.Communication.SipRouting.Tests
         [Test]
         public async Task GetSipTrunkForResource()
         {
-            var client = CreateClient();
-            var response = await client.GetTrunkAsync(TestData.TrunkList[1].Fqdn).ConfigureAwait(false);
-            var trunk = response.Value;
+            var client = InitializeTest();
 
+            var response = await client.GetTrunkAsync(TestData.TrunkList[1].Fqdn).ConfigureAwait(false);
+
+            var trunk = response.Value;
             Assert.IsNotNull(trunk);
-            TrunkAreEqual(TestData.TrunkList[1], trunk);
+            Assert.IsTrue(TrunkAreEqual(TestData.TrunkList[1], trunk));
         }
 
         [Test]
         public async Task GetSipRouteForResource()
         {
-            var client = CreateClient();
-            var response = await client.GetRouteAsync(TestData.RuleNavigateToTrunk1.Name).ConfigureAwait(false);
-            var route = response.Value;
+            var client = InitializeTest();
 
+            var response = await client.GetRouteAsync(TestData.RuleNavigateToTrunk1.Name).ConfigureAwait(false);
+
+            var route = response.Value;
             Assert.IsNotNull(route);
-            RouteAreEqual(TestData.RuleNavigateToTrunk1, route);
+            Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToTrunk1, route));
         }
 
         [Test]
         public async Task ReplaceSipRoutesForResource()
         {
-            var client = CreateClient();
+            var client = InitializeTest();
+
             await client.SetRoutesAsync(new List<SipTrunkRoute> { TestData.RuleNavigateToAllTrunks }).ConfigureAwait(false);
-
             var response = await client.GetRoutesAsync().ConfigureAwait(false);
-            var newRoutes = response.Value;
 
+            var newRoutes = response.Value;
             Assert.IsNotNull(newRoutes);
             Assert.AreEqual(1, newRoutes.Count);
-            RouteAreEqual(TestData.RuleNavigateToAllTrunks, newRoutes[0]);
+            Assert.IsTrue(RouteAreEqual(TestData.RuleNavigateToAllTrunks, newRoutes[0]));
         }
 
         [Test]
         public async Task ReplaceSipTrunksForResource()
         {
-            var client = CreateClient();
-            await client.SetRoutesAsync(new List<SipTrunkRoute> ()).ConfigureAwait(false);  // Need to clear the routes first
+            var client = InitializeTest();
+
+            await client.SetRoutesAsync(new List<SipTrunkRoute>()).ConfigureAwait(false);  // Need to clear the routes first
             await client.SetTrunksAsync(new List<SipTrunk> { TestData.NewTrunk });
-
             var response = await client.GetTrunksAsync().ConfigureAwait(false);
-            var newTrunks = response.Value;
 
+            var newTrunks = response.Value;
             Assert.IsNotNull(newTrunks);
             Assert.AreEqual(1, newTrunks.Count);
-            TrunkAreEqual(TestData.NewTrunk, newTrunks[0]);
+            Assert.IsTrue(TrunkAreEqual(TestData.NewTrunk, newTrunks[0]));
         }
-
-        private void RouteAreEqual(SipTrunkRoute expected, SipTrunkRoute actual)
-        {
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Description, actual.Description);
-            Assert.AreEqual(expected.NumberPattern, actual.NumberPattern);
-            Assert.AreEqual(expected.Trunks.Count, actual.Trunks.Count);
-
-            for (int i = 0; i < expected.Trunks.Count; i++)
-            {
-                Assert.AreEqual(expected.Trunks[i], actual.Trunks[i]);
-            }
-        }
-
-        private void TrunkAreEqual(SipTrunk expected, SipTrunk actual)
-        {
-            Assert.AreEqual(expected.Fqdn, actual.Fqdn);
-            Assert.AreEqual(expected.SipSignalingPort, actual.SipSignalingPort);
-        }
-
-        private TokenCredential GetToken() => Mode == RecordedTestMode.Playback
-                                            ? new MockCredential()
-                                            : new DefaultAzureCredential(new DefaultAzureCredentialOptions
-                                            {
-                                                AuthorityHost = new Uri("https://login.windows-ppe.net/")
-                                            });
     }
 }

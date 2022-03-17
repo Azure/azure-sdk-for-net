@@ -27,6 +27,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\SipRoutingClientLiveTests\" />
-    <Folder Include="SipRouting\samples\" />
   </ItemGroup>
 </Project>
