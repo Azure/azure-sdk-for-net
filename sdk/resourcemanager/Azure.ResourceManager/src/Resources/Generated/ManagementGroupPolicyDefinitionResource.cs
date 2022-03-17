@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ManagementGroupPolicyDefinition along with the instance operations that can be performed on it. </summary>
-    public partial class ManagementGroupPolicyDefinition : ArmResource
+    /// <summary> A Class representing a ManagementGroupPolicyDefinitionResource along with the instance operations that can be performed on it. </summary>
+    public partial class ManagementGroupPolicyDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicyDefinition"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicyDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policyDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyDefinitionsRestOperations _managementGroupPolicyDefinitionPolicyDefinitionsRestClient;
         private readonly PolicyDefinitionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinition"/> class for mocking. </summary>
-        protected ManagementGroupPolicyDefinition()
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinitionResource"/> class for mocking. </summary>
+        protected ManagementGroupPolicyDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupPolicyDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementGroupPolicyDefinition(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
+        internal ManagementGroupPolicyDefinitionResource(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroupPolicyDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagementGroupPolicyDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string managementGroupPolicyDefinitionPolicyDefinitionsApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyDefinitions_GetAtManagementGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroupPolicyDefinition>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupPolicyDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinition.Get");
+            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionResource.Get");
             scope.Start();
             try
             {
                 var response = await _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroupAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyDefinitions_GetAtManagementGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupPolicyDefinition> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupPolicyDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinition.Get");
+            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionResource.Get");
             scope.Start();
             try
             {
                 var response = _managementGroupPolicyDefinitionPolicyDefinitionsRestClient.GetAtManagementGroup(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinition.Delete");
+            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinition.Delete");
+            using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionResource.Delete");
             scope.Start();
             try
             {

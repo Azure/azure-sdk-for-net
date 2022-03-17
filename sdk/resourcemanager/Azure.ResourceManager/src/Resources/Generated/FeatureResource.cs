@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a Feature along with the instance operations that can be performed on it. </summary>
-    public partial class Feature : ArmResource
+    /// <summary> A Class representing a FeatureResource along with the instance operations that can be performed on it. </summary>
+    public partial class FeatureResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="Feature"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="FeatureResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace, string featureName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly FeaturesRestOperations _featureRestClient;
         private readonly FeatureData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Feature"/> class for mocking. </summary>
-        protected Feature()
+        /// <summary> Initializes a new instance of the <see cref="FeatureResource"/> class for mocking. </summary>
+        protected FeatureResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "Feature"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "FeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Feature(ArmClient client, FeatureData data) : this(client, data.Id)
+        internal FeatureResource(ArmClient client, FeatureData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Feature"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FeatureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Feature(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FeatureResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string featureApiVersion);
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Feature>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Get");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureResource.Get");
             scope.Start();
             try
             {
                 var response = await _featureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Feature> Get(CancellationToken cancellationToken = default)
+        public virtual Response<FeatureResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Get");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureResource.Get");
             scope.Start();
             try
             {
                 var response = _featureRestClient.Get(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Register
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Feature>> RegisterAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureResource>> RegisterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Register");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureResource.Register");
             scope.Start();
             try
             {
                 var response = await _featureRestClient.RegisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Register
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Feature> Register(CancellationToken cancellationToken = default)
+        public virtual Response<FeatureResource> Register(CancellationToken cancellationToken = default)
         {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Register");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureResource.Register");
             scope.Start();
             try
             {
                 var response = _featureRestClient.Register(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
-                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Unregister
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Feature>> UnregisterAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureResource>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Unregister");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureResource.Unregister");
             scope.Start();
             try
             {
                 var response = await _featureRestClient.UnregisterAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Unregister
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Feature> Unregister(CancellationToken cancellationToken = default)
+        public virtual Response<FeatureResource> Unregister(CancellationToken cancellationToken = default)
         {
-            using var scope = _featureClientDiagnostics.CreateScope("Feature.Unregister");
+            using var scope = _featureClientDiagnostics.CreateScope("FeatureResource.Unregister");
             scope.Start();
             try
             {
                 var response = _featureRestClient.Unregister(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
-                return Response.FromValue(new Feature(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FeatureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

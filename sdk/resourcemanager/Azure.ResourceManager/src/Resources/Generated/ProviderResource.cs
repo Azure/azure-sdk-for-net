@@ -18,10 +18,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a Provider along with the instance operations that can be performed on it. </summary>
-    public partial class Provider : ArmResource
+    /// <summary> A Class representing a ProviderResource along with the instance operations that can be performed on it. </summary>
+    public partial class ProviderResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="Provider"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ProviderResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
@@ -34,24 +34,24 @@ namespace Azure.ResourceManager.Resources
         private readonly ProviderResourceTypesRestOperations _providerResourceTypesRestClient;
         private readonly ProviderData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Provider"/> class for mocking. </summary>
-        protected Provider()
+        /// <summary> Initializes a new instance of the <see cref="ProviderResource"/> class for mocking. </summary>
+        protected ProviderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "Provider"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Provider(ArmClient client, ProviderData data) : this(client, data.Id)
+        internal ProviderResource(ArmClient client, ProviderData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Provider"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Provider(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProviderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _providerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string providerApiVersion);
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of Features in the Feature. </summary>
-        /// <returns> An object representing collection of Features and their operations over a Feature. </returns>
+        /// <summary> Gets a collection of FeatureResources in the FeatureResource. </summary>
+        /// <returns> An object representing collection of FeatureResources and their operations over a FeatureResource. </returns>
         public virtual FeatureCollection GetFeatures()
         {
             return GetCachedClient(Client => new FeatureCollection(Client, Id));
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual async Task<Response<Feature>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FeatureResource>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
             return await GetFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual Response<Feature> GetFeature(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<FeatureResource> GetFeature(string featureName, CancellationToken cancellationToken = default)
         {
             return GetFeatures().Get(featureName, cancellationToken);
         }
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Provider>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerClientDiagnostics.CreateScope("Provider.Get");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.Get");
             scope.Start();
             try
             {
                 var response = await _providerRestClient.GetAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Provider> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerClientDiagnostics.CreateScope("Provider.Get");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.Get");
             scope.Start();
             try
             {
                 var response = _providerRestClient.Get(Id.SubscriptionId, Id.Provider, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Providers_Unregister
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Provider>> UnregisterAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderResource>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _providerClientDiagnostics.CreateScope("Provider.Unregister");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.Unregister");
             scope.Start();
             try
             {
                 var response = await _providerRestClient.UnregisterAsync(Id.SubscriptionId, Id.Provider, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,14 +200,14 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Providers_Unregister
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Provider> Unregister(CancellationToken cancellationToken = default)
+        public virtual Response<ProviderResource> Unregister(CancellationToken cancellationToken = default)
         {
-            using var scope = _providerClientDiagnostics.CreateScope("Provider.Unregister");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.Unregister");
             scope.Start();
             try
             {
                 var response = _providerRestClient.Unregister(Id.SubscriptionId, Id.Provider, cancellationToken);
-                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ProviderPermission>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerClientDiagnostics.CreateScope("Provider.ProviderPermissions");
+                using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.ProviderPermissions");
                 scope.Start();
                 try
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ProviderPermission> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerClientDiagnostics.CreateScope("Provider.ProviderPermissions");
+                using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.ProviderPermissions");
                 scope.Start();
                 try
                 {
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Provider>> RegisterAsync(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderResource>> RegisterAsync(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerClientDiagnostics.CreateScope("Provider.Register");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.Register");
             scope.Start();
             try
             {
                 var response = await _providerRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, properties, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="properties"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Provider> Register(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderResource> Register(ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _providerClientDiagnostics.CreateScope("Provider.Register");
+            using var scope = _providerClientDiagnostics.CreateScope("ProviderResource.Register");
             scope.Start();
             try
             {
                 var response = _providerRestClient.Register(Id.SubscriptionId, Id.Provider, properties, cancellationToken);
-                return Response.FromValue(new Provider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ProviderResourceType>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
+                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("ProviderResource.GetProviderResourceTypes");
                 scope.Start();
                 try
                 {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ProviderResourceType> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("Provider.GetProviderResourceTypes");
+                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("ProviderResource.GetProviderResourceTypes");
                 scope.Start();
                 try
                 {

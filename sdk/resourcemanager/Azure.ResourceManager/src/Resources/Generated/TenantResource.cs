@@ -18,8 +18,8 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a Tenant along with the instance operations that can be performed on it. </summary>
-    public partial class Tenant : ArmResource
+    /// <summary> A Class representing a TenantResource along with the instance operations that can be performed on it. </summary>
+    public partial class TenantResource : ArmResource
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Resources
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="Tenant"/> class for mocking. </summary>
-        protected Tenant()
+        /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class for mocking. </summary>
+        protected TenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="Tenant"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Tenant(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string tenantApiVersion);
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Resources
             return GetGenericResources().Get(resourceId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantPolicyDefinitions in the TenantPolicyDefinition. </summary>
-        /// <returns> An object representing collection of TenantPolicyDefinitions and their operations over a TenantPolicyDefinition. </returns>
+        /// <summary> Gets a collection of TenantPolicyDefinitionResources in the TenantPolicyDefinitionResource. </summary>
+        /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
         {
             return GetCachedClient(Client => new TenantPolicyDefinitionCollection(Client, Id));
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<TenantPolicyDefinition>> GetTenantPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicyDefinitionResource>> GetTenantPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetTenantPolicyDefinitions().GetAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
         }
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<TenantPolicyDefinition> GetTenantPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicyDefinitionResource> GetTenantPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetTenantPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantPolicySetDefinitions in the TenantPolicySetDefinition. </summary>
-        /// <returns> An object representing collection of TenantPolicySetDefinitions and their operations over a TenantPolicySetDefinition. </returns>
+        /// <summary> Gets a collection of TenantPolicySetDefinitionResources in the TenantPolicySetDefinitionResource. </summary>
+        /// <returns> An object representing collection of TenantPolicySetDefinitionResources and their operations over a TenantPolicySetDefinitionResource. </returns>
         public virtual TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions()
         {
             return GetCachedClient(Client => new TenantPolicySetDefinitionCollection(Client, Id));
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<TenantPolicySetDefinition>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             return await GetTenantPolicySetDefinitions().GetAsync(policySetDefinitionName, cancellationToken).ConfigureAwait(false);
         }
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        public virtual Response<TenantPolicySetDefinition> GetTenantPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicySetDefinitionResource> GetTenantPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
             return GetTenantPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataPolicyManifests in the DataPolicyManifest. </summary>
-        /// <returns> An object representing collection of DataPolicyManifests and their operations over a DataPolicyManifest. </returns>
+        /// <summary> Gets a collection of DataPolicyManifestResources in the DataPolicyManifestResource. </summary>
+        /// <returns> An object representing collection of DataPolicyManifestResources and their operations over a DataPolicyManifestResource. </returns>
         public virtual DataPolicyManifestCollection GetDataPolicyManifests()
         {
             return GetCachedClient(Client => new DataPolicyManifestCollection(Client, Id));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public virtual async Task<Response<DataPolicyManifest>> GetDataPolicyManifestAsync(string policyMode, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataPolicyManifestResource>> GetDataPolicyManifestAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             return await GetDataPolicyManifests().GetAsync(policyMode, cancellationToken).ConfigureAwait(false);
         }
@@ -204,15 +204,15 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public virtual Response<DataPolicyManifest> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
+        public virtual Response<DataPolicyManifestResource> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
         {
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceLinks in the ResourceLink. </summary>
+        /// <summary> Gets a collection of ResourceLinkResources in the ResourceLinkResource. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceLinks and their operations over a ResourceLink. </returns>
+        /// <returns> An object representing collection of ResourceLinkResources and their operations over a ResourceLinkResource. </returns>
         public virtual ResourceLinkCollection GetResourceLinks(string scope)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ResourceLink>> GetResourceLinkAsync(string scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceLinkResource>> GetResourceLinkAsync(string scope, CancellationToken cancellationToken = default)
         {
             return await GetResourceLinks(scope).GetAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -241,13 +241,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ResourceLink> GetResourceLink(string scope, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceLinkResource> GetResourceLink(string scope, CancellationToken cancellationToken = default)
         {
             return GetResourceLinks(scope).Get(cancellationToken);
         }
 
-        /// <summary> Gets a collection of Subscriptions in the Subscription. </summary>
-        /// <returns> An object representing collection of Subscriptions and their operations over a Subscription. </returns>
+        /// <summary> Gets a collection of SubscriptionResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionResources and their operations over a SubscriptionResource. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
         {
             return GetCachedClient(Client => new SubscriptionCollection(Client, Id));
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<Response<Subscription>> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionResource>> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             return await GetSubscriptions().GetAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<Subscription> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionResource> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             return GetSubscriptions().Get(subscriptionId, cancellationToken);
         }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantProviders");
                 scope0.Start();
                 try
                 {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantProviders");
                 scope0.Start();
                 try
                 {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantProviders");
                 scope0.Start();
                 try
                 {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantProviders");
                 scope0.Start();
                 try
                 {
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantProvider");
             scope0.Start();
             try
             {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            using var scope0 = _providersClientDiagnostics.CreateScope("TenantResource.GetTenantProvider");
             scope0.Start();
             try
             {

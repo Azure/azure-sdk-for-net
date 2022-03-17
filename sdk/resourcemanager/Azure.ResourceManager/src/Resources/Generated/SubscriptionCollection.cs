@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of Subscription and their operations over its parent. </summary>
-    public partial class SubscriptionCollection : ArmCollection, IEnumerable<Subscription>, IAsyncEnumerable<Subscription>
+    public partial class SubscriptionCollection : ArmCollection, IEnumerable<SubscriptionResource>, IAsyncEnumerable<SubscriptionResource>
     {
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
         private readonly SubscriptionsRestOperations _subscriptionRestClient;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Subscription.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(Subscription.ResourceType, out string subscriptionApiVersion);
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", SubscriptionResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(SubscriptionResource.ResourceType, out string subscriptionApiVersion);
             _subscriptionRestClient = new SubscriptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Tenant.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+            if (id.ResourceType != TenantResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<Response<Subscription>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionResource>> GetAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _subscriptionRestClient.GetAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<Subscription> Get(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionResource> Get(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _subscriptionRestClient.Get(subscriptionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Subscriptions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Subscription> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _subscriptionRestClient.ListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<Subscription>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _subscriptionRestClient.ListNextPageAsync(nextLink, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Subscriptions_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Subscription> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Subscription> FirstPageFunc(int? pageSizeHint)
+            Page<SubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _subscriptionRestClient.List(cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<Subscription> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _subscriptionRestClient.ListNextPage(nextLink, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Subscription(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<Response<Subscription>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionResource>> GetIfExistsAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _subscriptionRestClient.GetAsync(subscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
-                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SubscriptionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<Subscription> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionResource> GetIfExists(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _subscriptionRestClient.Get(subscriptionId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Subscription>(null, response.GetRawResponse());
-                return Response.FromValue(new Subscription(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SubscriptionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<Subscription> IEnumerable<Subscription>.GetEnumerator()
+        IEnumerator<SubscriptionResource> IEnumerable<SubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Subscription> IAsyncEnumerable<Subscription>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SubscriptionResource> IAsyncEnumerable<SubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -10,6 +10,7 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use: C:/Users/mingzhehuang/workspaces/archerzz/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1
 mgmt-debug:
   show-request-path: true
 batch:

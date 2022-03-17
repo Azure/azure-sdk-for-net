@@ -16,7 +16,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a ResourceGroup along with the instance operations that can be performed on it. </summary>
-    public partial class ResourceGroup : ArmResource
+    public partial class ResourceGroupResource : ArmResource
     {
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
                 scope.Start();
                 try
                 {

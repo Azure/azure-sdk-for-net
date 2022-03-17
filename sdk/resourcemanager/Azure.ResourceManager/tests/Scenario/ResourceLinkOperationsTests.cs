@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Tenant tenant = await Client.GetTenants().GetAllAsync().FirstOrDefaultAsync(_ => true);
+            TenantResource tenant = await Client.GetTenants().GetAllAsync().FirstOrDefaultAsync(_ => true);
             Subscription subscription = await tenant.GetSubscriptions().GetAllAsync().FirstOrDefaultAsync(_ => true);
             string rgName = Recording.GenerateAssetName("testRg-");
             ResourceGroup rg = await CreateResourceGroup(subscription, rgName);

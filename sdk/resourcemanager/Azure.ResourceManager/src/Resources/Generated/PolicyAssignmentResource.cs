@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a PolicyAssignment along with the instance operations that can be performed on it. </summary>
-    public partial class PolicyAssignment : ArmResource
+    /// <summary> A Class representing a PolicyAssignmentResource along with the instance operations that can be performed on it. </summary>
+    public partial class PolicyAssignmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PolicyAssignment"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PolicyAssignmentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyAssignmentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyAssignmentsRestOperations _policyAssignmentRestClient;
         private readonly PolicyAssignmentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignment"/> class for mocking. </summary>
-        protected PolicyAssignment()
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentResource"/> class for mocking. </summary>
+        protected PolicyAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyAssignment"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PolicyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PolicyAssignment(ArmClient client, PolicyAssignmentData data) : this(client, data.Id)
+        internal PolicyAssignmentResource(ArmClient client, PolicyAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignment"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyAssignment(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string policyAssignmentApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyAssignment>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Get");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
             scope.Start();
             try
             {
                 var response = await _policyAssignmentRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyAssignments_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyAssignment> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Get");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Get");
             scope.Start();
             try
             {
                 var response = _policyAssignmentRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<PolicyAssignment>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyAssignmentResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Delete");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Delete");
             scope.Start();
             try
             {
                 var response = await _policyAssignmentRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignment>(Response.FromValue(new PolicyAssignment(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<PolicyAssignment> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyAssignmentResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignment.Delete");
+            using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentResource.Delete");
             scope.Start();
             try
             {
                 var response = _policyAssignmentRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignment>(Response.FromValue(new PolicyAssignment(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

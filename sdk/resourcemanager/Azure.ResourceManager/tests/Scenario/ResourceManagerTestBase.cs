@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<ResourceLink> CreateResourceLink(Tenant tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
+        protected async Task<ResourceLink> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
         {
             ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);

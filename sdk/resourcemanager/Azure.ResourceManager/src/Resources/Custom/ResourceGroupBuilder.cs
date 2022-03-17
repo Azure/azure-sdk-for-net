@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmOperation{ResourceGroup}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public ArmOperation<ResourceGroup> CreateOrUpdate(string name, WaitUntil waitUntil = WaitUntil.Completed, CancellationToken cancellationToken = default)
+        public ArmOperation<ResourceGroupResource> CreateOrUpdate(string name, WaitUntil waitUntil = WaitUntil.Completed, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmOperation{ResourceGroup}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
-        public async Task<ArmOperation<ResourceGroup>> CreateOrUpdateAsync(string name, WaitUntil waitUntil = WaitUntil.Completed, CancellationToken cancellationToken = default)
+        public async Task<ArmOperation<ResourceGroupResource>> CreateOrUpdateAsync(string name, WaitUntil waitUntil = WaitUntil.Completed, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));

@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a TenantPolicyDefinition along with the instance operations that can be performed on it. </summary>
-    public partial class TenantPolicyDefinition : ArmResource
+    /// <summary> A Class representing a TenantPolicyDefinitionResource along with the instance operations that can be performed on it. </summary>
+    public partial class TenantPolicyDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TenantPolicyDefinition"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="TenantPolicyDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string policyDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyDefinitionsRestOperations _tenantPolicyDefinitionPolicyDefinitionsRestClient;
         private readonly PolicyDefinitionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinition"/> class for mocking. </summary>
-        protected TenantPolicyDefinition()
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinitionResource"/> class for mocking. </summary>
+        protected TenantPolicyDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantPolicyDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "TenantPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantPolicyDefinition(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
+        internal TenantPolicyDefinitionResource(ArmClient client, PolicyDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantPolicyDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TenantPolicyDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal TenantPolicyDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string tenantPolicyDefinitionPolicyDefinitionsApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyDefinitions_GetBuiltIn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantPolicyDefinition>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicyDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinition.Get");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.Get");
             scope.Start();
             try
             {
                 var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltInAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyDefinitions_GetBuiltIn
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantPolicyDefinition> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicyDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinition.Get");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.Get");
             scope.Start();
             try
             {
                 var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltIn(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

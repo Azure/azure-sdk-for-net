@@ -12,25 +12,25 @@ namespace Azure.ResourceManager
 {
     public partial class ArmClient
     {
-        #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignment along with the instance operations that can be performed on it but with no data. </summary>
+        #region PolicyAssignmentResource
+        /// <summary> Gets an object representing a PolicyAssignmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
-        public virtual PolicyAssignment GetPolicyAssignment(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyAssignmentResource" /> object. </returns>
+        public virtual PolicyAssignmentResource GetPolicyAssignmentResource(ResourceIdentifier id)
         {
-            PolicyAssignment.ValidateResourceId(id);
-            return new PolicyAssignment(this, id);
+            PolicyAssignmentResource.ValidateResourceId(id);
+            return new PolicyAssignmentResource(this, id);
         }
         #endregion
 
-        #region Provider
-        /// <summary> Gets an object representing a Provider along with the instance operations that can be performed on it but with no data. </summary>
+        #region ProviderResource
+        /// <summary> Gets an object representing a ProviderResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Provider" /> object. </returns>
-        public virtual Provider GetProvider(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProviderResource" /> object. </returns>
+        public virtual ProviderResource GetProviderResource(ResourceIdentifier id)
         {
-            Provider.ValidateResourceId(id);
-            return new Provider(this, id);
+            ProviderResource.ValidateResourceId(id);
+            return new ProviderResource(this, id);
         }
         #endregion
 
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region ResourceGroup
-        /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroupResource
+        /// <summary> Gets an object representing a ResourceGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
-        public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupResource" /> object. </returns>
+        public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
         {
-            ResourceGroup.ValidateResourceId(id);
-            return new ResourceGroup(this, id);
+            ResourceGroupResource.ValidateResourceId(id);
+            return new ResourceGroupResource(this, id);
         }
         #endregion
 
@@ -67,135 +67,146 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region SubscriptionPolicyDefinition
-        /// <summary> Gets an object representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionPolicyDefinitionResource
+        /// <summary> Gets an object representing a SubscriptionPolicyDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPolicyDefinition" /> object. </returns>
-        public virtual SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionPolicyDefinitionResource" /> object. </returns>
+        public virtual SubscriptionPolicyDefinitionResource GetSubscriptionPolicyDefinitionResource(ResourceIdentifier id)
         {
-            SubscriptionPolicyDefinition.ValidateResourceId(id);
-            return new SubscriptionPolicyDefinition(this, id);
+            SubscriptionPolicyDefinitionResource.ValidateResourceId(id);
+            return new SubscriptionPolicyDefinitionResource(this, id);
         }
         #endregion
 
-        #region TenantPolicyDefinition
-        /// <summary> Gets an object representing a TenantPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicyDefinitionResource
+        /// <summary> Gets an object representing a TenantPolicyDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantPolicyDefinition" /> object. </returns>
-        public virtual TenantPolicyDefinition GetTenantPolicyDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicyDefinitionResource" /> object. </returns>
+        public virtual TenantPolicyDefinitionResource GetTenantPolicyDefinitionResource(ResourceIdentifier id)
         {
-            TenantPolicyDefinition.ValidateResourceId(id);
-            return new TenantPolicyDefinition(this, id);
+            TenantPolicyDefinitionResource.ValidateResourceId(id);
+            return new TenantPolicyDefinitionResource(this, id);
         }
         #endregion
 
-        #region ManagementGroupPolicyDefinition
-        /// <summary> Gets an object representing a ManagementGroupPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementGroupPolicyDefinitionResource
+        /// <summary> Gets an object representing a ManagementGroupPolicyDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupPolicyDefinition" /> object. </returns>
-        public virtual ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupPolicyDefinitionResource" /> object. </returns>
+        public virtual ManagementGroupPolicyDefinitionResource GetManagementGroupPolicyDefinitionResource(ResourceIdentifier id)
         {
-            ManagementGroupPolicyDefinition.ValidateResourceId(id);
-            return new ManagementGroupPolicyDefinition(this, id);
+            ManagementGroupPolicyDefinitionResource.ValidateResourceId(id);
+            return new ManagementGroupPolicyDefinitionResource(this, id);
         }
         #endregion
 
-        #region SubscriptionPolicySetDefinition
-        /// <summary> Gets an object representing a SubscriptionPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionPolicySetDefinitionResource
+        /// <summary> Gets an object representing a SubscriptionPolicySetDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinition" /> object. </returns>
-        public virtual SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionPolicySetDefinitionResource" /> object. </returns>
+        public virtual SubscriptionPolicySetDefinitionResource GetSubscriptionPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            SubscriptionPolicySetDefinition.ValidateResourceId(id);
-            return new SubscriptionPolicySetDefinition(this, id);
+            SubscriptionPolicySetDefinitionResource.ValidateResourceId(id);
+            return new SubscriptionPolicySetDefinitionResource(this, id);
         }
         #endregion
 
-        #region TenantPolicySetDefinition
-        /// <summary> Gets an object representing a TenantPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantPolicySetDefinitionResource
+        /// <summary> Gets an object representing a TenantPolicySetDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantPolicySetDefinition" /> object. </returns>
-        public virtual TenantPolicySetDefinition GetTenantPolicySetDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantPolicySetDefinitionResource" /> object. </returns>
+        public virtual TenantPolicySetDefinitionResource GetTenantPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            TenantPolicySetDefinition.ValidateResourceId(id);
-            return new TenantPolicySetDefinition(this, id);
+            TenantPolicySetDefinitionResource.ValidateResourceId(id);
+            return new TenantPolicySetDefinitionResource(this, id);
         }
         #endregion
 
-        #region ManagementGroupPolicySetDefinition
-        /// <summary> Gets an object representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementGroupPolicySetDefinitionResource
+        /// <summary> Gets an object representing a ManagementGroupPolicySetDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinition" /> object. </returns>
-        public virtual ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinitionResource" /> object. </returns>
+        public virtual ManagementGroupPolicySetDefinitionResource GetManagementGroupPolicySetDefinitionResource(ResourceIdentifier id)
         {
-            ManagementGroupPolicySetDefinition.ValidateResourceId(id);
-            return new ManagementGroupPolicySetDefinition(this, id);
+            ManagementGroupPolicySetDefinitionResource.ValidateResourceId(id);
+            return new ManagementGroupPolicySetDefinitionResource(this, id);
         }
         #endregion
 
-        #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemption along with the instance operations that can be performed on it but with no data. </summary>
+        #region PolicyExemptionResource
+        /// <summary> Gets an object representing a PolicyExemptionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyExemption" /> object. </returns>
-        public virtual PolicyExemption GetPolicyExemption(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyExemptionResource" /> object. </returns>
+        public virtual PolicyExemptionResource GetPolicyExemptionResource(ResourceIdentifier id)
         {
-            PolicyExemption.ValidateResourceId(id);
-            return new PolicyExemption(this, id);
+            PolicyExemptionResource.ValidateResourceId(id);
+            return new PolicyExemptionResource(this, id);
         }
         #endregion
 
-        #region DataPolicyManifest
-        /// <summary> Gets an object representing a DataPolicyManifest along with the instance operations that can be performed on it but with no data. </summary>
+        #region DataPolicyManifestResource
+        /// <summary> Gets an object representing a DataPolicyManifestResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataPolicyManifest" /> object. </returns>
-        public virtual DataPolicyManifest GetDataPolicyManifest(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataPolicyManifestResource" /> object. </returns>
+        public virtual DataPolicyManifestResource GetDataPolicyManifestResource(ResourceIdentifier id)
         {
-            DataPolicyManifest.ValidateResourceId(id);
-            return new DataPolicyManifest(this, id);
+            DataPolicyManifestResource.ValidateResourceId(id);
+            return new DataPolicyManifestResource(this, id);
         }
         #endregion
 
-        #region ManagementLock
-        /// <summary> Gets an object representing a ManagementLock along with the instance operations that can be performed on it but with no data. </summary>
+        #region ManagementLockResource
+        /// <summary> Gets an object representing a ManagementLockResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagementLock" /> object. </returns>
-        public virtual ManagementLock GetManagementLock(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementLockResource" /> object. </returns>
+        public virtual ManagementLockResource GetManagementLockResource(ResourceIdentifier id)
         {
-            ManagementLock.ValidateResourceId(id);
-            return new ManagementLock(this, id);
+            ManagementLockResource.ValidateResourceId(id);
+            return new ManagementLockResource(this, id);
         }
         #endregion
 
-        #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceLinkResource
+        /// <summary> Gets an object representing a ResourceLinkResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
-        public virtual ResourceLink GetResourceLink(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceLinkResource" /> object. </returns>
+        public virtual ResourceLinkResource GetResourceLinkResource(ResourceIdentifier id)
         {
-            ResourceLink.ValidateResourceId(id);
-            return new ResourceLink(this, id);
+            ResourceLinkResource.ValidateResourceId(id);
+            return new ResourceLinkResource(this, id);
         }
         #endregion
 
-        #region Subscription
-        /// <summary> Gets an object representing a Subscription along with the instance operations that can be performed on it but with no data. </summary>
+        #region SubscriptionResource
+        /// <summary> Gets an object representing a SubscriptionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Subscription" /> object. </returns>
-        public virtual Subscription GetSubscription(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionResource" /> object. </returns>
+        public virtual SubscriptionResource GetSubscriptionResource(ResourceIdentifier id)
         {
-            Subscription.ValidateResourceId(id);
-            return new Subscription(this, id);
+            SubscriptionResource.ValidateResourceId(id);
+            return new SubscriptionResource(this, id);
         }
         #endregion
 
-        #region Feature
-        /// <summary> Gets an object representing a Feature along with the instance operations that can be performed on it but with no data. </summary>
+        #region TenantResource
+        /// <summary> Gets an object representing a TenantResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Feature" /> object. </returns>
-        public virtual Feature GetFeature(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TenantResource" /> object. </returns>
+        public virtual TenantResource GetTenantResource(ResourceIdentifier id)
         {
-            Feature.ValidateResourceId(id);
-            return new Feature(this, id);
+            TenantResource.ValidateResourceId(id);
+            return new TenantResource(this, id);
+        }
+        #endregion
+
+        #region FeatureResource
+        /// <summary> Gets an object representing a FeatureResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FeatureResource" /> object. </returns>
+        public virtual FeatureResource GetFeatureResource(ResourceIdentifier id)
+        {
+            FeatureResource.ValidateResourceId(id);
+            return new FeatureResource(this, id);
         }
         #endregion
     }

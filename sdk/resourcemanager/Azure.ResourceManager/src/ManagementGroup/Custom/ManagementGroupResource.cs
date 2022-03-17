@@ -21,7 +21,7 @@ using Azure.ResourceManager.Management.Models;
 namespace Azure.ResourceManager.Management
 {
     /// <summary> A Class representing a ManagementGroup along with the instance operations that can be performed on it. </summary>
-    public partial class ManagementGroup : ArmResource
+    public partial class ManagementGroupResource : ArmResource
     {
     }
 }

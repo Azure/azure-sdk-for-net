@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Core
 
         internal static ResourceIdentifier GetSubscriptionResourceIdentifier(this ResourceIdentifier id)
         {
-            if (id.ResourceType == Subscription.ResourceType)
+            if (id.ResourceType == SubscriptionResource.ResourceType)
                 return id;
 
             ResourceIdentifier parent = id.Parent;
-            while (parent != null && parent.ResourceType != Subscription.ResourceType)
+            while (parent != null && parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 parent = parent.Parent;
             }
 
-            return parent?.ResourceType == Subscription.ResourceType ? parent : null;
+            return parent?.ResourceType == SubscriptionResource.ResourceType ? parent : null;
         }
     }
 }

@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a PolicyExemption along with the instance operations that can be performed on it. </summary>
-    public partial class PolicyExemption : ArmResource
+    /// <summary> A Class representing a PolicyExemptionResource along with the instance operations that can be performed on it. </summary>
+    public partial class PolicyExemptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PolicyExemption"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PolicyExemptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string policyExemptionName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicyExemptionsRestOperations _policyExemptionRestClient;
         private readonly PolicyExemptionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyExemption"/> class for mocking. </summary>
-        protected PolicyExemption()
+        /// <summary> Initializes a new instance of the <see cref="PolicyExemptionResource"/> class for mocking. </summary>
+        protected PolicyExemptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyExemption"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PolicyExemptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PolicyExemption(ArmClient client, PolicyExemptionData data) : this(client, data.Id)
+        internal PolicyExemptionResource(ArmClient client, PolicyExemptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyExemption"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyExemptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyExemption(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyExemptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyExemptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyExemption>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyExemptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Get");
+            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionResource.Get");
             scope.Start();
             try
             {
                 var response = await _policyExemptionRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyExemptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicyExemptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyExemption> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PolicyExemptionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Get");
+            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionResource.Get");
             scope.Start();
             try
             {
                 var response = _policyExemptionRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyExemption(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyExemptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
+            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemption.Delete");
+            using var scope = _policyExemptionClientDiagnostics.CreateScope("PolicyExemptionResource.Delete");
             scope.Start();
             try
             {

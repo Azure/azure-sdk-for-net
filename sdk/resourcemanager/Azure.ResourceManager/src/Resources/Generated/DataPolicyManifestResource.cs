@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a DataPolicyManifest along with the instance operations that can be performed on it. </summary>
-    public partial class DataPolicyManifest : ArmResource
+    /// <summary> A Class representing a DataPolicyManifestResource along with the instance operations that can be performed on it. </summary>
+    public partial class DataPolicyManifestResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifest"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifestResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string policyMode)
         {
             var resourceId = $"/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly DataPolicyManifestsRestOperations _dataPolicyManifestRestClient;
         private readonly DataPolicyManifestData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifest"/> class for mocking. </summary>
-        protected DataPolicyManifest()
+        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestResource"/> class for mocking. </summary>
+        protected DataPolicyManifestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataPolicyManifest"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "DataPolicyManifestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmClient client, DataPolicyManifestData data) : this(client, data.Id)
+        internal DataPolicyManifestResource(ArmClient client, DataPolicyManifestData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifest"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataPolicyManifestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataPolicyManifest(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataPolicyManifestResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataPolicyManifest>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataPolicyManifestResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifest.Get");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestResource.Get");
             scope.Start();
             try
             {
                 var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DataPolicyManifests_GetByPolicyMode
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataPolicyManifest> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataPolicyManifestResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifest.Get");
+            using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestResource.Get");
             scope.Start();
             try
             {
                 var response = _dataPolicyManifestRestClient.GetByPolicyMode(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataPolicyManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

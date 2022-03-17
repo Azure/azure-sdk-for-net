@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a SubscriptionPolicySetDefinition along with the instance operations that can be performed on it. </summary>
-    public partial class SubscriptionPolicySetDefinition : ArmResource
+    /// <summary> A Class representing a SubscriptionPolicySetDefinitionResource along with the instance operations that can be performed on it. </summary>
+    public partial class SubscriptionPolicySetDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicySetDefinition"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicySetDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policySetDefinitionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly PolicySetDefinitionsRestOperations _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient;
         private readonly PolicySetDefinitionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinition"/> class for mocking. </summary>
-        protected SubscriptionPolicySetDefinition()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResource"/> class for mocking. </summary>
+        protected SubscriptionPolicySetDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionPolicySetDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SubscriptionPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionPolicySetDefinition(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)
+        internal SubscriptionPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinition"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionPolicySetDefinition(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionPolicySetDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionPolicySetDefinition>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinition.Get");
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionPolicySetDefinition> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinition.Get");
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinition.Delete");
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinition.Delete");
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Delete");
             scope.Start();
             try
             {

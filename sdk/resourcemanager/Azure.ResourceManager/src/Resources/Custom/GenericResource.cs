@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
+            _providerCollection = new ProviderCollection(Client.GetSubscriptionResource(subscription));
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

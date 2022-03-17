@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    public partial class Subscription : ArmResource
+    public partial class SubscriptionResource : ArmResource
     {
         /// RequestPath: /subscriptions/{subscriptionId}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetGenericResources");
                 scope.Start();
                 try
                 {

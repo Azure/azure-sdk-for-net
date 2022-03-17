@@ -18,10 +18,10 @@ using Azure.ResourceManager.Management.Models;
 
 namespace Azure.ResourceManager.Management
 {
-    /// <summary> A Class representing a ManagementGroup along with the instance operations that can be performed on it. </summary>
-    public partial class ManagementGroup : ArmResource
+    /// <summary> A Class representing a ManagementGroupResource along with the instance operations that can be performed on it. </summary>
+    public partial class ManagementGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagementGroup"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string groupId)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{groupId}";
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.Management
         private readonly ManagementGroupsRestOperations _managementGroupRestClient;
         private readonly ManagementGroupData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class for mocking. </summary>
-        protected ManagementGroup()
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResource"/> class for mocking. </summary>
+        protected ManagementGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagementGroup"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ManagementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementGroup(ArmClient client, ManagementGroupData data) : this(client, data.Id)
+        internal ManagementGroupResource(ArmClient client, ManagementGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroup"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroup>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Get");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Get");
             scope.Start();
             try
             {
                 var response = await _managementGroupRestClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.Management
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroup> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Get");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Get");
             scope.Start();
             try
             {
                 var response = _managementGroupRestClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Delete");
             scope.Start();
             try
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Delete");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Delete");
             scope.Start();
             try
             {
@@ -209,16 +209,16 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroup>> UpdateAsync(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> UpdateAsync(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Update");
             scope.Start();
             try
             {
                 var response = await _managementGroupRestClient.UpdateAsync(Id.Name, data, cacheControl, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -237,16 +237,16 @@ namespace Azure.ResourceManager.Management
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ManagementGroup> Update(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> Update(PatchableManagementGroupData data, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.Update");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Update");
             scope.Start();
             try
             {
                 var response = _managementGroupRestClient.Update(Id.Name, data, cacheControl, cancellationToken);
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Management
         {
             async Task<Page<DescendantInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Management
             }
             async Task<Page<DescendantInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Management
         {
             Page<DescendantInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
                 scope.Start();
                 try
                 {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Management
             }
             Page<DescendantInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroup.GetDescendants");
+                using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.GetDescendants");
                 scope.Start();
                 try
                 {

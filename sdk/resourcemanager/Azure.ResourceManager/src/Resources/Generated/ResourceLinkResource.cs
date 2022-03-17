@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ResourceLink along with the instance operations that can be performed on it. </summary>
-    public partial class ResourceLink : ArmResource
+    /// <summary> A Class representing a ResourceLinkResource along with the instance operations that can be performed on it. </summary>
+    public partial class ResourceLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ResourceLink"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ResourceLinkResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string linkId)
         {
             var resourceId = $"{linkId}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourceLinksRestOperations _resourceLinkRestClient;
         private readonly ResourceLinkData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceLink"/> class for mocking. </summary>
-        protected ResourceLink()
+        /// <summary> Initializes a new instance of the <see cref="ResourceLinkResource"/> class for mocking. </summary>
+        protected ResourceLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceLink"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ResourceLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceLink(ArmClient client, ResourceLinkData data) : this(client, data.Id)
+        internal ResourceLinkResource(ArmClient client, ResourceLinkData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceLink"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceLink(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string resourceLinkApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceLink>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.Get");
+            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkResource.Get");
             scope.Start();
             try
             {
                 var response = await _resourceLinkRestClient.GetAsync(Id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceLink(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceLink> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.Get");
+            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkResource.Get");
             scope.Start();
             try
             {
                 var response = _resourceLinkRestClient.Get(Id, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceLink(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.Delete");
+            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLink.Delete");
+            using var scope = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkResource.Delete");
             scope.Start();
             try
             {

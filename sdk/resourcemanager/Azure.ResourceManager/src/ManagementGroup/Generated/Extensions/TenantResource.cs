@@ -14,10 +14,10 @@ using Azure.ResourceManager.Management.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class Tenant
+    public partial class TenantResource
     {
-        /// <summary> Gets a collection of ManagementGroups in the ManagementGroup. </summary>
-        /// <returns> An object representing collection of ManagementGroups and their operations over a ManagementGroup. </returns>
+        /// <summary> Gets a collection of ManagementGroupResources in the ManagementGroupResource. </summary>
+        /// <returns> An object representing collection of ManagementGroupResources and their operations over a ManagementGroupResource. </returns>
         public virtual ManagementGroupCollection GetManagementGroups()
         {
             return GetCachedClient(Client => new ManagementGroupCollection(Client, Id));
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroup>> GetManagementGroupAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             return await GetManagementGroups().GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<ManagementGroup> GetManagementGroup(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> GetManagementGroup(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             return GetManagementGroups().Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
         }
