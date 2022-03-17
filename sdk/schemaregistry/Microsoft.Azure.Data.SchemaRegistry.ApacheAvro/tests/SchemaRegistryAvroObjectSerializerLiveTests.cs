@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Avro.Specific;
 using Azure;
+using Azure.Data.SchemaRegistry;
 using Azure.Messaging.EventHubs;
 using TestSchema;
 
@@ -83,6 +84,21 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 Throws.InstanceOf<AvroSerializationException>()
                     .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>()
                     .And.Property(nameof(AvroSerializationException.SchemaId)).EqualTo(schemaId));
+
+            #region Snippet:SchemaRegistryAvroException
+            try
+            {
+                Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
+            }
+            catch (AvroSerializationException exception)
+            {
+                // the exception message will contain the schema ID that was used to write the data
+                Console.WriteLine(exception);
+                // we might want to look up the specific schema from Schema Registry so that we can log the schema definition
+                SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
+                Console.WriteLine(schema.Definition);
+            }
+            #endregion
         }
 
         [RecordedTest]

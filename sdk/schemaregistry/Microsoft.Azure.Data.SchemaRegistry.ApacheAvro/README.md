@@ -131,7 +131,24 @@ Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(cont
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be provided as potential issues are discovered.
+If you encounter errors when communication with the Schema Registry service, these errors will be thrown as `RequestFailedExceptions`. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to serialization to Avro, or deserialization from Avro, will be thrown as `AvroSerializationException`. The `InnerException` will contain the underlying exception that was thrown from the Apache Avro library. When deserializing, the exception will also contain the `SchemaId` of the schema that triggered the error. Using our `Employee` schema example, if we add an `Employee_V2` model that adds a new required field, this would not be compatible with `Employee`. If the data we are attempting to deserialize may contain a schema that would not be compatible with our `Employee_V2` model, then we might write code like the following:
+```C# Snippet:SchemaRegistryAvroException
+try
+{
+    Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
+}
+catch (AvroSerializationException exception)
+{
+    // the exception message will contain the schema ID that was used to write the data
+    Console.WriteLine(exception);
+    // we might want to look up the specific schema from Schema Registry so that we can log the schema definition
+    SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
+    Console.WriteLine(schema.Definition);
+}
+```
+
+In general, any invalid Avro schemas would probably be caught during testing, but such schemas will also result in a `AvroSerializationException` being thrown when attempting to serialize using an invalid writer schema, or deserialize when using an invalid reader schema.
+
 
 ## Next steps
 
