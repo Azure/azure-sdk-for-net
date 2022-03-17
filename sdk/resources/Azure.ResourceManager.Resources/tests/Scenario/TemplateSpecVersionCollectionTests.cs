@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Data.LinkedTemplates[i].Template, getResult.Data.LinkedTemplates[i].Template);
             }
             Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
-            Assert.AreEqual(model.Data.MainTemplate, getResult.Data.MainTemplate);
+            Assert.AreEqual(model.Data.MainTemplate.ToArray(), getResult.Data.MainTemplate.ToArray());
             Assert.AreEqual(model.Data.UiFormDefinition, getResult.Data.UiFormDefinition);
         }
     }

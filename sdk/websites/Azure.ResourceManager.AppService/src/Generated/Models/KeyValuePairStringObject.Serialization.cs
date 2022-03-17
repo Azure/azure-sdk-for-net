@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static KeyValuePairStringObject DeserializeKeyValuePairStringObject(JsonElement element)
         {
             Optional<string> key = default;
-            Optional<object> value = default;
+            Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    value = property.Value.GetObject();
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

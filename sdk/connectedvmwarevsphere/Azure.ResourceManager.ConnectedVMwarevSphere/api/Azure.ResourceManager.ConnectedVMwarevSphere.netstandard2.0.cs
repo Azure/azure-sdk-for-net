@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string ForceUpdateTag { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionPropertiesInstanceView InstanceView { get { throw null; } set { } }
         public string MachineExtensionType { get { throw null; } set { } }
-        public object ProtectedSettings { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
+        public System.BinaryData Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
     public static partial class ResourceGroupExtensions
@@ -945,9 +945,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public string MachineExtensionType { get { throw null; } set { } }
-        public object ProtectedSettings { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
+        public System.BinaryData Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
     }
     public partial class PatchableVirtualMachineData
