@@ -62,11 +62,11 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
         // Not expected; this typically indicates an issue with loading an assembly
         // and may indicate a version conflict with transitive dependencies.
 
-        var builder = new StringBuilder($"{Environment.NewLine }[{ assembly.FullName }] could not load types for inspection.  Error: { ex }{ Environment.NewLine }{ Environment.NewLine } \t\tError Details:{ Environment.NewLine }");
+        var builder = new StringBuilder($"{Environment.NewLine }[{ assembly.FullName }] could not load types for inspection.  Error: { ex }{ Environment.NewLine } \tLoad Error Details:{ Environment.NewLine }");
 
         foreach (var loadEx in ex.LoaderExceptions)
         {
-            builder.Append("\t\t");
+            builder.Append("\t\t - ");
             builder.AppendLine(loadEx.Message);
         }
 
@@ -233,46 +233,46 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
         var assembly = assembliesToProcess.Pop();
         processedAssemblies.Add(assembly.FullName);
 
-        foreach (var refAssembly in assembly.GetReferencedAssemblies())
-        {
-            // Skip assemblies that have already been processed or that are system assemblies.
+        //foreach (var refAssembly in assembly.GetReferencedAssemblies())
+        //{
+        //    // Skip assemblies that have already been processed or that are system assemblies.
 
-            if ((!refAssembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(refAssembly.FullName)))
-            {
-                try
-                {
-                    assembliesToProcess.Push(Assembly.Load(refAssembly.FullName));
-                }
-                catch (FileNotFoundException)
-                {
-                    // Expected; this occurs when an assembly is transitively referenced but not available
-                    // for the current framework or platform and is most often seen for platform-specific interop
-                    // assemblies.
+        //    if ((!refAssembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(refAssembly.FullName)))
+        //    {
+        //        try
+        //        {
+        //            assembliesToProcess.Push(Assembly.Load(refAssembly.FullName));
+        //        }
+        //        catch (FileNotFoundException)
+        //        {
+        //            // Expected; this occurs when an assembly is transitively referenced but not available
+        //            // for the current framework or platform and is most often seen for platform-specific interop
+        //            // assemblies.
 
-                    LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
-                }
-                catch (DllNotFoundException)
-                {
-                    // Expected; this occurs when an assembly is transitively referenced but not available
-                    // for the current framework or platform and is most often seen for platform-specific interop
-                    // assemblies.
+        //            LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
+        //        }
+        //        catch (DllNotFoundException)
+        //        {
+        //            // Expected; this occurs when an assembly is transitively referenced but not available
+        //            // for the current framework or platform and is most often seen for platform-specific interop
+        //            // assemblies.
 
-                    LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
-                }
-                catch (Exception ex) when ((ex is BadImageFormatException) || ((ex is FileLoadException fileEx) && (ShouldIgnoreFileLoadException(fileEx))))
-                {
-                    // Expected; this occurs when an assembly is not compiled for the current framework
-                    // or platform and is most often seen for platform-specific interop assemblies.
+        //            LogInformation($"[{ refAssembly.FullName }] was not found to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
+        //        }
+        //        catch (Exception ex) when ((ex is BadImageFormatException) || ((ex is FileLoadException fileEx) && (ShouldIgnoreFileLoadException(fileEx))))
+        //        {
+        //            // Expected; this occurs when an assembly is not compiled for the current framework
+        //            // or platform and is most often seen for platform-specific interop assemblies.
 
-                    LogInformation($"[{ refAssembly.FullName }] was not in the correct format to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
-                }
-                catch (Exception ex)
-                {
-                    ReportError();
-                    LogError($"{Environment.NewLine }[{ refAssembly.FullName }] could not be loaded for inspection.  Error: { ex }{ Environment.NewLine }");
-                }
-            }
-        }
+        //            LogInformation($"[{ refAssembly.FullName }] was not in the correct format to load.  This is expected for some framework or platform-specific libraries, particularly those with \"Interop\" or \"Compat\" in their name.");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ReportError();
+        //            LogError($"{Environment.NewLine }[{ refAssembly.FullName }] could not be loaded for inspection.  Error: { ex }{ Environment.NewLine }");
+        //        }
+        //    }
+        //}
 
         yield return assembly;
     }
