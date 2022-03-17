@@ -37,7 +37,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
             Name = name;
             NumberPattern = numberPattern;
             Description = description;
-            Trunks = trunks.ToList().AsReadOnly() ?? new List<string>().AsReadOnly();
+            Trunks = trunks?.ToList().AsReadOnly() ?? new List<string>().AsReadOnly();
         }
 
         /// <summary> Gets or sets description of the route. </summary>
