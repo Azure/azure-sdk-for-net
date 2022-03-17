@@ -95,8 +95,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 // the exception message will contain the schema ID that was used to write the data
                 Console.WriteLine(exception);
                 // we might want to look up the specific schema from Schema Registry so that we can log the schema definition
-                SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
-                Console.WriteLine(schema.Definition);
+                if (exception.SchemaId != null)
+                {
+                    SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
+                    Console.WriteLine(schema.Definition);
+                }
             }
             #endregion
         }
