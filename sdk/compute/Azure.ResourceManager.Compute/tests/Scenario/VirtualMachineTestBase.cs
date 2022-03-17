@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,19 +52,19 @@ namespace Azure.ResourceManager.Compute.Tests
             var subnets = new List<object>() { subnet };
             var input = new GenericResourceData(DefaultLocation)
             {
-                Properties = new Dictionary<string, object>()
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "addressSpace", addressSpaces },
                     { "subnets", subnets }
-                }
+                })
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, vnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
             return operation.Value;
         }
 
         protected ResourceIdentifier GetSubnetId(GenericResource vnet)
         {
-            var properties = vnet.Data.Properties as IDictionary<string, object>;
+            var properties = vnet.Data.Properties.ToDictionaryFromJson();
             var subnets = properties["subnets"] as IEnumerable<object>;
             var subnet = subnets.First() as IDictionary<string, object>;
             return new ResourceIdentifier(subnet["id"] as string);
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.Compute.Tests
             ResourceIdentifier subnetId = new ResourceIdentifier($"{vnetId}/subnets/{subnetName}");
             var input = new GenericResourceData(DefaultLocation)
             {
-                Properties = new Dictionary<string, object>()
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
-                }
+                })
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, subnetId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetId, input);
             return operation.Value;
         }
 
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Tests
             ResourceIdentifier nicId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}");
             var input = new GenericResourceData(DefaultLocation)
             {
-                Properties = new Dictionary<string, object>()
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "ipConfigurations", new List<object>()
                         {
@@ -107,9 +108,9 @@ namespace Azure.ResourceManager.Compute.Tests
                             }
                         }
                     }
-                }
+                })
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(true, nicId, input);
+            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicId, input);
             return operation.Value;
         }
 
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
-            var lro = await collection.CreateOrUpdateAsync(true, vmName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
             return lro.Value;
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var collection = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
-            var lro = await collection.CreateOrUpdateAsync(true, groupName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
             return lro.Value;
         }
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostGroupName = Recording.GenerateAssetName("testDHG-");
             var collection = (await CreateDedicatedHostGroupAsync(hostGroupName)).GetDedicatedHosts();
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
-            var lro = await collection.CreateOrUpdateAsync(true, hostName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
             return lro.Value;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var hostName = Recording.GenerateAssetName("testHost-");
             var dedicatedHost = await CreateDedicatedHostAsync(hostName);
-            await dedicatedHost.DeleteAsync(true);
+            await dedicatedHost.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 AutoReplaceOnFailure = updatedAutoReplaceOnFailure
             };
-            var lro = await dedicatedHost.UpdateAsync(true, update);
+            var lro = await dedicatedHost.UpdateAsync(WaitUntil.Completed, update);
             DedicatedHost updatedHost = lro.Value;
 
             Assert.AreEqual(updatedAutoReplaceOnFailure, updatedHost.Data.AutoReplaceOnFailure);

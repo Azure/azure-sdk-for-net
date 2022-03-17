@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
             await StopSessionRecordingAsync();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                     new ManagedInstancePairInfo(primaryManagedInstanceId,partnerManagedInstanceId),
                 },
             };
-            var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(true, instanceFailoverGroupName, data);
+            var instanceFailoverGroupLro = await _resourceGroup.GetInstanceFailoverGroups(locationName).CreateOrUpdateAsync(WaitUntil.Completed, instanceFailoverGroupName, data);
             return instanceFailoverGroupLro.Value;
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
             // 5.Delete
             var deleteInstanceFailoverGroup = (await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAsync(instanceFailoverGroupName)).Value;
-            await deleteInstanceFailoverGroup.DeleteAsync(true);
+            await deleteInstanceFailoverGroup.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetInstanceFailoverGroups(locationName).GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }

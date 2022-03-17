@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Solutions))
             {

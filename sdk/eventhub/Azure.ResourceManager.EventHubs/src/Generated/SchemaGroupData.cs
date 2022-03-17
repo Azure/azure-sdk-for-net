@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of SchemaGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="updatedAtUtc"> Exact time the Schema Group was updated. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="groupProperties"> dictionary object for SchemaGroup group properties. </param>
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
-        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType) : base(id, name, type, systemData, location)
+        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType) : base(id, name, resourceType, systemData, location)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;

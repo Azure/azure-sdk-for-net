@@ -38,10 +38,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="uniqueId">Unique Id</param>
         /// <param name="syncGroupStatus">Sync group status</param>
-        public SyncGroup(string id = default(string), string name = default(string), string type = default(string), string uniqueId = default(string), string syncGroupStatus = default(string))
-            : base(id, name, type)
+        public SyncGroup(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string uniqueId = default(string), string syncGroupStatus = default(string))
+            : base(id, name, type, systemData)
         {
             UniqueId = uniqueId;
             SyncGroupStatus = syncGroupStatus;

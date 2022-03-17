@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="migrationOperationStatus"> Status of the migration task. </param>
         /// <param name="operationId"> Operation ID for the migration task. </param>
         /// <param name="localMySqlEnabled"> True if the web app has in app MySql enabled. </param>
-        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, OperationStatus? migrationOperationStatus, string operationId, bool? localMySqlEnabled) : base(id, name, type, systemData, kind)
+        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, OperationStatus? migrationOperationStatus, string operationId, bool? localMySqlEnabled) : base(id, name, resourceType, systemData, kind)
         {
             MigrationOperationStatus = migrationOperationStatus;
             OperationId = operationId;

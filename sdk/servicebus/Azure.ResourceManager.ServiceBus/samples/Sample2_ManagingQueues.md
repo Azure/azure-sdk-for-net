@@ -26,7 +26,7 @@ This is a scoped operations object, and any operations you perform will be done 
 ```C# Snippet:Managing_ServiceBusQueues_CreateResourceGroup
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -35,7 +35,7 @@ After we have the resource group created, we can create a namespace
 ```C# Snippet:Managing_ServiceBusQueues_CreateNamespace
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
+ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ServiceBusQueueCollection serviceBusQueueCollection = serviceBusNamespace.GetServiceBusQueues();
 ```
 
@@ -45,7 +45,7 @@ Now that we have a namespace, we can manage the queues inside this namespace.
 
 ```C# Snippet:Managing_ServiceBusQueues_CreateQueue
 string queueName = "myQueue";
-ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(true, queueName, new ServiceBusQueueData())).Value;
+ServiceBusQueue serviceBusQueue = (await serviceBusQueueCollection.CreateOrUpdateAsync(WaitUntil.Completed, queueName, new ServiceBusQueueData())).Value;
 ```
 
 ***List all queues***
@@ -81,7 +81,7 @@ if (await serviceBusQueueCollection.ExistsAsync("bar"))
 
 ```C# Snippet:Managing_ServiceBusQueues_DeleteQueue
 ServiceBusQueue serviceBusQueue = await serviceBusQueueCollection.GetAsync("myQueue");
-await serviceBusQueue.DeleteAsync(true);
+await serviceBusQueue.DeleteAsync(WaitUntil.Completed);
 ```
 
 ## Next steps

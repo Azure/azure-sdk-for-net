@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="deployer"> Username of deployer. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="startTime"> Start time of deploy operation. </param>
         /// <param name="endTime"> End time of deploy operation. </param>
         /// <param name="complete"> Whether the deployment operation has completed. </param>
-        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? complete) : base(id, name, type, systemData, kind)
+        internal MSDeployStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? complete) : base(id, name, resourceType, systemData, kind)
         {
             Deployer = deployer;
             ProvisioningState = provisioningState;

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             Name = name;
-            Type = "Microsoft.Cdn/Profiles/Endpoints";
+            ResourceType = "Microsoft.Cdn/Profiles/Endpoints";
         }
 
         /// <summary> The resource name to validate. </summary>
         public string Name { get; }
         /// <summary> The type of the resource whose name is to be validated. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
     }
 }

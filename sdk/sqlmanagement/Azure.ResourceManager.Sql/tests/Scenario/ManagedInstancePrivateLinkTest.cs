@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             // 3.Get
             var getPrivateLink = await collection.GetAsync(privateLinkName);
             Assert.AreEqual(privateLinkName.ToString(), getPrivateLink.Value.Data.Name);
-            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", getPrivateLink.Value.Data.Type.ToString());
+            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", getPrivateLink.Value.Data.ResourceType.ToString());
 
             // 4.GetIfExist
             var GetIfExistPrivateLink = await collection.GetIfExistsAsync(privateLinkName);
             Assert.AreEqual(privateLinkName.ToString(), GetIfExistPrivateLink.Value.Data.Name);
-            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", GetIfExistPrivateLink.Value.Data.Type.ToString());
+            Assert.AreEqual("Microsoft.Sql/managedInstances/privateLinkResources", GetIfExistPrivateLink.Value.Data.ResourceType.ToString());
         }
     }
 }

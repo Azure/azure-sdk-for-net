@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceGroupExportResult DeserializeResourceGroupExportResult(JsonElement element)
         {
-            Optional<object> template = default;
+            Optional<BinaryData> template = default;
             Optional<ErrorDetail> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    template = property.Value.GetObject();
+                    template = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("error"))

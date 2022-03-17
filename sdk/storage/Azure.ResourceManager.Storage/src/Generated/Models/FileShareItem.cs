@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of FileShareItem. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="lastModifiedTime"> Returns the date and time the share was last modified. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotTime"> Creation time of share snapshot returned in the response of list shares with expand param &quot;snapshots&quot;. </param>
-        internal FileShareItem(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string etag, DateTimeOffset? lastModifiedTime, IDictionary<string, string> metadata, int? shareQuota, EnabledProtocols? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedTime, int? remainingRetentionDays, ShareAccessTier? accessTier, DateTimeOffset? accessTierChangeTime, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotTime) : base(id, name, type, systemData, etag)
+        internal FileShareItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, DateTimeOffset? lastModifiedTime, IDictionary<string, string> metadata, int? shareQuota, EnabledProtocols? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedTime, int? remainingRetentionDays, ShareAccessTier? accessTier, DateTimeOffset? accessTierChangeTime, string accessTierStatus, long? shareUsageBytes, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IList<SignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotTime) : base(id, name, resourceType, systemData, etag)
         {
             LastModifiedTime = lastModifiedTime;
             Metadata = metadata;

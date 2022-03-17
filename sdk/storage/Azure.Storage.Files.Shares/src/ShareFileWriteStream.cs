@@ -58,6 +58,7 @@ namespace Azure.Storage.Files.Shares
                     rangeContentMD5: default,
                     _progressHandler,
                     _conditions,
+                    fileLastWrittenMode: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

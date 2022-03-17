@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of DeploymentScriptPropertiesBase. </summary>
         internal DeploymentScriptPropertiesBase()
         {
-            Outputs = new ChangeTrackingDictionary<string, object>();
+            Outputs = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Container settings. </summary>
@@ -37,6 +38,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IReadOnlyDictionary<string, object> Outputs { get; }
+        public IReadOnlyDictionary<string, BinaryData> Outputs { get; }
     }
 }

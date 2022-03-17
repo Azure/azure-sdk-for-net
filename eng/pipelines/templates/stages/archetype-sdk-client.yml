@@ -30,6 +30,9 @@ parameters:
 - name: TargetDocRepoName
   type: string
   default: azure-docs-sdk-dotnet
+- name: BuildSnippets
+  type: boolean
+  default: false
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -68,6 +71,7 @@ stages:
         ${{ if eq(parameters.ServiceDirectory, 'template') }}:
           TestPipeline: true
         ArtifactName: packages
+        BuildSnippets: ${{ parameters.BuildSnippets }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
         MatrixConfigs:

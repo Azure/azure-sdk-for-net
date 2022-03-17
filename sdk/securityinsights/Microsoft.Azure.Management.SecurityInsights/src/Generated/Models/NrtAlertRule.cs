@@ -35,6 +35,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Initializes a new instance of the NrtAlertRule class.
         /// </summary>
+        /// <param name="query">The query that creates alerts for this
+        /// rule.</param>
         /// <param name="displayName">The display name for alerts created by
         /// this alert rule.</param>
         /// <param name="enabled">Determines whether this alert rule is enabled
@@ -44,6 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// triggered.</param>
         /// <param name="suppressionEnabled">Determines whether the suppression
         /// for this alert rule is enabled or disabled.</param>
+        /// <param name="severity">The severity for alerts created by this
+        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
+        /// 'Informational'</param>
         /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -60,14 +65,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// all are numbers, for example 0 &lt;1.0.2&gt;</param>
         /// <param name="description">The description of the alert
         /// rule.</param>
-        /// <param name="query">The query that creates alerts for this
-        /// rule.</param>
+        /// <param name="tactics">The tactics of the alert rule</param>
+        /// <param name="techniques">The techniques of the alert rule</param>
         /// <param name="lastModifiedUtc">The last time that this alert rule
         /// has been modified.</param>
-        /// <param name="severity">The severity for alerts created by this
-        /// alert rule. Possible values include: 'High', 'Medium', 'Low',
-        /// 'Informational'</param>
-        /// <param name="tactics">The tactics of the alert rule</param>
         /// <param name="incidentConfiguration">The settings of the incidents
         /// that created from alerts triggered by this analytics rule</param>
         /// <param name="customDetails">Dictionary of string key-value pairs of
@@ -76,20 +77,21 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// alert rule</param>
         /// <param name="alertDetailsOverride">The alert details override
         /// settings</param>
-        public NrtAlertRule(string displayName, bool enabled, System.TimeSpan suppressionDuration, bool suppressionEnabled, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string alertRuleTemplateName = default(string), string templateVersion = default(string), string description = default(string), string query = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), string severity = default(string), IList<string> tactics = default(IList<string>), IncidentConfiguration incidentConfiguration = default(IncidentConfiguration), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
+        public NrtAlertRule(string query, string displayName, bool enabled, System.TimeSpan suppressionDuration, bool suppressionEnabled, string severity, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string alertRuleTemplateName = default(string), string templateVersion = default(string), string description = default(string), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>), System.DateTime? lastModifiedUtc = default(System.DateTime?), IncidentConfiguration incidentConfiguration = default(IncidentConfiguration), IDictionary<string, string> customDetails = default(IDictionary<string, string>), IList<EntityMapping> entityMappings = default(IList<EntityMapping>), AlertDetailsOverride alertDetailsOverride = default(AlertDetailsOverride))
             : base(id, name, type, systemData, etag)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             TemplateVersion = templateVersion;
             Description = description;
             Query = query;
+            Tactics = tactics;
+            Techniques = techniques;
             DisplayName = displayName;
             Enabled = enabled;
             LastModifiedUtc = lastModifiedUtc;
             SuppressionDuration = suppressionDuration;
             SuppressionEnabled = suppressionEnabled;
             Severity = severity;
-            Tactics = tactics;
             IncidentConfiguration = incidentConfiguration;
             CustomDetails = customDetails;
             EntityMappings = entityMappings;
@@ -128,6 +130,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.query")]
         public string Query { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tactics of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tactics")]
+        public IList<string> Tactics { get; set; }
+
+        /// <summary>
+        /// Gets or sets the techniques of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for alerts created by this alert
@@ -171,12 +185,6 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string Severity { get; set; }
 
         /// <summary>
-        /// Gets or sets the tactics of the alert rule
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.tactics")]
-        public IList<string> Tactics { get; set; }
-
-        /// <summary>
         /// Gets or sets the settings of the incidents that created from alerts
         /// triggered by this analytics rule
         /// </summary>
@@ -210,9 +218,17 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Query == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Query");
+            }
             if (DisplayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+            }
+            if (Severity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Severity");
             }
             if (IncidentConfiguration != null)
             {

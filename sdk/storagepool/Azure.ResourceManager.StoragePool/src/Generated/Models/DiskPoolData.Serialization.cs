@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StoragePool
 
         internal static DiskPoolData DeserializeDiskPoolData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<StoragePoolSku> sku = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
             IDictionary<string, string> tags = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StoragePool
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"))

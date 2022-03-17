@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -16,10 +17,10 @@ namespace Azure.ResourceManager.Resources.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ParameterType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AllowedValues))
             {
@@ -27,14 +28,22 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedValues)
                 {
-                    writer.WriteObjectValue(item);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item);
+#else
+                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+#endif
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue");
-                writer.WriteObjectValue(DefaultValue);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DefaultValue);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -47,8 +56,8 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ParameterDefinitionsValue DeserializeParameterDefinitionsValue(JsonElement element)
         {
             Optional<ParameterType> type = default;
-            Optional<IList<object>> allowedValues = default;
-            Optional<object> defaultValue = default;
+            Optional<IList<BinaryData>> allowedValues = default;
+            Optional<BinaryData> defaultValue = default;
             Optional<ParameterDefinitionsValueMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,10 +78,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
                     }
                     allowedValues = array;
                     continue;
@@ -84,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultValue = property.Value.GetObject();
+                    defaultValue = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("metadata"))

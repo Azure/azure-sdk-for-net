@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         {
             _expressRouteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string expressRouteLinkApiVersion);
-            _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(_expressRouteLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteLinkApiVersion);
+            _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ExpressRouteLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteLink>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteLink>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _expressRouteLinkClientDiagnostics.CreateScope("ExpressRouteLink.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _expressRouteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _expressRouteLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRouteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _expressRouteLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

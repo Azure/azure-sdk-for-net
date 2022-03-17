@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="releaseNoteUri"> The release note uri. </param>
         /// <param name="endOfLifeDate"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeDate, OperatingSystemTypes? supportedOSType) : base(id, name, type, systemData, tags, location)
+        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeDate, OperatingSystemTypes? supportedOSType) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Eula = eula;
