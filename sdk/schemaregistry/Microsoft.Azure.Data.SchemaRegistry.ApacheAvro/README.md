@@ -131,7 +131,8 @@ Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(cont
 
 ## Troubleshooting
 
-If you encounter errors when communication with the Schema Registry service, these errors will be thrown as `RequestFailedExceptions`. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to serialization to Avro, or deserialization from Avro, will be thrown as `AvroSerializationException`. The `InnerException` will contain the underlying exception that was thrown from the Apache Avro library. When deserializing, the exception will also contain the `SchemaId` of the schema that triggered the error. Using our `Employee` schema example, if we add an `Employee_V2` model that adds a new required field, this would not be compatible with `Employee`. If the data we are attempting to deserialize may contain a schema that would not be compatible with our `Employee_V2` model, then we might write code like the following:
+If you encounter errors when communication with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to serialization to Avro, or deserialization from Avro, will be thrown as a `AvroSerializationException`. The `InnerException` property will contain the underlying exception that was thrown from the Apache Avro library. When deserializing, the `SchemaId` property will contain the schema ID of the schema that triggered the error. Using our `Employee` schema example, if we add an `Employee_V2` model that adds a new required field, this would not be compatible with `Employee`. If the data we are attempting to deserialize may contain a schema that would not be compatible with our `Employee_V2` model, then we might write code like the following:
+
 ```C# Snippet:SchemaRegistryAvroException
 try
 {
@@ -189,3 +190,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry
+[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
