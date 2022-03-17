@@ -72,9 +72,9 @@ namespace Azure.ResourceManager
 
             options ??= new ArmClientOptions();
 
-            Argument.AssertNotNull(options.Environment.BaseUri, nameof(options.Environment.BaseUri));
+            Argument.AssertNotNull(options.Environment.Endpoint, nameof(options.Environment.Endpoint));
 
-            BaseUri = options.Environment.BaseUri;
+            BaseUri = options.Environment.Endpoint;
 
             if (options.Diagnostics.IsTelemetryEnabled)
             {
