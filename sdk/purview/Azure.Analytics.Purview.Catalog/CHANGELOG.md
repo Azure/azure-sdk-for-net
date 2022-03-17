@@ -1,12 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.3 (2022-03-17)
 
 ### Bugs Fixed
+
+- Fix bug for listing entities by guids
 
 ### Other Changes
 
