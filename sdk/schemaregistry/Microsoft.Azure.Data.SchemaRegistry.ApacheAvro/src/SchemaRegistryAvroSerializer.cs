@@ -118,10 +118,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             bool async,
             CancellationToken cancellationToken)
         {
-            (string schemaId, BinaryData bd) = async
-                ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
-                : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
-
             messageType ??= typeof(BinaryContent);
             if (messageType.GetConstructor(Type.EmptyTypes) == null)
             {
@@ -129,6 +125,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                     $"The type {messageType} must have a public parameterless constructor in order to use it as the 'MessageContent' type to serialize to.");
             }
             var message = (BinaryContent)Activator.CreateInstance(messageType);
+
+            (string schemaId, BinaryData bd) = async
+                ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
+                : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
+
             message.Data = bd;
             message.ContentType = $"{AvroMimeType}+{schemaId}";
             return message;

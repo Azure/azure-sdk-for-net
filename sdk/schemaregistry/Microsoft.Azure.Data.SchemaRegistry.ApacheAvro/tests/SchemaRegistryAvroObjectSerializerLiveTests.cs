@@ -277,7 +277,8 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await serializer.SerializeAsync(new Employee(), messageType: typeof(BinaryContentWithNoConstructor)));
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }, messageType: typeof(BinaryContentWithNoConstructor)));
         }
 
         private class InvalidAvroModel : ISpecificRecord
