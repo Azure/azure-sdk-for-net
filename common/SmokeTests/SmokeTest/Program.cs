@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
 // The goal of the smoke tests is to ensure that each of the Azure SDK
@@ -50,6 +51,29 @@ foreach (var assembly in LoadAssemblies(Assembly.GetEntryAssembly(), AssemblyFil
             ++typeCount;
             ProcessType(type);
         }
+    }
+    catch (ReflectionTypeLoadException) when (assembly.FullName.StartsWith("System."))
+    {
+        // Not expected, but not impactful.  System assemblies aren't indicative of
+        // transitive dependency conflicts.
+    }
+    catch (ReflectionTypeLoadException ex)
+    {
+        // Not expected; this typically indicates an issue with loading an assembly
+        // and may indicate a version conflict with transitive dependencies.
+
+        var builder = new StringBuilder($"{Environment.NewLine }[{ assembly.FullName }] could not load types for inspection.  Error: { ex }{ Environment.NewLine }{ Environment.NewLine } \t\tError Details:{ Environment.NewLine }");
+
+        foreach (var loadEx in ex.LoaderExceptions)
+        {
+            builder.Append("\t\t");
+            builder.AppendLine(loadEx.Message);
+        }
+
+        builder.Append(Environment.NewLine);
+
+        ReportError();
+        LogError(builder.ToString());
     }
     catch (Exception ex)
     {
