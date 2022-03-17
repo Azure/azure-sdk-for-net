@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ArmFeatures in the ArmFeature. </summary>
-        /// <returns> An object representing collection of ArmFeatures and their operations over a ArmFeature. </returns>
-        public virtual ArmFeatureCollection GetArmFeatures()
+        /// <summary> Gets a collection of Features in the Feature. </summary>
+        /// <returns> An object representing collection of Features and their operations over a Feature. </returns>
+        public virtual FeatureCollection GetFeatures()
         {
-            return GetCachedClient(Client => new ArmFeatureCollection(Client, Id));
+            return GetCachedClient(Client => new FeatureCollection(Client, Id));
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual async Task<Response<ArmFeature>> GetArmFeatureAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Feature>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
-            return await GetArmFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
+            return await GetFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public virtual Response<ArmFeature> GetArmFeature(string featureName, CancellationToken cancellationToken = default)
+        public virtual Response<Feature> GetFeature(string featureName, CancellationToken cancellationToken = default)
         {
-            return GetArmFeatures().Get(featureName, cancellationToken);
+            return GetFeatures().Get(featureName, cancellationToken);
         }
 
         /// <summary>

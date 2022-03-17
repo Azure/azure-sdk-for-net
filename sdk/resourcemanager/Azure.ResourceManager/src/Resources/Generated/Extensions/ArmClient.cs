@@ -188,14 +188,14 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region ArmFeature
-        /// <summary> Gets an object representing a ArmFeature along with the instance operations that can be performed on it but with no data. </summary>
+        #region Feature
+        /// <summary> Gets an object representing a Feature along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmFeature" /> object. </returns>
-        public virtual ArmFeature GetArmFeature(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="Feature" /> object. </returns>
+        public virtual Feature GetFeature(ResourceIdentifier id)
         {
-            ArmFeature.ValidateResourceId(id);
-            return new ArmFeature(this, id);
+            Feature.ValidateResourceId(id);
+            return new Feature(this, id);
         }
         #endregion
     }

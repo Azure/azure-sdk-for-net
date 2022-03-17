@@ -11,21 +11,21 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmFeature data model. </summary>
-    public partial class ArmFeatureData : ResourceData
+    /// <summary> A class representing the Feature data model. </summary>
+    public partial class FeatureData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArmFeatureData. </summary>
-        internal ArmFeatureData()
+        /// <summary> Initializes a new instance of FeatureData. </summary>
+        internal FeatureData()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmFeatureData. </summary>
+        /// <summary> Initializes a new instance of FeatureData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the previewed feature. </param>
-        internal ArmFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FeatureProperties properties) : base(id, name, resourceType, systemData)
+        internal FeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FeatureProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
         internal FeatureOperationsListResult()
         {
-            Value = new ChangeTrackingList<ArmFeatureData>();
+            Value = new ChangeTrackingList<FeatureData>();
         }
 
         /// <summary> Initializes a new instance of FeatureOperationsListResult. </summary>
         /// <param name="value"> The array of features. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal FeatureOperationsListResult(IReadOnlyList<ArmFeatureData> value, string nextLink)
+        internal FeatureOperationsListResult(IReadOnlyList<FeatureData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The array of features. </summary>
-        public IReadOnlyList<ArmFeatureData> Value { get; }
+        public IReadOnlyList<FeatureData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

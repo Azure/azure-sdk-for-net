@@ -262,7 +262,7 @@ directive:
       to: PredefinedTagsListResult
   - rename-model:
       from: FeatureResult
-      to: ArmFeature
+      to: Feature
   - rename-model:
       from: Resource
       to: TrackedResourceExtended
