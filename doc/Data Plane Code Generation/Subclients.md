@@ -58,44 +58,89 @@ single-top-level-client: true
 
 **Generated code after:**
 
-```C#
-//Top-level-client Generated\SubClientsClient.cs
+``` diff
+//Add Top-level-client Generated\SubClientsClient.cs
 namespace Azure.Service.SubClients
 {
-    public partial class SubClientsClient
++   public partial class SubClientsClient
     {
-        public SubClientsClient(AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null){}
-    }
-    private Parameter _cachedParameter;
+        private const string AuthorizationHeader = "Fake-Subscription-Key";
+        private readonly AzureKeyCredential _keyCredential;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
 
-    public virtual Root GetRootClient(string cachedParameter)
-    {
-        Argument.AssertNotNullOrEmpty(cachedParameter, nameof(cachedParameter));
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
-        return new Root(ClientDiagnostics, _pipeline, _keyCredential, cachedParameter, _endpoint);
-    }
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
-    public virtual Parameter GetParameterClient()
-    {
-        return Volatile.Read(ref _cachedParameter) ?? Interlocked.CompareExchange(ref _cachedParameter, new Parameter(ClientDiagnostics, _pipeline, _keyCredential, _endpoint), null) ?? _cachedParameter;
+        /// <summary> Initializes a new instance of SubClientsClient for mocking. </summary>
+        protected SubClientsClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of SubClientsClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public SubClientsClient(AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+            endpoint ??= new Uri("http://localhost:3000");
+            options ??= new SubClientsClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+        }
+
+        private Parameter _cachedParameter;
+
+        /// <summary> Initializes a new instance of Root. </summary>
+        /// <param name="cachedParameter"> The String to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cachedParameter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cachedParameter"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Root GetRootClient(string cachedParameter)
+        {
+            Argument.AssertNotNullOrEmpty(cachedParameter, nameof(cachedParameter));
+
+            return new Root(ClientDiagnostics, _pipeline, _keyCredential, cachedParameter, _endpoint);
+        }
+
+        /// <summary> Initializes a new instance of Parameter. </summary>
+        public virtual Parameter GetParameterClient()
+        {
+            return Volatile.Read(ref _cachedParameter) ?? Interlocked.CompareExchange(ref _cachedParameter, new Parameter(ClientDiagnostics, _pipeline, _keyCredential, _endpoint), null) ?? _cachedParameter;
+        }
     }
 }
 
 // SubClient: Root Generated\Root.cs
 namespace Azure.Service.SubClients
 {
-    public partial class Root
+-   public partial class RootClient
++   public partial class Root
     {
-        internal Root(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, string cachedParameter, Uri endpoint){}
+-       protected RootClient(){}
++       protected Root(){}
+-       public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null){}
++       internal Root(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, string cachedParameter, Uri endpoint){}
     }
 }
 
 //subclient: Parameter Generated\Parameter.cs
 namespace Azure.Service.SubClients
 {
-    public partial class Parameter
+-   public partial class ParameterClient
++   public partial class Parameter
     {
-        internal Parameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint) {}
+-       protected ParameterClient()
++       protected Parameter()
+-       public ParameterClient(AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null){}
++       internal Parameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint) {}
     }
 }
 
@@ -149,33 +194,53 @@ namespace Azure.Service.SubClients
 **Generated code after:**
 
 ```diff
+namespace Azure.Service.SubClients
+{
+-   public partial class SubClientsClientOptions : ClientOptions{}
++   public partial class RootClientOptions : ClientOptions{}
+}
 //Parent client: RootClient Generated\RootClient.cs
 namespace Azure.Service.SubClients
 {
     public partial class RootClient
     {
-    +   private readonly string _cachedParameter;
-    -   public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null)
-    
-    +   public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, RootClientOptions options = null)
-    }
+-        public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null)
++        public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, RootClientOptions options = null)
+         {
+             Argument.AssertNotNullOrEmpty(cachedParameter, nameof(cachedParameter));
+             Argument.AssertNotNull(credential, nameof(credential));
+             endpoint ??= new Uri("http://localhost:3000");
+-            options ??= new SubClientsClientOptions();
++            options ??= new RootClientOptions();
 
-    private Parameter _cachedParameter0;
-    public virtual Parameter GetParameterClient()
-    {
-        return Volatile.Read(ref _cachedParameter0) ?? Interlocked.CompareExchange(ref _cachedParameter0, new Parameter(ClientDiagnostics, _pipeline, _keyCredential, _endpoint), null) ?? _cachedParameter0;
+             ClientDiagnostics = new ClientDiagnostics(options);
+             _keyCredential = credential;
+             
+         }
+
++        private Parameter _cachedParameter0;
++
++        /// <summary> Initializes a new instance of Parameter. </summary>
++        public virtual Parameter GetParameterClient()
++        {
++            return Volatile.Read(ref _cachedParameter0) ?? Interlocked.CompareExchange(ref _cachedParameter0, new Parameter(ClientDiagnostics, _pipeline, _keyCredential, _endpoint), null) ?? _cachedParameter0;
++        }
++
     }
 }
 
 //Sub client: Parameter Generated\Parameter.cs
 namespace Azure.Service.SubClients
 {
-    public partial class Parameter
+-   public partial class ParameterClient
++   public partial class Parameter
     {
-        internal Parameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint){}
+-       protected ParameterClient(){}
++       protected Parameter(){}
+-       public ParameterClient(AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null){}
++       internal Parameter(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, Uri endpoint){}
     }
 }
-
 
 ```
 
