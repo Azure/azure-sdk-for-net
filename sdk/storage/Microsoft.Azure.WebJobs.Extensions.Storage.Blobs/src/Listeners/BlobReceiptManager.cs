@@ -122,27 +122,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<string> TryAcquireLeaseAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
-            try
+            Response<BlobLease> response = await blob
+                .GetBlobLeaseClient()
+                .AcquireAsync(
+                    LeasePeriod,
+                    conditions: null,
+                    new RequestContext()
+                    {
+                        ErrorOptions = ErrorOptions.NoThrow,
+                        CancellationToken = cancellationToken
+                    })
+                .ConfigureAwait(false);
+
+            // Return the lease if we successfully acquired it
+            Response raw = response.GetRawResponse();
+            if (!raw.IsError)
             {
-                BlobLease lease = await blob.GetBlobLeaseClient().AcquireAsync(LeasePeriod, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return lease.LeaseId;
+                return response.Value.LeaseId;
             }
-            catch (RequestFailedException exception)
+
+            // Return null if someone else holds the lease or the receipt was
+            // already deleted
+            if ((raw.Status == 409 || raw.Status == 404) &&
+                raw.Headers.TryGetValue("x-ms-error-code", out string code) &&
+                (code == BlobErrorCode.LeaseAlreadyPresent ||
+                 code == BlobErrorCode.BlobNotFound ||
+                 code == BlobErrorCode.ContainerNotFound))
             {
-                if (exception.IsConflictLeaseAlreadyPresent())
-                {
-                    return null;
-                }
-                else if (exception.IsNotFoundBlobOrContainerNotFound())
-                {
-                    // If someone deleted the receipt, there's no lease to acquire.
-                    return null;
-                }
-                else
-                {
-                    throw;
-                }
+                return null;
             }
+
+            // If we see any other errors (like auth, throttling, etc.) then
+            // we'll throw them
+            throw new RequestFailedException(raw);
+            // Note: this is currently not working correctly because of
+            // https://github.com/Azure/azure-sdk-for-net/issues/27614
+            // and will throw an exception without the ErrorCode or other
+            // important information populated
         }
 
         public async Task MarkCompletedAsync(BlockBlobClient blob, string leaseId,

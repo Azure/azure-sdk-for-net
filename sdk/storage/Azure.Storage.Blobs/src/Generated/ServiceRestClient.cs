@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
@@ -179,6 +180,158 @@ namespace Azure.Storage.Blobs
                     }
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetPropertiesRequest(int? timeout, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> gets the properties of a storage account&apos;s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   Logging: {
+        ///     Version: string,
+        ///     Delete: boolean,
+        ///     Read: boolean,
+        ///     Write: boolean,
+        ///     RetentionPolicy: {
+        ///       Enabled: boolean,
+        ///       Days: number,
+        ///       AllowPermanentDelete: boolean
+        ///     }
+        ///   },
+        ///   HourMetrics: {
+        ///     Version: string,
+        ///     Enabled: boolean,
+        ///     IncludeAPIs: boolean,
+        ///     RetentionPolicy: RetentionPolicy
+        ///   },
+        ///   MinuteMetrics: Metrics,
+        ///   Cors: [
+        ///     {
+        ///       AllowedOrigins: string,
+        ///       AllowedMethods: string,
+        ///       AllowedHeaders: string,
+        ///       ExposedHeaders: string,
+        ///       MaxAgeInSeconds: number
+        ///     }
+        ///   ],
+        ///   DefaultServiceVersion: string,
+        ///   DeleteRetentionPolicy: RetentionPolicy,
+        ///   StaticWebsite: {
+        ///     Enabled: boolean,
+        ///     IndexDocument: string,
+        ///     ErrorDocument404Path: string,
+        ///     DefaultIndexDocumentPath: string
+        ///   }
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   Message: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetPropertiesAsync(int? timeout = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ServiceClient.GetProperties");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> gets the properties of a storage account&apos;s Blob service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <remarks>
+        /// Schema for <c>Response Body</c>:
+        /// <code>{
+        ///   Logging: {
+        ///     Version: string,
+        ///     Delete: boolean,
+        ///     Read: boolean,
+        ///     Write: boolean,
+        ///     RetentionPolicy: {
+        ///       Enabled: boolean,
+        ///       Days: number,
+        ///       AllowPermanentDelete: boolean
+        ///     }
+        ///   },
+        ///   HourMetrics: {
+        ///     Version: string,
+        ///     Enabled: boolean,
+        ///     IncludeAPIs: boolean,
+        ///     RetentionPolicy: RetentionPolicy
+        ///   },
+        ///   MinuteMetrics: Metrics,
+        ///   Cors: [
+        ///     {
+        ///       AllowedOrigins: string,
+        ///       AllowedMethods: string,
+        ///       AllowedHeaders: string,
+        ///       ExposedHeaders: string,
+        ///       MaxAgeInSeconds: number
+        ///     }
+        ///   ],
+        ///   DefaultServiceVersion: string,
+        ///   DeleteRetentionPolicy: RetentionPolicy,
+        ///   StaticWebsite: {
+        ///     Enabled: boolean,
+        ///     IndexDocument: string,
+        ///     ErrorDocument404Path: string,
+        ///     DefaultIndexDocumentPath: string
+        ///   }
+        /// }
+        /// </code>
+        /// Schema for <c>Response Error</c>:
+        /// <code>{
+        ///   Message: string
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetProperties(int? timeout = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("ServiceClient.GetProperties");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -741,5 +894,8 @@ namespace Azure.Storage.Blobs
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

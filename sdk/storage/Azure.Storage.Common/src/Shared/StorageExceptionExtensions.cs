@@ -20,7 +20,7 @@ namespace Azure.Storage
         /// <param name="response">The response.</param>
         /// <param name="errorCode">An optional error code.</param>
         /// <returns>The response's error code.</returns>
-        public static string GetErrorCode(this Response response, string errorCode)
+        public static string GetErrorCode(this Response response, string errorCode = null)
         {
             if (string.IsNullOrEmpty(errorCode))
             {

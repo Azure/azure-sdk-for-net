@@ -20,7 +20,12 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
+    <!-- [TODO: uncomment when Azure.Core ships]
     <PackageReference Include="Azure.Core" />
+    [/TODO]-->
+    <!-- [TODO: remove when Azure.Core ships] -->
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <!-- [/TODO]-->
     <PackageReference Include="System.IO.Hashing" />
   </ItemGroup>
   <ItemGroup>

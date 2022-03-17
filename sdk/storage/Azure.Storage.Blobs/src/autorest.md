@@ -342,3 +342,13 @@ directive:
     $.BlobItemInternal.properties["OrMetadata"] = $.BlobItemInternal.properties["ObjectReplicationMetadata"];
     delete $.BlobItemInternal.properties["ObjectReplicationMetadata"];
 ```
+
+### Generate DPG methods
+(note that these are just the latter half of OperationIds today but will
+possibly change to full OperationIds in the future and this will break.
+See https://github.com/Azure/autorest.csharp/issues/2078)
+```yaml
+protocol-method-list:
+  - GetProperties
+  - AcquireLease
+```

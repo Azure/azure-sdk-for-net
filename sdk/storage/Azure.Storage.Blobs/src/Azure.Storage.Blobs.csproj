@@ -35,6 +35,7 @@
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)RequestContextExtensions.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />

@@ -12,7 +12,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
+	<!-- [TODO: uncomment when Azure.Storage.Blobs ships]
     <PackageReference Include="Azure.Storage.Blobs" />
+    [/TODO]-->
+    <!-- [TODO: remove when Azure.Storage.Blobs ships] -->
+    <ProjectReference Include="..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+	<!-- [/TODO]-->
     <PackageReference Include="Azure.Storage.Queues" />
   </ItemGroup>
 

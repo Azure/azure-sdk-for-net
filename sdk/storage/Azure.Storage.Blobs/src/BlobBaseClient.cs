@@ -4442,39 +4442,63 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlobBaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}");
-
-                string operationName = $"{nameof(BlobBaseClient)}.{nameof(Exists)}";
-
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(Exists)}");
                 try
                 {
-                    Response<BlobProperties> response = await GetPropertiesInternal(
-                        conditions: default,
-                        async: async,
-                        cancellationToken: cancellationToken,
-                        operationName)
-                        .ConfigureAwait(false);
+                    scope.Start();
 
-                    return Response.FromValue(true, response.GetRawResponse());
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound
-                    || storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-                {
-                    return Response.FromValue(false, default);
-                }
-                catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
-                {
-                    return Response.FromValue(true, default);
+                    // Get the blob properties, but don't throw any exceptions
+                    RequestContext context = new()
+                    {
+                        ErrorOptions = ErrorOptions.NoThrow,
+                        CancellationToken = cancellationToken
+                    };
+                    Response response = async ?
+                        await BlobRestClient.GetPropertiesAsync(context: context).ConfigureAwait(false) :
+                        BlobRestClient.GetProperties(context: context);
+
+                    // If the response wasn't an error, then the blob exists
+                    if (!response.IsError)
+                    {
+                        return Response.FromValue(true, response);
+                    }
+
+                    // Otherwise it depends on the error
+                    string code = response.GetErrorCode();
+                    if (code == BlobErrorCode.BlobNotFound ||
+                        code == BlobErrorCode.ContainerNotFound)
+                    {
+                        // If the failure was just "we can't find the blob" then
+                        // we'll say it doesn't exist instead of throwing an exception
+                        return Response.FromValue(false, response);
+                    }
+                    else if (code == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
+                    {
+                        return Response.FromValue(true, response);
+                    }
+                    else
+                    {
+                        // If we get any other failure (auth, throttling, etc.) then
+                        // we'll still throw an exception
+                        RequestFailedException ex = async ?
+                            await ClientConfiguration.ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false) :
+                            ClientConfiguration.ClientDiagnostics.CreateRequestFailedException(response);
+                        // Can't simply do the following because of https://github.com/Azure/azure-sdk-for-net/issues/27614
+                        // ex = new RequestFailedException(response);
+
+                        throw ex;
+                    }
                 }
                 catch (Exception ex)
                 {
                     ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
                     ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
                 }
             }
         }
