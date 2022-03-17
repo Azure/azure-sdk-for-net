@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
             Assert.AreEqual(cdnProfileName, cdnProfile.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, null, cdnProfile.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, cdnProfileName, null));
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             _ = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
             int count = 0;
-            await foreach (var tempProfile in rg.GetProfiles().GetAllAsync())
+            await foreach (var tempProfileResource in rg.GetProfiles().GetAllAsync())
             {
                 count++;
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
             int count = 0;
             await foreach (var tempProfile in subscription.GetProfilesAsync())
             {
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
-            Profile getCdnProfile = await rg.GetProfiles().GetAsync(cdnProfileName);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardAkamai);
+            ProfileResource getCdnProfile = await rg.GetProfiles().GetAsync(cdnProfileName);
             ResourceDataHelper.AssertValidProfile(cdnProfile, getCdnProfile);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetProfiles().GetAsync(null));
         }

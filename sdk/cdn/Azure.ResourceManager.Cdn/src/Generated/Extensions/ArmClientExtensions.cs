@@ -13,97 +13,97 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region Profile
-        /// <summary> Gets an object representing a Profile along with the instance operations that can be performed on it but with no data. </summary>
+        #region ProfileResource
+        /// <summary> Gets an object representing a ProfileResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Profile" /> object. </returns>
-        public static Profile GetProfile(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ProfileResource" /> object. </returns>
+        public static ProfileResource GetProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                Profile.ValidateResourceId(id);
-                return new Profile(client, id);
+                ProfileResource.ValidateResourceId(id);
+                return new ProfileResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CdnEndpoint
-        /// <summary> Gets an object representing a CdnEndpoint along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnEndpointResource
+        /// <summary> Gets an object representing a CdnEndpointResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnEndpoint" /> object. </returns>
-        public static CdnEndpoint GetCdnEndpoint(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnEndpointResource" /> object. </returns>
+        public static CdnEndpointResource GetCdnEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CdnEndpoint.ValidateResourceId(id);
-                return new CdnEndpoint(client, id);
+                CdnEndpointResource.ValidateResourceId(id);
+                return new CdnEndpointResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CdnOrigin
-        /// <summary> Gets an object representing a CdnOrigin along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnOriginResource
+        /// <summary> Gets an object representing a CdnOriginResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnOrigin" /> object. </returns>
-        public static CdnOrigin GetCdnOrigin(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnOriginResource" /> object. </returns>
+        public static CdnOriginResource GetCdnOriginResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CdnOrigin.ValidateResourceId(id);
-                return new CdnOrigin(client, id);
+                CdnOriginResource.ValidateResourceId(id);
+                return new CdnOriginResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CdnOriginGroup
-        /// <summary> Gets an object representing a CdnOriginGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnOriginGroupResource
+        /// <summary> Gets an object representing a CdnOriginGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnOriginGroup" /> object. </returns>
-        public static CdnOriginGroup GetCdnOriginGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnOriginGroupResource" /> object. </returns>
+        public static CdnOriginGroupResource GetCdnOriginGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CdnOriginGroup.ValidateResourceId(id);
-                return new CdnOriginGroup(client, id);
+                CdnOriginGroupResource.ValidateResourceId(id);
+                return new CdnOriginGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CdnCustomDomain
-        /// <summary> Gets an object representing a CdnCustomDomain along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnCustomDomainResource
+        /// <summary> Gets an object representing a CdnCustomDomainResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnCustomDomain" /> object. </returns>
-        public static CdnCustomDomain GetCdnCustomDomain(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnCustomDomainResource" /> object. </returns>
+        public static CdnCustomDomainResource GetCdnCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CdnCustomDomain.ValidateResourceId(id);
-                return new CdnCustomDomain(client, id);
+                CdnCustomDomainResource.ValidateResourceId(id);
+                return new CdnCustomDomainResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CdnWebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region CdnWebApplicationFirewallPolicyResource
+        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicy" /> object. </returns>
-        public static CdnWebApplicationFirewallPolicy GetCdnWebApplicationFirewallPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource" /> object. </returns>
+        public static CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CdnWebApplicationFirewallPolicy.ValidateResourceId(id);
-                return new CdnWebApplicationFirewallPolicy(client, id);
+                CdnWebApplicationFirewallPolicyResource.ValidateResourceId(id);
+                return new CdnWebApplicationFirewallPolicyResource(client, id);
             }
             );
         }

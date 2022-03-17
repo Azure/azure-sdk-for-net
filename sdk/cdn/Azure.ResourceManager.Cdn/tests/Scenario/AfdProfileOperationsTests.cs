@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             await afdProfile.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await afdProfile.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             var lro = await afdProfile.AddTagAsync("newTag", "newValue");
-            Profile updatedAfdProfile = lro.Value;
+            ProfileResource updatedAfdProfileResource = lro.Value;
             ResourceDataHelper.AssertProfileUpdate(updatedAfdProfile, "newTag", "newValue");
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             int count = 0;
             await foreach (var tempUsage in afdProfile.GetResourceUsageAfdProfilesAsync())
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
-            Profile afdProfile = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
+            ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             ContinentsResponse continentsResponse = await afdProfile.GetLogAnalyticsLocationsAsync();
             Assert.AreEqual(continentsResponse.Continents.Count, 7);
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogMetric> metric = new List<LogMetric>() { LogMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogRanking> rankings = new List<LogRanking>() { LogRanking.Url };
             List<LogRankingMetric> metric = new List<LogRankingMetric>() { LogRankingMetric.ClientRequestCount };
             int maxRankings = 5;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDProfile");
+            ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDProfile");
             ResourcesResponse resourcesResponse = await afdProfile.GetLogAnalyticsResourcesAsync();
             Assert.AreEqual(resourcesResponse.CustomDomains.Count, 0);
             Assert.AreEqual(resourcesResponse.Endpoints.Count, 1);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
+            ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
             List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
-            Profile afdProfile = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
+            ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
             List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
             DateTimeOffset dateTimeEnd = new DateTimeOffset(2021, 9, 25, 0, 0, 0, TimeSpan.Zero);

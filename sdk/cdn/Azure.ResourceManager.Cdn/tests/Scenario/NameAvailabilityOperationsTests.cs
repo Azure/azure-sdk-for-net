@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Cdn.Tests
                 Assert.True(checkNameAvailabilityOutput.NameAvailable);
                 ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
                 string cdnProfileName = Recording.GenerateAssetName("profile-");
-                Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+                ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
                 cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-                CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
+                CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
                 CheckNameAvailabilityInput checkNameAvailabilityInput2 = new CheckNameAvailabilityInput(cdnEndpoint.Data.Name);
                 checkNameAvailabilityOutput = await tenant.CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput2);
                 Assert.False(checkNameAvailabilityOutput.NameAvailable);
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.True(checkNameAvailabilityOutput.NameAvailable);
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnEndpoint cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
+            CdnEndpointResource cdnEndpoint = await CreateCdnEndpoint(cdnProfile, cdnEndpointName);
             CheckNameAvailabilityInput checkNameAvailabilityInput2 = new CheckNameAvailabilityInput(cdnEndpoint.Data.Name);
             checkNameAvailabilityOutput = await subscription.CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput2);
             Assert.False(checkNameAvailabilityOutput.NameAvailable);

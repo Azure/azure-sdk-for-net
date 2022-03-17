@@ -19,10 +19,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A Class representing a CdnEndpoint along with the instance operations that can be performed on it. </summary>
-    public partial class CdnEndpoint : ArmResource
+    /// <summary> A Class representing a CdnEndpointResource along with the instance operations that can be performed on it. </summary>
+    public partial class CdnEndpointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CdnEndpoint"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CdnEndpointResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}";
@@ -33,24 +33,24 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
         private readonly CdnEndpointData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class for mocking. </summary>
-        protected CdnEndpoint()
+        /// <summary> Initializes a new instance of the <see cref="CdnEndpointResource"/> class for mocking. </summary>
+        protected CdnEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnEndpoint"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CdnEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CdnEndpoint(ArmClient client, CdnEndpointData data) : this(client, data.Id)
+        internal CdnEndpointResource(ArmClient client, CdnEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CdnEndpoint"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CdnEndpoint(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CdnEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cdnEndpointApiVersion);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CdnOrigins in the CdnOrigin. </summary>
-        /// <returns> An object representing collection of CdnOrigins and their operations over a CdnOrigin. </returns>
+        /// <summary> Gets a collection of CdnOriginResources in the CdnOriginResource. </summary>
+        /// <returns> An object representing collection of CdnOriginResources and their operations over a CdnOriginResource. </returns>
         public virtual CdnOriginCollection GetCdnOrigins()
         {
             return GetCachedClient(Client => new CdnOriginCollection(Client, Id));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public virtual async Task<Response<CdnOrigin>> GetCdnOriginAsync(string originName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnOriginResource>> GetCdnOriginAsync(string originName, CancellationToken cancellationToken = default)
         {
             return await GetCdnOrigins().GetAsync(originName, cancellationToken).ConfigureAwait(false);
         }
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
-        public virtual Response<CdnOrigin> GetCdnOrigin(string originName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnOriginResource> GetCdnOrigin(string originName, CancellationToken cancellationToken = default)
         {
             return GetCdnOrigins().Get(originName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnOriginGroups in the CdnOriginGroup. </summary>
-        /// <returns> An object representing collection of CdnOriginGroups and their operations over a CdnOriginGroup. </returns>
+        /// <summary> Gets a collection of CdnOriginGroupResources in the CdnOriginGroupResource. </summary>
+        /// <returns> An object representing collection of CdnOriginGroupResources and their operations over a CdnOriginGroupResource. </returns>
         public virtual CdnOriginGroupCollection GetCdnOriginGroups()
         {
             return GetCachedClient(Client => new CdnOriginGroupCollection(Client, Id));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public virtual async Task<Response<CdnOriginGroup>> GetCdnOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnOriginGroupResource>> GetCdnOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
             return await GetCdnOriginGroups().GetAsync(originGroupName, cancellationToken).ConfigureAwait(false);
         }
@@ -149,13 +149,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
-        public virtual Response<CdnOriginGroup> GetCdnOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnOriginGroupResource> GetCdnOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
         {
             return GetCdnOriginGroups().Get(originGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnCustomDomains in the CdnCustomDomain. </summary>
-        /// <returns> An object representing collection of CdnCustomDomains and their operations over a CdnCustomDomain. </returns>
+        /// <summary> Gets a collection of CdnCustomDomainResources in the CdnCustomDomainResource. </summary>
+        /// <returns> An object representing collection of CdnCustomDomainResources and their operations over a CdnCustomDomainResource. </returns>
         public virtual CdnCustomDomainCollection GetCdnCustomDomains()
         {
             return GetCachedClient(Client => new CdnCustomDomainCollection(Client, Id));
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public virtual async Task<Response<CdnCustomDomain>> GetCdnCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnCustomDomainResource>> GetCdnCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             return await GetCdnCustomDomains().GetAsync(customDomainName, cancellationToken).ConfigureAwait(false);
         }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
-        public virtual Response<CdnCustomDomain> GetCdnCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
+        public virtual Response<CdnCustomDomainResource> GetCdnCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
         {
             return GetCdnCustomDomains().Get(customDomainName, cancellationToken);
         }
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CdnEndpoint>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Get");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Get");
             scope.Start();
             try
             {
                 var response = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -219,16 +219,16 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: CdnEndpoints_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CdnEndpoint> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CdnEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Get");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Get");
             scope.Start();
             try
             {
                 var response = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CdnEndpoint(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Delete");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Delete");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Delete");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Delete");
             scope.Start();
             try
             {
@@ -298,16 +298,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CdnEndpoint>> UpdateAsync(WaitUntil waitUntil, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnEndpointResource>> UpdateAsync(WaitUntil waitUntil, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Update");
             scope.Start();
             try
             {
                 var response = await _cdnEndpointRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -328,16 +328,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="data"> Endpoint update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CdnEndpoint> Update(WaitUntil waitUntil, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CdnEndpointResource> Update(WaitUntil waitUntil, PatchableCdnEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Update");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Update");
             scope.Start();
             try
             {
                 var response = _cdnEndpointRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -356,14 +356,14 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CdnEndpoint>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnEndpointResource>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Start");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Start");
             scope.Start();
             try
             {
                 var response = await _cdnEndpointRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -382,14 +382,14 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CdnEndpoint> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CdnEndpointResource> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Start");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Start");
             scope.Start();
             try
             {
                 var response = _cdnEndpointRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -408,14 +408,14 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CdnEndpoint>> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CdnEndpointResource>> StopAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Stop");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Stop");
             scope.Start();
             try
             {
                 var response = await _cdnEndpointRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CdnEndpoint> Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CdnEndpointResource> Stop(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.Stop");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.Stop");
             scope.Start();
             try
             {
                 var response = _cdnEndpointRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CdnArmOperation<CdnEndpoint>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new CdnArmOperation<CdnEndpointResource>(new CdnEndpointOperationSource(Client), _cdnEndpointClientDiagnostics, Pipeline, _cdnEndpointRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.PurgeContent");
             scope.Start();
             try
             {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.PurgeContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.PurgeContent");
             scope.Start();
             try
             {
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.LoadContent");
             scope.Start();
             try
             {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(contentFilePaths, nameof(contentFilePaths));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.LoadContent");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.LoadContent");
             scope.Start();
             try
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Argument.AssertNotNull(customDomainProperties, nameof(customDomainProperties));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.ValidateCustomDomain");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.ValidateCustomDomain");
             scope.Start();
             try
             {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Cdn
         {
             async Task<Page<ResourceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.GetResourceUsage");
                 scope.Start();
                 try
                 {
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Cdn
             }
             async Task<Page<ResourceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.GetResourceUsage");
                 scope.Start();
                 try
                 {
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Cdn
         {
             Page<ResourceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.GetResourceUsage");
                 scope.Start();
                 try
                 {
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Cdn
             }
             Page<ResourceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.GetResourceUsage");
+                using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.GetResourceUsage");
                 scope.Start();
                 try
                 {
@@ -718,12 +718,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CdnEndpoint>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpointResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.AddTag");
             scope.Start();
             try
             {
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -749,12 +749,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CdnEndpoint> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<CdnEndpointResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.AddTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.AddTag");
             scope.Start();
             try
             {
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -779,11 +779,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CdnEndpoint>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpointResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.SetTags");
             scope.Start();
             try
             {
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -809,11 +809,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CdnEndpoint> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<CdnEndpointResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.SetTags");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.SetTags");
             scope.Start();
             try
             {
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -839,11 +839,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CdnEndpoint>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnEndpointResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.RemoveTag");
             scope.Start();
             try
             {
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -868,11 +868,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CdnEndpoint> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<CdnEndpointResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpoint.RemoveTag");
+            using var scope = _cdnEndpointClientDiagnostics.CreateScope("CdnEndpointResource.RemoveTag");
             scope.Start();
             try
             {
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new CdnEndpoint(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

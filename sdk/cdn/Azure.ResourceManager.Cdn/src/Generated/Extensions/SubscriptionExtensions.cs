@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Profile> GetProfilesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ProfileResource> GetProfilesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetProfilesAsync(cancellationToken);
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Profile> GetProfiles(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ProfileResource> GetProfiles(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetProfiles(cancellationToken);
         }

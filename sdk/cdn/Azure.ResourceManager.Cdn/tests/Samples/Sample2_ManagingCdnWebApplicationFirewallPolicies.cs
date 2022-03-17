@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 Name = CdnSkuName.StandardMicrosoft
             });
-            ArmOperation<CdnWebApplicationFirewallPolicy> lro = await resourceGroup.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);
-            CdnWebApplicationFirewallPolicy policy = lro.Value;
+            ArmOperation<CdnWebApplicationFirewallPolicyResource> lro = await resourceGroup.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);
+            CdnWebApplicationFirewallPolicyResource policy = lro.Value;
             #endregion Snippet:Managing_CdnWebApplicationFirewallPolicies_CreateAWebApplicationFirewallPolicy
         }
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // First we need to get the cdn web application firewall policy collection from the specific resource group
             CdnWebApplicationFirewallPolicyCollection policyCollection = resourceGroup.GetCdnWebApplicationFirewallPolicies();
             // With GetAllAsync(), we can get a list of the policy in the collection
-            AsyncPageable<CdnWebApplicationFirewallPolicy> response = policyCollection.GetAllAsync();
-            await foreach (CdnWebApplicationFirewallPolicy policy in response)
+            AsyncPageable<CdnWebApplicationFirewallPolicyResource> response = policyCollection.GetAllAsync();
+            await foreach (CdnWebApplicationFirewallPolicyResource policy in response)
             {
                 Console.WriteLine(policy.Data.Name);
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // First we need to get the cdn web application firewall policy collection from the specific resource group
             CdnWebApplicationFirewallPolicyCollection policyCollection = resourceGroup.GetCdnWebApplicationFirewallPolicies();
             // Now we can get the policy with GetAsync()
-            CdnWebApplicationFirewallPolicy policy = await policyCollection.GetAsync("myPolicy");
+            CdnWebApplicationFirewallPolicyResource policy = await policyCollection.GetAsync("myPolicy");
             // With DeleteAsync(), we can delete the policy
             await policy.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_CdnWebApplicationFirewallPolicies_DeleteAWebApplicationFirewallPolicy

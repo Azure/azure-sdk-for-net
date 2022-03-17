@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Cdn
             );
         }
 
-        /// <summary> Gets a collection of Profiles in the Profile. </summary>
+        /// <summary> Gets a collection of ProfileResources in the ProfileResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Profiles and their operations over a Profile. </returns>
+        /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public static ProfileCollection GetProfiles(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetProfiles();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public static async Task<Response<Profile>> GetProfileAsync(this ResourceGroup resourceGroup, string profileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroup resourceGroup, string profileName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public static Response<Profile> GetProfile(this ResourceGroup resourceGroup, string profileName, CancellationToken cancellationToken = default)
+        public static Response<ProfileResource> GetProfile(this ResourceGroup resourceGroup, string profileName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetProfiles().Get(profileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicies in the CdnWebApplicationFirewallPolicy. </summary>
+        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the CdnWebApplicationFirewallPolicyResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CdnWebApplicationFirewallPolicies and their operations over a CdnWebApplicationFirewallPolicy. </returns>
+        /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetCdnWebApplicationFirewallPolicies();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public static async Task<Response<CdnWebApplicationFirewallPolicy>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public static Response<CdnWebApplicationFirewallPolicy> GetCdnWebApplicationFirewallPolicy(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
+        public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }

@@ -18,10 +18,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A Class representing a CdnWebApplicationFirewallPolicy along with the instance operations that can be performed on it. </summary>
-    public partial class CdnWebApplicationFirewallPolicy : ArmResource
+    /// <summary> A Class representing a CdnWebApplicationFirewallPolicyResource along with the instance operations that can be performed on it. </summary>
+    public partial class CdnWebApplicationFirewallPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CdnWebApplicationFirewallPolicy"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CdnWebApplicationFirewallPolicyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}";
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.Cdn
         private readonly PoliciesRestOperations _cdnWebApplicationFirewallPolicyPoliciesRestClient;
         private readonly CdnWebApplicationFirewallPolicyData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicy"/> class for mocking. </summary>
-        protected CdnWebApplicationFirewallPolicy()
+        /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyResource"/> class for mocking. </summary>
+        protected CdnWebApplicationFirewallPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnWebApplicationFirewallPolicy"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "CdnWebApplicationFirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CdnWebApplicationFirewallPolicy(ArmClient client, CdnWebApplicationFirewallPolicyData data) : this(client, data.Id)
+        internal CdnWebApplicationFirewallPolicyResource(ArmClient client, CdnWebApplicationFirewallPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicy"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnWebApplicationFirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CdnWebApplicationFirewallPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CdnWebApplicationFirewallPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string cdnWebApplicationFirewallPolicyPoliciesApiVersion);
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CdnWebApplicationFirewallPolicy>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Get");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.Get");
             scope.Start();
             try
             {
                 var response = await _cdnWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,16 +113,16 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Policies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CdnWebApplicationFirewallPolicy> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CdnWebApplicationFirewallPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Get");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.Get");
             scope.Start();
             try
             {
                 var response = _cdnWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Delete");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.Delete");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CdnWebApplicationFirewallPolicy>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.AddTag");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CdnWebApplicationFirewallPolicy> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<CdnWebApplicationFirewallPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.AddTag");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CdnWebApplicationFirewallPolicy>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.SetTags");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,11 +283,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CdnWebApplicationFirewallPolicy> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<CdnWebApplicationFirewallPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.SetTags");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CdnWebApplicationFirewallPolicy>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CdnWebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.RemoveTag");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _cdnWebApplicationFirewallPolicyPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -342,11 +342,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CdnWebApplicationFirewallPolicy> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<CdnWebApplicationFirewallPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicy.RemoveTag");
+            using var scope = _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics.CreateScope("CdnWebApplicationFirewallPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Cdn
                 originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _cdnWebApplicationFirewallPolicyPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new CdnWebApplicationFirewallPolicy(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new CdnWebApplicationFirewallPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

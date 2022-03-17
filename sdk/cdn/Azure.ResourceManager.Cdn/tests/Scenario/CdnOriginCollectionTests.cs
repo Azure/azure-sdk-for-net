@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnEndpoint cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
+            CdnEndpointResource cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
-            CdnOrigin cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
+            CdnOriginResource cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
             Assert.AreEqual(cdnOriginName, cdnOrigin.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOrigins().CreateOrUpdateAsync(WaitUntil.Completed, null, cdnOrigin.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOrigins().CreateOrUpdateAsync(WaitUntil.Completed, cdnOriginName, null));
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnEndpoint cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
+            CdnEndpointResource cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
             _ = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
             int count = 0;
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
-            Profile cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
+            ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
-            CdnEndpoint cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
+            CdnEndpointResource cdnEndpoint = await CreateCdnEndpointWithOriginGroup(cdnProfile, cdnEndpointName);
             string cdnOriginName = Recording.GenerateAssetName("origin-");
-            CdnOrigin cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
-            CdnOrigin getCdnOrigin = await cdnEndpoint.GetCdnOrigins().GetAsync(cdnOriginName);
+            CdnOriginResource cdnOrigin = await CreateCdnOrigin(cdnEndpoint, cdnOriginName);
+            CdnOriginResource getCdnOrigin = await cdnEndpoint.GetCdnOrigins().GetAsync(cdnOriginName);
             ResourceDataHelper.AssertValidOrigin(cdnOrigin, getCdnOrigin);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnOrigins().GetAsync(null));
         }

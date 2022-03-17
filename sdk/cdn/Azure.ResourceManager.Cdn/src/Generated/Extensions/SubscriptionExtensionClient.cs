@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Cdn
         {
         }
 
-        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", Profile.ResourceType.Namespace, DiagnosticOptions);
-        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Profile.ResourceType));
+        private ClientDiagnostics ProfileClientDiagnostics => _profileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, DiagnosticOptions);
+        private ProfilesRestOperations ProfileRestClient => _profileRestClient ??= new ProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ProfileResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private CdnManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CdnManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ResourceUsageClientDiagnostics => _resourceUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Profile> GetProfilesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ProfileResource> GetProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Profile>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ProfileResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetProfiles");
                 scope.Start();
                 try
                 {
                     var response = await ProfileRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            async Task<Page<Profile>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetProfiles");
                 scope.Start();
                 try
                 {
                     var response = await ProfileRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -105,17 +105,17 @@ namespace Azure.ResourceManager.Cdn
         /// Operation Id: Profiles_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Profile" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Profile> GetProfiles(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ProfileResource> GetProfiles(CancellationToken cancellationToken = default)
         {
-            Page<Profile> FirstPageFunc(int? pageSizeHint)
+            Page<ProfileResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetProfiles");
                 scope.Start();
                 try
                 {
                     var response = ProfileRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Cdn
                     throw;
                 }
             }
-            Page<Profile> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetProfiles");
                 scope.Start();
                 try
                 {
                     var response = ProfileRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Profile(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

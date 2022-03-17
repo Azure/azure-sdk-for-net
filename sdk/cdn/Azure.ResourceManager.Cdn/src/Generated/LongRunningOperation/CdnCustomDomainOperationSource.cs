@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnCustomDomainOperationSource : IOperationSource<CdnCustomDomain>
+    internal class CdnCustomDomainOperationSource : IOperationSource<CdnCustomDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        CdnCustomDomain IOperationSource<CdnCustomDomain>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnCustomDomainResource IOperationSource<CdnCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
-            return new CdnCustomDomain(_client, data);
+            return new CdnCustomDomainResource(_client, data);
         }
 
-        async ValueTask<CdnCustomDomain> IOperationSource<CdnCustomDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnCustomDomainResource> IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement);
-            return new CdnCustomDomain(_client, data);
+            return new CdnCustomDomainResource(_client, data);
         }
     }
 }
