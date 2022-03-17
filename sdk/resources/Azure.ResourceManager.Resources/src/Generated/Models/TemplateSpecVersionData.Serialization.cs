@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = BinaryData.FromString(property.Value.GetRawText());
+                            metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mainTemplate"))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mainTemplate = BinaryData.FromString(property.Value.GetRawText());
+                            mainTemplate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("uiFormDefinition"))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            uiFormDefinition = BinaryData.FromString(property.Value.GetRawText());
+                            uiFormDefinition = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

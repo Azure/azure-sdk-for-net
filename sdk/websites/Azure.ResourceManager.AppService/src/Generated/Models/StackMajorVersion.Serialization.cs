@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property.Value.GetRawText()));
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     appSettingsDictionary = dictionary;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property.Value.GetRawText()));
+                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                     }
                     siteConfigPropertiesDictionary = dictionary;
                     continue;
