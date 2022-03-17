@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// BookmarkOperations operations.
     /// </summary>
-    internal partial class BookmarkOperations : IServiceOperations<SecurityInsightsClient>, IBookmarkOperations
+    internal partial class BookmarkOperations : IServiceOperations<SecurityInsights>, IBookmarkOperations
     {
         /// <summary>
         /// Initializes a new instance of the BookmarkOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BookmarkOperations(SecurityInsightsClient client)
+        internal BookmarkOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Expand an bookmark

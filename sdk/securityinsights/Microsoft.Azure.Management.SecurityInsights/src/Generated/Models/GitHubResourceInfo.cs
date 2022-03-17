@@ -14,25 +14,27 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an entity with kind.
+    /// Resources created in GitHub repository.
     /// </summary>
-    public partial class ThreatIntelligenceResourceKind
+    public partial class GitHubResourceInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ThreatIntelligenceResourceKind
-        /// class.
+        /// Initializes a new instance of the GitHubResourceInfo class.
         /// </summary>
-        public ThreatIntelligenceResourceKind()
+        public GitHubResourceInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Static constructor for ThreatIntelligenceResourceKind class.
+        /// Initializes a new instance of the GitHubResourceInfo class.
         /// </summary>
-        static ThreatIntelligenceResourceKind()
+        /// <param name="appInstallationId">GitHub application installation
+        /// id.</param>
+        public GitHubResourceInfo(string appInstallationId = default(string))
         {
-            Kind = "indicator";
+            AppInstallationId = appInstallationId;
+            CustomInit();
         }
 
         /// <summary>
@@ -41,10 +43,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// The kind of the entity.
+        /// Gets or sets gitHub application installation id.
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public static string Kind { get; private set; }
+        [JsonProperty(PropertyName = "appInstallationId")]
+        public string AppInstallationId { get; set; }
 
     }
 }

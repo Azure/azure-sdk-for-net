@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// class.
         /// </summary>
         /// <param name="isEnabled">Determines whether the automation rule is
-        /// enabled or disabled.</param>
+        /// enabled or disabled</param>
         /// <param name="expirationTimeUtc">Determines when the automation rule
         /// should automatically expire and be disabled.</param>
         /// <param name="conditions">The conditions to evaluate to determine if
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
 
         /// <summary>
         /// Gets or sets determines whether the automation rule is enabled or
-        /// disabled.
+        /// disabled
         /// </summary>
         [JsonProperty(PropertyName = "isEnabled")]
         public bool IsEnabled { get; set; }
@@ -82,13 +83,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IList<AutomationRuleCondition> Conditions { get; set; }
 
         /// <summary>
-        /// The type of object the automation rule triggers on
         /// </summary>
         [JsonProperty(PropertyName = "triggersOn")]
         public static string TriggersOn { get; private set; }
 
         /// <summary>
-        /// The type of event the automation rule triggers on
         /// </summary>
         [JsonProperty(PropertyName = "triggersWhen")]
         public static string TriggersWhen { get; private set; }
@@ -96,11 +95,18 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Conditions != null)
+            {
+                if (Conditions.Count > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "Conditions", 50);
+                }
+            }
         }
     }
 }

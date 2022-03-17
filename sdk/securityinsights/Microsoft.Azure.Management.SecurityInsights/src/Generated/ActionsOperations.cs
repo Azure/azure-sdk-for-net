@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// ActionsOperations operations.
     /// </summary>
-    internal partial class ActionsOperations : IServiceOperations<SecurityInsightsClient>, IActionsOperations
+    internal partial class ActionsOperations : IServiceOperations<SecurityInsights>, IActionsOperations
     {
         /// <summary>
         /// Initializes a new instance of the ActionsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ActionsOperations(SecurityInsightsClient client)
+        internal ActionsOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Gets all actions of alert rule.
