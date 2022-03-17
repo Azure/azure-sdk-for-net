@@ -787,16 +787,13 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         {
             public void Report(BlobDownloadDirectoryProgress response)
             {
-                if (response.TransferStatus == StorageJobTransferStatus.Completed)
+                if (response.TransferStatus == StorageJobTransferStatus.Completed || response.TransferStatus == StorageJobTransferStatus.CompletedWithErrors)
                 {
-                    Console.WriteLine("Completed without errors!");
-                    // Ideally customers would have an event arguement that would trigger here when their job finishes
-                }
-                else if (response.TransferStatus == StorageJobTransferStatus.CompletedWithErrors)
-                {
-                    Console.WriteLine("Completed with errors :(");
-                    // Ideally customers would have an event arguement that would trigger here when their job finishes
-                    // Or they can stop waiting on the event handler for information back
+                    Console.WriteLine("Completed!");
+                    // Ideally customers would have an event argument that would trigger here when their job finishes
+                    //BlobContainerClient containerClient = new BlobContainerClient(new Uri("http://accountname.blob.core.windows.net/containername"), containerName);
+                    // readjust ACL to not allow any more reads after downloading
+                    //await containerClient.SetAccessPolicyAsync(PublicAccessType.None);
                 }
             }
         };

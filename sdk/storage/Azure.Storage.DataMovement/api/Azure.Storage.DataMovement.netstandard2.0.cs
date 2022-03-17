@@ -56,10 +56,10 @@ namespace Azure.Storage.DataMovement
     public partial class StorageTransferProgress
     {
         public StorageTransferProgress() { }
-        public int FailedTransferred { get { throw null; } }
-        public int QueuedTransfers { get { throw null; } }
-        public int SkippedTransferring { get { throw null; } }
-        public int SuccesfullyTransferred { get { throw null; } }
-        public int TransfersInProgress { get { throw null; } }
+        public int FilesCurrentlyTransferring { get { throw null; } }
+        public int FilesQueuedForTransfer { get { throw null; } }
+        public int FilesTransferredFailed { get { throw null; } }
+        public int FilesTransferredSkipped { get { throw null; } }
+        public int FilesTransferredSuccessfully { get { throw null; } }
     }
 }

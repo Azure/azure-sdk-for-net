@@ -45,8 +45,8 @@ namespace Azure.Storage.DataMovement.Blobs
         protected static Azure.Core.Pipeline.HttpPipeline GetHttpPipeline(Azure.Storage.DataMovement.Blobs.BlobVirtualDirectoryClient client) { throw null; }
         public virtual Azure.Storage.Blobs.BlobContainerClient GetParentBlobContainerClient() { throw null; }
         protected internal virtual Azure.Storage.Blobs.BlobContainerClient GetParentBlobContainerClientCore() { throw null; }
-        public virtual System.Collections.Generic.IEnumerable<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>> Upload(string sourceDirectoryPath, bool overwrite = false, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo>>> UploadAsync(string sourceDirectoryPath, bool overwrite = false, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IEnumerable<Azure.Storage.DataMovement.Blobs.Models.SingleBlobContentInfo> Upload(string sourceDirectoryPath, bool overwrite = false, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Storage.DataMovement.Blobs.Models.SingleBlobContentInfo>> UploadAsync(string sourceDirectoryPath, bool overwrite = false, Azure.Storage.DataMovement.Blobs.Models.BlobDirectoryUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class SpecializedBlobExtensions
     {
@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
     {
         ServiceSideAsyncCopy = 0,
         ServiceSideSyncCopy = 1,
-        LocalSyncCopy = 2,
+        RoundTripCopy = 2,
         ServiceSideSyncUploadFromUriCopy = 3,
     }
     public partial class BlobCopySingleTransferFailedEventArgs : Azure.Storage.DataMovement.StorageTransferEventArgs
@@ -186,7 +186,7 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         internal BlobTransferJobProperties() { }
         public System.Uri DestinationUri { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.Uri SourcePath { get { throw null; } }
+        public System.Uri SourceUri { get { throw null; } }
         public Azure.Storage.DataMovement.Blobs.Models.BlobTransferType TransferType { get { throw null; } }
     }
     public enum BlobTransferType
@@ -260,5 +260,11 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         Overwrite = 0,
         Fail = 1,
         Skip = 2,
+    }
+    public partial class SingleBlobContentInfo
+    {
+        internal SingleBlobContentInfo() { }
+        public System.Uri BlobUri { get { throw null; } }
+        public Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> ContentInfo { get { throw null; } }
     }
 }

@@ -129,16 +129,6 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
-        /// The configuation<see cref="Storage.Blobs.BlobClientConfiguration"/>.
-        /// </summary>
-        internal readonly Storage.Blobs.BlobClientConfiguration _clientConfiguration;
-
-        /// <summary>
-        /// <see cref="Storage.Blobs.BlobClientConfiguration"/>.
-        /// </summary>
-        internal virtual Storage.Blobs.BlobClientConfiguration ClientConfiguration => _clientConfiguration;
-
-        /// <summary>
         /// A <see cref="BlobContainerClient"/> assoicated with the file system.
         /// </summary>
         internal readonly BlobContainerClient _containerClient;
@@ -203,6 +193,10 @@ namespace Azure.Storage.DataMovement.Blobs
             };
             _uri = blobUriBuilder.ToUri();
             _containerClient = client;
+            _pipeline = BlobContainerClientInternals.GetHttpPipeline(client);
+            BlobClientOptions options = BlobContainerClientInternals.GetClientOptions(client);
+            _clientDiagnostics = new StorageClientDiagnostics(options);
+            _version = options.Version;
         }
 
         /// <summary>
@@ -265,19 +259,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 };
             _uri = builder.ToUri();
             _directoryPath = blobDirectoryPath;
-
-            _clientConfiguration = new Storage.Blobs.BlobClientConfiguration(
-                pipeline: options.Build(conn.Credentials),
-                sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
-
+            _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _containerClient = new BlobContainerClient(connectionString, blobContainerName, options);
-
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -296,7 +280,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// every request.
         /// </param>
         internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, BlobClientOptions options = default)
-            : this(blobDirectoryUri, (HttpPipelinePolicy)null, options, null)
+            : this(blobDirectoryUri, (HttpPipelinePolicy)null, options)
         {
             BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
             // Clear the blob directory path to get the Uri with just the container name
@@ -323,7 +307,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// every request.
         /// </param>
         internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(blobDirectoryUri, credential.AsPolicy(), options, credential)
+            : this(blobDirectoryUri, credential.AsPolicy(), options)
         {
             BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
             // Clear the blob directory path to get the Uri with just the container name
@@ -354,7 +338,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(blobDirectoryUri, credential.AsPolicy<BlobUriBuilder>(blobDirectoryUri), options, null)
+            : this(blobDirectoryUri, credential.AsPolicy<BlobUriBuilder>(blobDirectoryUri), options)
         {
             BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
             // Clear the blob directory path to get the Uri with just the container name
@@ -381,7 +365,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// every request.
         /// </param>
         internal BlobVirtualDirectoryClient(Uri blobDirectoryUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobDirectoryUri, credential.AsPolicy(options), options, null)
+            : this(blobDirectoryUri, credential.AsPolicy(options), options)
         {
             Errors.VerifyHttpsTokenAuth(blobDirectoryUri);
             BlobUriBuilder builder = new BlobUriBuilder(blobDirectoryUri);
@@ -408,29 +392,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
         internal BlobVirtualDirectoryClient(
             Uri blobDirectoryUri,
             HttpPipelinePolicy authentication,
-            BlobClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            BlobClientOptions options)
         {
             Argument.AssertNotNull(blobDirectoryUri, nameof(blobDirectoryUri));
             options ??= new BlobClientOptions();
             _uri = blobDirectoryUri;
-
-            _clientConfiguration = new Storage.Blobs.BlobClientConfiguration(
-                pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
-
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            _pipeline = options.Build(authentication);
+            _clientDiagnostics = new StorageClientDiagnostics(options);
+            _version = options.Version;
         }
 
         /// <summary>
@@ -520,7 +492,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
         protected static HttpPipeline GetHttpPipeline(BlobVirtualDirectoryClient client) =>
-            client.ClientConfiguration.Pipeline;
+            client.Pipeline;
 
         /// <summary>
         /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
@@ -529,12 +501,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
         protected static BlobClientOptions GetClientOptions(BlobVirtualDirectoryClient client) =>
-            new BlobClientOptions(client.ClientConfiguration.Version)
+            new BlobClientOptions(client.Version)
             {
                 // We only use this for communicating diagnostics, at the moment
                 Diagnostics =
                 {
-                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
+                    IsDistributedTracingEnabled = client.ClientDiagnostics.IsActivityEnabled
                 }
             };
         #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
@@ -671,7 +643,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </remarks>
         [ForwardsClientCalls]
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual IEnumerable<Response<BlobContentInfo>> Upload(
+        public virtual IEnumerable<SingleBlobContentInfo> Upload(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             string sourceDirectoryPath,
             bool overwrite = false,
@@ -720,7 +692,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </remarks>
         [ForwardsClientCalls]
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<IEnumerable<Response<BlobContentInfo>>> UploadAsync(
+        public virtual async Task<IEnumerable<SingleBlobContentInfo>> UploadAsync(
 #pragma warning disable AZC0015 // Unexpected client method return type.
             string sourceDirectoryPath,
             bool overwrite = false,
@@ -774,22 +746,22 @@ namespace Azure.Storage.DataMovement.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<IEnumerable<Response<BlobContentInfo>>> UploadInternal(
+        internal async Task<IEnumerable<SingleBlobContentInfo>> UploadInternal(
             string sourceDirectoryPath,
             bool overwrite,
             BlobDirectoryUploadOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobVirtualDirectoryClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobVirtualDirectoryClient)))
             {
-                ClientConfiguration.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobVirtualDirectoryClient),
                     message:
                     $"{nameof(sourceDirectoryPath)}: {sourceDirectoryPath}\n" +
                     $"{nameof(options)}: {options}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(Upload)}");
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(Upload)}");
 
                 try
                 {
@@ -801,11 +773,15 @@ namespace Azure.Storage.DataMovement.Blobs
                     PathScanner scanner = scannerFactory.BuildPathScanner();
                     IEnumerable<FileSystemInfo> pathList = scanner.Scan();
 
-                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
+                    int concurrency = 1;
+                    if (options != null)
+                    {
+                        concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
                         options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    }
                     TaskThrottler throttler = new TaskThrottler(concurrency);
 
-                    List<Response<BlobContentInfo>> responses = new List<Response<BlobContentInfo>>();
+                    List<SingleBlobContentInfo> responses = new List<SingleBlobContentInfo>();
 
                     foreach (FileSystemInfo path in pathList)
                     {
@@ -814,15 +790,28 @@ namespace Azure.Storage.DataMovement.Blobs
                             // Replace backward slashes meant to be directory name separators
                             string blobName = path.FullName.Substring(fullPath.Length + 1);
                             blobName = blobName.Replace(@"\", "/");
-                            BlobClient blobClient = ContainerClient.GetBlobClient(DirectoryPath + blobName);
+                            BlobClient blobClient = ContainerClient.GetBlobClient(DirectoryPath + "/" + blobName);
+                            BlobUploadOptions singleOptions = new BlobUploadOptions()
+                            {
+                                AccessTier = options.AccessTier,
+                                ImmutabilityPolicy = options.ImmutabilityPolicy,
+                                LegalHold = options.LegalHold,
+                                Conditions = overwrite ? null : new BlobRequestConditions() { IfNoneMatch = new ETag(Constants.Wildcard) }
+                            };
 
                             throttler.AddTask(async () =>
                             {
-                                responses.Add(await blobClient.UploadAsync(
+                                Response<BlobContentInfo> response = await blobClient.UploadAsync(
                                        path.FullName.ToString(),
-                                       overwrite,
-                                       cancellationToken)
-                                   .ConfigureAwait(false));
+                                       options: singleOptions,
+                                       cancellationToken: cancellationToken)
+                                   .ConfigureAwait(false);
+                                SingleBlobContentInfo singleBlobContentInfo = new SingleBlobContentInfo()
+                                {
+                                    BlobUri = blobClient.Uri,
+                                    ContentInfo = response,
+                                };
+                                responses.Add(singleBlobContentInfo);
                             });
                         }
                     }
@@ -840,13 +829,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 }
                 catch (Exception ex)
                 {
-                    ClientConfiguration.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobVirtualDirectoryClient));
+                    Pipeline.LogMethodExit(nameof(BlobVirtualDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1051,15 +1040,15 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobDirectoryDownloadOptions options,
             CancellationToken cancellationToken)
         {
-            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobVirtualDirectoryClient)))
+            using (Pipeline.BeginLoggingScope(nameof(BlobVirtualDirectoryClient)))
             {
-                ClientConfiguration.Pipeline.LogMethodEnter(
+                Pipeline.LogMethodEnter(
                     nameof(BlobVirtualDirectoryClient),
                     message:
                     $"{nameof(targetPath)}: {targetPath}\n" +
                     $"{nameof(options)}: {options}");
 
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(DownloadTo)}");
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(DownloadTo)}");
 
                 try
                 {
@@ -1069,8 +1058,15 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     BlobContainerClient containerClient = GetParentBlobContainerClient();
 
-                    int concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
-                        options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                    int concurrency = 1;
+                    if (options != null)
+                    {
+                        if (options.TransferOptions != null)
+                        {
+                            concurrency = options.TransferOptions.MaximumConcurrency.HasValue && options.TransferOptions.MaximumConcurrency > 0 ?
+                                options.TransferOptions.MaximumConcurrency.GetValueOrDefault() : 1;
+                        }
+                    }
                     TaskThrottler throttler = new TaskThrottler(concurrency);
 
                     List<Response> responses = new List<Response>();
@@ -1097,14 +1093,14 @@ namespace Azure.Storage.DataMovement.Blobs
 
                                     // If the destination file doesn't exist
                                     // or it's specified to overwrite the existing file, then perform normal download
-                                    if (options.OverwriteOptions == DownloadOverwriteMethod.Overwrite)
+                                    if (options == null || options.OverwriteOptions == DownloadOverwriteMethod.Overwrite)
                                     {
                                         using (Stream destination = File.Create(downloadPath))
                                         {
                                             responses.Add(await client.DownloadToAsync(
                                                 destination,
                                                 default,
-                                                options.TransferOptions,
+                                                options != null ? options.TransferOptions : default,
                                                 cancellationToken)
                                                 .ConfigureAwait(false));
                                         }
@@ -1119,7 +1115,7 @@ namespace Azure.Storage.DataMovement.Blobs
                                                 responses.Add(await client.DownloadToAsync(
                                                     destination,
                                                     default,
-                                                    options.TransferOptions,
+                                                    options != null ? options.TransferOptions : default,
                                                     cancellationToken)
                                                     .ConfigureAwait(false));
                                             }
@@ -1157,7 +1153,7 @@ namespace Azure.Storage.DataMovement.Blobs
                                     responses.Add(await client.DownloadToAsync(
                                         destination,
                                         default,
-                                        options.TransferOptions,
+                                        options != null ? options.TransferOptions : default,
                                         cancellationToken)
                                         .ConfigureAwait(false));
                                 }
@@ -1178,13 +1174,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 }
                 catch (Exception ex)
                 {
-                    ClientConfiguration.Pipeline.LogException(ex);
+                    Pipeline.LogException(ex);
                     scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobVirtualDirectoryClient));
+                    Pipeline.LogMethodExit(nameof(BlobVirtualDirectoryClient));
                     scope.Dispose();
                 }
             }
@@ -1233,7 +1229,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string additionalPrefix = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(GetBlobs)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(GetBlobs)}");
             try
             {
                 scope.Start();
@@ -1293,7 +1289,7 @@ namespace Azure.Storage.DataMovement.Blobs
             string additionalPrefix = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(GetBlobs)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlobVirtualDirectoryClient)}.{nameof(GetBlobs)}");
 
             try
             {

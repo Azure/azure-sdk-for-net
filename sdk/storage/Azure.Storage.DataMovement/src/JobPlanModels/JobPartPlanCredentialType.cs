@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Azure.Storage.DataMovement
 {
-    internal enum CredentialType
+    internal enum JobPartPlanCredentialType
     {
         Unknown = 0,
         /// <summary>

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Azure.Storage.DataMovement
 {
-    internal enum BlockBlobTier
+    internal enum JobPartPlanBlockBlobTier
     {
         /// <summary> None. </summary>
         None = 0,

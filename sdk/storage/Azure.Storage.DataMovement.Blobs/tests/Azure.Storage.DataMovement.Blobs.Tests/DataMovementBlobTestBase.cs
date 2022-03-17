@@ -454,5 +454,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests.Shared
                 Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
         }
+
+        internal DateTimeOffset RoundToNearestSecond(DateTimeOffset initalDateTimeOffset)
+            => new DateTimeOffset(
+                year: initalDateTimeOffset.Year,
+                month: initalDateTimeOffset.Month,
+                day: initalDateTimeOffset.Day,
+                hour: initalDateTimeOffset.Hour,
+                minute: initalDateTimeOffset.Minute,
+                second: initalDateTimeOffset.Second,
+                offset: TimeSpan.Zero);
     }
 }

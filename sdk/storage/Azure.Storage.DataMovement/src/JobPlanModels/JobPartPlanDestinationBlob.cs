@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the tier if this is a block or page blob respectfully. Only one or none can be specified at a time.
         /// </summary>
-        public BlockBlobTier BlockBlobTier { get; internal set; }
+        public JobPartPlanBlockBlobTier BlockBlobTier { get; internal set; }
         public PageBlobTier PageBlobTier { get; internal set; }
 
         /// <summary>

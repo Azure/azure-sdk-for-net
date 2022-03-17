@@ -197,12 +197,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        // TODO: Resolve issues with threading causing failures in test playback
-        //      (maybe should be resolved in base TransferSchduler, with tests for
-        //      threading behavior in its own tests)
-
         [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteUnspecified()
+        public async Task UploadDirectoryAsync()
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
@@ -223,12 +219,23 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
 
             // Act
-            await client.UploadAsync(folder, false, options);
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(4, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
 
             List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
                 .Select((BlobItem blob) => blob.Name).ToList();
 
-            // Assert
+            Assert.AreEqual(4, blobs.Count());
+            // Assert - Check destination blobs
             Assert.Multiple(() =>
             {
                 CollectionAssert.Contains(blobs, dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
@@ -242,7 +249,266 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task UploadDirectoryAsync_RemoteGiven()
+        public async Task UploadDirectoryAsync_SingleFile()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string openChild = CreateRandomFile(folder);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(1, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert - Check destination blobs
+            Assert.AreEqual(1, blobs.Count());
+            Assert.AreEqual(blobs.First(), dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task UploadDirectoryAsync_SingleSubdirectory()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+            string openSubchild2 = CreateRandomFile(openSubfolder);
+            string openSubchild3 = CreateRandomFile(openSubfolder);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(3, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert - Check destination blobs
+            Assert.AreEqual(3, blobs.Count());
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild2.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild3.Substring(folder.Length + 1).Replace('\\', '/'));
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task UploadDirectoryAsync_ManySubDirectories()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+
+            string openSubfolder2 = CreateRandomDirectory(folder);
+            string openSubChild2_1 = CreateRandomFile(openSubfolder2);
+            string openSubChild2_2 = CreateRandomFile(openSubfolder2);
+            string openSubChild2_3 = CreateRandomFile(openSubfolder2);
+
+            string openSubfolder3 = CreateRandomDirectory(folder);
+            string openSubChild3_1 = CreateRandomFile(openSubfolder2);
+            string openSubChild3_2 = CreateRandomFile(openSubfolder2);
+            string openSubChild3_3 = CreateRandomFile(openSubfolder2);
+
+            string openSubfolder4 = CreateRandomDirectory(folder);
+            string openSubChild4_1 = CreateRandomFile(openSubfolder2);
+            string openSubChild4_2 = CreateRandomFile(openSubfolder2);
+            string openSubChild4_3 = CreateRandomFile(openSubfolder2);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(10, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert - Check destination blobs
+            Assert.AreEqual(10, blobs.Count());
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild2_1.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild2_2.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild2_3.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild3_1.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild3_2.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild3_3.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild4_1.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild4_2.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubChild4_3.Substring(folder.Length + 1).Replace('\\', '/'));
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public async Task UploadDirectoryAsync_SubDirectoriesLevels(int level)
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+
+            string subfolderName = folder;
+            for (int i = 0; i < level; i++)
+            {
+                string openSubfolder = CreateRandomDirectory(subfolderName);
+                string openSubchild = CreateRandomFile(openSubfolder);
+                subfolderName = openSubfolder;
+            }
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(level, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert - Check destination blobs
+            Assert.AreEqual(level, blobs.Count());
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task UploadDirectoryAsync_EmptySubDirectories()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+            string openSubchild2 = CreateRandomFile(openSubfolder);
+            string openSubchild3 = CreateRandomFile(openSubfolder);
+            string openSubchild4 = CreateRandomFile(openSubfolder);
+            string openSubchild5 = CreateRandomFile(openSubfolder);
+            string openSubchild6 = CreateRandomFile(openSubfolder);
+
+            string openSubfolder2 = CreateRandomDirectory(folder);
+
+            string openSubfolder3 = CreateRandomDirectory(folder);
+
+            string openSubfolder4 = CreateRandomDirectory(folder);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(6, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert - Check destination blobs
+            Assert.AreEqual(6, blobs.Count());
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild2.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild3.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild4.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild5.Substring(folder.Length + 1).Replace('\\', '/'));
+                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild6.Substring(folder.Length + 1).Replace('\\', '/'));
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task UploadDirectory_ImmutableStorageWithVersioning()
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
@@ -260,22 +526,43 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string lockedSubfolder = CreateRandomDirectory(folder);
             string lockedSubchild = CreateRandomFile(lockedSubfolder);
 
-            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiresOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiresOn.Value);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions()
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true,
+            };
 
             // Act
-            await client.UploadAsync(folder, false, options);
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
 
-            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                .Select((BlobItem blob) => blob.Name).ToList();
-
-            // Assert
-            Assert.Multiple(() =>
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(4, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
             {
-                CollectionAssert.Contains(blobs, dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + lockedChild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                CollectionAssert.Contains(blobs, dirName + "/" + lockedSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-            });
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+
+            Assert.AreEqual(4, blobs.Count());
+            foreach (BlobItem blob in blobs)
+            {
+                Assert.AreEqual(blob.Properties.ImmutabilityPolicy.ExpiresOn, expectedImmutabilityPolicyExpiry);
+                Assert.AreEqual(blob.Properties.ImmutabilityPolicy.PolicyMode,immutabilityPolicy.PolicyMode);
+                Assert.IsTrue(blob.Properties.HasLegalHold);
+            }
 
             // Cleanup
             Directory.Delete(folder, true);
