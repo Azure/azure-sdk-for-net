@@ -31,7 +31,7 @@ namespace Azure.Storage.Test.Shared
             bool async,
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
         }
@@ -519,105 +519,105 @@ namespace Azure.Storage.Test.Shared
         #endregion
 
         #region Parallel Upload Tests
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public virtual async Task ParallelUploadSplitSuccessfulHashComputation(ValidationAlgorithm algorithm)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public virtual async Task ParallelUploadSplitSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int dataLength = Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
-        //    var validationOptions = new UploadTransferValidationOptions
-        //    {
-        //        Algorithm = algorithm
-        //    };
-        //    // force split
-        //    StorageTransferOptions transferOptions = new StorageTransferOptions
-        //    {
-        //        InitialTransferSize = 512,
-        //        MaximumTransferSize = 512
-        //    };
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = algorithm
+            };
+            // force split
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = 512,
+                MaximumTransferSize = 512
+            };
 
-        //    // make pipeline assertion for checking checksum was present on upload
-        //    var checksumPipelineAssertion = new AssertMessageContentsPolicy(
-        //        checkRequest: GetRequestChecksumAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestChecksumAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
-        //    var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
-        //    // Act
-        //    using (var stream = new MemoryStream(data))
-        //    {
-        //        checksumPipelineAssertion.CheckRequest = true;
-        //        await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
-        //    }
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
+            }
 
-        //    // Assert
-        //    // Assertion was in the pipeline and the service returning success means the checksum was correct
-        //}
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
 
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public virtual async Task ParallelUploadOneShotSuccessfulHashComputation(ValidationAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int dataLength = Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
-        //    var validationOptions = new UploadTransferValidationOptions
-        //    {
-        //        Algorithm = algorithm
-        //    };
-        //    // force oneshot
-        //    StorageTransferOptions transferOptions = new StorageTransferOptions
-        //    {
-        //        InitialTransferSize = Constants.MB,
-        //        MaximumTransferSize = Constants.MB
-        //    };
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = algorithm
+            };
+            // force oneshot
+            StorageTransferOptions transferOptions = new StorageTransferOptions
+            {
+                InitialTransferSize = Constants.MB,
+                MaximumTransferSize = Constants.MB
+            };
 
-        //    // make pipeline assertion for checking checksum was present on upload
-        //    var checksumPipelineAssertion = new AssertMessageContentsPolicy(
-        //        checkRequest: GetRequestChecksumAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
-        //    var clientOptions = ClientBuilder.GetOptions();
-        //    clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
+            // make pipeline assertion for checking checksum was present on upload
+            var checksumPipelineAssertion = new AssertMessageContentsPolicy(
+                checkRequest: GetRequestChecksumAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected));
+            var clientOptions = ClientBuilder.GetOptions();
+            clientOptions.AddPolicy(checksumPipelineAssertion, HttpPipelinePosition.PerCall);
 
-        //    var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: dataLength, createResource: true, options: clientOptions);
 
-        //    // Act
-        //    using (var stream = new MemoryStream(data))
-        //    {
-        //        checksumPipelineAssertion.CheckRequest = true;
-        //        await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
-        //    }
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                checksumPipelineAssertion.CheckRequest = true;
+                await ParallelUploadAsync(client, stream, validationOptions, transferOptions);
+            }
 
-        //    // Assert
-        //    // Assertion was in the pipeline and the service returning success means the checksum was correct
-        //}
+            // Assert
+            // Assertion was in the pipeline and the service returning success means the checksum was correct
+        }
 
-        //[TestCaseSource("GetValidationAlgorithms")]
-        //public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
-        //{
-        //    await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
+        [TestCaseSource("GetValidationAlgorithms")]
+        public virtual async Task PrecalculatedHashNotAccepted(ValidationAlgorithm algorithm)
+        {
+            await using IDisposingContainer<TContainerClient> disposingContainer = await GetDisposingContainerAsync();
 
-        //    // Arrange
-        //    const int dataLength = Constants.KB;
-        //    var data = GetRandomBuffer(dataLength);
-        //    var validationOptions = new UploadTransferValidationOptions
-        //    {
-        //        Algorithm = algorithm,
-        //        PrecalculatedChecksum = GetRandomBuffer(16)
-        //    };
+            // Arrange
+            const int dataLength = Constants.KB;
+            var data = GetRandomBuffer(dataLength);
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                Algorithm = algorithm,
+                PrecalculatedChecksum = GetRandomBuffer(16)
+            };
 
-        //    var client = await GetResourceClientAsync(disposingContainer.Container, dataLength);
+            var client = await GetResourceClientAsync(disposingContainer.Container, dataLength);
 
-        //    // Act
-        //    var exception = ThrowsOrInconclusiveAsync<ArgumentException>(
-        //        async () => await ParallelUploadAsync(client, new MemoryStream(data), validationOptions, transferOptions: default));
+            // Act
+            var exception = ThrowsOrInconclusiveAsync<ArgumentException>(
+                async () => await ParallelUploadAsync(client, new MemoryStream(data), validationOptions, transferOptions: default));
 
-        //    // Assert
-        //    Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
-        //}
+            // Assert
+            Assert.AreEqual("Precalculated checksum not supported when potentially partitioning an upload.", exception.Message);
+        }
         #endregion
 
         #region Parallel Download Tests

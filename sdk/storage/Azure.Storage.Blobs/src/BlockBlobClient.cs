@@ -865,10 +865,6 @@ namespace Azure.Storage.Blobs.Specialized
                     // compute hash BEFORE attaching progress handler
                     ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
                     // TODO CRC not currently in generated code
-                    if (hashResult?.StorageCrc64 != default)
-                    {
-                        throw new NotImplementedException("CRC64 support not implemented for PUT Blob.");
-                    }
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
 
@@ -901,9 +897,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            // TODO #27253
-                            //transactionalContentMD5: hashResult?.MD5,
-                            // TODO #23578 CRC64 not in generated code
+                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -934,9 +929,8 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            // TODO #27253
-                            //transactionalContentMD5: hashResult?.MD5,
-                            // TODO CRC64 not in generated code
+                            transactionalContentMD5: hashResult?.MD5,
+                            transactionalContentCrc64: hashResult?.StorageCrc64,
                             cancellationToken: cancellationToken);
                     }
 
