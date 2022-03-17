@@ -45,15 +45,12 @@ namespace Azure
 
         /// <summary>
         /// Converts the json value represented by <see cref="BinaryData"/> to an object of a specific type.
-        /// If it is a primitive type such as string, int, double, bool, or null literal you will get that back.
-        /// Otherwise you will get back either an array of object or Dictionary of string to object.
-        /// Each value in the key value pair or list will be also be converted into a primitive or another complex type recursively.
         /// </summary>
         /// <param name="data">The <see cref="BinaryData"/> instance to convert.</param>
-       /// <returns> The object value of the json value.
+        /// <returns> The object value of the json value.
         /// If the object contains a primitive type such as string, int, double, bool, or null literal, it returns that type.
-        /// Otherwise, it returns either an <see cref="object[]"/> or <see cref="Dictionary{TKey, TValue}"/> where TKey is <see cref="string"/> and TValue is <see cref="object"/>.
-        /// Each value in the key value pair or list will be also be converted into a primitive or another complex type.
+        /// Otherwise, it returns either an object[] or Dictionary&lt;string, object&gt;.
+        /// Each value in the key value pair or list will also be converted into a primitive or another complex type recursively.
         /// </returns>
         public static object? ToObjectFromJson(this BinaryData data)
         {
