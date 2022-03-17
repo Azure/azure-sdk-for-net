@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -38,7 +39,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.Resources
             Optional<PolicyType> policyType = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<object> metadata = default;
+            Optional<BinaryData> metadata = default;
             Optional<IDictionary<string, ParameterDefinitionsValue>> parameters = default;
             Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
             Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
@@ -146,7 +151,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = property0.Value.GetObject();
+                            metadata = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))

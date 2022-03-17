@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var genericResouces = subscription.GetGenericResources();
             var data = new GenericResourceData(location)
             {
-                Properties = new Dictionary<string, object>
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     { "hardwareProfile", new Dictionary<string, object> { { "vmSize", "Standard_F2" } } },
                     {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                             }
                         }
                     }
-                }
+                })
             };
             var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vmId, data));
             operation.WaitForCompletion();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             GenericResourceData data = new(location)
             {
-                Properties = new Dictionary<string, object>
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     { "hardwareProfile", new Dictionary<string, object>
                         {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                             }
                         }
                     }
-                }
+                })
             };
             var operation = await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vmId, data);
             return operation.Value;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var genericResouces = subscription.GetGenericResources();
             GenericResourceData data = new GenericResourceData(location)
             {
-                Properties = new Dictionary<string, object>
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     { "hardwareProfile", new Dictionary<string, object>
                         {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                             }
                         }
                     }
-                }
+                })
             };
             var operation = InstrumentOperation(await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vmId, data));
             operation.WaitForCompletion();
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             var extensionId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent");
             return (await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, extensionId, new GenericResourceData(location)
             {
-                Properties = new Dictionary<string, object>
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     { "publisher", "Microsoft.Azure.NetworkWatcher" },
                     { "typeHandlerVersion", "1.4" },
                     { "type", "NetworkWatcherAgentWindows" },
-                }
+                })
             })).Value;
             //VirtualMachineExtensionData parameters = new VirtualMachineExtensionData(location)
             //{

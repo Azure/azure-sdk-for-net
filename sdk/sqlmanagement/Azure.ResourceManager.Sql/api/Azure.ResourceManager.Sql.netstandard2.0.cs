@@ -2205,7 +2205,7 @@ namespace Azure.ResourceManager.Sql
     public partial class RecommendedActionData : Azure.ResourceManager.Models.ResourceData
     {
         public RecommendedActionData() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, object> Details { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Details { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.RecommendedActionErrorInfo ErrorDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.RecommendedActionImpactRecord> EstimatedImpact { get { throw null; } }
         public System.TimeSpan? ExecuteActionDuration { get { throw null; } }

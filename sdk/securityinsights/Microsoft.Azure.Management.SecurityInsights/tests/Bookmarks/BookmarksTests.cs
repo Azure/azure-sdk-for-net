@@ -2,13 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -32,8 +25,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
+                var BookmarkId = Guid.NewGuid().ToString();
+                var BookmarkBody = BookmarksUtils.GetDefaultBookmarkProperties();
+                var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
+
                 var Bookmarks = SecurityInsightsClient.Bookmarks.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName);
                 ValidateBookmarks(Bookmarks);
+
+                SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
             }
         }
 
@@ -44,16 +43,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
-                var BookmarkBody = new Bookmark()
-                {
-                    DisplayName = "SDKTestBookmark",
-                    Query = "SecurityEvent | take 10",
-                    Labels = Labels,
-                    EventTime = DateTime.Now
-                };
-
+                var BookmarkBody = BookmarksUtils.GetDefaultBookmarkProperties();
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 ValidateBookmark(Bookmark);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
@@ -66,15 +57,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
-                var BookmarkBody = new Bookmark()
-                {
-                    DisplayName = "SDKTestBookmark",
-                    Query = "SecurityEvent | take 10",
-                    Labels = Labels,
-                    EventTime = DateTime.Now
-                };
+                var BookmarkBody = BookmarksUtils.GetDefaultBookmarkProperties();
                 SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 var Bookmark = SecurityInsightsClient.Bookmarks.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
                 ValidateBookmark(Bookmark);
@@ -88,15 +72,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
-                var Labels = new List<string>();
                 var BookmarkId = Guid.NewGuid().ToString();
-                var BookmarkBody = new Bookmark()
-                {
-                    DisplayName = "SDKTestBookmark",
-                    Query = "SecurityEvent | take 10",
-                    Labels = Labels,
-                    EventTime = DateTime.Now
-                };
+                var BookmarkBody = BookmarksUtils.GetDefaultBookmarkProperties();
                 SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
             }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="mainTemplate"> The main Azure Resource Manager template content. </param>
         /// <param name="uiFormDefinition"> The Azure Resource Manager template UI definition content. </param>
-        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, object metadata, object mainTemplate, object uiFormDefinition) : base(id, name, resourceType, systemData)
+        internal TemplateSpecVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IDictionary<string, string> tags, string description, IList<LinkedTemplateArtifact> linkedTemplates, BinaryData metadata, BinaryData mainTemplate, BinaryData uiFormDefinition) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Resources
         /// <summary> An array of linked template artifacts. </summary>
         public IList<LinkedTemplateArtifact> LinkedTemplates { get; }
         /// <summary> The version metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
         /// <summary> The main Azure Resource Manager template content. </summary>
-        public object MainTemplate { get; set; }
+        public BinaryData MainTemplate { get; set; }
         /// <summary> The Azure Resource Manager template UI definition content. </summary>
-        public object UiFormDefinition { get; set; }
+        public BinaryData UiFormDefinition { get; set; }
     }
 }

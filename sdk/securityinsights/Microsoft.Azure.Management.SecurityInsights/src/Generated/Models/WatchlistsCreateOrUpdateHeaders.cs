@@ -14,30 +14,28 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response
+    /// Defines headers for CreateOrUpdate operation.
     /// </summary>
-    /// <remarks>
-    /// Common error response for all Azure Resource Manager APIs to return
-    /// error details for failed operations. (This also follows the OData error
-    /// response format.).
-    /// </remarks>
-    public partial class ErrorResponse
+    public partial class WatchlistsCreateOrUpdateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the WatchlistsCreateOrUpdateHeaders
+        /// class.
         /// </summary>
-        public ErrorResponse()
+        public WatchlistsCreateOrUpdateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the WatchlistsCreateOrUpdateHeaders
+        /// class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
+        /// <param name="azureAsyncOperation">Contains the status URL on which
+        /// clients are expected to poll the status of the operation.</param>
+        public WatchlistsCreateOrUpdateHeaders(string azureAsyncOperation = default(string))
         {
-            Error = error;
+            AzureAsyncOperation = azureAsyncOperation;
             CustomInit();
         }
 
@@ -47,10 +45,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets or sets contains the status URL on which clients are expected
+        /// to poll the status of the operation.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDetail Error { get; set; }
+        [JsonProperty(PropertyName = "Azure-AsyncOperation")]
+        public string AzureAsyncOperation { get; set; }
 
     }
 }

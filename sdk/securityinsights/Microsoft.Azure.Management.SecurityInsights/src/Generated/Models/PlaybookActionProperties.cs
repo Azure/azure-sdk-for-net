@@ -13,29 +13,24 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// The configuration of the run playbook automation rule action
-    /// </summary>
-    public partial class AutomationRuleRunPlaybookActionActionConfiguration
+    public partial class PlaybookActionProperties
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// AutomationRuleRunPlaybookActionActionConfiguration class.
+        /// Initializes a new instance of the PlaybookActionProperties class.
         /// </summary>
-        public AutomationRuleRunPlaybookActionActionConfiguration()
+        public PlaybookActionProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// AutomationRuleRunPlaybookActionActionConfiguration class.
+        /// Initializes a new instance of the PlaybookActionProperties class.
         /// </summary>
         /// <param name="logicAppResourceId">The resource id of the playbook
         /// resource</param>
         /// <param name="tenantId">The tenant id of the playbook
         /// resource</param>
-        public AutomationRuleRunPlaybookActionActionConfiguration(string logicAppResourceId = default(string), string tenantId = default(string))
+        public PlaybookActionProperties(string logicAppResourceId = default(string), System.Guid? tenantId = default(System.Guid?))
         {
             LogicAppResourceId = logicAppResourceId;
             TenantId = tenantId;
@@ -57,7 +52,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Gets or sets the tenant id of the playbook resource
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
+        public System.Guid? TenantId { get; set; }
 
     }
 }

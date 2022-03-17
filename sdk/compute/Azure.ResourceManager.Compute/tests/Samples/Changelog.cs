@@ -11,6 +11,7 @@
             using Azure.ResourceManager.Resources.Models;
             using System.Linq;
             using Azure.Core;
+using System;
 
 #if !SNIPPET
 using System.Threading.Tasks;
@@ -119,8 +120,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 ForceUpdateTag = "RerunExtension",
-                Settings = "{}",
-                ProtectedSettings = "{}"
+                Settings = BinaryData.FromObjectAsJson(new { }),
+                ProtectedSettings = BinaryData.FromObjectAsJson(new { })
             };
             #endregion
         }

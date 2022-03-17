@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
 
     /// <summary>
-    /// Defines values for Source.
+    /// Defines values for ConditionType.
     /// </summary>
-    public static class Source
+    public static class ConditionType
     {
-        public const string Localfile = "Local file";
-        public const string Remotestorage = "Remote storage";
+        /// <summary>
+        /// Evaluate an object property value
+        /// </summary>
+        public const string Property = "Property";
     }
 }

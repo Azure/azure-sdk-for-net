@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> The display name of the policy exemption. </param>
         /// <param name="description"> The description of the policy exemption. </param>
         /// <param name="metadata"> The policy exemption metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        internal PolicyExemptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyAssignmentId, IList<string> policyDefinitionReferenceIds, ExemptionCategory exemptionCategory, DateTimeOffset? expiresOn, string displayName, string description, object metadata) : base(id, name, resourceType, systemData)
+        internal PolicyExemptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyAssignmentId, IList<string> policyDefinitionReferenceIds, ExemptionCategory exemptionCategory, DateTimeOffset? expiresOn, string displayName, string description, BinaryData metadata) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceIds = policyDefinitionReferenceIds;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The description of the policy exemption. </summary>
         public string Description { get; set; }
         /// <summary> The policy exemption metadata. Metadata is an open ended object and is typically a collection of key value pairs. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
     }
 }

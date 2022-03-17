@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.SecurityInsights.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -33,11 +32,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the
         /// AutomationRuleModifyPropertiesAction class.
         /// </summary>
-        /// <param name="order">The order of execution of the automation rule
-        /// action</param>
-        /// <param name="actionConfiguration">The configuration of the modify
-        /// properties automation rule action</param>
-        public AutomationRuleModifyPropertiesAction(int order, AutomationRuleModifyPropertiesActionActionConfiguration actionConfiguration)
+        public AutomationRuleModifyPropertiesAction(int order, IncidentPropertiesAction actionConfiguration = default(IncidentPropertiesAction))
             : base(order)
         {
             ActionConfiguration = actionConfiguration;
@@ -50,25 +45,19 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the configuration of the modify properties automation
-        /// rule action
         /// </summary>
         [JsonProperty(PropertyName = "actionConfiguration")]
-        public AutomationRuleModifyPropertiesActionActionConfiguration ActionConfiguration { get; set; }
+        public IncidentPropertiesAction ActionConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
-            if (ActionConfiguration == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ActionConfiguration");
-            }
         }
     }
 }
