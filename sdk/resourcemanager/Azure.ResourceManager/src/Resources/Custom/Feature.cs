@@ -14,7 +14,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a Feature along with the instance operations that can be performed on it. </summary>
-    public partial class ArmFeature : ArmResource
+    public partial class Feature : ArmResource
     {
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
