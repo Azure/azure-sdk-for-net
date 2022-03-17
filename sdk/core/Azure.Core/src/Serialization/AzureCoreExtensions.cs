@@ -44,13 +44,17 @@ namespace Azure
             (T?)await serializer.DeserializeAsync(data.ToStream(), typeof(T), cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Converts the <see cref="BinaryData"/> to an object based on the json value it contains.
+        /// Converts the json value represented by <see cref="BinaryData"/> to an object of a specific type.
         /// If it is a primitive type such as string, int, double, bool, or null literal you will get that back.
         /// Otherwise you will get back either an array of object or Dictionary of string to object.
         /// Each value in the key value pair or list will be also be converted into a primitive or another complex type recursively.
         /// </summary>
         /// <param name="data">The <see cref="BinaryData"/> instance to convert.</param>
-        /// <returns>The data converted to the Dictionary of string to object.</returns>
+       /// <returns> The object value of the json value.
+        /// If the object contains a primitive type such as string, int, double, bool, or null literal, it returns that type.
+        /// Otherwise, it returns either an <see cref="object[]"/> or <see cref="Dictionary{TKey, TValue}"/> where TKey is <see cref="string"/> and TValue is <see cref="object"/>.
+        /// Each value in the key value pair or list will be also be converted into a primitive or another complex type.
+        /// </returns>
         public static object? ToObjectFromJson(this BinaryData data)
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();
