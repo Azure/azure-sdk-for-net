@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A Class representing a ArcSetting along with the instance operations that can be performed on it. </summary>
-    public partial class ArcSetting : ArmResource
+    /// <summary> A Class representing a ArcSettingResource along with the instance operations that can be performed on it. </summary>
+    public partial class ArcSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ArcSetting"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ArcSettingResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Hci
         private readonly ArcSettingsRestOperations _arcSettingRestClient;
         private readonly ArcSettingData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ArcSetting"/> class for mocking. </summary>
-        protected ArcSetting()
+        /// <summary> Initializes a new instance of the <see cref="ArcSettingResource"/> class for mocking. </summary>
+        protected ArcSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArcSetting"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ArcSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ArcSetting(ArmClient client, ArcSettingData data) : this(client, data.Id)
+        internal ArcSettingResource(ArmClient client, ArcSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArcSetting"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ArcSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArcSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Hci
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ArcExtensions in the ArcExtension. </summary>
-        /// <returns> An object representing collection of ArcExtensions and their operations over a ArcExtension. </returns>
+        /// <summary> Gets a collection of ArcExtensionResources in the ArcExtensionResource. </summary>
+        /// <returns> An object representing collection of ArcExtensionResources and their operations over a ArcExtensionResource. </returns>
         public virtual ArcExtensionCollection GetArcExtensions()
         {
             return GetCachedClient(Client => new ArcExtensionCollection(Client, Id));
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual async Task<Response<ArcExtension>> GetArcExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcExtensionResource>> GetArcExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             return await GetArcExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
         }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<ArcExtension> GetArcExtension(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtensionResource> GetArcExtension(string extensionName, CancellationToken cancellationToken = default)
         {
             return GetArcExtensions().Get(extensionName, cancellationToken);
         }
@@ -123,16 +123,16 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: ArcSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ArcSetting>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSetting.Get");
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.Get");
             scope.Start();
             try
             {
                 var response = await _arcSettingRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArcSetting(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,16 +147,16 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: ArcSettings_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ArcSetting> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ArcSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSetting.Get");
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.Get");
             scope.Start();
             try
             {
                 var response = _arcSettingRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArcSetting(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSetting.Delete");
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.Delete");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSetting.Delete");
+            using var scope = _arcSettingClientDiagnostics.CreateScope("ArcSettingResource.Delete");
             scope.Start();
             try
             {

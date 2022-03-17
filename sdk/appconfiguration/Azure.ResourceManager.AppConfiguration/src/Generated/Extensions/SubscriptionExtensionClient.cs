@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.AppConfiguration
         {
         }
 
-        private ClientDiagnostics ConfigurationStoreClientDiagnostics => _configurationStoreClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStore.ResourceType.Namespace, DiagnosticOptions);
-        private ConfigurationStoresRestOperations ConfigurationStoreRestClient => _configurationStoreRestClient ??= new ConfigurationStoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ConfigurationStore.ResourceType));
+        private ClientDiagnostics ConfigurationStoreClientDiagnostics => _configurationStoreClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ConfigurationStoreResource.ResourceType.Namespace, DiagnosticOptions);
+        private ConfigurationStoresRestOperations ConfigurationStoreRestClient => _configurationStoreRestClient ??= new ConfigurationStoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ConfigurationStoreResource.ResourceType));
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private AppConfigurationManagementRestOperations DefaultRestClient => _defaultRestClient ??= new AppConfigurationManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigurationStore> GetConfigurationStoresAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfigurationStoreResource> GetConfigurationStoresAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ConfigurationStore>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ConfigurationStoreResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ConfigurationStoreClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetConfigurationStores");
                 scope.Start();
                 try
                 {
                     var response = await ConfigurationStoreRestClient.ListAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            async Task<Page<ConfigurationStore>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ConfigurationStoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ConfigurationStoreClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetConfigurationStores");
                 scope.Start();
                 try
                 {
                     var response = await ConfigurationStoreRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigurationStore> GetConfigurationStores(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfigurationStoreResource> GetConfigurationStores(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<ConfigurationStore> FirstPageFunc(int? pageSizeHint)
+            Page<ConfigurationStoreResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ConfigurationStoreClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetConfigurationStores");
                 scope.Start();
                 try
                 {
                     var response = ConfigurationStoreRestClient.List(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.AppConfiguration
                     throw;
                 }
             }
-            Page<ConfigurationStore> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ConfigurationStoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ConfigurationStoreClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetConfigurationStores");
                 scope.Start();
                 try
                 {
                     var response = ConfigurationStoreRestClient.ListNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ConfigurationStoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

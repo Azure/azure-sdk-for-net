@@ -17,10 +17,10 @@ using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A Class representing a ArcExtension along with the instance operations that can be performed on it. </summary>
-    public partial class ArcExtension : ArmResource
+    /// <summary> A Class representing a ArcExtensionResource along with the instance operations that can be performed on it. </summary>
+    public partial class ArcExtensionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ArcExtension"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ArcExtensionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/extensions/{extensionName}";
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Hci
         private readonly ExtensionsRestOperations _arcExtensionExtensionsRestClient;
         private readonly ArcExtensionData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ArcExtension"/> class for mocking. </summary>
-        protected ArcExtension()
+        /// <summary> Initializes a new instance of the <see cref="ArcExtensionResource"/> class for mocking. </summary>
+        protected ArcExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArcExtension"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ArcExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ArcExtension(ArmClient client, ArcExtensionData data) : this(client, data.Id)
+        internal ArcExtensionResource(ArmClient client, ArcExtensionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArcExtension"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ArcExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArcExtensionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string arcExtensionExtensionsApiVersion);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Extensions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ArcExtension>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Get");
+            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionResource.Get");
             scope.Start();
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArcExtension(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Extensions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ArcExtension> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtensionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Get");
+            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionResource.Get");
             scope.Start();
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArcExtension(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Delete");
+            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionResource.Delete");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Delete");
+            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionResource.Delete");
             scope.Start();
             try
             {
@@ -191,16 +191,16 @@ namespace Azure.ResourceManager.Hci
         /// <param name="extension"> Details of the Machine Extension to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArcExtension>> UpdateAsync(WaitUntil waitUntil, ArcExtensionData extension, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcExtensionResource>> UpdateAsync(WaitUntil waitUntil, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(extension, nameof(extension));
 
-            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Update");
+            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionResource.Update");
             scope.Start();
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new HciArmOperation<ArcExtensionResource>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,16 +221,16 @@ namespace Azure.ResourceManager.Hci
         /// <param name="extension"> Details of the Machine Extension to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extension"/> is null. </exception>
-        public virtual ArmOperation<ArcExtension> Update(WaitUntil waitUntil, ArcExtensionData extension, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcExtensionResource> Update(WaitUntil waitUntil, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(extension, nameof(extension));
 
-            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtension.Update");
+            using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionResource.Update");
             scope.Start();
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension, cancellationToken);
-                var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
+                var operation = new HciArmOperation<ArcExtensionResource>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, extension).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

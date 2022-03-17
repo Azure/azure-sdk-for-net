@@ -13,33 +13,33 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region ConfigurationStore
-        /// <summary> Gets an object representing a ConfigurationStore along with the instance operations that can be performed on it but with no data. </summary>
+        #region ConfigurationStoreResource
+        /// <summary> Gets an object representing a ConfigurationStoreResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationStore" /> object. </returns>
-        public static ConfigurationStore GetConfigurationStore(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfigurationStoreResource" /> object. </returns>
+        public static ConfigurationStoreResource GetConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ConfigurationStore.ValidateResourceId(id);
-                return new ConfigurationStore(client, id);
+                ConfigurationStoreResource.ValidateResourceId(id);
+                return new ConfigurationStoreResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }

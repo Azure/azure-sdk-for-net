@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
     public class PrivateEndpointConnectionOperationTests : AppConfigurationClientBase
     {
         private ResourceGroup ResGroup { get; set; }
-        private ConfigurationStore ConfigStore { get; set; }
+        private ConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpoint PrivateEndpoint { get; set; }
-        private PrivateEndpointConnection Connection { get; set; }
+        private PrivateEndpointConnectionResource Connection { get; set; }
 
         public PrivateEndpointConnectionOperationTests(bool isAsync)
             : base(isAsync)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
                 PrivateEndpoint = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
-                List<PrivateEndpointConnection> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+                List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task DeleteTest()
         {
             await Connection.DeleteAsync(WaitUntil.Completed);
-            PrivateEndpointConnection connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
+            PrivateEndpointConnectionResource connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
 
             Assert.IsNull(connection);
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            PrivateEndpointConnection connection = await Connection.GetAsync();
+            PrivateEndpointConnectionResource connection = await Connection.GetAsync();
             Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
         }
 

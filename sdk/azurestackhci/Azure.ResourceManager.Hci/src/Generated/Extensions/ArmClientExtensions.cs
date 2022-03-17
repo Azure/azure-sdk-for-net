@@ -13,49 +13,49 @@ namespace Azure.ResourceManager.Hci
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region ArcSetting
-        /// <summary> Gets an object representing a ArcSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region ArcSettingResource
+        /// <summary> Gets an object representing a ArcSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcSetting" /> object. </returns>
-        public static ArcSetting GetArcSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcSettingResource" /> object. </returns>
+        public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ArcSetting.ValidateResourceId(id);
-                return new ArcSetting(client, id);
+                ArcSettingResource.ValidateResourceId(id);
+                return new ArcSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HciCluster
-        /// <summary> Gets an object representing a HciCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region HciClusterResource
+        /// <summary> Gets an object representing a HciClusterResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciCluster" /> object. </returns>
-        public static HciCluster GetHciCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciClusterResource" /> object. </returns>
+        public static HciClusterResource GetHciClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HciCluster.ValidateResourceId(id);
-                return new HciCluster(client, id);
+                HciClusterResource.ValidateResourceId(id);
+                return new HciClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ArcExtension
-        /// <summary> Gets an object representing a ArcExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region ArcExtensionResource
+        /// <summary> Gets an object representing a ArcExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcExtension" /> object. </returns>
-        public static ArcExtension GetArcExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArcExtensionResource" /> object. </returns>
+        public static ArcExtensionResource GetArcExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ArcExtension.ValidateResourceId(id);
-                return new ArcExtension(client, id);
+                ArcExtensionResource.ValidateResourceId(id);
+                return new ArcExtensionResource(client, id);
             }
             );
         }

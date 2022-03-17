@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HciCluster> GetHciClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HciClusterResource> GetHciClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetHciClustersAsync(cancellationToken);
         }
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HciCluster> GetHciClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HciClusterResource> GetHciClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetHciClusters(cancellationToken);
         }

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppConfiguration
             );
         }
 
-        /// <summary> Gets a collection of ConfigurationStores in the ConfigurationStore. </summary>
+        /// <summary> Gets a collection of ConfigurationStoreResources in the ConfigurationStoreResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ConfigurationStores and their operations over a ConfigurationStore. </returns>
+        /// <returns> An object representing collection of ConfigurationStoreResources and their operations over a ConfigurationStoreResource. </returns>
         public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetConfigurationStores();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public static async Task<Response<ConfigurationStore>> GetConfigurationStoreAsync(this ResourceGroup resourceGroup, string configStoreName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConfigurationStoreResource>> GetConfigurationStoreAsync(this ResourceGroup resourceGroup, string configStoreName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configStoreName"/> is null. </exception>
-        public static Response<ConfigurationStore> GetConfigurationStore(this ResourceGroup resourceGroup, string configStoreName, CancellationToken cancellationToken = default)
+        public static Response<ConfigurationStoreResource> GetConfigurationStore(this ResourceGroup resourceGroup, string configStoreName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetConfigurationStores().Get(configStoreName, cancellationToken);
         }

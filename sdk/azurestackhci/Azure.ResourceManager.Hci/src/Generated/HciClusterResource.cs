@@ -19,10 +19,10 @@ using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A Class representing a HciCluster along with the instance operations that can be performed on it. </summary>
-    public partial class HciCluster : ArmResource
+    /// <summary> A Class representing a HciClusterResource along with the instance operations that can be performed on it. </summary>
+    public partial class HciClusterResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HciCluster"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="HciClusterResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}";
@@ -33,24 +33,24 @@ namespace Azure.ResourceManager.Hci
         private readonly ClustersRestOperations _hciClusterClustersRestClient;
         private readonly HciClusterData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="HciCluster"/> class for mocking. </summary>
-        protected HciCluster()
+        /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class for mocking. </summary>
+        protected HciClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HciCluster"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "HciClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HciCluster(ArmClient client, HciClusterData data) : this(client, data.Id)
+        internal HciClusterResource(ArmClient client, HciClusterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HciCluster"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HciCluster(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HciClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string hciClusterClustersApiVersion);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Hci
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ArcSettings in the ArcSetting. </summary>
-        /// <returns> An object representing collection of ArcSettings and their operations over a ArcSetting. </returns>
+        /// <summary> Gets a collection of ArcSettingResources in the ArcSettingResource. </summary>
+        /// <returns> An object representing collection of ArcSettingResources and their operations over a ArcSettingResource. </returns>
         public virtual ArcSettingCollection GetArcSettings()
         {
             return GetCachedClient(Client => new ArcSettingCollection(Client, Id));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public virtual async Task<Response<ArcSetting>> GetArcSettingAsync(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcSettingResource>> GetArcSettingAsync(string arcSettingName, CancellationToken cancellationToken = default)
         {
             return await GetArcSettings().GetAsync(arcSettingName, cancellationToken).ConfigureAwait(false);
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="arcSettingName"/> is null. </exception>
-        public virtual Response<ArcSetting> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcSettingResource> GetArcSetting(string arcSettingName, CancellationToken cancellationToken = default)
         {
             return GetArcSettings().Get(arcSettingName, cancellationToken);
         }
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Clusters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HciCluster>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Get");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.Get");
             scope.Start();
             try
             {
                 var response = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,16 +149,16 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Clusters_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HciCluster> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Get");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.Get");
             scope.Start();
             try
             {
                 var response = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Delete");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.Delete");
             scope.Start();
             try
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Delete");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.Delete");
             scope.Start();
             try
             {
@@ -227,16 +227,16 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<HciCluster>> UpdateAsync(PatchableHciClusterData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> UpdateAsync(PatchableHciClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Update");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.Update");
             scope.Start();
             try
             {
                 var response = await _hciClusterClustersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,16 +253,16 @@ namespace Azure.ResourceManager.Hci
         /// <param name="data"> Details of the HCI cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<HciCluster> Update(PatchableHciClusterData data, CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> Update(PatchableHciClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.Update");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.Update");
             scope.Start();
             try
             {
                 var response = _hciClusterClustersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                return Response.FromValue(new HciCluster(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,12 +280,12 @@ namespace Azure.ResourceManager.Hci
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<HciCluster>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.AddTag");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.AddTag");
             scope.Start();
             try
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci
                 originalTags.Value.Data.TagValues[key] = value;
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HciCluster(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Hci
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<HciCluster> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.AddTag");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.AddTag");
             scope.Start();
             try
             {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Hci
                 originalTags.Value.Data.TagValues[key] = value;
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new HciCluster(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<HciCluster>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.SetTags");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.SetTags");
             scope.Start();
             try
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Hci
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HciCluster(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<HciCluster> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.SetTags");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.SetTags");
             scope.Start();
             try
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new HciCluster(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -401,11 +401,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<HciCluster>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.RemoveTag");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.RemoveTag");
             scope.Start();
             try
             {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Hci
                 originalTags.Value.Data.TagValues.Remove(key);
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _hciClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HciCluster(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -430,11 +430,11 @@ namespace Azure.ResourceManager.Hci
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<HciCluster> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<HciClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciCluster.RemoveTag");
+            using var scope = _hciClusterClustersClientDiagnostics.CreateScope("HciClusterResource.RemoveTag");
             scope.Start();
             try
             {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Hci
                 originalTags.Value.Data.TagValues.Remove(key);
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _hciClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new HciCluster(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                return Response.FromValue(new HciClusterResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {

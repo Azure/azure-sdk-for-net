@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci
             );
         }
 
-        /// <summary> Gets a collection of HciClusters in the HciCluster. </summary>
+        /// <summary> Gets a collection of HciClusterResources in the HciClusterResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HciClusters and their operations over a HciCluster. </returns>
+        /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
         public static HciClusterCollection GetHciClusters(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetHciClusters();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static async Task<Response<HciCluster>> GetHciClusterAsync(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HciClusterResource>> GetHciClusterAsync(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetHciClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
-        public static Response<HciCluster> GetHciCluster(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<HciClusterResource> GetHciCluster(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetHciClusters().Get(clusterName, cancellationToken);
         }

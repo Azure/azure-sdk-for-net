@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationStore> GetConfigurationStoresAsync(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfigurationStoreResource> GetConfigurationStoresAsync(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetConfigurationStoresAsync(skipToken, cancellationToken);
         }
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationStore" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationStore> GetConfigurationStores(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfigurationStoreResource> GetConfigurationStores(this Subscription subscription, string skipToken = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetConfigurationStores(skipToken, cancellationToken);
         }
