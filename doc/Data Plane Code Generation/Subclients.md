@@ -132,7 +132,7 @@ namespace Azure.Service.SubClients
 }
 ```
 
-**Define client hierarchy customization:**
+**Add client hierarchy customization (Customizations.cs):**
 
 ```C#
 
@@ -148,14 +148,16 @@ namespace Azure.Service.SubClients
 
 **Generated code after:**
 
-```c#
+```diff
 //Parent client: RootClient Generated\RootClient.cs
 namespace Azure.Service.SubClients
 {
     public partial class RootClient
     {
-        private readonly string _cachedParameter;
-        public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, RootClientOptions options = null){}
+    +   private readonly string _cachedParameter;
+    -   public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, SubClientsClientOptions options = null)
+    
+    +   public RootClient(string cachedParameter, AzureKeyCredential credential, Uri endpoint = null, RootClientOptions options = null)
     }
 
     private Parameter _cachedParameter0;
