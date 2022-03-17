@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Tests
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
-            data.Properties = propertyBag;
+            data.Properties = BinaryData.FromObjectAsJson(propertyBag);
             return data;
         }
 
@@ -124,16 +125,17 @@ namespace Azure.ResourceManager.Tests
 
         private GenericResourceData ConstructGenericVirtualNetworkData()
         {
-            var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
+            var properties = new JsonObject()
             {
-                Properties = new JsonObject()
-                {
-                    {"addressSpace", new JsonObject()
-                        {
-                            {"addressPrefixes", new List<string>(){"10.0.0.0/16" } }
-                        }
+                {"addressSpace", new JsonObject()
+                    {
+                        {"addressPrefixes", new List<string>(){"10.0.0.0/16" } }
                     }
                 }
+            };
+            var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
+            {
+                Properties = BinaryData.FromObjectAsJson(properties),
             };
             return virtualNetwork;
         }
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.Tests
         private static PolicyDefinitionData ConstructPolicyDefinitionData(string displayName) => new PolicyDefinitionData
         {
             DisplayName = $"Test ${displayName}",
-            PolicyRule = new Dictionary<string, object>
+            PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     {
                         "if", new Dictionary<string, object>
@@ -180,7 +182,7 @@ namespace Azure.ResourceManager.Tests
                             { "effect", "deny" }
                         }
                     }
-                }
+                })
         };
 
         protected async Task<SubscriptionPolicyDefinition> CreatePolicyDefinitionAtSubscription(Subscription subscription, string policyDefinitionName)

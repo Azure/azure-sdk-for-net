@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Data.Properties.CorrelationId, getResult.Data.Properties.CorrelationId);
                 Assert.AreEqual(model.Data.Properties.Timestamp, getResult.Data.Properties.Timestamp);
                 Assert.AreEqual(model.Data.Properties.Duration, getResult.Data.Properties.Duration);
-                Assert.AreEqual(model.Data.Properties.Outputs, getResult.Data.Properties.Outputs);
+                Assert.AreEqual(model.Data.Properties.Outputs.ToArray(), getResult.Data.Properties.Outputs.ToArray());
                 //Assert.AreEqual(model.Data.Properties.Providers, getResult.Data.Properties.Providers);
                 //Assert.AreEqual(model.Data.Properties.Dependencies, getResult.Data.Properties.Dependencies);
                 if (model.Data.Properties.TemplateLink != null || getResult.Data.Properties.TemplateLink != null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources.Tests
                     Assert.AreEqual(model.Data.Properties.TemplateLink.QueryString, getResult.Data.Properties.TemplateLink.QueryString);
                     Assert.AreEqual(model.Data.Properties.TemplateLink.RelativePath, getResult.Data.Properties.TemplateLink.RelativePath);
                 }
-                Assert.AreEqual(model.Data.Properties.Parameters, getResult.Data.Properties.Parameters);
+                Assert.AreEqual(model.Data.Properties.Parameters.ToArray(), getResult.Data.Properties.Parameters.ToArray());
                 if (model.Data.Properties.ParametersLink != null || getResult.Data.Properties.ParametersLink != null)
                 {
                     Assert.NotNull(model.Data.Properties.ParametersLink);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebJobData. </summary>
         public WebJobData()
         {
-            Settings = new ChangeTrackingDictionary<string, object>();
+            Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of WebJobData. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="error"> Error information. </param>
         /// <param name="usingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, object> settings) : base(id, name, resourceType, systemData, kind)
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, string url, string extraInfoUrl, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings) : base(id, name, resourceType, systemData, kind)
         {
             RunCommand = runCommand;
             Url = url;
@@ -58,6 +59,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Using SDK?. </summary>
         public bool? UsingSdk { get; set; }
         /// <summary> Job settings. </summary>
-        public IDictionary<string, object> Settings { get; }
+        public IDictionary<string, BinaryData> Settings { get; }
     }
 }
