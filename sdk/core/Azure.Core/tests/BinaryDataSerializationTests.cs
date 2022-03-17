@@ -247,7 +247,11 @@ namespace Azure.Core.Tests
         [Test]
         public void SerailizeUsingJsonFormattedStringForDictOfBinaryData()
         {
+#if NET461
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringDictOfBinaryDataNet461.json")).TrimEnd();
+#else
             var expected = File.ReadAllText(GetFileName("JsonFormattedStringDictOfBinaryData.json")).TrimEnd();
+#endif
 
             var payload = new ModelWithBinaryDataInDictionary { A = "a.value" };
 
