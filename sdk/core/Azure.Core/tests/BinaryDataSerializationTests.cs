@@ -24,7 +24,6 @@ namespace Azure.Core.Tests
             var data = ModelWithBinaryDataInDictionary.DeserializeModelWithBinaryDataInDictionary(document.RootElement);
 
             Assert.AreEqual("a.value", data.A);
-            //can we add explicits? what exception to throw?
             Assert.AreEqual("1", data.Details["strValue"].ToObjectFromJson<string>());
             Assert.IsTrue(data.Details["strValue"].ToObjectFromJson() is string);
             Assert.AreEqual(1, data.Details["intValue"].ToObjectFromJson<int>());
@@ -32,22 +31,17 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1.1, data.Details["doubleValue"].ToObjectFromJson<double>());
             Assert.IsTrue(data.Details["doubleValue"].ToObjectFromJson() is double);
 
-            var foo = data.Details["innerProperties"].ToObjectFromJson<Dictionary<string, object>>();
-            var x = data.Details["innerProperties"].ToObjectFromJson<object>(); //is JsonElement
-            var y = data.Details["innerProperties"].ToObjectFromJson(); // dynamic could be primitive could be dictionary<string, object>
-            Assert.IsTrue(foo["strValue"] is JsonElement);
+            var toObjectWithT = data.Details["innerProperties"].ToObjectFromJson<Dictionary<string, object>>();
+            var jsonElementObject = data.Details["innerProperties"].ToObjectFromJson<object>();
+            Assert.IsTrue(jsonElementObject is JsonElement);
+            var jsonDictionary = data.Details["innerProperties"].ToObjectFromJson();
+            Assert.IsTrue(jsonDictionary is Dictionary<string, object>);
+            Assert.IsTrue(toObjectWithT["strValue"] is JsonElement);
 
-            //new proposal minus name
             var dict = data.Details["innerProperties"].ToObjectFromJson() as Dictionary<string, object>;
             Assert.AreEqual("2", (string)dict["strValue"]);
             Assert.AreEqual(2, (int)dict["intValue"]);
             Assert.AreEqual(2.2, (double)dict["doubleValue"]);
-
-            //old way when it was an object
-            var dict2 = data.Details["innerProperties"].ToObjectFromJson() as Dictionary<string, object>;
-            Assert.AreEqual("2", (string)dict2["strValue"]);
-            Assert.AreEqual(2, (int)dict2["intValue"]);
-            Assert.AreEqual(2.2, (double)dict2["doubleValue"]);
         }
 
         [Test]
@@ -255,18 +249,16 @@ namespace Azure.Core.Tests
 
             var payload = new ModelWithBinaryDataInDictionary { A = "a.value" };
 
-            //can't load from string when defined this way
             var details = new Dictionary<string, BinaryData>();
             details["strValue"] = BinaryData.FromObjectAsJson("1");
             details["intValue"] = BinaryData.FromObjectAsJson(1);
             details["doubleValue"] = BinaryData.FromObjectAsJson(1.1);
 
-            //inconsistency in setting
             var innerProperties = new Dictionary<string, object>();
             innerProperties["strValue"] = "2";
             innerProperties["intValue"] = 2;
             innerProperties["doubleValue"] = 2.2;
-            //create second inner object scenario
+
             details["innerProperties"] = BinaryData.FromObjectAsJson(innerProperties);
             payload.Details = details;
 
