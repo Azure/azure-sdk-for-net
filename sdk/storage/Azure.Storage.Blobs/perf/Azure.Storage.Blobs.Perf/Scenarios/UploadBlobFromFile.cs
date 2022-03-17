@@ -39,6 +39,12 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
             await base.SetupAsync();
         }
 
+        public override Task CleanupAsync()
+        {
+            File.Delete(_filePath);
+            return base.CleanupAsync();
+        }
+
         public override void Dispose(bool disposing)
         {
             _stream.Dispose();
