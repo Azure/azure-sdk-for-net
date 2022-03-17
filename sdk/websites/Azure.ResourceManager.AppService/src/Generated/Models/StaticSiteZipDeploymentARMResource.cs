@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteZipDeploymentARMResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="appZipUrl"> URL for the zipped app content. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="deploymentTitle"> A title to label the deployment. </param>
         /// <param name="provider"> The provider submitting this deployment. </param>
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
-        internal StaticSiteZipDeploymentARMResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string appZipUrl, string apiZipUrl, string deploymentTitle, string provider, string functionLanguage) : base(id, name, type, systemData, kind)
+        internal StaticSiteZipDeploymentARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string appZipUrl, string apiZipUrl, string deploymentTitle, string provider, string functionLanguage) : base(id, name, resourceType, systemData, kind)
         {
             AppZipUrl = appZipUrl;
             ApiZipUrl = apiZipUrl;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="exclusionTag"> Exclusion tag for scaling plan. </param>
         /// <param name="schedules"> List of ScalingSchedule definitions. </param>
         /// <param name="hostPoolReferences"> List of ScalingHostPoolReference definitions. </param>
-        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, string timeZone, HostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string description, string friendlyName, string timeZone, HostPoolType? hostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences) : base(id, name, resourceType, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             Description = description;

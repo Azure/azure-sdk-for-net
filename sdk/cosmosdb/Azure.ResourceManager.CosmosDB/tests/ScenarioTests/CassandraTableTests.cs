@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _cassandraKeyspace.Delete(true);
-            _databaseAccount.Delete(true);
+            _cassandraKeyspace.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CassandraTable table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
             if (table != null)
             {
-                await table.DeleteAsync(true);
+                await table.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             parameters.Options = new CreateUpdateOptions { Throughput = TestThroughput2 };
 
-            table = (await CassandraTableCollection.CreateOrUpdateAsync(true, _tableName, parameters)).Value;
+            table = (await CassandraTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, _tableName, parameters)).Value;
             Assert.AreEqual(_tableName, table.Data.Resource.Id);
             VerifyCassandraTableCreation(table, parameters);
             // Seems bug in swagger definition
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
+            DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountCassandraKeyspaceTableThroughputSetting throughput = await table.GetDatabaseAccountCassandraKeyspaceTableThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateCassandraTableToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task CassandraTableDelete()
         {
             var table = await CreateCassandraTable(null);
-            await table.DeleteAsync(true);
+            await table.DeleteAsync(WaitUntil.Completed);
 
             table = await CassandraTableCollection.GetIfExistsAsync(_tableName);
             Assert.Null(table);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 parameters = BuildCreateUpdateOptions(null);
             }
 
-            var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(true, _tableName, parameters);
+            var tableLro = await CassandraTableCollection.CreateOrUpdateAsync(WaitUntil.Completed, _tableName, parameters);
             return tableLro.Value;
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _tableName = Recording.GenerateAssetName("cassandra-table-");
             return new CassandraTableCreateUpdateData(AzureLocation.WestUS,
                 new CassandraTableResource(_tableName, default, new CassandraSchema {
-                    Columns = { new CassandraColumn { Name = "columnA", Type = "int" }, new CassandraColumn { Name = "columnB", Type = "ascii" } },
+                    Columns = { new CassandraColumn { Name = "columnA", CassandraColumnType = "int" }, new CassandraColumn { Name = "columnB", CassandraColumnType = "ascii" } },
                     PartitionKeys = { new CassandraPartitionKey { Name = "columnA" } },
                     ClusterKeys = { new ClusterKey { Name = "columnB", OrderBy = "Asc" } },
                 }, default))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             for (int i = 0; i < cassandraTable.Data.Resource.Schema.Columns.Count; i++)
             {
                 Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Name, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Name);
-                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].Type, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].Type);
+                Assert.AreEqual(cassandraTable.Data.Resource.Schema.Columns[i].CassandraColumnType, cassandraTableCreateUpdateOptions.Resource.Schema.Columns[i].CassandraColumnType);
             }
 
             Assert.AreEqual(cassandraTable.Data.Resource.Schema.ClusterKeys.Count, cassandraTableCreateUpdateOptions.Resource.Schema.ClusterKeys.Count);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
             Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.Type, actualValue.Data.Type);
+            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 

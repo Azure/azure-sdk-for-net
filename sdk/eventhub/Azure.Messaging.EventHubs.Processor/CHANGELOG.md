@@ -1,12 +1,6 @@
 # Release History
 
-## 5.7.0-beta.4 (Unreleased)
-
-### Acknowledgments
-
-Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
-
-- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+## 5.7.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -16,7 +10,17 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Other Changes
 
-- Remove allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+## 5.7.0-beta.4 (2022-03-11)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Removed allocations from Event Source logging by introducing `WriteEvent` overloads to handle cases that would otherwise result in boxing to `object[]` via params array.  _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 
 - Enhanced README documentation to call attention to the need for the Azure Storage container used with the processor to exist, and highlight that it will not be implicitly created.
 

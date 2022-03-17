@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of IdentifierData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="value"> String representation of the identity. </param>
-        internal IdentifierData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string value) : base(id, name, type, systemData, kind)
+        internal IdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string value) : base(id, name, resourceType, systemData, kind)
         {
             Value = value;
         }

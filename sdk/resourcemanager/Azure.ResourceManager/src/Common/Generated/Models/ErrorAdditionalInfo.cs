@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.Core;
+using System;
 using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Models
@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
-        /// <param name="type"> The additional info type. </param>
+        /// <param name="errorAdditionalInfoType"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         [SerializationConstructor]
-        internal ErrorAdditionalInfo(ResourceType type, object info)
+        internal ErrorAdditionalInfo(string errorAdditionalInfoType, BinaryData info)
         {
-            Type = type;
+            ErrorAdditionalInfoType = errorAdditionalInfoType;
             Info = info;
         }
 
         /// <summary> The additional info type. </summary>
-        public ResourceType Type { get; }
+        public string ErrorAdditionalInfoType { get; }
         /// <summary> The additional info. </summary>
-        public object Info { get; }
+        public BinaryData Info { get; }
     }
 }

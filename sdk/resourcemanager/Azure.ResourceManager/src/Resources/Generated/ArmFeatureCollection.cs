@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _armFeatureFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmFeature.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ArmFeature.ResourceType, out string armFeatureFeaturesApiVersion);
-            _armFeatureFeaturesRestClient = new FeaturesRestOperations(_armFeatureFeaturesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armFeatureFeaturesApiVersion);
+            _armFeatureFeaturesRestClient = new FeaturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armFeatureFeaturesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public async virtual Task<Response<ArmFeature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmFeature>> GetAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armFeatureFeaturesRestClient.GetAsync(Id.SubscriptionId, Id.Provider, featureName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _armFeatureFeaturesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArmFeature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armFeatureFeaturesRestClient.Get(Id.SubscriptionId, Id.Provider, featureName, cancellationToken);
                 if (response.Value == null)
-                    throw _armFeatureFeaturesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArmFeature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
-        public async virtual Task<Response<ArmFeature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmFeature>> GetIfExistsAsync(string featureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(featureName, nameof(featureName));
 

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async static Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(this Subscription subscription, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(this Subscription subscription, NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscription).CheckCommunicationNameAvailabilityAsync(nameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
         }

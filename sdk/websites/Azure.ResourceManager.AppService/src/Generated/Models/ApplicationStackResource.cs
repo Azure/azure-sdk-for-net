@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="namePropertiesName"> Application stack name. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="frameworks"> List of frameworks associated with application stack. </param>
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string namePropertiesName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated) : base(id, name, type, systemData, kind)
+        internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string namePropertiesName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated) : base(id, name, resourceType, systemData, kind)
         {
             NamePropertiesName = namePropertiesName;
             Display = display;

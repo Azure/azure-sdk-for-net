@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         {
             _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
-            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: LoadBalancerLoadBalancingRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LoadBalancingRule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadBalancingRule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateScope("LoadBalancingRule.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancingRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancingRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         {
             _armFeatureFeaturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string armFeatureFeaturesApiVersion);
-            _armFeatureFeaturesRestClient = new FeaturesRestOperations(_armFeatureFeaturesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armFeatureFeaturesApiVersion);
+            _armFeatureFeaturesRestClient = new FeaturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armFeatureFeaturesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ArmFeature>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmFeature>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("ArmFeature.Get");
             scope.Start();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armFeatureFeaturesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _armFeatureFeaturesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArmFeature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armFeatureFeaturesRestClient.Get(Id.SubscriptionId, Id.ResourceType.Namespace, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _armFeatureFeaturesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ArmFeature(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Register
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ArmFeature>> RegisterAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmFeature>> RegisterAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("ArmFeature.Register");
             scope.Start();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Features_Unregister
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ArmFeature>> UnregisterAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmFeature>> UnregisterAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _armFeatureFeaturesClientDiagnostics.CreateScope("ArmFeature.Unregister");
             scope.Start();

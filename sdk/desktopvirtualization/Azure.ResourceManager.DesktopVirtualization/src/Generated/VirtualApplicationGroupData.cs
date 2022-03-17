@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of VirtualApplicationGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
         /// <param name="migrationRequest"> The registration info of HostPool. </param>
         /// <param name="cloudPcResource"> Is cloud pc resource. </param>
-        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, Plan plan, string objectId, string description, string friendlyName, string hostPoolArmPath, string workspaceArmPath, ApplicationGroupType applicationGroupType, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, type, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
+        internal VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, string kind, string etag, SystemAssignedServiceIdentity identity, ResourceModelWithAllowedPropertySetSku sku, ArmPlan plan, string objectId, string description, string friendlyName, string hostPoolArmPath, string workspaceArmPath, ApplicationGroupType applicationGroupType, MigrationRequestProperties migrationRequest, bool? cloudPcResource) : base(id, name, resourceType, systemData, tags, location, managedBy, kind, etag, identity, sku, plan)
         {
             ObjectId = objectId;
             Description = description;

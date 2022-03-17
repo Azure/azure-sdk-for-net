@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteRecommendationRecommendationsApiVersion);
-            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteRecommendation>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecommendation>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendation.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteRecommendationRecommendationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteRecommendation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
-                    throw _siteRecommendationRecommendationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteRecommendation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_DisableRecommendationForSite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DisableAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendation.Disable");
             scope.Start();

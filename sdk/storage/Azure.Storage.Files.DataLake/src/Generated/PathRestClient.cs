@@ -30,16 +30,16 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince)
+        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,6 +140,18 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value, "R");
             }
+            if (encryptionKey != null)
+            {
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
+            }
+            if (encryptionKeySha256 != null)
+            {
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
+            }
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -168,10 +180,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince);
+            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -207,10 +222,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="sourceIfModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="sourceIfUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince);
+            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -553,7 +571,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateReadRequest(int? timeout, string range, string leaseId, bool? xMsRangeGetContentMd5, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateReadRequest(int? timeout, string range, string leaseId, bool? xMsRangeGetContentMd5, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -595,6 +613,18 @@ namespace Azure.Storage.Files.DataLake
             {
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
+            if (encryptionKey != null)
+            {
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
+            }
+            if (encryptionKeySha256 != null)
+            {
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
+            }
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -608,10 +638,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Stream, PathReadHeaders>> ReadAsync(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathReadHeaders(message.Response);
             switch (message.Response.Status)
@@ -636,10 +669,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Stream, PathReadHeaders> Read(int? timeout = null, string range = null, string leaseId = null, bool? xMsRangeGetContentMd5 = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateReadRequest(timeout, range, leaseId, xMsRangeGetContentMd5, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathReadHeaders(message.Response);
             switch (message.Response.Status)
@@ -1036,7 +1072,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateFlushDataRequest(int? timeout, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateFlushDataRequest(int? timeout, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1106,6 +1142,18 @@ namespace Azure.Storage.Files.DataLake
                 request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
             }
             request.Headers.Add("x-ms-version", _version);
+            if (encryptionKey != null)
+            {
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
+            }
+            if (encryptionKeySha256 != null)
+            {
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
+            }
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -1127,10 +1175,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathFlushDataHeaders>> FlushDataAsync(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathFlushDataHeaders>> FlushDataAsync(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathFlushDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1159,10 +1210,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathFlushDataHeaders> FlushData(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathFlushDataHeaders> FlushData(int? timeout = null, long? position = null, bool? retainUncommittedData = null, bool? close = null, long? contentLength = null, byte[] contentMD5 = null, string leaseId = null, string cacheControl = null, string contentType = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateFlushDataRequest(timeout, position, retainUncommittedData, close, contentLength, contentMD5, leaseId, cacheControl, contentType, contentDisposition, contentEncoding, contentLanguage, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathFlushDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1174,7 +1228,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId)
+        internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1200,6 +1254,18 @@ namespace Azure.Storage.Files.DataLake
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (encryptionKey != null)
+            {
+                request.Headers.Add("x-ms-encryption-key", encryptionKey);
+            }
+            if (encryptionKeySha256 != null)
+            {
+                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
+            }
+            if (encryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/json");
             if (contentLength != null)
             {
@@ -1222,16 +1288,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathAppendDataHeaders>> AppendDataAsync(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId);
+            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathAppendDataHeaders(message.Response);
             switch (message.Response.Status)
@@ -1251,16 +1320,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathAppendDataHeaders> AppendData(Stream body, long? position = null, int? timeout = null, long? contentLength = null, byte[] transactionalContentHash = null, byte[] transactionalContentCrc64 = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId);
+            using var message = CreateAppendDataRequest(body, position, timeout, contentLength, transactionalContentHash, transactionalContentCrc64, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathAppendDataHeaders(message.Response);
             switch (message.Response.Status)

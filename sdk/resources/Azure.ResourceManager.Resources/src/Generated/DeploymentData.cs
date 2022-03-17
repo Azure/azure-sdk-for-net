@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, type, systemData)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         {
             _outboundRuleLoadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
-            _outboundRuleLoadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(_outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundRuleLoadBalancerOutboundRulesApiVersion);
+            _outboundRuleLoadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundRuleLoadBalancerOutboundRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: LoadBalancerOutboundRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<OutboundRule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OutboundRule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRule.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _outboundRuleLoadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OutboundRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _outboundRuleLoadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OutboundRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

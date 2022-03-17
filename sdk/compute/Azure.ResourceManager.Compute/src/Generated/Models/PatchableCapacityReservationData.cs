@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set. Currently VM Skus with the capability called &apos;CapacityReservationSupported&apos; set to true are supported. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </summary>
-        public Sku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
         public string ReservationId { get; }
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>

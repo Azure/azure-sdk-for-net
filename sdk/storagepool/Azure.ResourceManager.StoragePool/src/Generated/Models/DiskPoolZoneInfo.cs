@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
         /// <param name="sku"> Determines the SKU of VM deployed for Disk Pool. </param>
-        internal DiskPoolZoneInfo(IReadOnlyList<string> availabilityZones, IReadOnlyList<string> additionalCapabilities, Sku sku)
+        internal DiskPoolZoneInfo(IReadOnlyList<string> availabilityZones, IReadOnlyList<string> additionalCapabilities, StoragePoolSku sku)
         {
             AvailabilityZones = availabilityZones;
             AdditionalCapabilities = additionalCapabilities;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> List of additional capabilities for Disk Pool. </summary>
         public IReadOnlyList<string> AdditionalCapabilities { get; }
         /// <summary> Determines the SKU of VM deployed for Disk Pool. </summary>
-        public Sku Sku { get; }
+        public StoragePoolSku Sku { get; }
     }
 }

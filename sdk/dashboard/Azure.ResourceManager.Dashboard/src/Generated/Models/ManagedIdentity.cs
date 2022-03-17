@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.Dashboard.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
-        /// <param name="type"> The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the resource. </param>
+        /// <param name="identityType"> The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the resource. </param>
         /// <param name="principalId"> The principal id of the system assigned identity. </param>
         /// <param name="tenantId"> The tenant id of the system assigned identity. </param>
         /// <param name="userAssignedIdentities"> Dictionary of user assigned identities. </param>
-        internal ManagedIdentity(IdentityType? type, string principalId, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal ManagedIdentity(IdentityType? identityType, string principalId, string tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
         {
-            Type = type;
+            IdentityType = identityType;
             PrincipalId = principalId;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
         /// <summary> The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user assigned identities. The type &apos;None&apos; will remove any identities from the resource. </summary>
-        public IdentityType? Type { get; set; }
+        public IdentityType? IdentityType { get; set; }
         /// <summary> The principal id of the system assigned identity. </summary>
         public string PrincipalId { get; }
         /// <summary> The tenant id of the system assigned identity. </summary>

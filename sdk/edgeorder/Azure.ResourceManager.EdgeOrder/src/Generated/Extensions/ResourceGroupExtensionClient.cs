@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder
         }
 
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private EdgeOrderManagementRestOperations DefaultRestClient => _defaultRestClient ??= new EdgeOrderManagementRestOperations(DefaultClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private EdgeOrderManagementRestOperations DefaultRestClient => _defaultRestClient ??= new EdgeOrderManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An object representing collection of AddressResources and their operations over a AddressResource. </returns>
         public virtual AddressResourceCollection GetAddressResources()
         {
-            return new AddressResourceCollection(Client, Id);
+            return GetCachedClient(Client => new AddressResourceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of OrderResources in the OrderResource. </summary>
         /// <returns> An object representing collection of OrderResources and their operations over a OrderResource. </returns>
         public virtual OrderResourceCollection GetOrderResources()
         {
-            return new OrderResourceCollection(Client, Id);
+            return GetCachedClient(Client => new OrderResourceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of OrderItemResources in the OrderItemResource. </summary>
         /// <returns> An object representing collection of OrderItemResources and their operations over a OrderItemResource. </returns>
         public virtual OrderItemResourceCollection GetOrderItemResources()
         {
-            return new OrderItemResourceCollection(Client, Id);
+            return GetCachedClient(Client => new OrderItemResourceCollection(Client, Id));
         }
 
         /// <summary>

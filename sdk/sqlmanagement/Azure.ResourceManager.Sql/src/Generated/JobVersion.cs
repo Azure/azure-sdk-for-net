@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _jobVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string jobVersionApiVersion);
-            _jobVersionRestClient = new JobVersionsRestOperations(_jobVersionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobVersionApiVersion);
+            _jobVersionRestClient = new JobVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -86,7 +86,35 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerJobAgentJobVersionSteps and their operations over a ServerJobAgentJobVersionStep. </returns>
         public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
         {
-            return new ServerJobAgentJobVersionStepCollection(Client, Id);
+            return GetCachedClient(Client => new ServerJobAgentJobVersionStepCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified version of a job step.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
+        /// <param name="stepName"> The name of the job step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public virtual async Task<Response<ServerJobAgentJobVersionStep>> GetServerJobAgentJobVersionStepAsync(string stepName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerJobAgentJobVersionSteps().GetAsync(stepName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified version of a job step.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}/steps/{stepName}
+        /// Operation Id: JobSteps_GetByVersion
+        /// </summary>
+        /// <param name="stepName"> The name of the job step. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
+        public virtual Response<ServerJobAgentJobVersionStep> GetServerJobAgentJobVersionStep(string stepName, CancellationToken cancellationToken = default)
+        {
+            return GetServerJobAgentJobVersionSteps().Get(stepName, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobVersions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<JobVersion>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobVersion>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _jobVersionClientDiagnostics.CreateScope("JobVersion.Get");
             scope.Start();
@@ -103,7 +131,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _jobVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _jobVersionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +155,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _jobVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
-                    throw _jobVersionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JobVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

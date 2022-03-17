@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         {
             _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlan.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AppServicePlan.ResourceType, out string appServicePlanApiVersion);
-            _appServicePlanRestClient = new AppServicePlansRestOperations(_appServicePlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
+            _appServicePlanRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="appServicePlan"/> is null. </exception>
-        public async virtual Task<ArmOperation<AppServicePlan>> CreateOrUpdateAsync(bool waitForCompletion, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServicePlan>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(appServicePlan, nameof(appServicePlan));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServicePlanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<AppServicePlan>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="appServicePlan"> Details of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="appServicePlan"/> is null. </exception>
-        public virtual ArmOperation<AppServicePlan> CreateOrUpdate(bool waitForCompletion, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServicePlan> CreateOrUpdate(WaitUntil waitUntil, string name, AppServicePlanData appServicePlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(appServicePlan, nameof(appServicePlan));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServicePlanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan, cancellationToken);
                 var operation = new AppServiceArmOperation<AppServicePlan>(new AppServicePlanOperationSource(Client), _appServicePlanClientDiagnostics, Pipeline, _appServicePlanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, appServicePlan).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServicePlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _appServicePlanClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServicePlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    throw _appServicePlanClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AppServicePlan(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<AppServicePlan>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServicePlan>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

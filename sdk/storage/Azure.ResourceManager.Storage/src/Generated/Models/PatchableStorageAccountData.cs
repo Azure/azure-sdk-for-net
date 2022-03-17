@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Gets or sets the SKU name. Note that the SKU name cannot be updated to Standard_ZRS, Premium_LRS or Premium_ZRS, nor can accounts of those SKU names be updated to any other value. </summary>
-        public Sku Sku { get; set; }
+        public StorageSku Sku { get; set; }
         /// <summary> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server. </summary>
-        public Kind? Kind { get; set; }
+        public StorageKind? Kind { get; set; }
         /// <summary> Custom domain assigned to the storage account by the user. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </summary>
         public CustomDomain CustomDomain { get; set; }
         /// <summary> Not applicable. Azure Storage encryption at rest is enabled by default for all storage accounts and cannot be disabled. </summary>

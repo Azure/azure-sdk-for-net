@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-C-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
-            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(true, templateSpecName, templateSpecData)).Value;
+            TemplateSpec templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(WaitUntil.Completed, templateSpecName, templateSpecData)).Value;
             const string version = "v1";
             TemplateSpecVersionData templateSpecVersionData = CreateTemplateSpecVersionData();
-            TemplateSpecVersion templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(true, version, templateSpecVersionData)).Value;
-            await templateSpecVersion.DeleteAsync(true);
+            TemplateSpecVersion templateSpecVersion = (await templateSpec.GetTemplateSpecVersions().CreateOrUpdateAsync(WaitUntil.Completed, version, templateSpecVersionData)).Value;
+            await templateSpecVersion.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await templateSpecVersion.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

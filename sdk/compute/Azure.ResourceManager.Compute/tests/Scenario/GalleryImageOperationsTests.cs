@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var galleryInput = ResourceDataHelper.GetBasicGalleryData(DefaultLocation);
-            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(true, galleryName, galleryInput);
+            var lro = await _resourceGroup.GetGalleries().CreateOrUpdateAsync(WaitUntil.Completed, galleryName, galleryInput);
             _gallery = lro.Value;
             return _gallery;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
                     Recording.GenerateAssetName("offer"),
                     Recording.GenerateAssetName("sku"));
             var imageInput = ResourceDataHelper.GetBasicGalleryImageData(DefaultLocation, OperatingSystemTypes.Linux, identifier);
-            var lro = await _gallery.GetGalleryImages().CreateOrUpdateAsync(true, galleryImageName, imageInput);
+            var lro = await _gallery.GetGalleryImages().CreateOrUpdateAsync(WaitUntil.Completed, galleryImageName, imageInput);
             return lro.Value;
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testGallery_");
             var image = await CreateGalleryImageAsync(name);
-            await image.DeleteAsync(true);
+            await image.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 OSType = OperatingSystemTypes.Linux, // We have to put this here, otherwise we get a 409 Changing property 'galleryImage.properties.osType' is not allowed.
                 Description = description
             };
-            var lro = await image.UpdateAsync(true, update);
+            var lro = await image.UpdateAsync(WaitUntil.Completed, update);
             GalleryImage updatedGalleryImage = lro.Value;
 
             Assert.AreEqual(description, updatedGalleryImage.Data.Description);

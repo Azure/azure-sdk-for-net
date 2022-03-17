@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ReissueCertificateOrderRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="delayExistingRevokeInHours"> Delay in hours to revoke existing certificate after the new certificate is issued. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        internal ReissueCertificateOrderRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, int? keySize, int? delayExistingRevokeInHours, string csr, bool? isPrivateKeyExternal) : base(id, name, type, systemData, kind)
+        internal ReissueCertificateOrderRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? keySize, int? delayExistingRevokeInHours, string csr, bool? isPrivateKeyExternal) : base(id, name, resourceType, systemData, kind)
         {
             KeySize = keySize;
             DelayExistingRevokeInHours = delayExistingRevokeInHours;
