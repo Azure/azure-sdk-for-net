@@ -26,11 +26,11 @@ namespace Azure.Core.TestFramework
 
             if (IsLro(invocation.Method.ReturnType))
             {
-                bool current = (bool)invocation.Arguments[0];
-                if (current)
+                WaitUntil current = (WaitUntil)invocation.Arguments[0];
+                if (current == WaitUntil.Completed)
                 {
                     modifiedAskToWait = true;
-                    invocation.Arguments[0] = false;
+                    invocation.Arguments[0] = WaitUntil.Started;
                 }
             }
 

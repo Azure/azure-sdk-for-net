@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _gremlinDatabase.Delete(true);
-            _databaseAccount.Delete(true);
+            _gremlinDatabase.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             GremlinGraph graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
             if (graph != null)
             {
-                await graph.DeleteAsync(true);
+                await graph.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             parameters.Options = new CreateUpdateOptions { Throughput = TestThroughput2 };
 
-            grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(false, _graphName, parameters)).WaitForCompletionAsync();
+            grpah = await (await GremlinGraphContainer.CreateOrUpdateAsync(WaitUntil.Started, _graphName, parameters)).WaitForCompletionAsync();
             Assert.AreEqual(_graphName, grpah.Data.Resource.Id);
             VerifyGremlinGraphCreation(grpah, parameters);
             // Seems bug in swagger definition
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountGremlinDatabaseGraphThroughputSetting throughput = await graph.GetDatabaseAccountGremlinDatabaseGraphThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateGremlinGraphToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -155,24 +155,24 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task GremlinGraphDelete()
         {
             var graph = await CreateGremlinGraph(null);
-            await graph.DeleteAsync(true);
+            await graph.DeleteAsync(WaitUntil.Completed);
 
             graph = await GremlinGraphContainer.GetIfExistsAsync(_graphName);
             Assert.Null(graph);
         }
 
-        protected async Task<GremlinGraph> CreateGremlinGraph(GremlinGraphCreateUpdateOptions parameters)
+        protected async Task<GremlinGraph> CreateGremlinGraph(GremlinGraphCreateUpdateData parameters)
         {
             if (parameters == null)
             {
                 parameters = BuildCreateUpdateOptions(null);
             }
 
-            var graphLro = await GremlinGraphContainer.CreateOrUpdateAsync(true, _graphName, parameters);
+            var graphLro = await GremlinGraphContainer.CreateOrUpdateAsync(WaitUntil.Completed, _graphName, parameters);
             return graphLro.Value;
         }
 
-        private GremlinGraphCreateUpdateOptions BuildCreateUpdateOptions(AutoscaleSettings autoscale)
+        private GremlinGraphCreateUpdateData BuildCreateUpdateOptions(AutoscaleSettings autoscale)
         {
             _graphName = Recording.GenerateAssetName("gremlin-graph-");
 
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
 
-            return new GremlinGraphCreateUpdateOptions(AzureLocation.WestUS, new GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
+            return new GremlinGraphCreateUpdateData(AzureLocation.WestUS, new GremlinGraphResource(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }
 
-        private void VerifyGremlinGraphCreation(GremlinGraph graph, GremlinGraphCreateUpdateOptions gremlinGraphCreateUpdateOptions)
+        private void VerifyGremlinGraphCreation(GremlinGraph graph, GremlinGraphCreateUpdateData gremlinGraphCreateUpdateOptions)
         {
             Assert.AreEqual(graph.Data.Resource.Id, gremlinGraphCreateUpdateOptions.Resource.Id);
             Assert.AreEqual(graph.Data.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower(), gremlinGraphCreateUpdateOptions.Resource.IndexingPolicy.IndexingMode.Value.ToString().ToLower());
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
             Assert.AreEqual(expectedValue.Data.Location, actualValue.Data.Location);
             Assert.AreEqual(expectedValue.Data.Tags, actualValue.Data.Tags);
-            Assert.AreEqual(expectedValue.Data.Type, actualValue.Data.Type);
+            Assert.AreEqual(expectedValue.Data.ResourceType, actualValue.Data.ResourceType);
 
             Assert.AreEqual(expectedValue.Data.Options, actualValue.Data.Options);
 

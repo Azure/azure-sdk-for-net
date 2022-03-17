@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of ManagedIdentity. </summary>
-        /// <param name="type"> Represent the identity type: systemAssigned, userAssigned, None. </param>
+        /// <param name="managedIdentityType"> Represent the identity type: systemAssigned, userAssigned, None. </param>
         /// <param name="userAssignedIdentities"> Get or set the user assigned identities. </param>
         /// <param name="principalId">
         /// Get the principal id for the system assigned identity.
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Get the tenant id for the system assigned identity.
         /// Only be used in response
         /// </param>
-        internal ManagedIdentity(ManagedIdentityType? type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, string tenantId)
+        internal ManagedIdentity(ManagedIdentityType? managedIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, string principalId, string tenantId)
         {
-            Type = type;
+            ManagedIdentityType = managedIdentityType;
             UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
             TenantId = tenantId;
         }
 
         /// <summary> Represent the identity type: systemAssigned, userAssigned, None. </summary>
-        public ManagedIdentityType? Type { get; set; }
+        public ManagedIdentityType? ManagedIdentityType { get; set; }
         /// <summary> Get or set the user assigned identities. </summary>
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(MaximumJitAccessDuration))
             {
                 writer.WritePropertyName("maximumJitAccessDuration");
-                writer.WriteStringValue(MaximumJitAccessDuration);
+                writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
             }
             writer.WriteEndObject();
         }
@@ -46,7 +47,11 @@ namespace Azure.ResourceManager.Resources.Models
             bool jitAccessEnabled = default;
             Optional<JitApprovalMode> jitApprovalMode = default;
             Optional<IList<JitApprover>> jitApprovers = default;
+<<<<<<< HEAD
             Optional<string> maximumJitAccessDuration = default;
+=======
+            Optional<TimeSpan> maximumJitAccessDuration = default;
+>>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jitAccessEnabled"))
@@ -81,11 +86,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("maximumJitAccessDuration"))
                 {
-                    maximumJitAccessDuration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    maximumJitAccessDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new ApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), maximumJitAccessDuration.Value);
+            return new ApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), Optional.ToNullable(maximumJitAccessDuration));
         }
     }
 }

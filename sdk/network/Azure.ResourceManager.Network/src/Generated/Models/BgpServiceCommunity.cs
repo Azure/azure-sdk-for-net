@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Service Community Properties. </summary>
-    public partial class BgpServiceCommunity : Resource
+    public partial class BgpServiceCommunity : NetworkResourceData
     {
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
         public BgpServiceCommunity()
@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serviceName"> The name of the bgp community. e.g. Skype. </param>
         /// <param name="bgpCommunities"> A list of bgp communities. </param>
-        internal BgpServiceCommunity(string id, string name, string type, string location, IDictionary<string, string> tags, string serviceName, IList<BGPCommunity> bgpCommunities) : base(id, name, type, location, tags)
+        internal BgpServiceCommunity(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string serviceName, IList<BGPCommunity> bgpCommunities) : base(id, name, resourceType, location, tags)
         {
             ServiceName = serviceName;
             BgpCommunities = bgpCommunities;

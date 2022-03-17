@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -26,7 +27,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>
         /// <param name="maximumJitAccessDuration"> The maximum duration JIT access is granted. This is an ISO8601 time period value. </param>
+<<<<<<< HEAD
         internal ApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, string maximumJitAccessDuration)
+=======
+        internal ApplicationJitAccessPolicy(bool jitAccessEnabled, JitApprovalMode? jitApprovalMode, IList<JitApprover> jitApprovers, TimeSpan? maximumJitAccessDuration)
+>>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         {
             JitAccessEnabled = jitAccessEnabled;
             JitApprovalMode = jitApprovalMode;
@@ -41,6 +46,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The JIT approvers. </summary>
         public IList<JitApprover> JitApprovers { get; }
         /// <summary> The maximum duration JIT access is granted. This is an ISO8601 time period value. </summary>
-        public string MaximumJitAccessDuration { get; set; }
+        public TimeSpan? MaximumJitAccessDuration { get; set; }
     }
 }

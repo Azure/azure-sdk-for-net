@@ -86,7 +86,12 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// The 2021-04-10 serivce version.
             /// </summary>
-            V2021_04_10 = 11
+            V2021_04_10 = 11,
+
+            /// <summary>
+            /// The 2021-06-08 service version.
+            /// </summary>
+            V2021_06_08 = 12
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -97,6 +102,11 @@ namespace Azure.Storage.Files.DataLake
         /// Versioning for the Azure Storage services</see>.
         /// </summary>
         public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
+        /// </summary>
+        public DataLakeCustomerProvidedKey? CustomerProvidedKey { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeClientOptions"/>

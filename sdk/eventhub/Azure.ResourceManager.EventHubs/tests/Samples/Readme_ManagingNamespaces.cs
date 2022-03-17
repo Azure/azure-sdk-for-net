@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             #endregion
             this.resourceGroup = resourceGroup;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             string namespaceName = "myNamespace";
             EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
             AzureLocation location = AzureLocation.EastUS2;
-            EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new EventHubNamespaceData(location))).Value;
+            EventHubNamespace eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
             #endregion
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #region Snippet:Managing_Namespaces_DeleteNamespace
             EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
             EventHubNamespace eventHubNamespace = await namespaceCollection.GetAsync("myNamespace");
-            await eventHubNamespace.DeleteAsync(true);
+            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
 

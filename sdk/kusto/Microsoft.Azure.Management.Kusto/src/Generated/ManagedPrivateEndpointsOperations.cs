@@ -715,10 +715,10 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ManagedPrivateEndpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedPrivateEndpoint,ManagedPrivateEndpointsUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ManagedPrivateEndpoint> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, managedPrivateEndpointName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ManagedPrivateEndpoint,ManagedPrivateEndpointsUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, managedPrivateEndpointName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1042,7 +1042,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ManagedPrivateEndpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ManagedPrivateEndpoint,ManagedPrivateEndpointsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string managedPrivateEndpointName, ManagedPrivateEndpoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1193,7 +1193,7 @@ namespace Microsoft.Azure.Management.Kusto
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ManagedPrivateEndpoint>();
+            var _result = new AzureOperationResponse<ManagedPrivateEndpoint,ManagedPrivateEndpointsUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1235,6 +1235,19 @@ namespace Microsoft.Azure.Management.Kusto
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ManagedPrivateEndpointsUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

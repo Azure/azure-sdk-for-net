@@ -645,12 +645,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual CopyModelOperation StartCopyModel(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual CopyModelOperation StartCopyModelTo(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCopyModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCopyModelTo)}");
             scope.Start();
 
             try
@@ -674,12 +674,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="CopyModelOperation"/> to wait on this long-running operation.  Its <see cref="CopyModelOperation.Value"/> upon successful
         /// completion will contain meta-data about the model copied.</returns>
-        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyModelOperation> StartCopyModelToAsync(string modelId, CopyAuthorization target, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(target, nameof(target));
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCopyModel)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCopyModelTo)}");
             scope.Start();
 
             try
@@ -786,7 +786,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// submitted to be analyzed with a composed model ID, a classification step is first performed to
         /// route it to the correct custom model.
         /// </summary>
-        /// <param name="modelIds">List of model ids to use in the composed model.</param>
+        /// <param name="componentModelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelId">A unique ID for your composed model. If not specified, a model ID will be created for you.</param>
         /// <param name="modelDescription">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
@@ -795,9 +795,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the composed model.</para>
         /// </returns>
-        public virtual BuildModelOperation StartCreateComposedModel(IEnumerable<string> modelIds, string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual BuildModelOperation StartCreateComposedModel(IEnumerable<string> componentModelIds, string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(modelIds, nameof(modelIds));
+            Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCreateComposedModel)}");
             scope.Start();
@@ -805,7 +805,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 modelId ??= Guid.NewGuid().ToString();
-                var composeRequest = new ComposeDocumentModelRequest(modelId, ConvertToComponentModelInfo(modelIds))
+                var composeRequest = new ComposeDocumentModelRequest(modelId, ConvertToComponentModelInfo(componentModelIds))
                 {
                     Description = modelDescription
                 };
@@ -834,7 +834,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// submitted to be analyzed with a composed model ID, a classification step is first performed to
         /// route it to the correct custom model.
         /// </summary>
-        /// <param name="modelIds">List of model ids to use in the composed model.</param>
+        /// <param name="componentModelIds">List of model ids to use in the composed model.</param>
         /// <param name="modelId">A unique ID for your composed model. If not specified, a model ID will be created for you.</param>
         /// <param name="modelDescription">An optional description to add to the model.</param>
         /// <param name="tags">A list of user-defined key-value tag attributes associated with the model.</param>
@@ -843,9 +843,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <para>A <see cref="BuildModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the composed model.</para>
         /// </returns>
-        public virtual async Task<BuildModelOperation> StartCreateComposedModelAsync(IEnumerable<string> modelIds, string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildModelOperation> StartCreateComposedModelAsync(IEnumerable<string> componentModelIds, string modelId = default, string modelDescription = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(modelIds, nameof(modelIds));
+            Argument.AssertNotNull(componentModelIds, nameof(componentModelIds));
 
             using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(StartCreateComposedModel)}");
             scope.Start();
@@ -853,7 +853,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             try
             {
                 modelId ??= Guid.NewGuid().ToString();
-                var composeRequest = new ComposeDocumentModelRequest(modelId, ConvertToComponentModelInfo(modelIds))
+                var composeRequest = new ComposeDocumentModelRequest(modelId, ConvertToComponentModelInfo(componentModelIds))
                 {
                     Description = modelDescription
                 };
@@ -876,8 +876,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
-        internal static List<ComponentModelInfo> ConvertToComponentModelInfo(IEnumerable<string> modelIds)
-            => modelIds.Select((modelId) => new ComponentModelInfo(modelId)).ToList();
+        internal static List<ComponentModelInfo> ConvertToComponentModelInfo(IEnumerable<string> componentModelIds)
+            => componentModelIds.Select((modelId) => new ComponentModelInfo(modelId)).ToList();
 
         #endregion Composed Model
     }

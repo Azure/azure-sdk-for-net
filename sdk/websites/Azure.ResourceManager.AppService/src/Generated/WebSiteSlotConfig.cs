@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.AppService
         {
             _webSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string webSiteSlotConfigWebAppsApiVersion);
-            _webSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(_webSiteSlotConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteSlotConfigWebAppsApiVersion);
+            _webSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteSlotConfigWebAppsApiVersion);
             _siteSlotConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotConfigSnapshot.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlotConfigSnapshot.ResourceType, out string siteSlotConfigSnapshotWebAppsApiVersion);
-            _siteSlotConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigSnapshotWebAppsApiVersion);
+            _siteSlotConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,7 +92,35 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotConfigSnapshots and their operations over a SiteSlotConfigSnapshot. </returns>
         public virtual SiteSlotConfigSnapshotCollection GetSiteSlotConfigSnapshots()
         {
-            return new SiteSlotConfigSnapshotCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotConfigSnapshotCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
+        /// Operation Id: WebApps_GetConfigurationSnapshotSlot
+        /// </summary>
+        /// <param name="snapshotId"> The ID of the snapshot to read. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotConfigSnapshot>> GetSiteSlotConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotConfigSnapshots().GetAsync(snapshotId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a snapshot of the configuration of an app at a previous point in time.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}
+        /// Operation Id: WebApps_GetConfigurationSnapshotSlot
+        /// </summary>
+        /// <param name="snapshotId"> The ID of the snapshot to read. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
+        public virtual Response<SiteSlotConfigSnapshot> GetSiteSlotConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotConfigSnapshots().Get(snapshotId, cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteSlotConfigWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfig.Get");
             scope.Start();
@@ -109,7 +137,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,7 +161,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteSlotConfigWebAppsRestClient.GetConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _webSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -151,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<Response<WebSiteSlotConfig>> UpdateAsync(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteSlotConfig>> UpdateAsync(SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteConfig, nameof(siteConfig));
 
@@ -200,11 +228,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebSiteSlotConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebSiteSlotConfig>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteConfig, nameof(siteConfig));
 
@@ -214,7 +242,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteSlotConfigWebAppsRestClient.CreateOrUpdateConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<WebSiteSlotConfig>(Response.FromValue(new WebSiteSlotConfig(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -230,11 +258,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web
         /// Operation Id: WebApps_CreateOrUpdateConfigurationSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteConfig"> JSON representation of a SiteConfig object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteConfig"/> is null. </exception>
-        public virtual ArmOperation<WebSiteSlotConfig> CreateOrUpdate(bool waitForCompletion, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebSiteSlotConfig> CreateOrUpdate(WaitUntil waitUntil, SiteConfigData siteConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteConfig, nameof(siteConfig));
 
@@ -244,7 +272,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteSlotConfigWebAppsRestClient.CreateOrUpdateConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteConfig, cancellationToken);
                 var operation = new AppServiceArmOperation<WebSiteSlotConfig>(Response.FromValue(new WebSiteSlotConfig(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

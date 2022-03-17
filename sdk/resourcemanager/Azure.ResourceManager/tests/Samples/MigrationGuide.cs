@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string resourceGroupName = "QuickStartRG";
 
             ResourceGroupData resourceGroupData = new ResourceGroupData(location);
-            ArmOperation<ResourceGroup> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(true, resourceGroupName, resourceGroupData);
+            ArmOperation<ResourceGroup> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
             ResourceGroup resourceGroup = resourceGroupOperation.Value;
             #endregion
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string virtualMachineName = "quickstartvm";
             AvailabilitySetData availabilitySetData = new AvailabilitySetData(location);
             AvailabilitySetCollection availabilitySets = resourceGroup.GetAvailabilitySets();
-            ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(true, virtualMachineName + "_aSet", availabilitySetData);
+            ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
             AvailabilitySet availabilitySet = availabilitySetOperation.Value;
             #endregion
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Tests.Samples
             };
             VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
             virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
-            ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(true, virtualNetworkName, virtualNetworkData);
+            ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
             VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
             #endregion
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string networkSecurityGroupName = virtualMachineName + "_nsg";
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = location };
             NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
-            ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+            ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
             NetworkSecurityGroup networkSecurityGroup = networkSecurityGroupOperation.Value;
             #endregion
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Tests.Samples
             nicData.Location = location;
             nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
             NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
-            ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(true, networkInterfaceName, nicData);
+            ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
             NetworkInterface networkInterface = networkInterfaceOperation.Value;
             #endregion
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Tests.Samples
             virutalMachineData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
             VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
-            ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(true, virtualMachineName, virutalMachineData);
+            ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
             VirtualMachine virtualMachine = virtualMachineOperation.Value;
             Console.WriteLine("VM ID: " + virtualMachine.Id);
             #endregion

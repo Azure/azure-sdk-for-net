@@ -16,6 +16,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
 
+        public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
+
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
             foreach (var telemetryItem in telemetryItems)

@@ -166,6 +166,13 @@ directive:
       $.Application['x-ms-client-name'] = 'ArmApplication';
       $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ApplicationPackageLockingPolicy';
       $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ApplicationBillingDetails';
+      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
+      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
 ```
 
 ### Tag: package-track2-preview

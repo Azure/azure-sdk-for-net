@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of GuestAgentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="uuid"> Gets or sets a unique identifier for this resource. </param>
         /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, type, systemData)
+        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData)
         {
             Uuid = uuid;
             Credentials = credentials;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 AzureADOnlyAuthentication = true,
             };
-            var adoAuth = await collection.CreateOrUpdateAsync(true, AuthenticationName.Default, data);
+            var adoAuth = await collection.CreateOrUpdateAsync(WaitUntil.Completed, AuthenticationName.Default, data);
 
             // 2.CheckIfExist
             Assert.IsTrue(collection.Exists(adoAuthName));
