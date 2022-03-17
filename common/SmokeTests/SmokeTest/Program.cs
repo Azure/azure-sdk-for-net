@@ -231,10 +231,10 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
     while (assembliesToProcess.Count > 0)
     {
         var assembly = assembliesToProcess.Pop();
-        processedAssemblies.Add(assembly.FullName);
-
+        
         if ((!assembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(assembly.FullName)))
         {
+            processedAssemblies.Add(assembly.FullName);
             yield return assembly;
         }
     }
