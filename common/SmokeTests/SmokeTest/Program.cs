@@ -226,7 +226,7 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
         assembliesToProcess.Push(assembly);
     }
 
-    // Process the selected assemblies recursively, capturing references discovered along the way.
+    // Process the selected assemblies.
 
     while (assembliesToProcess.Count > 0)
     {
