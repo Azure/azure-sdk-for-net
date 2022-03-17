@@ -1,4 +1,8 @@
-
+# cSpell:ignore Committish
+# cSpell:ignore committish
+# cSpell:ignore PULLREQUEST
+# cSpell:ignore TARGETBRANCH
+# cSpell:ignore SOURCEVERSION
 function Get-ChangedFiles {
   param (
     [string]$SourceCommittish= "${env:BUILD_SOURCEVERSION}",

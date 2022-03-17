@@ -12,6 +12,7 @@ steps:
         if ((!"$(System.PullRequest.SourceBranch)".StartsWith("sync-eng/common")) -and $targetBranch -eq "$(DefaultBranch)")
         {
           $filesInCommonDir  = & "eng/common/scripts/get-changedfiles.ps1" -TargetCommittish $targetBranch -DiffPath 'eng/common/*'
+          # cSpell:ignore LASTEXITCODE
           if (($LASTEXITCODE -eq 0) -and ($filesInCommonDir.Count -gt 0))
           {
             Write-Host "##vso[task.LogIssue type=error;]Changes to files under 'eng/common' directory should not be made in this Repo`n${filesInCommonDir}"

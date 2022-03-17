@@ -76,6 +76,9 @@ Param (
 
 Set-StrictMode -Version 3.0
 
+# cSpell:ignore LASTEXITCODE
+# cSpell:ignore errrrrorrrrr
+# cSpell:ignore sepleing
 function TestSpellChecker() {
     Test-Exit0WhenAllFilesExcluded
     ResetTest

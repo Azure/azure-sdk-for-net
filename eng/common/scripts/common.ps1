@@ -4,6 +4,9 @@ $EngCommonDir = Join-Path $EngDir "common"
 $EngCommonScriptsDir = Join-Path $EngCommonDir "scripts"
 $EngScriptsDir = Join-Path $EngDir "scripts"
 
+# cSpell:ignore Apireview
+# cSpell:ignore Onboarded
+
 # Import required scripts
 . (Join-Path $EngCommonScriptsDir SemVer.ps1)
 . (Join-Path $EngCommonScriptsDir ChangeLog-Operations.ps1)

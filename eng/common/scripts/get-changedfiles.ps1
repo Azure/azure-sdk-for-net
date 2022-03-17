@@ -16,6 +16,11 @@
   E.g. 'ad' means filter out the newly added file and deleted file 
   E.g. '' means no filter on file mode.
 #>
+# cSpell:ignore Committish
+# cSpell:ignore committish
+# cSpell:ignore PULLREQUEST
+# cSpell:ignore TARGETBRANCH
+# cSpell:ignore SOURCEVERSION
 [CmdletBinding()]
 param (
   [string] $SourceCommittish = "${env:BUILD_SOURCEVERSION}",
