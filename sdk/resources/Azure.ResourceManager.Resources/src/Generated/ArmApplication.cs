@@ -54,11 +54,7 @@ namespace Azure.ResourceManager.Resources
         {
             _armApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string armApplicationApplicationsApiVersion);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-            _armApplicationApplicationsRestClient = new ApplicationsRestOperations(_armApplicationApplicationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armApplicationApplicationsApiVersion);
-=======
             _armApplicationApplicationsRestClient = new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armApplicationApplicationsApiVersion);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -94,11 +90,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Applications_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-        public async virtual Task<Response<ArmApplication>> GetAsync(CancellationToken cancellationToken = default)
-=======
         public virtual async Task<Response<ArmApplication>> GetAsync(CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
         {
             using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplication.Get");
             scope.Start();
@@ -106,11 +98,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                    throw await _armApplicationApplicationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-=======
                     throw new RequestFailedException(response.GetRawResponse());
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,11 +122,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                    throw _armApplicationApplicationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-=======
                     throw new RequestFailedException(response.GetRawResponse());
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -163,11 +147,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armApplicationApplicationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                if (waitForCompletion)
-=======
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -193,11 +173,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armApplicationApplicationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                if (waitForCompletion)
-=======
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -215,25 +191,16 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="data"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-        public async virtual Task<Response<ArmApplication>> UpdateAsync(ArmApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
-        {
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ArmApplication>> UpdateAsync(PatchableArmApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
             using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplication.Update");
             scope.Start();
             try
             {
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                var response = await _armApplicationApplicationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
-=======
                 var response = await _armApplicationApplicationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,25 +217,16 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="data"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-        public virtual Response<ArmApplication> Update(ArmApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
-        {
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ArmApplication> Update(PatchableArmApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
             using var scope = _armApplicationApplicationsClientDiagnostics.CreateScope("ArmApplication.Update");
             scope.Start();
             try
             {
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                var response = _armApplicationApplicationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
-=======
                 var response = _armApplicationApplicationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,11 +251,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armApplicationApplicationsRestClient.RefreshPermissionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                if (waitForCompletion)
-=======
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -323,11 +277,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armApplicationApplicationsRestClient.RefreshPermissions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ResourcesArmOperation(_armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateRefreshPermissionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                if (waitForCompletion)
-=======
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -347,11 +297,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-        public async virtual Task<Response<ArmApplication>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-=======
         public virtual async Task<Response<ArmApplication>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -362,11 +308,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-=======
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 var originalResponse = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ArmApplication(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -397,11 +339,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-=======
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 var originalResponse = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ArmApplication(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -420,11 +358,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-        public async virtual Task<Response<ArmApplication>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-=======
         public virtual async Task<Response<ArmApplication>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -435,11 +369,7 @@ namespace Azure.ResourceManager.Resources
                 await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-=======
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 var originalResponse = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ArmApplication(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -469,11 +399,7 @@ namespace Azure.ResourceManager.Resources
                 TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-=======
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 var originalResponse = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ArmApplication(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -492,11 +418,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-        public async virtual Task<Response<ArmApplication>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-=======
         public virtual async Task<Response<ArmApplication>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -506,11 +428,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-=======
                 await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 var originalResponse = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ArmApplication(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -539,11 +457,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplication.cs
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
-=======
                 TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Application.cs
                 var originalResponse = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ArmApplication(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

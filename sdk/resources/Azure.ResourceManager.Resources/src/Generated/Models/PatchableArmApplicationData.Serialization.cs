@@ -12,11 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/ArmApplicationUpdateOptions.Serialization.cs
-    public partial class ArmApplicationUpdateOptions : IUtf8JsonSerializable
-=======
     public partial class PatchableArmApplicationData : IUtf8JsonSerializable
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/PatchableArmApplicationData.Serialization.cs
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -82,11 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/ArmApplicationUpdateOptions.Serialization.cs
-        internal static ArmApplicationUpdateOptions DeserializeArmApplicationUpdateOptions(JsonElement element)
-=======
         internal static PatchableArmApplicationData DeserializePatchableArmApplicationData(JsonElement element)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/PatchableArmApplicationData.Serialization.cs
         {
             Optional<ArmPlan> plan = default;
             Optional<string> kind = default;
@@ -349,11 +341,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/ArmApplicationUpdateOptions.Serialization.cs
-            return new ArmApplicationUpdateOptions(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
-=======
             return new PatchableArmApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/PatchableArmApplicationData.Serialization.cs
         }
     }
 }

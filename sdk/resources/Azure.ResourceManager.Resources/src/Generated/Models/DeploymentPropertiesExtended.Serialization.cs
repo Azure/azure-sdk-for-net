@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<TimeSpan> duration = default;
             Optional<object> outputs = default;
             Optional<IReadOnlyList<ProviderData>> providers = default;
-            Optional<IReadOnlyList<Dependency>> dependencies = default;
+            Optional<IReadOnlyList<ArmDependency>> dependencies = default;
             Optional<TemplateLink> templateLink = default;
             Optional<object> parameters = default;
             Optional<ParametersLink> parametersLink = default;
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Dependency> array = new List<Dependency>();
+                    List<ArmDependency> array = new List<ArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Dependency.DeserializeDependency(item));
+                        array.Add(ArmDependency.DeserializeArmDependency(item));
                     }
                     dependencies = array;
                     continue;

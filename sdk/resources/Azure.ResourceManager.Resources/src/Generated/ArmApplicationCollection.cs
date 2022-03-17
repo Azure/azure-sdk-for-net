@@ -38,11 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _armApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmApplication.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ArmApplication.ResourceType, out string armApplicationApplicationsApiVersion);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-            _armApplicationApplicationsRestClient = new ApplicationsRestOperations(_armApplicationApplicationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armApplicationApplicationsApiVersion);
-=======
             _armApplicationApplicationsRestClient = new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, armApplicationApplicationsApiVersion);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,11 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-        public async virtual Task<ArmOperation<ArmApplication>> CreateOrUpdateAsync(bool waitForCompletion, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
-=======
         public virtual async Task<ArmOperation<ArmApplication>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -80,11 +72,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armApplicationApplicationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation<ArmApplication>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response, OperationFinalStateVia.Location);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-                if (waitForCompletion)
-=======
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -106,11 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-        public virtual ArmOperation<ArmApplication> CreateOrUpdate(bool waitForCompletion, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
-=======
         public virtual ArmOperation<ArmApplication> CreateOrUpdate(WaitUntil waitUntil, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -121,11 +105,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armApplicationApplicationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters, cancellationToken);
                 var operation = new ResourcesArmOperation<ArmApplication>(new ArmApplicationOperationSource(Client), _armApplicationApplicationsClientDiagnostics, Pipeline, _armApplicationApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationName, parameters).Request, response, OperationFinalStateVia.Location);
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-                if (waitForCompletion)
-=======
                 if (waitUntil == WaitUntil.Completed)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -145,11 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-        public async virtual Task<Response<ArmApplication>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
-=======
         public virtual async Task<Response<ArmApplication>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
@@ -159,11 +135,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _armApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-                    throw await _armApplicationApplicationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-=======
                     throw new RequestFailedException(response.GetRawResponse());
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
                 return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,11 +164,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _armApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationName, cancellationToken);
                 if (response.Value == null)
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-                    throw _armApplicationApplicationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-=======
                     throw new RequestFailedException(response.GetRawResponse());
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
                 return Response.FromValue(new ArmApplication(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,11 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ArmApplicationCollection.cs
-        public async virtual Task<Response<ArmApplication>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
-=======
         public virtual async Task<Response<ArmApplication>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/ApplicationCollection.cs
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 

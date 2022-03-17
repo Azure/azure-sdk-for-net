@@ -29,11 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The approver service principal Id. </param>
         /// <param name="jitApproverType"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/JitApprover.cs
-        internal JitApprover(string id, JitApproverType? type, string displayName)
-=======
         internal JitApprover(string id, JitApproverType? jitApproverType, string displayName)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/JitApproverDefinition.cs
         {
             Id = id;
             JitApproverType = jitApproverType;

@@ -43,11 +43,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of ArmApplications and their operations over a ArmApplication. </returns>
         public virtual ArmApplicationCollection GetArmApplications()
         {
-<<<<<<< HEAD
-            return new ArmApplicationCollection(Client, Id);
-=======
             return GetCachedClient(Client => new ArmApplicationCollection(Client, Id));
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>

@@ -63,10 +63,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-<<<<<<< HEAD
-=======
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         public async Task<Response<ArmApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -97,10 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-<<<<<<< HEAD
-=======
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         public Response<ArmApplicationData> Get(string subscriptionId, string resourceGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -226,10 +220,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-<<<<<<< HEAD
-=======
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -256,10 +247,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> Parameters supplied to the create or update a managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/> or <paramref name="parameters"/> is null. </exception>
-<<<<<<< HEAD
-=======
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -279,11 +267,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-<<<<<<< HEAD
-        internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationUpdateOptions options)
-=======
         internal Azure.Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, PatchableArmApplicationData data)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -313,14 +297,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="data"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public async Task<Response<ArmApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArmApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationName, PatchableArmApplicationData data, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -349,14 +328,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="applicationName"> The name of the managed application. </param>
         /// <param name="data"> Parameters supplied to update an existing managed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is null. </exception>
-        public Response<ArmApplicationData> Update(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationUpdateOptions options = null, CancellationToken cancellationToken = default)
-=======
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArmApplicationData> Update(string subscriptionId, string resourceGroupName, string applicationName, PatchableArmApplicationData data, CancellationToken cancellationToken = default)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

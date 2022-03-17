@@ -11,20 +11,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment dependency information. </summary>
-    public partial class Dependency
+    public partial class ArmDependency
     {
-        /// <summary> Initializes a new instance of Dependency. </summary>
-        internal Dependency()
+        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        internal ArmDependency()
         {
             DependsOn = new ChangeTrackingList<BasicDependency>();
         }
 
-        /// <summary> Initializes a new instance of Dependency. </summary>
+        /// <summary> Initializes a new instance of ArmDependency. </summary>
         /// <param name="dependsOn"> The list of dependencies. </param>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal Dependency(IReadOnlyList<BasicDependency> dependsOn, string id, string resourceType, string resourceName)
+        internal ArmDependency(IReadOnlyList<BasicDependency> dependsOn, string id, string resourceType, string resourceName)
         {
             DependsOn = dependsOn;
             Id = id;

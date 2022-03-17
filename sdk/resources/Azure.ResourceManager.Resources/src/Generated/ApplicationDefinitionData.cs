@@ -50,11 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-<<<<<<< HEAD
-        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicy lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, type, systemData, tags, location, managedBy, sku)
-=======
         internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicy lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         {
             LockLevel = lockLevel;
             DisplayName = displayName;

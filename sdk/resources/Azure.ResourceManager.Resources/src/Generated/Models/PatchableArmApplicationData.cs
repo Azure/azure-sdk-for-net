@@ -12,29 +12,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about managed application. </summary>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/ArmApplicationUpdateOptions.cs
-    public partial class ArmApplicationUpdateOptions : ApplicationResource
-    {
-        /// <summary> Initializes a new instance of ArmApplicationUpdateOptions. </summary>
-        /// <param name="location"> The location. </param>
-        public ArmApplicationUpdateOptions(AzureLocation location) : base(location)
-=======
     public partial class PatchableArmApplicationData : ApplicationResource
     {
         /// <summary> Initializes a new instance of PatchableArmApplicationData. </summary>
         /// <param name="location"> The location. </param>
         public PatchableArmApplicationData(AzureLocation location) : base(location)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/PatchableArmApplicationData.cs
         {
             Authorizations = new ChangeTrackingList<ApplicationAuthorization>();
             Artifacts = new ChangeTrackingList<ApplicationArtifact>();
         }
 
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/ArmApplicationUpdateOptions.cs
-        /// <summary> Initializes a new instance of ArmApplicationUpdateOptions. </summary>
-=======
         /// <summary> Initializes a new instance of PatchableArmApplicationData. </summary>
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/PatchableArmApplicationData.cs
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,11 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/ArmApplicationUpdateOptions.cs
-        internal ArmApplicationUpdateOptions(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, Plan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetails billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, type, systemData, tags, location, managedBy, sku)
-=======
         internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ArmPlan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetails billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Models/PatchableArmApplicationData.cs
         {
             Plan = plan;
             Kind = kind;

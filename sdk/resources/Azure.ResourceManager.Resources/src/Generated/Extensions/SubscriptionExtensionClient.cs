@@ -43,11 +43,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         private ClientDiagnostics ArmApplicationApplicationsClientDiagnostics => _armApplicationApplicationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmApplication.ResourceType.Namespace, DiagnosticOptions);
-<<<<<<< HEAD
-        private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(ArmApplicationApplicationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ArmApplication.ResourceType));
-=======
         private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ArmApplication.ResourceType));
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequest.ResourceType.Namespace, DiagnosticOptions);
         private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequest.ResourceType));
         private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);

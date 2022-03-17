@@ -33,14 +33,6 @@ namespace Azure.ResourceManager.Resources
             return GetExtensionClient(resourceGroup).GetDeployments();
         }
 
-<<<<<<< HEAD
-        /// <summary> Gets a collection of ArmApplications in the ArmApplication. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ArmApplications and their operations over a ArmApplication. </returns>
-        public static ArmApplicationCollection GetArmApplications(this ResourceGroup resourceGroup)
-        {
-            return GetExtensionClient(resourceGroup).GetArmApplications();
-=======
         /// <summary>
         /// Gets a deployment.
         /// Request Path: /{scope}/providers/Microsoft.Resources/deployments/{deploymentName}
@@ -107,7 +99,6 @@ namespace Azure.ResourceManager.Resources
         public static Response<ArmApplication> GetArmApplication(this ResourceGroup resourceGroup, string applicationName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetArmApplications().Get(applicationName, cancellationToken);
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>

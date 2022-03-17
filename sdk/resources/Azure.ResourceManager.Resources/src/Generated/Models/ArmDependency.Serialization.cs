@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class Dependency
+    public partial class ArmDependency
     {
-        internal static Dependency DeserializeDependency(JsonElement element)
+        internal static ArmDependency DeserializeArmDependency(JsonElement element)
         {
             Optional<IReadOnlyList<BasicDependency>> dependsOn = default;
             Optional<string> id = default;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new Dependency(Optional.ToList(dependsOn), id.Value, resourceType.Value, resourceName.Value);
+            return new ArmDependency(Optional.ToList(dependsOn), id.Value, resourceType.Value, resourceName.Value);
         }
     }
 }

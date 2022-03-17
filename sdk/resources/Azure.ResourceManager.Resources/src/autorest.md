@@ -173,6 +173,7 @@ directive:
     transform: >
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentOperationProperties.properties.duration["format"] = "duration";
+      $.Dependency["x-ms-client-name"] = "ArmDependency";
 ```
 
 ### Tag: package-track2-preview

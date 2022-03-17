@@ -47,11 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
             bool jitAccessEnabled = default;
             Optional<JitApprovalMode> jitApprovalMode = default;
             Optional<IList<JitApprover>> jitApprovers = default;
-<<<<<<< HEAD
-            Optional<string> maximumJitAccessDuration = default;
-=======
             Optional<TimeSpan> maximumJitAccessDuration = default;
->>>>>>> 90ad54a2604e5bd07abc362541484aacc229dd2e
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jitAccessEnabled"))
