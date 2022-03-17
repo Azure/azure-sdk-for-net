@@ -15,7 +15,7 @@ namespace Azure.Data.Tables
         /// The versions of Azure Tables supported by this client
         /// library.
         /// </summary>
-        private const ServiceVersion Latest = ServiceVersion.V2019_02_02;
+        private const ServiceVersion Latest = ServiceVersion.V2020_12_06;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableClientOptions"/> class.
@@ -30,6 +30,7 @@ namespace Azure.Data.Tables
             VersionString = serviceVersion switch
             {
                 ServiceVersion.V2019_02_02 => "2019-02-02",
+                ServiceVersion.V2020_12_06 => "2020-12-06",
                 _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
             };
         }
@@ -43,9 +44,14 @@ namespace Azure.Data.Tables
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// The Tables API version 2019-02-02
+            /// The Tables API version 2019-02-02.
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The Tables API version 2020-12-06.
+            /// </summary>
+            V2020_12_06 = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

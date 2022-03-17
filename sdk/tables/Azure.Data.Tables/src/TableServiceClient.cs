@@ -327,7 +327,7 @@ namespace Azure.Data.Tables
             TableAccountSasResourceTypes resourceTypes,
             DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(permissions, resourceTypes, expiresOn);
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableAccountSasBuilder"/>.</returns>
         public virtual TableAccountSasBuilder GetSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
-            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn) { Version = _version };
+            return new TableAccountSasBuilder(rawPermissions, resourceTypes, expiresOn);
         }
 
         /// <summary>
