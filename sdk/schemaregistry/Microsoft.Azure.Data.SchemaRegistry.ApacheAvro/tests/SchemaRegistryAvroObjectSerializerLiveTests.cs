@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
-        public async Task CannotSerializeUnsupportedType()
+        public void CannotSerializeUnsupportedType()
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
@@ -144,11 +144,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.ThrowsAsync<ArgumentException>(async () => await serializer.SerializeAsync<BinaryContent, TimeZoneInfo>(timeZoneInfo));
-            await Task.CompletedTask;
         }
 
         [RecordedTest]
-        public async Task CannotDeserializeUnsupportedType()
+        public void CannotDeserializeUnsupportedType()
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
@@ -160,11 +159,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 ContentType = "avro/binary+234234"
             };
             Assert.ThrowsAsync<ArgumentException>(async () => await serializer.DeserializeAsync<TimeZoneInfo>(content));
-            await Task.CompletedTask;
         }
 
         [RecordedTest]
-        public async Task CannotDeserializeWithNullSchemaId()
+        public void CannotDeserializeWithNullSchemaId()
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
@@ -176,7 +174,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 ContentType = null
             };
             Assert.ThrowsAsync<ArgumentNullException>(async () => await serializer.DeserializeAsync<TimeZoneInfo>(content));
-            await Task.CompletedTask;
         }
 
         [RecordedTest]
@@ -273,6 +270,16 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             Assert.AreEqual(42, deserialized.Age);
         }
 
+        [RecordedTest]
+        public void SerializingToMessageTypeWithoutConstructorThrows()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await serializer.SerializeAsync(new Employee(), messageType: typeof(BinaryContentWithNoConstructor)));
+        }
+
         private class InvalidAvroModel : ISpecificRecord
         {
             public virtual Schema Schema => Schema.Parse("{\"type\":\"record\",\"name\":\"Invalid\"}");
@@ -280,6 +287,13 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             public virtual object Get(int fieldPos) => throw new NotImplementedException();
 
             public virtual void Put(int fieldPos, object fieldValue) => throw new NotImplementedException();
+        }
+
+        public class BinaryContentWithNoConstructor : BinaryContent
+        {
+            internal BinaryContentWithNoConstructor()
+            {
+            }
         }
     }
 }

@@ -123,6 +123,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
             messageType ??= typeof(BinaryContent);
+            if (messageType.GetConstructor(Type.EmptyTypes) == null)
+            {
+                throw new InvalidOperationException(
+                    $"The type {messageType} must have a public parameterless constructor in order to use it as the 'MessageContent' type to serialize to.");
+            }
             var message = (BinaryContent)Activator.CreateInstance(messageType);
             message.Data = bd;
             message.ContentType = $"{AvroMimeType}+{schemaId}";
