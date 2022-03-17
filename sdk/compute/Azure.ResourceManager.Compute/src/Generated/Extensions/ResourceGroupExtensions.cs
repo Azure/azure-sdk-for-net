@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Compute
             );
         }
 
-        /// <summary> Gets a collection of AvailabilitySets in the AvailabilitySet. </summary>
+        /// <summary> Gets a collection of AvailabilitySetResources in the AvailabilitySetResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AvailabilitySets and their operations over a AvailabilitySet. </returns>
+        /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
         public static AvailabilitySetCollection GetAvailabilitySets(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetAvailabilitySets();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public static async Task<Response<AvailabilitySet>> GetAvailabilitySetAsync(this ResourceGroup resourceGroup, string availabilitySetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvailabilitySetResource>> GetAvailabilitySetAsync(this ResourceGroup resourceGroup, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetAvailabilitySets().GetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
         }
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public static Response<AvailabilitySet> GetAvailabilitySet(this ResourceGroup resourceGroup, string availabilitySetName, CancellationToken cancellationToken = default)
+        public static Response<AvailabilitySetResource> GetAvailabilitySet(this ResourceGroup resourceGroup, string availabilitySetName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetAvailabilitySets().Get(availabilitySetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProximityPlacementGroups in the ProximityPlacementGroup. </summary>
+        /// <summary> Gets a collection of ProximityPlacementGroupResources in the ProximityPlacementGroupResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProximityPlacementGroups and their operations over a ProximityPlacementGroup. </returns>
+        /// <returns> An object representing collection of ProximityPlacementGroupResources and their operations over a ProximityPlacementGroupResource. </returns>
         public static ProximityPlacementGroupCollection GetProximityPlacementGroups(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetProximityPlacementGroups();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
-        public static async Task<Response<ProximityPlacementGroup>> GetProximityPlacementGroupAsync(this ResourceGroup resourceGroup, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProximityPlacementGroupResource>> GetProximityPlacementGroupAsync(this ResourceGroup resourceGroup, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetProximityPlacementGroups().GetAsync(proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
         }
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
-        public static Response<ProximityPlacementGroup> GetProximityPlacementGroup(this ResourceGroup resourceGroup, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public static Response<ProximityPlacementGroupResource> GetProximityPlacementGroup(this ResourceGroup resourceGroup, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetProximityPlacementGroups().Get(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DedicatedHostGroups in the DedicatedHostGroup. </summary>
+        /// <summary> Gets a collection of DedicatedHostGroupResources in the DedicatedHostGroupResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DedicatedHostGroups and their operations over a DedicatedHostGroup. </returns>
+        /// <returns> An object representing collection of DedicatedHostGroupResources and their operations over a DedicatedHostGroupResource. </returns>
         public static DedicatedHostGroupCollection GetDedicatedHostGroups(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDedicatedHostGroups();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
-        public static async Task<Response<DedicatedHostGroup>> GetDedicatedHostGroupAsync(this ResourceGroup resourceGroup, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this ResourceGroup resourceGroup, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetDedicatedHostGroups().GetAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
-        public static Response<DedicatedHostGroup> GetDedicatedHostGroup(this ResourceGroup resourceGroup, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<DedicatedHostGroupResource> GetDedicatedHostGroup(this ResourceGroup resourceGroup, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SshPublicKeys in the SshPublicKey. </summary>
+        /// <summary> Gets a collection of SshPublicKeyResources in the SshPublicKeyResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SshPublicKeys and their operations over a SshPublicKey. </returns>
+        /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
         public static SshPublicKeyCollection GetSshPublicKeys(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetSshPublicKeys();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
-        public static async Task<Response<SshPublicKey>> GetSshPublicKeyAsync(this ResourceGroup resourceGroup, string sshPublicKeyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SshPublicKeyResource>> GetSshPublicKeyAsync(this ResourceGroup resourceGroup, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetSshPublicKeys().GetAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
         }
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
-        public static Response<SshPublicKey> GetSshPublicKey(this ResourceGroup resourceGroup, string sshPublicKeyName, CancellationToken cancellationToken = default)
+        public static Response<SshPublicKeyResource> GetSshPublicKey(this ResourceGroup resourceGroup, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
+        /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
+        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetVirtualMachines();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public static async Task<Response<VirtualMachine>> GetVirtualMachineAsync(this ResourceGroup resourceGroup, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroup resourceGroup, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -217,14 +217,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public static Response<VirtualMachine> GetVirtualMachine(this ResourceGroup resourceGroup, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroup resourceGroup, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetVirtualMachines().Get(vmName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSets in the VirtualMachineScaleSet. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the VirtualMachineScaleSetResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualMachineScaleSets and their operations over a VirtualMachineScaleSet. </returns>
+        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
         public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetVirtualMachineScaleSets();
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public static async Task<Response<VirtualMachineScaleSet>> GetVirtualMachineScaleSetAsync(this ResourceGroup resourceGroup, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroup resourceGroup, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -257,14 +257,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public static Response<VirtualMachineScaleSet> GetVirtualMachineScaleSet(this ResourceGroup resourceGroup, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroup resourceGroup, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Images in the Image. </summary>
+        /// <summary> Gets a collection of ImageResources in the ImageResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Images and their operations over a Image. </returns>
+        /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
         public static ImageCollection GetImages(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetImages();
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public static async Task<Response<Image>> GetImageAsync(this ResourceGroup resourceGroup, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ImageResource>> GetImageAsync(this ResourceGroup resourceGroup, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public static Response<Image> GetImage(this ResourceGroup resourceGroup, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ImageResource> GetImage(this ResourceGroup resourceGroup, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetImages().Get(imageName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RestorePointGroups in the RestorePointGroup. </summary>
+        /// <summary> Gets a collection of RestorePointGroupResources in the RestorePointGroupResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RestorePointGroups and their operations over a RestorePointGroup. </returns>
+        /// <returns> An object representing collection of RestorePointGroupResources and their operations over a RestorePointGroupResource. </returns>
         public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetRestorePointGroups();
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        public static async Task<Response<RestorePointGroup>> GetRestorePointGroupAsync(this ResourceGroup resourceGroup, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroup resourceGroup, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetRestorePointGroups().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -337,14 +337,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        public static Response<RestorePointGroup> GetRestorePointGroup(this ResourceGroup resourceGroup, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroup resourceGroup, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CapacityReservationGroups in the CapacityReservationGroup. </summary>
+        /// <summary> Gets a collection of CapacityReservationGroupResources in the CapacityReservationGroupResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CapacityReservationGroups and their operations over a CapacityReservationGroup. </returns>
+        /// <returns> An object representing collection of CapacityReservationGroupResources and their operations over a CapacityReservationGroupResource. </returns>
         public static CapacityReservationGroupCollection GetCapacityReservationGroups(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetCapacityReservationGroups();
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public static async Task<Response<CapacityReservationGroup>> GetCapacityReservationGroupAsync(this ResourceGroup resourceGroup, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroup resourceGroup, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetCapacityReservationGroups().GetAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -377,14 +377,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public static Response<CapacityReservationGroup> GetCapacityReservationGroup(this ResourceGroup resourceGroup, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroup resourceGroup, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Disks in the Disk. </summary>
+        /// <summary> Gets a collection of DiskResources in the DiskResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Disks and their operations over a Disk. </returns>
+        /// <returns> An object representing collection of DiskResources and their operations over a DiskResource. </returns>
         public static DiskCollection GetDisks(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDisks();
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public static async Task<Response<Disk>> GetDiskAsync(this ResourceGroup resourceGroup, string diskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskResource>> GetDiskAsync(this ResourceGroup resourceGroup, string diskName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
         }
@@ -415,14 +415,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public static Response<Disk> GetDisk(this ResourceGroup resourceGroup, string diskName, CancellationToken cancellationToken = default)
+        public static Response<DiskResource> GetDisk(this ResourceGroup resourceGroup, string diskName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetDisks().Get(diskName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Snapshots in the Snapshot. </summary>
+        /// <summary> Gets a collection of SnapshotResources in the SnapshotResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Snapshots and their operations over a Snapshot. </returns>
+        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
         public static SnapshotCollection GetSnapshots(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetSnapshots();
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public static async Task<Response<Snapshot>> GetSnapshotAsync(this ResourceGroup resourceGroup, string snapshotName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroup resourceGroup, string snapshotName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
@@ -453,14 +453,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public static Response<Snapshot> GetSnapshot(this ResourceGroup resourceGroup, string snapshotName, CancellationToken cancellationToken = default)
+        public static Response<SnapshotResource> GetSnapshot(this ResourceGroup resourceGroup, string snapshotName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetSnapshots().Get(snapshotName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskEncryptionSets in the DiskEncryptionSet. </summary>
+        /// <summary> Gets a collection of DiskEncryptionSetResources in the DiskEncryptionSetResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DiskEncryptionSets and their operations over a DiskEncryptionSet. </returns>
+        /// <returns> An object representing collection of DiskEncryptionSetResources and their operations over a DiskEncryptionSetResource. </returns>
         public static DiskEncryptionSetCollection GetDiskEncryptionSets(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDiskEncryptionSets();
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public static async Task<Response<DiskEncryptionSet>> GetDiskEncryptionSetAsync(this ResourceGroup resourceGroup, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskEncryptionSetResource>> GetDiskEncryptionSetAsync(this ResourceGroup resourceGroup, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetDiskEncryptionSets().GetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
         }
@@ -491,14 +491,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public static Response<DiskEncryptionSet> GetDiskEncryptionSet(this ResourceGroup resourceGroup, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public static Response<DiskEncryptionSetResource> GetDiskEncryptionSet(this ResourceGroup resourceGroup, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskAccesses in the DiskAccess. </summary>
+        /// <summary> Gets a collection of DiskAccessResources in the DiskAccessResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DiskAccesses and their operations over a DiskAccess. </returns>
+        /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
         public static DiskAccessCollection GetDiskAccesses(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDiskAccesses();
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public static async Task<Response<DiskAccess>> GetDiskAccessAsync(this ResourceGroup resourceGroup, string diskAccessName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskAccessResource>> GetDiskAccessAsync(this ResourceGroup resourceGroup, string diskAccessName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
         }
@@ -529,14 +529,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public static Response<DiskAccess> GetDiskAccess(this ResourceGroup resourceGroup, string diskAccessName, CancellationToken cancellationToken = default)
+        public static Response<DiskAccessResource> GetDiskAccess(this ResourceGroup resourceGroup, string diskAccessName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetDiskAccesses().Get(diskAccessName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Galleries in the Gallery. </summary>
+        /// <summary> Gets a collection of GalleryResources in the GalleryResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of Galleries and their operations over a Gallery. </returns>
+        /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
         public static GalleryCollection GetGalleries(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetGalleries();
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public static async Task<Response<Gallery>> GetGalleryAsync(this ResourceGroup resourceGroup, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroup resourceGroup, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetGalleries().GetAsync(galleryName, select, cancellationToken).ConfigureAwait(false);
         }
@@ -569,14 +569,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public static Response<Gallery> GetGallery(this ResourceGroup resourceGroup, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public static Response<GalleryResource> GetGallery(this ResourceGroup resourceGroup, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetGalleries().Get(galleryName, select, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServices in the CloudService. </summary>
+        /// <summary> Gets a collection of CloudServiceResources in the CloudServiceResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CloudServices and their operations over a CloudService. </returns>
+        /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
         public static CloudServiceCollection GetCloudServices(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetCloudServices();
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public static async Task<Response<CloudService>> GetCloudServiceAsync(this ResourceGroup resourceGroup, string cloudServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceResource>> GetCloudServiceAsync(this ResourceGroup resourceGroup, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetCloudServices().GetAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
         }
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public static Response<CloudService> GetCloudService(this ResourceGroup resourceGroup, string cloudServiceName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceResource> GetCloudService(this ResourceGroup resourceGroup, string cloudServiceName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetCloudServices().Get(cloudServiceName, cancellationToken);
         }

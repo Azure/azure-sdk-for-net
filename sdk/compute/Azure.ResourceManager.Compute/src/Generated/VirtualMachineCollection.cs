@@ -23,7 +23,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of VirtualMachine and their operations over its parent. </summary>
-    public partial class VirtualMachineCollection : ArmCollection, IEnumerable<VirtualMachine>, IAsyncEnumerable<VirtualMachine>
+    public partial class VirtualMachineCollection : ArmCollection, IEnumerable<VirtualMachineResource>, IAsyncEnumerable<VirtualMachineResource>
     {
         private readonly ClientDiagnostics _virtualMachineClientDiagnostics;
         private readonly VirtualMachinesRestOperations _virtualMachineRestClient;
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachine.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(VirtualMachine.ResourceType, out string virtualMachineApiVersion);
+            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(VirtualMachineResource.ResourceType, out string virtualMachineApiVersion);
             _virtualMachineRestClient = new VirtualMachinesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachine>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _virtualMachineRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachine>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachine> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _virtualMachineRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmName, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachine>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachine>> GetAsync(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineResource>> GetAsync(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual Response<VirtualMachine> Get(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineResource> Get(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachine> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachine>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualMachineRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<VirtualMachine>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualMachineRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +226,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: VirtualMachines_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachine> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachine> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualMachineRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<VirtualMachine> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualMachineRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachine>> GetIfExistsAsync(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineResource>> GetIfExistsAsync(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
@@ -338,8 +338,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<VirtualMachine>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualMachineResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual Response<VirtualMachine> GetIfExists(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineResource> GetIfExists(string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
@@ -368,8 +368,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<VirtualMachine>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualMachineResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<VirtualMachine> IEnumerable<VirtualMachine>.GetEnumerator()
+        IEnumerator<VirtualMachineResource> IEnumerable<VirtualMachineResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VirtualMachine> IAsyncEnumerable<VirtualMachine>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualMachineResource> IAsyncEnumerable<VirtualMachineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

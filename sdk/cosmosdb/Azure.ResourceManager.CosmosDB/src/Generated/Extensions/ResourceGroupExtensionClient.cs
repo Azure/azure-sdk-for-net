@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.CosmosDB
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DatabaseAccounts in the DatabaseAccount. </summary>
-        /// <returns> An object representing collection of DatabaseAccounts and their operations over a DatabaseAccount. </returns>
+        /// <summary> Gets a collection of DatabaseAccountResources in the DatabaseAccountResource. </summary>
+        /// <returns> An object representing collection of DatabaseAccountResources and their operations over a DatabaseAccountResource. </returns>
         public virtual DatabaseAccountCollection GetDatabaseAccounts()
         {
             return GetCachedClient(Client => new DatabaseAccountCollection(Client, Id));

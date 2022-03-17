@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class PrivateEndpointConnectionTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccount _databaseAccount;
+        private DatabaseAccountResource _databaseAccount;
 
         public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
+                ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             // need to overwrite with the resource group fetched by ArmClient, otherwise it won't be recorded
             _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
 
-            _databaseAccount = await ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).GetAsync();
+            _databaseAccount = await ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await CreatePrivateEndpoint();
 
             var privateEndpointConnections = await PrivateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            PrivateEndpointConnection privateEndpointConnection = await PrivateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
+            PrivateEndpointConnectionResource privateEndpointConnection = await PrivateEndpointConnectionCollection.GetIfExistsAsync(privateEndpointConnections[0].Data.Name);
             Assert.IsNotNull(privateEndpointConnection);
 
             await privateEndpointConnection.DeleteAsync(WaitUntil.Completed);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return (await _resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, name, privateEndpointData)).Value;
         }
 
-        private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnection actualValue)
+        private void VerifyPrivateEndpointConnections(PrivateLinkServiceConnection expectedValue, PrivateEndpointConnectionResource actualValue)
         {
             // Services will give diffferent ids and names for the incoming private endpoint connections, so comparing them is meaningless
             //Assert.AreEqual(expectedValue.Id, actualValue.Id);

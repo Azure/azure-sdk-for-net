@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineScaleSetOperationSource : IOperationSource<VirtualMachineScaleSet>
+    internal class VirtualMachineScaleSetOperationSource : IOperationSource<VirtualMachineScaleSetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        VirtualMachineScaleSet IOperationSource<VirtualMachineScaleSet>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineScaleSetResource IOperationSource<VirtualMachineScaleSetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement);
-            return new VirtualMachineScaleSet(_client, data);
+            return new VirtualMachineScaleSetResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineScaleSet> IOperationSource<VirtualMachineScaleSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineScaleSetResource> IOperationSource<VirtualMachineScaleSetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineScaleSetData.DeserializeVirtualMachineScaleSetData(document.RootElement);
-            return new VirtualMachineScaleSet(_client, data);
+            return new VirtualMachineScaleSetResource(_client, data);
         }
     }
 }

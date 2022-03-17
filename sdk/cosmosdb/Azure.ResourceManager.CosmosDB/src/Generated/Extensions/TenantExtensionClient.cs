@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccount.ResourceType.Namespace, DiagnosticOptions);
-        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DatabaseAccount.ResourceType));
+        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccountResource.ResourceType.Namespace, DiagnosticOptions);
+        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DatabaseAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

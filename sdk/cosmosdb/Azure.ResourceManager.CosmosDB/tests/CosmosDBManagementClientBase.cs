@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             JsonPathSanitizers.Add("$..secondaryReadonlyMasterKey");
         }
 
-        protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
+        protected async Task<DatabaseAccountResource> CreateDatabaseAccount(string name, DatabaseAccountKind kind)
         {
             return await CreateDatabaseAccount(name, kind, null);
         }
 
-        protected async Task<DatabaseAccount> CreateDatabaseAccount(string name, DatabaseAccountKind kind, DatabaseAccountCapability capability)
+        protected async Task<DatabaseAccountResource> CreateDatabaseAccount(string name, DatabaseAccountKind kind, DatabaseAccountCapability capability)
         {
             var locations = new List<DatabaseAccountLocation>()
             {

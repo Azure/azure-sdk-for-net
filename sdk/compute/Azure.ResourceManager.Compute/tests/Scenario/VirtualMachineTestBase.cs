@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return nic;
         }
 
-        protected async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
+        protected async Task<VirtualMachineResource> CreateVirtualMachineAsync(string vmName)
         {
             var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();

@@ -13,193 +13,193 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region ResourcePool
-        /// <summary> Gets an object representing a ResourcePool along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourcePoolResource
+        /// <summary> Gets an object representing a ResourcePoolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourcePool" /> object. </returns>
-        public static ResourcePool GetResourcePool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourcePoolResource" /> object. </returns>
+        public static ResourcePoolResource GetResourcePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ResourcePool.ValidateResourceId(id);
-                return new ResourcePool(client, id);
+                ResourcePoolResource.ValidateResourceId(id);
+                return new ResourcePoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VMwareCluster
-        /// <summary> Gets an object representing a VMwareCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region VMwareClusterResource
+        /// <summary> Gets an object representing a VMwareClusterResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareCluster" /> object. </returns>
-        public static VMwareCluster GetVMwareCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareClusterResource" /> object. </returns>
+        public static VMwareClusterResource GetVMwareClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VMwareCluster.ValidateResourceId(id);
-                return new VMwareCluster(client, id);
+                VMwareClusterResource.ValidateResourceId(id);
+                return new VMwareClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VMwareHost
-        /// <summary> Gets an object representing a VMwareHost along with the instance operations that can be performed on it but with no data. </summary>
+        #region VMwareHostResource
+        /// <summary> Gets an object representing a VMwareHostResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareHost" /> object. </returns>
-        public static VMwareHost GetVMwareHost(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareHostResource" /> object. </returns>
+        public static VMwareHostResource GetVMwareHostResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VMwareHost.ValidateResourceId(id);
-                return new VMwareHost(client, id);
+                VMwareHostResource.ValidateResourceId(id);
+                return new VMwareHostResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VMwareDatastore
-        /// <summary> Gets an object representing a VMwareDatastore along with the instance operations that can be performed on it but with no data. </summary>
+        #region VMwareDatastoreResource
+        /// <summary> Gets an object representing a VMwareDatastoreResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMwareDatastore" /> object. </returns>
-        public static VMwareDatastore GetVMwareDatastore(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VMwareDatastoreResource" /> object. </returns>
+        public static VMwareDatastoreResource GetVMwareDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VMwareDatastore.ValidateResourceId(id);
-                return new VMwareDatastore(client, id);
+                VMwareDatastoreResource.ValidateResourceId(id);
+                return new VMwareDatastoreResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VCenter
-        /// <summary> Gets an object representing a VCenter along with the instance operations that can be performed on it but with no data. </summary>
+        #region VCenterResource
+        /// <summary> Gets an object representing a VCenterResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VCenter" /> object. </returns>
-        public static VCenter GetVCenter(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VCenterResource" /> object. </returns>
+        public static VCenterResource GetVCenterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VCenter.ValidateResourceId(id);
-                return new VCenter(client, id);
+                VCenterResource.ValidateResourceId(id);
+                return new VCenterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineResource
+        /// <summary> Gets an object representing a VirtualMachineResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
-        public static VirtualMachine GetVirtualMachine(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
+        public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualMachine.ValidateResourceId(id);
-                return new VirtualMachine(client, id);
+                VirtualMachineResource.ValidateResourceId(id);
+                return new VirtualMachineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualMachineTemplate
-        /// <summary> Gets an object representing a VirtualMachineTemplate along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualMachineTemplateResource
+        /// <summary> Gets an object representing a VirtualMachineTemplateResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualMachineTemplate" /> object. </returns>
-        public static VirtualMachineTemplate GetVirtualMachineTemplate(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualMachineTemplateResource" /> object. </returns>
+        public static VirtualMachineTemplateResource GetVirtualMachineTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualMachineTemplate.ValidateResourceId(id);
-                return new VirtualMachineTemplate(client, id);
+                VirtualMachineTemplateResource.ValidateResourceId(id);
+                return new VirtualMachineTemplateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetwork along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualNetworkResource
+        /// <summary> Gets an object representing a VirtualNetworkResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
-        public static VirtualNetwork GetVirtualNetwork(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualNetworkResource" /> object. </returns>
+        public static VirtualNetworkResource GetVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualNetwork.ValidateResourceId(id);
-                return new VirtualNetwork(client, id);
+                VirtualNetworkResource.ValidateResourceId(id);
+                return new VirtualNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InventoryItem
-        /// <summary> Gets an object representing a InventoryItem along with the instance operations that can be performed on it but with no data. </summary>
+        #region InventoryItemResource
+        /// <summary> Gets an object representing a InventoryItemResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InventoryItem" /> object. </returns>
-        public static InventoryItem GetInventoryItem(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InventoryItemResource" /> object. </returns>
+        public static InventoryItemResource GetInventoryItemResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                InventoryItem.ValidateResourceId(id);
-                return new InventoryItem(client, id);
+                InventoryItemResource.ValidateResourceId(id);
+                return new InventoryItemResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HybridIdentityMetadata
-        /// <summary> Gets an object representing a HybridIdentityMetadata along with the instance operations that can be performed on it but with no data. </summary>
+        #region HybridIdentityMetadataResource
+        /// <summary> Gets an object representing a HybridIdentityMetadataResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridIdentityMetadata" /> object. </returns>
-        public static HybridIdentityMetadata GetHybridIdentityMetadata(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
+        public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HybridIdentityMetadata.ValidateResourceId(id);
-                return new HybridIdentityMetadata(client, id);
+                HybridIdentityMetadataResource.ValidateResourceId(id);
+                return new HybridIdentityMetadataResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MachineExtension
-        /// <summary> Gets an object representing a MachineExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region MachineExtensionResource
+        /// <summary> Gets an object representing a MachineExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineExtension" /> object. </returns>
-        public static MachineExtension GetMachineExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineExtensionResource" /> object. </returns>
+        public static MachineExtensionResource GetMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MachineExtension.ValidateResourceId(id);
-                return new MachineExtension(client, id);
+                MachineExtensionResource.ValidateResourceId(id);
+                return new MachineExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GuestAgent
-        /// <summary> Gets an object representing a GuestAgent along with the instance operations that can be performed on it but with no data. </summary>
+        #region GuestAgentResource
+        /// <summary> Gets an object representing a GuestAgentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestAgent" /> object. </returns>
-        public static GuestAgent GetGuestAgent(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
+        public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                GuestAgent.ValidateResourceId(id);
-                return new GuestAgent(client, id);
+                GuestAgentResource.ValidateResourceId(id);
+                return new GuestAgentResource(client, id);
             }
             );
         }

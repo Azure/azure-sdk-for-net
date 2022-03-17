@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of InventoryItem and their operations over its parent. </summary>
-    public partial class InventoryItemCollection : ArmCollection, IEnumerable<InventoryItem>, IAsyncEnumerable<InventoryItem>
+    public partial class InventoryItemCollection : ArmCollection, IEnumerable<InventoryItemResource>, IAsyncEnumerable<InventoryItemResource>
     {
         private readonly ClientDiagnostics _inventoryItemClientDiagnostics;
         private readonly InventoryItemsRestOperations _inventoryItemRestClient;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal InventoryItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _inventoryItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", InventoryItem.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(InventoryItem.ResourceType, out string inventoryItemApiVersion);
+            _inventoryItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", InventoryItemResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(InventoryItemResource.ResourceType, out string inventoryItemApiVersion);
             _inventoryItemRestClient = new InventoryItemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inventoryItemApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VCenter.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VCenter.ResourceType), nameof(id));
+            if (id.ResourceType != VCenterResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VCenterResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<ArmOperation<InventoryItem>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<InventoryItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<InventoryItem>(Response.FromValue(new InventoryItem(Client, response), response.GetRawResponse()));
+                var operation = new ConnectedVMwarevSphereArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual ArmOperation<InventoryItem> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<InventoryItemResource> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemName, InventoryItemData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<InventoryItem>(Response.FromValue(new InventoryItem(Client, response), response.GetRawResponse()));
+                var operation = new ConnectedVMwarevSphereArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<Response<InventoryItem>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InventoryItemResource>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InventoryItem(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual Response<InventoryItem> Get(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual Response<InventoryItemResource> Get(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new InventoryItem(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: InventoryItems_ListByVCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InventoryItem" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InventoryItem> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InventoryItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<InventoryItem>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<InventoryItemResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _inventoryItemRestClient.ListByVCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItem(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -196,14 +196,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            async Task<Page<InventoryItem>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<InventoryItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _inventoryItemRestClient.ListByVCenterNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItem(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -220,17 +220,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: InventoryItems_ListByVCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InventoryItem" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InventoryItem> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="InventoryItemResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InventoryItemResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<InventoryItem> FirstPageFunc(int? pageSizeHint)
+            Page<InventoryItemResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _inventoryItemRestClient.ListByVCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItem(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            Page<InventoryItem> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<InventoryItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _inventoryItemRestClient.ListByVCenterNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItem(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new InventoryItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<Response<InventoryItem>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InventoryItemResource>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<InventoryItem>(null, response.GetRawResponse());
-                return Response.FromValue(new InventoryItem(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<InventoryItemResource>(null, response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual Response<InventoryItem> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual Response<InventoryItemResource> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
 
@@ -358,8 +358,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<InventoryItem>(null, response.GetRawResponse());
-                return Response.FromValue(new InventoryItem(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<InventoryItemResource>(null, response.GetRawResponse());
+                return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        IEnumerator<InventoryItem> IEnumerable<InventoryItem>.GetEnumerator()
+        IEnumerator<InventoryItemResource> IEnumerable<InventoryItemResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<InventoryItem> IAsyncEnumerable<InventoryItem>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<InventoryItemResource> IAsyncEnumerable<InventoryItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

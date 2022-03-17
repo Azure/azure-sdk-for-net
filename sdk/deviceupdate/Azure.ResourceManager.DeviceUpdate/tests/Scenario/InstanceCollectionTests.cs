@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
-            DeviceUpdateInstance instance = await CreateInstance(account, instanceName);
+            DeviceUpdateInstanceResource instance = await CreateInstance(account, instanceName);
             Assert.AreEqual(instanceName, instance.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, null, instance.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, instanceName, null));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
             _ = await CreateInstance(account, instanceName);
             int count = 0;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
+            DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
-            DeviceUpdateInstance instance = await CreateInstance(account, instanceName);
-            DeviceUpdateInstance getInstance = await account.GetDeviceUpdateInstances().GetAsync(instanceName);
+            DeviceUpdateInstanceResource instance = await CreateInstance(account, instanceName);
+            DeviceUpdateInstanceResource getInstance = await account.GetDeviceUpdateInstances().GetAsync(instanceName);
             ResourceDataHelper.AssertValidInstance(instance, getInstance);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await account.GetDeviceUpdateInstances().GetAsync(null));
         }

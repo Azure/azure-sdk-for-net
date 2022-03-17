@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccount.ResourceType.Namespace, DiagnosticOptions);
-        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DatabaseAccount.ResourceType));
-        private ClientDiagnostics RestorableDatabaseAccountClientDiagnostics => _restorableDatabaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableDatabaseAccount.ResourceType.Namespace, DiagnosticOptions);
-        private RestorableDatabaseAccountsRestOperations RestorableDatabaseAccountRestClient => _restorableDatabaseAccountRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RestorableDatabaseAccount.ResourceType));
+        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccountResource.ResourceType.Namespace, DiagnosticOptions);
+        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DatabaseAccountResource.ResourceType));
+        private ClientDiagnostics RestorableDatabaseAccountClientDiagnostics => _restorableDatabaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableDatabaseAccountResource.ResourceType.Namespace, DiagnosticOptions);
+        private RestorableDatabaseAccountsRestOperations RestorableDatabaseAccountRestClient => _restorableDatabaseAccountRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RestorableDatabaseAccountResource.ResourceType));
         private ClientDiagnostics ClusterResourceCassandraClustersClientDiagnostics => _clusterResourceCassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ClusterResource.ResourceType.Namespace, DiagnosticOptions);
         private CassandraClustersRestOperations ClusterResourceCassandraClustersRestClient => _clusterResourceCassandraClustersRestClient ??= new CassandraClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ClusterResource.ResourceType));
 
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.CosmosDB
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CosmosDBLocations in the CosmosDBLocation. </summary>
-        /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocation. </returns>
+        /// <summary> Gets a collection of CosmosDBLocationResources in the CosmosDBLocationResource. </summary>
+        /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public virtual CosmosDBLocationCollection GetCosmosDBLocations()
         {
             return GetCachedClient(Client => new CosmosDBLocationCollection(Client, Id));
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseAccount> GetDatabaseAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseAccountResource> GetDatabaseAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseAccount>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DatabaseAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DatabaseAccountClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDatabaseAccounts");
                 scope.Start();
                 try
                 {
                     var response = await DatabaseAccountRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccount(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccountResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: DatabaseAccounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseAccount> GetDatabaseAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseAccountResource> GetDatabaseAccounts(CancellationToken cancellationToken = default)
         {
-            Page<DatabaseAccount> FirstPageFunc(int? pageSizeHint)
+            Page<DatabaseAccountResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DatabaseAccountClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDatabaseAccounts");
                 scope.Start();
                 try
                 {
                     var response = DatabaseAccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccount(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DatabaseAccountResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: RestorableDatabaseAccounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableDatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableDatabaseAccount> GetRestorableDatabaseAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorableDatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableDatabaseAccountResource> GetRestorableDatabaseAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestorableDatabaseAccount>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RestorableDatabaseAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = RestorableDatabaseAccountClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetRestorableDatabaseAccounts");
                 scope.Start();
                 try
                 {
                     var response = await RestorableDatabaseAccountRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccountResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: RestorableDatabaseAccounts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDatabaseAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableDatabaseAccount> GetRestorableDatabaseAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorableDatabaseAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableDatabaseAccountResource> GetRestorableDatabaseAccounts(CancellationToken cancellationToken = default)
         {
-            Page<RestorableDatabaseAccount> FirstPageFunc(int? pageSizeHint)
+            Page<RestorableDatabaseAccountResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = RestorableDatabaseAccountClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetRestorableDatabaseAccounts");
                 scope.Start();
                 try
                 {
                     var response = RestorableDatabaseAccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccount(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorableDatabaseAccountResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

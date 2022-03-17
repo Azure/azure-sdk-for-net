@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
         }
 
-        private ClientDiagnostics VirtualWorkspaceWorkspacesClientDiagnostics => _virtualWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspace.ResourceType.Namespace, DiagnosticOptions);
-        private WorkspacesRestOperations VirtualWorkspaceWorkspacesRestClient => _virtualWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWorkspace.ResourceType));
-        private ClientDiagnostics ScalingPlanClientDiagnostics => _scalingPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlan.ResourceType.Namespace, DiagnosticOptions);
-        private ScalingPlansRestOperations ScalingPlanRestClient => _scalingPlanRestClient ??= new ScalingPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ScalingPlan.ResourceType));
-        private ClientDiagnostics VirtualApplicationGroupApplicationGroupsClientDiagnostics => _virtualApplicationGroupApplicationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroup.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationGroupsRestOperations VirtualApplicationGroupApplicationGroupsRestClient => _virtualApplicationGroupApplicationGroupsRestClient ??= new ApplicationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualApplicationGroup.ResourceType));
-        private ClientDiagnostics HostPoolClientDiagnostics => _hostPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPool.ResourceType.Namespace, DiagnosticOptions);
-        private HostPoolsRestOperations HostPoolRestClient => _hostPoolRestClient ??= new HostPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HostPool.ResourceType));
+        private ClientDiagnostics VirtualWorkspaceWorkspacesClientDiagnostics => _virtualWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspaceResource.ResourceType.Namespace, DiagnosticOptions);
+        private WorkspacesRestOperations VirtualWorkspaceWorkspacesRestClient => _virtualWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWorkspaceResource.ResourceType));
+        private ClientDiagnostics ScalingPlanClientDiagnostics => _scalingPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanResource.ResourceType.Namespace, DiagnosticOptions);
+        private ScalingPlansRestOperations ScalingPlanRestClient => _scalingPlanRestClient ??= new ScalingPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ScalingPlanResource.ResourceType));
+        private ClientDiagnostics VirtualApplicationGroupApplicationGroupsClientDiagnostics => _virtualApplicationGroupApplicationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroupResource.ResourceType.Namespace, DiagnosticOptions);
+        private ApplicationGroupsRestOperations VirtualApplicationGroupApplicationGroupsRestClient => _virtualApplicationGroupApplicationGroupsRestClient ??= new ApplicationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualApplicationGroupResource.ResourceType));
+        private ClientDiagnostics HostPoolClientDiagnostics => _hostPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPoolResource.ResourceType.Namespace, DiagnosticOptions);
+        private HostPoolsRestOperations HostPoolRestClient => _hostPoolRestClient ??= new HostPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HostPoolResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Workspaces_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWorkspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualWorkspace> GetVirtualWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWorkspaceResource> GetVirtualWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualWorkspace>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = await VirtualWorkspaceWorkspacesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<VirtualWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualWorkspaceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = await VirtualWorkspaceWorkspacesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: Workspaces_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWorkspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualWorkspace> GetVirtualWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWorkspaceResource> GetVirtualWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<VirtualWorkspace> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualWorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = VirtualWorkspaceWorkspacesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -122,14 +122,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<VirtualWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualWorkspaceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = VirtualWorkspaceWorkspacesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspace(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWorkspaceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -146,17 +146,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: ScalingPlans_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScalingPlan" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScalingPlan> GetScalingPlansAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScalingPlan>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ScalingPlanResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ScalingPlanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetScalingPlans");
                 scope.Start();
                 try
                 {
                     var response = await ScalingPlanRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<ScalingPlan>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ScalingPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ScalingPlanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetScalingPlans");
                 scope.Start();
                 try
                 {
                     var response = await ScalingPlanRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: ScalingPlans_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScalingPlan" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScalingPlan> GetScalingPlans(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScalingPlanResource> GetScalingPlans(CancellationToken cancellationToken = default)
         {
-            Page<ScalingPlan> FirstPageFunc(int? pageSizeHint)
+            Page<ScalingPlanResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ScalingPlanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetScalingPlans");
                 scope.Start();
                 try
                 {
                     var response = ScalingPlanRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<ScalingPlan> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ScalingPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ScalingPlanClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetScalingPlans");
                 scope.Start();
                 try
                 {
                     var response = ScalingPlanRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -231,17 +231,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualApplicationGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualApplicationGroup> GetVirtualApplicationGroupsAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualApplicationGroupResource> GetVirtualApplicationGroupsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualApplicationGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualApplicationGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualApplicationGroups");
                 scope.Start();
                 try
                 {
                     var response = await VirtualApplicationGroupApplicationGroupsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<VirtualApplicationGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualApplicationGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualApplicationGroups");
                 scope.Start();
                 try
                 {
                     var response = await VirtualApplicationGroupApplicationGroupsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,17 +274,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualApplicationGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualApplicationGroup> GetVirtualApplicationGroups(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualApplicationGroupResource> GetVirtualApplicationGroups(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<VirtualApplicationGroup> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualApplicationGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = VirtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualApplicationGroups");
                 scope.Start();
                 try
                 {
                     var response = VirtualApplicationGroupApplicationGroupsRestClient.ListBySubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -292,14 +292,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<VirtualApplicationGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualApplicationGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = VirtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetVirtualApplicationGroups");
                 scope.Start();
                 try
                 {
                     var response = VirtualApplicationGroupApplicationGroupsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualApplicationGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,17 +316,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HostPool> GetHostPoolsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HostPoolResource> GetHostPoolsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HostPool>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HostPoolResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = HostPoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHostPools");
                 scope.Start();
                 try
                 {
                     var response = await HostPoolRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -334,14 +334,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<HostPool>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HostPoolResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = HostPoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHostPools");
                 scope.Start();
                 try
                 {
                     var response = await HostPoolRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -358,17 +358,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: HostPools_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostPool" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HostPool> GetHostPools(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HostPoolResource> GetHostPools(CancellationToken cancellationToken = default)
         {
-            Page<HostPool> FirstPageFunc(int? pageSizeHint)
+            Page<HostPoolResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = HostPoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHostPools");
                 scope.Start();
                 try
                 {
                     var response = HostPoolRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<HostPool> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HostPoolResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = HostPoolClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetHostPools");
                 scope.Start();
                 try
                 {
                     var response = HostPoolRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HostPool(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new HostPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

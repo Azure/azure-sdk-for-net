@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Communication
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CommunicationServices in the CommunicationService. </summary>
-        /// <returns> An object representing collection of CommunicationServices and their operations over a CommunicationService. </returns>
+        /// <summary> Gets a collection of CommunicationServiceResources in the CommunicationServiceResource. </summary>
+        /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public virtual CommunicationServiceCollection GetCommunicationServices()
         {
             return GetCachedClient(Client => new CommunicationServiceCollection(Client, Id));

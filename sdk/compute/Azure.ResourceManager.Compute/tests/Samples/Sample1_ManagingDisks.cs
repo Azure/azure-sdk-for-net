@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 CreationData = new CreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
-            ArmOperation<Disk> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
-            Disk disk = lro.Value;
+            ArmOperation<DiskResource> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
+            DiskResource disk = lro.Value;
             #endregion Snippet:Managing_Disks_CreateADisk
         }
 
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // Now we get the disk collection from the resource group
             DiskCollection diskCollection = resourceGroup.GetDisks();
             // With ListAsync(), we can get a list of the disks
-            AsyncPageable<Disk> response = diskCollection.GetAllAsync();
-            await foreach (Disk disk in response)
+            AsyncPageable<DiskResource> response = diskCollection.GetAllAsync();
+            await foreach (DiskResource disk in response)
             {
                 Console.WriteLine(disk.Data.Name);
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // Now we get the disk collection from the resource group
             DiskCollection diskCollection = resourceGroup.GetDisks();
             string diskName = "myDisk";
-            Disk disk = await diskCollection.GetAsync(diskName);
+            DiskResource disk = await diskCollection.GetAsync(diskName);
             await disk.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Disks_DeleteDisk
         }

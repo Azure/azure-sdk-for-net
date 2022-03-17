@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 PlatformFaultDomainCount = 2,
                 Sku = new ComputeSku() { Name = "Aligned" }
             };
-            ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(WaitUntil.Completed, "myAvailabilitySet", availabilitySetData);
-            AvailabilitySet availabilitySet = asetOperation.Value;
+            ArmOperation<AvailabilitySetResource> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(WaitUntil.Completed, "myAvailabilitySet", availabilitySetData);
+            AvailabilitySetResource availabilitySet = asetOperation.Value;
 
             // Create VNet
             var vnetData = new VirtualNetworkData()
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 },
                 HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
             };
-            ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
-            VirtualMachine vm = vmOperation.Value;
+            ArmOperation<VirtualMachineResource> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
+            VirtualMachineResource vm = vmOperation.Value;
             #endregion
         }
 

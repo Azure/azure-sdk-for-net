@@ -13,145 +13,145 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region VirtualWorkspace
-        /// <summary> Gets an object representing a VirtualWorkspace along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualWorkspaceResource
+        /// <summary> Gets an object representing a VirtualWorkspaceResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualWorkspace" /> object. </returns>
-        public static VirtualWorkspace GetVirtualWorkspace(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualWorkspaceResource" /> object. </returns>
+        public static VirtualWorkspaceResource GetVirtualWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualWorkspace.ValidateResourceId(id);
-                return new VirtualWorkspace(client, id);
+                VirtualWorkspaceResource.ValidateResourceId(id);
+                return new VirtualWorkspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ScalingPlan
-        /// <summary> Gets an object representing a ScalingPlan along with the instance operations that can be performed on it but with no data. </summary>
+        #region ScalingPlanResource
+        /// <summary> Gets an object representing a ScalingPlanResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScalingPlan" /> object. </returns>
-        public static ScalingPlan GetScalingPlan(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScalingPlanResource" /> object. </returns>
+        public static ScalingPlanResource GetScalingPlanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ScalingPlan.ValidateResourceId(id);
-                return new ScalingPlan(client, id);
+                ScalingPlanResource.ValidateResourceId(id);
+                return new ScalingPlanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualApplicationGroup
-        /// <summary> Gets an object representing a VirtualApplicationGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualApplicationGroupResource
+        /// <summary> Gets an object representing a VirtualApplicationGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualApplicationGroup" /> object. </returns>
-        public static VirtualApplicationGroup GetVirtualApplicationGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationGroupResource" /> object. </returns>
+        public static VirtualApplicationGroupResource GetVirtualApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualApplicationGroup.ValidateResourceId(id);
-                return new VirtualApplicationGroup(client, id);
+                VirtualApplicationGroupResource.ValidateResourceId(id);
+                return new VirtualApplicationGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualApplication
-        /// <summary> Gets an object representing a VirtualApplication along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualApplicationResource
+        /// <summary> Gets an object representing a VirtualApplicationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualApplication" /> object. </returns>
-        public static VirtualApplication GetVirtualApplication(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualApplicationResource" /> object. </returns>
+        public static VirtualApplicationResource GetVirtualApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualApplication.ValidateResourceId(id);
-                return new VirtualApplication(client, id);
+                VirtualApplicationResource.ValidateResourceId(id);
+                return new VirtualApplicationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region VirtualDesktop
-        /// <summary> Gets an object representing a VirtualDesktop along with the instance operations that can be performed on it but with no data. </summary>
+        #region VirtualDesktopResource
+        /// <summary> Gets an object representing a VirtualDesktopResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VirtualDesktop" /> object. </returns>
-        public static VirtualDesktop GetVirtualDesktop(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VirtualDesktopResource" /> object. </returns>
+        public static VirtualDesktopResource GetVirtualDesktopResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                VirtualDesktop.ValidateResourceId(id);
-                return new VirtualDesktop(client, id);
+                VirtualDesktopResource.ValidateResourceId(id);
+                return new VirtualDesktopResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HostPool
-        /// <summary> Gets an object representing a HostPool along with the instance operations that can be performed on it but with no data. </summary>
+        #region HostPoolResource
+        /// <summary> Gets an object representing a HostPoolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostPool" /> object. </returns>
-        public static HostPool GetHostPool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostPoolResource" /> object. </returns>
+        public static HostPoolResource GetHostPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HostPool.ValidateResourceId(id);
-                return new HostPool(client, id);
+                HostPoolResource.ValidateResourceId(id);
+                return new HostPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region UserSession
-        /// <summary> Gets an object representing a UserSession along with the instance operations that can be performed on it but with no data. </summary>
+        #region UserSessionResource
+        /// <summary> Gets an object representing a UserSessionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserSession" /> object. </returns>
-        public static UserSession GetUserSession(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="UserSessionResource" /> object. </returns>
+        public static UserSessionResource GetUserSessionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                UserSession.ValidateResourceId(id);
-                return new UserSession(client, id);
+                UserSessionResource.ValidateResourceId(id);
+                return new UserSessionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SessionHost
-        /// <summary> Gets an object representing a SessionHost along with the instance operations that can be performed on it but with no data. </summary>
+        #region SessionHostResource
+        /// <summary> Gets an object representing a SessionHostResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SessionHost" /> object. </returns>
-        public static SessionHost GetSessionHost(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SessionHostResource" /> object. </returns>
+        public static SessionHostResource GetSessionHostResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SessionHost.ValidateResourceId(id);
-                return new SessionHost(client, id);
+                SessionHostResource.ValidateResourceId(id);
+                return new SessionHostResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MsixPackage
-        /// <summary> Gets an object representing a MsixPackage along with the instance operations that can be performed on it but with no data. </summary>
+        #region MsixPackageResource
+        /// <summary> Gets an object representing a MsixPackageResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MsixPackage" /> object. </returns>
-        public static MsixPackage GetMsixPackage(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MsixPackageResource" /> object. </returns>
+        public static MsixPackageResource GetMsixPackageResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MsixPackage.ValidateResourceId(id);
-                return new MsixPackage(client, id);
+                MsixPackageResource.ValidateResourceId(id);
+                return new MsixPackageResource(client, id);
             }
             );
         }

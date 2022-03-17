@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationService.ResourceType.Namespace, DiagnosticOptions);
-        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CommunicationService.ResourceType));
+        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, DiagnosticOptions);
+        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CommunicationServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommunicationService> GetCommunicationServicesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CommunicationService>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CommunicationServiceResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunicationServices");
                 scope.Start();
                 try
                 {
                     var response = await CommunicationServiceRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -115,14 +115,14 @@ namespace Azure.ResourceManager.Communication
                     throw;
                 }
             }
-            async Task<Page<CommunicationService>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CommunicationServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunicationServices");
                 scope.Start();
                 try
                 {
                     var response = await CommunicationServiceRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Communication
         /// Operation Id: CommunicationService_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunicationService" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommunicationService> GetCommunicationServices(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunicationServiceResource> GetCommunicationServices(CancellationToken cancellationToken = default)
         {
-            Page<CommunicationService> FirstPageFunc(int? pageSizeHint)
+            Page<CommunicationServiceResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunicationServices");
                 scope.Start();
                 try
                 {
                     var response = CommunicationServiceRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Communication
                     throw;
                 }
             }
-            Page<CommunicationService> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CommunicationServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetCommunicationServices");
                 scope.Start();
                 try
                 {
                     var response = CommunicationServiceRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationService(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

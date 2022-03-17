@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    internal class DeviceUpdateAccountOperationSource : IOperationSource<DeviceUpdateAccount>
+    internal class DeviceUpdateAccountOperationSource : IOperationSource<DeviceUpdateAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.DeviceUpdate
             _client = client;
         }
 
-        DeviceUpdateAccount IOperationSource<DeviceUpdateAccount>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceUpdateAccountResource IOperationSource<DeviceUpdateAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(document.RootElement);
-            return new DeviceUpdateAccount(_client, data);
+            return new DeviceUpdateAccountResource(_client, data);
         }
 
-        async ValueTask<DeviceUpdateAccount> IOperationSource<DeviceUpdateAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceUpdateAccountResource> IOperationSource<DeviceUpdateAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(document.RootElement);
-            return new DeviceUpdateAccount(_client, data);
+            return new DeviceUpdateAccountResource(_client, data);
         }
     }
 }

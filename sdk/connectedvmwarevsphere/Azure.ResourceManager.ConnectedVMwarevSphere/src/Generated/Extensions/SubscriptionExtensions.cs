@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourcePool" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourcePool> GetResourcePoolsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourcePoolResource> GetResourcePoolsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetResourcePoolsAsync(cancellationToken);
         }
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourcePool" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourcePool> GetResourcePools(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourcePoolResource> GetResourcePools(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetResourcePools(cancellationToken);
         }
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareCluster> GetVMwareClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VMwareClusterResource> GetVMwareClustersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVMwareClustersAsync(cancellationToken);
         }
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareCluster" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareCluster> GetVMwareClusters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VMwareClusterResource> GetVMwareClusters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVMwareClusters(cancellationToken);
         }
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareHost> GetVMwareHostsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVMwareHostsAsync(cancellationToken);
         }
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareHost" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareHost> GetVMwareHosts(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VMwareHostResource> GetVMwareHosts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVMwareHosts(cancellationToken);
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VMwareDatastore> GetVMwareDatastoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VMwareDatastoreResource> GetVMwareDatastoresAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVMwareDatastoresAsync(cancellationToken);
         }
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VMwareDatastore> GetVMwareDatastores(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VMwareDatastoreResource> GetVMwareDatastores(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVMwareDatastores(cancellationToken);
         }
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VCenter" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VCenter> GetVCentersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VCenterResource> GetVCentersAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVCentersAsync(cancellationToken);
         }
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VCenter" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VCenter> GetVCenters(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VCenterResource> GetVCenters(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVCenters(cancellationToken);
         }
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachine> GetVirtualMachinesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualMachinesAsync(cancellationToken);
         }
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachine> GetVirtualMachines(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineResource> GetVirtualMachines(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualMachines(cancellationToken);
         }
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachineTemplate> GetVirtualMachineTemplatesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualMachineTemplatesAsync(cancellationToken);
         }
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineTemplate" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualMachineTemplate> GetVirtualMachineTemplates(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualMachineTemplateResource> GetVirtualMachineTemplates(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualMachineTemplates(cancellationToken);
         }
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualNetwork> GetVirtualNetworksAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualNetworksAsync(cancellationToken);
         }
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetwork" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<VirtualNetwork> GetVirtualNetworks(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<VirtualNetworkResource> GetVirtualNetworks(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetVirtualNetworks(cancellationToken);
         }

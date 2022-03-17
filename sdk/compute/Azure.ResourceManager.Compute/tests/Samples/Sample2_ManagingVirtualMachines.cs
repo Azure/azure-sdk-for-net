@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            ArmOperation<VirtualMachine> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine vm = lro.Value;
+            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
+            VirtualMachineResource vm = lro.Value;
             #endregion Snippet:Managing_VirtualMachines_CreateAVirtualMachine
         }
 
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // With ListAsync(), we can get a list of the virtual machines
-            AsyncPageable<VirtualMachine> response = vmCollection.GetAllAsync();
-            await foreach (VirtualMachine vm in response)
+            AsyncPageable<VirtualMachineResource> response = vmCollection.GetAllAsync();
+            await foreach (VirtualMachineResource vm in response)
             {
                 Console.WriteLine(vm.Data.Name);
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";
-            VirtualMachine vm = await vmCollection.GetAsync(vmName);
+            VirtualMachineResource vm = await vmCollection.GetAsync(vmName);
             await vm.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_VirtualMachines_DeleteVirtualMachine
         }

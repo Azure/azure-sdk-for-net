@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DeviceUpdate
             );
         }
 
-        /// <summary> Gets a collection of DeviceUpdateAccounts in the DeviceUpdateAccount. </summary>
+        /// <summary> Gets a collection of DeviceUpdateAccountResources in the DeviceUpdateAccountResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DeviceUpdateAccounts and their operations over a DeviceUpdateAccount. </returns>
+        /// <returns> An object representing collection of DeviceUpdateAccountResources and their operations over a DeviceUpdateAccountResource. </returns>
         public static DeviceUpdateAccountCollection GetDeviceUpdateAccounts(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDeviceUpdateAccounts();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<Response<DeviceUpdateAccount>> GetDeviceUpdateAccountAsync(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeviceUpdateAccountResource>> GetDeviceUpdateAccountAsync(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetDeviceUpdateAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static Response<DeviceUpdateAccount> GetDeviceUpdateAccount(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
+        public static Response<DeviceUpdateAccountResource> GetDeviceUpdateAccount(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetDeviceUpdateAccounts().Get(accountName, cancellationToken);
         }

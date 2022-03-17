@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeviceUpdateAccount> GetDeviceUpdateAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDeviceUpdateAccountsAsync(cancellationToken);
         }
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </summary>
         /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeviceUpdateAccount> GetDeviceUpdateAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DeviceUpdateAccountResource> GetDeviceUpdateAccounts(this Subscription subscription, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscription).GetDeviceUpdateAccounts(cancellationToken);
         }

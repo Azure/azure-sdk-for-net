@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Communication.Tests
         {
             // Create communication service
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
-            CommunicationService resource = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
+            CommunicationServiceResource resource = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
 
             // Link NotificationHub
             var linkNotificationHubResponse = await resource.LinkNotificationHubAsync(

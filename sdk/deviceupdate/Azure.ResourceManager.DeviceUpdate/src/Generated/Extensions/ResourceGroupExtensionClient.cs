@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeviceUpdateAccounts in the DeviceUpdateAccount. </summary>
-        /// <returns> An object representing collection of DeviceUpdateAccounts and their operations over a DeviceUpdateAccount. </returns>
+        /// <summary> Gets a collection of DeviceUpdateAccountResources in the DeviceUpdateAccountResource. </summary>
+        /// <returns> An object representing collection of DeviceUpdateAccountResources and their operations over a DeviceUpdateAccountResource. </returns>
         public virtual DeviceUpdateAccountCollection GetDeviceUpdateAccounts()
         {
             return GetCachedClient(Client => new DeviceUpdateAccountCollection(Client, Id));

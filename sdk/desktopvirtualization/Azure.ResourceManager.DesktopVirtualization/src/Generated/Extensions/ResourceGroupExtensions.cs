@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             );
         }
 
-        /// <summary> Gets a collection of VirtualWorkspaces in the VirtualWorkspace. </summary>
+        /// <summary> Gets a collection of VirtualWorkspaceResources in the VirtualWorkspaceResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualWorkspaces and their operations over a VirtualWorkspace. </returns>
+        /// <returns> An object representing collection of VirtualWorkspaceResources and their operations over a VirtualWorkspaceResource. </returns>
         public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetVirtualWorkspaces();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static async Task<Response<VirtualWorkspace>> GetVirtualWorkspaceAsync(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetVirtualWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static Response<VirtualWorkspace> GetVirtualWorkspace(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<VirtualWorkspaceResource> GetVirtualWorkspace(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScalingPlans in the ScalingPlan. </summary>
+        /// <summary> Gets a collection of ScalingPlanResources in the ScalingPlanResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ScalingPlans and their operations over a ScalingPlan. </returns>
+        /// <returns> An object representing collection of ScalingPlanResources and their operations over a ScalingPlanResource. </returns>
         public static ScalingPlanCollection GetScalingPlans(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetScalingPlans();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public static async Task<Response<ScalingPlan>> GetScalingPlanAsync(this ResourceGroup resourceGroup, string scalingPlanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScalingPlanResource>> GetScalingPlanAsync(this ResourceGroup resourceGroup, string scalingPlanName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetScalingPlans().GetAsync(scalingPlanName, cancellationToken).ConfigureAwait(false);
         }
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public static Response<ScalingPlan> GetScalingPlan(this ResourceGroup resourceGroup, string scalingPlanName, CancellationToken cancellationToken = default)
+        public static Response<ScalingPlanResource> GetScalingPlan(this ResourceGroup resourceGroup, string scalingPlanName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetScalingPlans().Get(scalingPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualApplicationGroups in the VirtualApplicationGroup. </summary>
+        /// <summary> Gets a collection of VirtualApplicationGroupResources in the VirtualApplicationGroupResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of VirtualApplicationGroups and their operations over a VirtualApplicationGroup. </returns>
+        /// <returns> An object representing collection of VirtualApplicationGroupResources and their operations over a VirtualApplicationGroupResource. </returns>
         public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetVirtualApplicationGroups();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public static async Task<Response<VirtualApplicationGroup>> GetVirtualApplicationGroupAsync(this ResourceGroup resourceGroup, string applicationGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(this ResourceGroup resourceGroup, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetVirtualApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public static Response<VirtualApplicationGroup> GetVirtualApplicationGroup(this ResourceGroup resourceGroup, string applicationGroupName, CancellationToken cancellationToken = default)
+        public static Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(this ResourceGroup resourceGroup, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetVirtualApplicationGroups().Get(applicationGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HostPools in the HostPool. </summary>
+        /// <summary> Gets a collection of HostPoolResources in the HostPoolResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of HostPools and their operations over a HostPool. </returns>
+        /// <returns> An object representing collection of HostPoolResources and their operations over a HostPoolResource. </returns>
         public static HostPoolCollection GetHostPools(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetHostPools();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public static async Task<Response<HostPool>> GetHostPoolAsync(this ResourceGroup resourceGroup, string hostPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HostPoolResource>> GetHostPoolAsync(this ResourceGroup resourceGroup, string hostPoolName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetHostPools().GetAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public static Response<HostPool> GetHostPool(this ResourceGroup resourceGroup, string hostPoolName, CancellationToken cancellationToken = default)
+        public static Response<HostPoolResource> GetHostPool(this ResourceGroup resourceGroup, string hostPoolName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetHostPools().Get(hostPoolName, cancellationToken);
         }

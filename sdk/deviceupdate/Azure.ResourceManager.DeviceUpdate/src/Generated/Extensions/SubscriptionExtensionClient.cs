@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
         private DeviceUpdateRestOperations DefaultRestClient => _defaultRestClient ??= new DeviceUpdateRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics DeviceUpdateAccountAccountsClientDiagnostics => _deviceUpdateAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccount.ResourceType.Namespace, DiagnosticOptions);
-        private AccountsRestOperations DeviceUpdateAccountAccountsRestClient => _deviceUpdateAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeviceUpdateAccount.ResourceType));
+        private ClientDiagnostics DeviceUpdateAccountAccountsClientDiagnostics => _deviceUpdateAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccountResource.ResourceType.Namespace, DiagnosticOptions);
+        private AccountsRestOperations DeviceUpdateAccountAccountsRestClient => _deviceUpdateAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeviceUpdateAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Operation Id: Accounts_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeviceUpdateAccount> GetDeviceUpdateAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceUpdateAccount>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeviceUpdateAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeviceUpdateAccounts");
                 scope.Start();
                 try
                 {
                     var response = await DeviceUpdateAccountAccountsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                     throw;
                 }
             }
-            async Task<Page<DeviceUpdateAccount>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeviceUpdateAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeviceUpdateAccounts");
                 scope.Start();
                 try
                 {
                     var response = await DeviceUpdateAccountAccountsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Operation Id: Accounts_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeviceUpdateAccount> GetDeviceUpdateAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceUpdateAccountResource> GetDeviceUpdateAccounts(CancellationToken cancellationToken = default)
         {
-            Page<DeviceUpdateAccount> FirstPageFunc(int? pageSizeHint)
+            Page<DeviceUpdateAccountResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeviceUpdateAccounts");
                 scope.Start();
                 try
                 {
                     var response = DeviceUpdateAccountAccountsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                     throw;
                 }
             }
-            Page<DeviceUpdateAccount> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeviceUpdateAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DeviceUpdateAccountAccountsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetDeviceUpdateAccounts");
                 scope.Start();
                 try
                 {
                     var response = DeviceUpdateAccountAccountsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

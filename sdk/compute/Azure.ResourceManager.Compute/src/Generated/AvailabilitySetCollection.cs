@@ -22,7 +22,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of AvailabilitySet and their operations over its parent. </summary>
-    public partial class AvailabilitySetCollection : ArmCollection, IEnumerable<AvailabilitySet>, IAsyncEnumerable<AvailabilitySet>
+    public partial class AvailabilitySetCollection : ArmCollection, IEnumerable<AvailabilitySetResource>, IAsyncEnumerable<AvailabilitySetResource>
     {
         private readonly ClientDiagnostics _availabilitySetClientDiagnostics;
         private readonly AvailabilitySetsRestOperations _availabilitySetRestClient;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AvailabilitySetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _availabilitySetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySet.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(AvailabilitySet.ResourceType, out string availabilitySetApiVersion);
+            _availabilitySetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", AvailabilitySetResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(AvailabilitySetResource.ResourceType, out string availabilitySetApiVersion);
             _availabilitySetRestClient = new AvailabilitySetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, availabilitySetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<AvailabilitySet>> CreateOrUpdateAsync(WaitUntil waitUntil, string availabilitySetName, AvailabilitySetData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AvailabilitySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string availabilitySetName, AvailabilitySetData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _availabilitySetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<AvailabilitySet>(Response.FromValue(new AvailabilitySet(Client, response), response.GetRawResponse()));
+                var operation = new ComputeArmOperation<AvailabilitySetResource>(Response.FromValue(new AvailabilitySetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<AvailabilitySet> CreateOrUpdate(WaitUntil waitUntil, string availabilitySetName, AvailabilitySetData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AvailabilitySetResource> CreateOrUpdate(WaitUntil waitUntil, string availabilitySetName, AvailabilitySetData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _availabilitySetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<AvailabilitySet>(Response.FromValue(new AvailabilitySet(Client, response), response.GetRawResponse()));
+                var operation = new ComputeArmOperation<AvailabilitySetResource>(Response.FromValue(new AvailabilitySetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public virtual async Task<Response<AvailabilitySet>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvailabilitySetResource>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _availabilitySetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailabilitySet(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public virtual Response<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
+        public virtual Response<AvailabilitySetResource> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _availabilitySetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AvailabilitySet(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: AvailabilitySets_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailabilitySet" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailabilitySet> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailabilitySetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AvailabilitySet>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AvailabilitySetResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _availabilitySetRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<AvailabilitySet>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AvailabilitySetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _availabilitySetRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +223,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: AvailabilitySets_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailabilitySet" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailabilitySet> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailabilitySetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AvailabilitySet> FirstPageFunc(int? pageSizeHint)
+            Page<AvailabilitySetResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _availabilitySetRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +241,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<AvailabilitySet> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AvailabilitySetResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _availabilitySetClientDiagnostics.CreateScope("AvailabilitySetCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _availabilitySetRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySet(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AvailabilitySetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public virtual async Task<Response<AvailabilitySet>> GetIfExistsAsync(string availabilitySetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AvailabilitySetResource>> GetIfExistsAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _availabilitySetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<AvailabilitySet>(null, response.GetRawResponse());
-                return Response.FromValue(new AvailabilitySet(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AvailabilitySetResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public virtual Response<AvailabilitySet> GetIfExists(string availabilitySetName, CancellationToken cancellationToken = default)
+        public virtual Response<AvailabilitySetResource> GetIfExists(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _availabilitySetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, availabilitySetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AvailabilitySet>(null, response.GetRawResponse());
-                return Response.FromValue(new AvailabilitySet(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AvailabilitySetResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AvailabilitySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<AvailabilitySet> IEnumerable<AvailabilitySet>.GetEnumerator()
+        IEnumerator<AvailabilitySetResource> IEnumerable<AvailabilitySetResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AvailabilitySet> IAsyncEnumerable<AvailabilitySet>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AvailabilitySetResource> IAsyncEnumerable<AvailabilitySetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,385 +13,385 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region DatabaseAccount
-        /// <summary> Gets an object representing a DatabaseAccount along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountResource
+        /// <summary> Gets an object representing a DatabaseAccountResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccount" /> object. </returns>
-        public static DatabaseAccount GetDatabaseAccount(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountResource" /> object. </returns>
+        public static DatabaseAccountResource GetDatabaseAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccount.ValidateResourceId(id);
-                return new DatabaseAccount(client, id);
+                DatabaseAccountResource.ValidateResourceId(id);
+                return new DatabaseAccountResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlDatabase
-        /// <summary> Gets an object representing a SqlDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlDatabaseResource
+        /// <summary> Gets an object representing a SqlDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
-        public static SqlDatabase GetSqlDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
+        public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlDatabase.ValidateResourceId(id);
-                return new SqlDatabase(client, id);
+                SqlDatabaseResource.ValidateResourceId(id);
+                return new SqlDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountSqlDatabaseThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountSqlDatabaseThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> object. </returns>
-        public static DatabaseAccountSqlDatabaseThroughputSetting GetDatabaseAccountSqlDatabaseThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountSqlDatabaseThroughputSettingResource GetDatabaseAccountSqlDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountSqlDatabaseThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountSqlDatabaseThroughputSetting(client, id);
+                DatabaseAccountSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountSqlDatabaseThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountSqlDatabaseContainerThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseContainerThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountSqlDatabaseContainerThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseContainerThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> object. </returns>
-        public static DatabaseAccountSqlDatabaseContainerThroughputSetting GetDatabaseAccountSqlDatabaseContainerThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountSqlDatabaseContainerThroughputSettingResource GetDatabaseAccountSqlDatabaseContainerThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountSqlDatabaseContainerThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountSqlDatabaseContainerThroughputSetting(client, id);
+                DatabaseAccountSqlDatabaseContainerThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountSqlDatabaseContainerThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountMongodbDatabaseThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountMongodbDatabaseThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting" /> object. </returns>
-        public static DatabaseAccountMongodbDatabaseThroughputSetting GetDatabaseAccountMongodbDatabaseThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountMongodbDatabaseThroughputSettingResource GetDatabaseAccountMongodbDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountMongodbDatabaseThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountMongodbDatabaseThroughputSetting(client, id);
+                DatabaseAccountMongodbDatabaseThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountMongodbDatabaseThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountMongodbDatabaseCollectionThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseCollectionThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting" /> object. </returns>
-        public static DatabaseAccountMongodbDatabaseCollectionThroughputSetting GetDatabaseAccountMongodbDatabaseCollectionThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource GetDatabaseAccountMongodbDatabaseCollectionThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountMongodbDatabaseCollectionThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountMongodbDatabaseCollectionThroughputSetting(client, id);
+                DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountMongodbDatabaseCollectionThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountTableThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountTableThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountTableThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountTableThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSetting" /> object. </returns>
-        public static DatabaseAccountTableThroughputSetting GetDatabaseAccountTableThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountTableThroughputSettingResource GetDatabaseAccountTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountTableThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountTableThroughputSetting(client, id);
+                DatabaseAccountTableThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountTableThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountCassandraKeyspaceThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountCassandraKeyspaceThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> object. </returns>
-        public static DatabaseAccountCassandraKeyspaceThroughputSetting GetDatabaseAccountCassandraKeyspaceThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountCassandraKeyspaceThroughputSettingResource GetDatabaseAccountCassandraKeyspaceThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountCassandraKeyspaceThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountCassandraKeyspaceThroughputSetting(client, id);
+                DatabaseAccountCassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountCassandraKeyspaceThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountCassandraKeyspaceTableThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceTableThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountCassandraKeyspaceTableThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceTableThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> object. </returns>
-        public static DatabaseAccountCassandraKeyspaceTableThroughputSetting GetDatabaseAccountCassandraKeyspaceTableThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountCassandraKeyspaceTableThroughputSettingResource GetDatabaseAccountCassandraKeyspaceTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountCassandraKeyspaceTableThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountCassandraKeyspaceTableThroughputSetting(client, id);
+                DatabaseAccountCassandraKeyspaceTableThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountCassandraKeyspaceTableThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountGremlinDatabaseThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountGremlinDatabaseThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSetting" /> object. </returns>
-        public static DatabaseAccountGremlinDatabaseThroughputSetting GetDatabaseAccountGremlinDatabaseThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountGremlinDatabaseThroughputSettingResource GetDatabaseAccountGremlinDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountGremlinDatabaseThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountGremlinDatabaseThroughputSetting(client, id);
+                DatabaseAccountGremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountGremlinDatabaseThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseAccountGremlinDatabaseGraphThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseGraphThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region DatabaseAccountGremlinDatabaseGraphThroughputSettingResource
+        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseGraphThroughputSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> object. </returns>
-        public static DatabaseAccountGremlinDatabaseGraphThroughputSetting GetDatabaseAccountGremlinDatabaseGraphThroughputSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSettingResource" /> object. </returns>
+        public static DatabaseAccountGremlinDatabaseGraphThroughputSettingResource GetDatabaseAccountGremlinDatabaseGraphThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DatabaseAccountGremlinDatabaseGraphThroughputSetting.ValidateResourceId(id);
-                return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(client, id);
+                DatabaseAccountGremlinDatabaseGraphThroughputSettingResource.ValidateResourceId(id);
+                return new DatabaseAccountGremlinDatabaseGraphThroughputSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlContainer
-        /// <summary> Gets an object representing a SqlContainer along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlContainerResource
+        /// <summary> Gets an object representing a SqlContainerResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlContainer" /> object. </returns>
-        public static SqlContainer GetSqlContainer(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlContainerResource" /> object. </returns>
+        public static SqlContainerResource GetSqlContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlContainer.ValidateResourceId(id);
-                return new SqlContainer(client, id);
+                SqlContainerResource.ValidateResourceId(id);
+                return new SqlContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlStoredProcedure
-        /// <summary> Gets an object representing a SqlStoredProcedure along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlStoredProcedureResource
+        /// <summary> Gets an object representing a SqlStoredProcedureResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlStoredProcedure" /> object. </returns>
-        public static SqlStoredProcedure GetSqlStoredProcedure(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlStoredProcedureResource" /> object. </returns>
+        public static SqlStoredProcedureResource GetSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlStoredProcedure.ValidateResourceId(id);
-                return new SqlStoredProcedure(client, id);
+                SqlStoredProcedureResource.ValidateResourceId(id);
+                return new SqlStoredProcedureResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlUserDefinedFunction
-        /// <summary> Gets an object representing a SqlUserDefinedFunction along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlUserDefinedFunctionResource
+        /// <summary> Gets an object representing a SqlUserDefinedFunctionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlUserDefinedFunction" /> object. </returns>
-        public static SqlUserDefinedFunction GetSqlUserDefinedFunction(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlUserDefinedFunctionResource" /> object. </returns>
+        public static SqlUserDefinedFunctionResource GetSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlUserDefinedFunction.ValidateResourceId(id);
-                return new SqlUserDefinedFunction(client, id);
+                SqlUserDefinedFunctionResource.ValidateResourceId(id);
+                return new SqlUserDefinedFunctionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SqlTrigger
-        /// <summary> Gets an object representing a SqlTrigger along with the instance operations that can be performed on it but with no data. </summary>
+        #region SqlTriggerResource
+        /// <summary> Gets an object representing a SqlTriggerResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlTrigger" /> object. </returns>
-        public static SqlTrigger GetSqlTrigger(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlTriggerResource" /> object. </returns>
+        public static SqlTriggerResource GetSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SqlTrigger.ValidateResourceId(id);
-                return new SqlTrigger(client, id);
+                SqlTriggerResource.ValidateResourceId(id);
+                return new SqlTriggerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MongoDBDatabase
-        /// <summary> Gets an object representing a MongoDBDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region MongoDBDatabaseResource
+        /// <summary> Gets an object representing a MongoDBDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBDatabase" /> object. </returns>
-        public static MongoDBDatabase GetMongoDBDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBDatabaseResource" /> object. </returns>
+        public static MongoDBDatabaseResource GetMongoDBDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MongoDBDatabase.ValidateResourceId(id);
-                return new MongoDBDatabase(client, id);
+                MongoDBDatabaseResource.ValidateResourceId(id);
+                return new MongoDBDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MongoDBCollection
-        /// <summary> Gets an object representing a MongoDBCollection along with the instance operations that can be performed on it but with no data. </summary>
+        #region MongoDBCollectionResource
+        /// <summary> Gets an object representing a MongoDBCollectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBCollection" /> object. </returns>
-        public static MongoDBCollection GetMongoDBCollection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBCollectionResource" /> object. </returns>
+        public static MongoDBCollectionResource GetMongoDBCollectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MongoDBCollection.ValidateResourceId(id);
-                return new MongoDBCollection(client, id);
+                MongoDBCollectionResource.ValidateResourceId(id);
+                return new MongoDBCollectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CosmosTable
-        /// <summary> Gets an object representing a CosmosTable along with the instance operations that can be performed on it but with no data. </summary>
+        #region CosmosTableResource
+        /// <summary> Gets an object representing a CosmosTableResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosTable" /> object. </returns>
-        public static CosmosTable GetCosmosTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosTableResource" /> object. </returns>
+        public static CosmosTableResource GetCosmosTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CosmosTable.ValidateResourceId(id);
-                return new CosmosTable(client, id);
+                CosmosTableResource.ValidateResourceId(id);
+                return new CosmosTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CassandraKeyspace
-        /// <summary> Gets an object representing a CassandraKeyspace along with the instance operations that can be performed on it but with no data. </summary>
+        #region CassandraKeyspaceResource
+        /// <summary> Gets an object representing a CassandraKeyspaceResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraKeyspace" /> object. </returns>
-        public static CassandraKeyspace GetCassandraKeyspace(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraKeyspaceResource" /> object. </returns>
+        public static CassandraKeyspaceResource GetCassandraKeyspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CassandraKeyspace.ValidateResourceId(id);
-                return new CassandraKeyspace(client, id);
+                CassandraKeyspaceResource.ValidateResourceId(id);
+                return new CassandraKeyspaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CassandraTable
-        /// <summary> Gets an object representing a CassandraTable along with the instance operations that can be performed on it but with no data. </summary>
+        #region CassandraTableResource
+        /// <summary> Gets an object representing a CassandraTableResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraTable" /> object. </returns>
-        public static CassandraTable GetCassandraTable(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CassandraTableResource" /> object. </returns>
+        public static CassandraTableResource GetCassandraTableResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CassandraTable.ValidateResourceId(id);
-                return new CassandraTable(client, id);
+                CassandraTableResource.ValidateResourceId(id);
+                return new CassandraTableResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GremlinDatabase
-        /// <summary> Gets an object representing a GremlinDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        #region GremlinDatabaseResource
+        /// <summary> Gets an object representing a GremlinDatabaseResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinDatabase" /> object. </returns>
-        public static GremlinDatabase GetGremlinDatabase(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GremlinDatabaseResource" /> object. </returns>
+        public static GremlinDatabaseResource GetGremlinDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                GremlinDatabase.ValidateResourceId(id);
-                return new GremlinDatabase(client, id);
+                GremlinDatabaseResource.ValidateResourceId(id);
+                return new GremlinDatabaseResource(client, id);
             }
             );
         }
         #endregion
 
-        #region GremlinGraph
-        /// <summary> Gets an object representing a GremlinGraph along with the instance operations that can be performed on it but with no data. </summary>
+        #region GremlinGraphResource
+        /// <summary> Gets an object representing a GremlinGraphResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinGraph" /> object. </returns>
-        public static GremlinGraph GetGremlinGraph(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GremlinGraphResource" /> object. </returns>
+        public static GremlinGraphResource GetGremlinGraphResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                GremlinGraph.ValidateResourceId(id);
-                return new GremlinGraph(client, id);
+                GremlinGraphResource.ValidateResourceId(id);
+                return new GremlinGraphResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CosmosDBLocation
-        /// <summary> Gets an object representing a CosmosDBLocation along with the instance operations that can be performed on it but with no data. </summary>
+        #region CosmosDBLocationResource
+        /// <summary> Gets an object representing a CosmosDBLocationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBLocation" /> object. </returns>
-        public static CosmosDBLocation GetCosmosDBLocation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBLocationResource" /> object. </returns>
+        public static CosmosDBLocationResource GetCosmosDBLocationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CosmosDBLocation.ValidateResourceId(id);
-                return new CosmosDBLocation(client, id);
+                CosmosDBLocationResource.ValidateResourceId(id);
+                return new CosmosDBLocationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
@@ -413,17 +413,17 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region RestorableDatabaseAccount
-        /// <summary> Gets an object representing a RestorableDatabaseAccount along with the instance operations that can be performed on it but with no data. </summary>
+        #region RestorableDatabaseAccountResource
+        /// <summary> Gets an object representing a RestorableDatabaseAccountResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableDatabaseAccount" /> object. </returns>
-        public static RestorableDatabaseAccount GetRestorableDatabaseAccount(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RestorableDatabaseAccountResource" /> object. </returns>
+        public static RestorableDatabaseAccountResource GetRestorableDatabaseAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                RestorableDatabaseAccount.ValidateResourceId(id);
-                return new RestorableDatabaseAccount(client, id);
+                RestorableDatabaseAccountResource.ValidateResourceId(id);
+                return new RestorableDatabaseAccountResource(client, id);
             }
             );
         }

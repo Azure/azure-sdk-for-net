@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Gets a collection of DatabaseAccounts in the DatabaseAccount. </summary>
+        /// <summary> Gets a collection of DatabaseAccountResources in the DatabaseAccountResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DatabaseAccounts and their operations over a DatabaseAccount. </returns>
+        /// <returns> An object representing collection of DatabaseAccountResources and their operations over a DatabaseAccountResource. </returns>
         public static DatabaseAccountCollection GetDatabaseAccounts(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetDatabaseAccounts();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<Response<DatabaseAccount>> GetDatabaseAccountAsync(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseAccountResource>> GetDatabaseAccountAsync(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
         {
             return await resourceGroup.GetDatabaseAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static Response<DatabaseAccount> GetDatabaseAccount(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
+        public static Response<DatabaseAccountResource> GetDatabaseAccount(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
         {
             return resourceGroup.GetDatabaseAccounts().Get(accountName, cancellationToken);
         }

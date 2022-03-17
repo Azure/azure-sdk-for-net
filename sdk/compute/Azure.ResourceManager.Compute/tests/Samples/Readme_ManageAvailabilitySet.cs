@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySetData input = new AvailabilitySetData(location);
-            ArmOperation<AvailabilitySet> lro = await availabilitySetCollection.CreateOrUpdateAsync(WaitUntil.Completed, availabilitySetName, input);
-            AvailabilitySet availabilitySet = lro.Value;
+            ArmOperation<AvailabilitySetResource> lro = await availabilitySetCollection.CreateOrUpdateAsync(WaitUntil.Completed, availabilitySetName, input);
+            AvailabilitySetResource availabilitySet = lro.Value;
             #endregion Snippet:Managing_Availability_Set_CreateAnAvailabilitySet
         }
 
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
-            AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
-            // availabilitySet is an AvailabilitySet instance created above
+            AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
+            // availabilitySet is an AvailabilitySetResource instance created above
             PatchableAvailabilitySetData update = new PatchableAvailabilitySetData()
             {
                 PlatformFaultDomainCount = 3
             };
-            AvailabilitySet updatedAvailabilitySet = await availabilitySet.UpdateAsync(update);
+            AvailabilitySetResource updatedAvailabilitySet = await availabilitySet.UpdateAsync(update);
             #endregion Snippet:Managing_Availability_Set_UpdateAnAvailabilitySet
         }
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
-            AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
+            AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // delete the availability set
             await availabilitySet.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Availability_Set_DeleteAnAvailabilitySet
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             // First, we get the availability set collection from the resource group
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             // With GetAllAsync(), we can get a list of the availability sets in the collection
-            AsyncPageable<AvailabilitySet> response = availabilitySetCollection.GetAllAsync();
-            await foreach (AvailabilitySet availabilitySet in response)
+            AsyncPageable<AvailabilitySetResource> response = availabilitySetCollection.GetAllAsync();
+            await foreach (AvailabilitySetResource availabilitySet in response)
             {
                 Console.WriteLine(availabilitySet.Data.Name);
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
-            AvailabilitySet availabilitySet = await availabilitySetCollection.GetIfExistsAsync(availabilitySetName);
+            AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetIfExistsAsync(availabilitySetName);
 
             if (availabilitySet == null)
             {
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             ResourceGroup resourceGroup = await rgCollection.GetAsync(rgName);
             AvailabilitySetCollection availabilitySetCollection = resourceGroup.GetAvailabilitySets();
             string availabilitySetName = "myAvailabilitySet";
-            AvailabilitySet availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
+            AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // add a tag on this availabilitySet
-            AvailabilitySet updatedAvailabilitySet = await availabilitySet.AddTagAsync("key", "value");
+            AvailabilitySetResource updatedAvailabilitySet = await availabilitySet.AddTagAsync("key", "value");
             #endregion Snippet:Managing_Availability_Set_AddTagAvailabilitySet
         }
     }

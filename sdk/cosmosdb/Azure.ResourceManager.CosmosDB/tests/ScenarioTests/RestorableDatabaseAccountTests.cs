@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class RestorableDatabaseAccountTests : CosmosDBManagementClientBase
     {
-        private DatabaseAccount _restorableDatabaseAccount;
+        private DatabaseAccountResource _restorableDatabaseAccount;
 
         public RestorableDatabaseAccountTests(bool isAsync) : base(isAsync)
         {
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task RestorableDatabaseAccountListByLocation()
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"));
-            CosmosDBLocation location = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBLocations().GetAsync(AzureLocation.WestUS);
+            CosmosDBLocationResource location = await (await ArmClient.GetDefaultSubscriptionAsync()).GetCosmosDBLocations().GetAsync(AzureLocation.WestUS);
             var restorableAccounts = await location.GetRestorableDatabaseAccounts().GetAllAsync().ToEnumerableAsync();
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
         // TODO: more tests after fixing the code generation issue
 
-        protected async Task<DatabaseAccount> CreateRestorableDatabaseAccount(string name)
+        protected async Task<DatabaseAccountResource> CreateRestorableDatabaseAccount(string name)
         {
             var locations = new List<DatabaseAccountLocation>()
             {

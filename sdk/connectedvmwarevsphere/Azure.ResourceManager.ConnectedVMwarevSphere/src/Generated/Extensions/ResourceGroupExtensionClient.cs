@@ -32,57 +32,57 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ResourcePools in the ResourcePool. </summary>
-        /// <returns> An object representing collection of ResourcePools and their operations over a ResourcePool. </returns>
+        /// <summary> Gets a collection of ResourcePoolResources in the ResourcePoolResource. </summary>
+        /// <returns> An object representing collection of ResourcePoolResources and their operations over a ResourcePoolResource. </returns>
         public virtual ResourcePoolCollection GetResourcePools()
         {
             return GetCachedClient(Client => new ResourcePoolCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VMwareClusters in the VMwareCluster. </summary>
-        /// <returns> An object representing collection of VMwareClusters and their operations over a VMwareCluster. </returns>
+        /// <summary> Gets a collection of VMwareClusterResources in the VMwareClusterResource. </summary>
+        /// <returns> An object representing collection of VMwareClusterResources and their operations over a VMwareClusterResource. </returns>
         public virtual VMwareClusterCollection GetVMwareClusters()
         {
             return GetCachedClient(Client => new VMwareClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VMwareHosts in the VMwareHost. </summary>
-        /// <returns> An object representing collection of VMwareHosts and their operations over a VMwareHost. </returns>
+        /// <summary> Gets a collection of VMwareHostResources in the VMwareHostResource. </summary>
+        /// <returns> An object representing collection of VMwareHostResources and their operations over a VMwareHostResource. </returns>
         public virtual VMwareHostCollection GetVMwareHosts()
         {
             return GetCachedClient(Client => new VMwareHostCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VMwareDatastores in the VMwareDatastore. </summary>
-        /// <returns> An object representing collection of VMwareDatastores and their operations over a VMwareDatastore. </returns>
+        /// <summary> Gets a collection of VMwareDatastoreResources in the VMwareDatastoreResource. </summary>
+        /// <returns> An object representing collection of VMwareDatastoreResources and their operations over a VMwareDatastoreResource. </returns>
         public virtual VMwareDatastoreCollection GetVMwareDatastores()
         {
             return GetCachedClient(Client => new VMwareDatastoreCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VCenters in the VCenter. </summary>
-        /// <returns> An object representing collection of VCenters and their operations over a VCenter. </returns>
+        /// <summary> Gets a collection of VCenterResources in the VCenterResource. </summary>
+        /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
         public virtual VCenterCollection GetVCenters()
         {
             return GetCachedClient(Client => new VCenterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachines in the VirtualMachine. </summary>
-        /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachine. </returns>
+        /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
+        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public virtual VirtualMachineCollection GetVirtualMachines()
         {
             return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineTemplates in the VirtualMachineTemplate. </summary>
-        /// <returns> An object representing collection of VirtualMachineTemplates and their operations over a VirtualMachineTemplate. </returns>
+        /// <summary> Gets a collection of VirtualMachineTemplateResources in the VirtualMachineTemplateResource. </summary>
+        /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
         public virtual VirtualMachineTemplateCollection GetVirtualMachineTemplates()
         {
             return GetCachedClient(Client => new VirtualMachineTemplateCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworks in the VirtualNetwork. </summary>
-        /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetwork. </returns>
+        /// <summary> Gets a collection of VirtualNetworkResources in the VirtualNetworkResource. </summary>
+        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {
             return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
