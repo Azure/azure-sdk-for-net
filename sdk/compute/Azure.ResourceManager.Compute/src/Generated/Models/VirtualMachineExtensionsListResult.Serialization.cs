@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineExtensionsListResult
+    internal partial class VirtualMachineExtensionsListResult
     {
         internal static VirtualMachineExtensionsListResult DeserializeVirtualMachineExtensionsListResult(JsonElement element)
         {

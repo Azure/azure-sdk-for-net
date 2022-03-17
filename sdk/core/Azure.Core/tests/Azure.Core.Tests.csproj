@@ -50,4 +50,9 @@
   <ItemGroup>
     <Compile Update="PemReaderTests.Keys.cs" DependentUpon="PemReaderTests.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="TestData\BinaryData\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
             {
                 var SecurityInsightsClient = TestHelper.GetSecurityInsightsClient(context);
                 //var Repositories = SecurityInsightsClient.SourceControl.ListRepositories(TestHelper.ResourceGroup, TestHelper.WorkspaceName, "GitHub");
-                //ValidateRepositories(Repositories);
+                // ValidateRepositories(Repositories);
                 //Can not test since you need tokens for repos
             }
         }

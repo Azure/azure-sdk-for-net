@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VirtualNetworkTap data model. </summary>
-    public partial class VirtualNetworkTapData : Resource
+    public partial class VirtualNetworkTapData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
         public VirtualNetworkTapData()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="destinationNetworkInterfaceIPConfiguration"> The reference to the private IP Address of the collector nic that will receive the tap. </param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
-        internal VirtualNetworkTapData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, type, location, tags)
+        internal VirtualNetworkTapData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;

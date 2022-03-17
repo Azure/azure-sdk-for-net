@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ProxyOnlyResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ProxyOnlyResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind) : base(id, name, type, systemData)
+        internal ProxyOnlyResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
         }

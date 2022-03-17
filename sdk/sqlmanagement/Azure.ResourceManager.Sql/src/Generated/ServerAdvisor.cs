@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverAdvisorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serverAdvisorApiVersion);
-            _serverAdvisorRestClient = new ServerAdvisorsRestOperations(_serverAdvisorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAdvisorApiVersion);
+            _serverAdvisorRestClient = new ServerAdvisorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAdvisorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerAdvisors_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerAdvisor>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerAdvisor>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverAdvisorClientDiagnostics.CreateScope("ServerAdvisor.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverAdvisorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverAdvisorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerAdvisor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverAdvisorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serverAdvisorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerAdvisor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The requested advisor resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<ServerAdvisor>> UpdateAsync(AdvisorData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerAdvisor>> UpdateAsync(AdvisorData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

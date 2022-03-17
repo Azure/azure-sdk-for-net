@@ -90,6 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element);
                     case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
+                    case "Script": return ScriptActivity.DeserializeScriptActivity(element);
                     case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
                     case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
                     case "SqlPoolStoredProcedure": return SqlPoolStoredProcedureActivity.DeserializeSqlPoolStoredProcedureActivity(element);

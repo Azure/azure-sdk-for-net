@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         internal NicIPAddressSettings(string allocationMethod, string ipAddress, string subnetMask)
         {
             AllocationMethod = allocationMethod;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SubnetMask = subnetMask;
         }
 
         /// <summary> Gets the ip address allocation method. </summary>
         public string AllocationMethod { get; }
         /// <summary> Gets the ip address for the nic. </summary>
-        public string IpAddress { get; }
+        public string IPAddress { get; }
         /// <summary> Gets the mask. </summary>
         public string SubnetMask { get; }
     }

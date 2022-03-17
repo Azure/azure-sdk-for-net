@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotProcessWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotProcessWebAppsApiVersion);
-            _siteSlotProcessWebAppsRestClient = new WebAppsRestOperations(_siteSlotProcessWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotProcessWebAppsApiVersion);
+            _siteSlotProcessWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotProcessWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,35 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotProcessModules and their operations over a SiteSlotProcessModule. </returns>
         public virtual SiteSlotProcessModuleCollection GetSiteSlotProcessModules()
         {
-            return new SiteSlotProcessModuleCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotProcessModuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
+        /// Operation Id: WebApps_GetProcessModuleSlot
+        /// </summary>
+        /// <param name="baseAddress"> Module base address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotProcessModule>> GetSiteSlotProcessModuleAsync(string baseAddress, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotProcessModules().GetAsync(baseAddress, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress}
+        /// Operation Id: WebApps_GetProcessModuleSlot
+        /// </summary>
+        /// <param name="baseAddress"> Module base address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        public virtual Response<SiteSlotProcessModule> GetSiteSlotProcessModule(string baseAddress, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotProcessModules().Get(baseAddress, cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetProcessSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotProcess>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotProcess>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcess.Get");
             scope.Start();
@@ -105,7 +133,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotProcessWebAppsRestClient.GetProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotProcessWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotProcess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,7 +157,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotProcessWebAppsRestClient.GetProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotProcessWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotProcess(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,9 +172,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}
         /// Operation Id: WebApps_DeleteProcessSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcess.Delete");
             scope.Start();
@@ -154,7 +182,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotProcessWebAppsRestClient.DeleteProcessSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -170,9 +198,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}
         /// Operation Id: WebApps_DeleteProcessSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcess.Delete");
             scope.Start();
@@ -180,7 +208,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotProcessWebAppsRestClient.DeleteProcessSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -197,7 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetProcessDumpSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Stream>> GetProcessDumpSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetProcessDumpSlotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcess.GetProcessDumpSlot");
             scope.Start();

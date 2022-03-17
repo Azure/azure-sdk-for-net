@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The type of the resource. </summary>
-    public readonly partial struct ManagedCassandraResourceIdentityType : IEquatable<ManagedCassandraResourceIdentityType>
+    internal readonly partial struct ManagedCassandraResourceIdentityType : IEquatable<ManagedCassandraResourceIdentityType>
     {
         private readonly string _value;
 

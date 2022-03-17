@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("definition");
             writer.WriteObjectValue(Definition);
             writer.WriteEndObject();

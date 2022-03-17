@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall FQDN Tag Resource. </summary>
-    public partial class AzureFirewallFqdnTag : Resource
+    public partial class AzureFirewallFqdnTag : NetworkResourceData
     {
         /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
         public AzureFirewallFqdnTag()
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall FQDN tag resource. </param>
         /// <param name="fqdnTagName"> The name of this FQDN Tag. </param>
-        internal AzureFirewallFqdnTag(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, string fqdnTagName) : base(id, name, type, location, tags)
+        internal AzureFirewallFqdnTag(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ProvisioningState = provisioningState;

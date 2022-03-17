@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The data effect definition. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of DataEffect. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
-        internal DataEffect(string name, object detailsSchema)
+        internal DataEffect(string name, BinaryData detailsSchema)
         {
             Name = name;
             DetailsSchema = detailsSchema;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The data effect name. </summary>
         public string Name { get; }
         /// <summary> The data effect details schema. </summary>
-        public object DetailsSchema { get; }
+        public BinaryData DetailsSchema { get; }
     }
 }

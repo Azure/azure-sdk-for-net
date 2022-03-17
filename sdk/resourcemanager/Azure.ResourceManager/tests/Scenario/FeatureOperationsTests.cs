@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(featureFromCollection.Data.Id, feature.Data.Id);
             Assert.AreEqual(featureFromCollection.Data.Name, feature.Data.Name);
             Assert.AreEqual(featureFromCollection.Data.Properties.State, feature.Data.Properties.State);
-            Assert.AreEqual(featureFromCollection.Data.Type, feature.Data.Type);
+            Assert.AreEqual(featureFromCollection.Data.ResourceType, feature.Data.ResourceType);
 
             ResourceIdentifier invalidId = new ResourceIdentifier(feature.Data.Id.ToString() + "x");
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetFeature(invalidId).GetAsync());
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(feature.Data.Id, afterRegister.Data.Id);
             Assert.AreEqual(feature.Data.Name, afterRegister.Data.Name);
             Assert.AreEqual("Pending", afterRegister.Data.Properties.State);
-            Assert.AreEqual(feature.Data.Type, afterRegister.Data.Type);
+            Assert.AreEqual(feature.Data.ResourceType, afterRegister.Data.ResourceType);
 
             Feature afterUnRegister = await feature.UnregisterAsync();
             Assert.AreEqual(feature.Data.Id, afterUnRegister.Data.Id);
             Assert.AreEqual(feature.Data.Name, afterUnRegister.Data.Name);
             Assert.AreEqual("Unregistering", afterUnRegister.Data.Properties.State);
-            Assert.AreEqual(feature.Data.Type, afterUnRegister.Data.Type);
+            Assert.AreEqual(feature.Data.ResourceType, afterUnRegister.Data.ResourceType);
         }
     }
 }

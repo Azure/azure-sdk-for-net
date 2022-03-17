@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         {
             _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", TopLevelDomain.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(TopLevelDomain.ResourceType, out string topLevelDomainApiVersion);
-            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(_topLevelDomainClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
+            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<TopLevelDomain>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopLevelDomain>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _topLevelDomainRestClient.GetAsync(Id.SubscriptionId, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _topLevelDomainClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _topLevelDomainRestClient.Get(Id.SubscriptionId, name, cancellationToken);
                 if (response.Value == null)
-                    throw _topLevelDomainClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new TopLevelDomain(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<TopLevelDomain>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopLevelDomain>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

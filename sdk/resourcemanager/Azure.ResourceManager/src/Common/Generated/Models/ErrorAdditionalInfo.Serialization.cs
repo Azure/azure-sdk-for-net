@@ -23,18 +23,13 @@ namespace Azure.ResourceManager.Models
 
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
-            Optional<ResourceType> type = default;
-            Optional<object> info = default;
+            Optional<string> type = default;
+            Optional<BinaryData> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    type = (ResourceType)property.Value.GetString();
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("info"))
@@ -44,11 +39,11 @@ namespace Azure.ResourceManager.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    info = property.Value.GetObject();
+                    info = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new ErrorAdditionalInfo(type, info.Value);
+            return new ErrorAdditionalInfo(type.Value, info.Value);
         }
 
         internal partial class ErrorAdditionalInfoConverter : JsonConverter<ErrorAdditionalInfo>

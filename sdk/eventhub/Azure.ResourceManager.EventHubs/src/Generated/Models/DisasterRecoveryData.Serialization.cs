@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<ProvisioningStateDR> provisioningState = default;
+            Optional<ProvisioningStateDisasterRecovery> provisioningState = default;
             Optional<string> partnerNamespace = default;
             Optional<string> alternateName = default;
             Optional<RoleDisasterRecovery> role = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningStateDR();
+                            provisioningState = property0.Value.GetString().ToProvisioningStateDisasterRecovery();
                             continue;
                         }
                         if (property0.NameEquals("partnerNamespace"))

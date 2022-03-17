@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Sku = Azure.ResourceManager.Storage.Models.Sku;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests.Samples
@@ -25,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
-            Sku sku = new Sku(SkuName.StandardGRS);
-            Kind kind = Kind.Storage;
+            StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
+            StorageKind kind = StorageKind.Storage;
             string locationStr = "westus2";
             StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(sku, kind, locationStr);
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(false, accountName, parameters);
+            ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Started, accountName, parameters);
             storageAccount = await accountCreateOperation.WaitForCompletionAsync();
             #region Snippet:Managing_FileShares_GetFileService
             FileService fileService = await storageAccount.GetFileService().GetAsync();
@@ -49,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             FileShareCollection fileShareCollection = fileService.GetFileShares();
             string fileShareName = "myFileShare";
             FileShareData fileShareData = new FileShareData();
-            ArmOperation<FileShare> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(false, fileShareName, fileShareData);
+            ArmOperation<FileShare> fileShareCreateOperation = await fileShareCollection.CreateOrUpdateAsync(WaitUntil.Started, fileShareName, fileShareData);
             FileShare fileShare =await fileShareCreateOperation.WaitForCompletionAsync();
             #endregion
         }
@@ -100,7 +98,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_FileShares_DeleteFileShare
             FileShareCollection fileShareCollection = fileService.GetFileShares();
             FileShare fileShare = await fileShareCollection.GetAsync("myFileShare");
-            await fileShare.DeleteAsync(true);
+            await fileShare.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
     }

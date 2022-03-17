@@ -9,9 +9,29 @@ namespace: Azure.ResourceManager.AppConfiguration
 require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d302c82f32daec0feb68cd7d68d45ba898b67ee7/specification/appconfiguration/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-  lenient-model-deduplication: true
 no-property-type-replacement: RegenerateKeyOptions
+modelerfour:
+  flatten-payloads: false
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 directive:
   - rename-model:
       from: ConfigurationStoreUpdateParameters

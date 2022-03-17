@@ -14,32 +14,32 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Initializes a new instance of RunCommandParameterDefinition. </summary>
         /// <param name="name"> The run command parameter name. </param>
-        /// <param name="type"> The run command parameter type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="type"/> is null. </exception>
-        internal RunCommandParameterDefinition(string name, string type)
+        /// <param name="runCommandParameterDefinitionType"> The run command parameter type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="runCommandParameterDefinitionType"/> is null. </exception>
+        internal RunCommandParameterDefinition(string name, string runCommandParameterDefinitionType)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (type == null)
+            if (runCommandParameterDefinitionType == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException(nameof(runCommandParameterDefinitionType));
             }
 
             Name = name;
-            Type = type;
+            RunCommandParameterDefinitionType = runCommandParameterDefinitionType;
         }
 
         /// <summary> Initializes a new instance of RunCommandParameterDefinition. </summary>
         /// <param name="name"> The run command parameter name. </param>
-        /// <param name="type"> The run command parameter type. </param>
+        /// <param name="runCommandParameterDefinitionType"> The run command parameter type. </param>
         /// <param name="defaultValue"> The run command parameter default value. </param>
         /// <param name="required"> The run command parameter required. </param>
-        internal RunCommandParameterDefinition(string name, string type, string defaultValue, bool? required)
+        internal RunCommandParameterDefinition(string name, string runCommandParameterDefinitionType, string defaultValue, bool? required)
         {
             Name = name;
-            Type = type;
+            RunCommandParameterDefinitionType = runCommandParameterDefinitionType;
             DefaultValue = defaultValue;
             Required = required;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The run command parameter name. </summary>
         public string Name { get; }
         /// <summary> The run command parameter type. </summary>
-        public string Type { get; }
+        public string RunCommandParameterDefinitionType { get; }
         /// <summary> The run command parameter default value. </summary>
         public string DefaultValue { get; }
         /// <summary> The run command parameter required. </summary>

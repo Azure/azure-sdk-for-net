@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// EntityQueryTemplatesOperations operations.
     /// </summary>
-    internal partial class EntityQueryTemplatesOperations : IServiceOperations<SecurityInsightsClient>, IEntityQueryTemplatesOperations
+    internal partial class EntityQueryTemplatesOperations : IServiceOperations<SecurityInsights>, IEntityQueryTemplatesOperations
     {
         /// <summary>
         /// Initializes a new instance of the EntityQueryTemplatesOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EntityQueryTemplatesOperations(SecurityInsightsClient client)
+        internal EntityQueryTemplatesOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Gets all entity query templates.

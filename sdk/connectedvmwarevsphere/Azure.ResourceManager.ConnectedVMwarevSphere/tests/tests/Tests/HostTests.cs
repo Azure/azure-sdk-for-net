@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var hostBody = new VMwareHostData(DefaultLocation);
             hostBody.MoRefId = "host-112923";
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
         }
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var hostBody = new VMwareHostData(DefaultLocation);
             hostBody.MoRefId = "host-27";
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             // get host
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var hostBody = new VMwareHostData(DefaultLocation);
             hostBody.MoRefId = "host-111894";
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             // check for exists host
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var hostBody = new VMwareHostData(DefaultLocation);
             hostBody.MoRefId = "host-33";
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             int count = 0;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var hostBody = new VMwareHostData(DefaultLocation);
             hostBody.MoRefId = "host-111900";
             hostBody.VCenterId = VcenterId;
             hostBody.ExtendedLocation = _extendedLocation;
             // create host
-            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(true, hostName, hostBody)).Value;
+            VMwareHost host1 = (await _hostCollection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, hostBody)).Value;
             Assert.IsNotNull(host1);
             Assert.AreEqual(host1.Id.Name, hostName);
             host1 = null;

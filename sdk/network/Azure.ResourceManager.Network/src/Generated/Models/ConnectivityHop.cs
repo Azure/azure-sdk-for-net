@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ConnectivityHop. </summary>
-        /// <param name="type"> The type of the hop. </param>
+        /// <param name="connectivityHopType"> The type of the hop. </param>
         /// <param name="id"> The ID of the hop. </param>
         /// <param name="address"> The IP address of the hop. </param>
         /// <param name="resourceId"> The ID of the resource corresponding to this hop. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="links"> List of hop links. </param>
         /// <param name="previousLinks"> List of previous hop links. </param>
         /// <param name="issues"> List of issues. </param>
-        internal ConnectivityHop(string type, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues)
+        internal ConnectivityHop(string connectivityHopType, string id, string address, string resourceId, IReadOnlyList<string> nextHopIds, IReadOnlyList<string> previousHopIds, IReadOnlyList<HopLink> links, IReadOnlyList<HopLink> previousLinks, IReadOnlyList<ConnectivityIssue> issues)
         {
-            Type = type;
+            ConnectivityHopType = connectivityHopType;
             Id = id;
             Address = address;
             ResourceId = resourceId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The type of the hop. </summary>
-        public string Type { get; }
+        public string ConnectivityHopType { get; }
         /// <summary> The ID of the hop. </summary>
         public string Id { get; }
         /// <summary> The IP address of the hop. </summary>

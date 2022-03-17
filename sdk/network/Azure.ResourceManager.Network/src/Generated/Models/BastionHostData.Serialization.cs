@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         internal static BastionHostData DeserializeBastionHostData(JsonElement element)
         {
             Optional<string> etag = default;
-            Optional<Sku> sku = default;
+            Optional<NetworkSku> sku = default;
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> type = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = NetworkSku.DeserializeNetworkSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

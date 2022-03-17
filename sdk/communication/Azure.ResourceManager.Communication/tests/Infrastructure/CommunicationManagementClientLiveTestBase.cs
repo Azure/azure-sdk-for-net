@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Communication.Tests
                 Location = ResourceLocation,
                 DataLocation = ResourceDataLocation,
             };
-            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(true, communicationServiceName, data);
+            var communicationServiceLro = await _resourceGroup.GetCommunicationServices().CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
             return communicationServiceLro.Value;
         }
     }

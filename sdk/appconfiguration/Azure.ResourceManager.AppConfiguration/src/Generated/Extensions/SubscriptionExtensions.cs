@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public async static Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
 
