@@ -17,7 +17,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.AI.TextAnalytics
+dotnet add package Azure.AI.TextAnalytics --version 5.2.0-beta.2
 ```
 
 This table shows the relationship between SDK versions and supported API versions of the service:
