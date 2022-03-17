@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 using System.Buffers.Binary;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using Azure.Messaging.EventHubs.Primitives;
@@ -95,7 +94,6 @@ namespace Azure.Messaging.EventHubs.Core
         ///   the gateway hashing algorithm as closely as possible and should not be adjusted without careful
         ///   consideration.
         /// </remarks>
-        [SkipLocalsInit]
         private static short GenerateHashCode(string partitionKey)
         {
             if (partitionKey == null)
