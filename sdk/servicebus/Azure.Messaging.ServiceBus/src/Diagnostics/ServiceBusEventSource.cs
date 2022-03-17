@@ -1611,8 +1611,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 eventPayload[1].Size = (amqpTransactionId.Length + 1) * sizeof(char);
                 eventPayload[1].DataPointer = (IntPtr)amqpTransactionIdPtr;
 
-                eventPayload[2].Size = Unsafe.SizeOf<bool>();
-                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref rollback);
+                // bool maps to "win:Boolean", a 4-byte boolean
+                var rollbackInt = Convert.ToInt32(rollback);
+                eventPayload[2].Size = Unsafe.SizeOf<int>();
+                eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref rollbackInt);
 
                 WriteEventCore(eventId, 3, eventPayload);
             }
