@@ -22,7 +22,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of KubeEnvironment and their operations over its parent. </summary>
-    public partial class KubeEnvironmentCollection : ArmCollection, IEnumerable<KubeEnvironment>, IAsyncEnumerable<KubeEnvironment>
+    public partial class KubeEnvironmentCollection : ArmCollection, IEnumerable<KubeEnvironmentResource>, IAsyncEnumerable<KubeEnvironmentResource>
     {
         private readonly ClientDiagnostics _kubeEnvironmentClientDiagnostics;
         private readonly KubeEnvironmentsRestOperations _kubeEnvironmentRestClient;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal KubeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironment.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(KubeEnvironment.ResourceType, out string kubeEnvironmentApiVersion);
+            _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(KubeEnvironmentResource.ResourceType, out string kubeEnvironmentApiVersion);
             _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, kubeEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<KubeEnvironment>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, KubeEnvironmentData kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<KubeEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, KubeEnvironmentData kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(kubeEnvironmentEnvelope, nameof(kubeEnvironmentEnvelope));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _kubeEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<KubeEnvironment>(new KubeEnvironmentOperationSource(Client), _kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<KubeEnvironmentResource>(new KubeEnvironmentOperationSource(Client), _kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="kubeEnvironmentEnvelope"/> is null. </exception>
-        public virtual ArmOperation<KubeEnvironment> CreateOrUpdate(WaitUntil waitUntil, string name, KubeEnvironmentData kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<KubeEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, KubeEnvironmentData kubeEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(kubeEnvironmentEnvelope, nameof(kubeEnvironmentEnvelope));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _kubeEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<KubeEnvironment>(new KubeEnvironmentOperationSource(Client), _kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<KubeEnvironmentResource>(new KubeEnvironmentOperationSource(Client), _kubeEnvironmentClientDiagnostics, Pipeline, _kubeEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, kubeEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<KubeEnvironment>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubeEnvironmentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<KubeEnvironment> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KubeEnvironmentResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: KubeEnvironments_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KubeEnvironment> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KubeEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<KubeEnvironment>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<KubeEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _kubeEnvironmentRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +199,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<KubeEnvironment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<KubeEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _kubeEnvironmentRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +223,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: KubeEnvironments_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KubeEnvironment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KubeEnvironment> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KubeEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<KubeEnvironment> FirstPageFunc(int? pageSizeHint)
+            Page<KubeEnvironmentResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _kubeEnvironmentRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +241,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<KubeEnvironment> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<KubeEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _kubeEnvironmentClientDiagnostics.CreateScope("KubeEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _kubeEnvironmentRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new KubeEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<KubeEnvironment>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubeEnvironmentResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _kubeEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<KubeEnvironment>(null, response.GetRawResponse());
-                return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<KubeEnvironmentResource>(null, response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<KubeEnvironment> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<KubeEnvironmentResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -361,8 +361,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _kubeEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<KubeEnvironment>(null, response.GetRawResponse());
-                return Response.FromValue(new KubeEnvironment(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<KubeEnvironmentResource>(null, response.GetRawResponse());
+                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<KubeEnvironment> IEnumerable<KubeEnvironment>.GetEnumerator()
+        IEnumerator<KubeEnvironmentResource> IEnumerable<KubeEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<KubeEnvironment> IAsyncEnumerable<KubeEnvironment>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<KubeEnvironmentResource> IAsyncEnumerable<KubeEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

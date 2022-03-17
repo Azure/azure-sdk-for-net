@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         //Could not use TestEnvironment.Location since Location is got dynamically
         public string Location { get; set; }
 
-        public Subscription Subscription { get; private set; }
+        public SubscriptionResource Subscription { get; private set; }
         public AccessPolicyEntry AccessPolicy { get; internal set; }
         public string ResGroupName { get; internal set; }
         public Dictionary<string, string> Tags { get; internal set; }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultCollection VaultCollection { get; set; }
         public DeletedVaultCollection DeletedVaultCollection { get; set; }
         public ManagedHsmCollection ManagedHsmCollection { get; set; }
-        public ResourceGroup ResourceGroup { get; set; }
+        public ResourceGroupResource ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)

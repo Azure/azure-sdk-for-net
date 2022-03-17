@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region AppServiceCertificateOrder
-        /// <summary> Gets an object representing a AppServiceCertificateOrder along with the instance operations that can be performed on it but with no data. </summary>
+        #region AppServiceCertificateOrderResource
+        /// <summary> Gets an object representing a AppServiceCertificateOrderResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceCertificateOrder" /> object. </returns>
-        public static AppServiceCertificateOrder GetAppServiceCertificateOrder(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceCertificateOrderResource" /> object. </returns>
+        public static AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                AppServiceCertificateOrder.ValidateResourceId(id);
-                return new AppServiceCertificateOrder(client, id);
+                AppServiceCertificateOrderResource.ValidateResourceId(id);
+                return new AppServiceCertificateOrderResource(client, id);
             }
             );
         }
@@ -45,657 +45,657 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region CertificateOrderDetector
-        /// <summary> Gets an object representing a CertificateOrderDetector along with the instance operations that can be performed on it but with no data. </summary>
+        #region CertificateOrderDetectorResource
+        /// <summary> Gets an object representing a CertificateOrderDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateOrderDetector" /> object. </returns>
-        public static CertificateOrderDetector GetCertificateOrderDetector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CertificateOrderDetectorResource" /> object. </returns>
+        public static CertificateOrderDetectorResource GetCertificateOrderDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CertificateOrderDetector.ValidateResourceId(id);
-                return new CertificateOrderDetector(client, id);
+                CertificateOrderDetectorResource.ValidateResourceId(id);
+                return new CertificateOrderDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HostingEnvironmentDetector
-        /// <summary> Gets an object representing a HostingEnvironmentDetector along with the instance operations that can be performed on it but with no data. </summary>
+        #region HostingEnvironmentDetectorResource
+        /// <summary> Gets an object representing a HostingEnvironmentDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentDetector" /> object. </returns>
-        public static HostingEnvironmentDetector GetHostingEnvironmentDetector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource" /> object. </returns>
+        public static HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HostingEnvironmentDetector.ValidateResourceId(id);
-                return new HostingEnvironmentDetector(client, id);
+                HostingEnvironmentDetectorResource.ValidateResourceId(id);
+                return new HostingEnvironmentDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteDetector
-        /// <summary> Gets an object representing a SiteDetector along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteDetectorResource
+        /// <summary> Gets an object representing a SiteDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDetector" /> object. </returns>
-        public static SiteDetector GetSiteDetector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDetectorResource" /> object. </returns>
+        public static SiteDetectorResource GetSiteDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteDetector.ValidateResourceId(id);
-                return new SiteDetector(client, id);
+                SiteDetectorResource.ValidateResourceId(id);
+                return new SiteDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotDetector
-        /// <summary> Gets an object representing a SiteSlotDetector along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotDetectorResource
+        /// <summary> Gets an object representing a SiteSlotDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDetector" /> object. </returns>
-        public static SiteSlotDetector GetSiteSlotDetector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDetectorResource" /> object. </returns>
+        public static SiteSlotDetectorResource GetSiteSlotDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotDetector.ValidateResourceId(id);
-                return new SiteSlotDetector(client, id);
+                SiteSlotDetectorResource.ValidateResourceId(id);
+                return new SiteSlotDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AppServiceDomain
-        /// <summary> Gets an object representing a AppServiceDomain along with the instance operations that can be performed on it but with no data. </summary>
+        #region AppServiceDomainResource
+        /// <summary> Gets an object representing a AppServiceDomainResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceDomain" /> object. </returns>
-        public static AppServiceDomain GetAppServiceDomain(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceDomainResource" /> object. </returns>
+        public static AppServiceDomainResource GetAppServiceDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                AppServiceDomain.ValidateResourceId(id);
-                return new AppServiceDomain(client, id);
+                AppServiceDomainResource.ValidateResourceId(id);
+                return new AppServiceDomainResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DomainOwnershipIdentifier
-        /// <summary> Gets an object representing a DomainOwnershipIdentifier along with the instance operations that can be performed on it but with no data. </summary>
+        #region DomainOwnershipIdentifierResource
+        /// <summary> Gets an object representing a DomainOwnershipIdentifierResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DomainOwnershipIdentifier" /> object. </returns>
-        public static DomainOwnershipIdentifier GetDomainOwnershipIdentifier(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource" /> object. </returns>
+        public static DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DomainOwnershipIdentifier.ValidateResourceId(id);
-                return new DomainOwnershipIdentifier(client, id);
+                DomainOwnershipIdentifierResource.ValidateResourceId(id);
+                return new DomainOwnershipIdentifierResource(client, id);
             }
             );
         }
         #endregion
 
-        #region TopLevelDomain
-        /// <summary> Gets an object representing a TopLevelDomain along with the instance operations that can be performed on it but with no data. </summary>
+        #region TopLevelDomainResource
+        /// <summary> Gets an object representing a TopLevelDomainResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TopLevelDomain" /> object. </returns>
-        public static TopLevelDomain GetTopLevelDomain(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopLevelDomainResource" /> object. </returns>
+        public static TopLevelDomainResource GetTopLevelDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                TopLevelDomain.ValidateResourceId(id);
-                return new TopLevelDomain(client, id);
+                TopLevelDomainResource.ValidateResourceId(id);
+                return new TopLevelDomainResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AppServiceEnvironment
-        /// <summary> Gets an object representing a AppServiceEnvironment along with the instance operations that can be performed on it but with no data. </summary>
+        #region AppServiceEnvironmentResource
+        /// <summary> Gets an object representing a AppServiceEnvironmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceEnvironment" /> object. </returns>
-        public static AppServiceEnvironment GetAppServiceEnvironment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceEnvironmentResource" /> object. </returns>
+        public static AppServiceEnvironmentResource GetAppServiceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                AppServiceEnvironment.ValidateResourceId(id);
-                return new AppServiceEnvironment(client, id);
+                AppServiceEnvironmentResource.ValidateResourceId(id);
+                return new AppServiceEnvironmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AseV3NetworkingConfiguration
-        /// <summary> Gets an object representing a AseV3NetworkingConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        #region AseV3NetworkingConfigurationResource
+        /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AseV3NetworkingConfiguration" /> object. </returns>
-        public static AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
+        public static AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                AseV3NetworkingConfiguration.ValidateResourceId(id);
-                return new AseV3NetworkingConfiguration(client, id);
+                AseV3NetworkingConfigurationResource.ValidateResourceId(id);
+                return new AseV3NetworkingConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HostingEnvironmentMultiRolePool
-        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePool along with the instance operations that can be performed on it but with no data. </summary>
+        #region HostingEnvironmentMultiRolePoolResource
+        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePoolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePool" /> object. </returns>
-        public static HostingEnvironmentMultiRolePool GetHostingEnvironmentMultiRolePool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource" /> object. </returns>
+        public static HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HostingEnvironmentMultiRolePool.ValidateResourceId(id);
-                return new HostingEnvironmentMultiRolePool(client, id);
+                HostingEnvironmentMultiRolePoolResource.ValidateResourceId(id);
+                return new HostingEnvironmentMultiRolePoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HostingEnvironmentWorkerPool
-        /// <summary> Gets an object representing a HostingEnvironmentWorkerPool along with the instance operations that can be performed on it but with no data. </summary>
+        #region HostingEnvironmentWorkerPoolResource
+        /// <summary> Gets an object representing a HostingEnvironmentWorkerPoolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentWorkerPool" /> object. </returns>
-        public static HostingEnvironmentWorkerPool GetHostingEnvironmentWorkerPool(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentWorkerPoolResource" /> object. </returns>
+        public static HostingEnvironmentWorkerPoolResource GetHostingEnvironmentWorkerPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HostingEnvironmentWorkerPool.ValidateResourceId(id);
-                return new HostingEnvironmentWorkerPool(client, id);
+                HostingEnvironmentWorkerPoolResource.ValidateResourceId(id);
+                return new HostingEnvironmentWorkerPoolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HostingEnvironmentPrivateEndpointConnection
-        /// <summary> Gets an object representing a HostingEnvironmentPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region HostingEnvironmentPrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a HostingEnvironmentPrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentPrivateEndpointConnection" /> object. </returns>
-        public static HostingEnvironmentPrivateEndpointConnection GetHostingEnvironmentPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> object. </returns>
+        public static HostingEnvironmentPrivateEndpointConnectionResource GetHostingEnvironmentPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HostingEnvironmentPrivateEndpointConnection.ValidateResourceId(id);
-                return new HostingEnvironmentPrivateEndpointConnection(client, id);
+                HostingEnvironmentPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new HostingEnvironmentPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StaticSitePrivateEndpointConnection
-        /// <summary> Gets an object representing a StaticSitePrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region StaticSitePrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a StaticSitePrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSitePrivateEndpointConnection" /> object. </returns>
-        public static StaticSitePrivateEndpointConnection GetStaticSitePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSitePrivateEndpointConnectionResource" /> object. </returns>
+        public static StaticSitePrivateEndpointConnectionResource GetStaticSitePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                StaticSitePrivateEndpointConnection.ValidateResourceId(id);
-                return new StaticSitePrivateEndpointConnection(client, id);
+                StaticSitePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new StaticSitePrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SitePrivateEndpointConnection
-        /// <summary> Gets an object representing a SitePrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region SitePrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a SitePrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitePrivateEndpointConnection" /> object. </returns>
-        public static SitePrivateEndpointConnection GetSitePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitePrivateEndpointConnectionResource" /> object. </returns>
+        public static SitePrivateEndpointConnectionResource GetSitePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SitePrivateEndpointConnection.ValidateResourceId(id);
-                return new SitePrivateEndpointConnection(client, id);
+                SitePrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new SitePrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotPrivateEndpointConnection
-        /// <summary> Gets an object representing a SiteSlotPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotPrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a SiteSlotPrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPrivateEndpointConnection" /> object. </returns>
-        public static SiteSlotPrivateEndpointConnection GetSiteSlotPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotPrivateEndpointConnectionResource" /> object. </returns>
+        public static SiteSlotPrivateEndpointConnectionResource GetSiteSlotPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotPrivateEndpointConnection.ValidateResourceId(id);
-                return new SiteSlotPrivateEndpointConnection(client, id);
+                SiteSlotPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new SiteSlotPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AppServicePlan
-        /// <summary> Gets an object representing a AppServicePlan along with the instance operations that can be performed on it but with no data. </summary>
+        #region AppServicePlanResource
+        /// <summary> Gets an object representing a AppServicePlanResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServicePlan" /> object. </returns>
-        public static AppServicePlan GetAppServicePlan(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanResource" /> object. </returns>
+        public static AppServicePlanResource GetAppServicePlanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                AppServicePlan.ValidateResourceId(id);
-                return new AppServicePlan(client, id);
+                AppServicePlanResource.ValidateResourceId(id);
+                return new AppServicePlanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerfarmHybridConnectionNamespaceRelay
-        /// <summary> Gets an object representing a ServerfarmHybridConnectionNamespaceRelay along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerfarmHybridConnectionNamespaceRelayResource
+        /// <summary> Gets an object representing a ServerfarmHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmHybridConnectionNamespaceRelay" /> object. </returns>
-        public static ServerfarmHybridConnectionNamespaceRelay GetServerfarmHybridConnectionNamespaceRelay(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> object. </returns>
+        public static ServerfarmHybridConnectionNamespaceRelayResource GetServerfarmHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerfarmHybridConnectionNamespaceRelay.ValidateResourceId(id);
-                return new ServerfarmHybridConnectionNamespaceRelay(client, id);
+                ServerfarmHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+                return new ServerfarmHybridConnectionNamespaceRelayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteHybridConnectionNamespaceRelay
-        /// <summary> Gets an object representing a SiteHybridConnectionNamespaceRelay along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteHybridConnectionNamespaceRelayResource
+        /// <summary> Gets an object representing a SiteHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelay" /> object. </returns>
-        public static SiteHybridConnectionNamespaceRelay GetSiteHybridConnectionNamespaceRelay(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelayResource" /> object. </returns>
+        public static SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteHybridConnectionNamespaceRelay.ValidateResourceId(id);
-                return new SiteHybridConnectionNamespaceRelay(client, id);
+                SiteHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+                return new SiteHybridConnectionNamespaceRelayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotHybridConnectionNamespaceRelay
-        /// <summary> Gets an object representing a SiteSlotHybridConnectionNamespaceRelay along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotHybridConnectionNamespaceRelayResource
+        /// <summary> Gets an object representing a SiteSlotHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelay" /> object. </returns>
-        public static SiteSlotHybridConnectionNamespaceRelay GetSiteSlotHybridConnectionNamespaceRelay(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> object. </returns>
+        public static SiteSlotHybridConnectionNamespaceRelayResource GetSiteSlotHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotHybridConnectionNamespaceRelay.ValidateResourceId(id);
-                return new SiteSlotHybridConnectionNamespaceRelay(client, id);
+                SiteSlotHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+                return new SiteSlotHybridConnectionNamespaceRelayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HybridConnectionLimits
-        /// <summary> Gets an object representing a HybridConnectionLimits along with the instance operations that can be performed on it but with no data. </summary>
+        #region HybridConnectionLimitsResource
+        /// <summary> Gets an object representing a HybridConnectionLimitsResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridConnectionLimits" /> object. </returns>
-        public static HybridConnectionLimits GetHybridConnectionLimits(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
+        public static HybridConnectionLimitsResource GetHybridConnectionLimitsResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HybridConnectionLimits.ValidateResourceId(id);
-                return new HybridConnectionLimits(client, id);
+                HybridConnectionLimitsResource.ValidateResourceId(id);
+                return new HybridConnectionLimitsResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerfarmVirtualNetworkConnection
-        /// <summary> Gets an object representing a ServerfarmVirtualNetworkConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerfarmVirtualNetworkConnectionResource
+        /// <summary> Gets an object representing a ServerfarmVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnection" /> object. </returns>
-        public static ServerfarmVirtualNetworkConnection GetServerfarmVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionResource" /> object. </returns>
+        public static ServerfarmVirtualNetworkConnectionResource GetServerfarmVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerfarmVirtualNetworkConnection.ValidateResourceId(id);
-                return new ServerfarmVirtualNetworkConnection(client, id);
+                ServerfarmVirtualNetworkConnectionResource.ValidateResourceId(id);
+                return new ServerfarmVirtualNetworkConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotVirtualNetworkConnection
-        /// <summary> Gets an object representing a SiteSlotVirtualNetworkConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotVirtualNetworkConnectionResource
+        /// <summary> Gets an object representing a SiteSlotVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnection" /> object. </returns>
-        public static SiteSlotVirtualNetworkConnection GetSiteSlotVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionResource" /> object. </returns>
+        public static SiteSlotVirtualNetworkConnectionResource GetSiteSlotVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotVirtualNetworkConnection.ValidateResourceId(id);
-                return new SiteSlotVirtualNetworkConnection(client, id);
+                SiteSlotVirtualNetworkConnectionResource.ValidateResourceId(id);
+                return new SiteSlotVirtualNetworkConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteVirtualNetworkConnection
-        /// <summary> Gets an object representing a SiteVirtualNetworkConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteVirtualNetworkConnectionResource
+        /// <summary> Gets an object representing a SiteVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteVirtualNetworkConnection" /> object. </returns>
-        public static SiteVirtualNetworkConnection GetSiteVirtualNetworkConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionResource" /> object. </returns>
+        public static SiteVirtualNetworkConnectionResource GetSiteVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteVirtualNetworkConnection.ValidateResourceId(id);
-                return new SiteVirtualNetworkConnection(client, id);
+                SiteVirtualNetworkConnectionResource.ValidateResourceId(id);
+                return new SiteVirtualNetworkConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServerfarmVirtualNetworkConnectionGateway
-        /// <summary> Gets an object representing a ServerfarmVirtualNetworkConnectionGateway along with the instance operations that can be performed on it but with no data. </summary>
+        #region ServerfarmVirtualNetworkConnectionGatewayResource
+        /// <summary> Gets an object representing a ServerfarmVirtualNetworkConnectionGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionGateway" /> object. </returns>
-        public static ServerfarmVirtualNetworkConnectionGateway GetServerfarmVirtualNetworkConnectionGateway(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> object. </returns>
+        public static ServerfarmVirtualNetworkConnectionGatewayResource GetServerfarmVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ServerfarmVirtualNetworkConnectionGateway.ValidateResourceId(id);
-                return new ServerfarmVirtualNetworkConnectionGateway(client, id);
+                ServerfarmVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+                return new ServerfarmVirtualNetworkConnectionGatewayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotVirtualNetworkConnectionGateway
-        /// <summary> Gets an object representing a SiteSlotVirtualNetworkConnectionGateway along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotVirtualNetworkConnectionGatewayResource
+        /// <summary> Gets an object representing a SiteSlotVirtualNetworkConnectionGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGateway" /> object. </returns>
-        public static SiteSlotVirtualNetworkConnectionGateway GetSiteSlotVirtualNetworkConnectionGateway(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> object. </returns>
+        public static SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotVirtualNetworkConnectionGateway.ValidateResourceId(id);
-                return new SiteSlotVirtualNetworkConnectionGateway(client, id);
+                SiteSlotVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+                return new SiteSlotVirtualNetworkConnectionGatewayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteVirtualNetworkConnectionGateway
-        /// <summary> Gets an object representing a SiteVirtualNetworkConnectionGateway along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteVirtualNetworkConnectionGatewayResource
+        /// <summary> Gets an object representing a SiteVirtualNetworkConnectionGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGateway" /> object. </returns>
-        public static SiteVirtualNetworkConnectionGateway GetSiteVirtualNetworkConnectionGateway(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGatewayResource" /> object. </returns>
+        public static SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteVirtualNetworkConnectionGateway.ValidateResourceId(id);
-                return new SiteVirtualNetworkConnectionGateway(client, id);
+                SiteVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+                return new SiteVirtualNetworkConnectionGatewayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region Certificate
-        /// <summary> Gets an object representing a Certificate along with the instance operations that can be performed on it but with no data. </summary>
+        #region CertificateResource
+        /// <summary> Gets an object representing a CertificateResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Certificate" /> object. </returns>
-        public static Certificate GetCertificate(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CertificateResource" /> object. </returns>
+        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                Certificate.ValidateResourceId(id);
-                return new Certificate(client, id);
+                CertificateResource.ValidateResourceId(id);
+                return new CertificateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteDiagnostic
-        /// <summary> Gets an object representing a SiteDiagnostic along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteDiagnosticResource
+        /// <summary> Gets an object representing a SiteDiagnosticResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDiagnostic" /> object. </returns>
-        public static SiteDiagnostic GetSiteDiagnostic(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticResource" /> object. </returns>
+        public static SiteDiagnosticResource GetSiteDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteDiagnostic.ValidateResourceId(id);
-                return new SiteDiagnostic(client, id);
+                SiteDiagnosticResource.ValidateResourceId(id);
+                return new SiteDiagnosticResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotDiagnostic
-        /// <summary> Gets an object representing a SiteSlotDiagnostic along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotDiagnosticResource
+        /// <summary> Gets an object representing a SiteSlotDiagnosticResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDiagnostic" /> object. </returns>
-        public static SiteSlotDiagnostic GetSiteSlotDiagnostic(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource" /> object. </returns>
+        public static SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotDiagnostic.ValidateResourceId(id);
-                return new SiteSlotDiagnostic(client, id);
+                SiteSlotDiagnosticResource.ValidateResourceId(id);
+                return new SiteSlotDiagnosticResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteDiagnosticAnalysis
-        /// <summary> Gets an object representing a SiteDiagnosticAnalysis along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteDiagnosticAnalysisResource
+        /// <summary> Gets an object representing a SiteDiagnosticAnalysisResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDiagnosticAnalysis" /> object. </returns>
-        public static SiteDiagnosticAnalysis GetSiteDiagnosticAnalysis(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource" /> object. </returns>
+        public static SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteDiagnosticAnalysis.ValidateResourceId(id);
-                return new SiteDiagnosticAnalysis(client, id);
+                SiteDiagnosticAnalysisResource.ValidateResourceId(id);
+                return new SiteDiagnosticAnalysisResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotDiagnosticAnalysis
-        /// <summary> Gets an object representing a SiteSlotDiagnosticAnalysis along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotDiagnosticAnalysisResource
+        /// <summary> Gets an object representing a SiteSlotDiagnosticAnalysisResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysis" /> object. </returns>
-        public static SiteSlotDiagnosticAnalysis GetSiteSlotDiagnosticAnalysis(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource" /> object. </returns>
+        public static SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotDiagnosticAnalysis.ValidateResourceId(id);
-                return new SiteSlotDiagnosticAnalysis(client, id);
+                SiteSlotDiagnosticAnalysisResource.ValidateResourceId(id);
+                return new SiteSlotDiagnosticAnalysisResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteDiagnosticDetector
-        /// <summary> Gets an object representing a SiteDiagnosticDetector along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteDiagnosticDetectorResource
+        /// <summary> Gets an object representing a SiteDiagnosticDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDiagnosticDetector" /> object. </returns>
-        public static SiteDiagnosticDetector GetSiteDiagnosticDetector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource" /> object. </returns>
+        public static SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteDiagnosticDetector.ValidateResourceId(id);
-                return new SiteDiagnosticDetector(client, id);
+                SiteDiagnosticDetectorResource.ValidateResourceId(id);
+                return new SiteDiagnosticDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotDiagnosticDetector
-        /// <summary> Gets an object representing a SiteSlotDiagnosticDetector along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotDiagnosticDetectorResource
+        /// <summary> Gets an object representing a SiteSlotDiagnosticDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetector" /> object. </returns>
-        public static SiteSlotDiagnosticDetector GetSiteSlotDiagnosticDetector(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource" /> object. </returns>
+        public static SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotDiagnosticDetector.ValidateResourceId(id);
-                return new SiteSlotDiagnosticDetector(client, id);
+                SiteSlotDiagnosticDetectorResource.ValidateResourceId(id);
+                return new SiteSlotDiagnosticDetectorResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DeletedSite
-        /// <summary> Gets an object representing a DeletedSite along with the instance operations that can be performed on it but with no data. </summary>
+        #region DeletedSiteResource
+        /// <summary> Gets an object representing a DeletedSiteResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedSite" /> object. </returns>
-        public static DeletedSite GetDeletedSite(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeletedSiteResource" /> object. </returns>
+        public static DeletedSiteResource GetDeletedSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DeletedSite.ValidateResourceId(id);
-                return new DeletedSite(client, id);
+                DeletedSiteResource.ValidateResourceId(id);
+                return new DeletedSiteResource(client, id);
             }
             );
         }
         #endregion
 
-        #region KubeEnvironment
-        /// <summary> Gets an object representing a KubeEnvironment along with the instance operations that can be performed on it but with no data. </summary>
+        #region KubeEnvironmentResource
+        /// <summary> Gets an object representing a KubeEnvironmentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KubeEnvironment" /> object. </returns>
-        public static KubeEnvironment GetKubeEnvironment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubeEnvironmentResource" /> object. </returns>
+        public static KubeEnvironmentResource GetKubeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                KubeEnvironment.ValidateResourceId(id);
-                return new KubeEnvironment(client, id);
+                KubeEnvironmentResource.ValidateResourceId(id);
+                return new KubeEnvironmentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region HostingEnvironmentRecommendation
-        /// <summary> Gets an object representing a HostingEnvironmentRecommendation along with the instance operations that can be performed on it but with no data. </summary>
+        #region HostingEnvironmentRecommendationResource
+        /// <summary> Gets an object representing a HostingEnvironmentRecommendationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HostingEnvironmentRecommendation" /> object. </returns>
-        public static HostingEnvironmentRecommendation GetHostingEnvironmentRecommendation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource" /> object. </returns>
+        public static HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                HostingEnvironmentRecommendation.ValidateResourceId(id);
-                return new HostingEnvironmentRecommendation(client, id);
+                HostingEnvironmentRecommendationResource.ValidateResourceId(id);
+                return new HostingEnvironmentRecommendationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteRecommendation
-        /// <summary> Gets an object representing a SiteRecommendation along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteRecommendationResource
+        /// <summary> Gets an object representing a SiteRecommendationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteRecommendation" /> object. </returns>
-        public static SiteRecommendation GetSiteRecommendation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteRecommendationResource" /> object. </returns>
+        public static SiteRecommendationResource GetSiteRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteRecommendation.ValidateResourceId(id);
-                return new SiteRecommendation(client, id);
+                SiteRecommendationResource.ValidateResourceId(id);
+                return new SiteRecommendationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteResourceHealthMetadata
-        /// <summary> Gets an object representing a SiteResourceHealthMetadata along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteResourceHealthMetadataResource
+        /// <summary> Gets an object representing a SiteResourceHealthMetadataResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResourceHealthMetadata" /> object. </returns>
-        public static SiteResourceHealthMetadata GetSiteResourceHealthMetadata(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteResourceHealthMetadataResource" /> object. </returns>
+        public static SiteResourceHealthMetadataResource GetSiteResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteResourceHealthMetadata.ValidateResourceId(id);
-                return new SiteResourceHealthMetadata(client, id);
+                SiteResourceHealthMetadataResource.ValidateResourceId(id);
+                return new SiteResourceHealthMetadataResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotResourceHealthMetadata
-        /// <summary> Gets an object representing a SiteSlotResourceHealthMetadata along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotResourceHealthMetadataResource
+        /// <summary> Gets an object representing a SiteSlotResourceHealthMetadataResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadata" /> object. </returns>
-        public static SiteSlotResourceHealthMetadata GetSiteSlotResourceHealthMetadata(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadataResource" /> object. </returns>
+        public static SiteSlotResourceHealthMetadataResource GetSiteSlotResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotResourceHealthMetadata.ValidateResourceId(id);
-                return new SiteSlotResourceHealthMetadata(client, id);
+                SiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
+                return new SiteSlotResourceHealthMetadataResource(client, id);
             }
             );
         }
         #endregion
 
-        #region User
-        /// <summary> Gets an object representing a User along with the instance operations that can be performed on it but with no data. </summary>
+        #region UserResource
+        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="User" /> object. </returns>
-        public static User GetUser(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
+        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                User.ValidateResourceId(id);
-                return new User(client, id);
+                UserResource.ValidateResourceId(id);
+                return new UserResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SourceControl
-        /// <summary> Gets an object representing a SourceControl along with the instance operations that can be performed on it but with no data. </summary>
+        #region SourceControlResource
+        /// <summary> Gets an object representing a SourceControlResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControl" /> object. </returns>
-        public static SourceControl GetSourceControl(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
+        public static SourceControlResource GetSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SourceControl.ValidateResourceId(id);
-                return new SourceControl(client, id);
+                SourceControlResource.ValidateResourceId(id);
+                return new SourceControlResource(client, id);
             }
             );
         }
@@ -733,33 +733,33 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region StaticSiteBuildUserProvidedFunctionApp
-        /// <summary> Gets an object representing a StaticSiteBuildUserProvidedFunctionApp along with the instance operations that can be performed on it but with no data. </summary>
+        #region StaticSiteBuildUserProvidedFunctionAppResource
+        /// <summary> Gets an object representing a StaticSiteBuildUserProvidedFunctionAppResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionApp" /> object. </returns>
-        public static StaticSiteBuildUserProvidedFunctionApp GetStaticSiteBuildUserProvidedFunctionApp(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> object. </returns>
+        public static StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                StaticSiteBuildUserProvidedFunctionApp.ValidateResourceId(id);
-                return new StaticSiteBuildUserProvidedFunctionApp(client, id);
+                StaticSiteBuildUserProvidedFunctionAppResource.ValidateResourceId(id);
+                return new StaticSiteBuildUserProvidedFunctionAppResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StaticSiteUserProvidedFunctionApp
-        /// <summary> Gets an object representing a StaticSiteUserProvidedFunctionApp along with the instance operations that can be performed on it but with no data. </summary>
+        #region StaticSiteUserProvidedFunctionAppResource
+        /// <summary> Gets an object representing a StaticSiteUserProvidedFunctionAppResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionApp" /> object. </returns>
-        public static StaticSiteUserProvidedFunctionApp GetStaticSiteUserProvidedFunctionApp(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource" /> object. </returns>
+        public static StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                StaticSiteUserProvidedFunctionApp.ValidateResourceId(id);
-                return new StaticSiteUserProvidedFunctionApp(client, id);
+                StaticSiteUserProvidedFunctionAppResource.ValidateResourceId(id);
+                return new StaticSiteUserProvidedFunctionAppResource(client, id);
             }
             );
         }
@@ -781,225 +781,225 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region WebSite
-        /// <summary> Gets an object representing a WebSite along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebSiteResource
+        /// <summary> Gets an object representing a WebSiteResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSite" /> object. </returns>
-        public static WebSite GetWebSite(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteResource" /> object. </returns>
+        public static WebSiteResource GetWebSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WebSite.ValidateResourceId(id);
-                return new WebSite(client, id);
+                WebSiteResource.ValidateResourceId(id);
+                return new WebSiteResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlot
-        /// <summary> Gets an object representing a SiteSlot along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotResource
+        /// <summary> Gets an object representing a SiteSlotResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlot" /> object. </returns>
-        public static SiteSlot GetSiteSlot(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotResource" /> object. </returns>
+        public static SiteSlotResource GetSiteSlotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlot.ValidateResourceId(id);
-                return new SiteSlot(client, id);
+                SiteSlotResource.ValidateResourceId(id);
+                return new SiteSlotResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteBackup
-        /// <summary> Gets an object representing a SiteBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteBackupResource
+        /// <summary> Gets an object representing a SiteBackupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteBackup" /> object. </returns>
-        public static SiteBackup GetSiteBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteBackupResource" /> object. </returns>
+        public static SiteBackupResource GetSiteBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteBackup.ValidateResourceId(id);
-                return new SiteBackup(client, id);
+                SiteBackupResource.ValidateResourceId(id);
+                return new SiteBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotBackup
-        /// <summary> Gets an object representing a SiteSlotBackup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotBackupResource
+        /// <summary> Gets an object representing a SiteSlotBackupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotBackup" /> object. </returns>
-        public static SiteSlotBackup GetSiteSlotBackup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotBackupResource" /> object. </returns>
+        public static SiteSlotBackupResource GetSiteSlotBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotBackup.ValidateResourceId(id);
-                return new SiteSlotBackup(client, id);
+                SiteSlotBackupResource.ValidateResourceId(id);
+                return new SiteSlotBackupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region BasicPublishingCredentialsPolicyFtp
-        /// <summary> Gets an object representing a BasicPublishingCredentialsPolicyFtp along with the instance operations that can be performed on it but with no data. </summary>
+        #region BasicPublishingCredentialsPolicyFtpResource
+        /// <summary> Gets an object representing a BasicPublishingCredentialsPolicyFtpResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtp" /> object. </returns>
-        public static BasicPublishingCredentialsPolicyFtp GetBasicPublishingCredentialsPolicyFtp(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> object. </returns>
+        public static BasicPublishingCredentialsPolicyFtpResource GetBasicPublishingCredentialsPolicyFtpResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                BasicPublishingCredentialsPolicyFtp.ValidateResourceId(id);
-                return new BasicPublishingCredentialsPolicyFtp(client, id);
+                BasicPublishingCredentialsPolicyFtpResource.ValidateResourceId(id);
+                return new BasicPublishingCredentialsPolicyFtpResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ScmSiteBasicPublishingCredentialsPolicy
-        /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ScmSiteBasicPublishingCredentialsPolicyResource
+        /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicy" /> object. </returns>
-        public static ScmSiteBasicPublishingCredentialsPolicy GetScmSiteBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
+        public static ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ScmSiteBasicPublishingCredentialsPolicy.ValidateResourceId(id);
-                return new ScmSiteBasicPublishingCredentialsPolicy(client, id);
+                ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new ScmSiteBasicPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FtpSiteSlotBasicPublishingCredentialsPolicy
-        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region FtpSiteSlotBasicPublishingCredentialsPolicyResource
+        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
-        public static FtpSiteSlotBasicPublishingCredentialsPolicy GetFtpSiteSlotBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
+        public static FtpSiteSlotBasicPublishingCredentialsPolicyResource GetFtpSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                FtpSiteSlotBasicPublishingCredentialsPolicy.ValidateResourceId(id);
-                return new FtpSiteSlotBasicPublishingCredentialsPolicy(client, id);
+                FtpSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new FtpSiteSlotBasicPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ScmSiteSlotBasicPublishingCredentialsPolicy
-        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        #region ScmSiteSlotBasicPublishingCredentialsPolicyResource
+        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicy" /> object. </returns>
-        public static ScmSiteSlotBasicPublishingCredentialsPolicy GetScmSiteSlotBasicPublishingCredentialsPolicy(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
+        public static ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ScmSiteSlotBasicPublishingCredentialsPolicy.ValidateResourceId(id);
-                return new ScmSiteSlotBasicPublishingCredentialsPolicy(client, id);
+                ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+                return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteConfigAppsetting
-        /// <summary> Gets an object representing a SiteConfigAppsetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteConfigAppsettingResource
+        /// <summary> Gets an object representing a SiteConfigAppsettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteConfigAppsetting" /> object. </returns>
-        public static SiteConfigAppsetting GetSiteConfigAppsetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigAppsettingResource" /> object. </returns>
+        public static SiteConfigAppsettingResource GetSiteConfigAppsettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteConfigAppsetting.ValidateResourceId(id);
-                return new SiteConfigAppsetting(client, id);
+                SiteConfigAppsettingResource.ValidateResourceId(id);
+                return new SiteConfigAppsettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteConfigConnectionString
-        /// <summary> Gets an object representing a SiteConfigConnectionString along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteConfigConnectionStringResource
+        /// <summary> Gets an object representing a SiteConfigConnectionStringResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteConfigConnectionString" /> object. </returns>
-        public static SiteConfigConnectionString GetSiteConfigConnectionString(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigConnectionStringResource" /> object. </returns>
+        public static SiteConfigConnectionStringResource GetSiteConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteConfigConnectionString.ValidateResourceId(id);
-                return new SiteConfigConnectionString(client, id);
+                SiteConfigConnectionStringResource.ValidateResourceId(id);
+                return new SiteConfigConnectionStringResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotConfigAppSetting
-        /// <summary> Gets an object representing a SiteSlotConfigAppSetting along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotConfigAppSettingResource
+        /// <summary> Gets an object representing a SiteSlotConfigAppSettingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigAppSetting" /> object. </returns>
-        public static SiteSlotConfigAppSetting GetSiteSlotConfigAppSetting(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotConfigAppSettingResource" /> object. </returns>
+        public static SiteSlotConfigAppSettingResource GetSiteSlotConfigAppSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotConfigAppSetting.ValidateResourceId(id);
-                return new SiteSlotConfigAppSetting(client, id);
+                SiteSlotConfigAppSettingResource.ValidateResourceId(id);
+                return new SiteSlotConfigAppSettingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotConfigConnectionString
-        /// <summary> Gets an object representing a SiteSlotConfigConnectionString along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotConfigConnectionStringResource
+        /// <summary> Gets an object representing a SiteSlotConfigConnectionStringResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigConnectionString" /> object. </returns>
-        public static SiteSlotConfigConnectionString GetSiteSlotConfigConnectionString(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotConfigConnectionStringResource" /> object. </returns>
+        public static SiteSlotConfigConnectionStringResource GetSiteSlotConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotConfigConnectionString.ValidateResourceId(id);
-                return new SiteSlotConfigConnectionString(client, id);
+                SiteSlotConfigConnectionStringResource.ValidateResourceId(id);
+                return new SiteSlotConfigConnectionStringResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LogsSiteConfig
-        /// <summary> Gets an object representing a LogsSiteConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogsSiteConfigResource
+        /// <summary> Gets an object representing a LogsSiteConfigResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogsSiteConfig" /> object. </returns>
-        public static LogsSiteConfig GetLogsSiteConfig(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteConfigResource" /> object. </returns>
+        public static LogsSiteConfigResource GetLogsSiteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                LogsSiteConfig.ValidateResourceId(id);
-                return new LogsSiteConfig(client, id);
+                LogsSiteConfigResource.ValidateResourceId(id);
+                return new LogsSiteConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region LogsSiteSlotConfig
-        /// <summary> Gets an object representing a LogsSiteSlotConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region LogsSiteSlotConfigResource
+        /// <summary> Gets an object representing a LogsSiteSlotConfigResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogsSiteSlotConfig" /> object. </returns>
-        public static LogsSiteSlotConfig GetLogsSiteSlotConfig(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteSlotConfigResource" /> object. </returns>
+        public static LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                LogsSiteSlotConfig.ValidateResourceId(id);
-                return new LogsSiteSlotConfig(client, id);
+                LogsSiteSlotConfigResource.ValidateResourceId(id);
+                return new LogsSiteSlotConfigResource(client, id);
             }
             );
         }
@@ -1021,801 +1021,801 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region WebSiteConfig
-        /// <summary> Gets an object representing a WebSiteConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebSiteConfigResource
+        /// <summary> Gets an object representing a WebSiteConfigResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteConfig" /> object. </returns>
-        public static WebSiteConfig GetWebSiteConfig(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteConfigResource" /> object. </returns>
+        public static WebSiteConfigResource GetWebSiteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WebSiteConfig.ValidateResourceId(id);
-                return new WebSiteConfig(client, id);
+                WebSiteConfigResource.ValidateResourceId(id);
+                return new WebSiteConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteConfigSnapshot
-        /// <summary> Gets an object representing a SiteConfigSnapshot along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteConfigSnapshotResource
+        /// <summary> Gets an object representing a SiteConfigSnapshotResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteConfigSnapshot" /> object. </returns>
-        public static SiteConfigSnapshot GetSiteConfigSnapshot(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigSnapshotResource" /> object. </returns>
+        public static SiteConfigSnapshotResource GetSiteConfigSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteConfigSnapshot.ValidateResourceId(id);
-                return new SiteConfigSnapshot(client, id);
+                SiteConfigSnapshotResource.ValidateResourceId(id);
+                return new SiteConfigSnapshotResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WebSiteSlotConfig
-        /// <summary> Gets an object representing a WebSiteSlotConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebSiteSlotConfigResource
+        /// <summary> Gets an object representing a WebSiteSlotConfigResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteSlotConfig" /> object. </returns>
-        public static WebSiteSlotConfig GetWebSiteSlotConfig(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotConfigResource" /> object. </returns>
+        public static WebSiteSlotConfigResource GetWebSiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WebSiteSlotConfig.ValidateResourceId(id);
-                return new WebSiteSlotConfig(client, id);
+                WebSiteSlotConfigResource.ValidateResourceId(id);
+                return new WebSiteSlotConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotConfigSnapshot
-        /// <summary> Gets an object representing a SiteSlotConfigSnapshot along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotConfigSnapshotResource
+        /// <summary> Gets an object representing a SiteSlotConfigSnapshotResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotConfigSnapshot" /> object. </returns>
-        public static SiteSlotConfigSnapshot GetSiteSlotConfigSnapshot(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotConfigSnapshotResource" /> object. </returns>
+        public static SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotConfigSnapshot.ValidateResourceId(id);
-                return new SiteSlotConfigSnapshot(client, id);
+                SiteSlotConfigSnapshotResource.ValidateResourceId(id);
+                return new SiteSlotConfigSnapshotResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteContinuousWebJob
-        /// <summary> Gets an object representing a SiteContinuousWebJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteContinuousWebJobResource
+        /// <summary> Gets an object representing a SiteContinuousWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteContinuousWebJob" /> object. </returns>
-        public static SiteContinuousWebJob GetSiteContinuousWebJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteContinuousWebJobResource" /> object. </returns>
+        public static SiteContinuousWebJobResource GetSiteContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteContinuousWebJob.ValidateResourceId(id);
-                return new SiteContinuousWebJob(client, id);
+                SiteContinuousWebJobResource.ValidateResourceId(id);
+                return new SiteContinuousWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotContinuousWebJob
-        /// <summary> Gets an object representing a SiteSlotContinuousWebJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotContinuousWebJobResource
+        /// <summary> Gets an object representing a SiteSlotContinuousWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotContinuousWebJob" /> object. </returns>
-        public static SiteSlotContinuousWebJob GetSiteSlotContinuousWebJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotContinuousWebJobResource" /> object. </returns>
+        public static SiteSlotContinuousWebJobResource GetSiteSlotContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotContinuousWebJob.ValidateResourceId(id);
-                return new SiteSlotContinuousWebJob(client, id);
+                SiteSlotContinuousWebJobResource.ValidateResourceId(id);
+                return new SiteSlotContinuousWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteDeployment
-        /// <summary> Gets an object representing a SiteDeployment along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteDeploymentResource
+        /// <summary> Gets an object representing a SiteDeploymentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDeployment" /> object. </returns>
-        public static SiteDeployment GetSiteDeployment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDeploymentResource" /> object. </returns>
+        public static SiteDeploymentResource GetSiteDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteDeployment.ValidateResourceId(id);
-                return new SiteDeployment(client, id);
+                SiteDeploymentResource.ValidateResourceId(id);
+                return new SiteDeploymentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotDeployment
-        /// <summary> Gets an object representing a SiteSlotDeployment along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotDeploymentResource
+        /// <summary> Gets an object representing a SiteSlotDeploymentResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDeployment" /> object. </returns>
-        public static SiteSlotDeployment GetSiteSlotDeployment(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDeploymentResource" /> object. </returns>
+        public static SiteSlotDeploymentResource GetSiteSlotDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotDeployment.ValidateResourceId(id);
-                return new SiteSlotDeployment(client, id);
+                SiteSlotDeploymentResource.ValidateResourceId(id);
+                return new SiteSlotDeploymentResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteDomainOwnershipIdentifier
-        /// <summary> Gets an object representing a SiteDomainOwnershipIdentifier along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteDomainOwnershipIdentifierResource
+        /// <summary> Gets an object representing a SiteDomainOwnershipIdentifierResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifier" /> object. </returns>
-        public static SiteDomainOwnershipIdentifier GetSiteDomainOwnershipIdentifier(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifierResource" /> object. </returns>
+        public static SiteDomainOwnershipIdentifierResource GetSiteDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteDomainOwnershipIdentifier.ValidateResourceId(id);
-                return new SiteDomainOwnershipIdentifier(client, id);
+                SiteDomainOwnershipIdentifierResource.ValidateResourceId(id);
+                return new SiteDomainOwnershipIdentifierResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotDomainOwnershipIdentifier
-        /// <summary> Gets an object representing a SiteSlotDomainOwnershipIdentifier along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotDomainOwnershipIdentifierResource
+        /// <summary> Gets an object representing a SiteSlotDomainOwnershipIdentifierResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifier" /> object. </returns>
-        public static SiteSlotDomainOwnershipIdentifier GetSiteSlotDomainOwnershipIdentifier(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifierResource" /> object. </returns>
+        public static SiteSlotDomainOwnershipIdentifierResource GetSiteSlotDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotDomainOwnershipIdentifier.ValidateResourceId(id);
-                return new SiteSlotDomainOwnershipIdentifier(client, id);
+                SiteSlotDomainOwnershipIdentifierResource.ValidateResourceId(id);
+                return new SiteSlotDomainOwnershipIdentifierResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteExtension
-        /// <summary> Gets an object representing a SiteExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteExtensionResource
+        /// <summary> Gets an object representing a SiteExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteExtension" /> object. </returns>
-        public static SiteExtension GetSiteExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
+        public static SiteExtensionResource GetSiteExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteExtension.ValidateResourceId(id);
-                return new SiteExtension(client, id);
+                SiteExtensionResource.ValidateResourceId(id);
+                return new SiteExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteInstanceExtension
-        /// <summary> Gets an object representing a SiteInstanceExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteInstanceExtensionResource
+        /// <summary> Gets an object representing a SiteInstanceExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteInstanceExtension" /> object. </returns>
-        public static SiteInstanceExtension GetSiteInstanceExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceExtensionResource" /> object. </returns>
+        public static SiteInstanceExtensionResource GetSiteInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteInstanceExtension.ValidateResourceId(id);
-                return new SiteInstanceExtension(client, id);
+                SiteInstanceExtensionResource.ValidateResourceId(id);
+                return new SiteInstanceExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotExtension
-        /// <summary> Gets an object representing a SiteSlotExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotExtensionResource
+        /// <summary> Gets an object representing a SiteSlotExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotExtension" /> object. </returns>
-        public static SiteSlotExtension GetSiteSlotExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
+        public static SiteSlotExtensionResource GetSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotExtension.ValidateResourceId(id);
-                return new SiteSlotExtension(client, id);
+                SiteSlotExtensionResource.ValidateResourceId(id);
+                return new SiteSlotExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotInstanceExtension
-        /// <summary> Gets an object representing a SiteSlotInstanceExtension along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotInstanceExtensionResource
+        /// <summary> Gets an object representing a SiteSlotInstanceExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotInstanceExtension" /> object. </returns>
-        public static SiteSlotInstanceExtension GetSiteSlotInstanceExtension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource" /> object. </returns>
+        public static SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotInstanceExtension.ValidateResourceId(id);
-                return new SiteSlotInstanceExtension(client, id);
+                SiteSlotInstanceExtensionResource.ValidateResourceId(id);
+                return new SiteSlotInstanceExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteFunction
-        /// <summary> Gets an object representing a SiteFunction along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteFunctionResource
+        /// <summary> Gets an object representing a SiteFunctionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteFunction" /> object. </returns>
-        public static SiteFunction GetSiteFunction(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteFunctionResource" /> object. </returns>
+        public static SiteFunctionResource GetSiteFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteFunction.ValidateResourceId(id);
-                return new SiteFunction(client, id);
+                SiteFunctionResource.ValidateResourceId(id);
+                return new SiteFunctionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotFunction
-        /// <summary> Gets an object representing a SiteSlotFunction along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotFunctionResource
+        /// <summary> Gets an object representing a SiteSlotFunctionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotFunction" /> object. </returns>
-        public static SiteSlotFunction GetSiteSlotFunction(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotFunctionResource" /> object. </returns>
+        public static SiteSlotFunctionResource GetSiteSlotFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotFunction.ValidateResourceId(id);
-                return new SiteSlotFunction(client, id);
+                SiteSlotFunctionResource.ValidateResourceId(id);
+                return new SiteSlotFunctionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteHostNameBinding
-        /// <summary> Gets an object representing a SiteHostNameBinding along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteHostNameBindingResource
+        /// <summary> Gets an object representing a SiteHostNameBindingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteHostNameBinding" /> object. </returns>
-        public static SiteHostNameBinding GetSiteHostNameBinding(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHostNameBindingResource" /> object. </returns>
+        public static SiteHostNameBindingResource GetSiteHostNameBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteHostNameBinding.ValidateResourceId(id);
-                return new SiteHostNameBinding(client, id);
+                SiteHostNameBindingResource.ValidateResourceId(id);
+                return new SiteHostNameBindingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotHostNameBinding
-        /// <summary> Gets an object representing a SiteSlotHostNameBinding along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotHostNameBindingResource
+        /// <summary> Gets an object representing a SiteSlotHostNameBindingResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotHostNameBinding" /> object. </returns>
-        public static SiteSlotHostNameBinding GetSiteSlotHostNameBinding(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHostNameBindingResource" /> object. </returns>
+        public static SiteSlotHostNameBindingResource GetSiteSlotHostNameBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotHostNameBinding.ValidateResourceId(id);
-                return new SiteSlotHostNameBinding(client, id);
+                SiteSlotHostNameBindingResource.ValidateResourceId(id);
+                return new SiteSlotHostNameBindingResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteHybridConnection
-        /// <summary> Gets an object representing a SiteHybridConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteHybridConnectionResource
+        /// <summary> Gets an object representing a SiteHybridConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteHybridConnection" /> object. </returns>
-        public static SiteHybridConnection GetSiteHybridConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHybridConnectionResource" /> object. </returns>
+        public static SiteHybridConnectionResource GetSiteHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteHybridConnection.ValidateResourceId(id);
-                return new SiteHybridConnection(client, id);
+                SiteHybridConnectionResource.ValidateResourceId(id);
+                return new SiteHybridConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotHybridconnection
-        /// <summary> Gets an object representing a SiteSlotHybridconnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotHybridconnectionResource
+        /// <summary> Gets an object representing a SiteSlotHybridconnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotHybridconnection" /> object. </returns>
-        public static SiteSlotHybridconnection GetSiteSlotHybridconnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHybridconnectionResource" /> object. </returns>
+        public static SiteSlotHybridconnectionResource GetSiteSlotHybridconnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotHybridconnection.ValidateResourceId(id);
-                return new SiteSlotHybridconnection(client, id);
+                SiteSlotHybridconnectionResource.ValidateResourceId(id);
+                return new SiteSlotHybridconnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteInstance
-        /// <summary> Gets an object representing a SiteInstance along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteInstanceResource
+        /// <summary> Gets an object representing a SiteInstanceResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteInstance" /> object. </returns>
-        public static SiteInstance GetSiteInstance(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceResource" /> object. </returns>
+        public static SiteInstanceResource GetSiteInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteInstance.ValidateResourceId(id);
-                return new SiteInstance(client, id);
+                SiteInstanceResource.ValidateResourceId(id);
+                return new SiteInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotInstance
-        /// <summary> Gets an object representing a SiteSlotInstance along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotInstanceResource
+        /// <summary> Gets an object representing a SiteSlotInstanceResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotInstance" /> object. </returns>
-        public static SiteSlotInstance GetSiteSlotInstance(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceResource" /> object. </returns>
+        public static SiteSlotInstanceResource GetSiteSlotInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotInstance.ValidateResourceId(id);
-                return new SiteSlotInstance(client, id);
+                SiteSlotInstanceResource.ValidateResourceId(id);
+                return new SiteSlotInstanceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteInstanceProcess
-        /// <summary> Gets an object representing a SiteInstanceProcess along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteInstanceProcessResource
+        /// <summary> Gets an object representing a SiteInstanceProcessResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteInstanceProcess" /> object. </returns>
-        public static SiteInstanceProcess GetSiteInstanceProcess(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceProcessResource" /> object. </returns>
+        public static SiteInstanceProcessResource GetSiteInstanceProcessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteInstanceProcess.ValidateResourceId(id);
-                return new SiteInstanceProcess(client, id);
+                SiteInstanceProcessResource.ValidateResourceId(id);
+                return new SiteInstanceProcessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteProcess
-        /// <summary> Gets an object representing a SiteProcess along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteProcessResource
+        /// <summary> Gets an object representing a SiteProcessResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteProcess" /> object. </returns>
-        public static SiteProcess GetSiteProcess(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteProcessResource" /> object. </returns>
+        public static SiteProcessResource GetSiteProcessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteProcess.ValidateResourceId(id);
-                return new SiteProcess(client, id);
+                SiteProcessResource.ValidateResourceId(id);
+                return new SiteProcessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotInstanceProcess
-        /// <summary> Gets an object representing a SiteSlotInstanceProcess along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotInstanceProcessResource
+        /// <summary> Gets an object representing a SiteSlotInstanceProcessResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotInstanceProcess" /> object. </returns>
-        public static SiteSlotInstanceProcess GetSiteSlotInstanceProcess(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceProcessResource" /> object. </returns>
+        public static SiteSlotInstanceProcessResource GetSiteSlotInstanceProcessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotInstanceProcess.ValidateResourceId(id);
-                return new SiteSlotInstanceProcess(client, id);
+                SiteSlotInstanceProcessResource.ValidateResourceId(id);
+                return new SiteSlotInstanceProcessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotProcess
-        /// <summary> Gets an object representing a SiteSlotProcess along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotProcessResource
+        /// <summary> Gets an object representing a SiteSlotProcessResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotProcess" /> object. </returns>
-        public static SiteSlotProcess GetSiteSlotProcess(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotProcessResource" /> object. </returns>
+        public static SiteSlotProcessResource GetSiteSlotProcessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotProcess.ValidateResourceId(id);
-                return new SiteSlotProcess(client, id);
+                SiteSlotProcessResource.ValidateResourceId(id);
+                return new SiteSlotProcessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteInstanceProcessModule
-        /// <summary> Gets an object representing a SiteInstanceProcessModule along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteInstanceProcessModuleResource
+        /// <summary> Gets an object representing a SiteInstanceProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteInstanceProcessModule" /> object. </returns>
-        public static SiteInstanceProcessModule GetSiteInstanceProcessModule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceProcessModuleResource" /> object. </returns>
+        public static SiteInstanceProcessModuleResource GetSiteInstanceProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteInstanceProcessModule.ValidateResourceId(id);
-                return new SiteInstanceProcessModule(client, id);
+                SiteInstanceProcessModuleResource.ValidateResourceId(id);
+                return new SiteInstanceProcessModuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteProcessModule
-        /// <summary> Gets an object representing a SiteProcessModule along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteProcessModuleResource
+        /// <summary> Gets an object representing a SiteProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteProcessModule" /> object. </returns>
-        public static SiteProcessModule GetSiteProcessModule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteProcessModuleResource" /> object. </returns>
+        public static SiteProcessModuleResource GetSiteProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteProcessModule.ValidateResourceId(id);
-                return new SiteProcessModule(client, id);
+                SiteProcessModuleResource.ValidateResourceId(id);
+                return new SiteProcessModuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotInstanceProcessModule
-        /// <summary> Gets an object representing a SiteSlotInstanceProcessModule along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotInstanceProcessModuleResource
+        /// <summary> Gets an object representing a SiteSlotInstanceProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotInstanceProcessModule" /> object. </returns>
-        public static SiteSlotInstanceProcessModule GetSiteSlotInstanceProcessModule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceProcessModuleResource" /> object. </returns>
+        public static SiteSlotInstanceProcessModuleResource GetSiteSlotInstanceProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotInstanceProcessModule.ValidateResourceId(id);
-                return new SiteSlotInstanceProcessModule(client, id);
+                SiteSlotInstanceProcessModuleResource.ValidateResourceId(id);
+                return new SiteSlotInstanceProcessModuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotProcessModule
-        /// <summary> Gets an object representing a SiteSlotProcessModule along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotProcessModuleResource
+        /// <summary> Gets an object representing a SiteSlotProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotProcessModule" /> object. </returns>
-        public static SiteSlotProcessModule GetSiteSlotProcessModule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotProcessModuleResource" /> object. </returns>
+        public static SiteSlotProcessModuleResource GetSiteSlotProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotProcessModule.ValidateResourceId(id);
-                return new SiteSlotProcessModule(client, id);
+                SiteSlotProcessModuleResource.ValidateResourceId(id);
+                return new SiteSlotProcessModuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteNetworkConfig
-        /// <summary> Gets an object representing a SiteNetworkConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteNetworkConfigResource
+        /// <summary> Gets an object representing a SiteNetworkConfigResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteNetworkConfig" /> object. </returns>
-        public static SiteNetworkConfig GetSiteNetworkConfig(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkConfigResource" /> object. </returns>
+        public static SiteNetworkConfigResource GetSiteNetworkConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteNetworkConfig.ValidateResourceId(id);
-                return new SiteNetworkConfig(client, id);
+                SiteNetworkConfigResource.ValidateResourceId(id);
+                return new SiteNetworkConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotNetworkConfig
-        /// <summary> Gets an object representing a SiteSlotNetworkConfig along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotNetworkConfigResource
+        /// <summary> Gets an object representing a SiteSlotNetworkConfigResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotNetworkConfig" /> object. </returns>
-        public static SiteSlotNetworkConfig GetSiteSlotNetworkConfig(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource" /> object. </returns>
+        public static SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotNetworkConfig.ValidateResourceId(id);
-                return new SiteSlotNetworkConfig(client, id);
+                SiteSlotNetworkConfigResource.ValidateResourceId(id);
+                return new SiteSlotNetworkConfigResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SitePremierAddon
-        /// <summary> Gets an object representing a SitePremierAddon along with the instance operations that can be performed on it but with no data. </summary>
+        #region SitePremierAddonResource
+        /// <summary> Gets an object representing a SitePremierAddonResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitePremierAddon" /> object. </returns>
-        public static SitePremierAddon GetSitePremierAddon(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitePremierAddonResource" /> object. </returns>
+        public static SitePremierAddonResource GetSitePremierAddonResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SitePremierAddon.ValidateResourceId(id);
-                return new SitePremierAddon(client, id);
+                SitePremierAddonResource.ValidateResourceId(id);
+                return new SitePremierAddonResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotPremierAddOn
-        /// <summary> Gets an object representing a SiteSlotPremierAddOn along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotPremierAddOnResource
+        /// <summary> Gets an object representing a SiteSlotPremierAddOnResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPremierAddOn" /> object. </returns>
-        public static SiteSlotPremierAddOn GetSiteSlotPremierAddOn(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotPremierAddOnResource" /> object. </returns>
+        public static SiteSlotPremierAddOnResource GetSiteSlotPremierAddOnResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotPremierAddOn.ValidateResourceId(id);
-                return new SiteSlotPremierAddOn(client, id);
+                SiteSlotPremierAddOnResource.ValidateResourceId(id);
+                return new SiteSlotPremierAddOnResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SitePrivateAccess
-        /// <summary> Gets an object representing a SitePrivateAccess along with the instance operations that can be performed on it but with no data. </summary>
+        #region SitePrivateAccessResource
+        /// <summary> Gets an object representing a SitePrivateAccessResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitePrivateAccess" /> object. </returns>
-        public static SitePrivateAccess GetSitePrivateAccess(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitePrivateAccessResource" /> object. </returns>
+        public static SitePrivateAccessResource GetSitePrivateAccessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SitePrivateAccess.ValidateResourceId(id);
-                return new SitePrivateAccess(client, id);
+                SitePrivateAccessResource.ValidateResourceId(id);
+                return new SitePrivateAccessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotPrivateAccess
-        /// <summary> Gets an object representing a SiteSlotPrivateAccess along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotPrivateAccessResource
+        /// <summary> Gets an object representing a SiteSlotPrivateAccessResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPrivateAccess" /> object. </returns>
-        public static SiteSlotPrivateAccess GetSiteSlotPrivateAccess(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotPrivateAccessResource" /> object. </returns>
+        public static SiteSlotPrivateAccessResource GetSiteSlotPrivateAccessResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotPrivateAccess.ValidateResourceId(id);
-                return new SiteSlotPrivateAccess(client, id);
+                SiteSlotPrivateAccessResource.ValidateResourceId(id);
+                return new SiteSlotPrivateAccessResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SitePublicCertificate
-        /// <summary> Gets an object representing a SitePublicCertificate along with the instance operations that can be performed on it but with no data. </summary>
+        #region SitePublicCertificateResource
+        /// <summary> Gets an object representing a SitePublicCertificateResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SitePublicCertificate" /> object. </returns>
-        public static SitePublicCertificate GetSitePublicCertificate(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitePublicCertificateResource" /> object. </returns>
+        public static SitePublicCertificateResource GetSitePublicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SitePublicCertificate.ValidateResourceId(id);
-                return new SitePublicCertificate(client, id);
+                SitePublicCertificateResource.ValidateResourceId(id);
+                return new SitePublicCertificateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotPublicCertificate
-        /// <summary> Gets an object representing a SiteSlotPublicCertificate along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotPublicCertificateResource
+        /// <summary> Gets an object representing a SiteSlotPublicCertificateResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotPublicCertificate" /> object. </returns>
-        public static SiteSlotPublicCertificate GetSiteSlotPublicCertificate(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotPublicCertificateResource" /> object. </returns>
+        public static SiteSlotPublicCertificateResource GetSiteSlotPublicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotPublicCertificate.ValidateResourceId(id);
-                return new SiteSlotPublicCertificate(client, id);
+                SiteSlotPublicCertificateResource.ValidateResourceId(id);
+                return new SiteSlotPublicCertificateResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSiteextension
-        /// <summary> Gets an object representing a SiteSiteextension along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSiteextensionResource
+        /// <summary> Gets an object representing a SiteSiteextensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSiteextension" /> object. </returns>
-        public static SiteSiteextension GetSiteSiteextension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSiteextensionResource" /> object. </returns>
+        public static SiteSiteextensionResource GetSiteSiteextensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSiteextension.ValidateResourceId(id);
-                return new SiteSiteextension(client, id);
+                SiteSiteextensionResource.ValidateResourceId(id);
+                return new SiteSiteextensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotSiteextension
-        /// <summary> Gets an object representing a SiteSlotSiteextension along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotSiteextensionResource
+        /// <summary> Gets an object representing a SiteSlotSiteextensionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotSiteextension" /> object. </returns>
-        public static SiteSlotSiteextension GetSiteSlotSiteextension(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotSiteextensionResource" /> object. </returns>
+        public static SiteSlotSiteextensionResource GetSiteSlotSiteextensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotSiteextension.ValidateResourceId(id);
-                return new SiteSlotSiteextension(client, id);
+                SiteSlotSiteextensionResource.ValidateResourceId(id);
+                return new SiteSlotSiteextensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MigrateMySqlStatus
-        /// <summary> Gets an object representing a MigrateMySqlStatus along with the instance operations that can be performed on it but with no data. </summary>
+        #region MigrateMySqlStatusResource
+        /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrateMySqlStatus" /> object. </returns>
-        public static MigrateMySqlStatus GetMigrateMySqlStatus(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateMySqlStatusResource" /> object. </returns>
+        public static MigrateMySqlStatusResource GetMigrateMySqlStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                MigrateMySqlStatus.ValidateResourceId(id);
-                return new MigrateMySqlStatus(client, id);
+                MigrateMySqlStatusResource.ValidateResourceId(id);
+                return new MigrateMySqlStatusResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NetworkFeatures
-        /// <summary> Gets an object representing a NetworkFeatures along with the instance operations that can be performed on it but with no data. </summary>
+        #region NetworkFeaturesResource
+        /// <summary> Gets an object representing a NetworkFeaturesResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFeatures" /> object. </returns>
-        public static NetworkFeatures GetNetworkFeatures(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFeaturesResource" /> object. </returns>
+        public static NetworkFeaturesResource GetNetworkFeaturesResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                NetworkFeatures.ValidateResourceId(id);
-                return new NetworkFeatures(client, id);
+                NetworkFeaturesResource.ValidateResourceId(id);
+                return new NetworkFeaturesResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotSourcecontrol
-        /// <summary> Gets an object representing a SiteSlotSourcecontrol along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotSourcecontrolResource
+        /// <summary> Gets an object representing a SiteSlotSourcecontrolResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotSourcecontrol" /> object. </returns>
-        public static SiteSlotSourcecontrol GetSiteSlotSourcecontrol(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotSourcecontrolResource" /> object. </returns>
+        public static SiteSlotSourcecontrolResource GetSiteSlotSourcecontrolResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotSourcecontrol.ValidateResourceId(id);
-                return new SiteSlotSourcecontrol(client, id);
+                SiteSlotSourcecontrolResource.ValidateResourceId(id);
+                return new SiteSlotSourcecontrolResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSourceControl
-        /// <summary> Gets an object representing a SiteSourceControl along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSourceControlResource
+        /// <summary> Gets an object representing a SiteSourceControlResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSourceControl" /> object. </returns>
-        public static SiteSourceControl GetSiteSourceControl(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSourceControlResource" /> object. </returns>
+        public static SiteSourceControlResource GetSiteSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSourceControl.ValidateResourceId(id);
-                return new SiteSourceControl(client, id);
+                SiteSourceControlResource.ValidateResourceId(id);
+                return new SiteSourceControlResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteTriggeredwebJob
-        /// <summary> Gets an object representing a SiteTriggeredwebJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteTriggeredwebJobResource
+        /// <summary> Gets an object representing a SiteTriggeredwebJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteTriggeredwebJob" /> object. </returns>
-        public static SiteTriggeredwebJob GetSiteTriggeredwebJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteTriggeredwebJobResource" /> object. </returns>
+        public static SiteTriggeredwebJobResource GetSiteTriggeredwebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteTriggeredwebJob.ValidateResourceId(id);
-                return new SiteTriggeredwebJob(client, id);
+                SiteTriggeredwebJobResource.ValidateResourceId(id);
+                return new SiteTriggeredwebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotTriggeredWebJob
-        /// <summary> Gets an object representing a SiteSlotTriggeredWebJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotTriggeredWebJobResource
+        /// <summary> Gets an object representing a SiteSlotTriggeredWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotTriggeredWebJob" /> object. </returns>
-        public static SiteSlotTriggeredWebJob GetSiteSlotTriggeredWebJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobResource" /> object. </returns>
+        public static SiteSlotTriggeredWebJobResource GetSiteSlotTriggeredWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotTriggeredWebJob.ValidateResourceId(id);
-                return new SiteSlotTriggeredWebJob(client, id);
+                SiteSlotTriggeredWebJobResource.ValidateResourceId(id);
+                return new SiteSlotTriggeredWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteTriggeredWebJobHistory
-        /// <summary> Gets an object representing a SiteTriggeredWebJobHistory along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteTriggeredWebJobHistoryResource
+        /// <summary> Gets an object representing a SiteTriggeredWebJobHistoryResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteTriggeredWebJobHistory" /> object. </returns>
-        public static SiteTriggeredWebJobHistory GetSiteTriggeredWebJobHistory(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteTriggeredWebJobHistoryResource" /> object. </returns>
+        public static SiteTriggeredWebJobHistoryResource GetSiteTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteTriggeredWebJobHistory.ValidateResourceId(id);
-                return new SiteTriggeredWebJobHistory(client, id);
+                SiteTriggeredWebJobHistoryResource.ValidateResourceId(id);
+                return new SiteTriggeredWebJobHistoryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotTriggeredWebJobHistory
-        /// <summary> Gets an object representing a SiteSlotTriggeredWebJobHistory along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotTriggeredWebJobHistoryResource
+        /// <summary> Gets an object representing a SiteSlotTriggeredWebJobHistoryResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobHistory" /> object. </returns>
-        public static SiteSlotTriggeredWebJobHistory GetSiteSlotTriggeredWebJobHistory(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> object. </returns>
+        public static SiteSlotTriggeredWebJobHistoryResource GetSiteSlotTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotTriggeredWebJobHistory.ValidateResourceId(id);
-                return new SiteSlotTriggeredWebJobHistory(client, id);
+                SiteSlotTriggeredWebJobHistoryResource.ValidateResourceId(id);
+                return new SiteSlotTriggeredWebJobHistoryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteSlotWebJob
-        /// <summary> Gets an object representing a SiteSlotWebJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteSlotWebJobResource
+        /// <summary> Gets an object representing a SiteSlotWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotWebJob" /> object. </returns>
-        public static SiteSlotWebJob GetSiteSlotWebJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotWebJobResource" /> object. </returns>
+        public static SiteSlotWebJobResource GetSiteSlotWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteSlotWebJob.ValidateResourceId(id);
-                return new SiteSlotWebJob(client, id);
+                SiteSlotWebJobResource.ValidateResourceId(id);
+                return new SiteSlotWebJobResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SiteWebJob
-        /// <summary> Gets an object representing a SiteWebJob along with the instance operations that can be performed on it but with no data. </summary>
+        #region SiteWebJobResource
+        /// <summary> Gets an object representing a SiteWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteWebJob" /> object. </returns>
-        public static SiteWebJob GetSiteWebJob(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteWebJobResource" /> object. </returns>
+        public static SiteWebJobResource GetSiteWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SiteWebJob.ValidateResourceId(id);
-                return new SiteWebJob(client, id);
+                SiteWebJobResource.ValidateResourceId(id);
+                return new SiteWebJobResource(client, id);
             }
             );
         }

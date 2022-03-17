@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateEndpointConnectionOperationTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
-        private Network.PrivateEndpoint PrivateEndpoint { get; set; }
+        private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
         private PrivateEndpointConnectionResource Connection { get; set; }
 
         public PrivateEndpointConnectionOperationTests(bool isAsync)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.2.4");
-                VirtualNetwork vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
+                VirtualNetworkResource vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                         },
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
-                PrivateEndpoint = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
+                PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
                 List<PrivateEndpointConnectionResource> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }

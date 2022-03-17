@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class SiteSiteextensionOperationSource : IOperationSource<SiteSiteextension>
+    internal class SiteSiteextensionOperationSource : IOperationSource<SiteSiteextensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        SiteSiteextension IOperationSource<SiteSiteextension>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteSiteextensionResource IOperationSource<SiteSiteextensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSiteextension(_client, data);
+            return new SiteSiteextensionResource(_client, data);
         }
 
-        async ValueTask<SiteSiteextension> IOperationSource<SiteSiteextension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteSiteextensionResource> IOperationSource<SiteSiteextensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteExtensionInfoData.DeserializeSiteExtensionInfoData(document.RootElement);
-            return new SiteSiteextension(_client, data);
+            return new SiteSiteextensionResource(_client, data);
         }
     }
 }

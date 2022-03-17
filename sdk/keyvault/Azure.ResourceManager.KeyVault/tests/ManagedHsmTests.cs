@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             parameters.Tags.InitializeFrom(Tags);
 
-            ManagedHsm updateManagedHsm = null;
+            ManagedHsmResource updateManagedHsm = null;
 
             if (Mode == RecordedTestMode.Record)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public async Task ManagedHsmListKeys()
         {
             List<string> resourceIds = new List<string>();
-            List<ManagedHsm> vaultList = new List<ManagedHsm>();
+            List<ManagedHsmResource> vaultList = new List<ManagedHsmResource>();
 
             string vaultName = Recording.GenerateAssetName("sdktest-vault-");
             var parameters = new ManagedHsmData(Location)

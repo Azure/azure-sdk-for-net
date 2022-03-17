@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class VirtualMachineTestBase : ComputeTestBase
     {
-        protected ResourceGroup _resourceGroup;
+        protected ResourceGroupResource _resourceGroup;
         protected GenericResourceCollection _genericResourceCollection;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)

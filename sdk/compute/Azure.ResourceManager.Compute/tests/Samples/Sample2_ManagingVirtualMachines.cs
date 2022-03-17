@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_CreateAVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // Use the same location as the resource group
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_ListAllVirtualMachines
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // With ListAsync(), we can get a list of the virtual machines
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
         {
             #region Snippet:Managing_VirtualMachines_DeleteVirtualMachine
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";

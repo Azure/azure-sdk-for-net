@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task ValidateHttpPipelines()
         {
-            Subscription subscription = await _client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            SubscriptionResource subscription = await _client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             await subscription.GetResourceGroups().Construct(AzureLocation.WestUS)
                 .CreateOrUpdateAsync(_rgName);
             await foreach (var rg in subscription.GetResourceGroups().GetAllAsync())

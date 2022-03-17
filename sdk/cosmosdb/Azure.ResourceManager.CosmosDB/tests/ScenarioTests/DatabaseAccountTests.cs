@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task TestSetup()
         {
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

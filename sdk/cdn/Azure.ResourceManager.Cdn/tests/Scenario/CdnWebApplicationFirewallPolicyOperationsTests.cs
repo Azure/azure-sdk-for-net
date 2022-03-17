@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             CdnWebApplicationFirewallPolicyResource policy = await CreatePolicy(rg, policyName);
             await policy.DeleteAsync(WaitUntil.Completed);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             CdnWebApplicationFirewallPolicyResource policy = await CreatePolicy(rg, policyName);
             var lro = await policy.AddTagAsync("newTag", "newValue");

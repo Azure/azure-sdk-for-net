@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class PrivateEndpointTests : NetworkServiceClientTestBase
     {
-        private VirtualNetwork virtualNetwork;
+        private VirtualNetworkResource virtualNetwork;
         private GenericResource privateDnsZone;
-        private Resources.ResourceGroup resourceGroup;
-        private StorageAccount storageAccount;
-        private Subscription _subscription;
+        private Resources.ResourceGroupResource resourceGroup;
+        private StorageAccountResource storageAccount;
+        private SubscriptionResource _subscription;
 
         public PrivateEndpointTests(bool isAsync) : base(isAsync)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Tests
         }
 
         // TODO: create it through resource management, or we can instrutment ArmClient?
-        private async Task<Response<VirtualNetwork>> createVirtualNetwork()
+        private async Task<Response<VirtualNetworkResource>> createVirtualNetwork()
         {
             var name = Recording.GenerateAssetName("pe_vnet");
             var vnet = new VirtualNetworkData()
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Tests
             return await resourceGroup.GetVirtualNetworks().CreateOrUpdate(WaitUntil.Completed, name, vnet).WaitForCompletionAsync();
         }
 
-        private async Task<StorageAccount> createStorageAccount()
+        private async Task<StorageAccountResource> createStorageAccount()
         {
             var name = Recording.GenerateAssetName("testsa");
             var parameters = new StorageAccountCreateParameters(new StorageSku(StorageSkuName.StandardLRS), StorageKind.Storage,TestEnvironment.Location);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         //var storageParameters = new Storage.Models.StorageAccountCreateParameters(new Storage.Models.Sku(Storage.Models.SkuName.StandardLRS), Storage.Models.Kind.Storage, TestEnvironment.Location);
         //var accountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroup.Data.Name, name, storageParameters);
-        //Response<Storage.Models.StorageAccount> account = await accountOperation.WaitForCompletionAsync();
+        //Response<Storage.Models.StorageAccountResource> account = await accountOperation.WaitForCompletionAsync();
         //return account.Value;
 
             //return (await ArmClient.DefaultSubscription.GetGenericResources().CreateOrUpdateAsync(true, storageAccountId, new GenericResourceData(TestEnvironment.Location)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Tests
             // create
             var privateEndpointCollection = resourceGroup.GetPrivateEndpoints();
             var name = Recording.GenerateAssetName("pe");
-            System.Console.WriteLine($"Subnet ID: {virtualNetwork.Data.Subnets[0].Id}");
+            System.Console.WriteLine($"SubnetResource ID: {virtualNetwork.Data.Subnets[0].Id}");
             var privateEndpointData = new PrivateEndpointData
             {
                 Location = TestEnvironment.Location,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // list all
             privateEndpoints = (await _subscription.GetPrivateEndpointsAsync().ToEnumerableAsync());
-            Assert.That(privateEndpoints, Has.None.Matches<PrivateEndpoint>(p => p.Data.Name == name));
+            Assert.That(privateEndpoints, Has.None.Matches<PrivateEndpointResource>(p => p.Data.Name == name));
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Tests
             // create
             var privateEndpointCollection = resourceGroup.GetPrivateEndpoints();
             var name = Recording.GenerateAssetName("pe");
-            System.Console.WriteLine($"Subnet ID: {virtualNetwork.Data.Subnets[0].Id}");
+            System.Console.WriteLine($"SubnetResource ID: {virtualNetwork.Data.Subnets[0].Id}");
             var privateEndpointData = new PrivateEndpointData
             {
                 Location = TestEnvironment.Location,
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task AvailablePrivateEndpointInResourceGroupTypeTest()
         {
-            var types = await resourceGroup.GetAvailablePrivateEndpointTypesAsync(TestEnvironment.Location).ToEnumerableAsync();
+            var types = await resourceGroup.GetAvailablePrivateEndpointTypesByResourceGroupAsync(TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
     }

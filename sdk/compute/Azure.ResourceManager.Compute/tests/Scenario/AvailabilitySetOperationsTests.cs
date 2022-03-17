@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Tests
             AvailabilitySetResource aset = await CreateAvailabilitySetAsync(asetName);
             var beforeAdd = aset.Data.ProximityPlacementGroupId;
 
-            ResourceGroup rg = Client.GetResourceGroup(ResourceGroup.CreateResourceIdentifier(aset.Id.SubscriptionId, aset.Id.ResourceGroupName));
+            ResourceGroupResource rg = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(aset.Id.SubscriptionId, aset.Id.ResourceGroupName));
             var proxGrpName = Recording.GenerateAssetName("proxGrp-");
             ProximityPlacementGroupResource proxGrp = (await rg.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, proxGrpName, new ProximityPlacementGroupData(DefaultLocation))).Value;
 

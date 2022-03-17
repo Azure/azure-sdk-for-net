@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class NatGatewayOperationSource : IOperationSource<NatGateway>
+    internal class NatGatewayOperationSource : IOperationSource<NatGatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        NatGateway IOperationSource<NatGateway>.CreateResult(Response response, CancellationToken cancellationToken)
+        NatGatewayResource IOperationSource<NatGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NatGatewayData.DeserializeNatGatewayData(document.RootElement);
-            return new NatGateway(_client, data);
+            return new NatGatewayResource(_client, data);
         }
 
-        async ValueTask<NatGateway> IOperationSource<NatGateway>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NatGatewayResource> IOperationSource<NatGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NatGatewayData.DeserializeNatGatewayData(document.RootElement);
-            return new NatGateway(_client, data);
+            return new NatGatewayResource(_client, data);
         }
     }
 }

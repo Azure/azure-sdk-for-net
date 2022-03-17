@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteSlotInstance and their operations over its parent. </summary>
-    public partial class SiteSlotInstanceCollection : ArmCollection, IEnumerable<SiteSlotInstance>, IAsyncEnumerable<SiteSlotInstance>
+    public partial class SiteSlotInstanceCollection : ArmCollection, IEnumerable<SiteSlotInstanceResource>, IAsyncEnumerable<SiteSlotInstanceResource>
     {
         private readonly ClientDiagnostics _siteSlotInstanceWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotInstanceWebAppsRestClient;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotInstance.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteSlotInstance.ResourceType, out string siteSlotInstanceWebAppsApiVersion);
+            _siteSlotInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotInstanceResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(SiteSlotInstanceResource.ResourceType, out string siteSlotInstanceWebAppsApiVersion);
             _siteSlotInstanceWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotInstanceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotInstance>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotInstanceResource>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<SiteSlotInstance> Get(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotInstanceResource> Get(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListInstanceIdentifiersSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotInstance> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotInstance>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotInstanceWebAppsRestClient.ListInstanceIdentifiersSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotInstanceWebAppsRestClient.ListInstanceIdentifiersSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListInstanceIdentifiersSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotInstance> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotInstance> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotInstanceWebAppsRestClient.ListInstanceIdentifiersSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +174,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotInstance> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotInstanceWebAppsRestClient.ListInstanceIdentifiersSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotInstance>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotInstanceResource>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotInstance>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotInstanceResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<SiteSlotInstance> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotInstanceResource> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotInstanceWebAppsRestClient.GetInstanceInfoSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotInstance>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotInstance(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotInstanceResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteSlotInstance> IEnumerable<SiteSlotInstance>.GetEnumerator()
+        IEnumerator<SiteSlotInstanceResource> IEnumerable<SiteSlotInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotInstance> IAsyncEnumerable<SiteSlotInstance>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotInstanceResource> IAsyncEnumerable<SiteSlotInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

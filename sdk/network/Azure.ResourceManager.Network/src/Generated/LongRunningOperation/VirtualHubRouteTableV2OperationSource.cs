@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualHubRouteTableV2OperationSource : IOperationSource<VirtualHubRouteTableV2>
+    internal class VirtualHubRouteTableV2OperationSource : IOperationSource<VirtualHubRouteTableV2Resource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualHubRouteTableV2 IOperationSource<VirtualHubRouteTableV2>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualHubRouteTableV2Resource IOperationSource<VirtualHubRouteTableV2Resource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement);
-            return new VirtualHubRouteTableV2(_client, data);
+            return new VirtualHubRouteTableV2Resource(_client, data);
         }
 
-        async ValueTask<VirtualHubRouteTableV2> IOperationSource<VirtualHubRouteTableV2>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualHubRouteTableV2Resource> IOperationSource<VirtualHubRouteTableV2Resource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualHubRouteTableV2Data.DeserializeVirtualHubRouteTableV2Data(document.RootElement);
-            return new VirtualHubRouteTableV2(_client, data);
+            return new VirtualHubRouteTableV2Resource(_client, data);
         }
     }
 }

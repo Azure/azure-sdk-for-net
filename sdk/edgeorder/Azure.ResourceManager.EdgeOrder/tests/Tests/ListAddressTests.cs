@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(1)]
         public async Task TestListAddressesAtSubscriptionLevel()
         {
-            AsyncPageable<AddressResource> addresses = SubscriptionExtensions.GetAddressResourcesAsync(Subscription);
+            AsyncPageable<AddressResource> addresses = SubscriptionResourceExtensions.GetAddressResourcesAsync(Subscription);
             List<AddressResource> addressesResult = await addresses.ToEnumerableAsync();
 
             Assert.NotNull(addressesResult);

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         protected const int DefaultMaxThroughput = 4000;
 
         protected ResourceIdentifier _resourceGroupIdentifier;
-        protected ResourceGroup _resourceGroup;
+        protected ResourceGroupResource _resourceGroup;
         protected string _databaseAccountName;
         protected DatabaseAccountCollection DatabaseAccountCollection { get => _resourceGroup.GetDatabaseAccounts(); }
         public string SubscriptionId { get; set; }

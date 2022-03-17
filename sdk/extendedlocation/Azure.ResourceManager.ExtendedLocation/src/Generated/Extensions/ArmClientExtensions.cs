@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.ExtendedLocation
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region CustomLocation
-        /// <summary> Gets an object representing a CustomLocation along with the instance operations that can be performed on it but with no data. </summary>
+        #region CustomLocationResource
+        /// <summary> Gets an object representing a CustomLocationResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomLocation" /> object. </returns>
-        public static CustomLocation GetCustomLocation(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CustomLocationResource" /> object. </returns>
+        public static CustomLocationResource GetCustomLocationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                CustomLocation.ValidateResourceId(id);
-                return new CustomLocation(client, id);
+                CustomLocationResource.ValidateResourceId(id);
+                return new CustomLocationResource(client, id);
             }
             );
         }

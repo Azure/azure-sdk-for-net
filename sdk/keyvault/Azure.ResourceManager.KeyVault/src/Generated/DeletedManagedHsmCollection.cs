@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeletedManagedHsmCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedManagedHsmManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsm.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(DeletedManagedHsm.ResourceType, out string deletedManagedHsmManagedHsmsApiVersion);
+            _deletedManagedHsmManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsmResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(DeletedManagedHsmResource.ResourceType, out string deletedManagedHsmManagedHsmsApiVersion);
             _deletedManagedHsmManagedHsmsRestClient = new ManagedHsmsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedManagedHsmManagedHsmsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Subscription.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DeletedManagedHsm>> GetAsync(string location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedManagedHsmResource>> GetAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = await _deletedManagedHsmManagedHsmsRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedManagedHsm(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public virtual Response<DeletedManagedHsm> Get(string location, string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedManagedHsmResource> Get(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KeyVault
                 var response = _deletedManagedHsmManagedHsmsRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeletedManagedHsm(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DeletedManagedHsm>> GetIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedManagedHsmResource>> GetIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _deletedManagedHsmManagedHsmsRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<DeletedManagedHsm>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedManagedHsm(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DeletedManagedHsmResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public virtual Response<DeletedManagedHsm> GetIfExists(string location, string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeletedManagedHsmResource> GetIfExists(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _deletedManagedHsmManagedHsmsRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DeletedManagedHsm>(null, response.GetRawResponse());
-                return Response.FromValue(new DeletedManagedHsm(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DeletedManagedHsmResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DeletedManagedHsmResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,177 +13,177 @@ namespace Azure.ResourceManager.EventHubs
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region EventHubCluster
-        /// <summary> Gets an object representing a EventHubCluster along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubClusterResource
+        /// <summary> Gets an object representing a EventHubClusterResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubCluster" /> object. </returns>
-        public static EventHubCluster GetEventHubCluster(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubClusterResource" /> object. </returns>
+        public static EventHubClusterResource GetEventHubClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                EventHubCluster.ValidateResourceId(id);
-                return new EventHubCluster(client, id);
+                EventHubClusterResource.ValidateResourceId(id);
+                return new EventHubClusterResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventHubNamespace
-        /// <summary> Gets an object representing a EventHubNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubNamespaceResource
+        /// <summary> Gets an object representing a EventHubNamespaceResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubNamespace" /> object. </returns>
-        public static EventHubNamespace GetEventHubNamespace(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubNamespaceResource" /> object. </returns>
+        public static EventHubNamespaceResource GetEventHubNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                EventHubNamespace.ValidateResourceId(id);
-                return new EventHubNamespace(client, id);
+                EventHubNamespaceResource.ValidateResourceId(id);
+                return new EventHubNamespaceResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NetworkRuleSet
-        /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it but with no data. </summary>
+        #region NetworkRuleSetResource
+        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
-        public static NetworkRuleSet GetNetworkRuleSet(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
+        public static NetworkRuleSetResource GetNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                NetworkRuleSet.ValidateResourceId(id);
-                return new NetworkRuleSet(client, id);
+                NetworkRuleSetResource.ValidateResourceId(id);
+                return new NetworkRuleSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region NamespaceAuthorizationRuleResource
+        /// <summary> Gets an object representing a NamespaceAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
-        public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NamespaceAuthorizationRuleResource" /> object. </returns>
+        public static NamespaceAuthorizationRuleResource GetNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                NamespaceAuthorizationRule.ValidateResourceId(id);
-                return new NamespaceAuthorizationRule(client, id);
+                NamespaceAuthorizationRuleResource.ValidateResourceId(id);
+                return new NamespaceAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventHubAuthorizationRule
-        /// <summary> Gets an object representing a EventHubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubAuthorizationRuleResource
+        /// <summary> Gets an object representing a EventHubAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubAuthorizationRule" /> object. </returns>
-        public static EventHubAuthorizationRule GetEventHubAuthorizationRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubAuthorizationRuleResource" /> object. </returns>
+        public static EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                EventHubAuthorizationRule.ValidateResourceId(id);
-                return new EventHubAuthorizationRule(client, id);
+                EventHubAuthorizationRuleResource.ValidateResourceId(id);
+                return new EventHubAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DisasterRecoveryAuthorizationRule
-        /// <summary> Gets an object representing a DisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryAuthorizationRuleResource
+        /// <summary> Gets an object representing a DisasterRecoveryAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRule" /> object. </returns>
-        public static DisasterRecoveryAuthorizationRule GetDisasterRecoveryAuthorizationRule(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRuleResource" /> object. </returns>
+        public static DisasterRecoveryAuthorizationRuleResource GetDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DisasterRecoveryAuthorizationRule.ValidateResourceId(id);
-                return new DisasterRecoveryAuthorizationRule(client, id);
+                DisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
+                return new DisasterRecoveryAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region EventHub
-        /// <summary> Gets an object representing a EventHub along with the instance operations that can be performed on it but with no data. </summary>
+        #region EventHubResource
+        /// <summary> Gets an object representing a EventHubResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHub" /> object. </returns>
-        public static EventHub GetEventHub(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubResource" /> object. </returns>
+        public static EventHubResource GetEventHubResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                EventHub.ValidateResourceId(id);
-                return new EventHub(client, id);
+                EventHubResource.ValidateResourceId(id);
+                return new EventHubResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DisasterRecovery
-        /// <summary> Gets an object representing a DisasterRecovery along with the instance operations that can be performed on it but with no data. </summary>
+        #region DisasterRecoveryResource
+        /// <summary> Gets an object representing a DisasterRecoveryResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
-        public static DisasterRecovery GetDisasterRecovery(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DisasterRecoveryResource" /> object. </returns>
+        public static DisasterRecoveryResource GetDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                DisasterRecovery.ValidateResourceId(id);
-                return new DisasterRecovery(client, id);
+                DisasterRecoveryResource.ValidateResourceId(id);
+                return new DisasterRecoveryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ConsumerGroup
-        /// <summary> Gets an object representing a ConsumerGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region ConsumerGroupResource
+        /// <summary> Gets an object representing a ConsumerGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConsumerGroup" /> object. </returns>
-        public static ConsumerGroup GetConsumerGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConsumerGroupResource" /> object. </returns>
+        public static ConsumerGroupResource GetConsumerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                ConsumerGroup.ValidateResourceId(id);
-                return new ConsumerGroup(client, id);
+                ConsumerGroupResource.ValidateResourceId(id);
+                return new ConsumerGroupResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SchemaGroup
-        /// <summary> Gets an object representing a SchemaGroup along with the instance operations that can be performed on it but with no data. </summary>
+        #region SchemaGroupResource
+        /// <summary> Gets an object representing a SchemaGroupResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SchemaGroup" /> object. </returns>
-        public static SchemaGroup GetSchemaGroup(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SchemaGroupResource" /> object. </returns>
+        public static SchemaGroupResource GetSchemaGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SchemaGroup.ValidateResourceId(id);
-                return new SchemaGroup(client, id);
+                SchemaGroupResource.ValidateResourceId(id);
+                return new SchemaGroupResource(client, id);
             }
             );
         }

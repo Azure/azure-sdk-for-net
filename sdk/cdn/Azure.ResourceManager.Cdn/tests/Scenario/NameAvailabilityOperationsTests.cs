@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
-                Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+                SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
                 string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
                 CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput(cdnEndpointName);
                 CheckNameAvailabilityOutput checkNameAvailabilityOutput = await tenant.CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput);
                 Assert.True(checkNameAvailabilityOutput.NameAvailable);
-                ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+                ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
                 string cdnProfileName = Recording.GenerateAssetName("profile-");
                 ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
                 cdnEndpointName = Recording.GenerateAssetName("endpoint-");
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CheckNameAvailabilityWithSub()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string cdnEndpointName = Recording.GenerateAssetName("endpoint-");
             CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput(cdnEndpointName);
             CheckNameAvailabilityOutput checkNameAvailabilityOutput  = await subscription.CheckCdnNameAvailabilityWithSubscriptionAsync(checkNameAvailabilityInput);
             Assert.True(checkNameAvailabilityOutput.NameAvailable);
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string cdnProfileName = Recording.GenerateAssetName("profile-");
             ProfileResource cdnProfile = await CreateCdnProfile(rg, cdnProfileName, CdnSkuName.StandardMicrosoft);
             cdnEndpointName = Recording.GenerateAssetName("endpoint-");

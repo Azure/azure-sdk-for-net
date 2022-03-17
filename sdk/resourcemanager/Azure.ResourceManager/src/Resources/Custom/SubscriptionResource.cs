@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _subscriptionClientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("Subscription.GetGenericResources");
+                using var scope = _subscriptionResourcesClientDiagnostics.CreateScope("SubscriptionResource.GetGenericResources");
                 scope.Start();
                 try
                 {

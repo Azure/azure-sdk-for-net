@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
+                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<GenericResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
+                using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
                 scope.Start();
                 try
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<GenericResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroup.GetGenericResources");
+                using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.GetGenericResources");
                 scope.Start();
                 try
                 {

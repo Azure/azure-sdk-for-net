@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Tests
         public async Task LocalOneTimeSetup()
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
-            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             var op = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, _rgName, new ResourceGroupData(_location));
             await StopSessionRecordingAsync();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupVersionTracker tracker2 = new ResourceGroupVersionTracker();
             ArmClientOptions options1 = new ArmClientOptions();
             string versionOverride = "2021-01-01";
-            options1.SetApiVersion(ResourceGroup.ResourceType, versionOverride);
+            options1.SetApiVersion(ResourceGroupResource.ResourceType, versionOverride);
             ArmClientOptions options2 = new ArmClientOptions();
             options1.AddPolicy(tracker1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(tracker2, HttpPipelinePosition.PerCall);

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
-            ManagementLock mgmtLockObject = await CreateManagementLockObject(subscription, mgmtLockObjectName);
+            ManagementLockResource mgmtLockObject = await CreateManagementLockObject(subscription, mgmtLockObjectName);
             await mgmtLockObject.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await mgmtLockObject.GetAsync());
             Assert.AreEqual(404, ex.Status);

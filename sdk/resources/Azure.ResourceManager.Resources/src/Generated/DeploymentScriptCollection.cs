@@ -21,7 +21,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of DeploymentScript and their operations over its parent. </summary>
-    public partial class DeploymentScriptCollection : ArmCollection, IEnumerable<DeploymentScript>, IAsyncEnumerable<DeploymentScript>
+    public partial class DeploymentScriptCollection : ArmCollection, IEnumerable<DeploymentScriptResource>, IAsyncEnumerable<DeploymentScriptResource>
     {
         private readonly ClientDiagnostics _deploymentScriptClientDiagnostics;
         private readonly DeploymentScriptsRestOperations _deploymentScriptRestClient;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeploymentScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
+            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(DeploymentScriptResource.ResourceType, out string deploymentScriptApiVersion);
             _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeploymentScript>> CreateOrUpdateAsync(WaitUntil waitUntil, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeploymentScriptResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
             Argument.AssertNotNull(deploymentScript, nameof(deploymentScript));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _deploymentScriptRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<DeploymentScript>(new DeploymentScriptOperationSource(Client), _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<DeploymentScriptResource>(new DeploymentScriptOperationSource(Client), _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public virtual ArmOperation<DeploymentScript> CreateOrUpdate(WaitUntil waitUntil, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeploymentScriptResource> CreateOrUpdate(WaitUntil waitUntil, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
             Argument.AssertNotNull(deploymentScript, nameof(deploymentScript));
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _deploymentScriptRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken);
-                var operation = new ResourcesArmOperation<DeploymentScript>(new DeploymentScriptOperationSource(Client), _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response, OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<DeploymentScriptResource>(new DeploymentScriptOperationSource(Client), _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public virtual async Task<Response<DeploymentScript>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentScriptResource>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeploymentScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public virtual Response<DeploymentScript> Get(string scriptName, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentScriptResource> Get(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DeploymentScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DeploymentScripts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeploymentScript> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeploymentScriptResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeploymentScript>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeploymentScriptResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _deploymentScriptRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<DeploymentScript>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeploymentScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _deploymentScriptRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +222,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DeploymentScripts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentScript" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeploymentScript> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeploymentScriptResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeploymentScript> FirstPageFunc(int? pageSizeHint)
+            Page<DeploymentScriptResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _deploymentScriptRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<DeploymentScript> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeploymentScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _deploymentScriptRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScript(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public virtual async Task<Response<DeploymentScript>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentScriptResource>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -331,8 +331,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<DeploymentScript>(null, response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DeploymentScriptResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DeploymentScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public virtual Response<DeploymentScript> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
+        public virtual Response<DeploymentScriptResource> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -360,8 +360,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DeploymentScript>(null, response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DeploymentScriptResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DeploymentScriptResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<DeploymentScript> IEnumerable<DeploymentScript>.GetEnumerator()
+        IEnumerator<DeploymentScriptResource> IEnumerable<DeploymentScriptResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DeploymentScript> IAsyncEnumerable<DeploymentScript>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DeploymentScriptResource> IAsyncEnumerable<DeploymentScriptResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

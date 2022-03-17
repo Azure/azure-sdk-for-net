@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
 {
     public class Sample1_ManagingConfigurationStores
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = armClient.GetDefaultSubscriptionAsync().Result;
+            SubscriptionResource subscription = armClient.GetDefaultSubscriptionAsync().Result;
             #endregion
 
             #region Snippet:Readme_GetResourceGroupCollection
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests.Samples
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = (await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location))).Value;
+            ResourceGroupResource resourceGroup = (await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location))).Value;
             #endregion
 
             this.resourceGroup = resourceGroup;

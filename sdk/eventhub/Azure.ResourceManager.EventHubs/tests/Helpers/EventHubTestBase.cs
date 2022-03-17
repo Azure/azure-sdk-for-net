@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        protected Subscription DefaultSubscription;
+        protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
         public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
-        public async Task<ResourceGroup> CreateResourceGroupAsync()
+        public async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("testeventhubRG-");
-            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
             return namespaceName;
         }
 
-        public static void VerifyNamespaceProperties(EventHubNamespace eventHubNamespace, bool useDefaults)
+        public static void VerifyNamespaceProperties(EventHubNamespaceResource eventHubNamespace, bool useDefaults)
         {
             Assert.NotNull(eventHubNamespace);
             Assert.NotNull(eventHubNamespace.Id);

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             VaultProperties.EnableSoftDelete = null;
 
             List<string> resourceIds = new List<string>();
-            List<Vault> vaultList = new List<Vault>();
+            List<VaultResource> vaultList = new List<VaultResource>();
             for (int i = 0; i < n; i++)
             {
                 string vaultName = Recording.GenerateAssetName("sdktest-vault-");
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
             int n = 3;
             List<string> resourceIds = new List<string>();
-            List<Vault> vaultList = new List<Vault>();
+            List<VaultResource> vaultList = new List<VaultResource>();
             var parameters = new VaultCreateOrUpdateParameters(Location, VaultProperties);
             parameters.Tags.InitializeFrom(Tags);
             for (int i = 0; i < n; i++)

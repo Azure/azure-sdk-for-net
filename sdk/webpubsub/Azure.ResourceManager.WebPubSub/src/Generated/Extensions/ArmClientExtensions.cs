@@ -13,65 +13,65 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A class to add extension methods to ArmClient. </summary>
     public static partial class ArmClientExtensions
     {
-        #region WebPubSub
-        /// <summary> Gets an object representing a WebPubSub along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebPubSubResource
+        /// <summary> Gets an object representing a WebPubSubResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSub" /> object. </returns>
-        public static WebPubSub GetWebPubSub(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubResource" /> object. </returns>
+        public static WebPubSubResource GetWebPubSubResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WebPubSub.ValidateResourceId(id);
-                return new WebPubSub(client, id);
+                WebPubSubResource.ValidateResourceId(id);
+                return new WebPubSubResource(client, id);
             }
             );
         }
         #endregion
 
-        #region WebPubSubHub
-        /// <summary> Gets an object representing a WebPubSubHub along with the instance operations that can be performed on it but with no data. </summary>
+        #region WebPubSubHubResource
+        /// <summary> Gets an object representing a WebPubSubHubResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebPubSubHub" /> object. </returns>
-        public static WebPubSubHub GetWebPubSubHub(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubHubResource" /> object. </returns>
+        public static WebPubSubHubResource GetWebPubSubHubResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                WebPubSubHub.ValidateResourceId(id);
-                return new WebPubSubHub(client, id);
+                WebPubSubHubResource.ValidateResourceId(id);
+                return new WebPubSubHubResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        #region PrivateEndpointConnectionResource
+        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
-        public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
+        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                PrivateEndpointConnection.ValidateResourceId(id);
-                return new PrivateEndpointConnection(client, id);
+                PrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new PrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SharedPrivateLink
-        /// <summary> Gets an object representing a SharedPrivateLink along with the instance operations that can be performed on it but with no data. </summary>
+        #region SharedPrivateLinkResource
+        /// <summary> Gets an object representing a SharedPrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedPrivateLink" /> object. </returns>
-        public static SharedPrivateLink GetSharedPrivateLink(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>
+        public static SharedPrivateLinkResource GetSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetClient(() =>
             {
-                SharedPrivateLink.ValidateResourceId(id);
-                return new SharedPrivateLink(client, id);
+                SharedPrivateLinkResource.ValidateResourceId(id);
+                return new SharedPrivateLinkResource(client, id);
             }
             );
         }

@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StaticSitePrivateEndpointConnections in the StaticSitePrivateEndpointConnection. </summary>
-        /// <returns> An object representing collection of StaticSitePrivateEndpointConnections and their operations over a StaticSitePrivateEndpointConnection. </returns>
+        /// <summary> Gets a collection of StaticSitePrivateEndpointConnectionResources in the StaticSitePrivateEndpointConnectionResource. </summary>
+        /// <returns> An object representing collection of StaticSitePrivateEndpointConnectionResources and their operations over a StaticSitePrivateEndpointConnectionResource. </returns>
         public virtual StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections()
         {
             return GetCachedClient(Client => new StaticSitePrivateEndpointConnectionCollection(Client, Id));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual async Task<Response<StaticSitePrivateEndpointConnection>> GetStaticSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitePrivateEndpointConnectionResource>> GetStaticSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSitePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        public virtual Response<StaticSitePrivateEndpointConnection> GetStaticSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSitePrivateEndpointConnectionResource> GetStaticSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetStaticSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteBuildARMResources().Get(environmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionApps in the StaticSiteUserProvidedFunctionApp. </summary>
-        /// <returns> An object representing collection of StaticSiteUserProvidedFunctionApps and their operations over a StaticSiteUserProvidedFunctionApp. </returns>
+        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionAppResources in the StaticSiteUserProvidedFunctionAppResource. </summary>
+        /// <returns> An object representing collection of StaticSiteUserProvidedFunctionAppResources and their operations over a StaticSiteUserProvidedFunctionAppResource. </returns>
         public virtual StaticSiteUserProvidedFunctionAppCollection GetStaticSiteUserProvidedFunctionApps()
         {
             return GetCachedClient(Client => new StaticSiteUserProvidedFunctionAppCollection(Client, Id));
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteUserProvidedFunctionApp>> GetStaticSiteUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteUserProvidedFunctionAppResource>> GetStaticSiteUserProvidedFunctionAppAsync(string functionAppName, CancellationToken cancellationToken = default)
         {
             return await GetStaticSiteUserProvidedFunctionApps().GetAsync(functionAppName, cancellationToken).ConfigureAwait(false);
         }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="functionAppName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppName"/> is null. </exception>
-        public virtual Response<StaticSiteUserProvidedFunctionApp> GetStaticSiteUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSiteUserProvidedFunctionAppResource> GetStaticSiteUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
         }

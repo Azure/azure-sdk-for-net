@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ConnectionMonitorOperationSource : IOperationSource<ConnectionMonitor>
+    internal class ConnectionMonitorOperationSource : IOperationSource<ConnectionMonitorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ConnectionMonitor IOperationSource<ConnectionMonitor>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectionMonitorResource IOperationSource<ConnectionMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
-            return new ConnectionMonitor(_client, data);
+            return new ConnectionMonitorResource(_client, data);
         }
 
-        async ValueTask<ConnectionMonitor> IOperationSource<ConnectionMonitor>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectionMonitorResource> IOperationSource<ConnectionMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConnectionMonitorData.DeserializeConnectionMonitorData(document.RootElement);
-            return new ConnectionMonitor(_client, data);
+            return new ConnectionMonitorResource(_client, data);
         }
     }
 }

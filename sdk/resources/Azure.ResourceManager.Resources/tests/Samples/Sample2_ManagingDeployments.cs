@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
 {
     public class Sample2_ManagingDeployments
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                     }
                 }
             });
-            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-            Deployment deployment = lro.Value;
+            ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+            DeploymentResource deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
 
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 },
                 Parameters = parameters
             });
-            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-            Deployment deployment = lro.Value;
+            ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+            DeploymentResource deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
 
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 Template = File.ReadAllText("storage-template.json"),
                 Parameters = File.ReadAllText("storage-parameters.json")
             });
-            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-            Deployment deployment = lro.Value;
+            ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+            DeploymentResource deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
 
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // First we need to get the deployment collection from the resource group
             DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // With GetAllAsync(), we can get a list of the deployments in the collection
-            AsyncPageable<Deployment> response = deploymentCollection.GetAllAsync();
-            await foreach (Deployment deployment in response)
+            AsyncPageable<DeploymentResource> response = deploymentCollection.GetAllAsync();
+            await foreach (DeploymentResource deployment in response)
             {
                 Console.WriteLine(deployment.Data.Name);
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // First we need to get the deployment collection from the resource group
             DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
             // Now we can get the deployment with GetAsync()
-            Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
+            DeploymentResource deployment = await deploymentCollection.GetAsync("myDeployment");
             // With DeleteAsync(), we can delete the deployment
             await deployment.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Deployments_DeleteADeployment
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;
         }

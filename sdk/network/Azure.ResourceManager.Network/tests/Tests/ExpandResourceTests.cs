@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class ExpandResourceTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
 
         public ExpandResourceTests(bool isAsync) : base(isAsync)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
+            PublicIPAddressResource lbPublicIp = await CreateDefaultPublicIpAddress(
                 lbPublicIpName,
                 lbDomaingNameLabel,
                 location,
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Network.Tests
             // Create Vnet
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
 
             // Create Nics
             string nic1name = Recording.GenerateAssetName("azsmnet");
             string nic2name = Recording.GenerateAssetName("azsmnet");
             string nic3name = Recording.GenerateAssetName("azsmnet");
 
-            NetworkInterface nic1 = await CreateNetworkInterface(
+            NetworkInterfaceResource nic1 = await CreateNetworkInterface(
                 nic1name,
                 null,
                 vnet.Data.Subnets[0].Id,
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Tests
                 "ipconfig",
                 resourceGroup.GetNetworkInterfaces());
 
-            NetworkInterface nic2 = await CreateNetworkInterface(
+            NetworkInterfaceResource nic2 = await CreateNetworkInterface(
                 nic2name,
                 null,
                 vnet.Data.Subnets[0].Id,
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Tests
                 "ipconfig",
                 resourceGroup.GetNetworkInterfaces());
 
-            NetworkInterface nic3 = await CreateNetworkInterface(
+            NetworkInterfaceResource nic3 = await CreateNetworkInterface(
                 nic3name,
                 null,
                 vnet.Data.Subnets[0].Id,
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            LoadBalancer loadBalancer = (await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancerData)).Value;
+            LoadBalancerResource loadBalancer = (await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancerData)).Value;
 
             // Associate the nic with LB
             //nic1.GetNetworkInterfaceIPConfigurations().List().First().`
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             await foreach (var pool in loadBalancer.GetBackendAddressPools())
             {
-                BackendAddressPool firstPool = await GetFirstPoolAsync(loadBalancer);
+                BackendAddressPoolResource firstPool = await GetFirstPoolAsync(loadBalancer);
                 foreach (var ipconfig in firstPool.Data.BackendIPConfigurations)
                 {
                     Assert.NotNull(ipconfig.Id);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Get NIC with expanded subnet
             nic1 = await networkInterfaceCollection.GetAsync(nic1name, "IPConfigurations/Subnet");
-            await foreach (NetworkInterfaceIPConfiguration ipconfig in nic1.GetNetworkInterfaceIPConfigurations())
+            await foreach (NetworkInterfaceIPConfigurationResource ipconfig in nic1.GetNetworkInterfaceIPConfigurations())
             {
                 Assert.NotNull(ipconfig.Data.Subnet);
                 Assert.NotNull(ipconfig.Data.Subnet.Id);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Get subnet with expanded ipconfigurations
-            Response<Subnet> subnet = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(
+            Response<SubnetResource> subnet = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(
                 subnetName,
                 "IPConfigurations");
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Get publicIPAddress with expanded ipconfigurations
-            Response<PublicIPAddress> publicip = await resourceGroup.GetPublicIPAddresses().GetAsync(
+            Response<PublicIPAddressResource> publicip = await resourceGroup.GetPublicIPAddresses().GetAsync(
                 lbPublicIpName,
                 "IPConfiguration");
 
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Network.Tests
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all NetworkInterfaces
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network.Tests
             await (await resourceGroup.GetPublicIPAddresses().GetAsync(lbPublicIpName)).Value.DeleteAsync(WaitUntil.Completed);
         }
 
-        private async Task<BackendAddressPool> GetFirstPoolAsync(LoadBalancer loadBalancer)
+        private async Task<BackendAddressPoolResource> GetFirstPoolAsync(LoadBalancerResource loadBalancer)
         {
             await foreach (var pool in loadBalancer.GetBackendAddressPools())
             {

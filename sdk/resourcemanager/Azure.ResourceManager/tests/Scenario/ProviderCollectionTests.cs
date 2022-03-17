@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TryGet()
         {
             ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
-            Provider provider = await providerCollection.GetIfExistsAsync("microsoft.insights");
+            ProviderResource provider = await providerCollection.GetIfExistsAsync("microsoft.insights");
             Assert.IsNotNull(provider);
 
             var response = await providerCollection.GetIfExistsAsync("DoesNotExist");

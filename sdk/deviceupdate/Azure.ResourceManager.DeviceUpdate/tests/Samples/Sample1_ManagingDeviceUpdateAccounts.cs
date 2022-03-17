@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
 {
     public class Sample1_ManagingDeviceUpdateAccounts
     {
-        private Subscription subscription;
-        private ResourceGroup resourceGroup;
+        private SubscriptionResource subscription;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
         {
             #region Snippet:Readme_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Readme_GetResourceGroupCollection
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
             #endregion
 
             this.subscription = subscription;

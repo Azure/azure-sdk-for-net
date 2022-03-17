@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class HostingEnvironmentPrivateEndpointConnectionOperationSource : IOperationSource<HostingEnvironmentPrivateEndpointConnection>
+    internal class HostingEnvironmentPrivateEndpointConnectionOperationSource : IOperationSource<HostingEnvironmentPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        HostingEnvironmentPrivateEndpointConnection IOperationSource<HostingEnvironmentPrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        HostingEnvironmentPrivateEndpointConnectionResource IOperationSource<HostingEnvironmentPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
-            return new HostingEnvironmentPrivateEndpointConnection(_client, data);
+            return new HostingEnvironmentPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<HostingEnvironmentPrivateEndpointConnection> IOperationSource<HostingEnvironmentPrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HostingEnvironmentPrivateEndpointConnectionResource> IOperationSource<HostingEnvironmentPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement);
-            return new HostingEnvironmentPrivateEndpointConnection(_client, data);
+            return new HostingEnvironmentPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

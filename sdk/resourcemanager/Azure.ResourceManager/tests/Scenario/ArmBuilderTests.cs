@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.ThrowsAsync<ArgumentException>(async delegate 
             {
-                Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+                SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
                 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
                 ResourceGroupBuilder rgBuilder = rgCollection.Construct(AzureLocation.WestUS2);
                 await rgBuilder.CreateOrUpdateAsync(value);

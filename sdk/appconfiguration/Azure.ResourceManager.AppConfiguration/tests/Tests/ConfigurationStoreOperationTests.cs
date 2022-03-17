@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class ConfigurationStoreOperationTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
         private string ConfigurationStoreName { get; set; }
 

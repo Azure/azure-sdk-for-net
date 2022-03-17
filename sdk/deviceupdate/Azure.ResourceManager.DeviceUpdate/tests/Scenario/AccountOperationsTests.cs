@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             await account.DeleteAsync(WaitUntil.Completed);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             PatchableDeviceUpdateAccountData updateOptions = new PatchableDeviceUpdateAccountData()
