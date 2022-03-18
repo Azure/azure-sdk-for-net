@@ -267,18 +267,6 @@ namespace Azure.ResourceManager
         /// Gets a client using this instance of ArmClient to copy the client settings from.
         /// </summary>
         /// <typeparam name="T"> The type of <see cref="ArmResource"/> that will be constructed. </typeparam>
-        /// <param name="ctor"> Delegate method that will construct the client. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetClient<T>(Func<T> ctor)
-            where T : ArmResource
-        {
-            return ctor();
-        }
-
-        /// <summary>
-        /// Gets a client using this instance of ArmClient to copy the client settings from.
-        /// </summary>
-        /// <typeparam name="T"> The type of <see cref="ArmResource"/> that will be constructed. </typeparam>
         /// <param name="resourceFactory"> Delegate method that will construct the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual T GetResourceClient<T>(Func<T> resourceFactory)
