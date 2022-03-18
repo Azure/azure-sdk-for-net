@@ -38,11 +38,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetHistogramSum());
                     metricDataPoint.DataPointType = DataPointType.Aggregation;
                     long histogramCount = metricPoint.GetHistogramCount();
-                    // Current schema only supports int32 values for count
-                    // If GetHistogramCount() greater than int.MaxValue
-                    // Right shift by 32 bits sets the int.MaxValue as metricDataPoint.Count
-                    // This handles negative precison too for MinValue
-                    metricDataPoint.Count = (int)(histogramCount >> 32);
+                    // Current schema only supports int values for count
+                    // if the value is within integer range we will use it otherwise ignore it.
+                    metricDataPoint.Count = (histogramCount <= int.MaxValue && histogramCount >= int.MinValue) ? (int?)histogramCount : null;
                     break;
             }
 
