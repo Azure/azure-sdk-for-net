@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -67,8 +69,8 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        internal RequestFailedException(int status, (string Message, ResponseError? Error) details):
-            this(status, details.Message, details.Error?.Code, null)
+        internal RequestFailedException(int status, (string Message, ResponseError? Error) details, Exception? innerException):
+            this(status, details.Message, details.Error?.Code, innerException)
         {
         }
 
@@ -76,7 +78,16 @@ namespace Azure
         /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
         /// <param name="response">The response to obtain error details from.</param>
         public RequestFailedException(Response response)
-            : this(response.Status, GetErrorDetails(response))
+            : this(response.Status, GetErrorDetails(response), null)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="RequestFailedException"></see> class
+        /// with an error message, HTTP status code, error code obtained from the specified response.</summary>
+        /// <param name="response">The response to obtain error details from.</param>
+        /// <param name="innerException">TODO</param>
+        public RequestFailedException(Response response, Exception? innerException)
+            : this(response.Status, GetErrorDetails(response), innerException)
         {
         }
 
@@ -90,9 +101,11 @@ namespace Azure
 
         private static (string Message, ResponseError? Error) GetErrorDetails(Response response)
         {
-            string? content = ClientDiagnostics.ReadContentAsync(response, false).EnsureCompleted();
-            ResponseError? error = ClientDiagnostics.ExtractAzureErrorContent(content);
-            string exceptionMessage = ClientDiagnostics.CreateRequestFailedMessageWithContent(
+            IDictionary<string, string>? details = default;
+
+            string? content = ResponseClassifier.ReadContentAsync(response, false).EnsureCompleted();
+            ResponseError? error = response.ResponseClassifier.ExtractErrorContent(content, response.Headers, ref details); // TODO: sort out AdditionalInfo
+            string exceptionMessage = ResponseClassifier.CreateRequestFailedMessageWithContent(
                 response,
                 error,
                 content,

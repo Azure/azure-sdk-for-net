@@ -612,6 +612,7 @@ namespace Azure.Core
     public partial class ResponseClassifier
     {
         public ResponseClassifier() { }
+        public virtual Azure.ResponseError? ExtractErrorContent(string? content, Azure.Core.ResponseHeaders responseHeaders, ref System.Collections.Generic.IDictionary<string, string>? additionalInfo) { throw null; }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }

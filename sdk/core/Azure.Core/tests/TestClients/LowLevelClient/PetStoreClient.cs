@@ -90,7 +90,7 @@ namespace Azure.Core.Experimental.Tests
                     }
                     else
                     {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw new RequestFailedException(message.Response);
                     }
                 }
             }
@@ -129,7 +129,7 @@ namespace Azure.Core.Experimental.Tests
                     }
                     else
                     {
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                     }
                 }
             }

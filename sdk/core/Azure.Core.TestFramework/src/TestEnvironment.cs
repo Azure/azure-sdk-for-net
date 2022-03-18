@@ -343,7 +343,7 @@ namespace Azure.Core.TestFramework
             // unexpected response => throw an exception
             if (response.Status != 200)
             {
-                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                throw new RequestFailedException(response);
             }
 
             // parse the response
@@ -391,7 +391,7 @@ namespace Azure.Core.TestFramework
                     response = await pipeline.SendRequestAsync(request, CancellationToken.None);
                     if (response.Status != 200)
                     {
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                        throw new RequestFailedException(response);
                     }
                 }
             }

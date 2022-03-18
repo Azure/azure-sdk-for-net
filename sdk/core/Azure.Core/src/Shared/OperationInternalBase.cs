@@ -207,7 +207,11 @@ namespace Azure.Core
             }
         }
 
+#pragma warning disable CA1801 // Parameter async of method ApplyStateAsync is never used.
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         protected async ValueTask<Response> ApplyStateAsync(bool async, Response response, bool hasCompleted, bool hasSucceeded, RequestFailedException? requestFailedException, bool throwIfFailed = true)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+#pragma warning restore CA1801 // Parameter async of method ApplyStateAsync is never used.
         {
             RawResponse = response;
 
@@ -222,10 +226,7 @@ namespace Azure.Core
                 return response;
             }
 
-            OperationFailedException = requestFailedException ??
-                (async
-                    ? await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false)
-                    : _diagnostics.CreateRequestFailedException(response));
+            OperationFailedException = requestFailedException ?? new RequestFailedException(response);
 
             if (throwIfFailed)
             {

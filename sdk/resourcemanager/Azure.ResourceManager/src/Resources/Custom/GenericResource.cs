@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = await GetApiVersionAsync(cancellationToken).ConfigureAwait(false);
                 var response = await _resourcesRestClient.GetByIdAsync(Id, apiVersion, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
                 var apiVersion = GetApiVersion(cancellationToken);
                 var response = _resourcesRestClient.GetById(Id, apiVersion, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GenericResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
