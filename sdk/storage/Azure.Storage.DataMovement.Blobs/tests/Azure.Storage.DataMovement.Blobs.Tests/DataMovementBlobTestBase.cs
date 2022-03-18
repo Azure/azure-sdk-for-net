@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests.Shared
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
 
         public DataMovementBlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
             BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }

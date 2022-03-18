@@ -25,6 +25,11 @@ namespace Azure.Storage.DataMovement.Blobs.Models
         public Response<BlobContentInfo> ContentInfo { get; internal set; }
 
         /// <summary>
+        /// Any exceptions caught during the process
+        /// </summary>
+        public Exception Exception { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of SingleBlobContentInfo instances.
         /// You can use BlobsModelFactory.SingleBlobContentInfo instead.
         /// </summary>

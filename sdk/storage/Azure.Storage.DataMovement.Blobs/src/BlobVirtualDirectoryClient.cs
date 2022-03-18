@@ -699,13 +699,14 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobDirectoryUploadOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            return await UploadInternal(
+            IEnumerable < SingleBlobContentInfo > ret = await UploadInternal(
                 sourceDirectoryPath,
                 overwrite,
                 options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
+            return ret;
         }
 
         /// <summary>
@@ -783,6 +784,10 @@ namespace Azure.Storage.DataMovement.Blobs
 
                     List<SingleBlobContentInfo> responses = new List<SingleBlobContentInfo>();
 
+                    // A list of tasks that are currently executing which will
+                    // always be smaller than _maxWorkerCount
+                    List<Task<Response<BlobContentInfo>>> runningTasks = new List<Task<Response<BlobContentInfo>>>();
+
                     foreach (FileSystemInfo path in pathList)
                     {
                         if (path.GetType() == typeof(FileInfo))
@@ -799,20 +804,28 @@ namespace Azure.Storage.DataMovement.Blobs
                                 Conditions = overwrite ? null : new BlobRequestConditions() { IfNoneMatch = new ETag(Constants.Wildcard) }
                             };
 
-                            throttler.AddTask(async () =>
+                            try
                             {
-                                Response<BlobContentInfo> response = await blobClient.UploadAsync(
-                                       path.FullName.ToString(),
-                                       options: singleOptions,
-                                       cancellationToken: cancellationToken)
-                                   .ConfigureAwait(false);
+                                runningTasks.Add(blobClient.UploadAsync(
+                                    path.FullName.ToString(),
+                                    options: singleOptions,
+                                    cancellationToken: cancellationToken));
                                 SingleBlobContentInfo singleBlobContentInfo = new SingleBlobContentInfo()
                                 {
                                     BlobUri = blobClient.Uri,
                                     ContentInfo = response,
                                 };
                                 responses.Add(singleBlobContentInfo);
-                            });
+                            }
+                            catch (Exception exception)
+                            {
+                                // should we return exceptions in the content info?
+                                responses.Add(new SingleBlobContentInfo()
+                                {
+                                    BlobUri = blobClient.Uri,
+                                    Exception = exception,
+                                });
+                            }
                         }
                     }
 

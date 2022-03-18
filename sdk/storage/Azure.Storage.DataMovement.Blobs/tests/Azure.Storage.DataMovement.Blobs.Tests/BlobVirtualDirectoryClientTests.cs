@@ -569,6 +569,97 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        public async Task UploadDirectoryAsync_OverwriteTrue()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string openChild = CreateRandomFile(folder);
+            string lockedChild = CreateRandomFile(folder);
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+
+            string lockedSubfolder = CreateRandomDirectory(folder);
+            string lockedSubchild = CreateRandomFile(lockedSubfolder);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+            BlobClient blobClient = client.GetBlobClient(dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
+            await blobClient.UploadAsync(openChild);
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, true, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(4, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            Assert.AreEqual(4, blobs.Count());
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task UploadDirectoryAsync_OverwriteFalse()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string openChild = CreateRandomFile(folder);
+            string lockedChild = CreateRandomFile(folder);
+
+            string openSubfolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(openSubfolder);
+
+            string lockedSubfolder = CreateRandomDirectory(folder);
+            string lockedSubchild = CreateRandomFile(lockedSubfolder);
+
+            BlobClient blobClient = client.GetBlobClient(dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
+            await blobClient.UploadAsync(openChild);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(folder, false, options);
+
+            // Assert - Check Response
+            Assert.NotNull(response);
+            Assert.AreEqual(4, response.Count());
+            foreach (SingleBlobContentInfo responseItem in response)
+            {
+                Assert.NotNull(responseItem);
+                Assert.NotNull(responseItem.BlobUri);
+                Assert.NotNull(responseItem.ContentInfo);
+            }
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            Assert.AreEqual(4, blobs.Count());
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
         public async Task DownloadDirectoryAsync()
         {
             // Arrange
