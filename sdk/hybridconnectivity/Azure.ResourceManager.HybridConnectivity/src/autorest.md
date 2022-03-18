@@ -31,10 +31,11 @@ rename-rules:
   Ipv6: IPv6
   Ipsec: IPsec
   URI: Uri
-  TypePropertiesType: EndpointType
 directive:
   - from: swagger-document
     where: "$.definitions.EndpointProperties.properties.type"
     transform: >
+      $["x-ms-client-name"] = "EndpointType";
       $["x-ms-enum"]["name"] = "EndpointType"
+
 ```
