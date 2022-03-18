@@ -33,7 +33,7 @@ rename-rules:
   URI: Uri
 directive:
   - from: swagger-document
-    where: "$.definitions.EndpointProperties.properties.type"
+    where: $.definitions.EndpointProperties.properties.type
     transform: >
       $["x-ms-client-name"] = "EndpointType";
       $["x-ms-enum"]["name"] = "EndpointType"
