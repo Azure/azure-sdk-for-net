@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Models
     {
         public ErrorAdditionalInfo() { }
         public string ErrorAdditionalInfoType { get { throw null; } }
-        public object Info { get { throw null; } }
+        public System.BinaryData Info { get { throw null; } }
     }
     public partial class ErrorDetail
     {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Resources
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
-        public object Properties { get { throw null; } set { } }
+        public System.BinaryData Properties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourcesSku Sku { get { throw null; } set { } }
     }
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.EnforcementMode? EnforcementMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.NonComplianceMessage> NonComplianceMessages { get { throw null; } }
         public System.Collections.Generic.IList<string> NotScopes { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterValuesValue> Parameters { get { throw null; } }
@@ -774,10 +774,10 @@ namespace Azure.ResourceManager.Resources
         public PolicyDefinitionData() { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public string Mode { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterDefinitionsValue> Parameters { get { throw null; } }
-        public object PolicyRule { get { throw null; } set { } }
+        public System.BinaryData PolicyRule { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
     }
     public partial class PolicyExemption : Azure.ResourceManager.Core.ArmResource
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Resources
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExemptionCategory ExemptionCategory { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public string PolicyAssignmentId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PolicyDefinitionReferenceIds { get { throw null; } }
     }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Resources
         public PolicySetDefinitionData() { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterDefinitionsValue> Parameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup> PolicyDefinitionGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } }
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class DataEffect
     {
         internal DataEffect() { }
-        public object DetailsSchema { get { throw null; } }
+        public System.BinaryData DetailsSchema { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class DataManifestCustomResourceFunctionDefinition
@@ -1478,15 +1478,15 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ParameterDefinitionsValue
     {
         public ParameterDefinitionsValue() { }
-        public System.Collections.Generic.IList<object> AllowedValues { get { throw null; } }
-        public object DefaultValue { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.BinaryData> AllowedValues { get { throw null; } }
+        public System.BinaryData DefaultValue { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ParameterType? ParameterType { get { throw null; } set { } }
     }
     public partial class ParameterDefinitionsValueMetadata
     {
         public ParameterDefinitionsValueMetadata() { }
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public bool? AssignPermissions { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ParameterValuesValue
     {
         public ParameterValuesValue() { }
-        public object Value { get { throw null; } set { } }
+        public System.BinaryData Value { get { throw null; } set { } }
     }
     public partial class PatchableResourceGroupData
     {
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ResourceGroupExportResult() { }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
-        public object Template { get { throw null; } }
+        public System.BinaryData Template { get { throw null; } }
     }
     public partial class ResourceGroupProperties
     {

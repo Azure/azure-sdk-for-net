@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// EntitiesGetTimelineOperations operations.
     /// </summary>
-    internal partial class EntitiesGetTimelineOperations : IServiceOperations<SecurityInsightsClient>, IEntitiesGetTimelineOperations
+    internal partial class EntitiesGetTimelineOperations : IServiceOperations<SecurityInsights>, IEntitiesGetTimelineOperations
     {
         /// <summary>
         /// Initializes a new instance of the EntitiesGetTimelineOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EntitiesGetTimelineOperations(SecurityInsightsClient client)
+        internal EntitiesGetTimelineOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Timeline for an entity.

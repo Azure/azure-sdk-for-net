@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Reenable after generator update")]
         public async Task CreateOrUpdate()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
@@ -38,7 +37,6 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Reenable after generator update")]
         public async Task List()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
@@ -59,7 +57,6 @@ namespace Azure.ResourceManager.Cdn.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Reenable after generator update")]
         public async Task Get()
         {
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();

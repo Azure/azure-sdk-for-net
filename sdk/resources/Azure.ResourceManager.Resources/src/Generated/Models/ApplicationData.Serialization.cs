@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -65,7 +66,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters");
-                writer.WriteObjectValue(Parameters);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Parameters);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(JitAccessPolicy))
             {
@@ -91,8 +96,8 @@ namespace Azure.ResourceManager.Resources
             SystemData systemData = default;
             Optional<string> managedResourceGroupId = default;
             Optional<string> applicationDefinitionId = default;
-            Optional<object> parameters = default;
-            Optional<object> outputs = default;
+            Optional<BinaryData> parameters = default;
+            Optional<BinaryData> outputs = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ApplicationBillingDetailsDefinition> billingDetails = default;
             Optional<ApplicationJitAccessPolicy> jitAccessPolicy = default;
@@ -207,7 +212,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = property0.Value.GetObject();
+                            parameters = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("outputs"))
@@ -217,7 +222,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            outputs = property0.Value.GetObject();
+                            outputs = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> correlationId = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
-            Optional<object> outputs = default;
+            Optional<BinaryData> outputs = default;
             Optional<IReadOnlyList<ProviderData>> providers = default;
             Optional<IReadOnlyList<Dependency>> dependencies = default;
             Optional<TemplateLink> templateLink = default;
-            Optional<object> parameters = default;
+            Optional<BinaryData> parameters = default;
             Optional<ParametersLink> parametersLink = default;
             Optional<DeploymentMode> mode = default;
             Optional<DebugSetting> debugSetting = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputs = property.Value.GetObject();
+                    outputs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("providers"))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parameters = property.Value.GetObject();
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parametersLink"))
