@@ -1,8 +1,13 @@
 namespace Azure.ResourceManager.Dashboard
 {
-    public static partial class ArmClientExtensions
+    public static partial class DashboardExtensions
     {
         public static Azure.ResourceManager.Dashboard.GrafanaResource GetGrafanaResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResource(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> GetGrafanaResourceAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Dashboard.GrafanaResourceCollection GetGrafanaResources(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResources(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class GrafanaResource : Azure.ResourceManager.Core.ArmResource
     {
@@ -47,17 +52,6 @@ namespace Azure.ResourceManager.Dashboard
         public Azure.ResourceManager.Dashboard.Models.ManagedIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Dashboard.Models.GrafanaResourceProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
-    }
-    public static partial class ResourceGroupExtensions
-    {
-        public static Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResource(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> GetGrafanaResourceAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Dashboard.GrafanaResourceCollection GetGrafanaResources(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-    }
-    public static partial class SubscriptionExtensions
-    {
-        public static Azure.Pageable<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResources(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Dashboard.Models
