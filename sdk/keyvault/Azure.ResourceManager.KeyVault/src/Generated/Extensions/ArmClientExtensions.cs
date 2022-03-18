@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="VaultKey" /> object. </returns>
         public static VaultKey GetVaultKey(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VaultKey.ValidateResourceId(id);
                 return new VaultKey(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="VaultKeyVersion" /> object. </returns>
         public static VaultKeyVersion GetVaultKeyVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VaultKeyVersion.ValidateResourceId(id);
                 return new VaultKeyVersion(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="Vault" /> object. </returns>
         public static Vault GetVault(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Vault.ValidateResourceId(id);
                 return new Vault(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedVault" /> object. </returns>
         public static DeletedVault GetDeletedVault(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeletedVault.ValidateResourceId(id);
                 return new DeletedVault(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="ManagedHsm" /> object. </returns>
         public static ManagedHsm GetManagedHsm(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedHsm.ValidateResourceId(id);
                 return new ManagedHsm(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedManagedHsm" /> object. </returns>
         public static DeletedManagedHsm GetDeletedManagedHsm(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeletedManagedHsm.ValidateResourceId(id);
                 return new DeletedManagedHsm(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="MhsmPrivateEndpointConnection" /> object. </returns>
         public static MhsmPrivateEndpointConnection GetMhsmPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MhsmPrivateEndpointConnection.ValidateResourceId(id);
                 return new MhsmPrivateEndpointConnection(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="Secret" /> object. </returns>
         public static Secret GetSecret(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Secret.ValidateResourceId(id);
                 return new Secret(client, id);

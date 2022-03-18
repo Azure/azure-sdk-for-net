@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcSetting" /> object. </returns>
         public static ArcSetting GetArcSetting(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ArcSetting.ValidateResourceId(id);
                 return new ArcSetting(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciCluster" /> object. </returns>
         public static HciCluster GetHciCluster(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HciCluster.ValidateResourceId(id);
                 return new HciCluster(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcExtension" /> object. </returns>
         public static ArcExtension GetArcExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ArcExtension.ValidateResourceId(id);
                 return new ArcExtension(client, id);
