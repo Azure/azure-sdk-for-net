@@ -203,6 +203,7 @@ namespace Azure
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) { }
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
