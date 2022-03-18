@@ -1,5 +1,5 @@
 param(
-    [string]$ProjectFile = './SmokeTest.csproj',
+    [string]$ProjectFile = (Join-Path $PSScriptRoot './SmokeTest.csproj'),
     [switch]$PreferDevVersion,
     [switch]$CI,
     [string]$ArtifactsPath
