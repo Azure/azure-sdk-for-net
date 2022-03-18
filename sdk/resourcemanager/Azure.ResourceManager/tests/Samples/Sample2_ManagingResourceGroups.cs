@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Managing_Resource_Groups_CreateAResourceGroup
             // First, initialize the ArmClient and get the default subscription
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            // Now we get a ResourceGroupResource collection for that subscription
+            // Now we get a ResourceGroup collection for that subscription
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Tests.Samples
             string resourceGroupName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
             ResourceGroupData resourceGroupData = new ResourceGroupData(location);
-            ArmOperation<ResourceGroupResource> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
-            ResourceGroupResource resourceGroup = operation.Value;
+            ArmOperation<ResourceGroup> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
+            ResourceGroup resourceGroup = operation.Value;
             #endregion Snippet:Managing_Resource_Groups_CreateAResourceGroup
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests.Samples
             // code omitted for brevity
 
             string resourceGroupName = "myRgName";
-            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
+            ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
             #endregion Snippet:Managing_Resource_Groups_GetResourceGroupCollection
         }
 
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Tests.Samples
             // First, initialize the ArmClient and get the default subscription
             ArmClient client = new ArmClient(new DefaultAzureCredential());
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
-            // Now we get a ResourceGroupResource collection for that subscription
+            // Now we get a ResourceGroup collection for that subscription
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             // We can then iterate over this collection to get the resources in the collection
-            await foreach (ResourceGroupResource resourceGroup in resourceGroups)
+            await foreach (ResourceGroup resourceGroup in resourceGroups)
             {
                 Console.WriteLine(resourceGroup.Data.Name);
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Tests.Samples
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             string resourceGroupName = "myRgName";
-            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
+            ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
             resourceGroup = await resourceGroup.AddTagAsync("key", "value");
             #endregion Snippet:Managing_Resource_Groups_UpdateAResourceGroup
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Tests.Samples
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             string resourceGroupName = "myRgName";
-            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
+            ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
             await resourceGroup.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Resource_Groups_DeleteResourceGroup
         }

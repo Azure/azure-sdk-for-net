@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;
-        private readonly ProviderCollection _providerCollection;
+        private readonly ResourceProviderCollection _resourceProviderCollection;
 
         /// <summary> Represents the REST operations. </summary>
         private RestOperations _restClient;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
             _nameSpace = nameSpace;
-            _providerCollection = new ProviderCollection(Client.GetSubscriptionResource(Id));
+            _resourceProviderCollection = new ResourceProviderCollection(Client.GetSubscriptionResource(Id));
         }
 
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         {
             return _restClient ??= new RestOperations(
                 _nameSpace,
-                _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
+                _resourceProviderCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
                 _clientDiagnostics,
                 Pipeline,
                 DiagnosticOptions.ApplicationId,
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
         {
             return _restClient ??= new RestOperations(
                 _nameSpace,
-                await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
+                await _resourceProviderCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
                 _clientDiagnostics,
                 Pipeline,
                 DiagnosticOptions.ApplicationId,

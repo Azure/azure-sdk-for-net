@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
         }
 
-        public Resources.ResourceGroupResource ResourceGroup
+        public Resources.ResourceGroup ResourceGroup
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             }
         }
 
-        public Resources.ResourceGroupResource GetResourceGroup(string name)
+        public Resources.ResourceGroup GetResourceGroup(string name)
         {
             return Subscription.GetResourceGroups().Get(name).Value;
         }
@@ -60,18 +60,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             ArmClient = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string name)
+        protected async Task<ResourceGroup> CreateResourceGroup(string name)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string name,string location)
+        protected async Task<ResourceGroup> CreateResourceGroup(string name,string location)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
         }
 
-        public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroupResource resourceGroup)
+        public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             operation.WaitForCompletion();
             return operation.Value;
         }
-        public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroupResource resourceGroup, VirtualNetworkResource vnet)
+        public async Task<GenericResource> CreateLinuxVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup, VirtualNetworkResource vnet)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return operation.Value;
         }
 
-        public async Task<GenericResource> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroupResource resourceGroup)
+        public async Task<GenericResource> CreateWindowsVM(string vmName, string networkInterfaceName, string location, ResourceGroup resourceGroup)
         {
             var vnet = await CreateVirtualNetwork(Recording.GenerateAssetName("vnet_"), Recording.GenerateAssetName("subnet_"), location, resourceGroup.GetVirtualNetworks());
             var networkInterface = await CreateNetworkInterface(networkInterfaceName, null, vnet.Data.Subnets[0].Id, location, Recording.GenerateAssetName("ipconfig_"), resourceGroup.GetNetworkInterfaces());
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return operation.Value;
         }
 
-        protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroupResource resourceGroup)
+        protected async Task<GenericResource> deployWindowsNetworkAgent(string virtualMachineName, string location, ResourceGroup resourceGroup)
         {
             var extensionId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/extensions/NetworkWatcherAgent");
             return (await ArmClient.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, extensionId, new GenericResourceData(location)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         //    await deploymentWait.WaitForCompletionAsync();
         //}
 
-        public async Task<ExpressRouteCircuitResource> CreateDefaultExpressRouteCircuit(Resources.ResourceGroupResource resourceGroup, string circuitName, string location)
+        public async Task<ExpressRouteCircuitResource> CreateDefaultExpressRouteCircuit(Resources.ResourceGroup resourceGroup, string circuitName, string location)
         {
             var sku = new ExpressRouteCircuitSku
             {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuitResource> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(Resources.ResourceGroupResource resourceGroup, string circuitName)
+        public async Task<ExpressRouteCircuitResource> UpdateDefaultExpressRouteCircuitWithMicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var peering = new ExpressRouteCircuitPeeringData()
             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getCircuitResponse;
         }
 
-        public async Task<ExpressRouteCircuitResource> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(Resources.ResourceGroupResource resourceGroup, string circuitName)
+        public async Task<ExpressRouteCircuitResource> UpdateDefaultExpressRouteCircuitWithIpv6MicrosoftPeering(Resources.ResourceGroup resourceGroup, string circuitName)
         {
             var iPv6Peering = new IPv6ExpressRouteCircuitPeeringConfig()
             {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetLoadBalancers();
         }
 
-        protected LoadBalancerCollection GetLoadBalancerCollection(Resources.ResourceGroupResource resourceGroup)
+        protected LoadBalancerCollection GetLoadBalancerCollection(Resources.ResourceGroup resourceGroup)
         {
             return resourceGroup.GetLoadBalancers();
         }
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetVirtualNetworks();
         }
 
-        protected VirtualNetworkCollection GetVirtualNetworkCollection(Resources.ResourceGroupResource resourceGroup)
+        protected VirtualNetworkCollection GetVirtualNetworkCollection(Resources.ResourceGroup resourceGroup)
         {
             return resourceGroup.GetVirtualNetworks();
         }
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return GetResourceGroup(resourceGroupName).GetNetworkInterfaces();
         }
 
-        protected NetworkInterfaceCollection GetNetworkInterfaceCollection(Resources.ResourceGroupResource resourceGroup)
+        protected NetworkInterfaceCollection GetNetworkInterfaceCollection(Resources.ResourceGroup resourceGroup)
         {
             return resourceGroup.GetNetworkInterfaces();
         }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 {
     public class Sample2_ManagingNetworkInterfaces
     {
-        private ResourceGroupResource resourceGroup;
+        private ResourceGroup resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]

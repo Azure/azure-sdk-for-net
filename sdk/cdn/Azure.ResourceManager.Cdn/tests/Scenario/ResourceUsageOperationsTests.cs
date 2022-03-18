@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetResourceUsage()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
             _ = await CreateCdnProfile(rg, profileName, CdnSkuName.StandardAkamai);
             int count = 0;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
 {
     public class Readme_ManagingNamespaces
     {
-        private ResourceGroupResource resourceGroup;
+        private ResourceGroup resourceGroup;
         [SetUp]
         public async Task createResourceGroup()
         {
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroupResource resourceGroup = operation.Value;
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = operation.Value;
             #endregion
             this.resourceGroup = resourceGroup;
         }

@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.ServiceBus.Tests.Samples
             #region Snippet:Managing_ServiceBusTopics_CreateResourceGroup
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroupResource resourceGroup = operation.Value;
+            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = operation.Value;
             #endregion
             #region Snippet:Managing_ServiceBusTopics_CreateNamespace
             string namespaceName = "myNamespace";

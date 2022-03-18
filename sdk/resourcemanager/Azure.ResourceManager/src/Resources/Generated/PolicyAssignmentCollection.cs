@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="PolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyAssignmentResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            if (Id.ResourceType == ResourceGroup.ResourceType)
             {
                 async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="PolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyAssignmentResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            if (Id.ResourceType == ResourceGroup.ResourceType)
             {
                 Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {

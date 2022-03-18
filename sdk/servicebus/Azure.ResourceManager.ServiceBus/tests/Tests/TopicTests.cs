@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class TopicTests : ServiceBusTestBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         private ServiceBusTopicCollection _topicCollection;
         public TopicTests(bool isAsync): base(isAsync)
         {

@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.Resources
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceLinkResources in the ResourceLinkResource. </summary>
+        /// <summary> Gets a collection of ResourceLinks in the ResourceLink. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An object representing collection of ResourceLinkResources and their operations over a ResourceLinkResource. </returns>
+        /// <returns> An object representing collection of ResourceLinks and their operations over a ResourceLink. </returns>
         public virtual ResourceLinkCollection GetResourceLinks(string scope)
         {
             Argument.AssertNotNull(scope, nameof(scope));
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ResourceLinkResource>> GetResourceLinkAsync(string scope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceLink>> GetResourceLinkAsync(string scope, CancellationToken cancellationToken = default)
         {
             return await GetResourceLinks(scope).GetAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ResourceLinkResource> GetResourceLink(string scope, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceLink> GetResourceLink(string scope, CancellationToken cancellationToken = default)
         {
             return GetResourceLinks(scope).Get(cancellationToken);
         }

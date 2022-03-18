@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Resources
             _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
             _subscriptionTagsRestClient = new TagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
-            _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLinkResource.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceLinkResource.ResourceType, out string resourceLinkApiVersion);
+            _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
             _resourceLinkRestClient = new ResourceLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
             _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", FeatureResource.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(FeatureResource.ResourceType, out string featureApiVersion);
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ProviderResources in the ProviderResource. </summary>
-        /// <returns> An object representing collection of ProviderResources and their operations over a ProviderResource. </returns>
-        public virtual ProviderCollection GetProviders()
+        /// <summary> Gets a collection of ResourceProviders in the ResourceProvider. </summary>
+        /// <returns> An object representing collection of ResourceProviders and their operations over a ResourceProvider. </returns>
+        public virtual ResourceProviderCollection GetResourceProviders()
         {
-            return GetCachedClient(Client => new ProviderCollection(Client, Id));
+            return GetCachedClient(Client => new ResourceProviderCollection(Client, Id));
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ProviderResource>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProvider>> GetResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await GetResourceProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ProviderResource> GetProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProvider> GetResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetProviders().Get(resourceProviderNamespace, expand, cancellationToken);
+            return GetResourceProviders().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourceGroupResources and their operations over a ResourceGroupResource. </returns>
+        /// <summary> Gets a collection of ResourceGroups in the ResourceGroup. </summary>
+        /// <returns> An object representing collection of ResourceGroups and their operations over a ResourceGroup. </returns>
         public virtual ResourceGroupCollection GetResourceGroups()
         {
             return GetCachedClient(Client => new ResourceGroupCollection(Client, Id));
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupResource>> GetResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroup>> GetResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return await GetResourceGroups().GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<ResourceGroupResource> GetResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroup> GetResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return GetResourceGroups().Get(resourceGroupName, cancellationToken);
         }
@@ -610,17 +610,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLinkResource> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceLink> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceLinkResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceLink>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -628,14 +628,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ResourceLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceLink>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -653,17 +653,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceLinkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLinkResource> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceLink> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceLinkResource> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceLink> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -671,14 +671,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ResourceLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceLink> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

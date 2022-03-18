@@ -10,7 +10,6 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-use: C:/Users/mingzhehuang/workspaces/archerzz/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1
 mgmt-debug:
   show-request-path: true
 batch:
@@ -108,7 +107,7 @@ request-path-to-resource-data:
   # tenant does not have name and type
   /: Tenant
   # provider does not have name and type
-  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: ResourceProvider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -153,7 +152,11 @@ override-operation-name:
   Resources_ListByResourceGroup: GetGenericResources
   Providers_RegisterAtManagementGroupScope: RegisterProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider;
+no-property-type-replacement: ResourceProviderData;ResourceProvider;
+no-resource-suffix:
+  - ResourceGroup
+  - ResourceLink
+  - ResourceProvider
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -237,6 +240,12 @@ directive:
   - rename-model:
       from: Location
       to: LocationExpanded
+  - rename-model:
+      from: Provider
+      to: ResourceProvider
+  - rename-model:
+      from: ProviderListResult
+      to: ResourceProviderListResult
   - rename-model:
       from: TenantIdDescription
       to: Tenant

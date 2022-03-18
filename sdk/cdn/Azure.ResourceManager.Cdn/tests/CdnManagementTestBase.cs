@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix)
+        protected async Task<ResourceGroup> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Cdn.Tests
             return lro.Value;
         }
 
-        protected async Task<ProfileResource> CreateCdnProfile(ResourceGroupResource rg, string profileName, CdnSkuName skuName)
+        protected async Task<ProfileResource> CreateCdnProfile(ResourceGroup rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateProfileData(skuName);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, input);
             return lro.Value;
         }
 
-        protected async Task<ProfileResource> CreateAfdProfile(ResourceGroupResource rg, string profileName, CdnSkuName skuName)
+        protected async Task<ProfileResource> CreateAfdProfile(ResourceGroup rg, string profileName, CdnSkuName skuName)
         {
             ProfileData input = ResourceDataHelper.CreateAfdProfileData(skuName);
             var lro = await rg.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, profileName, input);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         //    return lro.Value;
         //}
 
-        protected async Task<CdnWebApplicationFirewallPolicyResource> CreatePolicy(ResourceGroupResource rg, string policyName)
+        protected async Task<CdnWebApplicationFirewallPolicyResource> CreatePolicy(ResourceGroup rg, string policyName)
         {
             CdnWebApplicationFirewallPolicyData input = ResourceDataHelper.CreateCdnWebApplicationFirewallPolicyData();
             var lro = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);

@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            else if (Id.ResourceType == ResourceGroup.ResourceType)
             {
                 async Task<Page<PolicyExemptionResource>> FirstPageFunc(int? pageSizeHint)
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ResourceGroupResource.ResourceType)
+            else if (Id.ResourceType == ResourceGroup.ResourceType)
             {
                 Page<PolicyExemptionResource> FirstPageFunc(int? pageSizeHint)
                 {

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class VirtualMachineTestBase : ComputeTestBase
     {
-        protected ResourceGroupResource _resourceGroup;
+        protected ResourceGroup _resourceGroup;
         protected GenericResourceCollection _genericResourceCollection;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineAsync()
         {
             var vnet = await CreateVirtualNetwork();
-            //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);
+            //var subnet = await CreateSubnet(vnet.Id as ResourceGroupIdentifier);
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             return nic;
         }

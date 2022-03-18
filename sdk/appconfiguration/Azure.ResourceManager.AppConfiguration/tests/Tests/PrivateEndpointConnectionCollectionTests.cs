@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateEndpointConnectionCollectionTests : AppConfigurationClientBase
     {
-        private ResourceGroupResource ResGroup { get; set; }
+        private ResourceGroup ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
 

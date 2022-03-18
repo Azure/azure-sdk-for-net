@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroupResource rg = lro.Value;
+            ResourceGroup rg = lro.Value;
             string appDefName = Recording.GenerateAssetName("appDef-D-");
             ApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ApplicationDefinitionResource appDef = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;

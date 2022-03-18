@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryCollectionTests : ComputeTestBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
 
         public GalleryCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)

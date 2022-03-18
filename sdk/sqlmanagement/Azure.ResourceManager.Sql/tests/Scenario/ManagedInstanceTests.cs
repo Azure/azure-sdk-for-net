@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class ManagedInstanceTests : SqlManagementClientBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         private string SubnetId;
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource resourceGroup = rgLro.Value;
+            ResourceGroup resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
 
             //Prerequisites: 1. create NetworkSecurityGroup
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

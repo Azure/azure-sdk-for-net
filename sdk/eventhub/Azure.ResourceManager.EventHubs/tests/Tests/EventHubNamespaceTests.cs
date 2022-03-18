@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class EventHubNamespaceTests : EventHubTestBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         public EventHubNamespaceTests(bool isAsync) : base(isAsync)
         {
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string namespaceName1 = await CreateValidNamespaceName("testnamespacemgmt1");
             string namespaceName2 = await CreateValidNamespaceName("testnamespacemgmt2");
             _resourceGroup = await CreateResourceGroupAsync();
-            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup resourceGroup = await CreateResourceGroupAsync();
             EventHubNamespaceCollection namespaceCollection1 = _resourceGroup.GetEventHubNamespaces();
             EventHubNamespaceCollection namespaceCollection2 = resourceGroup.GetEventHubNamespaces();
             _ = (await namespaceCollection1.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new EventHubNamespaceData(DefaultLocation))).Value;

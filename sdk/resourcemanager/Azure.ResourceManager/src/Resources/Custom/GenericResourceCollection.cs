@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources
             return version;
         }
 
-        private ProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
-            => GetCachedClient((client) => { return new ProviderCollection(client, subscriptionId); });
+        private ResourceProviderCollection GetProviderCollectionForSubscription(ResourceIdentifier subscriptionId)
+            => GetCachedClient((client) => { return new ResourceProviderCollection(client, subscriptionId); });
     }
 }

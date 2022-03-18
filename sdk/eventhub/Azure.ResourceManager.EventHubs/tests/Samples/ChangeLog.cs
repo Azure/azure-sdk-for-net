@@ -23,7 +23,7 @@ string eventhubName = "myEventhub";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
-ResourceGroupResource resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
+ResourceGroup resourceGroup = subscription.GetResourceGroups().Get(resourceGroupName);
 //create namespace
 EventHubNamespaceData parameters = new EventHubNamespaceData(AzureLocation.WestUS)
 {

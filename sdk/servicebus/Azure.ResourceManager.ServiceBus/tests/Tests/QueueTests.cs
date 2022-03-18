@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class QueueTests : ServiceBusTestBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         private ServiceBusQueueCollection _queueCollection;
         public QueueTests(bool isAsync) : base(isAsync)
         {

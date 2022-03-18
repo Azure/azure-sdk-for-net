@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
 {
     public class Sample2_ManagingCdnWebApplicationFirewallPolicies
     {
-        private ResourceGroupResource resourceGroup;
+        private ResourceGroup resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroupResource resourceGroup = lro.Value;
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroup resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;
         }

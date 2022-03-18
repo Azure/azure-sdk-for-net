@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
         public VaultCollection VaultCollection { get; set; }
         public DeletedVaultCollection DeletedVaultCollection { get; set; }
         public ManagedHsmCollection ManagedHsmCollection { get; set; }
-        public ResourceGroupResource ResourceGroup { get; set; }
+        public ResourceGroup ResourceGroup { get; set; }
 
         protected VaultOperationsTestsBase(bool isAsync)
             : base(isAsync)

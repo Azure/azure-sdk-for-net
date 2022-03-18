@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            ProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
+            ResourceProvider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource testFeature = null;
             await foreach (var feature in provider.GetFeatures().GetAllAsync())
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
+            ResourceProvider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource feature = await provider.GetFeatures().GetAsync("AHUB");
             Assert.IsNotNull(feature);
             Assert.IsNotNull(feature.Data.Id);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            ProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
+            ResourceProvider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource feature = await provider.GetFeatures().GetIfExistsAsync("AHUB");
             Assert.IsNotNull(feature);
             Assert.IsNotNull(feature.Data.Id);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Exists()
         {
-            ProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders().GetAsync("Microsoft.Compute");
+            ResourceProvider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             Assert.IsTrue(await provider.GetFeatures().ExistsAsync("AHUB"));
             Assert.IsFalse(await provider.GetFeatures().ExistsAsync("DoesNotExist"));
         }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Tests
     {
         private ArmClient _client;
         private ResourceGroupCollection _collection;
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         private string _rgName;
 
         public CollectionTryGetTest(bool isAsync)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGetTest()
         {
-            ResourceGroupResource result = await _collection.GetIfExistsAsync(_rgName);
+            ResourceGroup result = await _collection.GetIfExistsAsync(_rgName);
             Assert.NotNull(result);
             Assert.IsTrue(result.Data.Name == _rgName);
             result = await _collection.GetIfExistsAsync("FakeName");

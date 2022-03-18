@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private VirtualNetworkResource virtualNetwork;
         private GenericResource privateDnsZone;
-        private Resources.ResourceGroupResource resourceGroup;
+        private Resources.ResourceGroup resourceGroup;
         private StorageAccountResource storageAccount;
         private SubscriptionResource _subscription;
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task AvailablePrivateEndpointInResourceGroupTypeTest()
         {
-            var types = await resourceGroup.GetAvailablePrivateEndpointTypesByResourceGroupAsync(TestEnvironment.Location).ToEnumerableAsync();
+            var types = await resourceGroup.GetAvailablePrivateEndpointTypesAsync(TestEnvironment.Location).ToEnumerableAsync();
             Assert.IsNotEmpty(types);
         }
     }

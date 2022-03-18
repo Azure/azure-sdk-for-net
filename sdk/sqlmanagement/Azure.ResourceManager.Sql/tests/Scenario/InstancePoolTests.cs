@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class InstancePoolTests : SqlManagementClientBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public InstancePoolTests(bool isAsync)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-1000");
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroupResource rg = rgLro.Value;
+            ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

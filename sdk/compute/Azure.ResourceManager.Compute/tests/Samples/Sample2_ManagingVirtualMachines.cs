@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // Use the same location as the resource group
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             // With ListAsync(), we can get a list of the virtual machines
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the virtual machine collection from the resource group
             VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
             string vmName = "myVM";

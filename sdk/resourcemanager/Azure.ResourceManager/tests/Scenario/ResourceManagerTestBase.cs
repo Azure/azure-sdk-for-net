@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Tests
             Assert.IsNotNull(actual.Data.Children, "Children were null");
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgName)
+        protected async Task<ResourceGroup> CreateResourceGroup(SubscriptionResource subscription, string rgName)
         {
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Tests
             return virtualNetwork;
         }
 
-        protected async Task<GenericResource> CreateGenericVirtualNetwork(SubscriptionResource subscription, ResourceGroupResource rg, string vnName) // TODO: remove subscription parameter
+        protected async Task<GenericResource> CreateGenericVirtualNetwork(SubscriptionResource subscription, ResourceGroup rg, string vnName) // TODO: remove subscription parameter
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Tests
             return lro.Value;
         }
 
-        protected async Task<ResourceLinkResource> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
+        protected async Task<ResourceLink> CreateResourceLink(TenantResource tenant, GenericResource vn1, GenericResource vn2, string resourceLinkName)
         {
             ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Tests
             {
                 Properties = properties
             };
-            ArmOperation<ResourceLinkResource> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ResourceLink> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
             return lro.Value;
         }
     }

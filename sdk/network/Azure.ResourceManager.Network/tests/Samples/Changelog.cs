@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 #endif
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
             VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
             // Create VNet

@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Resources
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
-                else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
+                else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Resources
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
-                else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
+                else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);

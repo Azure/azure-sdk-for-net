@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroup rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
             var genericResources = subscription.GetGenericResourcesAsync();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg1 = rg1Op.Value;
+            ResourceGroup rg1 = rg1Op.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg1.Id);
             var rg2Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg2 = rg2Op.Value;
+            ResourceGroup rg2 = rg2Op.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg2.Id);
 
             var count = await GetResourceCountAsync(subscription.GetGenericResourcesAsync());
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg1 = rg1Op.Value;
+            ResourceGroup rg1 = rg1Op.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg1.Id);
             var rg2Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg2 = rg2Op.Value;
+            ResourceGroup rg2 = rg2Op.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg2.Id);
 
             int count = 0;
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rg1Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg1 = rg1Op.Value;
+            ResourceGroup rg1 = rg1Op.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg1.Id);
             _ = await CreateGenericAvailabilitySetAsync(rg1.Id);
             var rg2Op = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg2 = rg2Op.Value;
+            ResourceGroup rg2 = rg2Op.Value;
             _ = await CreateGenericAvailabilitySetAsync(rg2.Id);
 
             var count = await GetResourceCountAsync(rg1.GetGenericResourcesAsync());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroup rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
             Assert.IsTrue(await Client.GetGenericResources().ExistsAsync(aset.Data.Id));
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroup rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
             GenericResource resource = await Client.GetGenericResources().GetIfExistsAsync(aset.Data.Id);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroup rg = rgOp.Value;
             Assert.DoesNotThrowAsync(async () => _ = await CreateGenericAvailabilitySetAsync(rg.Id));
 
             var genericResources = Client.GetGenericResources();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroup rg = rgOp.Value;
             Assert.DoesNotThrowAsync(async () =>
             {
                 var createOp = await StartCreateGenericAvailabilitySetAsync(rg.Id);

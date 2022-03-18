@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             //In this test, the CName mapping from custom domain "customdomaintest-4.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
             //The CName mapping needs to be deleted before deleting the custom domain.
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string cdnCustomDomainName = "customDomain-811";
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             //In this test, the CName mapping from custom domain "customdomaintest-5.azuretest.net" to endpoint "testEndpoint4dotnetsdk.azureedge.net" is created in advance.
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
             CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
             string cdnCustomDomainName = Recording.GenerateAssetName("customDomain-");

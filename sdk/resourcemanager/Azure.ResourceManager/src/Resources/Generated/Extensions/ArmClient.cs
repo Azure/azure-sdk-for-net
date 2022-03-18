@@ -23,14 +23,14 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region ProviderResource
-        /// <summary> Gets an object representing a ProviderResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceProvider
+        /// <summary> Gets an object representing a ResourceProvider along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderResource" /> object. </returns>
-        public virtual ProviderResource GetProviderResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceProvider" /> object. </returns>
+        public virtual ResourceProvider GetResourceProvider(ResourceIdentifier id)
         {
-            ProviderResource.ValidateResourceId(id);
-            return new ProviderResource(this, id);
+            ResourceProvider.ValidateResourceId(id);
+            return new ResourceProvider(this, id);
         }
         #endregion
 
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region ResourceGroupResource
-        /// <summary> Gets an object representing a ResourceGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceGroup
+        /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupResource" /> object. </returns>
-        public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
+        public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
         {
-            ResourceGroupResource.ValidateResourceId(id);
-            return new ResourceGroupResource(this, id);
+            ResourceGroup.ValidateResourceId(id);
+            return new ResourceGroup(this, id);
         }
         #endregion
 
@@ -166,14 +166,14 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region ResourceLinkResource
-        /// <summary> Gets an object representing a ResourceLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceLink
+        /// <summary> Gets an object representing a ResourceLink along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceLinkResource" /> object. </returns>
-        public virtual ResourceLinkResource GetResourceLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
+        public virtual ResourceLink GetResourceLink(ResourceIdentifier id)
         {
-            ResourceLinkResource.ValidateResourceId(id);
-            return new ResourceLinkResource(this, id);
+            ResourceLink.ValidateResourceId(id);
+            return new ResourceLink(this, id);
         }
         #endregion
 

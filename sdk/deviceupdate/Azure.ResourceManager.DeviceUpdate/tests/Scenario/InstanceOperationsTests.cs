@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task Delete()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task AddTag()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");

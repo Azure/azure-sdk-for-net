@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             Assert.AreEqual(accountName, account.Data.Name);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task ListByRg()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             _ = await CreateAccount(rg, accountName);
             int count = 0;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task ListBySubscription()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             int count = 0;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             DeviceUpdateAccountResource getAccount = await rg.GetDeviceUpdateAccounts().GetAsync(accountName);

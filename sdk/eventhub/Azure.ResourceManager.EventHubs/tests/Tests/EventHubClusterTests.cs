@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class EventHubClusterTests : EventHubTestBase
     {
-        private ResourceGroupResource _resourceGroup;
+        private ResourceGroup _resourceGroup;
         public EventHubClusterTests(bool isAsync) : base(isAsync)
         {
         }

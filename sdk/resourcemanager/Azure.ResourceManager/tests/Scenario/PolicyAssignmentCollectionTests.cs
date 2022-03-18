@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             Assert.AreEqual(policyAssignmentName, policyAssignment.Data.Name);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
             string vnName = Recording.GenerateAssetName("testVn-");
             GenericResource vn = await CreateGenericVirtualNetwork(subscription, rg, vnName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName1 = Recording.GenerateAssetName("polAssign-");
             string policyAssignmentName2 = Recording.GenerateAssetName("polAssign-");
             string policyDefinitionId = "/providers/Microsoft.Authorization/policyDefinitions/0015ea4d-51ff-4ce3-8d8c-f3f8f0179a56";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             PolicyAssignmentResource getPolicyAssignment = await rg.GetPolicyAssignments().GetAsync(policyAssignmentName);
