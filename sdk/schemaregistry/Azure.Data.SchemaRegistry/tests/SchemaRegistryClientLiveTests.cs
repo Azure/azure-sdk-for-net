@@ -57,7 +57,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             AssertSchemaProperties(schemaProperties);
             AssertPropertiesAreEqual(registerProperties, schemaProperties);
 
-            SchemaProperties newVersion = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent_V2, format);
+            SchemaProperties newVersion = await client.RegisterSchemaAsync(schemaProperties.GroupName, schemaProperties.Name, SchemaContent_V2, schemaProperties.Format);
             AssertSchemaProperties(newVersion);
             Assert.AreNotEqual(registerProperties.Id, newVersion.Id);
         }
