@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine scale set sku. </summary>
-        public Sku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
         /// <summary> The purchase plan when deploying a virtual machine scale set from VM Marketplace images. </summary>
-        public Plan Plan { get; set; }
+        public ComputePlan Plan { get; set; }
         /// <summary> The identity of the virtual machine scale set, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The upgrade policy. </summary>

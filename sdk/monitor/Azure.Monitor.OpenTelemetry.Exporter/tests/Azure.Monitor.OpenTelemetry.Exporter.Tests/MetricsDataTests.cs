@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             enumerator.MoveNext();
             var metricPoint = enumerator.Current;
 
-            var metricData = new MetricsData(Version, metrics[0], ref metricPoint);
+            var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(2, metricData.Version);
             Assert.Equal(name, metricData.Metrics.First().Name);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             enumerator.MoveNext();
             var metricPoint = enumerator.Current;
 
-            var metricData = new MetricsData(Version, metrics[0], ref metricPoint);
+            var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(2, metricData.Version);
             Assert.Equal(name, metricData.Metrics.First().Name);
             Assert.Equal(123.45, metricData.Metrics.First().Value);
@@ -127,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             enumerator.MoveNext();
             var metricPoint = enumerator.Current;
 
-            var metricData = new MetricsData(Version, metrics[0], ref metricPoint);
+            var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(double.PositiveInfinity, metricData.Metrics.First().Value);
             Assert.Equal(DataPointType.Aggregation, metricData.Metrics.First().DataPointType);
         }
@@ -158,21 +158,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var enumerator = metrics[0].GetMetricPoints().GetEnumerator();
             enumerator.MoveNext();
             var metricPoint = enumerator.Current;
-            var metricData = new MetricsData(Version, metrics[0], ref metricPoint);
+            var metricData = new MetricsData(Version, metrics[0], metricPoint);
             Assert.Equal(double.PositiveInfinity, metricData.Metrics.First().Value);
 
             // Validate NegativeInfinity
             enumerator = metrics[1].GetMetricPoints().GetEnumerator();
             enumerator.MoveNext();
             metricPoint = enumerator.Current;
-            metricData = new MetricsData(Version, metrics[1], ref metricPoint);
+            metricData = new MetricsData(Version, metrics[1], metricPoint);
             Assert.Equal(double.NegativeInfinity, metricData.Metrics.First().Value);
 
             // Validate NaN
             enumerator = metrics[2].GetMetricPoints().GetEnumerator();
             enumerator.MoveNext();
             metricPoint = enumerator.Current;
-            metricData = new MetricsData(Version, metrics[2], ref metricPoint);
+            metricData = new MetricsData(Version, metrics[2], metricPoint);
             Assert.Equal(double.NaN, metricData.Metrics.First().Value);
         }
 
@@ -180,7 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void ThrowsIfMetricIsNull()
         {
             var metricPoint = new MetricPoint();
-            Assert.Throws<ArgumentNullException>(() => new MetricsData(Version, null, ref metricPoint));
+            Assert.Throws<ArgumentNullException>(() => new MetricsData(Version, null, metricPoint));
         }
     }
 }

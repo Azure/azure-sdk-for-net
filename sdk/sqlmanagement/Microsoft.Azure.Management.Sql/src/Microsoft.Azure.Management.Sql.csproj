@@ -17,6 +17,7 @@ New features:
 RestorableDroppedDatabases, RestorableDroppedManagedDatabases, ServerConnecionPolicies
 - ManagedInstances StorageAccountType parameter is now replaced with RequestedBackupStorageRedundancy and CurrentBackupStorageRedundancy
 - Add IPv6 firewall rules management API (2021-08-01-preview)
+- Add optional parameter SourceResourceId to Databases, which allows cross-subscription restore for DataWarehouse edition 
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

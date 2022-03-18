@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
 
-            return new TelemetryItem(activity, ref monitorTags);
+            return new TelemetryItem(activity, ref monitorTags, null, null, null);
         }
     }
 }

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Create the loadBalancer
-            var putLoadBalancerOperation = await resourceGroup.GetLoadBalancers().CreateOrUpdateAsync(true, lbName, loadBalancer);
+            var putLoadBalancerOperation = await resourceGroup.GetLoadBalancers().CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             Response<LoadBalancer> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify Put InboundNatRule in LoadBalancer
             var inboundNatRuleCollection = loadBalancerOperations.GetInboundNatRules();
-            var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(true, inboundNatRule3Name, inboundNatRule3Params);
+            var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRule3Name, inboundNatRule3Params);
             Response<InboundNatRule> putInboundNatRule = await putInboundNatRuleOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual(inboundNatRule3Name, putInboundNatRule.Value.Data.Name);
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(inboundNatRule3Name, listInboundNatRules[2].Data.Name);
 
             // Delete InboundNatRule in LoadBalancer
-            await getInboundNatRule.Value.DeleteAsync(true);
+            await getInboundNatRule.Value.DeleteAsync(WaitUntil.Completed);
 
             // Delete LoadBalancer
-            var deleteOperation1 = await loadBalancerOperations.DeleteAsync(true);
+            var deleteOperation1 = await loadBalancerOperations.DeleteAsync(WaitUntil.Completed);
             await deleteOperation1.WaitForCompletionResponseAsync();
             ;
 
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = GetLoadBalancerCollection(resourceGroup);
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Etag);
 
             // Delete LoadBalancer
-            await getLoadBalancer.Value.DeleteAsync(true);
+            await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = GetLoadBalancerCollection(resourceGroup);
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Etag);
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(true);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
 
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
@@ -808,19 +808,19 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Do another put after changing the distribution policy
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIP;
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             Assert.AreEqual(LoadDistribution.SourceIP, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
 
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIPProtocol;
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             Assert.AreEqual(LoadDistribution.SourceIPProtocol, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(true)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbname, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(true)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbname, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater);
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // update load balancer
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbname, getLoadBalancer.Value.Data);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, getLoadBalancer.Value.Data);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(true)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadBalancer);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
@@ -1140,13 +1140,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var nic1Operation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic1name, nic1.Data);
+            var nic1Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data);
             await nic1Operation.WaitForCompletionAsync();
 
-            var nic2Operation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic2name, nic2.Data);
+            var nic2Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data);
             await nic2Operation.WaitForCompletionAsync();
 
-            var nic3Operation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic3name, nic3.Data);
+            var nic3Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data);
             await nic3Operation.WaitForCompletionAsync();
 
             // Get Nics
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(true);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
@@ -1176,12 +1176,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all NetworkInterfaces
-            await nic1.DeleteAsync(true);
-            await nic2.DeleteAsync(true);
-            await nic2.DeleteAsync(true);
+            await nic1.DeleteAsync(WaitUntil.Completed);
+            await nic2.DeleteAsync(WaitUntil.Completed);
+            await nic2.DeleteAsync(WaitUntil.Completed);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadBalancer);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
             Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
@@ -1267,13 +1267,13 @@ namespace Azure.ResourceManager.Network.Tests
                 Protocol = TransportProtocol.Tcp
             };
             getLoadBalancer.Value.Data.InboundNatPools.Add(natpool2);
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, getLoadBalancer.Value.Data);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, getLoadBalancer.Value.Data);
 
             // Verify the nat pool
             Assert.AreEqual(2, getLoadBalancer.Value.Data.InboundNatPools.Count);
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(true);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of StaticSiteARMResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
-        internal StaticSiteARMResourceData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, SkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, string repositoryUrl, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplateOptions templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string provider) : base(id, name, type, systemData, tags, location, kind)
+        internal StaticSiteARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, SkuDescription sku, ManagedServiceIdentity identity, string defaultHostname, string repositoryUrl, string branch, IReadOnlyList<string> customDomains, string repositoryToken, StaticSiteBuildProperties buildProperties, IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections, StagingEnvironmentPolicy? stagingEnvironmentPolicy, bool? allowConfigFileUpdates, StaticSiteTemplateOptions templateProperties, string contentDistributionEndpoint, string keyVaultReferenceIdentity, IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, string provider) : base(id, name, resourceType, systemData, tags, location, kind)
         {
             Sku = sku;
             Identity = identity;

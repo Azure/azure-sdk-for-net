@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of ConfigurationStores and their operations over a ConfigurationStore. </returns>
         public virtual ConfigurationStoreCollection GetConfigurationStores()
         {
-            return new ConfigurationStoreCollection(Client, Id);
+            return GetCachedClient(Client => new ConfigurationStoreCollection(Client, Id));
         }
     }
 }

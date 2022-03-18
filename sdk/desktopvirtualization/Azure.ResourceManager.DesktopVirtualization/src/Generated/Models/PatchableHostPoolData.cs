@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of PatchableHostPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="friendlyName"> Friendly name of HostPool. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="ssoSecretType"> The type of single sign on Secret Type. </param>
         /// <param name="preferredAppGroupType"> The type of preferred application group type, default to Desktop Application Group. </param>
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
-        internal PatchableHostPoolData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, LoadBalancerType? loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfoPatch registrationInfo, string vmTemplate, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect) : base(id, name, type, systemData)
+        internal PatchableHostPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, LoadBalancerType? loadBalancerType, int? ring, bool? validationEnvironment, RegistrationInfoPatch registrationInfo, string vmTemplate, string ssoadfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, SsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             FriendlyName = friendlyName;

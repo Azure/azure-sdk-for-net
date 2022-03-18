@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             description = "{{ internal testing constructor (Token) }}";
             expectedOptions = new EventProcessorOptions();
-            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), expectedOptions);
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
 
@@ -192,7 +192,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             description = "{{ internal testing constructor (Shared Key) }}";
             expectedOptions = new EventProcessorOptions();
-            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), expectedOptions);
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
 
@@ -200,52 +200,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             description = "{{ internal testing constructor (SAS) }}";
             expectedOptions = new EventProcessorOptions();
-            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" />
-        ///   constructors.
-        /// </summary>
-        ///
-        [Test]
-        public void ConstructorsPassesTheRetryPolicyToStorageManager()
-        {
-            void assertRetryPoliciesMatch(EventHubsRetryPolicy expected,
-                                          EventProcessorClient target,
-                                          string constructorDescription)
-            {
-                var storageManager = GetStorageManager(target);
-                var retryPolicy = GetStorageManagerRetryPolicy(storageManager);
-
-                Assert.That(retryPolicy, Is.EqualTo(expected), $"The retry policy was incorrect for the { constructorDescription } constructor.");
-            }
-
-            var expectedPolicy = Mock.Of<EventHubsRetryPolicy>();
-            var clientOptions = new EventProcessorClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expectedPolicy } };
-
-            string description;
-            EventProcessorClient processorClient;
-
-            // Connection String constructor
-
-            description = "{{ connection string constructor }}";
-            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", clientOptions);
-            assertRetryPoliciesMatch(expectedPolicy, processorClient, description);
-
-            // Connection String and Event Hub Name constructor
-
-            description = "{{ connection string with Event Hub name constructor }}";
-            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123", "theHub", clientOptions);
-            assertRetryPoliciesMatch(expectedPolicy, processorClient, description);
-
-            // Namespace constructor
-
-            description = "{{ namespace constructor }}";
-            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), clientOptions);
-            assertRetryPoliciesMatch(expectedPolicy, processorClient, description);
         }
 
         /// <summary>
@@ -258,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(false)]
         public void StartProcessingValidatesProcessEventsAsync(bool async)
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
             if (async)
@@ -281,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(false)]
         public void StartProcessingValidatesProcessExceptionAsync(bool async)
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             if (async)
@@ -307,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
@@ -340,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
@@ -367,7 +324,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
@@ -503,7 +460,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
@@ -544,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
@@ -585,7 +542,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
@@ -637,7 +594,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProcessorDoesNotAllowNullEventHandlers()
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             Assert.That(() => processorClient.PartitionInitializingAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The initializing handler should not allow null.");
             Assert.That(() => processorClient.PartitionClosingAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The closing handler should not allow null.");
@@ -652,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProcessorAllowsOnlyOneHandlerRegistrationPerEvent()
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
             processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask;
@@ -672,7 +629,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProcessorDoesNotAllowRemovingEventHandlersWhenNoneWereSet()
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             Assert.That(() => processorClient.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The initializing handler should not allow removal.");
             Assert.That(() => processorClient.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The closing handler should not allow removal.");
@@ -687,7 +644,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProcessorDoesNotAllowRemovingUnregisteredEventHandlers()
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
             processorClient.PartitionClosingAsync += eventArgs => Task.CompletedTask;
@@ -710,7 +667,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ProcessorAllowsRemovingEventHandlers()
         {
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
             Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
@@ -741,7 +698,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
             Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
             processorClient.ProcessEventAsync += eventHandler;
             ;
             processorClient.ProcessErrorAsync += errorHandler;
@@ -783,7 +740,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var startingPosition = EventPosition.FromOffset(433);
             var options = new EventProcessorOptions { DefaultStartingPosition = startingPosition };
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
 
             processorClient.PartitionInitializingAsync += eventArgs =>
             {
@@ -815,7 +772,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var capturedEventArgs = default(PartitionClosingEventArgs);
             var partitionId = "0";
             var closeReason = ProcessingStoppedReason.Shutdown;
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.PartitionClosingAsync += eventArgs =>
             {
@@ -848,7 +805,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var exception = new DivideByZeroException("OMG, ZERO?!?!?!");
             var description = "Doing Stuff";
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.ProcessErrorAsync += eventArgs =>
             {
@@ -881,7 +838,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var capturedEventArgs = default(ProcessErrorEventArgs);
             var exception = new DivideByZeroException("OMG, ZERO?!?!?!");
             var description = "Doing Stuff";
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.ProcessErrorAsync += eventArgs =>
             {
@@ -919,11 +876,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var capturedEventArgs = new List<ProcessEventArgs>();
             var partitionId = "0";
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockStorageManager
-                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<EventProcessorCheckpoint>(), It.IsAny<EventData>(), It.IsAny<CancellationToken>()))
+            mockCheckpointStore
+                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             processorClient.ProcessEventAsync += eventArgs =>
@@ -949,10 +906,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var expectedStart = EventPosition.FromOffset(capturedEventArgs[index].Data.Offset);
 
-                mockStorageManager
+                mockCheckpointStore
                     .Verify(storage => storage.UpdateCheckpointAsync(
-                        It.Is<EventProcessorCheckpoint>(value => ((value.PartitionId == partitionId) && (value.StartingPosition == expectedStart))),
-                        capturedEventArgs[index].Data,
+                        processorClient.FullyQualifiedNamespace,
+                        processorClient.EventHubName,
+                        processorClient.ConsumerGroup,
+                        capturedEventArgs[index].Partition.PartitionId,
+                        capturedEventArgs[index].Data.Offset,
+                        capturedEventArgs[index].Data.SequenceNumber,
                         It.IsAny<CancellationToken>()),
                     Times.Once,
                     $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
@@ -973,8 +934,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var capturedEventArgs = default(ProcessEventArgs);
             var partitionId = "0";
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.ProcessEventAsync += eventArgs =>
             {
@@ -995,10 +956,14 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
             Assert.That(async () => await capturedEventArgs.UpdateCheckpointAsync(), Throws.InstanceOf<InvalidOperationException>(), "A checkpoint cannot be created for an empty event.");
 
-            mockStorageManager
+            mockCheckpointStore
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    It.IsAny<EventProcessorCheckpoint>(),
-                    It.IsAny<EventData>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<long>(),
+                    It.IsAny<long?>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
 
@@ -1024,7 +989,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var invokeCount = 0;
             var halfBatchCount = (int)Math.Floor(eventBatch.Length / 2.0f);
             var expectedException = new DivideByZeroException("Ruh Roh, Raggy!");
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.ProcessEventAsync += eventArgs =>
             {
@@ -1059,7 +1024,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var exceptionMultiple = 3;
             var exceptionMessage = "This is a processing exception";
             var capturedException = default(AggregateException);
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             var eventBatch = Enumerable
                 .Range(0, eventCount)
@@ -1113,7 +1078,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "3";
             var mockLogger = new Mock<EventProcessorClientEventSource>();
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.Logger = mockLogger.Object;
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
@@ -1158,7 +1123,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "3";
             var expectedException = new ApplicationException("Why is water wet?");
             var mockLogger = new Mock<EventProcessorClientEventSource>();
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.Logger = mockLogger.Object;
             processorClient.ProcessEventAsync += eventArgs => throw expectedException;
@@ -1197,8 +1162,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var processedEventsCount = 0;
             var partitionId = "0";
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.ProcessEventAsync += eventArgs =>
             {
@@ -1228,17 +1193,17 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "5";
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockStorageManager
+            mockCheckpointStore
                 .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(default(EventProcessorCheckpoint));
 
             await processorClient.InvokeGetCheckpointAsync(partitionId, cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            mockStorageManager
+            mockCheckpointStore
                 .Verify(storage => storage.GetCheckpointAsync(
                     processorClient.FullyQualifiedNamespace,
                     processorClient.EventHubName,
@@ -1264,10 +1229,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "0";
             var startingPosition = EventPosition.FromOffset(433);
             var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
 
-            mockStorageManager
+            mockCheckpointStore
                 .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(default(EventProcessorCheckpoint));
 
@@ -1304,10 +1269,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var startingPosition = EventPosition.FromOffset(433);
             var checkpointStartingPosition = EventPosition.FromSequenceNumber(999);
             var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
 
-            mockStorageManager
+            mockCheckpointStore
                 .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), partitionId, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new EventProcessorCheckpoint { PartitionId = partitionId, StartingPosition = checkpointStartingPosition });
 
@@ -1342,10 +1307,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partitionId = "0";
             var options = new EventProcessorOptions { DefaultStartingPosition = EventPosition.Latest };
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), options);
 
-            mockStorageManager
+            mockCheckpointStore
                 .Setup(storage => storage.GetCheckpointAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(default(EventProcessorCheckpoint));
 
@@ -1361,28 +1326,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.ListCheckpointsAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void ListCheckpointsIsDeprecatedAndThrows()
-        {
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-
-            mockStorageManager
-                .Setup(storage => storage.ListCheckpointsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(default(IEnumerable<EventProcessorCheckpoint>));
-
-            Assert.That(async () => await processorClient.InvokeListCheckpointsAsync(cancellationSource.Token), Throws.InstanceOf<InvalidOperationException>());
-            cancellationSource.Cancel();
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient.ListOwnershipAsync" />
         ///   method.
         /// </summary>
@@ -1393,17 +1336,17 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockStorageManager
+            mockCheckpointStore
                 .Setup(storage => storage.ListOwnershipAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(default(IEnumerable<EventProcessorPartitionOwnership>));
 
             await processorClient.InvokeListOwnershipAsync(cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            mockStorageManager
+            mockCheckpointStore
                 .Verify(storage => storage.ListOwnershipAsync(
                     processorClient.FullyQualifiedNamespace,
                     processorClient.EventHubName,
@@ -1426,17 +1369,17 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var desiredOwnership = new[] { new EventProcessorPartitionOwnership(), new EventProcessorPartitionOwnership() };
-            var mockStorageManager = new Mock<StorageManager>();
-            var processorClient = new TestEventProcessorClient(mockStorageManager.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var processorClient = new TestEventProcessorClient(mockCheckpointStore.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            mockStorageManager
+            mockCheckpointStore
                 .Setup(storage => storage.ClaimOwnershipAsync(It.IsAny<IEnumerable<EventProcessorPartitionOwnership>>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(default(IEnumerable<EventProcessorPartitionOwnership>));
 
             await processorClient.InvokeClaimOwnershipAsync(desiredOwnership, cancellationSource.Token);
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            mockStorageManager
+            mockCheckpointStore
                 .Verify(storage => storage.ClaimOwnershipAsync(
                     desiredOwnership,
                     It.IsAny<CancellationToken>()),
@@ -1457,16 +1400,21 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
-            var eventData = new MockEventData(Array.Empty<byte>(), offset: 456, sequenceNumber: 789);
-            var mockStorage = new Mock<StorageManager>();
+            var offset = 456;
+            var sequenceNumber = 789;
+            var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
-            await processorClient.UpdateCheckpointAsync(eventData, new Mock<PartitionContext>(partitionId).Object, cancellationSource.Token);
+            await processorClient.InvokeUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token);
 
             mockStorage
                 .Verify(storage => storage.UpdateCheckpointAsync(
-                    It.Is<EventProcessorCheckpoint>(value => value.PartitionId == partitionId),
-                    eventData,
+                    processorClient.FullyQualifiedNamespace,
+                    processorClient.EventHubName,
+                    processorClient.ConsumerGroup,
+                    partitionId,
+                    offset,
+                    sequenceNumber,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
 
@@ -1484,8 +1432,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-            Assert.That(async () => await processorClient.UpdateCheckpointAsync(new EventData(Array.Empty<byte>()), default, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync("0", 123, default, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -1500,12 +1448,13 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "3";
-            var eventData = new MockEventData(Array.Empty<byte>(), offset: 456, sequenceNumber: 789);
+            var offset = 456;
+            var sequenceNumber = 789;
             var mockLogger = new Mock<EventProcessorClientEventSource>();
-            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             processorClient.Logger = mockLogger.Object;
-            await processorClient.UpdateCheckpointAsync(eventData, new Mock<PartitionContext>(partitionId).Object, cancellationSource.Token);
+            await processorClient.InvokeUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token);
 
             mockLogger
                 .Verify(log => log.UpdateCheckpointStart(
@@ -1539,17 +1488,25 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new NotImplementedException("This didn't work.");
             var partitionId = "3";
-            var eventData = new MockEventData(Array.Empty<byte>(), offset: 456, sequenceNumber: 789);
+            var offset = 456;
+            var sequenceNumber = 789;
             var mockLogger = new Mock<EventProcessorClientEventSource>();
-            var mockStorage = new Mock<StorageManager>();
+            var mockStorage = new Mock<CheckpointStore>();
             var processorClient = new TestEventProcessorClient(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
 
             mockStorage
-                .Setup(storage => storage.UpdateCheckpointAsync(It.IsAny<EventProcessorCheckpoint>(), It.IsAny<EventData>(), It.IsAny<CancellationToken>()))
+                .Setup(storage => storage.UpdateCheckpointAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<long>(),
+                    It.IsAny<long?>(),
+                    It.IsAny<CancellationToken>()))
                 .Throws(expectedException);
 
             processorClient.Logger = mockLogger.Object;
-            Assert.That(async () => await processorClient.UpdateCheckpointAsync(eventData, new Mock<PartitionContext>(partitionId).Object, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+            Assert.That(async () => await processorClient.InvokeUpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
 
             mockLogger
                 .Verify(log => log.UpdateCheckpointError(
@@ -1606,26 +1563,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Retrieves the StorageManager for the processor client using its private accessor.
-        /// </summary>
-        ///
-        private static BlobsCheckpointStore GetStorageManager(EventProcessorClient client) =>
-            (BlobsCheckpointStore)
-            typeof(EventProcessorClient)
-                .GetProperty("StorageManager", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(client);
-
-        /// <summary>
-        ///   Retrieves the RetryPolicy for the storage manager using its private accessor.
-        /// </summary>
-        ///
-        private static EventHubsRetryPolicy GetStorageManagerRetryPolicy(BlobsCheckpointStore storageManager) =>
-            (EventHubsRetryPolicy)
-            typeof(BlobsCheckpointStore)
-                .GetProperty("RetryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(storageManager);
-
-        /// <summary>
         ///   Retrieves the active set of options for the processor client's base
         ///   class using the base class private accessor.
         /// </summary>
@@ -1662,13 +1599,13 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             private readonly EventHubConnection InjectedConnection;
 
-            internal TestEventProcessorClient(StorageManager storageManager,
+            internal TestEventProcessorClient(CheckpointStore checkpointStore,
                                               string consumerGroup,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               TokenCredential credential,
                                               EventHubConnection connection,
-                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+                                              EventProcessorOptions options) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {
                 InjectedConnection = connection;
             }
@@ -1688,10 +1625,10 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task InvokeOnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => base.OnProcessingErrorAsync(exception, partition, operationDescription, cancellationToken);
             public Task InvokeOnInitializingPartitionAsync(EventProcessorPartition partition, CancellationToken cancellationToken) => base.OnInitializingPartitionAsync(partition, cancellationToken);
             public Task InvokeOnPartitionProcessingStoppedAsync(EventProcessorPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken) => base.OnPartitionProcessingStoppedAsync(partition, reason, cancellationToken);
-            public Task<IEnumerable<EventProcessorCheckpoint>> InvokeListCheckpointsAsync(CancellationToken cancellationToken) => base.ListCheckpointsAsync(cancellationToken);
             public Task<EventProcessorCheckpoint> InvokeGetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => base.GetCheckpointAsync(partitionId, cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => base.ListOwnershipAsync(cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => base.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
+            public Task InvokeUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
             protected override EventHubConnection CreateConnection() => InjectedConnection;
         }
 

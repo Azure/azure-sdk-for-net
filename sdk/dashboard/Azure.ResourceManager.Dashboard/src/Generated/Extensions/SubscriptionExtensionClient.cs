@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dashboard
         }
 
         private ClientDiagnostics GrafanaResourceGrafanaClientDiagnostics => _grafanaResourceGrafanaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, DiagnosticOptions);
-        private GrafanaRestOperations GrafanaResourceGrafanaRestClient => _grafanaResourceGrafanaRestClient ??= new GrafanaRestOperations(GrafanaResourceGrafanaClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(GrafanaResource.ResourceType));
+        private GrafanaRestOperations GrafanaResourceGrafanaRestClient => _grafanaResourceGrafanaRestClient ??= new GrafanaRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(GrafanaResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

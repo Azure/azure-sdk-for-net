@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the IncidentLabel class.
         /// </summary>
         /// <param name="labelName">The name of the label</param>
-        /// <param name="labelType">The type of the label. Possible values
-        /// include: 'User', 'System'</param>
+        /// <param name="labelType">Possible values include: 'User',
+        /// 'AutoAssigned'</param>
         public IncidentLabel(string labelName, string labelType = default(string))
         {
             LabelName = labelName;
@@ -52,11 +52,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public string LabelName { get; set; }
 
         /// <summary>
-        /// Gets the type of the label. Possible values include: 'User',
-        /// 'System'
+        /// Gets or sets possible values include: 'User', 'AutoAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "labelType")]
-        public string LabelType { get; private set; }
+        public string LabelType { get; set; }
 
         /// <summary>
         /// Validate the object.

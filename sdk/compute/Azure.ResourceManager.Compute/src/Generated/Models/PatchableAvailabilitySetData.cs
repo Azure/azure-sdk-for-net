@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Sku of the availability set. </summary>
-        public Sku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
         /// <summary> Update Domain count. </summary>
         public int? PlatformUpdateDomainCount { get; set; }
         /// <summary> Fault Domain count. </summary>
