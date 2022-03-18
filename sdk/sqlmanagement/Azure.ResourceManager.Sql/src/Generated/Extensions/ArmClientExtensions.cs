@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecoverableDatabase" /> object. </returns>
         public static RecoverableDatabase GetRecoverableDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RecoverableDatabase.ValidateResourceId(id);
                 return new RecoverableDatabase(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
         public static DataMaskingPolicy GetDataMaskingPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DataMaskingPolicy.ValidateResourceId(id);
                 return new DataMaskingPolicy(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="GeoBackupPolicy" /> object. </returns>
         public static GeoBackupPolicy GetGeoBackupPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GeoBackupPolicy.ValidateResourceId(id);
                 return new GeoBackupPolicy(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
         public static SqlDatabase GetSqlDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlDatabase.ValidateResourceId(id);
                 return new SqlDatabase(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ElasticPool" /> object. </returns>
         public static ElasticPool GetElasticPool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ElasticPool.ValidateResourceId(id);
                 return new ElasticPool(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ReplicationLink" /> object. </returns>
         public static ReplicationLink GetReplicationLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ReplicationLink.ValidateResourceId(id);
                 return new ReplicationLink(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerCommunicationLink" /> object. </returns>
         public static ServerCommunicationLink GetServerCommunicationLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerCommunicationLink.ValidateResourceId(id);
                 return new ServerCommunicationLink(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServiceObjective" /> object. </returns>
         public static ServiceObjective GetServiceObjective(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceObjective.ValidateResourceId(id);
                 return new ServiceObjective(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicy" /> object. </returns>
         public static ExtendedDatabaseBlobAuditingPolicy GetExtendedDatabaseBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExtendedDatabaseBlobAuditingPolicy.ValidateResourceId(id);
                 return new ExtendedDatabaseBlobAuditingPolicy(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicy" /> object. </returns>
         public static ExtendedServerBlobAuditingPolicy GetExtendedServerBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ExtendedServerBlobAuditingPolicy.ValidateResourceId(id);
                 return new ExtendedServerBlobAuditingPolicy(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerBlobAuditingPolicy" /> object. </returns>
         public static ServerBlobAuditingPolicy GetServerBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerBlobAuditingPolicy.ValidateResourceId(id);
                 return new ServerBlobAuditingPolicy(client, id);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicy" /> object. </returns>
         public static DatabaseBlobAuditingPolicy GetDatabaseBlobAuditingPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseBlobAuditingPolicy.ValidateResourceId(id);
                 return new DatabaseBlobAuditingPolicy(client, id);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseAdvisor" /> object. </returns>
         public static ServerDatabaseAdvisor GetServerDatabaseAdvisor(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseAdvisor.ValidateResourceId(id);
                 return new ServerDatabaseAdvisor(client, id);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAdvisor" /> object. </returns>
         public static ServerAdvisor GetServerAdvisor(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerAdvisor.ValidateResourceId(id);
                 return new ServerAdvisor(client, id);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
         public static DatabaseAutomaticTuning GetDatabaseAutomaticTuning(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseAutomaticTuning.ValidateResourceId(id);
                 return new DatabaseAutomaticTuning(client, id);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumn" /> object. </returns>
         public static ServerDatabaseSchemaTableColumn GetServerDatabaseSchemaTableColumn(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseSchemaTableColumn.ValidateResourceId(id);
                 return new ServerDatabaseSchemaTableColumn(client, id);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> object. </returns>
         public static ManagedInstanceDatabaseSchemaTableColumn GetManagedInstanceDatabaseSchemaTableColumn(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseSchemaTableColumn.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseSchemaTableColumn(client, id);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecommendedAction" /> object. </returns>
         public static RecommendedAction GetRecommendedAction(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RecommendedAction.ValidateResourceId(id);
                 return new RecommendedAction(client, id);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchema" /> object. </returns>
         public static ServerDatabaseSchema GetServerDatabaseSchema(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseSchema.ValidateResourceId(id);
                 return new ServerDatabaseSchema(client, id);
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchema" /> object. </returns>
         public static ManagedInstanceDatabaseSchema GetManagedInstanceDatabaseSchema(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseSchema.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseSchema(client, id);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicy" /> object. </returns>
         public static DatabaseSecurityAlertPolicy GetDatabaseSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DatabaseSecurityAlertPolicy.ValidateResourceId(id);
                 return new DatabaseSecurityAlertPolicy(client, id);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTable" /> object. </returns>
         public static ServerDatabaseSchemaTable GetServerDatabaseSchemaTable(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseSchemaTable.ValidateResourceId(id);
                 return new ServerDatabaseSchemaTable(client, id);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTable" /> object. </returns>
         public static ManagedInstanceDatabaseSchemaTable GetManagedInstanceDatabaseSchemaTable(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseSchemaTable.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseSchemaTable(client, id);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
         public static ServerDatabaseVulnerabilityAssessmentRuleBaseline GetServerDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
                 return new ServerDatabaseVulnerabilityAssessmentRuleBaseline(client, id);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
         public static ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline GetManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline(client, id);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessment" /> object. </returns>
         public static ServerDatabaseVulnerabilityAssessment GetServerDatabaseVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseVulnerabilityAssessment.ValidateResourceId(id);
                 return new ServerDatabaseVulnerabilityAssessment(client, id);
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> object. </returns>
         public static ManagedInstanceDatabaseVulnerabilityAssessment GetManagedInstanceDatabaseVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseVulnerabilityAssessment.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseVulnerabilityAssessment(client, id);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> object. </returns>
         public static ServerDatabaseVulnerabilityAssessmentScan GetServerDatabaseVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
                 return new ServerDatabaseVulnerabilityAssessmentScan(client, id);
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> object. </returns>
         public static ManagedInstanceDatabaseVulnerabilityAssessmentScan GetManagedInstanceDatabaseVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseVulnerabilityAssessmentScan.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseVulnerabilityAssessmentScan(client, id);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataWarehouseUserActivities" /> object. </returns>
         public static DataWarehouseUserActivities GetDataWarehouseUserActivities(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DataWarehouseUserActivities.ValidateResourceId(id);
                 return new DataWarehouseUserActivities(client, id);
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DeletedServer" /> object. </returns>
         public static DeletedServer GetDeletedServer(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeletedServer.ValidateResourceId(id);
                 return new DeletedServer(client, id);
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="EncryptionProtector" /> object. </returns>
         public static EncryptionProtector GetEncryptionProtector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 EncryptionProtector.ValidateResourceId(id);
                 return new EncryptionProtector(client, id);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="FailoverGroup" /> object. </returns>
         public static FailoverGroup GetFailoverGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FailoverGroup.ValidateResourceId(id);
                 return new FailoverGroup(client, id);
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="FirewallRule" /> object. </returns>
         public static FirewallRule GetFirewallRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 FirewallRule.ValidateResourceId(id);
                 return new FirewallRule(client, id);
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="InstanceFailoverGroup" /> object. </returns>
         public static InstanceFailoverGroup GetInstanceFailoverGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 InstanceFailoverGroup.ValidateResourceId(id);
                 return new InstanceFailoverGroup(client, id);
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="InstancePool" /> object. </returns>
         public static InstancePool GetInstancePool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 InstancePool.ValidateResourceId(id);
                 return new InstancePool(client, id);
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobAgent" /> object. </returns>
         public static JobAgent GetJobAgent(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 JobAgent.ValidateResourceId(id);
                 return new JobAgent(client, id);
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobCredential" /> object. </returns>
         public static JobCredential GetJobCredential(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 JobCredential.ValidateResourceId(id);
                 return new JobCredential(client, id);
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobExecution" /> object. </returns>
         public static ServerJobAgentJobExecution GetServerJobAgentJobExecution(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerJobAgentJobExecution.ValidateResourceId(id);
                 return new ServerJobAgentJobExecution(client, id);
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStep" /> object. </returns>
         public static ServerJobAgentJobExecutionStep GetServerJobAgentJobExecutionStep(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerJobAgentJobExecutionStep.ValidateResourceId(id);
                 return new ServerJobAgentJobExecutionStep(client, id);
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTarget" /> object. </returns>
         public static ServerJobAgentJobExecutionStepTarget GetServerJobAgentJobExecutionStepTarget(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerJobAgentJobExecutionStepTarget.ValidateResourceId(id);
                 return new ServerJobAgentJobExecutionStepTarget(client, id);
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlJob" /> object. </returns>
         public static SqlJob GetSqlJob(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlJob.ValidateResourceId(id);
                 return new SqlJob(client, id);
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobVersionStep" /> object. </returns>
         public static ServerJobAgentJobVersionStep GetServerJobAgentJobVersionStep(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerJobAgentJobVersionStep.ValidateResourceId(id);
                 return new ServerJobAgentJobVersionStep(client, id);
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerJobAgentJobStep" /> object. </returns>
         public static ServerJobAgentJobStep GetServerJobAgentJobStep(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerJobAgentJobStep.ValidateResourceId(id);
                 return new ServerJobAgentJobStep(client, id);
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobTargetGroup" /> object. </returns>
         public static JobTargetGroup GetJobTargetGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 JobTargetGroup.ValidateResourceId(id);
                 return new JobTargetGroup(client, id);
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="JobVersion" /> object. </returns>
         public static JobVersion GetJobVersion(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 JobVersion.ValidateResourceId(id);
                 return new JobVersion(client, id);
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackup" /> object. </returns>
         public static SubscriptionLongTermRetentionBackup GetSubscriptionLongTermRetentionBackup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SubscriptionLongTermRetentionBackup.ValidateResourceId(id);
                 return new SubscriptionLongTermRetentionBackup(client, id);
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackup" /> object. </returns>
         public static ResourceGroupLongTermRetentionBackup GetResourceGroupLongTermRetentionBackup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ResourceGroupLongTermRetentionBackup.ValidateResourceId(id);
                 return new ResourceGroupLongTermRetentionBackup(client, id);
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> object. </returns>
         public static SubscriptionLongTermRetentionManagedInstanceBackup GetSubscriptionLongTermRetentionManagedInstanceBackup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SubscriptionLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
                 return new SubscriptionLongTermRetentionManagedInstanceBackup(client, id);
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> object. </returns>
         public static ResourceGroupLongTermRetentionManagedInstanceBackup GetResourceGroupLongTermRetentionManagedInstanceBackup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ResourceGroupLongTermRetentionManagedInstanceBackup.ValidateResourceId(id);
                 return new ResourceGroupLongTermRetentionManagedInstanceBackup(client, id);
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LongTermRetentionPolicy" /> object. </returns>
         public static LongTermRetentionPolicy GetLongTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LongTermRetentionPolicy.ValidateResourceId(id);
                 return new LongTermRetentionPolicy(client, id);
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
         public static MaintenanceWindowOptions GetMaintenanceWindowOptions(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MaintenanceWindowOptions.ValidateResourceId(id);
                 return new MaintenanceWindowOptions(client, id);
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
         public static MaintenanceWindows GetMaintenanceWindows(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MaintenanceWindows.ValidateResourceId(id);
                 return new MaintenanceWindows(client, id);
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> object. </returns>
         public static ManagedInstanceDatabaseBackupShortTermRetentionPolicy GetManagedInstanceDatabaseBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseBackupShortTermRetentionPolicy.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseBackupShortTermRetentionPolicy(client, id);
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> object. </returns>
         public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicy GetManagedRestorableDroppedDbBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.ValidateResourceId(id);
                 return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicy(client, id);
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResult" /> object. </returns>
         public static ManagedDatabaseRestoreDetailsResult GetManagedDatabaseRestoreDetailsResult(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedDatabaseRestoreDetailsResult.ValidateResourceId(id);
                 return new ManagedDatabaseRestoreDetailsResult(client, id);
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabase" /> object. </returns>
         public static ManagedDatabase GetManagedDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedDatabase.ValidateResourceId(id);
                 return new ManagedDatabase(client, id);
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicy" /> object. </returns>
         public static ManagedDatabaseSecurityAlertPolicy GetManagedDatabaseSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedDatabaseSecurityAlertPolicy.ValidateResourceId(id);
                 return new ManagedDatabaseSecurityAlertPolicy(client, id);
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
         public static ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
                 return new ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel(client, id);
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
         public static ServerDatabaseSchemaTableColumnSensitivityLabel GetServerDatabaseSchemaTableColumnSensitivityLabel(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDatabaseSchemaTableColumnSensitivityLabel.ValidateResourceId(id);
                 return new ServerDatabaseSchemaTableColumnSensitivityLabel(client, id);
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedTransparentDataEncryption" /> object. </returns>
         public static ManagedTransparentDataEncryption GetManagedTransparentDataEncryption(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedTransparentDataEncryption.ValidateResourceId(id);
                 return new ManagedTransparentDataEncryption(client, id);
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAdministrator" /> object. </returns>
         public static ManagedInstanceAdministrator GetManagedInstanceAdministrator(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceAdministrator.ValidateResourceId(id);
                 return new ManagedInstanceAdministrator(client, id);
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> object. </returns>
         public static ManagedInstanceAzureADOnlyAuthentication GetManagedInstanceAzureADOnlyAuthentication(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceAzureADOnlyAuthentication.ValidateResourceId(id);
                 return new ManagedInstanceAzureADOnlyAuthentication(client, id);
@@ -1028,7 +1028,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtector" /> object. </returns>
         public static ManagedInstanceEncryptionProtector GetManagedInstanceEncryptionProtector(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceEncryptionProtector.ValidateResourceId(id);
                 return new ManagedInstanceEncryptionProtector(client, id);
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceKey" /> object. </returns>
         public static ManagedInstanceKey GetManagedInstanceKey(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceKey.ValidateResourceId(id);
                 return new ManagedInstanceKey(client, id);
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicy" /> object. </returns>
         public static ManagedInstanceLongTermRetentionPolicy GetManagedInstanceLongTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceLongTermRetentionPolicy.ValidateResourceId(id);
                 return new ManagedInstanceLongTermRetentionPolicy(client, id);
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceOperation" /> object. </returns>
         public static ManagedInstanceOperation GetManagedInstanceOperation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceOperation.ValidateResourceId(id);
                 return new ManagedInstanceOperation(client, id);
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnection" /> object. </returns>
         public static ManagedInstancePrivateEndpointConnection GetManagedInstancePrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstancePrivateEndpointConnection.ValidateResourceId(id);
                 return new ManagedInstancePrivateEndpointConnection(client, id);
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstancePrivateLink" /> object. </returns>
         public static ManagedInstancePrivateLink GetManagedInstancePrivateLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstancePrivateLink.ValidateResourceId(id);
                 return new ManagedInstancePrivateLink(client, id);
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstance" /> object. </returns>
         public static ManagedInstance GetManagedInstance(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstance.ValidateResourceId(id);
                 return new ManagedInstance(client, id);
@@ -1140,7 +1140,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessment" /> object. </returns>
         public static ManagedInstanceVulnerabilityAssessment GetManagedInstanceVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedInstanceVulnerabilityAssessment.ValidateResourceId(id);
                 return new ManagedInstanceVulnerabilityAssessment(client, id);
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicy" /> object. </returns>
         public static ManagedServerSecurityAlertPolicy GetManagedServerSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ManagedServerSecurityAlertPolicy.ValidateResourceId(id);
                 return new ManagedServerSecurityAlertPolicy(client, id);
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
         public static PrivateLinkResource GetPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateLinkResource.ValidateResourceId(id);
                 return new PrivateLinkResource(client, id);
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecoverableManagedDatabase" /> object. </returns>
         public static RecoverableManagedDatabase GetRecoverableManagedDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RecoverableManagedDatabase.ValidateResourceId(id);
                 return new RecoverableManagedDatabase(client, id);
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
         public static RestorePoint GetRestorePoint(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RestorePoint.ValidateResourceId(id);
                 return new RestorePoint(client, id);
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
         public static ServerAutomaticTuning GetServerAutomaticTuning(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerAutomaticTuning.ValidateResourceId(id);
                 return new ServerAutomaticTuning(client, id);
@@ -1252,7 +1252,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAzureADAdministrator" /> object. </returns>
         public static ServerAzureADAdministrator GetServerAzureADAdministrator(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerAzureADAdministrator.ValidateResourceId(id);
                 return new ServerAzureADAdministrator(client, id);
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAzureADOnlyAuthentication" /> object. </returns>
         public static ServerAzureADOnlyAuthentication GetServerAzureADOnlyAuthentication(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerAzureADOnlyAuthentication.ValidateResourceId(id);
                 return new ServerAzureADOnlyAuthentication(client, id);
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDevOpsAuditingSettings" /> object. </returns>
         public static ServerDevOpsAuditingSettings GetServerDevOpsAuditingSettings(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDevOpsAuditingSettings.ValidateResourceId(id);
                 return new ServerDevOpsAuditingSettings(client, id);
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerDnsAlias" /> object. </returns>
         public static ServerDnsAlias GetServerDnsAlias(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerDnsAlias.ValidateResourceId(id);
                 return new ServerDnsAlias(client, id);
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerKey" /> object. </returns>
         public static ServerKey GetServerKey(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerKey.ValidateResourceId(id);
                 return new ServerKey(client, id);
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerSecurityAlertPolicy" /> object. </returns>
         public static ServerSecurityAlertPolicy GetServerSecurityAlertPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerSecurityAlertPolicy.ValidateResourceId(id);
                 return new ServerSecurityAlertPolicy(client, id);
@@ -1348,7 +1348,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerTrustGroup" /> object. </returns>
         public static ServerTrustGroup GetServerTrustGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerTrustGroup.ValidateResourceId(id);
                 return new ServerTrustGroup(client, id);
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessment" /> object. </returns>
         public static ServerVulnerabilityAssessment GetServerVulnerabilityAssessment(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerVulnerabilityAssessment.ValidateResourceId(id);
                 return new ServerVulnerabilityAssessment(client, id);
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
         public static SqlAgentConfiguration GetSqlAgentConfiguration(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlAgentConfiguration.ValidateResourceId(id);
                 return new SqlAgentConfiguration(client, id);
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionUsage" /> object. </returns>
         public static SubscriptionUsage GetSubscriptionUsage(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SubscriptionUsage.ValidateResourceId(id);
                 return new SubscriptionUsage(client, id);
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncAgent" /> object. </returns>
         public static SyncAgent GetSyncAgent(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SyncAgent.ValidateResourceId(id);
                 return new SyncAgent(client, id);
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncGroup" /> object. </returns>
         public static SyncGroup GetSyncGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SyncGroup.ValidateResourceId(id);
                 return new SyncGroup(client, id);
@@ -1444,7 +1444,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncMember" /> object. </returns>
         public static SyncMember GetSyncMember(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SyncMember.ValidateResourceId(id);
                 return new SyncMember(client, id);
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlTimeZone" /> object. </returns>
         public static SqlTimeZone GetSqlTimeZone(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlTimeZone.ValidateResourceId(id);
                 return new SqlTimeZone(client, id);
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="VirtualCluster" /> object. </returns>
         public static VirtualCluster GetVirtualCluster(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualCluster.ValidateResourceId(id);
                 return new VirtualCluster(client, id);
@@ -1492,7 +1492,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="VirtualNetworkRule" /> object. </returns>
         public static VirtualNetworkRule GetVirtualNetworkRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetworkRule.ValidateResourceId(id);
                 return new VirtualNetworkRule(client, id);
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="WorkloadClassifier" /> object. </returns>
         public static WorkloadClassifier GetWorkloadClassifier(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WorkloadClassifier.ValidateResourceId(id);
                 return new WorkloadClassifier(client, id);
@@ -1524,7 +1524,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="WorkloadGroup" /> object. </returns>
         public static WorkloadGroup GetWorkloadGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WorkloadGroup.ValidateResourceId(id);
                 return new WorkloadGroup(client, id);
@@ -1540,7 +1540,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryption" /> object. </returns>
         public static LogicalDatabaseTransparentDataEncryption GetLogicalDatabaseTransparentDataEncryption(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LogicalDatabaseTransparentDataEncryption.ValidateResourceId(id);
                 return new LogicalDatabaseTransparentDataEncryption(client, id);
@@ -1556,7 +1556,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="BackupShortTermRetentionPolicy" /> object. </returns>
         public static BackupShortTermRetentionPolicy GetBackupShortTermRetentionPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 BackupShortTermRetentionPolicy.ValidateResourceId(id);
                 return new BackupShortTermRetentionPolicy(client, id);
@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LedgerDigestUploads" /> object. </returns>
         public static LedgerDigestUploads GetLedgerDigestUploads(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 LedgerDigestUploads.ValidateResourceId(id);
                 return new LedgerDigestUploads(client, id);
@@ -1588,7 +1588,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="OutboundFirewallRule" /> object. </returns>
         public static OutboundFirewallRule GetOutboundFirewallRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 OutboundFirewallRule.ValidateResourceId(id);
                 return new OutboundFirewallRule(client, id);
@@ -1604,7 +1604,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorableDroppedDatabase" /> object. </returns>
         public static RestorableDroppedDatabase GetRestorableDroppedDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RestorableDroppedDatabase.ValidateResourceId(id);
                 return new RestorableDroppedDatabase(client, id);
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorableDroppedManagedDatabase" /> object. </returns>
         public static RestorableDroppedManagedDatabase GetRestorableDroppedManagedDatabase(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 RestorableDroppedManagedDatabase.ValidateResourceId(id);
                 return new RestorableDroppedManagedDatabase(client, id);
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServer" /> object. </returns>
         public static SqlServer GetSqlServer(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SqlServer.ValidateResourceId(id);
                 return new SqlServer(client, id);
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>
         public static ServerConnectionPolicy GetServerConnectionPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServerConnectionPolicy.ValidateResourceId(id);
                 return new ServerConnectionPolicy(client, id);

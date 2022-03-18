@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Locations = new ChangeTrackingList<string>();
             LocationMappings = new ChangeTrackingList<ProviderExtendedLocation>();
-            Aliases = new ChangeTrackingList<Alias>();
+            Aliases = new ChangeTrackingList<ResourceTypeAlias>();
             ApiVersions = new ChangeTrackingList<string>();
             ApiProfiles = new ChangeTrackingList<ApiProfile>();
             Properties = new ChangeTrackingDictionary<string, string>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
         /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
         /// <param name="properties"> The properties. </param>
-        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<Alias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
+        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The location mappings that are supported by this resource type. </summary>
         public IReadOnlyList<ProviderExtendedLocation> LocationMappings { get; }
         /// <summary> The aliases that are supported by this resource type. </summary>
-        public IReadOnlyList<Alias> Aliases { get; }
+        public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
         /// <summary> The API version. </summary>
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> The default API version. </summary>

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of the alias. </summary>
-    public enum AliasType
+    public enum ResourceTypeAliasType
     {
         /// <summary> Alias type is unknown (same as not providing alias type). </summary>
         NotSpecified,

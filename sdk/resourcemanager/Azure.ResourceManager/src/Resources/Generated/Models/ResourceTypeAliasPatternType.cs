@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of alias pattern. </summary>
-    public enum AliasPatternType
+    public enum ResourceTypeAliasPatternType
     {
         /// <summary> NotSpecified is not allowed. </summary>
         NotSpecified,

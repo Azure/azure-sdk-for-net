@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="ResourcePool" /> object. </returns>
         public static ResourcePool GetResourcePool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ResourcePool.ValidateResourceId(id);
                 return new ResourcePool(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareCluster" /> object. </returns>
         public static VMwareCluster GetVMwareCluster(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VMwareCluster.ValidateResourceId(id);
                 return new VMwareCluster(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareHost" /> object. </returns>
         public static VMwareHost GetVMwareHost(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VMwareHost.ValidateResourceId(id);
                 return new VMwareHost(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareDatastore" /> object. </returns>
         public static VMwareDatastore GetVMwareDatastore(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VMwareDatastore.ValidateResourceId(id);
                 return new VMwareDatastore(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VCenter" /> object. </returns>
         public static VCenter GetVCenter(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VCenter.ValidateResourceId(id);
                 return new VCenter(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
         public static VirtualMachine GetVirtualMachine(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachine.ValidateResourceId(id);
                 return new VirtualMachine(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualMachineTemplate" /> object. </returns>
         public static VirtualMachineTemplate GetVirtualMachineTemplate(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualMachineTemplate.ValidateResourceId(id);
                 return new VirtualMachineTemplate(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
         public static VirtualNetwork GetVirtualNetwork(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualNetwork.ValidateResourceId(id);
                 return new VirtualNetwork(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="InventoryItem" /> object. </returns>
         public static InventoryItem GetInventoryItem(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 InventoryItem.ValidateResourceId(id);
                 return new InventoryItem(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="HybridIdentityMetadata" /> object. </returns>
         public static HybridIdentityMetadata GetHybridIdentityMetadata(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HybridIdentityMetadata.ValidateResourceId(id);
                 return new HybridIdentityMetadata(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="MachineExtension" /> object. </returns>
         public static MachineExtension GetMachineExtension(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MachineExtension.ValidateResourceId(id);
                 return new MachineExtension(client, id);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="GuestAgent" /> object. </returns>
         public static GuestAgent GetGuestAgent(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GuestAgent.ValidateResourceId(id);
                 return new GuestAgent(client, id);

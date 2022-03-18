@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPool" /> object. </returns>
         public static DiskPool GetDiskPool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DiskPool.ValidateResourceId(id);
                 return new DiskPool(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="IscsiTarget" /> object. </returns>
         public static IscsiTarget GetIscsiTarget(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 IscsiTarget.ValidateResourceId(id);
                 return new IscsiTarget(client, id);

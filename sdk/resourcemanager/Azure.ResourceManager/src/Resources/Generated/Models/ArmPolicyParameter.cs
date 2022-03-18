@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The definition of a parameter that can be provided to the policy. </summary>
-    public partial class ParameterDefinitionsValue
+    public partial class ArmPolicyParameter
     {
-        /// <summary> Initializes a new instance of ParameterDefinitionsValue. </summary>
-        public ParameterDefinitionsValue()
+        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
+        public ArmPolicyParameter()
         {
             AllowedValues = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ParameterDefinitionsValue. </summary>
+        /// <summary> Initializes a new instance of ArmPolicyParameter. </summary>
         /// <param name="parameterType"> The data type of the parameter. </param>
         /// <param name="allowedValues"> The allowed values for the parameter. </param>
         /// <param name="defaultValue"> The default value for the parameter if no value is provided. </param>
         /// <param name="metadata"> General metadata for the parameter. </param>
-        internal ParameterDefinitionsValue(ParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
+        internal ArmPolicyParameter(ParameterType? parameterType, IList<BinaryData> allowedValues, BinaryData defaultValue, ParameterDefinitionsValueMetadata metadata)
         {
             ParameterType = parameterType;
             AllowedValues = allowedValues;

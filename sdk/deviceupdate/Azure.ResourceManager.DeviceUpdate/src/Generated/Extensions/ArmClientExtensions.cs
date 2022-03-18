@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdateAccount" /> object. </returns>
         public static DeviceUpdateAccount GetDeviceUpdateAccount(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeviceUpdateAccount.ValidateResourceId(id);
                 return new DeviceUpdateAccount(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdateInstance" /> object. </returns>
         public static DeviceUpdateInstance GetDeviceUpdateInstance(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DeviceUpdateInstance.ValidateResourceId(id);
                 return new DeviceUpdateInstance(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
         public static PrivateLink GetPrivateLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateLink.ValidateResourceId(id);
                 return new PrivateLink(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="PrivateEndpointConnectionProxy" /> object. </returns>
         public static PrivateEndpointConnectionProxy GetPrivateEndpointConnectionProxy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnectionProxy.ValidateResourceId(id);
                 return new PrivateEndpointConnectionProxy(client, id);
