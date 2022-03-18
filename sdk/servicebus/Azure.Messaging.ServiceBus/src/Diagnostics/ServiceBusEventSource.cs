@@ -1074,8 +1074,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 eventPayload[2].Size = (receiveLinkState.Length + 1) * sizeof(char);
                 eventPayload[2].DataPointer = (IntPtr)receiveLinkStatePtr;
 
-                eventPayload[3].Size = Unsafe.SizeOf<bool>();
-                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref isSessionReceiver);
+                var isSessionReceiverInt = isSessionReceiver ? bool.True : bool.False;
+                eventPayload[3].Size = Unsafe.SizeOf<int>();
+                eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref isSessionReceiverInt);
 
                 eventPayload[4].Size = (exception.Length + 1) * sizeof(char);
                 eventPayload[4].DataPointer = (IntPtr)exceptionPtr;
@@ -1612,7 +1613,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 eventPayload[1].DataPointer = (IntPtr)amqpTransactionIdPtr;
 
                 // bool maps to "win:Boolean", a 4-byte boolean
-                var rollbackInt = Convert.ToInt32(rollback);
+                var rollbackInt = rollback ? bool.True : bool.False;
                 eventPayload[2].Size = Unsafe.SizeOf<int>();
                 eventPayload[2].DataPointer = (IntPtr)Unsafe.AsPointer(ref rollbackInt);
 
