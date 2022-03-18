@@ -2377,8 +2377,8 @@ namespace Azure.Messaging.EventHubs.Tests
         private class MockTransport : TransportBase
         {
             public MockTransport() : base("Mock") { }
-            public override string LocalEndPoint { get; }
-            public override string RemoteEndPoint { get; }
+            public override EndPoint LocalEndPoint { get; }
+            public override EndPoint RemoteEndPoint { get; }
             public override bool ReadAsync(TransportAsyncCallbackArgs args) => throw new NotImplementedException();
             public override void SetMonitor(ITransportMonitor usageMeter) => throw new NotImplementedException();
             public override bool WriteAsync(TransportAsyncCallbackArgs args) => throw new NotImplementedException();
