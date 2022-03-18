@@ -50,14 +50,14 @@ namespace Azure.ResourceManager
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureChinaCloud;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureCloud;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureGermanCloud;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureUSGovernment;
-        public ArmEnvironment(System.Uri baseUri, string audience) { throw null; }
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureChina;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureGerman;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureGovernment;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzurePublicCloud;
+        public ArmEnvironment(System.Uri endpoint, string audience) { throw null; }
         public string Audience { get { throw null; } }
-        public System.Uri BaseUri { get { throw null; } }
         public string DefaultScope { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ArmEnvironment other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
