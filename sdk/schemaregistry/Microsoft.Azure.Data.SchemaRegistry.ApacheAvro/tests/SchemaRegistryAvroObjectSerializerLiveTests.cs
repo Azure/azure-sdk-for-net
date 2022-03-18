@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 async () => await serializer.DeserializeAsync<Employee_V2>(content),
                 Throws.InstanceOf<AvroSerializationException>()
                     .And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>()
-                    .And.Property(nameof(AvroSerializationException.SchemaId)).EqualTo(schemaId));
+                    .And.Property(nameof(AvroSerializationException.SerializedSchemaId)).EqualTo(schemaId));
 
             #region Snippet:SchemaRegistryAvroException
             try
@@ -95,9 +95,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
                 // the exception message will contain the schema ID that was used to write the data
                 Console.WriteLine(exception);
                 // we might want to look up the specific schema from Schema Registry so that we can log the schema definition
-                if (exception.SchemaId != null)
+                if (exception.SerializedSchemaId != null)
                 {
-                    SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SchemaId);
+                    SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SerializedSchemaId);
                     Console.WriteLine(schema.Definition);
                 }
             }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         }
 
         [RecordedTest]
-        public void ThrowsAvroSerializationExceptionForInvalidAvro()
+        public void ThrowsAvroSerializationExceptionWhenSerializingWithInvalidAvroSchema()
         {
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
@@ -114,7 +114,25 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
             Assert.That(
                 async () => await serializer.SerializeAsync<BinaryContent, InvalidAvroModel>(invalid),
-                Throws.InstanceOf<AvroSerializationException>().And.Property(nameof(Exception.InnerException)).InstanceOf<AvroException>());
+                Throws.InstanceOf<AvroSerializationException>().And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>());
+        }
+
+        [RecordedTest]
+        public async Task ThrowsAvroSerializationExceptionWhenDeserializingWithInvalidAvroSchema()
+        {
+            var client = CreateClient();
+            var groupName = TestEnvironment.SchemaRegistryGroup;
+
+            var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
+            var employee = new Employee { Age = 42, Name = "Caketown" };
+            var content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+            var schemaId = content.ContentType.ToString().Split('+')[1];
+
+            Assert.That(
+                async () => await serializer.DeserializeAsync<InvalidAvroModel>(content),
+                Throws.InstanceOf<AvroSerializationException>()
+                    .And.Property(nameof(Exception.InnerException)).InstanceOf<SchemaParseException>()
+                    .And.Property(nameof(AvroSerializationException.SerializedSchemaId)).EqualTo(schemaId));
         }
 
         [RecordedTest]
@@ -283,6 +301,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
         private class InvalidAvroModel : ISpecificRecord
         {
+            // the schema is invalid because it doesn't contain any fields
             public virtual Schema Schema => Schema.Parse("{\"type\":\"record\",\"name\":\"Invalid\"}");
 
             public virtual object Get(int fieldPos) => throw new NotImplementedException();

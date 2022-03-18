@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
     public class AvroSerializationException : Exception
     {
         /// <summary>
-        /// The Schema Registry schema Id related to the <see cref="AvroSerializationException"/>.
+        /// The Schema Registry schema Id related to the serialized data that caused the <see cref="AvroSerializationException"/>.
         /// </summary>
-        public string SchemaId { get; set; }
+        public string SerializedSchemaId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="AvroSerializationException"/>.
@@ -46,17 +46,17 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         /// Initializes a new instance of <see cref="AvroSerializationException"/>.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="schemaId">The Schema Registry schema Id related to the <see cref="AvroSerializationException"/>.</param>
+        /// <param name="serializedSchemaId">The Schema Registry schema Id related to the <see cref="AvroSerializationException"/>.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
-        public AvroSerializationException(string message, string schemaId, Exception innerException) : base(message, innerException)
+        public AvroSerializationException(string message, string serializedSchemaId, Exception innerException) : base(message, innerException)
         {
-            SchemaId = schemaId;
+            SerializedSchemaId = serializedSchemaId;
         }
 
         /// <inheritdoc />
         protected AvroSerializationException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            SchemaId = info.GetString(nameof(SchemaId));
+            SerializedSchemaId = info.GetString(nameof(SerializedSchemaId));
         }
 
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            info.AddValue(nameof(SchemaId), SchemaId);
+            info.AddValue(nameof(SerializedSchemaId), SerializedSchemaId);
             base.GetObjectData(info, context);
         }
     }

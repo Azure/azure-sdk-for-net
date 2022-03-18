@@ -340,9 +340,9 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
 
             SupportedType supportedType = GetSupportedTypeOrThrow(dataType);
 
+            Schema writerSchema;
             try
             {
-                Schema writerSchema;
                 if (async)
                 {
                     writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
@@ -351,26 +351,53 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
                 {
                     writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
                 }
+            }
+            catch (SchemaParseException ex)
+            {
+                throw new AvroSerializationException(
+                    $"An error occurred while attempting to parse the schema (schema ID: {schemaId}) that was used to serialize the Avro. " +
+                    $"Make sure that the schema represents valid Avro.",
+                    schemaId,
+                    ex);
+            }
 
-                var binaryDecoder = new BinaryDecoder(data.ToStream());
-
+            Schema readerSchema;
+            object returnInstance = null;
+            try
+            {
                 if (supportedType == SupportedType.SpecificRecord)
                 {
-                    object returnInstance = Activator.CreateInstance(dataType);
-                    DatumReader<object> reader = GetReader(writerSchema, ((ISpecificRecord)returnInstance).Schema,
-                        SupportedType.SpecificRecord);
-                    return reader.Read(reuse: returnInstance, binaryDecoder);
+                    returnInstance = Activator.CreateInstance(dataType);
+                    readerSchema = ((ISpecificRecord)returnInstance).Schema;
                 }
                 else
                 {
-                    DatumReader<object> reader = GetReader(writerSchema, writerSchema, supportedType);
-                    return reader.Read(reuse: null, binaryDecoder);
+                    readerSchema = writerSchema;
                 }
+            }
+            catch (SchemaParseException ex)
+            {
+                throw new AvroSerializationException(
+                    "An error occurred while attempting to parse the schema that you are attempting to deserialize the data with. " +
+                    "Make sure that the schema represents valid Avro.",
+                    schemaId,
+                    ex);
+            }
+
+            try
+            {
+                var binaryDecoder = new BinaryDecoder(data.ToStream());
+                DatumReader<object> reader = GetReader(writerSchema, readerSchema, supportedType);
+                return reader.Read(reuse: returnInstance, binaryDecoder);
             }
             catch (AvroException ex)
             {
-                throw new AvroSerializationException($"An error occurred while attempting to deserialize " +
-                                                     $"Avro that was written with schemaId: {schemaId}.", schemaId, ex);
+                throw new AvroSerializationException(
+                    "An error occurred while attempting to deserialize " +
+                    $"Avro that was serialized with schemaId: {schemaId}. The schema used to deserialize the data may not be compatible with the schema that was used" +
+                    $"to serialize the data. Please ensure that the schemas are compatible.",
+                    schemaId,
+                    ex);
             }
         }
 
