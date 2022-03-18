@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualWorkspace" /> object. </returns>
         public static VirtualWorkspace GetVirtualWorkspace(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualWorkspace.ValidateResourceId(id);
                 return new VirtualWorkspace(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="ScalingPlan" /> object. </returns>
         public static ScalingPlan GetScalingPlan(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ScalingPlan.ValidateResourceId(id);
                 return new ScalingPlan(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualApplicationGroup" /> object. </returns>
         public static VirtualApplicationGroup GetVirtualApplicationGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualApplicationGroup.ValidateResourceId(id);
                 return new VirtualApplicationGroup(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualApplication" /> object. </returns>
         public static VirtualApplication GetVirtualApplication(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualApplication.ValidateResourceId(id);
                 return new VirtualApplication(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualDesktop" /> object. </returns>
         public static VirtualDesktop GetVirtualDesktop(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 VirtualDesktop.ValidateResourceId(id);
                 return new VirtualDesktop(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="HostPool" /> object. </returns>
         public static HostPool GetHostPool(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 HostPool.ValidateResourceId(id);
                 return new HostPool(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="UserSession" /> object. </returns>
         public static UserSession GetUserSession(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 UserSession.ValidateResourceId(id);
                 return new UserSession(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="SessionHost" /> object. </returns>
         public static SessionHost GetSessionHost(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SessionHost.ValidateResourceId(id);
                 return new SessionHost(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="MsixPackage" /> object. </returns>
         public static MsixPackage GetMsixPackage(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MsixPackage.ValidateResourceId(id);
                 return new MsixPackage(client, id);

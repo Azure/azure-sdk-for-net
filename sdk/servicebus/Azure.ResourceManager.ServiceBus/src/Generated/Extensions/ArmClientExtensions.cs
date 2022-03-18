@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusNamespace" /> object. </returns>
         public static ServiceBusNamespace GetServiceBusNamespace(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceBusNamespace.ValidateResourceId(id);
                 return new ServiceBusNamespace(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
         public static NetworkRuleSet GetNetworkRuleSet(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NetworkRuleSet.ValidateResourceId(id);
                 return new NetworkRuleSet(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
         public static DisasterRecovery GetDisasterRecovery(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 DisasterRecovery.ValidateResourceId(id);
                 return new DisasterRecovery(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRule" /> object. </returns>
         public static NamespaceDisasterRecoveryAuthorizationRule GetNamespaceDisasterRecoveryAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NamespaceDisasterRecoveryAuthorizationRule.ValidateResourceId(id);
                 return new NamespaceDisasterRecoveryAuthorizationRule(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
         public static NamespaceAuthorizationRule GetNamespaceAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NamespaceAuthorizationRule.ValidateResourceId(id);
                 return new NamespaceAuthorizationRule(client, id);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="NamespaceQueueAuthorizationRule" /> object. </returns>
         public static NamespaceQueueAuthorizationRule GetNamespaceQueueAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NamespaceQueueAuthorizationRule.ValidateResourceId(id);
                 return new NamespaceQueueAuthorizationRule(client, id);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="NamespaceTopicAuthorizationRule" /> object. </returns>
         public static NamespaceTopicAuthorizationRule GetNamespaceTopicAuthorizationRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 NamespaceTopicAuthorizationRule.ValidateResourceId(id);
                 return new NamespaceTopicAuthorizationRule(client, id);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="MigrationConfigProperties" /> object. </returns>
         public static MigrationConfigProperties GetMigrationConfigProperties(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 MigrationConfigProperties.ValidateResourceId(id);
                 return new MigrationConfigProperties(client, id);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusQueue" /> object. </returns>
         public static ServiceBusQueue GetServiceBusQueue(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceBusQueue.ValidateResourceId(id);
                 return new ServiceBusQueue(client, id);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusTopic" /> object. </returns>
         public static ServiceBusTopic GetServiceBusTopic(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceBusTopic.ValidateResourceId(id);
                 return new ServiceBusTopic(client, id);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusRule" /> object. </returns>
         public static ServiceBusRule GetServiceBusRule(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceBusRule.ValidateResourceId(id);
                 return new ServiceBusRule(client, id);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusSubscription" /> object. </returns>
         public static ServiceBusSubscription GetServiceBusSubscription(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 ServiceBusSubscription.ValidateResourceId(id);
                 return new ServiceBusSubscription(client, id);

@@ -72,9 +72,9 @@ namespace Azure.ResourceManager
 
             options ??= new ArmClientOptions();
 
-            Argument.AssertNotNull(options.Environment.BaseUri, nameof(options.Environment.BaseUri));
+            Argument.AssertNotNull(options.Environment.Endpoint, nameof(options.Environment.Endpoint));
 
-            BaseUri = options.Environment.BaseUri;
+            BaseUri = options.Environment.Endpoint;
 
             if (options.Diagnostics.IsTelemetryEnabled)
             {
@@ -267,12 +267,12 @@ namespace Azure.ResourceManager
         /// Gets a client using this instance of ArmClient to copy the client settings from.
         /// </summary>
         /// <typeparam name="T"> The type of <see cref="ArmResource"/> that will be constructed. </typeparam>
-        /// <param name="ctor"> Delegate method that will construct the client. </param>
+        /// <param name="resourceFactory"> Delegate method that will construct the client. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetClient<T>(Func<T> ctor)
+        public virtual T GetResourceClient<T>(Func<T> resourceFactory)
             where T : ArmResource
         {
-            return ctor();
+            return resourceFactory();
         }
     }
 }

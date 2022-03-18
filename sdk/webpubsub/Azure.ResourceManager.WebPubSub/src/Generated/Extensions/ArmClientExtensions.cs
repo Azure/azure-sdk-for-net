@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSub" /> object. </returns>
         public static WebPubSub GetWebPubSub(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WebPubSub.ValidateResourceId(id);
                 return new WebPubSub(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubHub" /> object. </returns>
         public static WebPubSubHub GetWebPubSubHub(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 WebPubSubHub.ValidateResourceId(id);
                 return new WebPubSubHub(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
         public static PrivateEndpointConnection GetPrivateEndpointConnection(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 PrivateEndpointConnection.ValidateResourceId(id);
                 return new PrivateEndpointConnection(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="SharedPrivateLink" /> object. </returns>
         public static SharedPrivateLink GetSharedPrivateLink(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 SharedPrivateLink.ValidateResourceId(id);
                 return new SharedPrivateLink(client, id);
