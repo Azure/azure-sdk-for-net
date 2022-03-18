@@ -758,29 +758,21 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             string blobName = GetNewBlobName();
             AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+
             string tagKey = "myTagKey";
             string tagValue = "myTagValue";
-            Dictionary<string, string> oldTags = new Dictionary<string, string>
+            Dictionary<string, string> tags = new Dictionary<string, string>
             {
                 { tagKey, tagValue }
             };
             AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
-                Tags = oldTags
+                Tags = tags
             };
             await appendBlob.CreateAsync(options);
 
-            // Modify blob metadata to trigger new version
-            IDictionary<string, string> metadata = BuildMetadata();
-            Response<BlobInfo> metadataResponse = await appendBlob.SetMetadataAsync(metadata);
-
-            // Modify blob tags of new version
-            Dictionary<string, string> newTags = new Dictionary<string, string>
-            {
-                { tagKey, tagValue },
-                { "newKey", "newValue"}
-            };
-            await appendBlob.SetTagsAsync(newTags);
+            // Create blob again to trigger new version
+            await appendBlob.CreateAsync(options);
 
             // It takes a few seconds for Filter Blobs to pick up new changes
             await Delay(2000);
@@ -799,6 +791,10 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(2, blobs.Count);
+            Assert.IsNull(blobs[0].IsLatestVersion);
+            Assert.IsNotNull(blobs[0].VersionId);
+            Assert.IsTrue(blobs[1].IsLatestVersion);
+            Assert.IsNotNull(blobs[1].VersionId);
         }
 
         [RecordedTest]

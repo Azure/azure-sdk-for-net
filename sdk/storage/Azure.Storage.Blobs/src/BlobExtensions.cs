@@ -68,6 +68,8 @@ namespace Azure.Storage.Blobs
             {
                 BlobName = filterBlobItem.Name,
                 BlobContainerName = filterBlobItem.ContainerName,
+                VersionId = filterBlobItem.VersionId,
+                IsLatestVersion = filterBlobItem.IsCurrentVersion,
                 Tags = filterBlobItem.Tags.ToTagDictionary()
             };
         }
