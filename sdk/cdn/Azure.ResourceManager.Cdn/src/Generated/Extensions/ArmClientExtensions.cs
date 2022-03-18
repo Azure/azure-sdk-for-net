@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="Profile" /> object. </returns>
         public static Profile GetProfile(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Profile.ValidateResourceId(id);
                 return new Profile(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnEndpoint" /> object. </returns>
         public static CdnEndpoint GetCdnEndpoint(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnEndpoint.ValidateResourceId(id);
                 return new CdnEndpoint(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOrigin" /> object. </returns>
         public static CdnOrigin GetCdnOrigin(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnOrigin.ValidateResourceId(id);
                 return new CdnOrigin(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOriginGroup" /> object. </returns>
         public static CdnOriginGroup GetCdnOriginGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnOriginGroup.ValidateResourceId(id);
                 return new CdnOriginGroup(client, id);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnCustomDomain" /> object. </returns>
         public static CdnCustomDomain GetCdnCustomDomain(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnCustomDomain.ValidateResourceId(id);
                 return new CdnCustomDomain(client, id);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicy" /> object. </returns>
         public static CdnWebApplicationFirewallPolicy GetCdnWebApplicationFirewallPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnWebApplicationFirewallPolicy.ValidateResourceId(id);
                 return new CdnWebApplicationFirewallPolicy(client, id);

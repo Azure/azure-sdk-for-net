@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dashboard
         /// <returns> Returns a <see cref="GrafanaResource" /> object. </returns>
         public static GrafanaResource GetGrafanaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 GrafanaResource.ValidateResourceId(id);
                 return new GrafanaResource(client, id);

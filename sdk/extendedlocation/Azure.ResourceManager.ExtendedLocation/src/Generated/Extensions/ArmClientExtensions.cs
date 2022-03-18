@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <returns> Returns a <see cref="CustomLocation" /> object. </returns>
         public static CustomLocation GetCustomLocation(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CustomLocation.ValidateResourceId(id);
                 return new CustomLocation(client, id);
