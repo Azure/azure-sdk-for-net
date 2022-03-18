@@ -11,26 +11,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The alias type. </summary>
-    public partial class Alias
+    public partial class ResourceTypeAlias
     {
-        /// <summary> Initializes a new instance of Alias. </summary>
-        internal Alias()
+        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        internal ResourceTypeAlias()
         {
-            Paths = new ChangeTrackingList<AliasPath>();
+            Paths = new ChangeTrackingList<ResourceTypeAliasPath>();
         }
 
-        /// <summary> Initializes a new instance of Alias. </summary>
+        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
-        /// <param name="aliasType"> The type of the alias. </param>
+        /// <param name="resourceTypeAliasType"> The type of the alias. </param>
         /// <param name="defaultPath"> The default path for an alias. </param>
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
         /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn&apos;t have metadata. </param>
-        internal Alias(string name, IReadOnlyList<AliasPath> paths, AliasType? aliasType, string defaultPath, AliasPattern defaultPattern, AliasPathMetadata defaultMetadata)
+        internal ResourceTypeAlias(string name, IReadOnlyList<ResourceTypeAliasPath> paths, ResourceTypeAliasType? resourceTypeAliasType, string defaultPath, ResourceTypeAliasPattern defaultPattern, ResourceTypeAliasPathMetadata defaultMetadata)
         {
             Name = name;
             Paths = paths;
-            AliasType = aliasType;
+            ResourceTypeAliasType = resourceTypeAliasType;
             DefaultPath = defaultPath;
             DefaultPattern = defaultPattern;
             DefaultMetadata = defaultMetadata;
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The alias name. </summary>
         public string Name { get; }
         /// <summary> The paths for an alias. </summary>
-        public IReadOnlyList<AliasPath> Paths { get; }
+        public IReadOnlyList<ResourceTypeAliasPath> Paths { get; }
         /// <summary> The type of the alias. </summary>
-        public AliasType? AliasType { get; }
+        public ResourceTypeAliasType? ResourceTypeAliasType { get; }
         /// <summary> The default path for an alias. </summary>
         public string DefaultPath { get; }
         /// <summary> The default pattern for an alias. </summary>
-        public AliasPattern DefaultPattern { get; }
+        public ResourceTypeAliasPattern DefaultPattern { get; }
         /// <summary> The default alias path metadata. Applies to the default path and to any alias path that doesn&apos;t have metadata. </summary>
-        public AliasPathMetadata DefaultMetadata { get; }
+        public ResourceTypeAliasPathMetadata DefaultMetadata { get; }
     }
 }

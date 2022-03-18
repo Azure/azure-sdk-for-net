@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
             Optional<IList<string>> notScopes = default;
-            Optional<IDictionary<string, ParameterValuesValue>> parameters = default;
+            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
             Optional<string> description = default;
             Optional<BinaryData> metadata = default;
             Optional<EnforcementMode> enforcementMode = default;
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
+                            Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValuesValue.DeserializeParameterValuesValue(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value));
                             }
                             parameters = dictionary;
                             continue;

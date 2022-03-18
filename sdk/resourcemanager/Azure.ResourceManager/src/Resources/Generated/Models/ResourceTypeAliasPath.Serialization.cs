@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AliasPath
+    public partial class ResourceTypeAliasPath
     {
-        internal static AliasPath DeserializeAliasPath(JsonElement element)
+        internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element)
         {
             Optional<string> path = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<AliasPattern> pattern = default;
-            Optional<AliasPathMetadata> metadata = default;
+            Optional<ResourceTypeAliasPattern> pattern = default;
+            Optional<ResourceTypeAliasPathMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pattern = AliasPattern.DeserializeAliasPattern(property.Value);
+                    pattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
                     continue;
                 }
                 if (property.NameEquals("metadata"))
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    metadata = AliasPathMetadata.DeserializeAliasPathMetadata(property.Value);
+                    metadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
                     continue;
                 }
             }
-            return new AliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value, metadata.Value);
+            return new ResourceTypeAliasPath(path.Value, Optional.ToList(apiVersions), pattern.Value, metadata.Value);
         }
     }
 }

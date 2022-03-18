@@ -8,22 +8,22 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The type of the pattern for an alias path. </summary>
-    public partial class AliasPattern
+    public partial class ResourceTypeAliasPattern
     {
-        /// <summary> Initializes a new instance of AliasPattern. </summary>
-        internal AliasPattern()
+        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        internal ResourceTypeAliasPattern()
         {
         }
 
-        /// <summary> Initializes a new instance of AliasPattern. </summary>
+        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
         /// <param name="phrase"> The alias pattern phrase. </param>
         /// <param name="variable"> The alias pattern variable. </param>
-        /// <param name="aliasPatternType"> The type of alias pattern. </param>
-        internal AliasPattern(string phrase, string variable, AliasPatternType? aliasPatternType)
+        /// <param name="resourceTypeAliasPatternType"> The type of alias pattern. </param>
+        internal ResourceTypeAliasPattern(string phrase, string variable, ResourceTypeAliasPatternType? resourceTypeAliasPatternType)
         {
             Phrase = phrase;
             Variable = variable;
-            AliasPatternType = aliasPatternType;
+            ResourceTypeAliasPatternType = resourceTypeAliasPatternType;
         }
 
         /// <summary> The alias pattern phrase. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The alias pattern variable. </summary>
         public string Variable { get; }
         /// <summary> The type of alias pattern. </summary>
-        public AliasPatternType? AliasPatternType { get; }
+        public ResourceTypeAliasPatternType? ResourceTypeAliasPatternType { get; }
     }
 }

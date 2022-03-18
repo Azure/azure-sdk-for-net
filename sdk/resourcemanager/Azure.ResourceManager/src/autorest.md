@@ -269,6 +269,46 @@ directive:
   - rename-model:
       from: ProviderRegistrationRequest
       to: ProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: resources.json
+    where: $.definitions.AliasPath
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathAttributes";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathTokenType";
+  - from: resources.json
+    where: $.definitions.AliasPattern
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+  - from: resources.json
+    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPatternType";
+  - from: resources.json
+    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasType";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameter";
+  - from: policyAssignments.json
+    where: $.definitions.ParameterValuesValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameterValue";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json

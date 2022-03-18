@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AliasPattern
+    public partial class ResourceTypeAliasPattern
     {
-        internal static AliasPattern DeserializeAliasPattern(JsonElement element)
+        internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element)
         {
             Optional<string> phrase = default;
             Optional<string> variable = default;
-            Optional<AliasPatternType> type = default;
+            Optional<ResourceTypeAliasPatternType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phrase"))
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToAliasPatternType();
+                    type = property.Value.GetString().ToResourceTypeAliasPatternType();
                     continue;
                 }
             }
-            return new AliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
+            return new ResourceTypeAliasPattern(phrase.Value, variable.Value, Optional.ToNullable(type));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AliasPathMetadata
+    public partial class ResourceTypeAliasPathMetadata
     {
-        internal static AliasPathMetadata DeserializeAliasPathMetadata(JsonElement element)
+        internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element)
         {
-            Optional<AliasPathTokenType> type = default;
-            Optional<AliasPathAttributes> attributes = default;
+            Optional<ResourceTypeAliasPathTokenType> type = default;
+            Optional<ResourceTypeAliasPathAttributes> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new AliasPathTokenType(property.Value.GetString());
+                    type = new ResourceTypeAliasPathTokenType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attributes"))
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    attributes = new AliasPathAttributes(property.Value.GetString());
+                    attributes = new ResourceTypeAliasPathAttributes(property.Value.GetString());
                     continue;
                 }
             }
-            return new AliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes));
+            return new ResourceTypeAliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes));
         }
     }
 }
