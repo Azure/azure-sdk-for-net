@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
         public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 EndpointResource.ValidateResourceId(id);
                 return new EndpointResource(client, id);
