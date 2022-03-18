@@ -119,8 +119,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.</param>
+        /// <param name="trainingFilesUri">
+        /// An externally accessible Azure storage blob container URI pointing to the container that has your training files.
+        /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
+        /// configured.
+        /// For more information on setting up a training data set, see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.
+        /// </param>
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.
         /// <remarks>
@@ -166,8 +170,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.</param>
+        /// <param name="trainingFilesUri">
+        /// An externally accessible Azure storage blob container URI pointing to the container that has your training files.
+        /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
+        /// configured.
+        /// For more information on setting up a training data set, see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.
+        /// </param>
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="modelName">An optional, user-defined name to associate with the model.
         /// <remarks>
@@ -212,8 +220,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.</param>
+        /// <param name="trainingFilesUri">
+        /// An externally accessible Azure storage blob container URI pointing to the container that has your training files.
+        /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
+        /// configured.
+        /// For more information on setting up a training data set, see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.
+        /// </param>
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
         /// to the documents in the source path for training.</param>
@@ -253,8 +265,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.</param>
+        /// <param name="trainingFilesUri">
+        /// An externally accessible Azure storage blob container URI pointing to the container that has your training files.
+        /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
+        /// configured.
+        /// For more information on setting up a training data set, see <see href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data">here</see>.
+        /// </param>
         /// <param name="useTrainingLabels">If <c>true</c>, corresponding labeled files must exist in the blob container. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="trainingOptions">A set of options available for configuring the training request. For example, set a filter to apply
         /// to the documents in the source path for training.</param>
