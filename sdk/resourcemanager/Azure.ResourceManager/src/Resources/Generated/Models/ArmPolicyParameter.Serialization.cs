@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ParameterDefinitionsValue : IUtf8JsonSerializable
+    public partial class ArmPolicyParameter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ParameterDefinitionsValue DeserializeParameterDefinitionsValue(JsonElement element)
+        internal static ArmPolicyParameter DeserializeArmPolicyParameter(JsonElement element)
         {
             Optional<ParameterType> type = default;
             Optional<IList<BinaryData>> allowedValues = default;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ParameterDefinitionsValue(Optional.ToNullable(type), Optional.ToList(allowedValues), defaultValue.Value, metadata.Value);
+            return new ArmPolicyParameter(Optional.ToNullable(type), Optional.ToList(allowedValues), defaultValue.Value, metadata.Value);
         }
     }
 }

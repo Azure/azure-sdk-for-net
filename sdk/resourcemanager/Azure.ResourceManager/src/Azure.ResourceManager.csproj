@@ -9,7 +9,6 @@
     </Description>
     <PackageTags>azure;management;resource</PackageTags>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
-    <NoWarn>CA1801;AZC0012;CA1062;CA2225;CA1308;CA1066;CA1716;CA1031</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

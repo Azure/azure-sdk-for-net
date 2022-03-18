@@ -10,16 +10,16 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The value of a parameter. </summary>
-    public partial class ParameterValuesValue
+    public partial class ArmPolicyParameterValue
     {
-        /// <summary> Initializes a new instance of ParameterValuesValue. </summary>
-        public ParameterValuesValue()
+        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
+        public ArmPolicyParameterValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ParameterValuesValue. </summary>
+        /// <summary> Initializes a new instance of ArmPolicyParameterValue. </summary>
         /// <param name="value"> The value of the parameter. </param>
-        internal ParameterValuesValue(BinaryData value)
+        internal ArmPolicyParameterValue(BinaryData value)
         {
             Value = value;
         }

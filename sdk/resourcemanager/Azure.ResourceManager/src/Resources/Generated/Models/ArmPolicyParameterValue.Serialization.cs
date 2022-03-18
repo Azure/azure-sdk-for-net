@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ParameterValuesValue : IUtf8JsonSerializable
+    public partial class ArmPolicyParameterValue : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ParameterValuesValue DeserializeParameterValuesValue(JsonElement element)
+        internal static ArmPolicyParameterValue DeserializeArmPolicyParameterValue(JsonElement element)
         {
             Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ParameterValuesValue(value.Value);
+            return new ArmPolicyParameterValue(value.Value);
         }
     }
 }
