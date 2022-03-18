@@ -6,8 +6,6 @@
 
 - Fix bug for listing entities by guids
 
-### Other Changes
-
 ## 1.0.0-beta.2 (2021-10-15)
 
 ### New Features
