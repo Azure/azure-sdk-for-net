@@ -4,6 +4,12 @@ parameters:
   SourceDirectory: $(Build.SourcesDirectory)
   ServiceDirectory: ''
 
+# cSpell:ignore changedfiles
+# cSpell:ignore credscan
+# cSpell:ignore CREDSCAN
+# cSpell:ignore securedevelopmentteam
+# cSpell:ignore postanalysis
+
 steps:
 - pwsh: |
     if ("$(Build.Reason)" -eq 'PullRequest') {

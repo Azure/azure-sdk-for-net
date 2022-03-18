@@ -1,3 +1,6 @@
+# cSpell:ignore changedfiles
+# cSpell:ignore Committish
+
 steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     parameters:
