@@ -1074,6 +1074,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 eventPayload[2].Size = (receiveLinkState.Length + 1) * sizeof(char);
                 eventPayload[2].DataPointer = (IntPtr)receiveLinkStatePtr;
 
+                // bool maps to "win:Boolean", a 4-byte boolean
                 var isSessionReceiverInt = isSessionReceiver ? bool.True : bool.False;
                 eventPayload[3].Size = Unsafe.SizeOf<int>();
                 eventPayload[3].DataPointer = (IntPtr)Unsafe.AsPointer(ref isSessionReceiverInt);
