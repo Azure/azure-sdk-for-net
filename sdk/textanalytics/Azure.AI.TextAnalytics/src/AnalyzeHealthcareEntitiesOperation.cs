@@ -244,7 +244,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
-                _operationInternal.RawResponse = response.GetRawResponse();
+                _operationInternal.TrySetPendingResponse(response.GetRawResponse(), cancellationToken);
             }
             catch (Exception e)
             {
@@ -266,7 +266,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
-                _operationInternal.RawResponse = response.GetRawResponse();
+                await _operationInternal.TrySetPendingResponseAsync(response.GetRawResponse(), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

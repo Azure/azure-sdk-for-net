@@ -98,65 +98,39 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void SetStateSucceeds()
+        public void FinalStateSuccessful()
         {
-            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
-            {
-                oi.SetState(OperationState.Success(mockResponse));
-            }
-            else if (operationInternal is OperationInternal<int> oit)
-            {
-                oit.SetState(OperationState<int>.Success(mockResponse, 1));
-            }
-
+            var operationInternal = new OperationInternal(new ClientDiagnostics(new TestClientOptions()), new CompletedOperation(), mockResponse, finalState: OperationState.Success(mockResponse));
             Assert.IsTrue(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
-            {
-                Assert.IsTrue(oit2.HasValue);
-                Assert.AreEqual(1, oit2.Value);
-            }
+            Assert.AreEqual(mockResponse, operationInternal.RawResponse);
         }
 
         [Test]
-        public void SetStateIsPending()
+        public void FinalStateOfTSuccessful()
         {
-            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
-            {
-                oi.SetState(OperationState.Pending(mockResponse));
-            }
-            else if (operationInternal is OperationInternal<int> oit)
-            {
-                oit.SetState(OperationState<int>.Pending(mockResponse));
-            }
-
-            Assert.IsFalse(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
-            {
-                Assert.IsFalse(oit2.HasValue);
-            }
+            var operationInternal = new OperationInternal<int>(new ClientDiagnostics(new TestClientOptions()), new CompletedOperation(), mockResponse, finalState: OperationState<int>.Success(mockResponse, 42));
+            Assert.IsTrue(operationInternal.HasCompleted);
+            Assert.IsTrue(operationInternal.HasValue);
+            Assert.AreEqual(42, operationInternal.Value);
+            Assert.AreEqual(mockResponse, operationInternal.RawResponse);
         }
 
         [Test]
-        public void SetStateFails()
+        public void FinalStateFailed()
         {
-            var operationInternal = CreateOperationAsInternalBase(isOfT, UpdateResult.Pending);
-            if (operationInternal is OperationInternal oi)
-            {
-                oi.SetState(OperationState.Failure(mockResponse));
-            }
-            else if (operationInternal is OperationInternal<int> oit)
-            {
-                oit.SetState(OperationState<int>.Failure(mockResponse));
-            }
-
+            var operationInternal = new OperationInternal(new ClientDiagnostics(new TestClientOptions()), new CompletedOperation(), mockResponse, finalState: OperationState.Failure(mockResponse, originalException));
             Assert.IsTrue(operationInternal.HasCompleted);
-            if (operationInternal is OperationInternal<int> oit2)
-            {
-                Assert.IsFalse(oit2.HasValue);
-                Assert.Throws<RequestFailedException>(() => _ = oit2.Value);
-            }
+            Assert.AreEqual(mockResponse, operationInternal.RawResponse);
+        }
+
+        [Test]
+        public void FinalStateOfTFailed()
+        {
+            var operationInternal = new OperationInternal<int>(new ClientDiagnostics(new TestClientOptions()), new CompletedOperation(), mockResponse, finalState: OperationState<int>.Failure(mockResponse, originalException));
+            Assert.IsTrue(operationInternal.HasCompleted);
+            Assert.IsFalse(operationInternal.HasValue);
+            Assert.Throws<RequestFailedException>(() => _ = operationInternal.Value);
+            Assert.AreEqual(mockResponse, operationInternal.RawResponse);
         }
 
         [Test]
@@ -479,6 +453,15 @@ namespace Azure.Core.Tests
             _ = operation.WaitForCompletion(CancellationToken.None);
 
             Assert.AreEqual(retries - 1, fallbackStrategy.CallCount);
+        }
+
+        private class CompletedOperation : IOperation<int>, IOperation
+        {
+            ValueTask<OperationState<int>> IOperation<int>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+                => throw new InvalidOperationException($"Operation is completed, {nameof(IOperation<int>.UpdateStateAsync)} shouldn't be called");
+
+            ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+                => throw new InvalidOperationException($"Operation is completed, {nameof(IOperation.UpdateStateAsync)} shouldn't be called");
         }
     }
 }

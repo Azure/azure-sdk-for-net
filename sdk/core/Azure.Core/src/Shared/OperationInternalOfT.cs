@@ -52,7 +52,6 @@ namespace Azure.Core
 #pragma warning restore SA1649
     {
         private readonly IOperation<T> _operation;
-
         private T? _value;
 
         /// <summary>
@@ -78,17 +77,22 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used. Default is <see cref="ConstantDelayStrategy"/>.</param>
+        /// <param name="finalState">Final state of the operation for the case when underlying service request is completed before LRO instance is created.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation<T> operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            DelayStrategy? fallbackStrategy = null,
+            OperationState<T>? finalState = null)
+            : base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, finalState != null ? OperationState.FromTyped(finalState.Value) : null)
         {
             _operation = operation;
-            RawResponse = rawResponse;
+            if (finalState != null)
+            {
+                _value = finalState.Value.Value;
+            }
         }
 
         /// <summary>
@@ -99,7 +103,7 @@ namespace Azure.Core
         /// </code>
         /// </example>
         /// </summary>
-        public bool HasValue { get; private set; }
+        public bool HasValue => HasSucceeded;
 
         /// <summary>
         /// The final result of the long-running operation.
@@ -125,12 +129,8 @@ namespace Azure.Core
                 }
                 throw new InvalidOperationException("The operation has not completed yet.");
             }
-            private set
-            {
-                _value = value;
-                HasValue = true;
-            }
         }
+
         /// <summary>
         /// Periodically calls <see cref="OperationInternalBase.UpdateStatusAsync(CancellationToken)"/> until the long-running operation completes.
         /// After each service call, a retry-after header may be returned to communicate that there is no reason to poll
@@ -223,27 +223,14 @@ namespace Azure.Core
             return Response.FromValue(Value, rawResponse);
         }
 
-        /// <summary>
-        /// Sets the <see cref="OperationInternal{T}"/> state immediately.
-        /// </summary>
-        /// <param name="state">The <see cref="OperationState{T}"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
-        public void SetState(OperationState<T> state)
-        {
-            if (state.HasCompleted && state.HasSucceeded)
-            {
-                Value = state.Value!;
-            }
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
-        }
-
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        protected override async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             OperationState<T> state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
             if (state.HasCompleted && state.HasSucceeded)
             {
-                Value = state.Value!;
+                _value = state.Value!;
             }
-            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
+            return OperationState.FromTyped(state);
         }
     }
 

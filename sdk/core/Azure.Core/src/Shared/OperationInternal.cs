@@ -68,32 +68,22 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The fallback delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used. Default is <see cref="ConstantDelayStrategy"/>.</param>
+        /// <param name="finalState">Final state of the operation for the case when underlying service request is completed before LRO instance is created.</param>
         public OperationInternal(
             ClientDiagnostics clientDiagnostics,
             IOperation operation,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            DelayStrategy? fallbackStrategy = null,
+            OperationState? finalState = null)
+            :base(clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, finalState)
         {
             _operation = operation;
         }
 
-        /// <summary>
-        /// Sets the <see cref="OperationInternal"/> state immediately.
-        /// </summary>
-        /// <param name="state">The <see cref="OperationState"/> used to set <see cref="OperationInternalBase.HasCompleted"/> and other members.</param>
-        public void SetState(OperationState state)
-        {
-            ApplyStateAsync(false, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException, throwIfFailed: false).EnsureCompleted();
-        }
-
-        protected override async ValueTask<Response> UpdateStateAsync(bool async, CancellationToken cancellationToken)
-        {
-            OperationState state = await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
-            return await ApplyStateAsync(async, state.RawResponse, state.HasCompleted, state.HasSucceeded, state.OperationFailedException).ConfigureAwait(false);
-        }
+        protected override async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+            => await _operation.UpdateStateAsync(async, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -160,6 +150,9 @@ namespace Azure.Core
 
         public RequestFailedException? OperationFailedException { get; }
 
+        public static OperationState FromTyped<T>(OperationState<T> operationState)
+            => new(operationState.RawResponse, operationState.HasCompleted, operationState.HasSucceeded, operationState.OperationFailedException);
+
         /// <summary>
         /// Instantiates an <see cref="OperationState"/> indicating the operation has completed successfully.
         /// </summary>
@@ -169,7 +162,6 @@ namespace Azure.Core
         public static OperationState Success(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-
             return new OperationState(rawResponse, true, true, default);
         }
 
