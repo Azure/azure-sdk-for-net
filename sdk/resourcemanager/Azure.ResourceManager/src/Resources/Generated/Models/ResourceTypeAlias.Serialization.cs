@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Resources.Models
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<IReadOnlyList<AliasPath>> paths = default;
-            Optional<AliasType> type = default;
+            Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
+            Optional<ResourceTypeAliasType> type = default;
             Optional<string> defaultPath = default;
-            Optional<AliasPattern> defaultPattern = default;
-            Optional<AliasPathMetadata> defaultMetadata = default;
+            Optional<ResourceTypeAliasPattern> defaultPattern = default;
+            Optional<ResourceTypeAliasPathMetadata> defaultMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AliasPath> array = new List<AliasPath>();
+                    List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AliasPath.DeserializeAliasPath(item));
+                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
                     }
                     paths = array;
                     continue;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = property.Value.GetString().ToAliasType();
+                    type = property.Value.GetString().ToResourceTypeAliasType();
                     continue;
                 }
                 if (property.NameEquals("defaultPath"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultPattern = AliasPattern.DeserializeAliasPattern(property.Value);
+                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultMetadata"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    defaultMetadata = AliasPathMetadata.DeserializeAliasPathMetadata(property.Value);
+                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
                     continue;
                 }
             }
