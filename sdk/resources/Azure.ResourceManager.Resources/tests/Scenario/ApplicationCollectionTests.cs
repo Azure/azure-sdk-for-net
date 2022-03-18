@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Resources.Tests
             Assert.AreEqual(model.Data.Identity, getResult.Data.Identity);
             Assert.AreEqual(model.Data.ManagedResourceGroupId, getResult.Data.ManagedResourceGroupId);
             Assert.AreEqual(model.Data.ApplicationDefinitionId, getResult.Data.ApplicationDefinitionId);
-            Assert.AreEqual(model.Data.Parameters, getResult.Data.Parameters);
-            Assert.AreEqual(model.Data.Outputs, getResult.Data.Outputs);
+            Assert.AreEqual(model.Data.Parameters.ToArray(), getResult.Data.Parameters.ToArray());
+            Assert.AreEqual(model.Data.Outputs.ToArray(), getResult.Data.Outputs.ToArray());
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             if (model.Data.BillingDetails != null || getResult.Data.BillingDetails != null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="path"> A filesystem safe relative path of the artifact. </param>
         /// <param name="template"> The Azure Resource Manager template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="template"/> is null. </exception>
-        public LinkedTemplateArtifact(string path, object template)
+        public LinkedTemplateArtifact(string path, BinaryData template)
         {
             if (path == null)
             {
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> A filesystem safe relative path of the artifact. </summary>
         public string Path { get; set; }
         /// <summary> The Azure Resource Manager template. </summary>
-        public object Template { get; set; }
+        public BinaryData Template { get; set; }
     }
 }

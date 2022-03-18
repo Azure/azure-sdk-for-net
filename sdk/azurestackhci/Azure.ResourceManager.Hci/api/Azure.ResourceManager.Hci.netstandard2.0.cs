@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Hci
         public string LastModifiedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.CreatedByType? LastModifiedByType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Hci.Models.PerNodeExtensionState> PerNodeExtensionDetails { get { throw null; } }
-        public object ProtectedSettings { get { throw null; } set { } }
+        public System.BinaryData ProtectedSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Hci.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } set { } }
-        public object Settings { get { throw null; } set { } }
+        public System.BinaryData Settings { get { throw null; } set { } }
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesExtensionParametersType { get { throw null; } set { } }
     }

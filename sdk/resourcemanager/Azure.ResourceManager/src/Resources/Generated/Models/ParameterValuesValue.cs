@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The value of a parameter. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of ParameterValuesValue. </summary>
         /// <param name="value"> The value of the parameter. </param>
-        internal ParameterValuesValue(object value)
+        internal ParameterValuesValue(BinaryData value)
         {
             Value = value;
         }
 
         /// <summary> The value of the parameter. </summary>
-        public object Value { get; set; }
+        public BinaryData Value { get; set; }
     }
 }

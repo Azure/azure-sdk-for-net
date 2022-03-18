@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<object>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<object> GetServerFarmSkus(CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetServerFarmSkus(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();
