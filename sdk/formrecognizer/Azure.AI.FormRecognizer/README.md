@@ -568,8 +568,9 @@ Build a custom model on your own document type. The resulting model can be used 
 // Upload the documents to your storage container and then generate a container SAS URL. Note
 // that a container URI without SAS is accepted only when the container is public or has a
 // managed identity configured.
-// For instructions to set up documents for training in an Azure Storage Blob Container, please see:
-// https://aka.ms/azsdk/formrecognizer/buildtrainingset
+//
+// For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+// https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
 Uri trainingFileUri = <trainingFileUri>;
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

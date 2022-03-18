@@ -23,7 +23,8 @@ namespace Azure.AI.FormRecognizer.Samples
             // Upload the forms to your storage container and then generate a container SAS URL. Note
             // that a container URI without SAS is accepted only when the container is public or has a
             // managed identity configured.
-            // For instructions on setting up forms for training in an Azure Storage Blob Container, see
+            //
+            // For instructions on setting up forms for training in an Azure Blob Storage Container, see
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 #if SNIPPET
