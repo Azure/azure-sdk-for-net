@@ -92,9 +92,11 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             }
             catch (AvroSerializationException exception)
             {
-                // the exception message will contain the schema ID that was used to write the data
+                // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
+                // serialize the data.
                 Console.WriteLine(exception);
-                // we might want to look up the specific schema from Schema Registry so that we can log the schema definition
+
+                // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
                 if (exception.SerializedSchemaId != null)
                 {
                     SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SerializedSchemaId);
