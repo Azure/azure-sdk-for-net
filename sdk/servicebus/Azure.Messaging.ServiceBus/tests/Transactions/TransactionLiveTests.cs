@@ -366,17 +366,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [Test]
         public async Task CanUseSameSenderBothWithinAndOutsideTransactionSimultaneously()
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            await using (var scope1 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = CreateClient();
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
+                ServiceBusSender sender1 = client.CreateSender(scope1.QueueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName);
 
                 await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
                 ServiceBusSender sender2 = client.CreateSender(scope2.QueueName);
 
                 ServiceBusMessage message = ServiceBusTestUtilities.GetMessage();
-                await sender.SendMessageAsync(message);
+                await sender1.SendMessageAsync(message);
 
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Assert.NotNull(receivedMessage);
@@ -389,7 +389,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 {
                     await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
                     tcs.SetResult(true);
-                    await sender.SendMessageAsync(message).ConfigureAwait(false);
+                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                    await sender2.SendMessageAsync(message).ConfigureAwait(false);
                     ts.Complete();
                 }
 
@@ -398,7 +399,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     // await the TCS so that we can attempt to call Send from both inside the txn and outside at the same time
                     await tcs.Task;
                     Assert.IsNull(Transaction.Current);
-                    await sender.SendMessageAsync(message).ConfigureAwait(false);
+                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
                     await sender2.SendMessageAsync(message).ConfigureAwait(false);
                 }
             }
