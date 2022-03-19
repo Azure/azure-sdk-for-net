@@ -24,6 +24,8 @@
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedSources)\**\*.cs" LinkBase="Shared" />
     <Compile Include="$(MicrosoftAzureWebJobsExtensionsClientsSources)\**\*.cs" LinkBase="Shared" />
+	<Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+	<Compile Include="$(AzureCoreSharedSources)RequestContextExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
   <ItemGroup>

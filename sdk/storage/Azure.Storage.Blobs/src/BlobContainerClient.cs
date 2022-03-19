@@ -1602,33 +1602,22 @@ namespace Azure.Storage.Blobs
                     scope.Start();
 
                     // Get the container properties without throwing any exceptions
-                    RequestContext context = new()
-                    {
-                        ErrorOptions = ErrorOptions.NoThrow,
-                        CancellationToken = cancellationToken
-                    };
+                    RequestContext context =
+                        new RequestContext()
+                        {
+                            ErrorOptions = ErrorOptions.NoThrow,
+                            CancellationToken = cancellationToken
+                        }
+                        .AddClassifier(404, BlobErrorCode.ContainerNotFound.ToString(), false);
+
                     Response response = async ?
                         await ContainerRestClient.GetPropertiesAsync(context: context).ConfigureAwait(false) :
                         ContainerRestClient.GetProperties(context: context);
 
-                    // If the response wasn't an error, then the container exists
-                    if (!response.IsError)
+                    // If the response was any error other than a 404
+                    // ContainerNotFound we will throw.
+                    if (response.IsError)
                     {
-                        return Response.FromValue(true, response);
-                    }
-
-                    // Otherwise it depends on the error
-                    string code = response.GetErrorCode();
-                    if (code == BlobErrorCode.ContainerNotFound)
-                    {
-                        // If the failure was just "we can't find the container" then
-                        // we'll say it doesn't exist instead of throwing an exception
-                        return Response.FromValue(false, response);
-                    }
-                    else
-                    {
-                        // If we get any other failure (auth, throttling, etc.) then
-                        // we'll still throw an exception
                         RequestFailedException ex = async ?
                             await ClientConfiguration.ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false) :
                             ClientConfiguration.ClientDiagnostics.CreateRequestFailedException(response);
@@ -1637,6 +1626,10 @@ namespace Azure.Storage.Blobs
 
                         throw ex;
                     }
+
+                    // The container exists if we returned 200, but a 404 means
+                    // it doesn't
+                    return Response.FromValue(response.Status == 200, response);
                 }
                 catch (Exception ex)
                 {

@@ -4448,38 +4448,24 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
 
                     // Get the blob properties, but don't throw any exceptions
-                    RequestContext context = new()
-                    {
-                        ErrorOptions = ErrorOptions.NoThrow,
-                        CancellationToken = cancellationToken
-                    };
+                    RequestContext context =
+                        new RequestContext()
+                        {
+                            ErrorOptions = ErrorOptions.NoThrow,
+                            CancellationToken = cancellationToken
+                        }
+                        .AddClassifier(404, BlobErrorCode.BlobNotFound.ToString(), false)
+                        .AddClassifier(404, BlobErrorCode.ContainerNotFound.ToString(), false)
+                        .AddClassifier(409, BlobErrorCode.BlobUsesCustomerSpecifiedEncryption.ToString(), false);
                     Response response = async ?
                         await BlobRestClient.GetPropertiesAsync(context: context).ConfigureAwait(false) :
                         BlobRestClient.GetProperties(context: context);
 
-                    // If the response wasn't an error, then the blob exists
-                    if (!response.IsError)
+                    // If the response was any error other than a 404
+                    // ContainerNotFound, 404 BlobNotFound, or 409
+                    // BlobUsesCustomerSpecifiedEncryption we will throw
+                    if (response.IsError)
                     {
-                        return Response.FromValue(true, response);
-                    }
-
-                    // Otherwise it depends on the error
-                    string code = response.GetErrorCode();
-                    if (code == BlobErrorCode.BlobNotFound ||
-                        code == BlobErrorCode.ContainerNotFound)
-                    {
-                        // If the failure was just "we can't find the blob" then
-                        // we'll say it doesn't exist instead of throwing an exception
-                        return Response.FromValue(false, response);
-                    }
-                    else if (code == BlobErrorCode.BlobUsesCustomerSpecifiedEncryption)
-                    {
-                        return Response.FromValue(true, response);
-                    }
-                    else
-                    {
-                        // If we get any other failure (auth, throttling, etc.) then
-                        // we'll still throw an exception
                         RequestFailedException ex = async ?
                             await ClientConfiguration.ClientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false) :
                             ClientConfiguration.ClientDiagnostics.CreateRequestFailedException(response);
@@ -4488,6 +4474,16 @@ namespace Azure.Storage.Blobs.Specialized
 
                         throw ex;
                     }
+
+                    return Response.FromValue(
+                        response.Status switch
+                        {
+                            200 => true,  // Blob found
+                            409 => true,  // GetProperties failed because of encryption so blob exists
+                            404 => false, // Blob not found
+                            _ => false    // Otherwise consider it not found
+                        },
+                        response);
                 }
                 catch (Exception ex)
                 {

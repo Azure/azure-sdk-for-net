@@ -9,6 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -122,43 +123,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<string> TryAcquireLeaseAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
-            Response<BlobLease> response = await blob
-                .GetBlobLeaseClient()
-                .AcquireAsync(
-                    LeasePeriod,
-                    conditions: null,
-                    new RequestContext()
-                    {
-                        ErrorOptions = ErrorOptions.NoThrow,
-                        CancellationToken = cancellationToken
-                    })
-                .ConfigureAwait(false);
+            RequestContext context =
+                new RequestContext()
+                {
+                    ErrorOptions = ErrorOptions.NoThrow,
+                    CancellationToken = cancellationToken
+                }
+                .AddClassifier(409, BlobErrorCode.LeaseAlreadyPresent.ToString(), false)
+                .AddClassifier(404, BlobErrorCode.BlobNotFound.ToString(), false)
+                .AddClassifier(404, BlobErrorCode.ContainerNotFound.ToString(), false);
+            Response<BlobLease> response =
+                await blob.GetBlobLeaseClient()
+                    .AcquireAsync(LeasePeriod, conditions: null, context)
+                    .ConfigureAwait(false);
 
-            // Return the lease if we successfully acquired it
+            // If the response was any error other than a 409
+            // LeaseAlreadyPresent, a 404 ContainerNotFound, or a 404
+            // BlobNotFound we will throw
             Response raw = response.GetRawResponse();
-            if (!raw.IsError)
+            if (raw.IsError)
             {
-                return response.Value.LeaseId;
+                throw new RequestFailedException(raw);
+                // Note: this is currently not working correctly because of
+                // https://github.com/Azure/azure-sdk-for-net/issues/27614
+                // and will throw an exception without the ErrorCode or other
+                // important information populated
             }
 
-            // Return null if someone else holds the lease or the receipt was
-            // already deleted
-            if ((raw.Status == 409 || raw.Status == 404) &&
-                raw.Headers.TryGetValue("x-ms-error-code", out string code) &&
-                (code == BlobErrorCode.LeaseAlreadyPresent ||
-                 code == BlobErrorCode.BlobNotFound ||
-                 code == BlobErrorCode.ContainerNotFound))
-            {
-                return null;
-            }
-
-            // If we see any other errors (like auth, throttling, etc.) then
-            // we'll throw them
-            throw new RequestFailedException(raw);
-            // Note: this is currently not working correctly because of
-            // https://github.com/Azure/azure-sdk-for-net/issues/27614
-            // and will throw an exception without the ErrorCode or other
-            // important information populated
+            // Return the lease if we successfully acquired it or null if
+            // someone else holds the lease or the receipt was already deleted
+            return raw.Status == 201 ? response.Value.LeaseId : null;
         }
 
         public async Task MarkCompletedAsync(BlockBlobClient blob, string leaseId,
