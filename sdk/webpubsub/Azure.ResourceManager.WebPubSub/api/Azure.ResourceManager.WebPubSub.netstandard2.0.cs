@@ -1,6 +1,6 @@
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class PrivateEndpointConnection : Azure.ResourceManager.Core.ArmResource
+    public partial class PrivateEndpointConnection : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateEndpointConnection() { }
@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection>, System.Collections.IEnumerable
+    public partial class PrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection>, System.Collections.IEnumerable
     {
         protected PrivateEndpointConnectionCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.PrivateEndpointConnection> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.WebPubSub.PrivateEndpointConnectionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WebPubSub
         public Azure.ResourceManager.WebPubSub.Models.PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
-    public partial class SharedPrivateLink : Azure.ResourceManager.Core.ArmResource
+    public partial class SharedPrivateLink : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SharedPrivateLink() { }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.SharedPrivateLink>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SharedPrivateLinkCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>, System.Collections.IEnumerable
+    public partial class SharedPrivateLinkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.SharedPrivateLink>, System.Collections.IEnumerable
     {
         protected SharedPrivateLinkCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.SharedPrivateLink> CreateOrUpdate(Azure.WaitUntil waitUntil, string sharedPrivateLinkResourceName, Azure.ResourceManager.WebPubSub.SharedPrivateLinkData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.WebPubSub
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.SharedPrivateLinkStatus? Status { get { throw null; } }
     }
-    public partial class WebPubSub : Azure.ResourceManager.Core.ArmResource
+    public partial class WebPubSub : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WebPubSub() { }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.WebPubSub> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.WebPubSubData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.WebPubSub>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.WebPubSub.WebPubSubData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WebPubSubCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.WebPubSub>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSub>, System.Collections.IEnumerable
+    public partial class WebPubSubCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.WebPubSub>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSub>, System.Collections.IEnumerable
     {
         protected WebPubSubCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.WebPubSub> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.WebPubSub.WebPubSubData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.WebPubSub
         public static Azure.Pageable<Azure.ResourceManager.WebPubSub.WebPubSub> GetWebPubSubs(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.WebPubSub.WebPubSub> GetWebPubSubsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WebPubSubHub : Azure.ResourceManager.Core.ArmResource
+    public partial class WebPubSubHub : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WebPubSubHub() { }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubHub> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubHub>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WebPubSubHubCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubHub>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubHub>, System.Collections.IEnumerable
+    public partial class WebPubSubHubCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubHub>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubHub>, System.Collections.IEnumerable
     {
         protected WebPubSubHubCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WebPubSub.WebPubSubHub> CreateOrUpdate(Azure.WaitUntil waitUntil, string hubName, Azure.ResourceManager.WebPubSub.WebPubSubHubData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

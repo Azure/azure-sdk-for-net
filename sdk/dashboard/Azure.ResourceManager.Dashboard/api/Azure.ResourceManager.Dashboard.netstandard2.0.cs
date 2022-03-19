@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Dashboard
         public static Azure.Pageable<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResources(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Dashboard.GrafanaResource> GetGrafanaResourcesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class GrafanaResource : Azure.ResourceManager.Core.ArmResource
+    public partial class GrafanaResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected GrafanaResource() { }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dashboard
         public virtual Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource> Update(Azure.ResourceManager.Dashboard.Models.PatchableGrafanaResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dashboard.GrafanaResource>> UpdateAsync(Azure.ResourceManager.Dashboard.Models.PatchableGrafanaResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class GrafanaResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dashboard.GrafanaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dashboard.GrafanaResource>, System.Collections.IEnumerable
+    public partial class GrafanaResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dashboard.GrafanaResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dashboard.GrafanaResource>, System.Collections.IEnumerable
     {
         protected GrafanaResourceCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Dashboard.GrafanaResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string workspaceName, Azure.ResourceManager.Dashboard.GrafanaResourceData body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

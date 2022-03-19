@@ -114,34 +114,9 @@ namespace Azure.ResourceManager
 }
 namespace Azure.ResourceManager.Core
 {
-    public abstract partial class ArmCollection
-    {
-        protected ArmCollection() { }
-        protected ArmCollection(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
-        protected internal System.Uri BaseUri { get { throw null; } }
-        protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
-        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
-        public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> func) where T : class { throw null; }
-        protected bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
-    }
     public abstract partial class ArmResource
     {
         protected ArmResource() { }
-        protected internal ArmResource(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
-        protected internal System.Uri BaseUri { get { throw null; } }
-        protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
-        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
-        public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        protected internal Azure.ResourceManager.Resources.TagResource TagResource { get { throw null; } }
-        public virtual System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> GetAvailableLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation>> GetAvailableLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> func) where T : class { throw null; }
-        protected bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Management
