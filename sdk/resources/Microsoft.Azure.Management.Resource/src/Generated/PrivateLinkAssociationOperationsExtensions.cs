@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Parameters supplied to create the private link association.
             /// </param>
-            public static PrivateLinkAssociation Put(this IPrivateLinkAssociationOperations operations, string groupId, string plaId, PrivateLinkAssociationProperties parameters)
+            public static PrivateLinkAssociation Put(this IPrivateLinkAssociationOperations operations, string groupId, string plaId, PrivateLinkAssociationObject parameters)
             {
                 return operations.PutAsync(groupId, plaId, parameters).GetAwaiter().GetResult();
             }
@@ -59,9 +59,49 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkAssociation> PutAsync(this IPrivateLinkAssociationOperations operations, string groupId, string plaId, PrivateLinkAssociationProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkAssociation> PutAsync(this IPrivateLinkAssociationOperations operations, string groupId, string plaId, PrivateLinkAssociationObject parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PutWithHttpMessagesAsync(groupId, plaId, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get a single private link association
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='plaId'>
+            /// The ID of the PLA
+            /// </param>
+            public static PrivateLinkAssociation Get(this IPrivateLinkAssociationOperations operations, string groupId, string plaId)
+            {
+                return operations.GetAsync(groupId, plaId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a single private link association
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='plaId'>
+            /// The ID of the PLA
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkAssociation> GetAsync(this IPrivateLinkAssociationOperations operations, string groupId, string plaId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(groupId, plaId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -113,9 +153,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='groupId'>
             /// The management group ID.
             /// </param>
-            public static PrivateLinkAssociationGetResult Get(this IPrivateLinkAssociationOperations operations, string groupId)
+            public static PrivateLinkAssociationGetResult List(this IPrivateLinkAssociationOperations operations, string groupId)
             {
-                return operations.GetAsync(groupId).GetAwaiter().GetResult();
+                return operations.ListAsync(groupId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,9 +170,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkAssociationGetResult> GetAsync(this IPrivateLinkAssociationOperations operations, string groupId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkAssociationGetResult> ListAsync(this IPrivateLinkAssociationOperations operations, string groupId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(groupId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(groupId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
