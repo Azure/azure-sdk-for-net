@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         protected ResourceIdentifier GetSubnetId(GenericResource vnet)
         {
-            var properties = vnet.Data.Properties.ToDictionaryFromJson();
+            var properties = vnet.Data.Properties.ToObjectFromJson() as Dictionary<string, object>;
             var subnets = properties["subnets"] as IEnumerable<object>;
             var subnet = subnets.First() as IDictionary<string, object>;
             return new ResourceIdentifier(subnet["id"] as string);

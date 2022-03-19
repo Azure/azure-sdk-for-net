@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Tests
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
                 Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
-                foreach (KeyValuePair<string, ParameterDefinitionsValue> kvp in model.Data.Parameters)
+                foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
-                    ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
+                    ArmPolicyParameter getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
                     Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {

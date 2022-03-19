@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<BinaryData> metadata = default;
-            Optional<IDictionary<string, ParameterDefinitionsValue>> parameters = default;
+            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
             Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
             Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, ParameterDefinitionsValue> dictionary = new Dictionary<string, ParameterDefinitionsValue>();
+                            Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterDefinitionsValue.DeserializeParameterDefinitionsValue(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
                             }
                             parameters = dictionary;
                             continue;

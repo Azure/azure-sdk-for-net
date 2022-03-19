@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 return;
             }
-            Assert.Fail($"{nameof(SubscriptionExtensions)}.{nameof(SubscriptionExtensions.GetDeletedAccountsAsync)} has returned an empty collection of DeletedAccount.");
+            Assert.Fail($"{nameof(StorageExtensions)}.{nameof(StorageExtensions.GetDeletedAccountsAsync)} has returned an empty collection of DeletedAccount.");
         }
 
         [Test]

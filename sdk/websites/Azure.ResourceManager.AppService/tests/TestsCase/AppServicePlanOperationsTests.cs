@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Tests.Helpers;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var planName = Recording.GenerateAssetName("testDisk-");
             var plan = await CreateAppServicePlanAsync(planName);
             var skus = await plan.GetServerFarmSkusAsync();
-            var dict = skus.Value.ToDictionaryFromJson();
+            var dict = skus.Value.ToObjectFromJson() as Dictionary<string, object>;
         }
     }
 }

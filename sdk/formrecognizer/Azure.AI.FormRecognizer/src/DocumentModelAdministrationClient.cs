@@ -112,10 +112,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         #region Build
         /// <summary>
-        /// Build a custom document analysis model from a collection of documents in a blob storage container.
+        /// Build a custom document analysis model from a collection of documents in an Azure Blob Storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri pointing to the container that has your training files.
-        /// For more information see <see href="https://docs.microsoft.com/azure/applied-ai-services/form-recognizer/build-training-data-set">here</see>.</param>
+        /// <param name="trainingFilesUri">
+        /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
+        /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
+        /// configured.
+        /// For more information on setting up a training data set, see <see href="https://aka.ms/azsdk/formrecognizer/buildcustommodel">this article</see>.
+        /// </param>
         /// <param name="buildMode">
         /// The technique to use to build the model. Use:
         /// <list type="bullet">
@@ -185,10 +189,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Build a custom model from a collection of documents in a blob storage container.
+        /// Build a custom model from a collection of documents in an Azure Blob Storage container.
         /// </summary>
-        /// <param name="trainingFilesUri">An externally accessible Azure storage blob container Uri.
-        /// For more information see <see href="https://docs.microsoft.com/azure/applied-ai-services/form-recognizer/build-training-data-set">here</see>.</param>
+        /// <param name="trainingFilesUri">
+        /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
+        /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
+        /// configured.
+        /// For more information on setting up a training data set, see <see href="https://aka.ms/azsdk/formrecognizer/buildcustommodel">this article</see>.
+        /// </param>
         /// <param name="buildMode">
         /// The technique to use to build the model. Use:
         /// <list type="bullet">
