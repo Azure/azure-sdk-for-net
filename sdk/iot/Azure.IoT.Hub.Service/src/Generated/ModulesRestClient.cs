@@ -31,13 +31,13 @@ namespace Azure.IoT.Hub.Service
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public ModulesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-03-13")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://fully-qualified-iothubname.azure-devices.net");
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetTwinRequest(string id, string mid)
@@ -152,7 +152,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="deviceTwinInfo"> The module twin info that will replace the existing info. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="deviceTwinInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public async Task<Response<TwinData>> ReplaceTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -190,7 +190,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="deviceTwinInfo"> The module twin info that will replace the existing info. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the replace operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="deviceTwinInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public Response<TwinData> ReplaceTwin(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -253,7 +253,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="deviceTwinInfo"> The module twin info containing the tags and desired properties to be updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="deviceTwinInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public async Task<Response<TwinData>> UpdateTwinAsync(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -291,7 +291,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="deviceTwinInfo"> The module twin info containing the tags and desired properties to be updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the device twin, as per RFC7232. It determines if the update operation should be carried out. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="deviceTwinInfo"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="deviceTwinInfo"/> is null. </exception>
         public Response<TwinData> UpdateTwin(string id, string mid, TwinData deviceTwinInfo, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -515,7 +515,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="module"> The module identity. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="module"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="module"/> is null. </exception>
         public async Task<Response<ModuleIdentity>> CreateOrUpdateIdentityAsync(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -554,7 +554,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="module"> The module identity. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the module, as per RFC7232. This should not be set when creating a module, but may be set when updating a module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/>, or <paramref name="module"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="mid"/> or <paramref name="module"/> is null. </exception>
         public Response<ModuleIdentity> CreateOrUpdateIdentity(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
@@ -690,7 +690,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="moduleId"> The unique identifier of the module. </param>
         /// <param name="directMethodRequest"> The parameters to execute a direct method on the module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="moduleId"/>, or <paramref name="directMethodRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="moduleId"/> or <paramref name="directMethodRequest"/> is null. </exception>
         public async Task<Response<CloudToDeviceMethodResponse>> InvokeMethodAsync(string deviceId, string moduleId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
             if (deviceId == null)
@@ -727,7 +727,7 @@ namespace Azure.IoT.Hub.Service
         /// <param name="moduleId"> The unique identifier of the module. </param>
         /// <param name="directMethodRequest"> The parameters to execute a direct method on the module. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="moduleId"/>, or <paramref name="directMethodRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="moduleId"/> or <paramref name="directMethodRequest"/> is null. </exception>
         public Response<CloudToDeviceMethodResponse> InvokeMethod(string deviceId, string moduleId, CloudToDeviceMethodRequest directMethodRequest, CancellationToken cancellationToken = default)
         {
             if (deviceId == null)

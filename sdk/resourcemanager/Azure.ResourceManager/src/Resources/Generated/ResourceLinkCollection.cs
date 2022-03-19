@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Resources
         {
             _scope = scope;
             _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
-            _resourceLinkRestClient = new ResourceLinksRestOperations(_resourceLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
+            TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
+            _resourceLinkRestClient = new ResourceLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,16 +57,13 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{linkId}
         /// Operation Id: ResourceLinks_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ResourceLink>> CreateOrUpdateAsync(bool waitForCompletion, ResourceLinkData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceLink>> CreateOrUpdateAsync(WaitUntil waitUntil, ResourceLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.CreateOrUpdate");
             scope0.Start();
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _resourceLinkRestClient.CreateOrUpdateAsync(_scope, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation<ResourceLink>(Response.FromValue(new ResourceLink(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -90,16 +87,13 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /{linkId}
         /// Operation Id: ResourceLinks_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> Parameters for creating or updating a resource link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ResourceLink> CreateOrUpdate(bool waitForCompletion, ResourceLinkData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceLink> CreateOrUpdate(WaitUntil waitUntil, ResourceLinkData parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.CreateOrUpdate");
             scope0.Start();
@@ -107,7 +101,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceLinkRestClient.CreateOrUpdate(_scope, parameters, cancellationToken);
                 var operation = new ResourcesArmOperation<ResourceLink>(Response.FromValue(new ResourceLink(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -124,7 +118,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourceLink>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceLink>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.Get");
             scope0.Start();
@@ -132,7 +126,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _resourceLinkRestClient.GetAsync(_scope, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _resourceLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,7 +150,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceLinkRestClient.Get(_scope, cancellationToken);
                 if (response.Value == null)
-                    throw _resourceLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
             using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.Exists");
             scope0.Start();
@@ -300,7 +294,7 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: ResourceLinks_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ResourceLink>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceLink>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
             using var scope0 = _resourceLinkClientDiagnostics.CreateScope("ResourceLinkCollection.GetIfExists");
             scope0.Start();

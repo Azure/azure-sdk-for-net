@@ -28,13 +28,13 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ContainerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _url = url ?? throw new ArgumentNullException(nameof(url));
             _version = version ?? throw new ArgumentNullException(nameof(version));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
@@ -44,7 +44,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/>, or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
         public async Task<ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders>> SubmitBatchAsync(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)
@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="body"> Initial data. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/>, or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/>, <paramref name="multipartContentType"/> or <paramref name="body"/> is null. </exception>
         public ResponseWithHeaders<Stream, ContainerSubmitBatchHeaders> SubmitBatch(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (containerName == null)

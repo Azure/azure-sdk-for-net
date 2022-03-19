@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -29,7 +30,14 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        public WritableSubResource PrivateEndpoint { get; }
+        internal WritableSubResource PrivateEndpoint { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get => PrivateEndpoint.Id;
+            set => PrivateEndpoint.Id = value;
+        }
+
         /// <summary> Connection state of the private endpoint connection. </summary>
         public PrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; }
         /// <summary> State of the private endpoint connection. </summary>

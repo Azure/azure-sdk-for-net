@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Sql
         internal MaintenanceWindowOptions(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _maintenanceWindowOptionsMaintenanceWindowOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string maintenanceWindowOptionsMaintenanceWindowOptionsApiVersion);
-            _maintenanceWindowOptionsMaintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(_maintenanceWindowOptionsMaintenanceWindowOptionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowOptionsMaintenanceWindowOptionsApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceWindowOptionsMaintenanceWindowOptionsApiVersion);
+            _maintenanceWindowOptionsMaintenanceWindowOptionsRestClient = new MaintenanceWindowOptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, maintenanceWindowOptionsMaintenanceWindowOptionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,12 +90,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
-        public async virtual Task<Response<MaintenanceWindowOptions>> GetAsync(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceWindowOptions>> GetAsync(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowOptionsName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowOptionsName));
-            }
+            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
 
             using var scope = _maintenanceWindowOptionsMaintenanceWindowOptionsClientDiagnostics.CreateScope("MaintenanceWindowOptions.Get");
             scope.Start();
@@ -103,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _maintenanceWindowOptionsMaintenanceWindowOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _maintenanceWindowOptionsMaintenanceWindowOptionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindowOptions(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -123,10 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
         public virtual Response<MaintenanceWindowOptions> Get(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            if (maintenanceWindowOptionsName == null)
-            {
-                throw new ArgumentNullException(nameof(maintenanceWindowOptionsName));
-            }
+            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
 
             using var scope = _maintenanceWindowOptionsMaintenanceWindowOptionsClientDiagnostics.CreateScope("MaintenanceWindowOptions.Get");
             scope.Start();
@@ -134,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _maintenanceWindowOptionsMaintenanceWindowOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken);
                 if (response.Value == null)
-                    throw _maintenanceWindowOptionsMaintenanceWindowOptionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MaintenanceWindowOptions(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

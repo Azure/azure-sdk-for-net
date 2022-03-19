@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
         public VirtualMachineScaleSetUpdateNetworkConfiguration()
         {
-            IpConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableFpga = enableFpga;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             EnableIPForwarding = enableIPForwarding;
             DeleteOption = deleteOption;
         }
@@ -53,11 +53,34 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies whether the network interface is FPGA networking-enabled. </summary>
         public bool? EnableFpga { get; set; }
         /// <summary> The network security group. </summary>
-        public WritableSubResource NetworkSecurityGroup { get; set; }
+        internal WritableSubResource NetworkSecurityGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkSecurityGroupId
+        {
+            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            set
+            {
+                if (NetworkSecurityGroup is null)
+                    NetworkSecurityGroup = new WritableSubResource();
+                NetworkSecurityGroup.Id = value;
+            }
+        }
+
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
-        public VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
+        internal VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
+        /// <summary> List of DNS servers IP addresses. </summary>
+        public IList<string> DnsServers
+        {
+            get
+            {
+                if (DnsSettings is null)
+                    DnsSettings = new VirtualMachineScaleSetNetworkConfigurationDnsSettings();
+                return DnsSettings.DnsServers;
+            }
+        }
+
         /// <summary> The virtual machine scale set IP Configuration. </summary>
-        public IList<VirtualMachineScaleSetUpdateIPConfiguration> IpConfigurations { get; }
+        public IList<VirtualMachineScaleSetUpdateIPConfiguration> IPConfigurations { get; }
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionBackupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="managedInstanceName"> The managed instance that the backup database belongs to. </param>
         /// <param name="managedInstanceCreateTime"> The create time of the instance. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupTime"> The time the backup was taken. </param>
         /// <param name="backupExpirationTime"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, type, systemData)
+        internal ManagedInstanceLongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, DateTimeOffset? managedInstanceCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateTime = managedInstanceCreateTime;

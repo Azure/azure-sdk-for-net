@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of StorageAccounts and their operations over a StorageAccount. </returns>
         public virtual StorageAccountCollection GetStorageAccounts()
         {
-            return new StorageAccountCollection(Client, Id);
+            return GetCachedClient(Client => new StorageAccountCollection(Client, Id));
         }
     }
 }

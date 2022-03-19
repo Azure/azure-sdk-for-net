@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -113,14 +114,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async static Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityNamespaceAsync(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckEventHubNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return await GetExtensionClient(subscription).CheckNameAvailabilityNamespaceAsync(parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscription).CheckEventHubNameAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,14 +130,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="parameters"> Parameters to check availability of the given Namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityNamespace(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckEventHubNameAvailability(this Subscription subscription, CheckNameAvailabilityOptions parameters, CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return GetExtensionClient(subscription).CheckNameAvailabilityNamespace(parameters, cancellationToken);
+            return GetExtensionClient(subscription).CheckEventHubNameAvailability(parameters, cancellationToken);
         }
     }
 }

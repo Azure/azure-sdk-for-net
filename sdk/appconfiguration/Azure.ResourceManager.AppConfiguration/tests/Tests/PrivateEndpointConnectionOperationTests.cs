@@ -39,28 +39,23 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 string VnetName = Recording.GenerateAssetName("vnetname");
                 string SubnetName = Recording.GenerateAssetName("subnetname");
                 string EndpointName = Recording.GenerateAssetName("endpointxyz");
-                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, groupName, new ResourceGroupData(Location))).Value;
+                ResGroup = (await ArmClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, groupName, new ResourceGroupData(Location))).Value;
                 string configurationStoreName = Recording.GenerateAssetName("testapp-");
-                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new Models.Sku("Standard"))
+                ConfigurationStoreData configurationStoreData = new ConfigurationStoreData(Location, new AppConfigurationSku("Standard"))
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled
                 };
-                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(true, configurationStoreName, configurationStoreData)).Value;
+                ConfigStore = (await ResGroup.GetConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
                 // Prepare VNet and Private Endpoint
                 VirtualNetworkData vnetData = new VirtualNetworkData()
                 {
                     Location = "eastus",
-                    AddressSpace = new AddressSpace()
-                    {
-                        AddressPrefixes = { "10.0.0.0/16", }
-                    },
-                    DhcpOptions = new DhcpOptions()
-                    {
-                        DnsServers = { "10.1.1.1", "10.1.2.4" }
-                    },
                     Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
                 };
-                VirtualNetwork vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, VnetName, vnetData)).Value;
+                vnetData.AddressPrefixes.Add("10.0.0.0/16");
+                vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
+                vnetData.DhcpOptionsDnsServers.Add("10.1.2.4");
+                VirtualNetwork vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
@@ -74,7 +69,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                         },
                     Subnet = new SubnetData() { Id = "/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName }
                 };
-                PrivateEndpoint = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(true, EndpointName, privateEndpointData)).Value;
+                PrivateEndpoint = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
                 List<PrivateEndpointConnection> connections = await ConfigStore.GetPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
             }
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task DeleteTest()
         {
-            await Connection.DeleteAsync(true);
+            await Connection.DeleteAsync(WaitUntil.Completed);
             PrivateEndpointConnection connection = await ConfigStore.GetPrivateEndpointConnections().GetIfExistsAsync(Connection.Data.Name);
 
             Assert.IsNull(connection);

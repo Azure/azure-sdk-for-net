@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.CosmosDB
         internal DatabaseAccountMongodbDatabaseThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ResourceType, out string databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesApiVersion);
-            _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(_databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesApiVersion);
+            TryGetApiVersion(ResourceType, out string databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesApiVersion);
+            _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: MongoDBResources_GetMongoDBDatabaseThroughput
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.Get");
             scope.Start();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,16 +137,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default
         /// Operation Id: MongoDBResources_UpdateMongoDBDatabaseThroughput
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>> CreateOrUpdateAsync(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
+            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.CreateOrUpdate");
             scope.Start();
@@ -154,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.UpdateMongoDBDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>(new DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(Client), _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -170,16 +167,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default
         /// Operation Id: MongoDBResources_UpdateMongoDBDatabaseThroughput
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="updateThroughputParameters"> The RUs per second of the parameters to provide for the current MongoDB database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateThroughputParameters"/> is null. </exception>
-        public virtual ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting> CreateOrUpdate(bool waitForCompletion, ThroughputSettingsUpdateOptions updateThroughputParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData updateThroughputParameters, CancellationToken cancellationToken = default)
         {
-            if (updateThroughputParameters == null)
-            {
-                throw new ArgumentNullException(nameof(updateThroughputParameters));
-            }
+            Argument.AssertNotNull(updateThroughputParameters, nameof(updateThroughputParameters));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.CreateOrUpdate");
             scope.Start();
@@ -187,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.UpdateMongoDBDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters, cancellationToken);
                 var operation = new CosmosDBArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>(new DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(Client), _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, updateThroughputParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -203,9 +197,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale
         /// Operation Id: MongoDBResources_MigrateMongoDBDatabaseToAutoscale
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>> MigrateMongoDBDatabaseToAutoscaleAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>> MigrateMongoDBDatabaseToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.MigrateMongoDBDatabaseToAutoscale");
             scope.Start();
@@ -213,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>(new DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(Client), _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -229,9 +223,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale
         /// Operation Id: MongoDBResources_MigrateMongoDBDatabaseToAutoscale
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting> MigrateMongoDBDatabaseToAutoscale(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting> MigrateMongoDBDatabaseToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.MigrateMongoDBDatabaseToAutoscale");
             scope.Start();
@@ -239,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 var operation = new CosmosDBArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>(new DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(Client), _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -255,9 +249,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput
         /// Operation Id: MongoDBResources_MigrateMongoDBDatabaseToManualThroughput
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>> MigrateMongoDBDatabaseToManualThroughputAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>> MigrateMongoDBDatabaseToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.MigrateMongoDBDatabaseToManualThroughput");
             scope.Start();
@@ -265,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>(new DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(Client), _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -281,9 +275,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput
         /// Operation Id: MongoDBResources_MigrateMongoDBDatabaseToManualThroughput
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting> MigrateMongoDBDatabaseToManualThroughput(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting> MigrateMongoDBDatabaseToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.MigrateMongoDBDatabaseToManualThroughput");
             scope.Start();
@@ -291,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.MigrateMongoDBDatabaseToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 var operation = new CosmosDBArmOperation<DatabaseAccountMongodbDatabaseThroughputSetting>(new DatabaseAccountMongodbDatabaseThroughputSettingOperationSource(Client), _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.CreateMigrateMongoDBDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -311,24 +305,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -350,22 +338,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DatabaseAccountMongodbDatabaseThroughputSetting> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -384,21 +366,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.SetTags");
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -419,19 +398,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DatabaseAccountMongodbDatabaseThroughputSetting> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.SetTags");
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -450,20 +426,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountMongodbDatabaseThroughputSetting>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -484,18 +457,15 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DatabaseAccountMongodbDatabaseThroughputSetting> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesClientDiagnostics.CreateScope("DatabaseAccountMongodbDatabaseThroughputSetting.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _databaseAccountMongodbDatabaseThroughputSettingMongoDBResourcesRestClient.GetMongoDBDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 return Response.FromValue(new DatabaseAccountMongodbDatabaseThroughputSetting(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

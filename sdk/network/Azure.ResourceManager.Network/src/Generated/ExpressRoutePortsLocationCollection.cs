@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Network
         internal ExpressRoutePortsLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRoutePortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortsLocation.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ExpressRoutePortsLocation.ResourceType, out string expressRoutePortsLocationApiVersion);
-            _expressRoutePortsLocationRestClient = new ExpressRoutePortsLocationsRestOperations(_expressRoutePortsLocationClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortsLocationApiVersion);
+            TryGetApiVersion(ExpressRoutePortsLocation.ResourceType, out string expressRoutePortsLocationApiVersion);
+            _expressRoutePortsLocationRestClient = new ExpressRoutePortsLocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortsLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRoutePortsLocation>> GetAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRoutePortsLocation>> GetAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _expressRoutePortsLocationRestClient.GetAsync(Id.SubscriptionId, locationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _expressRoutePortsLocationClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRoutePortsLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<ExpressRoutePortsLocation> Get(string locationName, CancellationToken cancellationToken = default)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRoutePortsLocationRestClient.Get(Id.SubscriptionId, locationName, cancellationToken);
                 if (response.Value == null)
-                    throw _expressRoutePortsLocationClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRoutePortsLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,9 +200,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<bool> Exists(string locationName, CancellationToken cancellationToken = default)
         {
@@ -254,9 +254,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRoutePortsLocation>> GetIfExistsAsync(string locationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRoutePortsLocation>> GetIfExistsAsync(string locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
         public virtual Response<ExpressRoutePortsLocation> GetIfExists(string locationName, CancellationToken cancellationToken = default)
         {

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -29,12 +33,72 @@ namespace Azure.ResourceManager.CosmosDB
             return GetExtensionClient(resourceGroup).GetDatabaseAccounts();
         }
 
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        public static async Task<Response<DatabaseAccount>> GetDatabaseAccountAsync(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetDatabaseAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}
+        /// Operation Id: DatabaseAccounts_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="accountName"> Cosmos DB database account name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        public static Response<DatabaseAccount> GetDatabaseAccount(this ResourceGroup resourceGroup, string accountName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetDatabaseAccounts().Get(accountName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ClusterResources in the ClusterResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
         public static ClusterResourceCollection GetClusterResources(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetClusterResources();
+        }
+
+        /// <summary>
+        /// Get the properties of a managed Cassandra cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="clusterName"> Managed Cassandra cluster name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public static async Task<Response<ClusterResource>> GetClusterResourceAsync(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetClusterResources().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a managed Cassandra cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}
+        /// Operation Id: CassandraClusters_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="clusterName"> Managed Cassandra cluster name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public static Response<ClusterResource> GetClusterResource(this ResourceGroup resourceGroup, string clusterName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetClusterResources().Get(clusterName, cancellationToken);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// WatchlistItemsOperations operations.
     /// </summary>
-    internal partial class WatchlistItemsOperations : IServiceOperations<SecurityInsightsClient>, IWatchlistItemsOperations
+    internal partial class WatchlistItemsOperations : IServiceOperations<SecurityInsights>, IWatchlistItemsOperations
     {
         /// <summary>
         /// Initializes a new instance of the WatchlistItemsOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal WatchlistItemsOperations(SecurityInsightsClient client)
+        internal WatchlistItemsOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Gets all watchlist Items.
@@ -61,6 +61,12 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// </param>
         /// <param name='watchlistAlias'>
         /// Watchlist Alias
+        /// </param>
+        /// <param name='skipToken'>
+        /// Skiptoken is only used if a previous operation returned a partial result.
+        /// If a previous response contains a nextLink element, the value of the
+        /// nextLink element will include a skiptoken parameter that specifies a
+        /// starting point to use for subsequent calls. Optional.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,7 +89,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<WatchlistItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<WatchlistItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -150,6 +156,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("workspaceName", workspaceName);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("watchlistAlias", watchlistAlias);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
@@ -165,6 +172,10 @@ namespace Microsoft.Azure.Management.SecurityInsights
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (_queryParameters.Count > 0)
             {

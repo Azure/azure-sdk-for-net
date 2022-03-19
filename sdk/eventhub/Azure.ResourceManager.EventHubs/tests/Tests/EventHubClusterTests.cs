@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             string clusterName = Recording.GenerateAssetName("cluster");
             EventHubClusterCollection clusterCollection = _resourceGroup.GetEventHubClusters();
             EventHubClusterData parameter = new EventHubClusterData(AzureLocation.EastUS2);
-            EventHubCluster cluster = (await clusterCollection.CreateOrUpdateAsync(true, clusterName, parameter)).Value;
+            EventHubCluster cluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, parameter)).Value;
             Assert.NotNull(cluster);
             Assert.AreEqual(cluster.Data.Name, clusterName);
 
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
             //update the cluster
             cluster.Data.Tags.Add("key", "value");
-            cluster = (await cluster.UpdateAsync(true, cluster.Data)).Value;
+            cluster = (await cluster.UpdateAsync(WaitUntil.Completed, cluster.Data)).Value;
             Assert.AreEqual(cluster.Data.Tags["key"], "value");
 
             //delete the cluster
-            await cluster.DeleteAsync(true);
+            await cluster.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await clusterCollection.ExistsAsync(clusterName));
         }
     }

@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "981376d7-da36-4a7a-d5cb-94eb710ee927",
         "x-ms-date": "Fri, 29 Oct 2021 19:40:23 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -25,7 +25,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "981376d7-da36-4a7a-d5cb-94eb710ee927",
         "x-ms-request-id": "d8bf6493-901a-0009-2cfc-cc22b6000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -47,7 +47,7 @@
         "x-ms-file-last-write-time": "Now",
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -66,7 +66,7 @@
         "x-ms-file-permission-key": "15110104144358886944*6706197617703823457",
         "x-ms-request-id": "d8bf6495-901a-0009-2dfc-cc22b6000000",
         "x-ms-request-server-encrypted": "false",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -90,7 +90,7 @@
         "x-ms-file-permission": "Inherit",
         "x-ms-return-client-request-id": "true",
         "x-ms-type": "file",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -109,7 +109,7 @@
         "x-ms-file-permission-key": "13773932323712163591*6706197617703823457",
         "x-ms-request-id": "d8bf6496-901a-0009-2efc-cc22b6000000",
         "x-ms-request-server-encrypted": "false",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -130,7 +130,7 @@
         "x-ms-lease-duration": "-1",
         "x-ms-proposed-lease-id": "4e42880f-04a0-86a0-48c8-1812aad68adf",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -142,7 +142,7 @@
         "x-ms-client-request-id": "c01ffd1b-d589-3495-1ea7-03d8a7a5d934",
         "x-ms-lease-id": "4e42880f-04a0-86a0-48c8-1812aad68adf",
         "x-ms-request-id": "d8bf6497-901a-0009-2ffc-cc22b6000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -159,9 +159,9 @@
         ],
         "x-ms-client-request-id": "4532dcbb-7fed-d8cb-14a8-6af0988940f6",
         "x-ms-date": "Fri, 29 Oct 2021 19:40:23 GMT",
-        "x-ms-file-rename-source": "https%3A%2F%2F712xscnapby3pev55a.file.preprod.core.windows.net%2Ftest-share-c92393f0-6257-8104-a92a-89a638363bac%2Ftest-directory-e8072175-37bf-2031-3d8c-c2c22aeb8ca4%2Ftest-file-65caef3e-2740-d205-abcc-fb668ec5e4d2=",
+        "x-ms-file-rename-source": "https://712xscnapby3pev55a.file.preprod.core.windows.net/test-share-c92393f0-6257-8104-a92a-89a638363bac/test-directory-e8072175-37bf-2031-3d8c-c2c22aeb8ca4/test-file-65caef3e-2740-d205-abcc-fb668ec5e4d2",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 412,
@@ -172,7 +172,7 @@
         "x-ms-client-request-id": "4532dcbb-7fed-d8cb-14a8-6af0988940f6",
         "x-ms-error-code": "LeaseIdMissing",
         "x-ms-request-id": "d8bf6498-901a-0009-30fc-cc22b6000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ELeaseIdMissing\u003C/Code\u003E\u003CMessage\u003EThere is currently a lease on the file and no lease ID was specified in the request.\n",
@@ -195,7 +195,7 @@
         "x-ms-date": "Fri, 29 Oct 2021 19:40:23 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -204,7 +204,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "1750d198-b1f4-6ae5-561e-980d5f653aa7",
         "x-ms-request-id": "d8bf6499-901a-0009-31fc-cc22b6000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

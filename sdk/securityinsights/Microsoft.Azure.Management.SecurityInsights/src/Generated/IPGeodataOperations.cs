@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
     /// <summary>
     /// IPGeodataOperations operations.
     /// </summary>
-    internal partial class IPGeodataOperations : IServiceOperations<SecurityInsightsClient>, IIPGeodataOperations
+    internal partial class IPGeodataOperations : IServiceOperations<SecurityInsights>, IIPGeodataOperations
     {
         /// <summary>
         /// Initializes a new instance of the IPGeodataOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal IPGeodataOperations(SecurityInsightsClient client)
+        internal IPGeodataOperations(SecurityInsights client)
         {
             if (client == null)
             {
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a reference to the SecurityInsightsClient
+        /// Gets a reference to the SecurityInsights
         /// </summary>
-        public SecurityInsightsClient Client { get; private set; }
+        public SecurityInsights Client { get; private set; }
 
         /// <summary>
         /// Get geodata for a single IP address

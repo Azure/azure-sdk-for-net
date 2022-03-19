@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of MhsmNetworkRuleSet. </summary>
         public MhsmNetworkRuleSet()
         {
-            IpRules = new ChangeTrackingList<MhsmipRule>();
+            IPRules = new ChangeTrackingList<MhsmIPRule>();
             VirtualNetworkRules = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        internal MhsmNetworkRuleSet(NetworkRuleBypassOptions? bypass, NetworkRuleAction? defaultAction, IList<MhsmipRule> ipRules, IList<WritableSubResource> virtualNetworkRules)
+        internal MhsmNetworkRuleSet(NetworkRuleBypassOptions? bypass, NetworkRuleAction? defaultAction, IList<MhsmIPRule> ipRules, IList<WritableSubResource> virtualNetworkRules)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
-            IpRules = ipRules;
+            IPRules = ipRules;
             VirtualNetworkRules = virtualNetworkRules;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </summary>
         public NetworkRuleAction? DefaultAction { get; set; }
         /// <summary> The list of IP address rules. </summary>
-        public IList<MhsmipRule> IpRules { get; }
+        public IList<MhsmIPRule> IPRules { get; }
         /// <summary> The list of virtual network rules. </summary>
         public IList<WritableSubResource> VirtualNetworkRules { get; }
     }

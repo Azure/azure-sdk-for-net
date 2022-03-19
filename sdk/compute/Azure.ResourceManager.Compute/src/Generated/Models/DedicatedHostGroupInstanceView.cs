@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The DedicatedHostGroupInstanceView. </summary>
-    public partial class DedicatedHostGroupInstanceView
+    internal partial class DedicatedHostGroupInstanceView
     {
         /// <summary> Initializes a new instance of DedicatedHostGroupInstanceView. </summary>
         internal DedicatedHostGroupInstanceView()

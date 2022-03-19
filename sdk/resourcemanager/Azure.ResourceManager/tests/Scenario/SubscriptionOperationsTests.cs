@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    [Parallelizable]
     public class SubscriptionOperationsTests : ResourceManagerTestBase
     {
+        private string _tagKey;
+        private string TagKey => _tagKey ??= Recording.GenerateAssetName("TagKey-");
+        private string _tagValue;
+        private string TagValue => _tagValue ??= Recording.GenerateAssetName("TagValue-");
+
         public SubscriptionOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.Tests
             }
         }
 
-        [TestCase("te%st")]        
+        [TestCase("te%st")]
         [TestCase("te$st")]
         [TestCase("te#st")]
         [RecordedTest]
@@ -129,7 +134,7 @@ namespace Azure.ResourceManager.Tests
                 _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected 404 from service");
             }
-            catch(RequestFailedException e) when (e.Status == 404)
+            catch (RequestFailedException e) when (e.Status == 404)
             {
             }
         }
@@ -159,7 +164,7 @@ namespace Azure.ResourceManager.Tests
         private string GetLongString(int length)
         {
             StringBuilder builder = new StringBuilder();
-            for(int i=0; i<length; i++)
+            for (int i = 0; i < length; i++)
             {
                 builder.Append('a');
             }
@@ -182,6 +187,41 @@ namespace Azure.ResourceManager.Tests
             //Assert.IsNotNull(testFeature.Data.Name);
             //Assert.IsNotNull(testFeature.Data.Properties);
             //Assert.IsNotNull(testFeature.Data.Type);
+        }
+
+        [Ignore("Need to resolve before GA")]
+        [RecordedTest]
+        public async Task AddTag()
+        {
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var subscription2 = await subscription.AddTagAsync(TagKey, TagValue);
+            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(TagKey));
+            Assert.AreEqual(subscription2.Value.Data.Tags[TagKey], TagValue);
+        }
+
+        [Ignore("Need to resolve before GA")]
+        [RecordedTest]
+        public async Task RemoveTag()
+        {
+            await AddTag();
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var subscription2 = await subscription.RemoveTagAsync(TagKey);
+            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
+        }
+
+        [Ignore("Need to resolve before GA")]
+        [RecordedTest]
+        public async Task SetTags()
+        {
+            await AddTag();
+            var subscription = await Client.GetDefaultSubscriptionAsync();
+            var key = Recording.GenerateAssetName("TagKey-");
+            var value = Recording.GenerateAssetName("TagValue-");
+            var tags = new Dictionary<string, string>();
+            var subscription2 = await subscription.SetTagsAsync(tags);
+            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
+            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(key));
+            Assert.AreEqual(subscription2.Value.Data.Tags[key], value);
         }
     }
 }

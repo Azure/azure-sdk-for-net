@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Communication
         }
 
         private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationService.ResourceType.Namespace, DiagnosticOptions);
-        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(CommunicationServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CommunicationService.ResourceType));
+        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CommunicationService.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            Client.TryGetApiVersion(resourceType, out string apiVersion);
+            TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Communication
         /// </summary>
         /// <param name="nameAvailabilityParameters"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailability>> CheckCommunicationNameAvailabilityAsync(NameAvailabilityOptions nameAvailabilityParameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = CommunicationServiceClientDiagnostics.CreateScope("SubscriptionExtensionClient.CheckCommunicationNameAvailability");
             scope.Start();

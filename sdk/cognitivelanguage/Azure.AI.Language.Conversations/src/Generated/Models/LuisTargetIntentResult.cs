@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations
     {
         /// <summary> Initializes a new instance of LuisTargetIntentResult. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        internal LuisTargetIntentResult(double confidence) : base(confidence)
+        internal LuisTargetIntentResult(float confidence) : base(confidence)
         {
             TargetKind = Conversations.TargetKind.Luis;
         }
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="internalResult"> The actual response from a LUIS Generally Available application. </param>
-        internal LuisTargetIntentResult(TargetKind targetKind, string apiVersion, double confidence, object internalResult) : base(targetKind, apiVersion, confidence)
+        internal LuisTargetIntentResult(TargetKind targetKind, string apiVersion, float confidence, object internalResult) : base(targetKind, apiVersion, confidence)
         {
             InternalResult = internalResult;
             TargetKind = targetKind;

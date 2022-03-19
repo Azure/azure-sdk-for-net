@@ -15,7 +15,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         public TelemetryExceptionData(int version, LogRecord logRecord) : base(version)
         {
-            var message = LogsHelper.GetMessage(logRecord);
+            Properties = new ChangeTrackingDictionary<string, string>();
+            Measurements = new ChangeTrackingDictionary<string, double>();
+
+            var message = LogsHelper.GetMessageAndSetProperties(logRecord, Properties);
+
             SeverityLevel = LogsHelper.GetSeverityLevel(logRecord.LogLevel);
             ProblemId = LogsHelper.GetProblemId(logRecord.Exception);
 
@@ -40,12 +44,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     exceptions.Count - MaxExceptionCountToSave);
 
                 // we'll add our new exception and parent it to the root exception (first one in the list)
-                exceptions.Add(new TelemetryExceptionDetails(countExceededException, null, exceptions[0]));
+                exceptions.Add(new TelemetryExceptionDetails(countExceededException, countExceededException.Message, exceptions[0]));
             }
 
             Exceptions = exceptions;
-            Properties = new ChangeTrackingDictionary<string, string>();
-            Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
         private void ConvertExceptionTree(Exception exception, string message, TelemetryExceptionDetails parentExceptionDetails, List<TelemetryExceptionDetails> exceptions)

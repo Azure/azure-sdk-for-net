@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="functionAppId"> Function App ID. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="invokeUrlTemplate"> The invocation URL. </param>
         /// <param name="language"> The function language. </param>
         /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
-        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, object config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled) : base(id, name, type, systemData, kind)
+        internal FunctionEnvelopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string functionAppId, string scriptRootPathHref, string scriptHref, string configHref, string testDataHref, string secretsFileHref, string href, BinaryData config, IDictionary<string, string> files, string testData, string invokeUrlTemplate, string language, bool? isDisabled) : base(id, name, resourceType, systemData, kind)
         {
             FunctionAppId = functionAppId;
             ScriptRootPathHref = scriptRootPathHref;
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Function URI. </summary>
         public string Href { get; set; }
         /// <summary> Config information. </summary>
-        public object Config { get; set; }
+        public BinaryData Config { get; set; }
         /// <summary> File list. </summary>
         public IDictionary<string, string> Files { get; }
         /// <summary> Test data used when testing via the Azure Portal. </summary>

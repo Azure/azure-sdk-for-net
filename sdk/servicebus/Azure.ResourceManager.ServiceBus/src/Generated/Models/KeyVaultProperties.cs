@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Version of KeyVault. </summary>
         public string KeyVersion { get; set; }
         /// <summary> Gets or sets the identity. </summary>
-        public UserAssignedIdentityProperties Identity { get; set; }
+        internal UserAssignedIdentityProperties Identity { get; set; }
+        /// <summary> ARM ID of user Identity selected for encryption. </summary>
+        public string UserAssignedIdentity
+        {
+            get => Identity is null ? default : Identity.UserAssignedIdentity;
+            set
+            {
+                if (Identity is null)
+                    Identity = new UserAssignedIdentityProperties();
+                Identity.UserAssignedIdentity = value;
+            }
+        }
     }
 }

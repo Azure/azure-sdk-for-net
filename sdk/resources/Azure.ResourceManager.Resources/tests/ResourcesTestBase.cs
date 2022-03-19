@@ -14,6 +14,7 @@ using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
+using System.Security.Policy;
 
 namespace Azure.ResourceManager.Resources.Tests
 {
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,
-            Parameters = new JsonObject()
+            Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
                 {"storageAccountNamePrefix", new JsonObject()
                     {
@@ -60,14 +61,14 @@ namespace Azure.ResourceManager.Resources.Tests
                         {"value", "Standard_LRS" }
                     }
                 }
-            }
+            })
         };
 
         protected static DeploymentProperties CreateDeploymentProperties()
         {
             DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
             tmpDeploymentProperties.TemplateLink = new TemplateLink();
-            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             tmpDeploymentProperties.Parameters = new JsonObject()
             {
                 {"storageAccountType", new JsonObject()
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             DeploymentProperties tmpDeploymentProperties = new DeploymentProperties(DeploymentMode.Incremental);
             tmpDeploymentProperties.TemplateLink = new TemplateLink();
-            tmpDeploymentProperties.TemplateLink.Uri = "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json";
+            tmpDeploymentProperties.TemplateLink.Uri = new Uri("https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/quickstarts/microsoft.storage/storage-account-create/azuredeploy.json");
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);
@@ -122,15 +123,15 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName4Identities = "rg-for-DeployScript";
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             Subscription sub = await Client.GetDefaultSubscriptionAsync();
-            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(true, rgName4Identities, rgData);
+            var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName4Identities, rgData);
             ResourceGroup rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
-            var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(true, userAssignedIdentitiesId, userAssignedIdentitiesData);
+            var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userAssignedIdentitiesId, userAssignedIdentitiesData);
             GenericResource userAssignedIdentities = lro2.Value;
             var managedIdentity = new DeploymentScriptManagedIdentity()
             {
-                Type = "UserAssigned",
+                DeploymentScriptManagedIdentityType = "UserAssigned",
                 UserAssignedIdentities =
                 {
                     {
@@ -160,11 +161,11 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(AzureLocation.WestUS2)
         {
             Description = "My first version",
-            MainTemplate = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            MainTemplate = BinaryData.FromString(File.ReadAllText(Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "Scenario",
             "DeploymentTemplates",
-            $"simple-storage-account.json"))).RootElement.GetObject()
+            $"simple-storage-account.json")))
         };
     }
 }

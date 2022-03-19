@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal DataPolicyManifestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DataPolicyManifest.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DataPolicyManifest.ResourceType, out string dataPolicyManifestApiVersion);
-            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(_dataPolicyManifestClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
+            TryGetApiVersion(DataPolicyManifest.ResourceType, out string dataPolicyManifestApiVersion);
+            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public async virtual Task<Response<DataPolicyManifest>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataPolicyManifest>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _dataPolicyManifestRestClient.GetByPolicyModeAsync(policyMode, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _dataPolicyManifestClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<DataPolicyManifest> Get(string policyMode, CancellationToken cancellationToken = default)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _dataPolicyManifestRestClient.GetByPolicyMode(policyMode, cancellationToken);
                 if (response.Value == null)
-                    throw _dataPolicyManifestClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DataPolicyManifest(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string policyMode, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<bool> Exists(string policyMode, CancellationToken cancellationToken = default)
         {
@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
-        public async virtual Task<Response<DataPolicyManifest>> GetIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataPolicyManifest>> GetIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<DataPolicyManifest> GetIfExists(string policyMode, CancellationToken cancellationToken = default)
         {

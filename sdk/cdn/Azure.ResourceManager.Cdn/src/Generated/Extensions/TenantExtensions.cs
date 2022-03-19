@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
 
@@ -35,12 +36,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="checkNameAvailabilityInput"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
-        public async static Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityOutput>> CheckCdnNameAvailabilityAsync(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
+            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
 
             return await GetExtensionClient(tenant).CheckCdnNameAvailabilityAsync(checkNameAvailabilityInput, cancellationToken).ConfigureAwait(false);
         }
@@ -56,10 +54,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityInput"/> is null. </exception>
         public static Response<CheckNameAvailabilityOutput> CheckCdnNameAvailability(this Tenant tenant, CheckNameAvailabilityInput checkNameAvailabilityInput, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityInput == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityInput));
-            }
+            Argument.AssertNotNull(checkNameAvailabilityInput, nameof(checkNameAvailabilityInput));
 
             return GetExtensionClient(tenant).CheckCdnNameAvailability(checkNameAvailabilityInput, cancellationToken);
         }

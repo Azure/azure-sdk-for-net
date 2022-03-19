@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "5ffaf14e-0698-509e-1747-7ea2ca11cefe",
         "x-ms-date": "Thu, 20 Jan 2022 20:44:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "5ffaf14e-0698-509e-1747-7ea2ca11cefe",
         "x-ms-request-id": "6ce831a2-001e-0046-253e-0eee45000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -43,9 +43,9 @@
         "x-ms-date": "Thu, 20 Jan 2022 20:44:21 GMT",
         "x-ms-meta-testkey": "testvalue",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -58,7 +58,7 @@
         "x-ms-content-crc64": "AAAAAAAAAAA=",
         "x-ms-request-id": "6ce831ae-001e-0046-2d3e-0eee45000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2022-01-20T20:44:21.0464472Z"
       },
       "ResponseBody": []
@@ -77,7 +77,7 @@
         "x-ms-date": "Thu, 20 Jan 2022 20:44:21 GMT",
         "x-ms-meta-testkey": "testvalue",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": "\uFEFF\u003CBlockList /\u003E",
       "StatusCode": 201,
@@ -91,7 +91,7 @@
         "x-ms-content-crc64": "g0vf2Kdg954=",
         "x-ms-request-id": "6ce831ca-001e-0046-3d3e-0eee45000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2022-01-20T20:44:21.2043583Z"
       },
       "ResponseBody": []
@@ -107,7 +107,7 @@
         "x-ms-client-request-id": "91160e6c-95a1-5665-903f-a729be2a9207",
         "x-ms-date": "Thu, 20 Jan 2022 20:44:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -132,7 +132,7 @@
         "x-ms-meta-testkey": "testvalue",
         "x-ms-request-id": "6ce831e7-001e-0046-4d3e-0eee45000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2022-01-20T20:44:21.2043583Z"
       },
       "ResponseBody": []
@@ -148,7 +148,7 @@
         "x-ms-client-request-id": "0311bcf5-3bad-0f10-df68-d1ffcc75bb57",
         "x-ms-date": "Thu, 20 Jan 2022 20:44:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -173,7 +173,7 @@
         "x-ms-meta-testkey": "testvalue",
         "x-ms-request-id": "6ce831f4-001e-0046-573e-0eee45000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2022-01-20T20:44:21.2043583Z"
       },
       "ResponseBody": []
@@ -189,7 +189,7 @@
         "x-ms-client-request-id": "023353d9-8e19-ea5a-7492-eb8537926b4b",
         "x-ms-date": "Thu, 20 Jan 2022 20:44:21 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -199,7 +199,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "023353d9-8e19-ea5a-7492-eb8537926b4b",
         "x-ms-request-id": "6ce83203-001e-0046-623e-0eee45000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

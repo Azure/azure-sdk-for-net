@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <param name="tags">Resource tags</param>
         /// <param name="backupId">backupId</param>
-        /// <param name="creationDate">name</param>
+        /// <param name="creationDate">creationDate</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="size">Size of backup</param>
         /// <param name="label">Label for backup</param>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string BackupId { get; private set; }
 
         /// <summary>
-        /// Gets name
+        /// Gets creationDate
         /// </summary>
         /// <remarks>
         /// The creation date of the backup

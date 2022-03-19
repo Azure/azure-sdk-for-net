@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication
@@ -27,6 +31,36 @@ namespace Azure.ResourceManager.Communication
         public static CommunicationServiceCollection GetCommunicationServices(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetCommunicationServices();
+        }
+
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static async Task<Response<CommunicationService>> GetCommunicationServiceAsync(this ResourceGroup resourceGroup, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetCommunicationServices().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the CommunicationService and its properties.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
+        /// Operation Id: CommunicationService_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
+        public static Response<CommunicationService> GetCommunicationService(this ResourceGroup resourceGroup, string communicationServiceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetCommunicationServices().Get(communicationServiceName, cancellationToken);
         }
     }
 }

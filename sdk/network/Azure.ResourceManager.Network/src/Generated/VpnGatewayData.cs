@@ -13,20 +13,20 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the VpnGateway data model. </summary>
-    public partial class VpnGatewayData : Resource
+    public partial class VpnGatewayData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>
         public VpnGatewayData()
         {
             Connections = new ChangeTrackingList<VpnConnectionData>();
-            IpConfigurations = new ChangeTrackingList<VpnGatewayIpConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VpnGatewayIPConfiguration>();
             NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
         /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
-        internal VpnGatewayData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIpConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, type, location, tags)
+        internal VpnGatewayData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, ProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             VirtualHub = virtualHub;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             BgpSettings = bgpSettings;
             ProvisioningState = provisioningState;
             VpnGatewayScaleUnit = vpnGatewayScaleUnit;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
             NatRules = natRules;
         }
@@ -54,7 +54,19 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> The VirtualHub to which the gateway belongs. </summary>
-        public WritableSubResource VirtualHub { get; set; }
+        internal WritableSubResource VirtualHub { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get => VirtualHub is null ? default : VirtualHub.Id;
+            set
+            {
+                if (VirtualHub is null)
+                    VirtualHub = new WritableSubResource();
+                VirtualHub.Id = value;
+            }
+        }
+
         /// <summary> List of all vpn connections to the gateway. </summary>
         public IList<VpnConnectionData> Connections { get; }
         /// <summary> Local network gateway&apos;s BGP speaker settings. </summary>
@@ -64,7 +76,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The scale unit for this vpn gateway. </summary>
         public int? VpnGatewayScaleUnit { get; set; }
         /// <summary> List of all IPs configured on the gateway. </summary>
-        public IReadOnlyList<VpnGatewayIpConfiguration> IpConfigurations { get; }
+        public IReadOnlyList<VpnGatewayIPConfiguration> IPConfigurations { get; }
         /// <summary> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </summary>
         public bool? IsRoutingPreferenceInternet { get; set; }
         /// <summary> List of all the nat Rules associated with the gateway. </summary>

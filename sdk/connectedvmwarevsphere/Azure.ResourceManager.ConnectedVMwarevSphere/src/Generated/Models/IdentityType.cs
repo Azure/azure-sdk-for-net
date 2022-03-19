@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> The type of managed service identity. </summary>
-    public readonly partial struct IdentityType : IEquatable<IdentityType>
+    internal readonly partial struct IdentityType : IEquatable<IdentityType>
     {
         private readonly string _value;
 

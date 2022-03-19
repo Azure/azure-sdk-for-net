@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal class MetricHelper
     {
-        private const int version = 2;
+        private const int Version = 2;
 
         internal static List<TelemetryItem> OtelToAzureMonitorMetrics(Batch<Metric> batch, string roleName, string roleInstance, string instrumentationKey)
         {
@@ -21,19 +21,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (metric.MetricType == MetricType.DoubleSum || metric.MetricType == MetricType.DoubleGauge)
                 {
-                    foreach (ref var metricPoint in metric.GetMetricPoints())
+                    foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                     {
-                        string name = "Metric";
-                        string utcTime = TelemetryItem.FormatUtcTimestamp(metricPoint.EndTime.UtcDateTime);
-                        telemetryItem = new TelemetryItem(name, utcTime);
-                        telemetryItem.Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.SdkVersion;
-                        telemetryItem.InstrumentationKey = instrumentationKey;
-                        telemetryItem.SetResource(roleName, roleInstance);
-
+                        telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, roleName, roleInstance, instrumentationKey);
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "MetricData",
-                            BaseData = new MetricsData(version, metric, ref metricPoint)
+                            BaseData = new MetricsData(Version, metric, metricPoint)
                         };
                         telemetryItems.Add(telemetryItem);
                     }

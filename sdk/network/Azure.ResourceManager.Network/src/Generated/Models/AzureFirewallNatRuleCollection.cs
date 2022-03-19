@@ -44,7 +44,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Priority of the NAT rule collection resource. </summary>
         public int? Priority { get; set; }
         /// <summary> The action type of a NAT rule collection. </summary>
-        public AzureFirewallNatRCAction Action { get; set; }
+        internal AzureFirewallNatRCAction Action { get; set; }
+        /// <summary> The type of action. </summary>
+        public AzureFirewallNatRCActionType? AzureFirewallNatRCActionType
+        {
+            get => Action is null ? default : Action.AzureFirewallNatRCActionType;
+            set
+            {
+                if (Action is null)
+                    Action = new AzureFirewallNatRCAction();
+                Action.AzureFirewallNatRCActionType = value;
+            }
+        }
+
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
         public IList<AzureFirewallNatRule> Rules { get; }
         /// <summary> The provisioning state of the NAT rule collection resource. </summary>

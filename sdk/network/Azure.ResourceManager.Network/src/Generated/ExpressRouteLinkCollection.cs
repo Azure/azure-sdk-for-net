@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteLink.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(ExpressRouteLink.ResourceType, out string expressRouteLinkApiVersion);
-            _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(_expressRouteLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteLinkApiVersion);
+            TryGetApiVersion(ExpressRouteLink.ResourceType, out string expressRouteLinkApiVersion);
+            _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteLink>> GetAsync(string linkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteLink>> GetAsync(string linkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _expressRouteLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _expressRouteLinkClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<ExpressRouteLink> Get(string linkName, CancellationToken cancellationToken = default)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRouteLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkName, cancellationToken);
                 if (response.Value == null)
-                    throw _expressRouteLinkClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteLink(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<bool> Exists(string linkName, CancellationToken cancellationToken = default)
         {
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteLink>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteLink>> GetIfExistsAsync(string linkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkName"> The name of the ExpressRouteLink resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         public virtual Response<ExpressRouteLink> GetIfExists(string linkName, CancellationToken cancellationToken = default)
         {

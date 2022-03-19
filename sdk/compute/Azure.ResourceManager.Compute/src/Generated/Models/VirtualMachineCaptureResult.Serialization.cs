@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -28,8 +29,8 @@ namespace Azure.ResourceManager.Compute.Models
         {
             Optional<string> schema = default;
             Optional<string> contentVersion = default;
-            Optional<object> parameters = default;
-            Optional<IReadOnlyList<object>> resources = default;
+            Optional<BinaryData> parameters = default;
+            Optional<IReadOnlyList<BinaryData>> resources = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parameters = property.Value.GetObject();
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("resources"))
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<object> array = new List<object>();
+                    List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetObject());
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     resources = array;
                     continue;

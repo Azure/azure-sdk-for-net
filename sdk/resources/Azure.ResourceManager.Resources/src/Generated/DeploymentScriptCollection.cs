@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Resources
         internal DeploymentScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
-            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(_deploymentScriptClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
+            TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
+            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,19 +55,16 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
         /// Operation Id: DeploymentScripts_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public async virtual Task<ArmOperation<DeploymentScript>> CreateOrUpdateAsync(bool waitForCompletion, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeploymentScript>> CreateOrUpdateAsync(WaitUntil waitUntil, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
-            if (deploymentScript == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentScript));
-            }
+            Argument.AssertNotNull(deploymentScript, nameof(deploymentScript));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.CreateOrUpdate");
             scope.Start();
@@ -75,7 +72,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _deploymentScriptRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken).ConfigureAwait(false);
                 var operation = new ResourcesArmOperation<DeploymentScript>(new DeploymentScriptOperationSource(Client), _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -91,19 +88,16 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
         /// Operation Id: DeploymentScripts_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="deploymentScript"> Deployment script supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="deploymentScript"/> is null. </exception>
-        public virtual ArmOperation<DeploymentScript> CreateOrUpdate(bool waitForCompletion, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeploymentScript> CreateOrUpdate(WaitUntil waitUntil, string scriptName, DeploymentScriptData deploymentScript, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
-            if (deploymentScript == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentScript));
-            }
+            Argument.AssertNotNull(deploymentScript, nameof(deploymentScript));
 
             using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScriptCollection.CreateOrUpdate");
             scope.Start();
@@ -111,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _deploymentScriptRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript, cancellationToken);
                 var operation = new ResourcesArmOperation<DeploymentScript>(new DeploymentScriptOperationSource(Client), _deploymentScriptClientDiagnostics, Pipeline, _deploymentScriptRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, deploymentScript).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -129,9 +123,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public async virtual Task<Response<DeploymentScript>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentScript>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -141,7 +135,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deploymentScriptClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -158,7 +152,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<DeploymentScript> Get(string scriptName, CancellationToken cancellationToken = default)
         {
@@ -170,7 +164,7 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scriptName, cancellationToken);
                 if (response.Value == null)
-                    throw _deploymentScriptClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,9 +265,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string scriptName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -298,7 +292,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<bool> Exists(string scriptName, CancellationToken cancellationToken = default)
         {
@@ -325,9 +319,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        public async virtual Task<Response<DeploymentScript>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeploymentScript>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
@@ -354,7 +348,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<DeploymentScript> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
         {

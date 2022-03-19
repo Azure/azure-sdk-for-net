@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class representing collection of OSVersion and their operations over its parent. </summary>
     public partial class OSVersionCollection : ArmCollection, IEnumerable<OSVersion>, IAsyncEnumerable<OSVersion>
     {
-        private readonly ClientDiagnostics _oSVersionCloudServiceOperatingSystemsClientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _oSVersionCloudServiceOperatingSystemsRestClient;
+        private readonly ClientDiagnostics _osVersionCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _osVersionCloudServiceOperatingSystemsRestClient;
         private readonly string _location;
 
         /// <summary> Initializes a new instance of the <see cref="OSVersionCollection"/> class for mocking. </summary>
@@ -38,12 +38,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         internal OSVersionCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
             _location = location;
-            _oSVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersion.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(OSVersion.ResourceType, out string oSVersionCloudServiceOperatingSystemsApiVersion);
-            _oSVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_oSVersionCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, oSVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersion.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(OSVersion.ResourceType, out string osVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,19 +63,19 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Get");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken).ConfigureAwait(false);
+                var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -91,19 +92,19 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<OSVersion> Get(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Get");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken);
+                var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken);
                 if (response.Value == null)
-                    throw _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -124,11 +125,11 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<OSVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _oSVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -139,11 +140,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<OSVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _oSVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -166,11 +167,11 @@ namespace Azure.ResourceManager.Compute
         {
             Page<OSVersion> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _oSVersionCloudServiceOperatingSystemsRestClient.ListOSVersions(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
+                    var response = _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersions(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -181,11 +182,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<OSVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _oSVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
+                    var response = _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new OSVersion(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -204,13 +205,13 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Exists");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -231,13 +232,13 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Exists");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -258,17 +259,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return Response.FromValue<OSVersion>(null, response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());
@@ -287,17 +288,17 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
         public virtual Response<OSVersion> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _oSVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oSVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
+                var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return Response.FromValue<OSVersion>(null, response.GetRawResponse());
                 return Response.FromValue(new OSVersion(Client, response.Value), response.GetRawResponse());

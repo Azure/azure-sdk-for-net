@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -63,12 +64,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="checkNameAvailabilityParameters"> The object containing information for the availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
-        public async static Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<NameAvailabilityStatus>> CheckAppConfigurationNameAvailabilityAsync(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityParameters == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityParameters));
-            }
+            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
 
             return await GetExtensionClient(subscription).CheckAppConfigurationNameAvailabilityAsync(checkNameAvailabilityParameters, cancellationToken).ConfigureAwait(false);
         }
@@ -84,10 +82,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityParameters"/> is null. </exception>
         public static Response<NameAvailabilityStatus> CheckAppConfigurationNameAvailability(this Subscription subscription, CheckNameAvailabilityParameters checkNameAvailabilityParameters, CancellationToken cancellationToken = default)
         {
-            if (checkNameAvailabilityParameters == null)
-            {
-                throw new ArgumentNullException(nameof(checkNameAvailabilityParameters));
-            }
+            Argument.AssertNotNull(checkNameAvailabilityParameters, nameof(checkNameAvailabilityParameters));
 
             return GetExtensionClient(subscription).CheckAppConfigurationNameAvailability(checkNameAvailabilityParameters, cancellationToken);
         }

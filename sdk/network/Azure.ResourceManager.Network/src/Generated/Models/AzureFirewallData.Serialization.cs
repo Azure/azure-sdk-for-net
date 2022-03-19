@@ -81,20 +81,20 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
+                foreach (var item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ManagementIpConfiguration))
+            if (Optional.IsDefined(ManagementIPConfiguration))
             {
                 writer.WritePropertyName("managementIpConfiguration");
-                writer.WriteObjectValue(ManagementIpConfiguration);
+                writer.WriteObjectValue(ManagementIPConfiguration);
             }
             if (Optional.IsDefined(ThreatIntelMode))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> virtualHub = default;
             Optional<WritableSubResource> firewallPolicy = default;
             Optional<HubIPAddresses> hubIPAddresses = default;
-            Optional<IReadOnlyList<AzureFirewallIpGroups>> ipGroups = default;
+            Optional<IReadOnlyList<AzureFirewallIPGroups>> ipGroups = default;
             Optional<AzureFirewallSku> sku = default;
             Optional<IDictionary<string, string>> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -351,10 +351,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AzureFirewallIpGroups> array = new List<AzureFirewallIpGroups>();
+                            List<AzureFirewallIPGroups> array = new List<AzureFirewallIPGroups>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallIpGroups.DeserializeAzureFirewallIpGroups(item));
+                                array.Add(AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(item));
                             }
                             ipGroups = array;
                             continue;

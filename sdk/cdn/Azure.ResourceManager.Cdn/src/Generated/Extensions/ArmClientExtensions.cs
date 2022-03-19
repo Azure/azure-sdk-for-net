@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="Profile" /> object. </returns>
         public static Profile GetProfile(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 Profile.ValidateResourceId(id);
                 return new Profile(client, id);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnEndpoint" /> object. </returns>
         public static CdnEndpoint GetCdnEndpoint(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnEndpoint.ValidateResourceId(id);
                 return new CdnEndpoint(client, id);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOrigin" /> object. </returns>
         public static CdnOrigin GetCdnOrigin(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnOrigin.ValidateResourceId(id);
                 return new CdnOrigin(client, id);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOriginGroup" /> object. </returns>
         public static CdnOriginGroup GetCdnOriginGroup(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnOriginGroup.ValidateResourceId(id);
                 return new CdnOriginGroup(client, id);
@@ -84,154 +84,10 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnCustomDomain" /> object. </returns>
         public static CdnCustomDomain GetCdnCustomDomain(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnCustomDomain.ValidateResourceId(id);
                 return new CdnCustomDomain(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdCustomDomain
-        /// <summary> Gets an object representing a AfdCustomDomain along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdCustomDomain" /> object. </returns>
-        public static AfdCustomDomain GetAfdCustomDomain(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdCustomDomain.ValidateResourceId(id);
-                return new AfdCustomDomain(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdEndpoint
-        /// <summary> Gets an object representing a AfdEndpoint along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdEndpoint" /> object. </returns>
-        public static AfdEndpoint GetAfdEndpoint(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdEndpoint.ValidateResourceId(id);
-                return new AfdEndpoint(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdOriginGroup
-        /// <summary> Gets an object representing a AfdOriginGroup along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdOriginGroup" /> object. </returns>
-        public static AfdOriginGroup GetAfdOriginGroup(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdOriginGroup.ValidateResourceId(id);
-                return new AfdOriginGroup(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdOrigin
-        /// <summary> Gets an object representing a AfdOrigin along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdOrigin" /> object. </returns>
-        public static AfdOrigin GetAfdOrigin(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdOrigin.ValidateResourceId(id);
-                return new AfdOrigin(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdRoute
-        /// <summary> Gets an object representing a AfdRoute along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdRoute" /> object. </returns>
-        public static AfdRoute GetAfdRoute(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdRoute.ValidateResourceId(id);
-                return new AfdRoute(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdRuleSet
-        /// <summary> Gets an object representing a AfdRuleSet along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdRuleSet" /> object. </returns>
-        public static AfdRuleSet GetAfdRuleSet(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdRuleSet.ValidateResourceId(id);
-                return new AfdRuleSet(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdRule
-        /// <summary> Gets an object representing a AfdRule along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdRule" /> object. </returns>
-        public static AfdRule GetAfdRule(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdRule.ValidateResourceId(id);
-                return new AfdRule(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdSecurityPolicy
-        /// <summary> Gets an object representing a AfdSecurityPolicy along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdSecurityPolicy" /> object. </returns>
-        public static AfdSecurityPolicy GetAfdSecurityPolicy(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdSecurityPolicy.ValidateResourceId(id);
-                return new AfdSecurityPolicy(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AfdSecret
-        /// <summary> Gets an object representing a AfdSecret along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AfdSecret" /> object. </returns>
-        public static AfdSecret GetAfdSecret(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetClient(() =>
-            {
-                AfdSecret.ValidateResourceId(id);
-                return new AfdSecret(client, id);
             }
             );
         }
@@ -244,7 +100,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicy" /> object. </returns>
         public static CdnWebApplicationFirewallPolicy GetCdnWebApplicationFirewallPolicy(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetClient(() =>
+            return client.GetResourceClient(() =>
             {
                 CdnWebApplicationFirewallPolicy.ValidateResourceId(id);
                 return new CdnWebApplicationFirewallPolicy(client, id);

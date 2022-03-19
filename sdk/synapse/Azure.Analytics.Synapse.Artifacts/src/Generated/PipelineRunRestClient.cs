@@ -28,12 +28,12 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         public PipelineRunRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint)
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateQueryPipelineRunsByWorkspaceRequest(RunFilterParameters filterParameters)
@@ -204,7 +204,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/>, or <paramref name="filterParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/> or <paramref name="filterParameters"/> is null. </exception>
         public async Task<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/>, or <paramref name="filterParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/> or <paramref name="filterParameters"/> is null. </exception>
         public Response<ActivityRunsQueryResponse> QueryActivityRuns(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             if (pipelineName == null)

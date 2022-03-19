@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ProfileData(AzureLocation location, Models.Sku sku) : base(location)
+        public ProfileData(AzureLocation location, CdnSku sku) : base(location)
         {
             if (sku == null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of ProfileData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceState"> Resource status of the profile. </param>
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
         /// <param name="frontdoorId"> The Id of the frontdoor. </param>
-        internal ProfileData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, ProfileResourceState? resourceState, string provisioningState, string frontdoorId) : base(id, name, type, systemData, tags, location)
+        internal ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSku sku, ProfileResourceState? resourceState, string provisioningState, string frontdoorId) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ResourceState = resourceState;
@@ -50,7 +50,19 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> The pricing tier (defines a CDN provider, feature list and rate) of the CDN profile. </summary>
-        public Models.Sku Sku { get; set; }
+        internal CdnSku Sku { get; set; }
+        /// <summary> Name of the pricing tier. </summary>
+        public CdnSkuName? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new CdnSku();
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Resource status of the profile. </summary>
         public ProfileResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the profile. </summary>

@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppService
         internal DeletedSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
-            _deletedSiteGlobalRestClient = new GlobalRestOperations(_deletedSiteGlobalClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
+            TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
+            _deletedSiteGlobalRestClient = new GlobalRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
             _deletedSiteDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
-            Client.TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
-            _deletedSiteDeletedWebAppsRestClient = new DeletedWebAppsRestOperations(_deletedSiteDeletedWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteDeletedWebAppsApiVersion);
+            TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
+            _deletedSiteDeletedWebAppsRestClient = new DeletedWebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteDeletedWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public async virtual Task<Response<DeletedSite>> GetAsync(string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedSite>> GetAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, deletedSiteId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deletedSiteGlobalClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<DeletedSite> Get(string deletedSiteId, CancellationToken cancellationToken = default)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, deletedSiteId, cancellationToken);
                 if (response.Value == null)
-                    throw _deletedSiteGlobalClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<bool> Exists(string deletedSiteId, CancellationToken cancellationToken = default)
         {
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
-        public async virtual Task<Response<DeletedSite>> GetIfExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedSite>> GetIfExistsAsync(string deletedSiteId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedSiteId, nameof(deletedSiteId));
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public virtual Response<DeletedSite> GetIfExists(string deletedSiteId, CancellationToken cancellationToken = default)
         {
