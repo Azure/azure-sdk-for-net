@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             #region Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
 #if SNIPPET
-            string fileUri = "<fileUri>";
+            Uri fileUri = new Uri("<fileUri>");
 #else
             Uri fileUri = DocumentAnalysisTestEnvironment.CreateUri("Form_1.jpg");
 #endif

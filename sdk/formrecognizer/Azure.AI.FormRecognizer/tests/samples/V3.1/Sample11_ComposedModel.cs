@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Samples
             bool useLabels = true;
 
 #if SNIPPET
-            Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
+            Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
 #else
             Uri officeSuppliesUri = new Uri(trainingFileUrl);
 #endif
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Samples
             CustomFormModel officeSuppliesModel = suppliesOperationResponse.Value;
 
 #if SNIPPET
-            Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
+            Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
 #else
             Uri officeEquipmentUri = new Uri(trainingFileUrl);
 #endif
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Samples
             CustomFormModel officeEquipmentModel = equipmentOperationResponse.Value;
 
 #if SNIPPET
-            Uri furnitureUri = <purchaseOrderFurnitureUri>;
+            Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
 #else
             Uri furnitureUri = new Uri(trainingFileUrl);
 #endif
@@ -67,7 +67,7 @@ namespace Azure.AI.FormRecognizer.Samples
             CustomFormModel furnitureModel = furnitureOperationResponse.Value;
 
 #if SNIPPET
-            Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
+            Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
 #else
             Uri cleaningSuppliesUri = new Uri(trainingFileUrl);
 #endif
