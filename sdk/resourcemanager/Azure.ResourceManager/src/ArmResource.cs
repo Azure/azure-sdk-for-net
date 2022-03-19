@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.

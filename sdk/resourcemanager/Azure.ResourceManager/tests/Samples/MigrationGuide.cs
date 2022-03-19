@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Tests.Samples
             string virtualMachineName = "quickstartvm";
             AvailabilitySetData availabilitySetData = new AvailabilitySetData(location);
             AvailabilitySetCollection availabilitySets = resourceGroup.GetAvailabilitySets();
-            ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
-            AvailabilitySet availabilitySet = availabilitySetOperation.Value;
+            //ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
+            //AvailabilitySet availabilitySet = availabilitySetOperation.Value;
             #endregion
 
             #region Snippet:Create_Vnet_and_Subnet
-            string virtualNetworkName = "MYVM" + "_vnet";
+            //string virtualNetworkName = "MYVM" + "_vnet";
             string subnetName = "mySubnet";
 
             VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.Tests.Samples
             };
             VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
             virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
-            ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
-            VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
+            //ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
+            //VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
             #endregion
 
             #region Snippet:Create_NetworkSecurityGroup
             string networkSecurityGroupName = virtualMachineName + "_nsg";
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = location };
             NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
-            ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
-            NetworkSecurityGroup networkSecurityGroup = networkSecurityGroupOperation.Value;
+            //ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
+            //NetworkSecurityGroup networkSecurityGroup = networkSecurityGroupOperation.Value;
             #endregion
 
             #region Snippet:Create_NetworkInterface
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Tests.Samples
             {
                 Name = "Primary",
                 Primary = true,
-                Subnet = new SubnetData() { Id = virtualNetwork.Data.Subnets.First().Id },
+                //Subnet = new SubnetData() { Id = virtualNetwork.Data.Subnets.First().Id },
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
             };
 
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Tests.Samples
             nicData.Location = location;
             nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
             NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
-            ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
-            NetworkInterface networkInterface = networkInterfaceOperation.Value;
+            //ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
+            //NetworkInterface networkInterface = networkInterfaceOperation.Value;
             #endregion
 
             #region Snippet:Create_VirtualMachine
@@ -98,15 +98,15 @@ namespace Azure.ResourceManager.Tests.Samples
             virutalMachineData.OSProfile.AdminUsername = "admin-username";
             virutalMachineData.OSProfile.AdminPassword = "admin-p4$$w0rd";
             virutalMachineData.OSProfile.ComputerName = "computer-name";
-            virutalMachineData.AvailabilitySetId = availabilitySet.Id;
+            //virutalMachineData.AvailabilitySetId = availabilitySet.Id;
             NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
-            nicReference.Id = networkInterface.Id;
+            //nicReference.Id = networkInterface.Id;
             virutalMachineData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
             VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
-            ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
-            VirtualMachine virtualMachine = virtualMachineOperation.Value;
-            Console.WriteLine("VM ID: " + virtualMachine.Id);
+            //ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
+            //VirtualMachine virtualMachine = virtualMachineOperation.Value;
+            //Console.WriteLine("VM ID: " + virtualMachine.Id);
             #endregion
         }
     }

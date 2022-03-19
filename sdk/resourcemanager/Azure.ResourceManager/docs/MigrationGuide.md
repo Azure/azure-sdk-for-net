@@ -105,8 +105,8 @@ string aSetID = $"/subscriptions/{computeClient.SubscriptionId}/resourceGroups/{
 string virtualMachineName = "quickstartvm";
 AvailabilitySetData availabilitySetData = new AvailabilitySetData(location);
 AvailabilitySetCollection availabilitySets = resourceGroup.GetAvailabilitySets();
-ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
-AvailabilitySet availabilitySet = availabilitySetOperation.Value;
+//ArmOperation<AvailabilitySet> availabilitySetOperation = await availabilitySets.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName + "_aSet", availabilitySetData);
+//AvailabilitySet availabilitySet = availabilitySetOperation.Value;
 ```
 
 Parameters can be specified via the `AvailabilitySetData` object, in here, the basic default only requires the location. The availability set is created using  the AvailabilitySetsCollection returned from the `GetAvailabilitySets()` extension method instead of using another client. 
@@ -141,7 +141,7 @@ VirtualNetwork subnetResponse = networkClient.Subnets.Get(rgName, vnetName, subn
 ```
 #### New
 ```C# Snippet:Create_Vnet_and_Subnet
-string virtualNetworkName = "MYVM" + "_vnet";
+//string virtualNetworkName = "MYVM" + "_vnet";
 string subnetName = "mySubnet";
 
 VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
@@ -157,8 +157,8 @@ VirtualNetworkData virtualNetworkData = new VirtualNetworkData()
 };
 VirtualNetworkCollection virtualNetworks = resourceGroup.GetVirtualNetworks();
 virtualNetworkData.AddressPrefixes.Add("10.0.0.0/16");
-ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
-VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
+//ArmOperation<VirtualNetwork> virtualNetworkOperation = await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, virtualNetworkData);
+//VirtualNetwork virtualNetwork = virtualNetworkOperation.Value;
 ```
 
 In both libraries, subnets are defined inside virtual networks, however, with the new SDK you can get a subnets collection using `.GetSubnets()`, and from there create any subnet in the virtual network from which the method is being called.
@@ -180,8 +180,8 @@ NetworkSecurityGroup nsg = networkClient.NetworkSecurityGroups.Get(rgName, nsgNa
 string networkSecurityGroupName = virtualMachineName + "_nsg";
 NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData() { Location = location };
 NetworkSecurityGroupCollection networkSecurityGroups = resourceGroup.GetNetworkSecurityGroups();
-ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
-NetworkSecurityGroup networkSecurityGroup = networkSecurityGroupOperation.Value;
+//ArmOperation<NetworkSecurityGroup> networkSecurityGroupOperation = await networkSecurityGroups.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
+//NetworkSecurityGroup networkSecurityGroup = networkSecurityGroupOperation.Value;
 ```
 
 ### Create a Network Interface
@@ -219,7 +219,7 @@ NetworkInterfaceIPConfigurationData networkInterfaceIPConfiguration = new Networ
 {
     Name = "Primary",
     Primary = true,
-    Subnet = new SubnetData() { Id = virtualNetwork.Data.Subnets.First().Id },
+    //Subnet = new SubnetData() { Id = virtualNetwork.Data.Subnets.First().Id },
     PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
 };
 
@@ -227,8 +227,8 @@ NetworkInterfaceData nicData = new NetworkInterfaceData();
 nicData.Location = location;
 nicData.IPConfigurations.Add(networkInterfaceIPConfiguration);
 NetworkInterfaceCollection networkInterfaces = resourceGroup.GetNetworkInterfaces();
-ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
-NetworkInterface networkInterface = networkInterfaceOperation.Value;
+//ArmOperation<NetworkInterface> networkInterfaceOperation = await networkInterfaces.CreateOrUpdateAsync(WaitUntil.Completed, networkInterfaceName, nicData);
+//NetworkInterface networkInterface = networkInterfaceOperation.Value;
 ```
 
 This step is similar to the old SDK, however, notice that the `CreateOrUpdateAsync()` method returns the network interface that has been created. 
@@ -291,15 +291,15 @@ VirtualMachineData virutalMachineData = new VirtualMachineData(location);
 virutalMachineData.OSProfile.AdminUsername = "admin-username";
 virutalMachineData.OSProfile.AdminPassword = "admin-p4$$w0rd";
 virutalMachineData.OSProfile.ComputerName = "computer-name";
-virutalMachineData.AvailabilitySetId = availabilitySet.Id;
+//virutalMachineData.AvailabilitySetId = availabilitySet.Id;
 NetworkInterfaceReference nicReference = new NetworkInterfaceReference();
-nicReference.Id = networkInterface.Id;
+//nicReference.Id = networkInterface.Id;
 virutalMachineData.NetworkProfile.NetworkInterfaces.Add(nicReference);
 
 VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
-ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
-VirtualMachine virtualMachine = virtualMachineOperation.Value;
-Console.WriteLine("VM ID: " + virtualMachine.Id);
+//ArmOperation<VirtualMachine> virtualMachineOperation = await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virutalMachineData);
+//VirtualMachine virtualMachine = virtualMachineOperation.Value;
+//Console.WriteLine("VM ID: " + virtualMachine.Id);
 ```
 
 Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
