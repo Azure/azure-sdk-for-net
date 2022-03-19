@@ -214,10 +214,10 @@ namespace Azure.Data.Tables
             }
 
             _pipeline =
-                HttpPipelineBuilder.Build(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier());
+                HttpPipelineBuilder.Build(options, perCallPolicies, new HttpPipelinePolicy[] { policy }, new ResponseClassifier(), new TablesErrorFormatter());
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
@@ -260,10 +260,11 @@ namespace Azure.Data.Tables
                 options,
                 perCallPolicies,
                 new[] { new BearerTokenAuthenticationPolicy(tokenCredential, TableConstants.StorageScope) },
-                new ResponseClassifier());
+                new ResponseClassifier(),
+                new TablesErrorFormatter());
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
@@ -306,10 +307,11 @@ namespace Azure.Data.Tables
                 options,
                 perCallPolicies,
                 new[] { authPolicy },
-                new ResponseClassifier());
+                new ResponseClassifier(),
+                new TablesErrorFormatter());
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             Name = tableName;
         }
@@ -514,7 +516,7 @@ namespace Azure.Data.Tables
                     case 204:
                         return message.Response;
                     default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -544,7 +546,7 @@ namespace Azure.Data.Tables
                     case 204:
                         return message.Response;
                     default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -1214,7 +1216,7 @@ namespace Azure.Data.Tables
                     case 204:
                         return message.Response;
                     default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)
@@ -1257,7 +1259,7 @@ namespace Azure.Data.Tables
                     case 204:
                         return message.Response;
                     default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                        throw new RequestFailedException(message.Response);
                 }
             }
             catch (Exception ex)

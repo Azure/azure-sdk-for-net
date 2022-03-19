@@ -103,9 +103,9 @@ namespace Azure
         {
             IDictionary<string, string>? details = default;
 
-            string? content = ResponseClassifier.ReadContentAsync(response, false).EnsureCompleted();
-            ResponseError? error = response.ResponseClassifier.ExtractErrorContent(content, response.Headers, ref details); // TODO: sort out AdditionalInfo
-            string exceptionMessage = ResponseClassifier.CreateRequestFailedMessageWithContent(
+            string? content = ResponseErrorFormatter.ReadContentAsync(response, false).EnsureCompleted();
+            ResponseError? error = response.ErrorFormatter.ExtractErrorContent(content, response.Headers, ref details); // TODO: sort out AdditionalInfo
+            string exceptionMessage = ResponseErrorFormatter.CreateRequestFailedMessageWithContent(
                 response,
                 error,
                 content,

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -9,12 +9,8 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Core.Pipeline
 {
-    internal class TablesClientDiagnostics : ClientDiagnostics
+    internal class TablesErrorFormatter : ResponseErrorFormatter
     {
-        public TablesClientDiagnostics(ClientOptions options) : base(options)
-        {
-        }
-
         /// <summary>
         /// Partial method that can optionally be defined to extract the error
         /// message, code, and details in a service specific manner.
@@ -22,7 +18,7 @@ namespace Azure.Core.Pipeline
         /// <param name="content">The error content.</param>
         /// <param name="responseHeaders">The response headers.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-        protected override ResponseError ExtractFailureContent(
+        public override ResponseError ExtractErrorContent(
             string content,
             ResponseHeaders responseHeaders,
             ref IDictionary<string, string> additionalInfo

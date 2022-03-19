@@ -40,8 +40,28 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier)
         {
-            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier);
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier, null);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.ErrorFormatter);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+        /// </summary>
+        /// <param name="options">The customer provided client options object.</param>
+        /// <param name="perCallPolicies">Client provided per-call policies.</param>
+        /// <param name="perRetryPolicies">Client provided per-retry policies.</param>
+        /// <param name="responseClassifier">The client provided response classifier.</param>
+        /// <param name="errorFormatter">TODO</param>
+        /// <returns>A new instance of <see cref="HttpPipeline"/></returns>
+        public static HttpPipeline Build(
+            ClientOptions options,
+            HttpPipelinePolicy[] perCallPolicies,
+            HttpPipelinePolicy[] perRetryPolicies,
+            ResponseClassifier? responseClassifier,
+            ResponseErrorFormatter? errorFormatter)
+        {
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier, errorFormatter);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.ErrorFormatter);
         }
 
         /// <summary>
@@ -56,16 +76,17 @@ namespace Azure.Core.Pipeline
         public static DisposableHttpPipeline Build(ClientOptions options, HttpPipelinePolicy[] perCallPolicies, HttpPipelinePolicy[] perRetryPolicies, HttpPipelineTransportOptions transportOptions, ResponseClassifier? responseClassifier)
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
-            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, transportOptions, responseClassifier);
-            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
+            var result = BuildInternal(options, perCallPolicies, perRetryPolicies, transportOptions, responseClassifier, null);
+            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned, result.ErrorFormatter);
         }
 
-        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned) BuildInternal(
+        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned, ResponseErrorFormatter ErrorFormatter) BuildInternal(
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
             HttpPipelineTransportOptions? defaultTransportOptions,
-            ResponseClassifier? responseClassifier)
+            ResponseClassifier? responseClassifier,
+            ResponseErrorFormatter? errorFormatter)
         {
             if (perCallPolicies == null)
             {
@@ -180,8 +201,9 @@ namespace Azure.Core.Pipeline
             policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer));
 
             responseClassifier ??= ResponseClassifier.Shared;
+            errorFormatter ??= new ResponseErrorFormatter(); // TODO: use shared instance?
 
-            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
+            return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated, errorFormatter);
         }
 
         // internal for testing

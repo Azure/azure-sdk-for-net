@@ -20,7 +20,7 @@ namespace Azure.Data.Tables.Tests
         private static string TableBeingDeleted = "{\"odata.error\":{\"code\":\"TableBeingDeleted\",\"message\":{\"lang\":\"en-US\",\"value\":\"" + messageValue + "\"}}}";
         private static string BatchError = "{\"odata.error\":{\"code\":\"EntityAlreadyExists\",\"message\":{\"lang\":\"en-us\",\"value\":\"" + failedEntityIndex + batchMessage + "\"}}}";
 
-        private static TablesClientDiagnostics diagnostic = new(new TableClientOptions());
+        private static ClientDiagnostics diagnostic = new(new TableClientOptions());
 
         // Incoming Exception, Expected Exception, Expected TableErrorCode
         public static IEnumerable<object[]> OdataErrorTestInputs()
@@ -36,7 +36,7 @@ namespace Azure.Data.Tables.Tests
             var response = new MockResponse(400) { ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content.Replace("\n", "\\n"))) };
             response.AddHeader(HttpHeader.Common.JsonContentType);
 
-            var actualException = diagnostic.CreateRequestFailedException(response);
+            var actualException = new RequestFailedException(response);
 
             Assert.That(actualException.Message, Contains.Substring(expectedMessage));
             Assert.That(actualException.Data.Keys, Is.EquivalentTo(expectedData.Keys));

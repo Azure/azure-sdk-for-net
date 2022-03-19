@@ -50,6 +50,7 @@ namespace Azure.Core.Pipeline
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             ResponseClassifier = responseClassifier ?? ResponseClassifier.Shared;
+            ErrorFormatter = new ResponseErrorFormatter(); // TODO: are we ok with this?
 
             policies ??= Array.Empty<HttpPipelinePolicy>();
 
@@ -66,9 +67,11 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier responseClassifier)
+            ResponseClassifier responseClassifier,
+            ResponseErrorFormatter errorFormatter)
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
+            ErrorFormatter = errorFormatter ?? throw new ArgumentNullException(nameof(errorFormatter));
 
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -123,6 +126,8 @@ namespace Azure.Core.Pipeline
         /// The <see cref="ResponseClassifier"/> instance used in this pipeline invocations.
         /// </summary>
         public ResponseClassifier ResponseClassifier { get; }
+
+        internal ResponseErrorFormatter ErrorFormatter { get; }
 
         /// <summary>
         /// Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="HttpMessage.Response"/> property.
