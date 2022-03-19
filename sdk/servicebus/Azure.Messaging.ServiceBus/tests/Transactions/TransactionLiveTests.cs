@@ -390,7 +390,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
                     tcs.SetResult(true);
                     await sender1.SendMessageAsync(message).ConfigureAwait(false);
-                    await sender2.SendMessageAsync(message).ConfigureAwait(false);
+                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
                     ts.Complete();
                 }
 
