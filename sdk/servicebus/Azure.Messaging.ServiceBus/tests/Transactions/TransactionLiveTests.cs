@@ -383,7 +383,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                _ = SendMessageAsync();
+                var sendMessageTask = SendMessageAsync();
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
@@ -402,6 +402,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     await sender1.SendMessageAsync(message).ConfigureAwait(false);
                     await sender2.SendMessageAsync(message).ConfigureAwait(false);
                 }
+
+                // make sure task is completed to surface any exceptions
+                await sendMessageTask;
             }
         }
 
