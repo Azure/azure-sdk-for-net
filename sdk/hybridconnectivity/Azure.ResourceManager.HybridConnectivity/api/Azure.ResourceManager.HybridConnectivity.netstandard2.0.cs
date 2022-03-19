@@ -1,15 +1,5 @@
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    public static partial class ArmClientExtensions
-    {
-        public static Azure.ResourceManager.HybridConnectivity.EndpointResource GetEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-    }
-    public static partial class ArmResourceExtensions
-    {
-        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.EndpointResource> GetEndpointResource(this Azure.ResourceManager.Core.ArmResource armResource, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.EndpointResource>> GetEndpointResourceAsync(this Azure.ResourceManager.Core.ArmResource armResource, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.HybridConnectivity.EndpointResourceCollection GetEndpointResources(this Azure.ResourceManager.Core.ArmResource armResource) { throw null; }
-    }
     public partial class EndpointResource : Azure.ResourceManager.Core.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -56,11 +46,12 @@ namespace Azure.ResourceManager.HybridConnectivity
         public string ProvisioningState { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
     }
-    public static partial class ResourceGroupExtensions
+    public static partial class HybridConnectivityExtensions
     {
-    }
-    public static partial class SubscriptionExtensions
-    {
+        public static Azure.ResourceManager.HybridConnectivity.EndpointResource GetEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HybridConnectivity.EndpointResource> GetEndpointResource(this Azure.ResourceManager.Core.ArmResource armResource, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.EndpointResource>> GetEndpointResourceAsync(this Azure.ResourceManager.Core.ArmResource armResource, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridConnectivity.EndpointResourceCollection GetEndpointResources(this Azure.ResourceManager.Core.ArmResource armResource) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HybridConnectivity.Models
