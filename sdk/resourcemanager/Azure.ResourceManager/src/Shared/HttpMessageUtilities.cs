@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     internal static class HttpMessageUtilities
     {
