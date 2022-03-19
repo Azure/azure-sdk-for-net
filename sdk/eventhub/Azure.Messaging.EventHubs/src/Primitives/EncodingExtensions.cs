@@ -8,7 +8,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 {
     internal static class EncodingExtensions
     {
-        public static unsafe int GetBytes(this Encoding encoding, ReadOnlySpan<char> src, Span<byte> dest)
+        public static unsafe int GetBytes(this Encoding encoding, 
+                                           ReadOnlySpan<char> src, 
+                                           Span<byte> dest)
         {
             if (src.Length == 0)
             {
@@ -33,7 +35,8 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
         }
 
-        public static unsafe int GetByteCount(this Encoding encoding, ReadOnlySpan<char> src)
+        public static unsafe int GetByteCount(this Encoding encoding, 
+                                              ReadOnlySpan<char> src)
         {
             if (src.IsEmpty)
             {
