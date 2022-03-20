@@ -421,7 +421,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     {
                         tcs.SetResult(true);
                     }
-
+                    Assert.IsNull(Transaction.Current);
                     await sender2.SendMessageAsync(message).ConfigureAwait(false);
                 }
 
