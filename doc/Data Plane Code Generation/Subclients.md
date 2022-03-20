@@ -4,7 +4,7 @@
 
 There are two categories of clients: service clients and their subclients. Service clients can be instantiated and have the Client suffix. Subclients can only be created by calling factory methods on other clients (commonly on service clients) and do not have the client suffix. The service client is the entry point to the API for an Azure service. Please refer to [guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-subclients) for more detail information.
 
-There are two approaches to organize subclients and service client.
+There are two tools to organize subclients and service client.
 
 - **Single top-level client**: define one top-level service client with the name <service_name>Client, all other clients will be its subclient.
 
