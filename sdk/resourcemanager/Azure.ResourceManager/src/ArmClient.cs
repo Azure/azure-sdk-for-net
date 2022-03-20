@@ -76,14 +76,7 @@ namespace Azure.ResourceManager
 
             BaseUri = options.Environment.Endpoint;
 
-            if (options.Diagnostics.IsTelemetryEnabled)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope), new MgmtTelemetryPolicy(this, options));
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
-            }
+            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
 
             DiagnosticOptions = options.Diagnostics;
             _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions);
