@@ -372,7 +372,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             {
                 await using var client = CreateClient();
                 ServiceBusSender sender1 = client.CreateSender(scope1.QueueName);
-                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName, new ServiceBusReceiverOptions { PrefetchCount = 10});
+                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName);
 
                 await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
                 ServiceBusSender sender2 = client.CreateSender(scope2.QueueName);
