@@ -1,6 +1,6 @@
 namespace Azure.ResourceManager.Resources
 {
-    public partial class Application : Azure.ResourceManager.Core.ArmResource
+    public partial class Application : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected Application() { }
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.Application> Update(Azure.ResourceManager.Resources.Models.PatchableApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Application>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ApplicationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.IEnumerable
+    public partial class ApplicationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Application>, System.Collections.IEnumerable
     {
         protected ApplicationCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Application> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationName, Azure.ResourceManager.Resources.ApplicationData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.ApplicationPackageSupportUrls SupportUrls { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ApplicationClientDetails UpdatedBy { get { throw null; } }
     }
-    public partial class ApplicationDefinition : Azure.ResourceManager.Core.ArmResource
+    public partial class ApplicationDefinition : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ApplicationDefinition() { }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ApplicationDefinition>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ApplicationDefinitionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>, System.Collections.IEnumerable
+    public partial class ApplicationDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ApplicationDefinition>, System.Collections.IEnumerable
     {
         protected ApplicationDefinitionCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.ApplicationDefinition> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationDefinitionName, Azure.ResourceManager.Resources.ApplicationDefinitionData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         public System.Uri PackageFileUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ApplicationPolicy> Policies { get { throw null; } }
     }
-    public partial class Deployment : Azure.ResourceManager.Core.ArmResource
+    public partial class Deployment : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected Deployment() { }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Models.WhatIfOperationResult> WhatIf(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.DeploymentWhatIf parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>> WhatIfAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.Models.DeploymentWhatIf parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeploymentCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Deployment>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Deployment>, System.Collections.IEnumerable
+    public partial class DeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.Deployment>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Deployment>, System.Collections.IEnumerable
     {
         protected DeploymentCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.Deployment> CreateOrUpdate(Azure.WaitUntil waitUntil, string deploymentName, Azure.ResourceManager.Resources.Models.DeploymentInput parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.DeploymentPropertiesExtended Properties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class DeploymentScript : Azure.ResourceManager.Core.ArmResource
+    public partial class DeploymentScript : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DeploymentScript() { }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.DeploymentScript> Update(Azure.ResourceManager.Resources.Models.PatchableDeploymentScriptData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DeploymentScript>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableDeploymentScriptData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DeploymentScriptCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.IEnumerable
+    public partial class DeploymentScriptCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DeploymentScript>, System.Collections.IEnumerable
     {
         protected DeploymentScriptCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.DeploymentScript> CreateOrUpdate(Azure.WaitUntil waitUntil, string scriptName, Azure.ResourceManager.Resources.DeploymentScriptData deploymentScript, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Resources
         public string Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class JitRequest : Azure.ResourceManager.Core.ArmResource
+    public partial class JitRequest : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected JitRequest() { }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.JitRequest> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.JitRequest>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class JitRequestCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.JitRequest>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.JitRequest>, System.Collections.IEnumerable
+    public partial class JitRequestCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.JitRequest>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.JitRequest>, System.Collections.IEnumerable
     {
         protected JitRequestCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.JitRequest> CreateOrUpdate(Azure.WaitUntil waitUntil, string jitRequestName, Azure.ResourceManager.Resources.JitRequestData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpec> GetTemplateSpecsAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.TemplateSpecVersion GetTemplateSpecVersion(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ScriptLog : Azure.ResourceManager.Core.ArmResource
+    public partial class ScriptLog : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ScriptLog() { }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
         public ScriptLogData() { }
         public string Log { get { throw null; } }
     }
-    public partial class TemplateSpec : Azure.ResourceManager.Core.ArmResource
+    public partial class TemplateSpec : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TemplateSpec() { }
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpec> Update(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpec>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TemplateSpecCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.IEnumerable
+    public partial class TemplateSpecCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpec>, System.Collections.IEnumerable
     {
         protected TemplateSpecCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TemplateSpec> CreateOrUpdate(Azure.WaitUntil waitUntil, string templateSpecName, Azure.ResourceManager.Resources.TemplateSpecData templateSpec, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo> Versions { get { throw null; } }
     }
-    public partial class TemplateSpecVersion : Azure.ResourceManager.Core.ArmResource
+    public partial class TemplateSpecVersion : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TemplateSpecVersion() { }
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion> Update(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecVersion>> UpdateAsync(Azure.ResourceManager.Resources.Models.PatchableTemplateSpecVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class TemplateSpecVersionCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.IEnumerable
+    public partial class TemplateSpecVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersion>, System.Collections.IEnumerable
     {
         protected TemplateSpecVersionCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.TemplateSpecVersion> CreateOrUpdate(Azure.WaitUntil waitUntil, string templateSpecVersion, Azure.ResourceManager.Resources.TemplateSpecVersionData templateSpecVersionModel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

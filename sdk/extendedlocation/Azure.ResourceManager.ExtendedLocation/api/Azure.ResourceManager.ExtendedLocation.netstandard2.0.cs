@@ -1,6 +1,6 @@
 namespace Azure.ResourceManager.ExtendedLocation
 {
-    public partial class CustomLocation : Azure.ResourceManager.Core.ArmResource
+    public partial class CustomLocation : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected CustomLocation() { }
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         public virtual Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation> Update(Azure.ResourceManager.ExtendedLocation.Models.PatchableCustomLocationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocation.CustomLocation>> UpdateAsync(Azure.ResourceManager.ExtendedLocation.Models.PatchableCustomLocationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CustomLocationCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>, System.Collections.IEnumerable
+    public partial class CustomLocationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocation.CustomLocation>, System.Collections.IEnumerable
     {
         protected CustomLocationCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ExtendedLocation.CustomLocation> CreateOrUpdate(Azure.WaitUntil waitUntil, string resourceName, Azure.ResourceManager.ExtendedLocation.CustomLocationData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
