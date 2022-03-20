@@ -5,7 +5,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     internal class MgmtTelemetryPolicy : HttpPipelineSynchronousPolicy
     {
