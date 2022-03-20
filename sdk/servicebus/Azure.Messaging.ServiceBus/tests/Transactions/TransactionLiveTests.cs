@@ -385,25 +385,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                Task transactionTask;
-                Task noTransactionTask;
-                if (transactionFirst)
-                {
-                    transactionTask = SendWithTransactionAsync();
-                    noTransactionTask = SendWithoutTransactionAsync();
-                }
-                else
-                {
-                    noTransactionTask = SendWithoutTransactionAsync();
-                    transactionTask = SendWithTransactionAsync();
-                }
+                Task transactionTask = SendWithTransactionAsync();
+                Task noTransactionTask = SendWithoutTransactionAsync();
 
                 async Task SendWithTransactionAsync()
                 {
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
+                        if (!transactionFirst)
+                        {
+                            await tcs.Task;
+                        }
                         await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
-                        tcs.SetResult(true);
+                        if (transactionFirst)
+                        {
+                            tcs.SetResult(true);
+                        }
+
                         await sender1.SendMessageAsync(message).ConfigureAwait(false);
                         await sender1.SendMessageAsync(message).ConfigureAwait(false);
                         ts.Complete();
@@ -413,9 +411,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 async Task SendWithoutTransactionAsync()
                 {
                     // await the TCS so that we can attempt to call Send from both inside the txn and outside at the same time
-                    await tcs.Task;
+                    if (transactionFirst)
+                    {
+                        await tcs.Task;
+                    }
                     Assert.IsNull(Transaction.Current);
                     await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                    if (!transactionFirst)
+                    {
+                        tcs.SetResult(true);
+                    }
+
                     await sender2.SendMessageAsync(message).ConfigureAwait(false);
                 }
 
