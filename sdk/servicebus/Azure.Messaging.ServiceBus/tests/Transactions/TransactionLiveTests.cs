@@ -364,13 +364,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task CanUseSameSenderBothWithinAndOutsideTransactionSimultaneously()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CanUseSameSenderBothWithinAndOutsideTransactionSimultaneously(bool transactionFirst)
         {
             await using (var scope1 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = CreateClient();
                 ServiceBusSender sender1 = client.CreateSender(scope1.QueueName);
-                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(scope1.QueueName, new ServiceBusReceiverOptions { PrefetchCount = 10});
 
                 await using var scope2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
                 ServiceBusSender sender2 = client.CreateSender(scope2.QueueName);
@@ -383,18 +385,32 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                var sendMessageTask = SendMessageAsync();
-
-                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                Task transactionTask;
+                Task noTransactionTask;
+                if (transactionFirst)
                 {
-                    await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
-                    tcs.SetResult(true);
-                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
-                    await sender1.SendMessageAsync(message).ConfigureAwait(false);
-                    ts.Complete();
+                    transactionTask = SendWithTransactionAsync();
+                    noTransactionTask = SendWithoutTransactionAsync();
+                }
+                else
+                {
+                    noTransactionTask = SendWithoutTransactionAsync();
+                    transactionTask = SendWithTransactionAsync();
                 }
 
-                async Task SendMessageAsync()
+                async Task SendWithTransactionAsync()
+                {
+                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        await receiver.CompleteMessageAsync(receivedMessage).ConfigureAwait(false);
+                        tcs.SetResult(true);
+                        await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                        await sender1.SendMessageAsync(message).ConfigureAwait(false);
+                        ts.Complete();
+                    }
+                }
+
+                async Task SendWithoutTransactionAsync()
                 {
                     // await the TCS so that we can attempt to call Send from both inside the txn and outside at the same time
                     await tcs.Task;
@@ -403,8 +419,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                     await sender2.SendMessageAsync(message).ConfigureAwait(false);
                 }
 
-                // make sure task is completed to surface any exceptions
-                await sendMessageTask;
+                // make sure tasks are completed to surface any exceptions
+                await noTransactionTask;
+                await transactionTask;
             }
         }
 
