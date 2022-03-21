@@ -1,12 +1,13 @@
 # Release History
 
-## 1.23.0-beta.1 (Unreleased)
+## 1.23.0 (2022-04-05)
 
 ### Features Added
 
 - Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
 - Added type `RequestOptions` to the `Azure` namespace and made `RequestContext` a subclass of `RequestOptions`.  This enables `RequestOptions` to be exposed in methods that take `CancellationToken` without causing confusion regarding which cancellation token will take effect.
 - Added the `SetUserAgentString` extension method to `HttpMessage` accepting a `UserAgentValue` and an optional application Id string. This allows assembly specific user agent header information to be set with proper formatting on a per-message basis.
+- Added an extension method to `BinaryData` called `ToObjectFromJson` which converts the json value represented by `BinaryData` to an object of a specific type.
 
 ### Breaking Changes
 
@@ -16,10 +17,6 @@
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
   </ItemGroup>
 ```
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.22.0 (2022-01-11)
 
