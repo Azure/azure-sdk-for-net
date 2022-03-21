@@ -53,6 +53,11 @@ namespace Azure.ResourceManager
         protected internal DiagnosticsOptions DiagnosticOptions => Client.Diagnostics;
 
         /// <summary>
+        /// Gets the diagnostic options for this resource client.
+        /// </summary>
+        protected internal DiagnosticsOptions Diagnostics => Client.Diagnostics;
+
+        /// <summary>
         /// Gets the pipeline for this resource client.
         /// </summary>
         protected internal HttpPipeline Pipeline => Client.Pipeline;
@@ -61,6 +66,11 @@ namespace Azure.ResourceManager
         /// Gets the base uri for this resource client.
         /// </summary>
         protected internal Uri BaseUri => Client.Endpoint;
+
+        /// <summary>
+        /// Gets the base uri for this resource client.
+        /// </summary>
+        protected internal Uri Endpoint => Client.Endpoint;
 
         /// <summary>
         /// Gets the api version override if it has been set for the current client options.

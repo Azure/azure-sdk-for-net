@@ -50,6 +50,8 @@ namespace Azure.ResourceManager
         protected internal System.Uri BaseUri { get { throw null; } }
         protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
         protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
+        protected internal Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        protected internal System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
         protected internal Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
