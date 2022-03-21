@@ -40,20 +40,6 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region GenericResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GenericResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GenericResource.CreateResourceIdentifier" /> to create a <see cref="GenericResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
-        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
-        {
-            GenericResource.ValidateResourceId(id);
-            return new GenericResource(this, id);
-        }
-        #endregion
-
         #region ResourceGroup
         /// <summary>
         /// Gets an object representing a <see cref="ResourceGroup" /> along with the instance operations that can be performed on it but with no data.
