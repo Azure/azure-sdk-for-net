@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ResourceWithWritableName. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        internal ResourceWithWritableName(string id, string name, string type)
+        /// <param name="resourceType"> Resource type. </param>
+        internal ResourceWithWritableName(string id, string name, string resourceType)
         {
             Id = id;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Resource ID. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Resource name. </summary>
         public string Name { get; set; }
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
     }
 }

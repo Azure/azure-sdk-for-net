@@ -12,10 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing the PrivateLinkResource data model. </summary>
-    public partial class PrivateLinkResourceData : Resource
+    public partial class PrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
-        internal PrivateLinkResourceData()
+        public PrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -24,11 +24,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of PrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
-        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType type, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, type)
+        internal PrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;

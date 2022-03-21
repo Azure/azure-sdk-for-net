@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteUrl"/>, <paramref name="tenantId"/>, <paramref name="servicePrincipalId"/>, or <paramref name="servicePrincipalKey"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteUrl"/>, <paramref name="tenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public SharePointOnlineListLinkedService(object siteUrl, object tenantId, object servicePrincipalId, SecretBase servicePrincipalKey)
         {
             if (siteUrl == null)

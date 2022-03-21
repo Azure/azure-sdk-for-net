@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,10 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StringList. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="properties"> List of string resources. </param>
-        internal StringList(ResourceIdentifier id, string name, ResourceType type, string kind, IList<string> properties) : base(id, name, type, kind)
+        internal StringList(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<string> properties) : base(id, name, resourceType, systemData, kind)
         {
             Properties = properties;
         }

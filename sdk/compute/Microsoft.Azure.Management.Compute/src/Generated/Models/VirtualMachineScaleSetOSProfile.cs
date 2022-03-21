@@ -86,7 +86,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux)
         /// or the [Azure Key Vault virtual machine extension for
         /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).</param>
-        public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>))
+        /// <param name="allowExtensionOperations">Specifies whether extension
+        /// operations should be allowed on the virtual machine scale set.
+        /// &lt;br&gt;&lt;br&gt;This may only be set to False when no
+        /// extensions are present on the virtual machine scale set.</param>
+        public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?))
         {
             ComputerNamePrefix = computerNamePrefix;
             AdminUsername = adminUsername;
@@ -95,6 +99,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             WindowsConfiguration = windowsConfiguration;
             LinuxConfiguration = linuxConfiguration;
             Secrets = secrets;
+            AllowExtensionOperations = allowExtensionOperations;
             CustomInit();
         }
 
@@ -194,6 +199,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "secrets")]
         public IList<VaultSecretGroup> Secrets { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether extension operations should be
+        /// allowed on the virtual machine scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This may only be set to False
+        /// when no extensions are present on the virtual machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowExtensionOperations")]
+        public bool? AllowExtensionOperations { get; set; }
 
     }
 }

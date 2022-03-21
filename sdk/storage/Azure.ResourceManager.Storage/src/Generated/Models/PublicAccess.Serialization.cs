@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public static string ToSerialString(this PublicAccess value) => value switch
         {
+            PublicAccess.None => "None",
             PublicAccess.Container => "Container",
             PublicAccess.Blob => "Blob",
-            PublicAccess.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccess value.")
         };
 
         public static PublicAccess ToPublicAccess(this string value)
         {
+            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.None;
             if (string.Equals(value, "Container", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.Container;
             if (string.Equals(value, "Blob", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.Blob;
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return PublicAccess.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicAccess value.");
         }
     }

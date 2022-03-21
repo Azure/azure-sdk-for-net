@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -39,32 +40,32 @@ namespace Azure.ResourceManager.Tests
         protected static GenericResourceData ConstructGenericAvailabilitySet()
         {
             var data = new GenericResourceData(AzureLocation.WestUS2);
-            data.Sku = new Resources.Models.Sku()
+            data.Sku = new ResourcesSku()
             {
                 Name = "Aligned"
             };
             var propertyBag = new Dictionary<string, object>();
             propertyBag.Add("platformUpdateDomainCount", 5);
             propertyBag.Add("platformFaultDomainCount", 2);
-            data.Properties = propertyBag;
+            data.Properties = BinaryData.FromObjectAsJson(propertyBag);
             return data;
         }
 
         protected async Task<GenericResource> CreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
+            var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            var op = await genericResources.CreateOrUpdateAsync(asetId, data);
+            var op = await genericResources.CreateOrUpdateAsync(WaitUntil.Completed, asetId, data);
             return op.Value;
         }
 
-        protected async Task<ResourceCreateOrUpdateByIdOperation> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
+        protected async Task<ArmOperation<GenericResource>> StartCreateGenericAvailabilitySetAsync(ResourceIdentifier rgId)
         {
-            var genericResources = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetGenericResources();
+            var genericResources = Client.GetGenericResources();
             GenericResourceData data = ConstructGenericAvailabilitySet();
             var asetId = rgId.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
-            return await genericResources.CreateOrUpdateAsync(asetId, data, false);
+            return await genericResources.CreateOrUpdateAsync(WaitUntil.Started, asetId, data);
         }
 
         protected static void AssertAreEqual(GenericResource aset, GenericResource aset2)
@@ -90,11 +91,10 @@ namespace Azure.ResourceManager.Tests
             //TODO: Add equal for Properties and Tags
         }
 
-        protected static async Task<int> GetResourceCountAsync(GenericResourceCollection genericResources, ResourceGroup rg = default)
+        protected static async Task<int> GetResourceCountAsync(AsyncPageable<GenericResource> genericResources)
         {
             int result = 0;
-            var pageable = rg == null ? genericResources.GetAllAsync() : genericResources.GetByResourceGroupAsync(rg.Id.Name);
-            await foreach (var resource in pageable)
+            await foreach (var resource in genericResources)
                 result++;
             return result;
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(expected.Data.Id, actual.Data.Id);
             Assert.AreEqual(expected.Data.Name, actual.Data.Name);
             Assert.AreEqual(expected.Data.TenantId, actual.Data.TenantId);
-            Assert.AreEqual(expected.Data.Type, actual.Data.Type);
+            Assert.AreEqual(expected.Data.ResourceType, actual.Data.ResourceType);
             Assert.IsNotNull(actual.Data.Details, "Details were null");
             Assert.IsNotNull(actual.Data.Children, "Children were null");
         }
@@ -112,38 +112,39 @@ namespace Azure.ResourceManager.Tests
         protected async Task<ResourceGroup> CreateResourceGroup(Subscription subscription, string rgName)
         {
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
-            ResourceGroupCreateOrUpdateOperation lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(rgName, input);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
 
-        protected async Task<ManagementLockObject> CreateManagementLockObject(ArmResource armResource, string lockName)
+        protected async Task<ManagementLock> CreateManagementLockObject(ArmResource armResource, string lockName)
         {
-            ManagementLockObjectData input = new ManagementLockObjectData(new LockLevel("CanNotDelete"));
-            ManagementLockCreateOrUpdateByScopeOperation lro = await armResource.GetManagementLockObjects().CreateOrUpdateAsync(true, lockName, input);
+            ManagementLockData input = new ManagementLockData(new LockLevel("CanNotDelete"));
+            ArmOperation<ManagementLock> lro = await armResource.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, lockName, input);
             return lro.Value;
         }
 
         private GenericResourceData ConstructGenericVirtualNetworkData()
         {
-            var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
+            var properties = new JsonObject()
             {
-                Properties = new JsonObject()
-                {
-                    {"addressSpace", new JsonObject()
-                        {
-                            {"addressPrefixes", new List<string>(){"10.0.0.0/16" } }
-                        }
+                {"addressSpace", new JsonObject()
+                    {
+                        {"addressPrefixes", new List<string>(){"10.0.0.0/16" } }
                     }
                 }
+            };
+            var virtualNetwork = new GenericResourceData(AzureLocation.WestUS2)
+            {
+                Properties = BinaryData.FromObjectAsJson(properties),
             };
             return virtualNetwork;
         }
 
-        protected async Task<GenericResource> CreateGenericVirtualNetwork(Subscription subscription, ResourceGroup rg, string vnName)
+        protected async Task<GenericResource> CreateGenericVirtualNetwork(Subscription subscription, ResourceGroup rg, string vnName) // TODO: remove subscription parameter
         {
             GenericResourceData input = ConstructGenericVirtualNetworkData();
             ResourceIdentifier vnId = rg.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnName);
-            ResourceCreateOrUpdateByIdOperation lro = await subscription.GetGenericResources().CreateOrUpdateAsync(vnId, input);
+            ArmOperation<GenericResource> lro = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, vnId, input);
             return lro.Value;
         }
 
@@ -159,14 +160,14 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policyAssignmentName}",
                 PolicyDefinitionId = PolicyDefinitionId
             };
-            PolicyAssignmentCreateOperation lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(true, policyAssignmentName, input);
+            ArmOperation<PolicyAssignment> lro = await armResource.GetPolicyAssignments().CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, input);
             return lro.Value;
         }
 
         private static PolicyDefinitionData ConstructPolicyDefinitionData(string displayName) => new PolicyDefinitionData
         {
             DisplayName = $"Test ${displayName}",
-            PolicyRule = new Dictionary<string, object>
+            PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     {
                         "if", new Dictionary<string, object>
@@ -181,27 +182,27 @@ namespace Azure.ResourceManager.Tests
                             { "effect", "deny" }
                         }
                     }
-                }
+                })
         };
 
         protected async Task<SubscriptionPolicyDefinition> CreatePolicyDefinitionAtSubscription(Subscription subscription, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            PolicyDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
+            ArmOperation<SubscriptionPolicyDefinition> lro = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, input);
             return lro.Value;
         }
 
         protected async Task<ManagementGroupPolicyDefinition> CreatePolicyDefinitionAtMgmtGroup(ManagementGroup mgmtGroup, string policyDefinitionName)
         {
             PolicyDefinitionData input = ConstructPolicyDefinitionData(policyDefinitionName);
-            PolicyDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, input);
+            ArmOperation<ManagementGroupPolicyDefinition> lro = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, input);
             return lro.Value;
         }
 
         protected async Task<PolicyExemption> CreatePolicyExemption(ArmResource armResource, PolicyAssignment policyAssignment, string policyExemptionName)
         {
             PolicyExemptionData input = new PolicyExemptionData(policyAssignment.Id, new ExemptionCategory("Waiver"));
-            PolicyExemptionCreateOrUpdateOperation lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, input);
+            ArmOperation<PolicyExemption> lro = await armResource.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, input);
             return lro.Value;
         }
 
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            PolicySetDefinitionCreateOrUpdateOperation lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
+            ArmOperation<SubscriptionPolicySetDefinition> lro = await subscription.GetSubscriptionPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, input);
             return lro.Value;
         }
 
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Tests
                 DisplayName = $"Test ${policySetDefinitionName}",
                 PolicyDefinitions = { new PolicyDefinitionReference(policyDefinition.Id) }
             };
-            PolicySetDefinitionCreateOrUpdateAtManagementGroupOperation lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(true, policySetDefinitionName, input);
+            ArmOperation<ManagementGroupPolicySetDefinition> lro = await mgmtGroup.GetManagementGroupPolicySetDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, input);
             return lro.Value;
         }
 
@@ -231,7 +232,11 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceIdentifier resourceLinkId = new ResourceIdentifier(vn1.Id + "/providers/Microsoft.Resources/links/" + resourceLinkName);
             ResourceLinkProperties properties = new ResourceLinkProperties(vn2.Id);
-            ResourceLinkCreateOrUpdateOperation lro = await tenant.GetResourceLinks().CreateOrUpdateAsync(true, resourceLinkId, properties);
+            ResourceLinkData data = new ResourceLinkData()
+            {
+                Properties = properties
+            };
+            ArmOperation<ResourceLink> lro = await tenant.GetResourceLinks(resourceLinkId).CreateOrUpdateAsync(WaitUntil.Completed, data);
             return lro.Value;
         }
     }

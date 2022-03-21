@@ -16,12 +16,14 @@ namespace Azure.Storage.Blobs.Batch
 {
     internal partial class BlobRestClient
     {
-        private string url;
-        private string snapshot;
-        private string versionId;
-        private string version;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _url;
+        private readonly string _snapshot;
+        private readonly string _versionId;
+        private readonly string _version;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of BlobRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -30,15 +32,15 @@ namespace Azure.Storage.Blobs.Batch
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob&quot;&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It&apos;s for service version 2019-10-10 and newer. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public BlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string snapshot = null, string versionId = null, string version = "2020-06-12")
         {
-            this.url = url ?? throw new ArgumentNullException(nameof(url));
-            this.snapshot = snapshot;
-            this.versionId = versionId;
-            this.version = version ?? throw new ArgumentNullException(nameof(version));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _url = url ?? throw new ArgumentNullException(nameof(url));
+            _snapshot = snapshot;
+            _versionId = versionId;
+            _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
         internal HttpMessage CreateSetAccessTierRequest(string containerName, string blob, BatchAccessTier tier, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
@@ -47,19 +49,19 @@ namespace Azure.Storage.Blobs.Batch
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(containerName, false);
             uri.AppendPath("/", false);
             uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "tier", true);
-            if (snapshot != null)
+            if (_snapshot != null)
             {
-                uri.AppendQuery("snapshot", snapshot, true);
+                uri.AppendQuery("snapshot", _snapshot, true);
             }
-            if (versionId != null)
+            if (_versionId != null)
             {
-                uri.AppendQuery("versionid", versionId, true);
+                uri.AppendQuery("versionid", _versionId, true);
             }
             if (timeout != null)
             {
@@ -71,7 +73,7 @@ namespace Azure.Storage.Blobs.Batch
             {
                 request.Headers.Add("x-ms-rehydrate-priority", rehydratePriority.Value.ToString());
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             if (leaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
@@ -114,7 +116,7 @@ namespace Azure.Storage.Blobs.Batch
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -148,7 +150,7 @@ namespace Azure.Storage.Blobs.Batch
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -158,18 +160,18 @@ namespace Azure.Storage.Blobs.Batch
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
+            uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
             uri.AppendPath(containerName, false);
             uri.AppendPath("/", false);
             uri.AppendPath(blob, false);
-            if (snapshot != null)
+            if (_snapshot != null)
             {
-                uri.AppendQuery("snapshot", snapshot, true);
+                uri.AppendQuery("snapshot", _snapshot, true);
             }
-            if (versionId != null)
+            if (_versionId != null)
             {
-                uri.AppendQuery("versionid", versionId, true);
+                uri.AppendQuery("versionid", _versionId, true);
             }
             if (timeout != null)
             {
@@ -208,7 +210,7 @@ namespace Azure.Storage.Blobs.Batch
             {
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
-            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -246,7 +248,7 @@ namespace Azure.Storage.Blobs.Batch
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -283,7 +285,7 @@ namespace Azure.Storage.Blobs.Batch
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

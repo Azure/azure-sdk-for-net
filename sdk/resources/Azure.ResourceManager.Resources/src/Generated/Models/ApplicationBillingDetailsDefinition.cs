@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application billing details definition. </summary>
-    public partial class ApplicationBillingDetailsDefinition
+    internal partial class ApplicationBillingDetailsDefinition
     {
         /// <summary> Initializes a new instance of ApplicationBillingDetailsDefinition. </summary>
         internal ApplicationBillingDetailsDefinition()

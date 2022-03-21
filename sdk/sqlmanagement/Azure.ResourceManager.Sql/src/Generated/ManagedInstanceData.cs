@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the ManagedInstance data model. </summary>
-    public partial class ManagedInstanceData : TrackedResource
+    public partial class ManagedInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="location"> The location. </param>
@@ -26,7 +26,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the managed instance. </param>
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the server. </param>
-        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ResourceIdentity identity, Models.Sku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, StorageAccountType? storageAccountType, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators) : base(id, name, type, tags, location)
+        internal ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, string subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, string dnsZonePartner, bool? publicDataEndpointEnabled, string sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, StorageAccountType? storageAccountType, bool? zoneRedundant, string primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -105,9 +106,9 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The Azure Active Directory identity of the managed instance. </summary>
-        public ResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Managed instance SKU. Allowed values for sku.name: GP_Gen4, GP_Gen5, BC_Gen4, BC_Gen5. </summary>
-        public Models.Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Gets the provisioning state. </summary>
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>

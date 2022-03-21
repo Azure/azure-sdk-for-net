@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
-            IpConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             DscpConfiguration = dscpConfiguration;
         }
 
@@ -67,12 +67,46 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
         /// <summary> The network security group. </summary>
-        public WritableSubResource NetworkSecurityGroup { get; set; }
+        internal WritableSubResource NetworkSecurityGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier NetworkSecurityGroupId
+        {
+            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            set
+            {
+                if (NetworkSecurityGroup is null)
+                    NetworkSecurityGroup = new WritableSubResource();
+                NetworkSecurityGroup.Id = value;
+            }
+        }
+
         /// <summary> The dns settings to be applied on the network interfaces. </summary>
-        public VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
+        internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
+        /// <summary> List of DNS servers IP addresses. </summary>
+        public IList<string> DnsServers
+        {
+            get
+            {
+                if (DnsSettings is null)
+                    DnsSettings = new VirtualMachineNetworkInterfaceDnsSettingsConfiguration();
+                return DnsSettings.DnsServers;
+            }
+        }
+
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
+        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get; }
         /// <summary> Gets or sets the dscp configuration. </summary>
-        public WritableSubResource DscpConfiguration { get; set; }
+        internal WritableSubResource DscpConfiguration { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DscpConfigurationId
+        {
+            get => DscpConfiguration is null ? default : DscpConfiguration.Id;
+            set
+            {
+                if (DscpConfiguration is null)
+                    DscpConfiguration = new WritableSubResource();
+                DscpConfiguration.Id = value;
+            }
+        }
     }
 }

@@ -7,9 +7,16 @@ class StressTestPackageInfo {
     [string]$Namespace
     [string]$Directory
     [string]$ReleaseName
+    [string]$Dockerfile
+    [string]$DockerBuildDir
 }
 
-function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [switch]$CI) {
+function FindStressPackages(
+    [string]$directory,
+    [hashtable]$filters = @{},
+    [switch]$CI,
+    [string]$namespaceOverride
+) {
     # Bare minimum filter for stress tests
     $filters['stressTest'] = 'true'
 
@@ -18,7 +25,11 @@ function FindStressPackages([string]$directory, [hashtable]$filters = @{}, [swit
     foreach ($chartFile in $chartFiles) {
         $chart = ParseChart $chartFile
         if (matchesAnnotations $chart $filters) {
-            $packages += NewStressTestPackageInfo -chart $chart -chartFile $chartFile -CI:$CI
+            $packages += NewStressTestPackageInfo `
+                            -chart $chart `
+                            -chartFile $chartFile `
+                            -CI:$CI `
+                            -namespaceOverride $namespaceOverride
         }
     }
 
@@ -39,19 +50,37 @@ function MatchesAnnotations([hashtable]$chart, [hashtable]$filters) {
     return $true
 }
 
-function NewStressTestPackageInfo([hashtable]$chart, [System.IO.FileInfo]$chartFile, [switch]$CI) {
-    $namespace = if ($CI) {
+function NewStressTestPackageInfo(
+    [hashtable]$chart,
+    [System.IO.FileInfo]$chartFile,
+    [switch]$CI,
+    [object]$namespaceOverride
+) {
+    $namespace = if ($namespaceOverride) {
+        $namespaceOverride
+    } elseif ($CI) {
         $chart.annotations.namespace
     } else {
-        $namespace = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-        # Remove spaces, etc. that may be in $namespace
-        $namespace -replace '\W'
+        # Check GITHUB_USER for users in codespaces environments, since the default user is `codespaces` and
+        # we would like to avoid namespace overlaps for different codespaces users.
+        $namespace = if ($env:GITHUB_USER) {
+            $env:GITHUB_USER
+        } elseif ($env:USER) {
+            $env:USER
+        } else {
+            $env:USERNAME
+        }
+        # Remove spaces, underscores, etc. that may be in $namespace. Value must be a valid RFC 1123 DNS label:
+        # https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
+        $namespace -replace '_|\W', '-'
     }
 
     return [StressTestPackageInfo]@{
         Namespace = $namespace.ToLower()
         Directory = $chartFile.DirectoryName
         ReleaseName = $chart.name
+        Dockerfile = $chart.annotations.dockerfile
+        DockerBuildDir = $chart.annotations.dockerbuilddir
     }
 }
 

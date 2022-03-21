@@ -8,13 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -28,8 +28,11 @@ namespace Azure.ResourceManager.Resources
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly DeploymentScriptsRestOperations _deploymentScriptsRestClient;
+
+        private readonly ClientDiagnostics _deploymentScriptClientDiagnostics;
+        private readonly DeploymentScriptsRestOperations _deploymentScriptRestClient;
+        private readonly ClientDiagnostics _scriptLogDeploymentScriptsClientDiagnostics;
+        private readonly DeploymentScriptsRestOperations _scriptLogDeploymentScriptsRestClient;
         private readonly DeploymentScriptData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DeploymentScript"/> class for mocking. </summary>
@@ -38,41 +41,25 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of the <see cref = "DeploymentScript"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeploymentScript(ArmResource options, DeploymentScriptData data) : base(options, data.Id)
+        internal DeploymentScript(ArmClient client, DeploymentScriptData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DeploymentScript"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentScript(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal DeploymentScript(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="DeploymentScript"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentScript(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _deploymentScriptsRestClient = new DeploymentScriptsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string deploymentScriptApiVersion);
+            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
+            _scriptLogDeploymentScriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ScriptLog.ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ScriptLog.ResourceType, out string scriptLogDeploymentScriptsApiVersion);
+            _scriptLogDeploymentScriptsRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scriptLogDeploymentScriptsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -102,18 +89,29 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a deployment script with a given name. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentScript>> GetAsync(CancellationToken cancellationToken = default)
+        /// <summary> Gets an object representing a ScriptLog along with the instance operations that can be performed on it in the DeploymentScript. </summary>
+        /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
+        public virtual ScriptLog GetScriptLog()
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.Get");
+            return new ScriptLog(Client, new ResourceIdentifier(Id.ToString() + "/logs/default"));
+        }
+
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DeploymentScript>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Get");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -122,18 +120,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets a deployment script with a given name. </summary>
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentScript> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.Get");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Get");
             scope.Start();
             try
             {
-                var response = _deploymentScriptsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,54 +144,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes a deployment script. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<DeploymentScriptDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.Delete");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Delete");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeploymentScriptDeleteOperation(response);
-                if (waitForCompletion)
+                var response = await _deploymentScriptRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -200,19 +170,23 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Deletes a deployment script. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes a deployment script. When operation completes, status code 200 returned without content.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual DeploymentScriptDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.Delete");
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Delete");
             scope.Start();
             try
             {
-                var response = _deploymentScriptsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DeploymentScriptDeleteOperation(response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                var response = _deploymentScriptRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ResourcesArmOperation(response);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -222,17 +196,24 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates deployment script tags with specified values. </summary>
-        /// <param name="tags"> Resource tags to be updated. </param>
+        /// <summary>
+        /// Updates deployment script tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Update
+        /// </summary>
+        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeploymentScript>> UpdateAsync(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<DeploymentScript>> UpdateAsync(PatchableDeploymentScriptData data, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.Update");
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Update");
             scope.Start();
             try
             {
-                var response = await _deploymentScriptsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                var response = await _deploymentScriptRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,17 +222,24 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Updates deployment script tags with specified values. </summary>
-        /// <param name="tags"> Resource tags to be updated. </param>
+        /// <summary>
+        /// Updates deployment script tags with specified values.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Update
+        /// </summary>
+        /// <param name="data"> Deployment script resource with the tags to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentScript> Update(IDictionary<string, string> tags = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<DeploymentScript> Update(PatchableDeploymentScriptData data, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("DeploymentScript.Update");
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.Update");
             scope.Start();
             try
             {
-                var response = _deploymentScriptsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, cancellationToken);
-                return Response.FromValue(new DeploymentScript(this, response.Value), response.GetRawResponse());
+                var response = _deploymentScriptRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                return Response.FromValue(new DeploymentScript(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,19 +248,23 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs
+        /// Operation Id: DeploymentScripts_GetLogs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScriptLogData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScriptLogData> GetLogsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScriptLog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScriptLog> GetLogsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScriptLogData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ScriptLog>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScript.GetLogs");
+                using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("DeploymentScript.GetLogs");
                 scope.Start();
                 try
                 {
-                    var response = await _deploymentScriptsRestClient.GetLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    var response = await _scriptLogDeploymentScriptsRestClient.GetLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScriptLog(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,19 +275,23 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
-        /// <summary> Gets deployment script logs for a given deployment script name. </summary>
+        /// <summary>
+        /// Gets deployment script logs for a given deployment script name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}/logs
+        /// Operation Id: DeploymentScripts_GetLogs
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScriptLogData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScriptLogData> GetLogs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScriptLog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScriptLog> GetLogs(CancellationToken cancellationToken = default)
         {
-            Page<ScriptLogData> FirstPageFunc(int? pageSizeHint)
+            Page<ScriptLog> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("DeploymentScript.GetLogs");
+                using var scope = _scriptLogDeploymentScriptsClientDiagnostics.CreateScope("DeploymentScript.GetLogs");
                 scope.Start();
                 try
                 {
-                    var response = _deploymentScriptsRestClient.GetLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    var response = _scriptLogDeploymentScriptsRestClient.GetLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScriptLog(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -306,14 +302,184 @@ namespace Azure.ResourceManager.Resources
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
-        #region ScriptLog
-
-        /// <summary> Gets an object representing a ScriptLog along with the instance operations that can be performed on it in the DeploymentScript. </summary>
-        /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
-        public virtual ScriptLog GetScriptLog()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<DeploymentScript>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new ScriptLog(this, new ResourceIdentifier(Id.ToString() + "/logs/default"));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeploymentScript(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<DeploymentScript> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagHelper.Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new DeploymentScript(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<DeploymentScript>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.SetTags");
+            scope.Start();
+            try
+            {
+                await TagHelper.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeploymentScript(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<DeploymentScript> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.SetTags");
+            scope.Start();
+            try
+            {
+                TagHelper.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new DeploymentScript(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<DeploymentScript>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _deploymentScriptRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DeploymentScript(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}
+        /// Operation Id: DeploymentScripts_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<DeploymentScript> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _deploymentScriptClientDiagnostics.CreateScope("DeploymentScript.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagHelper.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _deploymentScriptRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return Response.FromValue(new DeploymentScript(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

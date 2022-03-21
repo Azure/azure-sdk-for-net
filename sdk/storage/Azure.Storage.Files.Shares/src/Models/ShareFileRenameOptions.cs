@@ -31,12 +31,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Source request conditions.  This parameter is only applicable if the source is a file.
         /// </summary>
-        public ShareFileRequestConditions SourceRequestConditions { get; set; }
+        public ShareFileRequestConditions SourceConditions { get; set; }
 
         /// <summary>
         /// Destination request conditions.
         /// </summary>
-        public ShareFileRequestConditions DestinationRequestConditions { get; set; }
+        public ShareFileRequestConditions DestinationConditions { get; set; }
 
         /// <summary>
         /// Optional SMB properties to set on the destination file or directory.
@@ -54,5 +54,11 @@ namespace Azure.Storage.Files.Shares.Models
 #pragma warning disable CA2227 // Collection properties should be read only
         public Metadata Metadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
+
+        /// <summary>
+        /// Optional content type to set on the File.
+        /// Note that this parameter does not apply for Directories.
+        /// </summary>
+        public string ContentType { get; set; }
     }
 }

@@ -44,8 +44,14 @@ namespace Azure.ResourceManager.KeyVault.Tests
         {
         }
 
+        protected VaultOperationsTestsBase(bool isAsync, RecordedTestMode mode)
+            : base(isAsync, mode)//, true)
+        {
+        }
+
         protected async Task Initialize()
         {
+            Location = "westcentralus";
             Client = GetArmClient();
             Subscription = await Client.GetDefaultSubscriptionAsync();
             DeletedVaultCollection = Subscription.GetDeletedVaults();
@@ -65,18 +71,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
                     break;
                 }
             }
-            Location = "North Central US";
 
-            ResGroupName = Recording.GenerateAssetName("sdktestrg");
-            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
+            ResGroupName = Recording.GenerateAssetName("sdktestrg-kv-");
+            var rgResponse = await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, ResGroupName, new ResourceGroupData(Location)).ConfigureAwait(false);
             ResourceGroup = rgResponse.Value;
 
             VaultCollection = ResourceGroup.GetVaults();
-            VaultName = Recording.GenerateAssetName("sdktestvault");
+            VaultName = Recording.GenerateAssetName("sdktest-vault-");
             TenantIdGuid = new Guid(TestEnvironment.TenantId);
             Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
 
-            var permissions = new Permissions
+            var permissions = new AccessPermissions
             {
                 Keys = { new KeyPermissions("all") },
                 Secrets = { new SecretPermissions("all") },
@@ -85,17 +90,17 @@ namespace Azure.ResourceManager.KeyVault.Tests
             };
             AccessPolicy = new AccessPolicyEntry(TenantIdGuid, ObjectId, permissions);
 
-            VaultProperties = new VaultProperties(TenantIdGuid, new Sku(SkuFamily.A, SkuName.Standard));
+            VaultProperties = new VaultProperties(TenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 
             VaultProperties.EnabledForDeployment = true;
             VaultProperties.EnabledForDiskEncryption = true;
             VaultProperties.EnabledForTemplateDeployment = true;
             VaultProperties.EnableSoftDelete = true;
-            VaultProperties.VaultUri = "";
+            VaultProperties.VaultUri = new Uri("http://vaulturi.com");
             VaultProperties.NetworkAcls = new NetworkRuleSet() {
                 Bypass = "AzureServices",
                 DefaultAction = "Allow",
-                IpRules =
+                IPRules =
                 {
                     new IPRule("1.2.3.4/32"),
                     new IPRule("1.0.0.0/25")

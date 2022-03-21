@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -24,7 +25,8 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of BlobContainerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="version"> The version of the deleted blob container. </param>
         /// <param name="deleted"> Indicates whether the blob container was deleted. </param>
@@ -43,7 +45,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="hasImmutabilityPolicy"> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </param>
         /// <param name="immutableStorageWithVersioning"> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType type, string etag, string version, bool? deleted, DateTimeOffset? deletedTime, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedTime, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning) : base(id, name, type, etag)
+        /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
+        /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string version, bool? deleted, DateTimeOffset? deletedTime, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedTime, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash) : base(id, name, resourceType, systemData, etag)
         {
             Version = version;
             Deleted = deleted;
@@ -62,6 +66,8 @@ namespace Azure.ResourceManager.Storage
             HasLegalHold = hasLegalHold;
             HasImmutabilityPolicy = hasImmutabilityPolicy;
             ImmutableStorageWithVersioning = immutableStorageWithVersioning;
+            EnableNfsV3RootSquash = enableNfsV3RootSquash;
+            EnableNfsV3AllSquash = enableNfsV3AllSquash;
         }
 
         /// <summary> The version of the deleted blob container. </summary>
@@ -98,5 +104,9 @@ namespace Azure.ResourceManager.Storage
         public bool? HasImmutabilityPolicy { get; }
         /// <summary> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </summary>
         public ImmutableStorageWithVersioning ImmutableStorageWithVersioning { get; set; }
+        /// <summary> Enable NFSv3 root squash on blob container. </summary>
+        public bool? EnableNfsV3RootSquash { get; set; }
+        /// <summary> Enable NFSv3 all squash on blob container. </summary>
+        public bool? EnableNfsV3AllSquash { get; set; }
     }
 }

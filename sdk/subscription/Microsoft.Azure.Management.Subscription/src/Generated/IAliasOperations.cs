@@ -27,7 +27,10 @@ namespace Microsoft.Azure.Management.Subscription
         /// Create Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note
+        /// that this is not the same as subscription name and this doesn’t
+        /// have any other lifecycle need beyond the request for subscription
+        /// creation.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -46,12 +49,15 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PutAliasResponse>> CreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionAliasResponse>> CreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note
+        /// that this is not the same as subscription name and this doesn’t
+        /// have any other lifecycle need beyond the request for subscription
+        /// creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -68,12 +74,15 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PutAliasResponse>> GetWithHttpMessagesAsync(string aliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionAliasResponse>> GetWithHttpMessagesAsync(string aliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete Alias.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note
+        /// that this is not the same as subscription name and this doesn’t
+        /// have any other lifecycle need beyond the request for subscription
+        /// creation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -89,7 +98,7 @@ namespace Microsoft.Azure.Management.Subscription
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string aliasName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get Alias Subscription.
+        /// List Alias Subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,12 +115,15 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PutAliasListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionAliasListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create Alias Subscription.
         /// </summary>
         /// <param name='aliasName'>
-        /// Alias Name
+        /// AliasName is the name for the subscription creation request. Note
+        /// that this is not the same as subscription name and this doesn’t
+        /// have any other lifecycle need beyond the request for subscription
+        /// creation.
         /// </param>
         /// <param name='body'>
         /// </param>
@@ -130,6 +142,6 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PutAliasResponse>> BeginCreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionAliasResponse>> BeginCreateWithHttpMessagesAsync(string aliasName, PutAliasRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

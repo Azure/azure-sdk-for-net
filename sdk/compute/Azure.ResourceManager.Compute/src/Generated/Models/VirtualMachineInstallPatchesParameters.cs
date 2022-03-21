@@ -13,24 +13,16 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineInstallPatchesParameters
     {
         /// <summary> Initializes a new instance of VirtualMachineInstallPatchesParameters. </summary>
-        /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="maximumDuration"/> is null. </exception>
-        public VirtualMachineInstallPatchesParameters(string maximumDuration, VMGuestPatchRebootSetting rebootSetting)
+        public VirtualMachineInstallPatchesParameters(VmGuestPatchRebootSetting rebootSetting)
         {
-            if (maximumDuration == null)
-            {
-                throw new ArgumentNullException(nameof(maximumDuration));
-            }
-
-            MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
         }
 
         /// <summary> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </summary>
-        public string MaximumDuration { get; }
+        public TimeSpan? MaximumDuration { get; set; }
         /// <summary> Defines when it is acceptable to reboot a VM during a software update operation. </summary>
-        public VMGuestPatchRebootSetting RebootSetting { get; }
+        public VmGuestPatchRebootSetting RebootSetting { get; }
         /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
         public WindowsParameters WindowsParameters { get; set; }
         /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>

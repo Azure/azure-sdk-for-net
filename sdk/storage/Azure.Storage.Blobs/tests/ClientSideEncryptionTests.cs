@@ -1224,28 +1224,22 @@ namespace Azure.Storage.Blobs.Test
             if (IsAsync)
             {
                 updateResult = blob.UpdateClientSideKeyEncryptionKeyAsync(
-                    new UpdateClientSideKeyEncryptionKeyOptions
+                    encryptionOptionsOverride: new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
-                        EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
-                        {
-                            KeyEncryptionKey = mockKey2.Object,
-                            KeyResolver = mockKeyResolver,
-                            KeyWrapAlgorithm = s_algorithmName
-                        }
+                        KeyEncryptionKey = mockKey2.Object,
+                        KeyResolver = mockKeyResolver,
+                        KeyWrapAlgorithm = s_algorithmName
                     },
                     cancellationToken: s_cancellationToken);
             }
             else
             {
                 updateResult = Task.Run(() => blob.UpdateClientSideKeyEncryptionKey(
-                    new UpdateClientSideKeyEncryptionKeyOptions
+                    encryptionOptionsOverride: new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                     {
-                        EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
-                        {
-                            KeyEncryptionKey = mockKey2.Object,
-                            KeyResolver = mockKeyResolver,
-                            KeyWrapAlgorithm = s_algorithmName
-                        }
+                        KeyEncryptionKey = mockKey2.Object,
+                        KeyResolver = mockKeyResolver,
+                        KeyWrapAlgorithm = s_algorithmName
                     },
                     cancellationToken: s_cancellationToken));
             }
@@ -1327,28 +1321,22 @@ namespace Azure.Storage.Blobs.Test
                 if (IsAsync)
                 {
                     await blob.UpdateClientSideKeyEncryptionKeyAsync(
-                        new UpdateClientSideKeyEncryptionKeyOptions
+                        encryptionOptionsOverride: new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                         {
-                            EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
-                            {
-                                KeyEncryptionKey = newKey,
-                                KeyResolver = keyResolver,
-                                KeyWrapAlgorithm = s_algorithmName
-                            }
+                            KeyEncryptionKey = newKey,
+                            KeyResolver = keyResolver,
+                            KeyWrapAlgorithm = s_algorithmName
                         },
                         cancellationToken: s_cancellationToken);
                 }
                 else
                 {
                     blob.UpdateClientSideKeyEncryptionKey(
-                        new UpdateClientSideKeyEncryptionKeyOptions
+                        encryptionOptionsOverride: new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
                         {
-                            EncryptionOptionsOverride = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
-                            {
-                                KeyEncryptionKey = newKey,
-                                KeyResolver = keyResolver,
-                                KeyWrapAlgorithm = s_algorithmName
-                            }
+                            KeyEncryptionKey = newKey,
+                            KeyResolver = keyResolver,
+                            KeyWrapAlgorithm = s_algorithmName
                         },
                         cancellationToken: s_cancellationToken);
                 }

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (Optional.IsDefined(Id))
             {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpAllocations))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations");
                 writer.WriteStartArray();
-                foreach (var item in IpAllocations)
+                foreach (var item in IPAllocations)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies");
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ApplicationGatewayIpConfigurations))
+            if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
                 writer.WritePropertyName("applicationGatewayIpConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in ApplicationGatewayIpConfigurations)
+                foreach (var item in ApplicationGatewayIPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }

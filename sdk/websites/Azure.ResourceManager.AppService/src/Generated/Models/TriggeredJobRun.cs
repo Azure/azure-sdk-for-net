@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="url"> Job URL. </param>
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startTime, DateTimeOffset? endTime, string duration, string outputUrl, string errorUrl, string url, string jobName, string trigger)
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startTime, DateTimeOffset? endTime, TimeSpan? duration, string outputUrl, string errorUrl, string url, string jobName, string trigger)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> End time. </summary>
         public DateTimeOffset? EndTime { get; set; }
         /// <summary> Job duration. </summary>
-        public string Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
         /// <summary> Output URL. </summary>
         public string OutputUrl { get; set; }
         /// <summary> Error URL. </summary>

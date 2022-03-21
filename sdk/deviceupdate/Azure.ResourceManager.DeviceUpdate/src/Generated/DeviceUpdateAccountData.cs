@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -14,31 +13,26 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing the DeviceUpdateAccount data model. </summary>
-    public partial class DeviceUpdateAccountData : Models.TrackedResource
+    public partial class DeviceUpdateAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public DeviceUpdateAccountData(string location) : base(location)
+        /// <param name="location"> The location. </param>
+        public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> The type of identity used for the resource. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="hostName"> API host name. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, type, systemData, tags, location)
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;

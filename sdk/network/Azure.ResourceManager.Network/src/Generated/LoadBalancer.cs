@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -28,8 +27,10 @@ namespace Azure.ResourceManager.Network
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly LoadBalancersRestOperations _loadBalancersRestClient;
+
+        private readonly ClientDiagnostics _loadBalancerClientDiagnostics;
+        private readonly LoadBalancersRestOperations _loadBalancerRestClient;
+        private readonly ClientDiagnostics _loadBalancerNetworkInterfacesClientDiagnostics;
         private readonly LoadBalancerNetworkInterfacesRestOperations _loadBalancerNetworkInterfacesRestClient;
         private readonly LoadBalancerData _data;
 
@@ -39,44 +40,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of the <see cref = "LoadBalancer"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LoadBalancer(ArmResource options, LoadBalancerData data) : base(options, new ResourceIdentifier(data.Id))
+        internal LoadBalancer(ArmClient client, LoadBalancerData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadBalancer(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal LoadBalancer(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="LoadBalancer"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal LoadBalancer(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _loadBalancersRestClient = new LoadBalancersRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _loadBalancerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string loadBalancerApiVersion);
+            _loadBalancerRestClient = new LoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancerApiVersion);
+            _loadBalancerNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,19 +87,235 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the specified load balancer. </summary>
+        /// <summary> Gets a collection of BackendAddressPools in the BackendAddressPool. </summary>
+        /// <returns> An object representing collection of BackendAddressPools and their operations over a BackendAddressPool. </returns>
+        public virtual BackendAddressPoolCollection GetBackendAddressPools()
+        {
+            return GetCachedClient(Client => new BackendAddressPoolCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets load balancer backend address pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}
+        /// Operation Id: LoadBalancerBackendAddressPools_Get
+        /// </summary>
+        /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        public virtual async Task<Response<BackendAddressPool>> GetBackendAddressPoolAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        {
+            return await GetBackendAddressPools().GetAsync(backendAddressPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets load balancer backend address pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}
+        /// Operation Id: LoadBalancerBackendAddressPools_Get
+        /// </summary>
+        /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        public virtual Response<BackendAddressPool> GetBackendAddressPool(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        {
+            return GetBackendAddressPools().Get(backendAddressPoolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FrontendIPConfigurations in the FrontendIPConfiguration. </summary>
+        /// <returns> An object representing collection of FrontendIPConfigurations and their operations over a FrontendIPConfiguration. </returns>
+        public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
+        {
+            return GetCachedClient(Client => new FrontendIPConfigurationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets load balancer frontend IP configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}
+        /// Operation Id: LoadBalancerFrontendIPConfigurations_Get
+        /// </summary>
+        /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        public virtual async Task<Response<FrontendIPConfiguration>> GetFrontendIPConfigurationAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetFrontendIPConfigurations().GetAsync(frontendIPConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets load balancer frontend IP configuration.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/frontendIPConfigurations/{frontendIPConfigurationName}
+        /// Operation Id: LoadBalancerFrontendIPConfigurations_Get
+        /// </summary>
+        /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        public virtual Response<FrontendIPConfiguration> GetFrontendIPConfiguration(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetFrontendIPConfigurations().Get(frontendIPConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of InboundNatRules in the InboundNatRule. </summary>
+        /// <returns> An object representing collection of InboundNatRules and their operations over a InboundNatRule. </returns>
+        public virtual InboundNatRuleCollection GetInboundNatRules()
+        {
+            return GetCachedClient(Client => new InboundNatRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
+        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LoadBalancer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        public virtual async Task<Response<InboundNatRule>> GetInboundNatRuleAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Get");
+            return await GetInboundNatRules().GetAsync(inboundNatRuleName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer inbound nat rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatRules/{inboundNatRuleName}
+        /// Operation Id: InboundNatRules_Get
+        /// </summary>
+        /// <param name="inboundNatRuleName"> The name of the inbound nat rule. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        public virtual Response<InboundNatRule> GetInboundNatRule(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetInboundNatRules().Get(inboundNatRuleName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LoadBalancingRules in the LoadBalancingRule. </summary>
+        /// <returns> An object representing collection of LoadBalancingRules and their operations over a LoadBalancingRule. </returns>
+        public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
+        {
+            return GetCachedClient(Client => new LoadBalancingRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer load balancing rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
+        /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancingRule>> GetLoadBalancingRuleAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetLoadBalancingRules().GetAsync(loadBalancingRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer load balancing rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/loadBalancingRules/{loadBalancingRuleName}
+        /// Operation Id: LoadBalancerLoadBalancingRules_Get
+        /// </summary>
+        /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        public virtual Response<LoadBalancingRule> GetLoadBalancingRule(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetLoadBalancingRules().Get(loadBalancingRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of OutboundRules in the OutboundRule. </summary>
+        /// <returns> An object representing collection of OutboundRules and their operations over a OutboundRule. </returns>
+        public virtual OutboundRuleCollection GetOutboundRules()
+        {
+            return GetCachedClient(Client => new OutboundRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer outbound rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}
+        /// Operation Id: LoadBalancerOutboundRules_Get
+        /// </summary>
+        /// <param name="outboundRuleName"> The name of the outbound rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        public virtual async Task<Response<OutboundRule>> GetOutboundRuleAsync(string outboundRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetOutboundRules().GetAsync(outboundRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer outbound rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}
+        /// Operation Id: LoadBalancerOutboundRules_Get
+        /// </summary>
+        /// <param name="outboundRuleName"> The name of the outbound rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        public virtual Response<OutboundRule> GetOutboundRule(string outboundRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetOutboundRules().Get(outboundRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Probes in the Probe. </summary>
+        /// <returns> An object representing collection of Probes and their operations over a Probe. </returns>
+        public virtual ProbeCollection GetProbes()
+        {
+            return GetCachedClient(Client => new ProbeCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets load balancer probe.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
+        /// <param name="probeName"> The name of the probe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        public virtual async Task<Response<Probe>> GetProbeAsync(string probeName, CancellationToken cancellationToken = default)
+        {
+            return await GetProbes().GetAsync(probeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets load balancer probe.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}
+        /// Operation Id: LoadBalancerProbes_Get
+        /// </summary>
+        /// <param name="probeName"> The name of the probe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        public virtual Response<Probe> GetProbe(string probeName, CancellationToken cancellationToken = default)
+        {
+            return GetProbes().Get(probeName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LoadBalancer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Get");
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LoadBalancer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -127,19 +324,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets the specified load balancer. </summary>
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LoadBalancer> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Get");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Get");
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                var response = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new LoadBalancer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,54 +349,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes the specified load balancer. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the specified load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<LoadBalancerDeleteOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Delete");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Delete");
             scope.Start();
             try
             {
-                var response = await _loadBalancersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
+                var response = await _loadBalancerRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -206,19 +375,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Deletes the specified load balancer. </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <summary>
+        /// Deletes the specified load balancer.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Delete
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual LoadBalancerDeleteOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Delete");
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.Delete");
             scope.Start();
             try
             {
-                var response = _loadBalancersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new LoadBalancerDeleteOperation(_clientDiagnostics, Pipeline, _loadBalancersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response);
-                if (waitForCompletion)
-                    operation.WaitForCompletion(cancellationToken);
+                var response = _loadBalancerRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_loadBalancerClientDiagnostics, Pipeline, _loadBalancerRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -228,69 +401,23 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Updates a load balancer tags. </summary>
-        /// <param name="parameters"> Parameters supplied to update load balancer tags. </param>
+        /// <summary>
+        /// Gets associated load balancer network interfaces.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/networkInterfaces
+        /// Operation Id: LoadBalancerNetworkInterfaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<LoadBalancer>> UpdateAsync(TagsObject parameters, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkInterface> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
-            if (parameters == null)
+            async Task<Page<NetworkInterface>> FirstPageFunc(int? pageSizeHint)
             {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Update");
-            scope.Start();
-            try
-            {
-                var response = await _loadBalancersRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Updates a load balancer tags. </summary>
-        /// <param name="parameters"> Parameters supplied to update load balancer tags. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<LoadBalancer> Update(TagsObject parameters, CancellationToken cancellationToken = default)
-        {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("LoadBalancer.Update");
-            scope.Start();
-            try
-            {
-                var response = _loadBalancersRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                return Response.FromValue(new LoadBalancer(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets associated load balancer network interfaces. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkInterfaceData> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<NetworkInterfaceData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
                     var response = await _loadBalancerNetworkInterfacesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -298,14 +425,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<NetworkInterfaceData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<NetworkInterface>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
                     var response = await _loadBalancerNetworkInterfacesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -316,19 +443,23 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets associated load balancer network interfaces. </summary>
+        /// <summary>
+        /// Gets associated load balancer network interfaces.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/networkInterfaces
+        /// Operation Id: LoadBalancerNetworkInterfaces_List
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkInterfaceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkInterfaceData> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkInterface" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkInterface> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken = default)
         {
-            Page<NetworkInterfaceData> FirstPageFunc(int? pageSizeHint)
+            Page<NetworkInterface> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
                     var response = _loadBalancerNetworkInterfacesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -336,14 +467,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<NetworkInterfaceData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<NetworkInterface> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
+                using var scope = _loadBalancerNetworkInterfacesClientDiagnostics.CreateScope("LoadBalancer.GetLoadBalancerNetworkInterfaces");
                 scope.Start();
                 try
                 {
                     var response = _loadBalancerNetworkInterfacesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new NetworkInterface(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -354,64 +485,184 @@ namespace Azure.ResourceManager.Network
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        #region BackendAddressPool
-
-        /// <summary> Gets a collection of BackendAddressPools in the LoadBalancer. </summary>
-        /// <returns> An object representing collection of BackendAddressPools and their operations over a LoadBalancer. </returns>
-        public virtual BackendAddressPoolCollection GetBackendAddressPools()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new BackendAddressPoolCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region FrontendIPConfiguration
-
-        /// <summary> Gets a collection of FrontendIPConfigurations in the LoadBalancer. </summary>
-        /// <returns> An object representing collection of FrontendIPConfigurations and their operations over a LoadBalancer. </returns>
-        public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<LoadBalancer> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            return new FrontendIPConfigurationCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.AddTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagHelper.Get(cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new LoadBalancer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region InboundNatRule
-
-        /// <summary> Gets a collection of InboundNatRules in the LoadBalancer. </summary>
-        /// <returns> An object representing collection of InboundNatRules and their operations over a LoadBalancer. </returns>
-        public virtual InboundNatRuleCollection GetInboundNatRules()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new InboundNatRuleCollection(this);
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.SetTags");
+            scope.Start();
+            try
+            {
+                await TagHelper.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region LoadBalancingRule
-
-        /// <summary> Gets a collection of LoadBalancingRules in the LoadBalancer. </summary>
-        /// <returns> An object representing collection of LoadBalancingRules and their operations over a LoadBalancer. </returns>
-        public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<LoadBalancer> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            return new LoadBalancingRuleCollection(this);
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.SetTags");
+            scope.Start();
+            try
+            {
+                TagHelper.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new LoadBalancer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region OutboundRule
-
-        /// <summary> Gets a collection of OutboundRules in the LoadBalancer. </summary>
-        /// <returns> An object representing collection of OutboundRules and their operations over a LoadBalancer. </returns>
-        public virtual OutboundRuleCollection GetOutboundRules()
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<LoadBalancer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            return new OutboundRuleCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalResponse = await _loadBalancerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LoadBalancer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
 
-        #region Probe
-
-        /// <summary> Gets a collection of Probes in the LoadBalancer. </summary>
-        /// <returns> An object representing collection of Probes and their operations over a LoadBalancer. </returns>
-        public virtual ProbeCollection GetProbes()
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
+        /// Operation Id: LoadBalancers_Get
+        /// </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<LoadBalancer> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            return new ProbeCollection(this);
+            Argument.AssertNotNull(key, nameof(key));
+
+            using var scope = _loadBalancerClientDiagnostics.CreateScope("LoadBalancer.RemoveTag");
+            scope.Start();
+            try
+            {
+                var originalTags = TagHelper.Get(cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                var originalResponse = _loadBalancerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
+                return Response.FromValue(new LoadBalancer(Client, originalResponse.Value), originalResponse.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
-        #endregion
     }
 }

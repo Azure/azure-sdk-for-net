@@ -14,7 +14,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.WebJobs.Ext
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{25AE2C7A-FD10-4A94-A063-857C542B7D45}"
 	ProjectSection(SolutionItems) = preProject
-		api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netcoreapp3.1.cs = api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netcoreapp3.1.cs
 		api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netstandard2.0.cs = api\Microsoft.Azure.WebJobs.Extensions.SignalRService.netstandard2.0.cs
 	EndProjectSection
 EndProject

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the LongTermRetentionBackup data model. </summary>
-    public partial class LongTermRetentionBackupData : Resource
+    public partial class LongTermRetentionBackupData : ResourceData
     {
         /// <summary> Initializes a new instance of LongTermRetentionBackupData. </summary>
         public LongTermRetentionBackupData()
@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of LongTermRetentionBackupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="serverName"> The server name that the backup database belong to. </param>
         /// <param name="serverCreateTime"> The create time of the server. </param>
         /// <param name="databaseName"> The name of the database the backup belong to. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="backupExpirationTime"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType type, string serverName, DateTimeOffset? serverCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, type)
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateTime, string databaseName, DateTimeOffset? databaseDeletionTime, DateTimeOffset? backupTime, DateTimeOffset? backupExpirationTime, BackupStorageRedundancy? backupStorageRedundancy, BackupStorageRedundancy? requestedBackupStorageRedundancy) : base(id, name, resourceType, systemData)
         {
             ServerName = serverName;
             ServerCreateTime = serverCreateTime;

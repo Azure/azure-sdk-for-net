@@ -8,30 +8,30 @@
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "Content-Type": "application/octet-stream",
-        "traceparent": "00-abf770d105a2fb459db7ff4c7413f4ef-38deb0ef90573e48-00",
-        "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20211124.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19044 )",
+        "traceparent": "00-83b77b42a232b04c9211c9e73ba2e72b-7743f6b6431a2c4c-00",
+        "User-Agent": "azsdk-net-Storage.Blobs/12.11.0-alpha.20220118.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
         "x-ms-blob-type": "BlockBlob",
         "x-ms-client-request-id": "59637c6e-44a5-4fe5-ff3e-249ed494349e",
-        "x-ms-date": "Wed, 24 Nov 2021 23:39:29 GMT",
+        "x-ms-date": "Thu, 20 Jan 2022 20:44:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "225",
         "Content-Type": "application/xml",
-        "Date": "Wed, 24 Nov 2021 23:39:28 GMT",
+        "Date": "Thu, 20 Jan 2022 20:44:49 GMT",
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "59637c6e-44a5-4fe5-ff3e-249ed494349e",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "d447a2dc-701e-003e-5e8c-e14dbd000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-request-id": "6ce852fa-001e-0046-733e-0eee45000000",
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EContainerNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified container does not exist.\n",
-        "RequestId:d447a2dc-701e-003e-5e8c-e14dbd000000\n",
-        "Time:2021-11-24T23:39:29.3008478Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:6ce852fa-001e-0046-733e-0eee45000000\n",
+        "Time:2022-01-20T20:44:49.2754818Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],

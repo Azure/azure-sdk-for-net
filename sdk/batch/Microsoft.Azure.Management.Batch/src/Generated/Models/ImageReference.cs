@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// image.
         /// </summary>
         /// <remarks>
-        /// For example, 18.04-LTS or 2019-Datacenter.
+        /// For example, 18.04-LTS or 2022-datacenter.
         /// </remarks>
         [JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }

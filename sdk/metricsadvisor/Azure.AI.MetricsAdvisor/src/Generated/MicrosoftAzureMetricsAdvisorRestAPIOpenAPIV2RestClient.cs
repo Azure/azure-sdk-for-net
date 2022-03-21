@@ -19,20 +19,22 @@ namespace Azure.AI.MetricsAdvisor
 {
     internal partial class MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient
     {
-        private string endpoint;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
         public MicrosoftAzureMetricsAdvisorRestAPIOpenAPIV2RestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
         internal HttpMessage CreateGetActiveSeriesCountRequest()
@@ -41,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/stats/latest", false);
             request.Uri = uri;
@@ -65,7 +67,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -85,7 +87,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -95,7 +97,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -121,7 +123,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -142,7 +144,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -152,7 +154,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -189,7 +191,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -217,7 +219,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -227,7 +229,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -248,7 +250,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -264,7 +266,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -274,7 +276,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations", false);
             request.Uri = uri;
@@ -305,7 +307,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -328,7 +330,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -338,7 +340,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -386,7 +388,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -416,7 +418,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -426,7 +428,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -472,7 +474,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -502,7 +504,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -512,7 +514,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/alert/anomaly/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -558,7 +560,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -588,7 +590,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -598,7 +600,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -624,7 +626,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -645,7 +647,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -655,7 +657,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -692,7 +694,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -720,7 +722,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -730,7 +732,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -751,7 +753,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -767,7 +769,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -777,7 +779,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations", false);
             request.Uri = uri;
@@ -808,7 +810,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -831,7 +833,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -841,7 +843,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -878,7 +880,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -901,7 +903,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -911,7 +913,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -949,7 +951,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -977,7 +979,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -987,7 +989,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -1035,7 +1037,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1065,7 +1067,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1075,7 +1077,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -1123,7 +1125,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1153,7 +1155,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1163,7 +1165,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -1206,7 +1208,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1235,7 +1237,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1245,7 +1247,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -1282,7 +1284,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1305,7 +1307,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1315,7 +1317,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/enrichment/anomalyDetection/configurations/", false);
             uri.AppendPath(configurationId, true);
@@ -1351,7 +1353,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1379,7 +1381,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1389,7 +1391,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/credentials", false);
             request.Uri = uri;
@@ -1420,7 +1422,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1443,7 +1445,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1453,7 +1455,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/credentials", false);
             if (skip != null)
@@ -1487,7 +1489,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1509,7 +1511,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1519,7 +1521,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/credentials/", false);
             uri.AppendPath(credentialId, true);
@@ -1556,7 +1558,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1584,7 +1586,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1594,7 +1596,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/credentials/", false);
             uri.AppendPath(credentialId, true);
@@ -1615,7 +1617,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1631,7 +1633,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1641,7 +1643,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/credentials/", false);
             uri.AppendPath(credentialId, true);
@@ -1667,7 +1669,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1688,7 +1690,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1698,7 +1700,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds", false);
             if (dataFeedName != null)
@@ -1757,7 +1759,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1784,7 +1786,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1794,7 +1796,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds", false);
             request.Uri = uri;
@@ -1825,7 +1827,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1848,7 +1850,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1858,7 +1860,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds/", false);
             uri.AppendPath(dataFeedId, true);
@@ -1884,7 +1886,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1905,7 +1907,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1915,7 +1917,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds/", false);
             uri.AppendPath(dataFeedId, true);
@@ -1952,7 +1954,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1980,7 +1982,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1990,7 +1992,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds/", false);
             uri.AppendPath(dataFeedId, true);
@@ -2011,7 +2013,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2027,7 +2029,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2037,7 +2039,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/feedback/metric/", false);
             uri.AppendPath(feedbackId, true);
@@ -2063,7 +2065,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2084,7 +2086,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2094,7 +2096,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/feedback/metric/query", false);
             if (skip != null)
@@ -2139,7 +2141,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2168,7 +2170,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2178,7 +2180,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/feedback/metric", false);
             request.Uri = uri;
@@ -2209,7 +2211,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2232,7 +2234,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2242,7 +2244,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/hooks", false);
             if (hookName != null)
@@ -2281,7 +2283,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2304,7 +2306,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2314,7 +2316,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/hooks", false);
             request.Uri = uri;
@@ -2345,7 +2347,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2368,7 +2370,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2378,7 +2380,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/hooks/", false);
             uri.AppendPath(hookId, true);
@@ -2404,7 +2406,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2425,7 +2427,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2435,7 +2437,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/hooks/", false);
             uri.AppendPath(hookId, true);
@@ -2472,7 +2474,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2500,7 +2502,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2510,7 +2512,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/hooks/", false);
             uri.AppendPath(hookId, true);
@@ -2531,7 +2533,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2547,7 +2549,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2557,7 +2559,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds/", false);
             uri.AppendPath(dataFeedId, true);
@@ -2605,7 +2607,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2635,7 +2637,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2645,7 +2647,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds/", false);
             uri.AppendPath(dataFeedId, true);
@@ -2678,7 +2680,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2701,7 +2703,7 @@ namespace Azure.AI.MetricsAdvisor
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2711,7 +2713,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/dataFeeds/", false);
             uri.AppendPath(dataFeedId, true);
@@ -2738,7 +2740,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2759,7 +2761,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2769,7 +2771,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/metrics/", false);
             uri.AppendPath(metricId, true);
@@ -2807,7 +2809,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2835,7 +2837,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2845,7 +2847,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/metrics/", false);
             uri.AppendPath(metricId, true);
@@ -2893,7 +2895,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -2923,7 +2925,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -2933,7 +2935,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/metrics/", false);
             uri.AppendPath(metricId, true);
@@ -2981,7 +2983,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3011,7 +3013,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3021,7 +3023,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/metrics/", false);
             uri.AppendPath(metricId, true);
@@ -3058,7 +3060,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3081,7 +3083,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3091,7 +3093,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/metrics/", false);
             uri.AppendPath(metricId, true);
@@ -3139,7 +3141,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3169,7 +3171,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3179,7 +3181,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3220,7 +3222,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3252,7 +3254,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3262,7 +3264,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3303,7 +3305,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3335,7 +3337,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3345,7 +3347,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3386,7 +3388,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3418,7 +3420,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3428,7 +3430,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3469,7 +3471,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3501,7 +3503,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3511,7 +3513,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3552,7 +3554,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3584,7 +3586,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3594,7 +3596,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3635,7 +3637,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3667,7 +3669,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3677,7 +3679,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3718,7 +3720,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3750,7 +3752,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3760,7 +3762,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendPath("/", false);
             uri.AppendRawNextLink(nextLink, false);
@@ -3801,7 +3803,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3833,7 +3835,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3843,7 +3845,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -3882,7 +3884,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -3917,7 +3919,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -3927,7 +3929,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -3966,7 +3968,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4001,7 +4003,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4011,7 +4013,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4050,7 +4052,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4085,7 +4087,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4095,7 +4097,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4129,7 +4131,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4159,7 +4161,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4169,7 +4171,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4208,7 +4210,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4243,7 +4245,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4253,7 +4255,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4292,7 +4294,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4327,7 +4329,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4337,7 +4339,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4375,7 +4377,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4409,7 +4411,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4419,7 +4421,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4453,7 +4455,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4483,7 +4485,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4493,7 +4495,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4526,7 +4528,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4555,7 +4557,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4565,7 +4567,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4603,7 +4605,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4637,7 +4639,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4647,7 +4649,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4685,7 +4687,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4719,7 +4721,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4729,7 +4731,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4763,7 +4765,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4793,7 +4795,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4803,7 +4805,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4842,7 +4844,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4877,7 +4879,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4887,7 +4889,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -4926,7 +4928,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -4961,7 +4963,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -4971,7 +4973,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -5010,7 +5012,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5045,7 +5047,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5055,7 +5057,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -5089,7 +5091,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5119,7 +5121,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -5129,7 +5131,7 @@ namespace Azure.AI.MetricsAdvisor
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/metricsadvisor/v1.0", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -5168,7 +5170,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -5203,7 +5205,7 @@ namespace Azure.AI.MetricsAdvisor
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

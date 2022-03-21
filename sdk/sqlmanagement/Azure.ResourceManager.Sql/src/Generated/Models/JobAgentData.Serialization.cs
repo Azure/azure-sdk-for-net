@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -45,12 +46,13 @@ namespace Azure.ResourceManager.Sql
 
         internal static JobAgentData DeserializeJobAgentData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<SqlSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> databaseId = default;
             Optional<JobAgentState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -62,7 +64,7 @@ namespace Azure.ResourceManager.Sql
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -95,6 +97,11 @@ namespace Azure.ResourceManager.Sql
                     type = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    continue;
+                }
                 if (property.NameEquals("properties"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -123,7 +130,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new JobAgentData(id, name, type, tags, location, sku.Value, databaseId.Value, Optional.ToNullable(state));
+            return new JobAgentData(id, name, type, systemData, tags, location, sku.Value, databaseId.Value, Optional.ToNullable(state));
         }
     }
 }

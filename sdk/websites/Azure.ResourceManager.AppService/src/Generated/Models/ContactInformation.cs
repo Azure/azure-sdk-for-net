@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="nameFirst"> First name. </param>
         /// <param name="nameLast"> Last name. </param>
         /// <param name="phone"> Phone number. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="email"/>, <paramref name="nameFirst"/>, <paramref name="nameLast"/>, or <paramref name="phone"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="email"/>, <paramref name="nameFirst"/>, <paramref name="nameLast"/> or <paramref name="phone"/> is null. </exception>
         public ContactInformation(string email, string nameFirst, string nameLast, string phone)
         {
             if (email == null)

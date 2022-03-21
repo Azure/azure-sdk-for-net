@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'WorkbookTemplate', 'Playbook', 'PlaybookTemplate',
         /// 'AnalyticsRuleTemplate', 'AnalyticsRule', 'HuntingQuery',
         /// 'InvestigationQuery', 'Parser', 'Watchlist', 'WatchlistTemplate',
-        /// 'Solution'</param>
+        /// 'Solution', 'AzureFunction', 'LogicAppsCustomConnector',
+        /// 'AutomationRule'</param>
         /// <param name="version">Version of the the content item we depend on.
         /// Can be blank, * or missing to indicate any version fulfills the
         /// dependency.  If version does not match our defined numeric format
@@ -79,7 +80,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// 'WorkbookTemplate', 'Playbook', 'PlaybookTemplate',
         /// 'AnalyticsRuleTemplate', 'AnalyticsRule', 'HuntingQuery',
         /// 'InvestigationQuery', 'Parser', 'Watchlist', 'WatchlistTemplate',
-        /// 'Solution'
+        /// 'Solution', 'AzureFunction', 'LogicAppsCustomConnector',
+        /// 'AutomationRule'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

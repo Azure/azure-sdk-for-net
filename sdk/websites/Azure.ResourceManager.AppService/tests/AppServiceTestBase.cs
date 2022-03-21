@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.AppService.Tests
         {
         }
 
+        public AppServiceTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
+
         [SetUp]
         public async Task CreateCommonClient()
         {
@@ -32,6 +36,7 @@ namespace Azure.ResourceManager.AppService.Tests
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

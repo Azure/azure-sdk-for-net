@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2022-02-08)
+
+### Features Added
+
+- Added the `QuestionAnsweringProjectsClient` to manage Question Answering projects.
 
 ## 1.0.0 (2021-11-03)
 

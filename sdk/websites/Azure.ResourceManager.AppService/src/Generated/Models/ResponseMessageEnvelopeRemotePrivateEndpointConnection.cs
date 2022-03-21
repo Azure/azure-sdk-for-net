@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
-    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Resource
+    public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceData
     {
         /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection()
@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </param>
         /// <param name="tags"> Tags associated with resource. </param>
         /// <param name="plan"> Azure resource manager plan. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Azure-AsyncOperation Error info. </param>
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, ArmPlan plan, RemotePrivateEndpointConnection properties, SkuDescription sku, string status, ErrorEntity error, ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, type)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags, ArmPlan plan, RemotePrivateEndpointConnection properties, SkuDescription sku, string status, ErrorEntity error, ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;

@@ -1,201 +1,151 @@
 # Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)
-The purpose of the Azure SDK is to provide a unified developer experience across Azure services. In this tutorial, we will walk through creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have a standardized API based on the  [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-We will use the [Azure SDK Generated Client template](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-dpg) project as a reference. We have a template [swagger file](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-dpg/Azure.Template.Generated/src/swagger) containing a REST API definition based on [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md). We will use the swagger to generate SDK using [autorest.csharp](https://github.com/Azure/autorest.csharp).
+We build Azure SDK libraries to give developers a consistent, unified experience working with Azure services, in the language ecosystem where they're most comfortable.  Azure SDK Code Generation allows you to quickly and easily create a client library so customers can work with your service as part of the SDK.  In this tutorial, we will step through the process of creating a new Azure SDK Generated Client library for a data plane Azure service.  The output library will have an API that follows [.NET Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html), which will give it the same look and feel of other .NET libraries in the Azure SDK.
 
-**Learn more**: to understand more about Azure SDK Code Geneneration, see the [Azure SDK Code Geneneration docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
+Azure SDK Code Generation takes an Open API spec as input, and uses the [autorest.csharp](https://github.com/Azure/autorest.csharp) generator to output a generated library.  It is important that the input API spec follows the [Azure REST API Guidelines](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md), to enable the output library to be consistent with the Azure SDK Guidelines.
+
+**Learn more**: You can learn more about Azure SDK Data Plane Code Generation in the [Azure SDK Code Geneneration docs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md).
 
 This tutorial has following sections:
 
-- [Prerequisites](#prerequisites)
-- [Setup your repo](#setup-your-repo)
-- [Getting started](#getting-started)
-  - [Create the project](#create-the-project)
-  - [Create the generated layer](#create-the-generated-layer)
-- [Tests](#tests)
-- [Samples](#samples)
-- [Snippets](#snippets)
-- [Export Public API](#export-public-api)
-- [README](#readme)
-- [Changelog](#changelog)
+- [Azure SDK Code Geneneration Quickstart Tutorial (Data Plane)](#azure-sdk-code-geneneration-quickstart-tutorial-data-plane)
+  - [Prerequisites](#prerequisites)
+  - [Setup your repo](#setup-your-repo)
+  - [Create starter package](#create-starter-package)
+  - [Add package ship requirements](#add-package-ship-requirements)
+    - [Tests](#tests)
+    - [Samples](#samples)
+    - [Snippets](#snippets)
+    - [README](#readme)
+    - [Changelog](#changelog)
+    - [Customize](#customize)
 
 <!-- /TOC -->
 
 ## Prerequisites
 
-- Install VS 2019 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
+- Install VS 2020 (Community or higher) and make sure you have the [latest updates](https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
-- Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 5.0.301 SDK** for your specific platform. (or a higher version within the 5.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/5.0)
+  - Install the **.NET Core cross-platform development** workloads in VisualStudio
+- Install **.NET 6.0 SDK** for your specific platform. (or a higher version)
+- Install **.NET core 3.1** for your specific platform.
 - Install the latest version of [git](https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher.
+- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
 - Install [NodeJS](https://nodejs.org/) (14.x.x).
 
 ## Setup your repo
 
-- Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET Contributing.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
-- Create a branch to work in. 
+- Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
+- Create a branch to work in.
 
-## Getting started
+## Create starter package  
 
-For this tutorial, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. To create the project, we'll copy the [Azure.Template.Generated](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-dpg) project for .NET.
+For this guide, we'll create a getting started project in a branch of your fork of `azure-sdk-for-net` repo. The started project will be under `sdk\<servie name>\<package name>` directory of `azure-sdk-for-net` repo. The package will contain several folders and files (see following). Please refer to [sdk-directory-layout](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md#sdk-directory-layout) for detail information.
 
-The `Azure.Template.Generated` project is a great place to get started with Azure SDK .NET library development in general, as it contains a number of common patterns we use for tests, samples, documentation, generating API listings. It also has generated code demonstrating an example Data Plane Generated Client.
-
-**Learn more**: see other features listed in the [Azure.Template.Generated README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/README.md).
-
-### Create the project
-
-#### 1. Copy the Azure.Template.Generated directory
-
-Copy the `sdk\template-dpg` directory to an `sdk\<your-service-name>` directory at the same level. For example, from the root of your cloned repo:
-
-```
-% mkdir sdk\<your-service-name>
-% xcopy sdk\template-dpg sdk\<your-service-name> /E
+```text
+sdk\<service name>\<package name>\README.md
+sdk\<service name>\<package name>\api
+sdk\<service name>\<package name>\src
+sdk\<service name>\<package name>\tests
+sdk\<service name>\<package name>\samples
+sdk\<service name>\<package name>\CHANGELOG.md
 ```
 
-**Learn more:** to understand more about the Azure SDK repo structure, see [Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md) in the `azure-sdk` repo.
+- `<service name>` - Should be the short name for the azure service. e.g. deviceupdate
+- `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
+  
+We will use dotnet project template [Azure.ServiceTemplate.Template](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates) to automatically create the project.
 
-#### 2. Remove existing generated code
+You can run `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
-Open the `Azure.Template.Generated.sln` file from the `sdk\<your-service-name>\Azure.Template.Generated` directory.
-
-You'll notice that the `Azure.Template.Generated` project already has generated code in it!  You're welcome to explore what's there -- it's been generated from the swagger file in the `sdk/template-dpg/Azure.Template.Generated/src/swagger` folder. For this tutorial, however, we'll delete these generated files so we can start clean.
-
-- Delete the Generated folder in the `Azure.Template.Generated` project.
-- Delete the `swagger` folder in the `Azure.Template.Generated` project.
-
-#### 3. Rename the solution and projects
-
-In `Azure.Template.Generated` solution, you will notice that it contains `Azure.Template.Generated.csproj` and `Azure.Template.Generated.Tests.csproj`. You will need to rename the project and solution based on your `Azure.<group>.<service>` library. For now, you can remove the `Azure.Template.Generated.Tests` test project reference from the solution and add back when the generated code is ready.
-
-In Visual Studio:
-
-- Rename the `Azure.Template.Generated` project to `Azure.<group>.<service>`.
-- Rename the `Azure.Template.Generated` solution to `Azure.<group>.<service>`.
-- Remove the `Azure.Template.Generated.Tests` project from the solution.
-
-**Note**: `Azure.<group>.<service>` is the Azure SDK package name. The package name/namespace will be something the architects will help standardize according to the guidelines.
-
-**Learn more:** see the [.NET Guidelines on Namespace Naming](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespace-naming) for more information on naming Azure SDK packages. This name diverges from approved Azure SDK namespaces, since it is intended to be used just for this tutorial.
-
-#### 4. Update the Assembly Info
-
-You'll notice that the `Azure.<group>.<service>` project has `properties/AssemblyInfo.cs` file in it. Replace `Microsoft.Test` namespace with the correct resource provider namespace for your service.
-
-**Learn more:** see the [Azure Services Resource Providers](https://docs.microsoft.com/azure/azure-resource-manager/management/azure-services-resource-providers) for the list of possible namespaces.
-
-#### 5. Save and commit your changes to your branch
-
-This will make it easier to see the changes you make when you generate code in the clean solution.
-
-```
-% git add -A
-% git commit -m "initial commit for <service-name>"
+```powershell
+eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -inputfiles <inputfilelink> [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
 ```
 
-### Create the generated client
+e.g.
 
-In this section, we'll create a generated API layer built on Azure Core. We'll use a small swagger file containing a REST API definition for Azure Messaging WebPubSub.
-
-In [Azure.Template.Generated](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-dpg/Azure.Template.Generated/src) project, we have [autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/src/autorest.md) file which is use to add configuration to generate code based on your swagger. After you run the `GenerateCode` command, you should find a [Generated](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-dpg/Azure.Template.Generated/src/Generated) folder in your project. Inside the Generated folder you'll find the [ServiceClient](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/src/Generated/TemplateServiceClient.cs) and [ServiceClientOptions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/src/Generated/TemplateServiceClientOptions.cs) which you can use to interact with the service.
-
-**Learn more:** the [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) has great samples showing how to add convenience APIs in the generated code. Explore this further as you design APIs for your own service.
-
-Here is the step by step process to generate code:
-
-#### 1. Set the Swagger File
-
-Open autorest.md in your `Azure.<group>.<service>` project. In the input-file definition, replace the file path with your swagger link, for example: [WebPubSub swagger link](https://github.com/Azure/azure-rest-api-specs/blob/39c7d63c21b9a29efe3907d9b949d1c77b021907/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json). Update a namespace definition to set the namespace C# generator will use when creating your types. Update the AAD token credential(for AAD token, refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/src/autorest.md#autorest-configuration) example) or Azure key credential (for Azure Key credential, refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub/src/autorest.md#swagger-sources) example). Save your changes.
-
-Your `autorest.md` file should now look like:
-
-````md
-# `Azure.<group>.<service>` Code Generation
-
-Run `dotnet build /t:GenerateCode` to generate code.
-
-### AutoRest Configuration
-> see https://aka.ms/autorest
-
-``` yaml
-input-file:
-- <swagger-file-link>
-namespace: <namespace>
-public-clients: true
-data-plane: true
-security: AADToken
-security-scopes: <AAD-token-scope>
-```
-````
-
-**Learn more:** see the [README.md](https://github.com/Azure/autorest.csharp/blob/feature/v3/readme.md) to learn more about Azure SDK Code Geneneration.
-
-#### 2. Run the Generate Command
-
-From a PowerShell command prompt, navigate to the directory holding `Azure.<group>.<service>.sln`. Run the following commands:
-
-```
-sdk\<your-service-name>\Azure.<group>.<service>\src> dotnet msbuild /t:GenerateCode
+```powershell
+pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-DataPlaneGenerateSDKPackage.ps1 -service sample -namespace Azure.Template.Sample -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 ```
 
-#### 3. Explore the Generated Code
+**Note**:
 
-After you've run the `GenerateCode` command above, you should find a `Generated` folder in your `Azure.<group>.<service>` project.
+- For `- namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
+- `-inputfiles` takes the address of the Open API spec files,  separated by semicolon if there is more than one file.  The Open API spec file can be local file, e.g. ./swagger/compute.json, or the web address of the file the `azure-rest-api-specs` repo.  When pointing to a file in the `azure-rest-api-specs` repo, make sure to include the commit id in the URI, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json`.  This ensures that you can choose the time to upgrade to new swagger file versions.
+- `-securityScope` designates the authentication scope your library will use if it supports token credential authentication.  Both Azure Active Directory and Azure Key Credential authentication are supported. **AzureKey authentication** is specific to each service, but generally it is documented by that service. e.g [AzureKey authentication of Azure Storage](https://docs.microsoft.com/azure/storage/blobs/authorize-data-operations-portal#use-the-account-access-key). **AADToken** is for any service that supports [TokenCredential authentication](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). If your service supports AADToken, just set the parameter **securityScope**(the security scope), and if your service supports AzureKey authentication, set parameter **securityHeaderName**( the security header name). You also can provide both if your service supports two methods of authentication.
 
-If you're interested, you can look through the swagger file to see how the autorest.csharp extension translated the REST API definition into C# code. This could help you later if you decide to make adjustments to your API design in the swagger file directly, so they can be used for all Tier 1 languages.
+When you run the `eng\scripts\automation\Invoke-DataPlaneGenerateSDKPackage.ps1` script, it will:
 
-**Learn more**: see the [OpenAPI Swagger Documentation](https://swagger.io/docs/) to learn more about swagger file formats.
+- Create a project folder, install template files from `eng/templates/Azure.ServiceTemplate.Template`, and create `.csproj` and `.sln` files for your new library.
 
-#### 4. Save and commit your changes to your branch
+    These files are created following the guidance for the [Azure SDK Repo Structure](https://github.com/Azure/azure-sdk/blob/master/docs/policies/repostructure.md).
 
-This will make it easier to see the changes you make when you re-generate the code later.
+- Generate the library source code files to the directory `<sdkPath>/<service>/<namespace>/src/Generated`
+- Build the library project to create the starter package binary.
+- Export the library's public API to the directory `<sdkPath>/<service>/<namespace>/api`
 
-Congratulations, you've generated your first Azure SDK library! Next, we'll discuss how we can add tests, samples and documents.
+## Add package ship requirements
 
-## Tests
+Before the library package can be released, you will need to add several requirements manually, including tests, samples, README, and CHANGELOG.
+You can refer to following guideline to add those requirements:
 
-In this section, we will talk about adding unit tests and live tests and how to run them. You will notice that [Azure.Template.Generated.Test](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template-dpg/Azure.Template.Generated/tests) project contains [TemplateServiceTestEnvironment](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/tests/TemplateServiceTestEnvironment.cs) file where we added live test environment to run live tests. We added live tests in [TemplateServiceLiveTests.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/tests/TemplateServiceLiveTests.cs) file and unit tests in [TemplateServiceTests.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/tests/TemplateServiceTests.cs) file.
+- Tests: <https://azure.github.io/azure-sdk/general_implementation.html#testing>
+- README/Samples: <https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-repository>
+- Changelog: <https://azure.github.io/azure-sdk/policies_releases.html#change-logs>
+- Other release concerns: <https://azure.github.io/azure-sdk/policies_releases.html>
 
-Here is the step by step process to add tests:
+### Tests
 
-- Add back `Azure.Template.Generated.Tests` csproj in your `Azure.<group>.<service>.sln`.
-- Rename the `Azure.Template.Generated.Tests` project to `Azure.<group>.<service>.Tests`.
-- Rename the `TemplateServiceTestEnvironment.cs` file to `<client-name>TestEnvironment.cs` and update the test environment. Before running live tests you will need to create live test resources, please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manager resources and update test environment.
-- Rename the `TemplateServiceLiveTests.cs` file to `<client-name>LiveTests.cs` and remove all the template project tests. Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#live-testing) to add live tests.
-- Rename the `TemplateServiceTests.cs` file to `<client-name>Tests.cs` and remove all the template project tests and add all the unit tests in this file.
-- Remove the `SerializationHelpers.cs` file.
+In this section, we will talk about adding unit tests and live tests and how to run them. You will notice that there is a test project under `Azure.<group>.<service>\tests`.
 
-**Note**: `Azure.<group>.<service>` is the Azure SDK package name and `<client-name>` is a client name, C# generator will generate a client which you can find in `Azure.<group>.<service>/Generated` directory.
+Here is the step by step process to add tests:requirements
+
+- Add other client parameters in `<client-name>ClientTestEnvironment.cs`
+- Update `<client-name>ClientTest.cs`.
+  - Comment-out the 'CreateClient' method, and update the new `<service>Client` statement.
+  - remove all the template project tests, and write the tests according to the commented Test method template. Please refer to [Using the TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md) to add tests.
+
+**Note**:
+
+- Before running live tests you will need to create live test resources, please refer to [Live Test Resource Management](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md) to learn more about how to manage resources and update test environment.
+- `Azure.<group>.<service>` is the Azure SDK package name and `<client-name>` is a client name, C# generator will generate a client which you can find in `Azure.<group>.<service>/Generated` directory.
 
 **Learn more:** see the [docs](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#to-test-1) to learn more about tests.
 
-## Samples
+### Samples
 
-In this section, we will talk about how to add samples. As you can see, we already have a `Samples` folder under `Azure.<group>.<service>/tests` directory. We run the samples as a part of tests. First, rename the `TemplateServiceSamples.HelloWorld.cs` file to `<client-name>Samples.HelloWorld.cs` and remove the existing sample tests. You will add the basic sample tests for your SDK in this file. Create more test files and add tests as per your scenarios.
+In this section, we will talk about how to add samples. As you can see, we already have a `Samples` folder under `Azure.<group>.<service>/tests` directory. We run the samples as a part of tests. First, enter `Sample<number>_<scenario>.cs` and remove the existing commented sample tests. You will add the basic sample tests for your SDK in this file. Create more test files and add tests as per your scenarios.
 
 **Learn more:** For general information about samples, see the [Samples Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-samples).
 
-## Snippets
+You will update all the `Sample<sample_number>_<scenario>.md` and README.md files under `Azure.<group>.<service>\samples` directory to the your service according to the examples in those files. Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/samples/) is an example.
 
-Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/tests/Samples/TemplateServiceSamples.HelloWorld.cs#L30) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/README.md#create-resource). Please refer [this](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
+### Snippets
 
-## Export Public API
+Snippets are the great way to reuse the sample code. Snippets allow us to verify that the code in our samples and READMEs is always up to date, and passes unit tests. We have added the snippet [here](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/tests/Samples/Sample1_CreateResource.cs#L32) in a sample and used it in the [README](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/README.md#create-resource). Please refer to [Updating Sample Snippets](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets) to add snippets in your samples.
 
-If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in [sdk\template-dpg\Azure.Template.Generated\api\Azure.Template.Generated.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/api/Azure.Template.Generated.netstandard2.0.cs).
-
-Running the script for a project in `sdk\webpubsub` would look like this: 
-```
-eng\scripts\Export-API.ps1 webpubsub
-```
-
-## README
+### README
 
 README.md file instructions are listed in `Azure.<group>.<service>/README.md` file. Please add/update the README.md file as per your library.
 
-**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template-dpg/Azure.Template.Generated/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
+**Learn more:** to understand more about README, see the [README.md](https://github.com/Azure/azure-sdk-for-net/blob/3ac301ac6435c818ad7a9946ab1c4023cee236ff/eng/templates/Azure.ServiceTemplate.Template/README.md). Based on that [here](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) is an example.
 
-## Changelog
+### Changelog
 
 Update the CHANGELOG.md file which exists in `Azure.<group>.<service>/CHANGELOG.md`. For general information about the changelog, see the [Changelog Guidelines](https://azure.github.io/azure-sdk/policies_releases.html#change-logs).
+
+### Add Convenience APIs
+
+Adding convenience APIs is not required for Azure SDK data plane generated libraries, but doing so can provide customers with a better experience when they develop code using your library.  You should consider adding convenience APIs to the generated client to make it easier to use for the most common customer scenarios, or based on customer feedback.  Any convenience APIs you add should be approved with the Azure SDK architecture board.
+
+You can add convienice APIs by adding a customization layer on top of the generated code.  Please see the [autorest.csharp README](https://github.com/Azure/autorest.csharp#setup) for the details of adding the customization layer.  This is the preferred method for adding convenience APIs to your generated client.
+
+If other modifications are needed to the generated API, you can consider making them directly to the Open API specification, which will have the benefit of making the changes to the library in all languages you generate the library in.  As a last resort, you can add modifications with swagger transforms in the `autorest.md` file.  [AnomalyDetector autorest.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/autorest.md) shows and example of how this can be accomplished.
+
+Once you've made changes to the public API, you will need to run the `eng\scripts\Export-API.ps1` script to update the public API listing. This will generate a file in the library's directory similar to the example found in [eng\templates\Azure.ServiceTemplate.Template\api\Azure.ServiceTemplate.Template.netstandard2.0.cs](https://github.com/Azure/azure-sdk-for-net/blob/bb0fbccfc33dd27d1ec6f0870022824d47181e61/sdk/template-dpg/Azure.ServiceTemplate.Template/api/Azure.ServiceTemplate.Template.netstandard2.0.cs).
+
+e.g. Running the script for a project in `sdk\deviceupdate` would look like this:
+
+```powershell
+eng\scripts\Export-API.ps1 deviceupdate
+```

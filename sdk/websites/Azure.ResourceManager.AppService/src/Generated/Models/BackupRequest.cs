@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,14 +23,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of BackupRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="backupName"> Name of the backup. </param>
         /// <param name="enabled"> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </param>
         /// <param name="storageAccountUrl"> SAS URL to the container. </param>
         /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
         /// <param name="databases"> Databases included in the backup. </param>
-        internal BackupRequest(ResourceIdentifier id, string name, ResourceType type, string kind, string backupName, bool? enabled, string storageAccountUrl, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases) : base(id, name, type, kind)
+        internal BackupRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string backupName, bool? enabled, string storageAccountUrl, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases) : base(id, name, resourceType, systemData, kind)
         {
             BackupName = backupName;
             Enabled = enabled;

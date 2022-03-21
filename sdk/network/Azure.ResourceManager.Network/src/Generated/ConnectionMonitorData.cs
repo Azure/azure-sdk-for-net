@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the ConnectionMonitor data model. </summary>
-    public partial class ConnectionMonitorData : ResourceManager.Models.Resource
+    public partial class ConnectionMonitorData : ResourceData
     {
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
         internal ConnectionMonitorData()
@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="location"> Connection monitor location. </param>
         /// <param name="tags"> Connection monitor tags. </param>
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="startTime"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType type, string etag, string location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, ProvisioningState? provisioningState, DateTimeOffset? startTime, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, type)
+        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string etag, string location, IReadOnlyDictionary<string, string> tags, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IReadOnlyList<ConnectionMonitorEndpoint> endpoints, IReadOnlyList<ConnectionMonitorTestConfiguration> testConfigurations, IReadOnlyList<ConnectionMonitorTestGroup> testGroups, IReadOnlyList<ConnectionMonitorOutput> outputs, string notes, ProvisioningState? provisioningState, DateTimeOffset? startTime, string monitoringStatus, ConnectionMonitorType? connectionMonitorType) : base(id, name, resourceType, systemData)
         {
             Etag = etag;
             Location = location;

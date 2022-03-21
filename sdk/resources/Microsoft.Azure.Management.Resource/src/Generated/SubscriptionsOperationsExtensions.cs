@@ -37,9 +37,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='subscriptionId'>
             /// The ID of the target subscription.
             /// </param>
-            public static IEnumerable<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
+            /// <param name='includeExtendedLocations'>
+            /// Whether to include extended locations.
+            /// </param>
+            public static IEnumerable<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId, bool? includeExtendedLocations = default(bool?))
             {
-                return operations.ListLocationsAsync(subscriptionId).GetAwaiter().GetResult();
+                return operations.ListLocationsAsync(subscriptionId, includeExtendedLocations).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,12 +59,15 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='subscriptionId'>
             /// The ID of the target subscription.
             /// </param>
+            /// <param name='includeExtendedLocations'>
+            /// Whether to include extended locations.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Location>> ListLocationsAsync(this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Location>> ListLocationsAsync(this ISubscriptionsOperations operations, string subscriptionId, bool? includeExtendedLocations = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, includeExtendedLocations, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

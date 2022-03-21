@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -37,7 +39,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -79,11 +85,12 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<PolicyType> policyType = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<object> metadata = default;
-            Optional<IDictionary<string, ParameterDefinitionsValue>> parameters = default;
+            Optional<BinaryData> metadata = default;
+            Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
             Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
             Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -101,6 +108,11 @@ namespace Azure.ResourceManager.Resources
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -139,7 +151,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = property0.Value.GetObject();
+                            metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -149,10 +161,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, ParameterDefinitionsValue> dictionary = new Dictionary<string, ParameterDefinitionsValue>();
+                            Dictionary<string, ArmPolicyParameter> dictionary = new Dictionary<string, ArmPolicyParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterDefinitionsValue.DeserializeParameterDefinitionsValue(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameter.DeserializeArmPolicyParameter(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -191,7 +203,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new PolicySetDefinitionData(id, name, type, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
+            return new PolicySetDefinitionData(id, name, type, systemData, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
         }
     }
 }

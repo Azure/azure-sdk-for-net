@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the DataPolicyManifest data model. </summary>
-    public partial class DataPolicyManifestData : Resource
+    public partial class DataPolicyManifestData : ResourceData
     {
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
         internal DataPolicyManifestData()
@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
         /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
         /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
         /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
         /// <param name="custom"> An array of data manifest custom resource definition. </param>
-        internal DataPolicyManifestData(ResourceIdentifier id, string name, ResourceType type, IReadOnlyList<string> namespaces, string policyMode, bool? isBuiltInOnly, IReadOnlyList<ResourceTypeAliases> resourceTypeAliases, IReadOnlyList<DataEffect> effects, IReadOnlyList<string> fieldValues, IReadOnlyList<string> standard, IReadOnlyList<DataManifestCustomResourceFunctionDefinition> custom) : base(id, name, type)
+        internal DataPolicyManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> namespaces, string policyMode, bool? isBuiltInOnly, IReadOnlyList<ResourceTypeAliases> resourceTypeAliases, IReadOnlyList<DataEffect> effects, IReadOnlyList<string> fieldValues, IReadOnlyList<string> standard, IReadOnlyList<DataManifestCustomResourceFunctionDefinition> custom) : base(id, name, resourceType, systemData)
         {
             Namespaces = namespaces;
             PolicyMode = policyMode;

@@ -4,7 +4,18 @@
 
 ### Features Added
 
+- Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
+- Added type `RequestOptions` to the `Azure` namespace and made `RequestContext` a subclass of `RequestOptions`.  This enables `RequestOptions` to be exposed in methods that take `CancellationToken` without causing confusion regarding which cancellation token will take effect.
+- Added the `SetUserAgentString` extension method to `HttpMessage` accepting a `UserAgentValue` and an optional application Id string. This allows assembly specific user agent header information to be set with proper formatting on a per-message basis.
+
 ### Breaking Changes
+
+- Cookies are no longer set on requests by default. Cookies can be re-enabled for `HttpClientTransport` by either setting an AppContext switch named "Azure.Core.Pipeline.HttpClientTransport.EnableCookies" to true or by setting the environment variable, "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES" to "true". Note: AppContext switches can also be configured via configuration like below:
+```xml
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
+  </ItemGroup>
+```
 
 ### Bugs Fixed
 

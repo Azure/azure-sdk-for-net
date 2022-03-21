@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> None. </summary>
         None,
         /// <summary> TLS10. </summary>
-        TLS10,
+        Tls10,
         /// <summary> TLS12. </summary>
-        TLS12
+        Tls12
     }
 }

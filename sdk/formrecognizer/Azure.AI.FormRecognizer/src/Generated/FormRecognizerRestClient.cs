@@ -20,23 +20,25 @@ namespace Azure.AI.FormRecognizer
 {
     internal partial class FormRecognizerRestClient
     {
-        private string endpoint;
-        private string apiVersion;
-        private ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
+        private readonly string _endpoint;
+        private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of FormRecognizerRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
         /// <param name="apiVersion"> Form Recognizer API version (for example: v2.0). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
         public FormRecognizerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion)
         {
-            this.endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            this.apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-            _clientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
         internal HttpMessage CreateTrainCustomModelAsyncRequest(TrainRequest trainRequest)
@@ -45,9 +47,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -77,7 +79,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -100,7 +102,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -110,9 +112,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             if (includeKeys != null)
@@ -142,7 +144,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -164,7 +166,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -174,9 +176,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             request.Uri = uri;
@@ -196,7 +198,7 @@ namespace Azure.AI.FormRecognizer
                 case 204:
                     return message.Response;
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -212,7 +214,7 @@ namespace Azure.AI.FormRecognizer
                 case 204:
                     return message.Response;
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -222,9 +224,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -263,7 +265,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -284,7 +286,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -294,9 +296,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyze", false);
@@ -336,7 +338,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -356,7 +358,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -366,9 +368,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
@@ -396,7 +398,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -418,7 +420,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -428,9 +430,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copy", false);
@@ -463,7 +465,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -487,7 +489,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -497,9 +499,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/copyResults/", false);
@@ -527,7 +529,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -549,7 +551,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -559,9 +561,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/copyAuthorization", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -585,7 +587,7 @@ namespace Azure.AI.FormRecognizer
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -606,7 +608,7 @@ namespace Azure.AI.FormRecognizer
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -616,9 +618,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models/compose", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
@@ -652,7 +654,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -679,7 +681,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -689,9 +691,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
@@ -732,7 +734,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -753,7 +755,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -763,9 +765,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/businessCard/analyze", false);
             if (includeTextDetails != null)
             {
@@ -807,7 +809,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -827,7 +829,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -837,9 +839,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/businessCard/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -864,7 +866,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -885,7 +887,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -895,9 +897,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/invoice/analyze", false);
             if (includeTextDetails != null)
             {
@@ -938,7 +940,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -959,7 +961,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -969,9 +971,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/invoice/analyze", false);
             if (includeTextDetails != null)
             {
@@ -1013,7 +1015,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1033,7 +1035,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1043,9 +1045,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/invoice/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1070,7 +1072,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1091,7 +1093,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1101,9 +1103,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/idDocument/analyze", false);
             if (includeTextDetails != null)
             {
@@ -1139,7 +1141,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1159,7 +1161,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1169,9 +1171,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/idDocument/analyze", false);
             if (includeTextDetails != null)
             {
@@ -1208,7 +1210,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1227,7 +1229,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1237,9 +1239,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/idDocument/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1264,7 +1266,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1285,7 +1287,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1295,9 +1297,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
@@ -1338,7 +1340,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1359,7 +1361,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1369,9 +1371,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/receipt/analyze", false);
             if (includeTextDetails != null)
             {
@@ -1413,7 +1415,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1433,7 +1435,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1443,9 +1445,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/prebuilt/receipt/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1470,7 +1472,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1491,7 +1493,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1501,9 +1503,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
             if (pages != null)
             {
@@ -1544,7 +1546,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1565,7 +1567,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1575,9 +1577,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
             if (pages != null)
             {
@@ -1619,7 +1621,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1639,7 +1641,7 @@ namespace Azure.AI.FormRecognizer
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1649,9 +1651,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyzeResults/", false);
             uri.AppendPath(resultId, true);
             request.Uri = uri;
@@ -1676,7 +1678,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1697,7 +1699,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1707,9 +1709,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "full", true);
             request.Uri = uri;
@@ -1733,7 +1735,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1753,7 +1755,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1763,9 +1765,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/custom/models", false);
             uri.AppendQuery("op", "summary", true);
             request.Uri = uri;
@@ -1789,7 +1791,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1809,7 +1811,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
@@ -1819,9 +1821,9 @@ namespace Azure.AI.FormRecognizer
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw(_endpoint, false);
             uri.AppendRaw("/formrecognizer/", false);
-            uri.AppendRaw(apiVersion, false);
+            uri.AppendRaw(_apiVersion, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1851,7 +1853,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
         }
 
@@ -1878,7 +1880,7 @@ namespace Azure.AI.FormRecognizer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
     }

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
-    public partial class CdnManagedHttpsOptions : CustomDomainHttpsOptions
+    internal partial class CdnManagedHttpsOptions : CustomDomainHttpsOptions
     {
         /// <summary> Initializes a new instance of CdnManagedHttpsOptions. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>

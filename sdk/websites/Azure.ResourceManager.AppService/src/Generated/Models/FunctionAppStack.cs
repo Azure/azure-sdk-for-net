@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -22,14 +23,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of FunctionAppStack. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOs"> Function App stack preferred OS. </param>
-        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType type, string kind, string location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOs? preferredOs) : base(id, name, type, kind)
+        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOs? preferredOs) : base(id, name, resourceType, systemData, kind)
         {
             Location = location;
             DisplayText = displayText;

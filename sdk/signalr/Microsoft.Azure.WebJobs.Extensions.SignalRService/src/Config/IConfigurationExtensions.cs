@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -64,6 +67,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
             endpoint = null;
             return false;
+        }
+
+        public static bool TryGetJsonObjectSerializer(this IConfiguration configuration, out ObjectSerializer serializer)
+        {
+            //indicates Newtonsoft, camcelCase
+            if (configuration.GetValue(Constants.AzureSignalRNewtonsoftCamelCase, false))
+            {
+                serializer = new NewtonsoftJsonObjectSerializer(new JsonSerializerSettings()
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
+                return true;
+            }
+
+            if (!configuration.OnDotnetInProcessRuntime())
+            {
+                serializer = new NewtonsoftJsonObjectSerializer();
+                return true;
+            }
+
+            var hubProtocolConfig = configuration[Constants.AzureSignalRHubProtocol];
+            if (hubProtocolConfig is not null)
+            {
+                serializer = Enum.Parse(typeof(HubProtocol), hubProtocolConfig, true) switch
+                {
+                    HubProtocol.NewtonsoftJson => new NewtonsoftJsonObjectSerializer(),
+                    HubProtocol.SystemTextJson => new JsonObjectSerializer(),
+                    _ => throw new InvalidOperationException($"The {Constants.AzureSignalRHubProtocol} setting value '{hubProtocolConfig}' is not supported."),
+                };
+                return true;
+            }
+            serializer = null;
+            return false;
+        }
+
+        private static bool OnDotnetInProcessRuntime(this IConfiguration configuration)
+        {
+            var workerRuntime = configuration[Constants.FunctionsWorkerRuntime];
+            //unit test environment
+            return workerRuntime == null || workerRuntime == Constants.DotnetWorker;
         }
     }
 }

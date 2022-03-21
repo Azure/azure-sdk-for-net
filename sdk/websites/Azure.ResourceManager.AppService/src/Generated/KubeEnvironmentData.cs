@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -23,7 +24,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.AppService
         /// supported
         /// </param>
         /// <param name="aksResourceID"></param>
-        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, type, tags, location, kind)
+        internal KubeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ExtendedLocation extendedLocation, KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, string aksResourceID) : base(id, name, resourceType, systemData, tags, location, kind)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;

@@ -15,9 +15,11 @@ namespace Azure.Communication.NetworkTraversal
         {
         }
 
-        /// <summary> An existing ACS identity. </summary>
+        /// <summary> An identity to be associated with telemetry for data relayed using the returned credentials. Must be an existing ACS user identity. If not provided, the telemetry will not contain an associated identity value. </summary>
         public string Id { get; set; }
-        /// <summary> The routing methodology to where the ICE server will be located from the client. </summary>
+        /// <summary> Filter the routing methodology returned. If not provided, will return all route types in separate ICE servers. </summary>
         public RouteType? RouteType { get; set; }
+        /// <summary> The credential Time-To-Live (TTL), in seconds. The default value will be used if given value exceeds it. </summary>
+        public int? Ttl { get; set; }
     }
 }

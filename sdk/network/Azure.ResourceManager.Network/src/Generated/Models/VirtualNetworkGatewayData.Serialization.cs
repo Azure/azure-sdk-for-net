@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations");
                 writer.WriteStartArray();
-                foreach (var item in IpConfigurations)
+                foreach (var item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableBgp");
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsDefined(EnablePrivateIpAddress))
+            if (Optional.IsDefined(EnablePrivateIPAddress))
             {
                 writer.WritePropertyName("enablePrivateIpAddress");
-                writer.WriteBooleanValue(EnablePrivateIpAddress.Value);
+                writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
             }
             if (Optional.IsDefined(Active))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element)
         {
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<Models.ExtendedLocation> extendedLocation = default;
             Optional<string> etag = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

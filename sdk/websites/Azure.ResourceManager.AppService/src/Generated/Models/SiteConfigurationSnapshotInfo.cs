@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -21,11 +22,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfo. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="time"> The time the snapshot was taken. </param>
         /// <param name="snapshotId"> The id of the snapshot. </param>
-        internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType type, string kind, DateTimeOffset? time, int? snapshotId) : base(id, name, type, kind)
+        internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? time, int? snapshotId) : base(id, name, resourceType, systemData, kind)
         {
             Time = time;
             SnapshotId = snapshotId;

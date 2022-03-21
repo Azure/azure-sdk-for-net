@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         /// <summary> Initializes a new instance of ServiceBusSku. </summary>
         /// <param name="name"> Name of this SKU. </param>
-        public ServiceBusSku(SkuName name)
+        public ServiceBusSku(ServiceBusSkuName name)
         {
             Name = name;
         }
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
         /// <param name="capacity"> The specified messaging units for the tier. For Premium tier, capacity are 1,2 and 4. </param>
-        internal ServiceBusSku(SkuName name, SkuTier? tier, int? capacity)
+        internal ServiceBusSku(ServiceBusSkuName name, ServiceBusSkuTier? tier, int? capacity)
         {
             Name = name;
             Tier = tier;
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Name of this SKU. </summary>
-        public SkuName Name { get; set; }
+        public ServiceBusSkuName Name { get; set; }
         /// <summary> The billing tier of this particular SKU. </summary>
-        public SkuTier? Tier { get; set; }
+        public ServiceBusSkuTier? Tier { get; set; }
         /// <summary> The specified messaging units for the tier. For Premium tier, capacity are 1,2 and 4. </summary>
         public int? Capacity { get; set; }
     }

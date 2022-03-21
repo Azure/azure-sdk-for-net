@@ -1,6 +1,6 @@
 # Release History
 
-## 12.5.0-beta.1 (Unreleased)
+## 12.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.5.0 (2022-03-10)
+
+### Bugs Fixed
+- Fixed an issue that caused authenticate failures when using a SAS token with a table name that contains upper-case characters. ([#26791](https://github.com/Azure/azure-sdk-for-net/issues/26791))
 
 ## 12.4.0 (2022-01-12)
 

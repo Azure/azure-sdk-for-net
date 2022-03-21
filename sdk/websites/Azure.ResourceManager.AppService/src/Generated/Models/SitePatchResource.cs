@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -26,7 +27,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SitePatchResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="state"> Current state of the app. </param>
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
-        internal SitePatchResource(ResourceIdentifier id, string name, ResourceType type, string kind, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIpAddresses, string possibleOutboundIpAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId) : base(id, name, type, kind)
+        internal SitePatchResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIpAddresses, string possibleOutboundIpAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId) : base(id, name, resourceType, systemData, kind)
         {
             Identity = identity;
             State = state;

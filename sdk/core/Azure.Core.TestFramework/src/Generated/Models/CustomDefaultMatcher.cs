@@ -5,31 +5,23 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> The CustomDefaultMatcher. </summary>
     public partial class CustomDefaultMatcher
     {
         /// <summary> Initializes a new instance of CustomDefaultMatcher. </summary>
-        /// <param name="excludedHeaders"></param>
-        /// <param name="compareBodies"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="excludedHeaders"/> is null. </exception>
-        public CustomDefaultMatcher(string excludedHeaders, bool compareBodies)
+        public CustomDefaultMatcher()
         {
-            if (excludedHeaders == null)
-            {
-                throw new ArgumentNullException(nameof(excludedHeaders));
-            }
-
-            ExcludedHeaders = excludedHeaders;
-            CompareBodies = compareBodies;
         }
 
-        /// <summary> Gets the excluded headers. </summary>
-        public string ExcludedHeaders { get; }
-        /// <summary> Gets the compare bodies. </summary>
-        public bool CompareBodies { get; }
+        /// <summary> Gets or sets the excluded headers. </summary>
+        public string ExcludedHeaders { get; set; }
+        /// <summary> Gets or sets the compare bodies. </summary>
+        public bool? CompareBodies { get; set; }
+        /// <summary> Gets or sets the ignored headers. </summary>
+        public string IgnoredHeaders { get; set; }
+        /// <summary> Gets or sets the ignored query parameters. </summary>
+        public string IgnoredQueryParameters { get; set; }
     }
 }

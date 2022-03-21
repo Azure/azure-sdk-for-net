@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the Deployment data model. </summary>
-    public partial class DeploymentData : Resource
+    public partial class DeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of DeploymentData. </summary>
         internal DeploymentData()
@@ -24,11 +24,12 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType type, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, type)
+        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

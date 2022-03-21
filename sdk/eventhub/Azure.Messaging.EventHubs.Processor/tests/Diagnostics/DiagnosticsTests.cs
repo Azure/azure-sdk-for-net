@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -48,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockContext = new Mock<PartitionContext>("65");
             var mockLogger = new Mock<EventProcessorClientEventSource>();
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<CheckpointStore>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
 
             mockProcessor
                 .Protected()
@@ -62,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.Logger = mockLogger.Object;
 
             using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
-            await mockProcessor.Object.UpdateCheckpointAsync(new MockEventData(new byte[0], sequenceNumber: 65, offset: 998), mockContext.Object, default);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -72,5 +73,27 @@ namespace Azure.Messaging.EventHubs.Tests
 
             cancellationSource.Cancel();
         }
+
+        /// <summary>
+        ///   Invokes the protected UpdateCheckpointAsync method on the processor client.
+        /// </summary>
+        ///
+        /// <param name="target">The client whose method to invoke.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        /// <returns>The translated options.</returns>
+        ///
+        private static Task InvokeUpdateCheckpointAsync(EventProcessorClient target,
+                                                        string partitionId,
+                                                        long offset,
+                                                        long? sequenceNumber,
+                                                        CancellationToken cancellationToken) =>
+            (Task)
+                typeof(EventProcessorClient)
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
     }
 }

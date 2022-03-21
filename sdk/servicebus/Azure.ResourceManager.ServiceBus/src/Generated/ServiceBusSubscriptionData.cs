@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusSubscription data model. </summary>
-    public partial class ServiceBusSubscriptionData : Resource
+    public partial class ServiceBusSubscriptionData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
         public ServiceBusSubscriptionData()
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="messageCount"> Number of messages. </param>
         /// <param name="createdAt"> Exact time the message was created. </param>
         /// <param name="accessedAt"> Last time there was a receive request to this subscription. </param>
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, long? messageCount, DateTimeOffset? createdAt, DateTimeOffset? accessedAt, DateTimeOffset? updatedAt, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, type)
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdAt, DateTimeOffset? accessedAt, DateTimeOffset? updatedAt, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, resourceType, systemData)
         {
-            SystemData = systemData;
             MessageCount = messageCount;
             CreatedAt = createdAt;
             AccessedAt = accessedAt;
@@ -68,8 +67,6 @@ namespace Azure.ResourceManager.ServiceBus
             ClientAffineProperties = clientAffineProperties;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Number of messages. </summary>
         public long? MessageCount { get; }
         /// <summary> Exact time the message was created. </summary>

@@ -13,15 +13,18 @@ namespace Azure.Identity
 {
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
+        private Action<PublicClientApplicationBuilder> _beforeBuildClient;
+
         internal string RedirectUrl { get; }
 
         protected MsalPublicClient()
         { }
 
-        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, ITokenCacheOptions cacheOptions, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options, Action<PublicClientApplicationBuilder> beforeBuildClient = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             RedirectUrl = redirectUrl;
+            _beforeBuildClient = beforeBuildClient;
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
@@ -51,6 +54,11 @@ namespace Azure.Identity
             if (clientCapabilities.Length > 0)
             {
                 pubAppBuilder.WithClientCapabilities(clientCapabilities);
+            }
+
+            if (_beforeBuildClient != null)
+            {
+                _beforeBuildClient(pubAppBuilder);
             }
 
             return new ValueTask<IPublicClientApplication>(pubAppBuilder.Build());

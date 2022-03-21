@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, Sku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? zoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
+        internal ElasticPoolPerformanceLevelCapability(PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, int? maxDatabaseCount, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes, IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels, bool? zoneRedundant, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, CapabilityStatus? status, string reason)
         {
             PerformanceLevel = performanceLevel;
             Sku = sku;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The performance level for the pool. </summary>
         public PerformanceLevelCapability PerformanceLevel { get; }
         /// <summary> The sku. </summary>
-        public Sku Sku { get; }
+        public SqlSku Sku { get; }
         /// <summary> List of supported license types. </summary>
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
         /// <summary> The maximum number of databases supported. </summary>

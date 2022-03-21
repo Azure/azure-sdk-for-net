@@ -76,6 +76,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
+        /// <value>
+        /// The receive mode is specified using <see cref="ServiceBusProcessorOptions.ReceiveMode"/>
+        /// and has a default mode of <see cref="ServiceBusReceiveMode.PeekLock"/>.
+        /// </value>
         public virtual ServiceBusReceiveMode ReceiveMode { get; }
 
         /// <summary>
@@ -88,6 +92,10 @@ namespace Azure.Messaging.ServiceBus
         /// during processing. This is intended to help maximize throughput by allowing the
         /// processor to receive from a local cache rather than waiting on a service request.
         /// </summary>
+        /// <value>
+        /// The prefetch count is specified using <see cref="ServiceBusProcessorOptions.PrefetchCount"/>
+        /// and has a default value of 0.
+        /// </value>
         public virtual int PrefetchCount { get; }
 
         /// <summary>
@@ -110,8 +118,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Gets the maximum number of concurrent calls to the
         /// <see cref="ProcessMessageAsync"/> message handler the processor should initiate.
         /// </summary>
-        ///
-        /// <value>The maximum number of concurrent calls to the message handler.</value>
+        /// <value>
+        /// The number of maximum concurrent calls is specified using <see cref="ServiceBusProcessorOptions.MaxConcurrentCalls"/>
+        /// and has a default value of 1.
+        /// </value>
         public virtual int MaxConcurrentCalls => _maxConcurrentCalls;
         private volatile int _maxConcurrentCalls;
         private int _currentConcurrentCalls;
@@ -137,20 +147,22 @@ namespace Azure.Messaging.ServiceBus
         /// If the message handler triggers an exception and did not settle the message,
         /// then the message will be automatically abandoned, irrespective of <see cref= "AutoCompleteMessages" />.
         /// </remarks>
-        ///
-        /// <value>true to complete the message processing automatically on
-        /// successful execution of the operation; otherwise, false.</value>
+        /// <value>
+        /// The option to auto complete messages is specified using <see cref="ServiceBusProcessorOptions.AutoCompleteMessages"/>
+        /// and has a default value of <c>true</c>.
+        /// </value>
         public virtual bool AutoCompleteMessages { get; }
 
         /// <summary>
         /// Gets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// </summary>
-        ///
-        /// <value>The maximum duration during which locks are automatically renewed.</value>
-        ///
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        /// <value>
+        /// The maximum duration for lock renewal is specified using <see cref="ServiceBusProcessorOptions.MaxAutoLockRenewalDuration"/>
+        /// and has a default value of 5 minutes.
+        /// </value>
         public virtual TimeSpan MaxAutoLockRenewalDuration { get; }
 
         /// <summary>
@@ -365,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != default)
                 {
@@ -377,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
 
             remove
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != value)
                 {
@@ -733,9 +745,13 @@ namespace Azure.Messaging.ServiceBus
                     {
                         // Nothing to do here.  These exceptions are expected.
                     }
-
-                    ActiveReceiveTask.Dispose();
-                    ActiveReceiveTask = null;
+                    finally
+                    {
+                        // If an unexpected exception occurred while awaiting the receive task, we still want to dispose and set to null
+                        // as the task is complete and there is no use in awaiting it again if StopProcessingAsync is called again.
+                        ActiveReceiveTask.Dispose();
+                        ActiveReceiveTask = null;
+                    }
                 }
             }
             catch (Exception exception)
@@ -800,7 +816,9 @@ namespace Azure.Messaging.ServiceBus
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                        // Instead of using the array overload which allocates an array, we use the overload that has two parameters
+                        // and pass in CancellationToken.None. This should be safe since CanBeCanceled will return false.
+                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
                         TaskTuples.Add(
                             (

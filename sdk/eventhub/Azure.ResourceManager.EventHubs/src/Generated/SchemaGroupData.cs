@@ -25,18 +25,17 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of SchemaGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="updatedAtUtc"> Exact time the Schema Group was updated. </param>
         /// <param name="createdAtUtc"> Exact time the Schema Group was created. </param>
         /// <param name="eTag"> The ETag value. </param>
         /// <param name="groupProperties"> dictionary object for SchemaGroup group properties. </param>
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
-        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType) : base(id, name, type, location)
+        internal SchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, Guid? eTag, IDictionary<string, string> groupProperties, SchemaCompatibility? schemaCompatibility, SchemaType? schemaType) : base(id, name, resourceType, systemData, location)
         {
-            SystemData = systemData;
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
             ETag = eTag;
@@ -45,8 +44,6 @@ namespace Azure.ResourceManager.EventHubs
             SchemaType = schemaType;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Exact time the Schema Group was updated. </summary>
         public DateTimeOffset? UpdatedAtUtc { get; }
         /// <summary> Exact time the Schema Group was created. </summary>

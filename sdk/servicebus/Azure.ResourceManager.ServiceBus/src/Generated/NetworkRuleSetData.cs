@@ -13,37 +13,34 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the NetworkRuleSet data model. </summary>
-    public partial class NetworkRuleSetData : Resource
+    public partial class NetworkRuleSetData : ResourceData
     {
         /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
         public NetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
-            IpRules = new ChangeTrackingList<NetworkRuleSetIpRules>();
+            IPRules = new ChangeTrackingList<NetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type)
+        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIPRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, resourceType, systemData)
         {
-            SystemData = systemData;
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
-            IpRules = ipRules;
+            IPRules = ipRules;
             PublicNetworkAccess = publicNetworkAccess;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Value that indicates whether Trusted Service Access is Enabled or not. </summary>
         public bool? TrustedServiceAccessEnabled { get; set; }
         /// <summary> Default Action for Network Rule Set. </summary>
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> List VirtualNetwork Rules. </summary>
         public IList<NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<NetworkRuleSetIpRules> IpRules { get; }
+        public IList<NetworkRuleSetIPRules> IPRules { get; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         public PublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
     }

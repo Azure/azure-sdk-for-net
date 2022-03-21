@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualWanSecurityProvider. </summary>
         /// <param name="name"> Name of the security provider. </param>
         /// <param name="url"> Url of the security provider. </param>
-        /// <param name="type"> Name of the security provider. </param>
-        internal VirtualWanSecurityProvider(string name, string url, VirtualWanSecurityProviderType? type)
+        /// <param name="virtualWanSecurityProviderType"> Name of the security provider. </param>
+        internal VirtualWanSecurityProvider(string name, string url, VirtualWanSecurityProviderType? virtualWanSecurityProviderType)
         {
             Name = name;
             Url = url;
-            Type = type;
+            VirtualWanSecurityProviderType = virtualWanSecurityProviderType;
         }
 
         /// <summary> Name of the security provider. </summary>
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Url of the security provider. </summary>
         public string Url { get; }
         /// <summary> Name of the security provider. </summary>
-        public VirtualWanSecurityProviderType? Type { get; }
+        public VirtualWanSecurityProviderType? VirtualWanSecurityProviderType { get; }
     }
 }

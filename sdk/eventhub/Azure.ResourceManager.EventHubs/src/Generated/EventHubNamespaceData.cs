@@ -10,12 +10,11 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing the EventHubNamespace data model. </summary>
-    public partial class EventHubNamespaceData : TrackedResource
+    public partial class EventHubNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EventHubNamespaceData. </summary>
         /// <param name="location"> The location. </param>
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubNamespaceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
         /// <param name="createdAt"> The time the Namespace was created. </param>
@@ -48,11 +47,10 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, Models.Sku sku, ResourceIdentity identity, SystemData systemData, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, type, tags, location)
+        internal EventHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, string provisioningState, string status, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, string serviceBusEndpoint, string clusterArmId, string metricId, bool? isAutoInflateEnabled, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubEncryption encryption, IList<PrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
-            SystemData = systemData;
             ProvisioningState = provisioningState;
             Status = status;
             CreatedAt = createdAt;
@@ -71,11 +69,9 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary> Properties of sku resource. </summary>
-        public Models.Sku Sku { get; set; }
+        public EventHubsSku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
-        public ResourceIdentity Identity { get; set; }
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the Namespace. </summary>
         public string ProvisioningState { get; }
         /// <summary> Status of the Namespace. </summary>

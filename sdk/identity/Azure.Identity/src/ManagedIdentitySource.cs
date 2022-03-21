@@ -67,9 +67,10 @@ namespace Azure.Identity
                 message = UnexpectedResponse;
             }
 
+            var responseError = new ResponseError(null, message);
             throw async
-                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, message, innerException: exception).ConfigureAwait(false)
-                : Pipeline.Diagnostics.CreateRequestFailedException(response, message, innerException: exception);
+                ? await Pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response, responseError, innerException: exception).ConfigureAwait(false)
+                : Pipeline.Diagnostics.CreateRequestFailedException(response, responseError, innerException: exception);
         }
 
         protected abstract Request CreateRequest(string[] scopes);

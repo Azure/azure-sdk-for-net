@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.StoragePool
 
         internal static DiskPoolData DeserializeDiskPoolData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
+            Optional<StoragePoolSku> sku = default;
             Optional<string> managedBy = default;
             Optional<IReadOnlyList<string>> managedByExtended = default;
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             ProvisioningStates provisioningState = default;
             IList<string> availabilityZones = default;
             OperationalStatus status = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StoragePool
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = StoragePoolSku.DeserializeStoragePoolSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"))
@@ -118,16 +118,6 @@ namespace Azure.ResourceManager.StoragePool
                         array.Add(item.GetString());
                     }
                     managedByExtended = array;
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -158,6 +148,11 @@ namespace Azure.ResourceManager.StoragePool
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -228,7 +223,7 @@ namespace Azure.ResourceManager.StoragePool
                     continue;
                 }
             }
-            return new DiskPoolData(id, name, type, tags, location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), systemData, provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
+            return new DiskPoolData(id, name, type, systemData, tags, location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities));
         }
     }
 }

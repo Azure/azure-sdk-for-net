@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -28,8 +26,9 @@ namespace Azure.ResourceManager.AppService
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default";
             return new ResourceIdentifier(resourceId);
         }
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentsRestClient;
+
+        private readonly ClientDiagnostics _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics;
+        private readonly AppServiceEnvironmentsRestOperations _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient;
         private readonly WorkerPoolResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentMultiRolePool"/> class for mocking. </summary>
@@ -38,43 +37,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentMultiRolePool"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal HostingEnvironmentMultiRolePool(ArmResource options, WorkerPoolResourceData data) : base(options, data.Id)
+        internal HostingEnvironmentMultiRolePool(ArmClient client, WorkerPoolResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentMultiRolePool"/> class. </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HostingEnvironmentMultiRolePool(ArmResource options, ResourceIdentifier id) : base(options, id)
+        internal HostingEnvironmentMultiRolePool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            Parent = options;
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentMultiRolePool"/> class. </summary>
-        /// <param name="clientOptions"> The client options to build client context. </param>
-        /// <param name="credential"> The credential to build client context. </param>
-        /// <param name="uri"> The uri to build client context. </param>
-        /// <param name="pipeline"> The pipeline to build client context. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal HostingEnvironmentMultiRolePool(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipeline pipeline, ResourceIdentifier id) : base(clientOptions, credential, uri, pipeline, id)
-        {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri);
+            _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            TryGetApiVersion(ResourceType, out string hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
+            _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentMultiRolePoolAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,24 +82,22 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets the parent resource of this resource. </summary>
-        public ArmResource Parent { get; }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_GetMultiRolePool
-        /// <summary> Description for Get properties of a multi-role pool. </summary>
+        /// <summary>
+        /// Description for Get properties of a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
+        /// Operation Id: AppServiceEnvironments_GetMultiRolePool
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HostingEnvironmentMultiRolePool>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentMultiRolePool>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Get");
+            using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Get");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.GetMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.GetMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentMultiRolePool(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentMultiRolePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -130,21 +106,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_GetMultiRolePool
-        /// <summary> Description for Get properties of a multi-role pool. </summary>
+        /// <summary>
+        /// Description for Get properties of a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
+        /// Operation Id: AppServiceEnvironments_GetMultiRolePool
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HostingEnvironmentMultiRolePool> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Get");
+            using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Get");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.GetMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.GetMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HostingEnvironmentMultiRolePool(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentMultiRolePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,64 +130,78 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public async virtual Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Lists all available geo-locations. </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of locations that may take multiple service requests to iterate over. </returns>
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetAvailableLocations");
-            scope.Start();
-            try
-            {
-                return ListAvailableLocations(ResourceType, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_CreateOrUpdateMultiRolePool
-        /// <summary> Description for Create or update a multi-role pool. </summary>
+        /// <summary>
+        /// Description for Create or update a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
+        /// Operation Id: AppServiceEnvironments_UpdateMultiRolePool
+        /// </summary>
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public async virtual Task<AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation> CreateOrUpdateAsync(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentMultiRolePool>> UpdateAsync(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.CreateOrUpdate");
+            using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Update");
             scope.Start();
             try
             {
-                var response = await _appServiceEnvironmentsRestClient.CreateOrUpdateMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation(this, _clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response);
-                if (waitForCompletion)
+                var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.UpdateMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new HostingEnvironmentMultiRolePool(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Create or update a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
+        /// Operation Id: AppServiceEnvironments_UpdateMultiRolePool
+        /// </summary>
+        /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
+        public virtual Response<HostingEnvironmentMultiRolePool> Update(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
+
+            using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Update");
+            scope.Start();
+            try
+            {
+                var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.UpdateMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken);
+                return Response.FromValue(new HostingEnvironmentMultiRolePool(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Create or update a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
+        /// Operation Id: AppServiceEnvironments_CreateOrUpdateMultiRolePool
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
+        public virtual async Task<ArmOperation<HostingEnvironmentMultiRolePool>> CreateOrUpdateAsync(WaitUntil waitUntil, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
+
+            using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateOrUpdateMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<HostingEnvironmentMultiRolePool>(new HostingEnvironmentMultiRolePoolOperationSource(Client), _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -221,28 +212,26 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_CreateOrUpdateMultiRolePool
-        /// <summary> Description for Create or update a multi-role pool. </summary>
+        /// <summary>
+        /// Description for Create or update a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
+        /// Operation Id: AppServiceEnvironments_CreateOrUpdateMultiRolePool
+        /// </summary>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public virtual AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation CreateOrUpdate(bool waitForCompletion, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostingEnvironmentMultiRolePool> CreateOrUpdate(WaitUntil waitUntil, WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
         {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
+            Argument.AssertNotNull(multiRolePoolEnvelope, nameof(multiRolePoolEnvelope));
 
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.CreateOrUpdate");
+            using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _appServiceEnvironmentsRestClient.CreateOrUpdateMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken);
-                var operation = new AppServiceEnvironmentCreateOrUpdateMultiRolePoolOperation(this, _clientDiagnostics, Pipeline, _appServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response);
-                if (waitForCompletion)
+                var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateOrUpdateMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken);
+                var operation = new AppServiceArmOperation<HostingEnvironmentMultiRolePool>(new HostingEnvironmentMultiRolePoolOperationSource(Client), _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateCreateOrUpdateMultiRolePoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -253,84 +242,27 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_UpdateMultiRolePool
-        /// <summary> Description for Create or update a multi-role pool. </summary>
-        /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public async virtual Task<Response<HostingEnvironmentMultiRolePool>> UpdateAsync(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
-        {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Update");
-            scope.Start();
-            try
-            {
-                var response = await _appServiceEnvironmentsRestClient.UpdateMultiRolePoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HostingEnvironmentMultiRolePool(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_UpdateMultiRolePool
-        /// <summary> Description for Create or update a multi-role pool. </summary>
-        /// <param name="multiRolePoolEnvelope"> Properties of the multi-role pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="multiRolePoolEnvelope"/> is null. </exception>
-        public virtual Response<HostingEnvironmentMultiRolePool> Update(WorkerPoolResourceData multiRolePoolEnvelope, CancellationToken cancellationToken = default)
-        {
-            if (multiRolePoolEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(multiRolePoolEnvelope));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.Update");
-            scope.Start();
-            try
-            {
-                var response = _appServiceEnvironmentsRestClient.UpdateMultiRolePool(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, multiRolePoolEnvelope, cancellationToken);
-                return Response.FromValue(new HostingEnvironmentMultiRolePool(this, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
-        /// <summary> Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
+        /// Operation Id: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
+        /// </summary>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitionsAsync(string instance, CancellationToken cancellationToken = default)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             async Task<Page<ResourceMetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -341,11 +273,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<ResourceMetricDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -357,28 +289,27 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
-        /// <summary> Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get metric definitions for a specific instance of a multi-role pool of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/instances/{instance}/metricdefinitions
+        /// Operation Id: AppServiceEnvironments_ListMultiRolePoolInstanceMetricDefinitions
+        /// </summary>
         /// <param name="instance"> Name of the instance in the multi-role pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instance"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instance"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetMultiRolePoolInstanceMetricDefinitions(string instance, CancellationToken cancellationToken = default)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            Argument.AssertNotNullOrEmpty(instance, nameof(instance));
 
             Page<ResourceMetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -389,11 +320,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<ResourceMetricDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolInstanceMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolInstanceMetricDefinitionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -405,21 +336,22 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRoleMetricDefinitions
-        /// <summary> Description for Get metric definitions for a multi-role pool of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get metric definitions for a multi-role pool of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
+        /// Operation Id: AppServiceEnvironments_ListMultiRoleMetricDefinitions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceMetricDefinition> GetMultiRoleMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ResourceMetricDefinition>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -430,11 +362,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<ResourceMetricDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitionsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -446,21 +378,22 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRoleMetricDefinitions
-        /// <summary> Description for Get metric definitions for a multi-role pool of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get metric definitions for a multi-role pool of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/metricdefinitions
+        /// Operation Id: AppServiceEnvironments_ListMultiRoleMetricDefinitions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceMetricDefinition> GetMultiRoleMetricDefinitions(CancellationToken cancellationToken = default)
         {
             Page<ResourceMetricDefinition> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitions(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -471,11 +404,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<ResourceMetricDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleMetricDefinitions");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleMetricDefinitionsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -487,21 +420,22 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRolePoolSkus
-        /// <summary> Description for Get available SKUs for scaling a multi-role pool. </summary>
+        /// <summary>
+        /// Description for Get available SKUs for scaling a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
+        /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SkuInfo> GetMultiRolePoolSkusAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<SkuInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRolePoolSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolSkusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -512,11 +446,11 @@ namespace Azure.ResourceManager.AppService
             }
             async Task<Page<SkuInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRolePoolSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolSkusNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -528,21 +462,22 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRolePoolSkus
-        /// <summary> Description for Get available SKUs for scaling a multi-role pool. </summary>
+        /// <summary>
+        /// Description for Get available SKUs for scaling a multi-role pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/skus
+        /// Operation Id: AppServiceEnvironments_ListMultiRolePoolSkus
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SkuInfo> GetMultiRolePoolSkus(CancellationToken cancellationToken = default)
         {
             Page<SkuInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRolePoolSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolSkus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -553,11 +488,11 @@ namespace Azure.ResourceManager.AppService
             }
             Page<SkuInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRolePoolSkus");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRolePoolSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRolePoolSkusNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -569,21 +504,22 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRoleUsages
-        /// <summary> Description for Get usage metrics for a multi-role pool of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get usage metrics for a multi-role pool of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
+        /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Usage> GetMultiRoleUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceUsage> GetMultiRoleUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Usage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRoleUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleUsagesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -592,13 +528,13 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<Usage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
                 try
                 {
-                    var response = await _appServiceEnvironmentsRestClient.ListMultiRoleUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleUsagesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -610,21 +546,22 @@ namespace Azure.ResourceManager.AppService
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
-        /// ContextualPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default
-        /// OperationId: AppServiceEnvironments_ListMultiRoleUsages
-        /// <summary> Description for Get usage metrics for a multi-role pool of an App Service Environment. </summary>
+        /// <summary>
+        /// Description for Get usage metrics for a multi-role pool of an App Service Environment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default/usages
+        /// Operation Id: AppServiceEnvironments_ListMultiRoleUsages
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Usage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Usage> GetMultiRoleUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceUsage> GetMultiRoleUsages(CancellationToken cancellationToken = default)
         {
-            Page<Usage> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRoleUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleUsages(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -633,13 +570,13 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<Usage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
+                using var scope = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentMultiRolePool.GetMultiRoleUsages");
                 scope.Start();
                 try
                 {
-                    var response = _appServiceEnvironmentsRestClient.ListMultiRoleUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
+                    var response = _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.ListMultiRoleUsagesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
