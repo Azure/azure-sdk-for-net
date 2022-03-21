@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             // Make sure there is at least one operation, so we are going to build a custom model.
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif

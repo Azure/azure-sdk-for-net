@@ -37,28 +37,28 @@ In our case, we will be writing an application that collects the expenses a comp
 
 bool useLabels = true;
 
-Uri officeSuppliesUri = <purchaseOrderOfficeSuppliesUri>;
+Uri officeSuppliesUri = new Uri("<purchaseOrderOfficeSuppliesUri>");
 string suppliesModelName = "Purchase order - Office supplies";
 
 TrainingOperation suppliesOperation = await client.StartTrainingAsync(officeSuppliesUri, useLabels, suppliesModelName);
 Response<CustomFormModel> suppliesOperationResponse = await suppliesOperation.WaitForCompletionAsync();
 CustomFormModel officeSuppliesModel = suppliesOperationResponse.Value;
 
-Uri officeEquipmentUri = <purchaseOrderOfficeEquipmentUri>;
+Uri officeEquipmentUri = new Uri("<purchaseOrderOfficeEquipmentUri>");
 string equipmentModelName = "Purchase order - Office Equipment";
 
 TrainingOperation equipmentOperation = await client.StartTrainingAsync(officeEquipmentUri, useLabels, equipmentModelName);
 Response<CustomFormModel> equipmentOperationResponse = await equipmentOperation.WaitForCompletionAsync();
 CustomFormModel officeEquipmentModel = equipmentOperationResponse.Value;
 
-Uri furnitureUri = <purchaseOrderFurnitureUri>;
+Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
 string furnitureModelName = "Purchase order - Furniture";
 
 TrainingOperation furnitureOperation = await client.StartTrainingAsync(furnitureUri, useLabels, furnitureModelName);
 Response<CustomFormModel> furnitureOperationResponse = await furnitureOperation.WaitForCompletionAsync();
 CustomFormModel furnitureModel = furnitureOperationResponse.Value;
 
-Uri cleaningSuppliesUri = <purchaseOrderCleaningSuppliesUri>;
+Uri cleaningSuppliesUri = new Uri("<purchaseOrderCleaningSuppliesUri>");
 string cleaningModelName = "Purchase order - Cleaning Supplies";
 
 TrainingOperation cleaningOperation = await client.StartTrainingAsync(cleaningSuppliesUri, useLabels, cleaningModelName);

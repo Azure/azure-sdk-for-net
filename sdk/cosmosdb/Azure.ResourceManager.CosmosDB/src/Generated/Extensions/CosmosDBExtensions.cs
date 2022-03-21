@@ -272,7 +272,10 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         #region DatabaseAccount
-        /// <summary> Gets an object representing a DatabaseAccount along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccount" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccount.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccount" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccount" /> object. </returns>
@@ -288,7 +291,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region SqlDatabase
-        /// <summary> Gets an object representing a SqlDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabase.CreateResourceIdentifier" /> to create a <see cref="SqlDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
@@ -304,7 +310,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountSqlDatabaseThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountSqlDatabaseThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSetting" /> object. </returns>
@@ -320,7 +329,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountSqlDatabaseContainerThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseContainerThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSetting" /> object. </returns>
@@ -336,7 +348,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountMongodbDatabaseThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountMongodbDatabaseThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSetting" /> object. </returns>
@@ -352,7 +367,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountMongodbDatabaseCollectionThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseCollectionThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseCollectionThroughputSetting" /> object. </returns>
@@ -368,7 +386,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountTableThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountTableThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountTableThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountTableThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountTableThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSetting" /> object. </returns>
@@ -384,7 +405,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountCassandraKeyspaceThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSetting" /> object. </returns>
@@ -400,7 +424,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountCassandraKeyspaceTableThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceTableThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceTableThroughputSetting" /> object. </returns>
@@ -416,7 +443,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountGremlinDatabaseThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountGremlinDatabaseThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountGremlinDatabaseThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountGremlinDatabaseThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseThroughputSetting" /> object. </returns>
@@ -432,7 +462,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DatabaseAccountGremlinDatabaseGraphThroughputSetting
-        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseGraphThroughputSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting.CreateResourceIdentifier" /> to create a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSetting" /> object. </returns>
@@ -448,7 +481,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region SqlContainer
-        /// <summary> Gets an object representing a SqlContainer along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlContainer" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlContainer.CreateResourceIdentifier" /> to create a <see cref="SqlContainer" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlContainer" /> object. </returns>
@@ -464,7 +500,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region SqlStoredProcedure
-        /// <summary> Gets an object representing a SqlStoredProcedure along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlStoredProcedure" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlStoredProcedure.CreateResourceIdentifier" /> to create a <see cref="SqlStoredProcedure" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlStoredProcedure" /> object. </returns>
@@ -480,7 +519,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region SqlUserDefinedFunction
-        /// <summary> Gets an object representing a SqlUserDefinedFunction along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlUserDefinedFunction" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlUserDefinedFunction.CreateResourceIdentifier" /> to create a <see cref="SqlUserDefinedFunction" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlUserDefinedFunction" /> object. </returns>
@@ -496,7 +538,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region SqlTrigger
-        /// <summary> Gets an object representing a SqlTrigger along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlTrigger" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlTrigger.CreateResourceIdentifier" /> to create a <see cref="SqlTrigger" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlTrigger" /> object. </returns>
@@ -512,7 +557,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region MongoDBDatabase
-        /// <summary> Gets an object representing a MongoDBDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoDBDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBDatabase.CreateResourceIdentifier" /> to create a <see cref="MongoDBDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MongoDBDatabase" /> object. </returns>
@@ -528,7 +576,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region MongoDBCollection
-        /// <summary> Gets an object representing a MongoDBCollection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoDBCollection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBCollection.CreateResourceIdentifier" /> to create a <see cref="MongoDBCollection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MongoDBCollection" /> object. </returns>
@@ -544,7 +595,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region CosmosTable
-        /// <summary> Gets an object representing a CosmosTable along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosTable" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosTable.CreateResourceIdentifier" /> to create a <see cref="CosmosTable" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosTable" /> object. </returns>
@@ -560,7 +614,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region CassandraKeyspace
-        /// <summary> Gets an object representing a CassandraKeyspace along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CassandraKeyspace" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraKeyspace.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspace" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CassandraKeyspace" /> object. </returns>
@@ -576,7 +633,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region CassandraTable
-        /// <summary> Gets an object representing a CassandraTable along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CassandraTable" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CassandraTable.CreateResourceIdentifier" /> to create a <see cref="CassandraTable" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CassandraTable" /> object. </returns>
@@ -592,7 +652,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region GremlinDatabase
-        /// <summary> Gets an object representing a GremlinDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GremlinDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GremlinDatabase.CreateResourceIdentifier" /> to create a <see cref="GremlinDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GremlinDatabase" /> object. </returns>
@@ -608,7 +671,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region GremlinGraph
-        /// <summary> Gets an object representing a GremlinGraph along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GremlinGraph" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GremlinGraph.CreateResourceIdentifier" /> to create a <see cref="GremlinGraph" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GremlinGraph" /> object. </returns>
@@ -624,7 +690,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region CosmosDBLocation
-        /// <summary> Gets an object representing a CosmosDBLocation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CosmosDBLocation" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBLocation.CreateResourceIdentifier" /> to create a <see cref="CosmosDBLocation" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CosmosDBLocation" /> object. </returns>
@@ -640,7 +709,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -656,7 +728,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region PrivateLinkResource
-        /// <summary> Gets an object representing a PrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
@@ -672,7 +747,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region RestorableDatabaseAccount
-        /// <summary> Gets an object representing a RestorableDatabaseAccount along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDatabaseAccount" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDatabaseAccount.CreateResourceIdentifier" /> to create a <see cref="RestorableDatabaseAccount" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorableDatabaseAccount" /> object. </returns>
@@ -688,7 +766,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region ClusterResource
-        /// <summary> Gets an object representing a ClusterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ClusterResource.CreateResourceIdentifier" /> to create a <see cref="ClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ClusterResource" /> object. </returns>
@@ -704,7 +785,10 @@ namespace Azure.ResourceManager.CosmosDB
         #endregion
 
         #region DataCenterResource
-        /// <summary> Gets an object representing a DataCenterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DataCenterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCenterResource.CreateResourceIdentifier" /> to create a <see cref="DataCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataCenterResource" /> object. </returns>

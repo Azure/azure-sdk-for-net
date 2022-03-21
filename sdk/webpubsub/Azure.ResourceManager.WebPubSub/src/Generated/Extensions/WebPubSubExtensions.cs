@@ -176,7 +176,10 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         #region WebPubSub
-        /// <summary> Gets an object representing a WebPubSub along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSub" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSub.CreateResourceIdentifier" /> to create a <see cref="WebPubSub" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebPubSub" /> object. </returns>
@@ -192,7 +195,10 @@ namespace Azure.ResourceManager.WebPubSub
         #endregion
 
         #region WebPubSubHub
-        /// <summary> Gets an object representing a WebPubSubHub along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubHub" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubHub.CreateResourceIdentifier" /> to create a <see cref="WebPubSubHub" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebPubSubHub" /> object. </returns>
@@ -208,7 +214,10 @@ namespace Azure.ResourceManager.WebPubSub
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -224,7 +233,10 @@ namespace Azure.ResourceManager.WebPubSub
         #endregion
 
         #region SharedPrivateLink
-        /// <summary> Gets an object representing a SharedPrivateLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedPrivateLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedPrivateLink.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedPrivateLink" /> object. </returns>

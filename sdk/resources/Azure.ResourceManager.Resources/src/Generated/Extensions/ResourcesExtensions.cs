@@ -538,7 +538,10 @@ namespace Azure.ResourceManager.Resources
         }
 
         #region Deployment
-        /// <summary> Gets an object representing a Deployment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Deployment" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Deployment.CreateResourceIdentifier" /> to create a <see cref="Deployment" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Deployment" /> object. </returns>
@@ -554,7 +557,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region Application
-        /// <summary> Gets an object representing a Application along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="Application" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Application.CreateResourceIdentifier" /> to create an <see cref="Application" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Application" /> object. </returns>
@@ -570,7 +576,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region ApplicationDefinition
-        /// <summary> Gets an object representing a ApplicationDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationDefinition.CreateResourceIdentifier" /> to create an <see cref="ApplicationDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationDefinition" /> object. </returns>
@@ -586,7 +595,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region JitRequest
-        /// <summary> Gets an object representing a JitRequest along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="JitRequest" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JitRequest.CreateResourceIdentifier" /> to create a <see cref="JitRequest" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JitRequest" /> object. </returns>
@@ -602,7 +614,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region DeploymentScript
-        /// <summary> Gets an object representing a DeploymentScript along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeploymentScript" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeploymentScript.CreateResourceIdentifier" /> to create a <see cref="DeploymentScript" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeploymentScript" /> object. </returns>
@@ -618,7 +633,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region ScriptLog
-        /// <summary> Gets an object representing a ScriptLog along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ScriptLog" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScriptLog.CreateResourceIdentifier" /> to create a <see cref="ScriptLog" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScriptLog" /> object. </returns>
@@ -634,7 +652,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region TemplateSpec
-        /// <summary> Gets an object representing a TemplateSpec along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TemplateSpec" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TemplateSpec.CreateResourceIdentifier" /> to create a <see cref="TemplateSpec" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TemplateSpec" /> object. </returns>
@@ -650,7 +671,10 @@ namespace Azure.ResourceManager.Resources
         #endregion
 
         #region TemplateSpecVersion
-        /// <summary> Gets an object representing a TemplateSpecVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TemplateSpecVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TemplateSpecVersion.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TemplateSpecVersion" /> object. </returns>

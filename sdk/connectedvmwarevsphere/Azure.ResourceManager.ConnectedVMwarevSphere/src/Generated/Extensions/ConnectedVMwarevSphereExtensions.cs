@@ -549,7 +549,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         }
 
         #region ResourcePool
-        /// <summary> Gets an object representing a ResourcePool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourcePool" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourcePool.CreateResourceIdentifier" /> to create a <see cref="ResourcePool" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourcePool" /> object. </returns>
@@ -565,7 +568,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VMwareCluster
-        /// <summary> Gets an object representing a VMwareCluster along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VMwareCluster" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareCluster.CreateResourceIdentifier" /> to create a <see cref="VMwareCluster" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VMwareCluster" /> object. </returns>
@@ -581,7 +587,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VMwareHost
-        /// <summary> Gets an object representing a VMwareHost along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VMwareHost" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareHost.CreateResourceIdentifier" /> to create a <see cref="VMwareHost" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VMwareHost" /> object. </returns>
@@ -597,7 +606,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VMwareDatastore
-        /// <summary> Gets an object representing a VMwareDatastore along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VMwareDatastore" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VMwareDatastore.CreateResourceIdentifier" /> to create a <see cref="VMwareDatastore" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VMwareDatastore" /> object. </returns>
@@ -613,7 +625,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VCenter
-        /// <summary> Gets an object representing a VCenter along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VCenter" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VCenter.CreateResourceIdentifier" /> to create a <see cref="VCenter" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VCenter" /> object. </returns>
@@ -629,7 +644,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachine" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachine.CreateResourceIdentifier" /> to create a <see cref="VirtualMachine" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
@@ -645,7 +663,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VirtualMachineTemplate
-        /// <summary> Gets an object representing a VirtualMachineTemplate along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineTemplate" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineTemplate.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineTemplate" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineTemplate" /> object. </returns>
@@ -661,7 +682,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetwork along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetwork" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetwork.CreateResourceIdentifier" /> to create a <see cref="VirtualNetwork" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
@@ -677,7 +701,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region InventoryItem
-        /// <summary> Gets an object representing a InventoryItem along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="InventoryItem" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InventoryItem.CreateResourceIdentifier" /> to create an <see cref="InventoryItem" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InventoryItem" /> object. </returns>
@@ -693,7 +720,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region HybridIdentityMetadata
-        /// <summary> Gets an object representing a HybridIdentityMetadata along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridIdentityMetadata" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridIdentityMetadata.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadata" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridIdentityMetadata" /> object. </returns>
@@ -709,7 +739,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region MachineExtension
-        /// <summary> Gets an object representing a MachineExtension along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineExtension" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineExtension.CreateResourceIdentifier" /> to create a <see cref="MachineExtension" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineExtension" /> object. </returns>
@@ -725,7 +758,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         #endregion
 
         #region GuestAgent
-        /// <summary> Gets an object representing a GuestAgent along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestAgent" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestAgent.CreateResourceIdentifier" /> to create a <see cref="GuestAgent" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GuestAgent" /> object. </returns>
