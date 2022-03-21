@@ -177,7 +177,7 @@ void ProcessType(Type type)
 
                 if (IsAzureClientType(type))
                 {
-                    Console.WriteLine($"\tConstructed: '{ type.FullName }'");
+                    LogInformation($"\tConstructed: '{ type.FullName }'");
                 }
             }
             catch (TargetInvocationException ex) when (ShouldIgnoreInvocationException(ex))
