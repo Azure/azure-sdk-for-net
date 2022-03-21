@@ -109,7 +109,7 @@ void LogError(string message, ConsoleColor? color = default)
 {
     if (IsDevOpsHost)
     {
-        Console.WriteLine($"[debug]{ message })");
+        Console.WriteLine($"##vso[task.LogIssue type=error;]{ message }");
     }
     else
     {
@@ -131,7 +131,7 @@ void LogInformation(string message, ConsoleColor? color = default)
 {
     if (IsDevOpsHost)
     {
-        Console.WriteLine($"##vso[task.LogIssue type=error;]{ message }");
+        Console.WriteLine($"[debug]{ message })");
     }
     else
     {
