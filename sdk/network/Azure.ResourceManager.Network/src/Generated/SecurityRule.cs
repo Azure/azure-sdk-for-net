@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string securityRuleApiVersion);
-            _securityRuleRestClient = new SecurityRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityRuleApiVersion);
+            _securityRuleRestClient = new SecurityRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

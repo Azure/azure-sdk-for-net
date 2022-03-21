@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.EventHubs
         {
         }
 
-        private ClientDiagnostics EventHubClusterClustersClientDiagnostics => _eventHubClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, DiagnosticOptions);
-        private ClustersRestOperations EventHubClusterClustersRestClient => _eventHubClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(EventHubCluster.ResourceType));
-        private ClientDiagnostics EventHubNamespaceNamespacesClientDiagnostics => _eventHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubNamespace.ResourceType.Namespace, DiagnosticOptions);
-        private NamespacesRestOperations EventHubNamespaceNamespacesRestClient => _eventHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(EventHubNamespace.ResourceType));
-        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ClientDiagnostics EventHubClusterClustersClientDiagnostics => _eventHubClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations EventHubClusterClustersRestClient => _eventHubClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventHubCluster.ResourceType));
+        private ClientDiagnostics EventHubNamespaceNamespacesClientDiagnostics => _eventHubNamespaceNamespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubNamespace.ResourceType.Namespace, Diagnostics);
+        private NamespacesRestOperations EventHubNamespaceNamespacesRestClient => _eventHubNamespaceNamespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventHubNamespace.ResourceType));
+        private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private NamespacesRestOperations NamespacesRestClient => _namespacesRestClient ??= new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseAccountCassandraKeyspaceThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesApiVersion);
-            _databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesRestClient = new CassandraResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesApiVersion);
+            _databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesRestClient = new CassandraResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAccountCassandraKeyspaceThroughputSettingCassandraResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

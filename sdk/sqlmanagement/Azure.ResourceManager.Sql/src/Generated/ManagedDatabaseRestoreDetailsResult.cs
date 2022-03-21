@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedDatabaseRestoreDetailsResult(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
-            _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
+            _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

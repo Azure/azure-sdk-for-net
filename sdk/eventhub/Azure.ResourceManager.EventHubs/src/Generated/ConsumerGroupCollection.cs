@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConsumerGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _consumerGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ConsumerGroup.ResourceType.Namespace, DiagnosticOptions);
+            _consumerGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ConsumerGroup.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ConsumerGroup.ResourceType, out string consumerGroupApiVersion);
-            _consumerGroupRestClient = new ConsumerGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, consumerGroupApiVersion);
+            _consumerGroupRestClient = new ConsumerGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, consumerGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

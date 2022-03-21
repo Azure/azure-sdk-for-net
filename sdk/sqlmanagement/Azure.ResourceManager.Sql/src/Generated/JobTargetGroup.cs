@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal JobTargetGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobTargetGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _jobTargetGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string jobTargetGroupApiVersion);
-            _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobTargetGroupApiVersion);
+            _jobTargetGroupRestClient = new JobTargetGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobTargetGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

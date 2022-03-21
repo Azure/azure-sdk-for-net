@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DiskAccessCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diskAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccess.ResourceType.Namespace, DiagnosticOptions);
+            _diskAccessClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccess.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DiskAccess.ResourceType, out string diskAccessApiVersion);
-            _diskAccessRestClient = new DiskAccessesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskAccessApiVersion);
+            _diskAccessRestClient = new DiskAccessesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskAccessApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SyncMember(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _syncMemberClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _syncMemberClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string syncMemberApiVersion);
-            _syncMemberRestClient = new SyncMembersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncMemberApiVersion);
+            _syncMemberRestClient = new SyncMembersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, syncMemberApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

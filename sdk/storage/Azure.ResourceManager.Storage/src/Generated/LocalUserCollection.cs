@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LocalUserCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", LocalUser.ResourceType.Namespace, DiagnosticOptions);
+            _localUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", LocalUser.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(LocalUser.ResourceType, out string localUserApiVersion);
-            _localUserRestClient = new LocalUsersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localUserApiVersion);
+            _localUserRestClient = new LocalUsersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, localUserApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

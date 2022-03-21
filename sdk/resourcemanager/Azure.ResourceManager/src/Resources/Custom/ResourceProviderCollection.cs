@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Resources
         internal ResourceProviderCollection(ArmClient client, ResourceIdentifier id)
             : base(client, id)
         {
-            _resourceProviderProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceProvider.ResourceType.Namespace, DiagnosticOptions);
+            _resourceProviderProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceProvider.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceProvider.ResourceType, out string providerApiVersion);
-            _resourceProviderProvidersRestClient = new ProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, providerApiVersion);
+            _resourceProviderProvidersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, providerApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

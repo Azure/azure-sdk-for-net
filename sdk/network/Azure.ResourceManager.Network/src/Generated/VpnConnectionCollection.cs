@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VpnConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnConnection.ResourceType.Namespace, DiagnosticOptions);
+            _vpnConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnConnection.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VpnConnection.ResourceType, out string vpnConnectionApiVersion);
-            _vpnConnectionRestClient = new VpnConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnConnectionApiVersion);
+            _vpnConnectionRestClient = new VpnConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

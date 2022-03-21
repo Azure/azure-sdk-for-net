@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspace.ResourceType.Namespace, DiagnosticOptions);
+            _virtualWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspace.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualWorkspace.ResourceType, out string virtualWorkspaceWorkspacesApiVersion);
-            _virtualWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWorkspaceWorkspacesApiVersion);
+            _virtualWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWorkspaceWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

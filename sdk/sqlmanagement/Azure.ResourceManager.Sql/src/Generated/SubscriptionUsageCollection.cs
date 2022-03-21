@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Sql
         internal SubscriptionUsageCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
             _locationName = locationName;
-            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsage.ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsage.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SubscriptionUsage.ResourceType, out string subscriptionUsageApiVersion);
-            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
+            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUsageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

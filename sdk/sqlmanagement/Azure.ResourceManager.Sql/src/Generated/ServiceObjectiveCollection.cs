@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServiceObjectiveCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceObjectiveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServiceObjective.ResourceType.Namespace, DiagnosticOptions);
+            _serviceObjectiveClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServiceObjective.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceObjective.ResourceType, out string serviceObjectiveApiVersion);
-            _serviceObjectiveRestClient = new ServiceObjectivesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceObjectiveApiVersion);
+            _serviceObjectiveRestClient = new ServiceObjectivesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceObjectiveApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

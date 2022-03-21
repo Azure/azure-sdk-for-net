@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkInterface(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _networkInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
-            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkInterfaceApiVersion);
-            _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _networkInterfaceRestClient = new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion);
+            _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

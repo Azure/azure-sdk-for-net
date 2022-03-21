@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseAccountSqlDatabaseThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _databaseAccountSqlDatabaseThroughputSettingSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string databaseAccountSqlDatabaseThroughputSettingSqlResourcesApiVersion);
-            _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountSqlDatabaseThroughputSettingSqlResourcesApiVersion);
+            _databaseAccountSqlDatabaseThroughputSettingSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAccountSqlDatabaseThroughputSettingSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

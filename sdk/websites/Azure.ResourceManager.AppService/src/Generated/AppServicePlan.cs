@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServicePlan(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _appServicePlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
-            _appServicePlanRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServicePlanApiVersion);
+            _appServicePlanRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

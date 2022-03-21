@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseAccountGremlinDatabaseThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesApiVersion);
-            _databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesApiVersion);
+            _databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAccountGremlinDatabaseThroughputSettingGremlinResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

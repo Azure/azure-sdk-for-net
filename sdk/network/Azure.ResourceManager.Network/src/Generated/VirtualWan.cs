@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualWan(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string virtualWanApiVersion);
-            _virtualWanRestClient = new VirtualWansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualWanApiVersion);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _defaultRestClient = new NetworkManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _vpnSitesConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _virtualWanRestClient = new VirtualWansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWanApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _vpnSitesConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _vpnSitesConfigurationRestClient = new VpnSitesConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _vpnServerConfigurationsAssociatedWithVirtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _vpnServerConfigurationsAssociatedWithVirtualWanRestClient = new VpnServerConfigurationsAssociatedWithVirtualWanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

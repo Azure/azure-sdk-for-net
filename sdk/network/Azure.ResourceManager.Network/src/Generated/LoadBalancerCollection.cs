@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LoadBalancerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _loadBalancerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancer.ResourceType.Namespace, DiagnosticOptions);
+            _loadBalancerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancer.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(LoadBalancer.ResourceType, out string loadBalancerApiVersion);
-            _loadBalancerRestClient = new LoadBalancersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancerApiVersion);
+            _loadBalancerRestClient = new LoadBalancersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

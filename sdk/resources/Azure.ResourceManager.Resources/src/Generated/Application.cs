@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Application(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _applicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string applicationApiVersion);
-            _applicationRestClient = new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationApiVersion);
+            _applicationRestClient = new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

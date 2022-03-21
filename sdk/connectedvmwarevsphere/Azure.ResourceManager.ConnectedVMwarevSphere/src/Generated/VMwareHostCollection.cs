@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VMwareHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vMwareHostHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHost.ResourceType.Namespace, DiagnosticOptions);
+            _vMwareHostHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHost.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VMwareHost.ResourceType, out string vMwareHostHostsApiVersion);
-            _vMwareHostHostsRestClient = new HostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vMwareHostHostsApiVersion);
+            _vMwareHostHostsRestClient = new HostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vMwareHostHostsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         internal RestApiCollection(ArmResource operation, string nameSpace)
             : base(operation.Client, operation.Id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, Diagnostics);
             _nameSpace = nameSpace;
             _providerCollection = new ResourceProviderCollection(Client.GetSubscription(Id));
         }
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Resources
                 _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
                 _clientDiagnostics,
                 Pipeline,
-                DiagnosticOptions.ApplicationId,
-                BaseUri);
+                Diagnostics.ApplicationId,
+                Endpoint);
         }
 
         private async Task<RestOperations> GetRestClientAsync(CancellationToken cancellationToken = default)
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Resources
                 await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
                 _clientDiagnostics,
                 Pipeline,
-                DiagnosticOptions.ApplicationId,
-                BaseUri);
+                Diagnostics.ApplicationId,
+                Endpoint);
         }
 
         /// <summary> Gets a list of operations. </summary>

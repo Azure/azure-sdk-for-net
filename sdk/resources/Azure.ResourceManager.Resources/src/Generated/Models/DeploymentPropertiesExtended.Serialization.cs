@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
             Optional<BinaryData> outputs = default;
-            Optional<IReadOnlyList<ProviderData>> providers = default;
+            Optional<IReadOnlyList<ResourceProviderData>> providers = default;
             Optional<IReadOnlyList<Dependency>> dependencies = default;
             Optional<TemplateLink> templateLink = default;
             Optional<BinaryData> parameters = default;
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderData> array = new List<ProviderData>();
+                    List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ProviderData>(item.ToString()));
+                        array.Add(JsonSerializer.Deserialize<ResourceProviderData>(item.ToString()));
                     }
                     providers = array;
                     continue;

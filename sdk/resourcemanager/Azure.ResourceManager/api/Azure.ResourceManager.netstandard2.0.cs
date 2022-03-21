@@ -47,9 +47,7 @@ namespace Azure.ResourceManager
     {
         protected ArmCollection() { }
         protected ArmCollection(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
-        protected internal System.Uri BaseUri { get { throw null; } }
         protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
-        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
         protected internal Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         protected internal System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -92,9 +90,7 @@ namespace Azure.ResourceManager
     {
         protected ArmResource() { }
         protected internal ArmResource(Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { }
-        protected internal System.Uri BaseUri { get { throw null; } }
         protected internal virtual Azure.ResourceManager.ArmClient Client { get { throw null; } }
-        protected internal Azure.Core.DiagnosticsOptions DiagnosticOptions { get { throw null; } }
         protected internal Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         protected internal System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }

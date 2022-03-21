@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagementLockCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementLock.ResourceType.Namespace, DiagnosticOptions);
+            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementLock.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagementLock.ResourceType, out string managementLockApiVersion);
-            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
+            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementLockApiVersion);
         }
 
         /// <summary>

@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerAutomaticTuning(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _serverAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverAutomaticTuningApiVersion);
-            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAutomaticTuningApiVersion);
+            _serverAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverAutomaticTuningApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal JitRequest(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _jitRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string jitRequestApiVersion);
-            _jitRequestRestClient = new JitRequestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jitRequestApiVersion);
+            _jitRequestRestClient = new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jitRequestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SqlTriggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlTriggerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlTrigger.ResourceType.Namespace, DiagnosticOptions);
+            _sqlTriggerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlTrigger.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlTrigger.ResourceType, out string sqlTriggerSqlResourcesApiVersion);
-            _sqlTriggerSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTriggerSqlResourcesApiVersion);
+            _sqlTriggerSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlTriggerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

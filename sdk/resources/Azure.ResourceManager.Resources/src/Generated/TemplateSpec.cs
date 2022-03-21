@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TemplateSpec(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string templateSpecApiVersion);
-            _templateSpecRestClient = new TemplateSpecsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecApiVersion);
+            _templateSpecRestClient = new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, templateSpecApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

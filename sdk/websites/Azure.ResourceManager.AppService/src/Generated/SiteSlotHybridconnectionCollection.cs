@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotHybridconnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotHybridconnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridconnection.ResourceType.Namespace, DiagnosticOptions);
+            _siteSlotHybridconnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridconnection.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteSlotHybridconnection.ResourceType, out string siteSlotHybridconnectionWebAppsApiVersion);
-            _siteSlotHybridconnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHybridconnectionWebAppsApiVersion);
+            _siteSlotHybridconnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotHybridconnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

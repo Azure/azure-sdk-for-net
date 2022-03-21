@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BasicPublishingCredentialsPolicyFtp(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _basicPublishingCredentialsPolicyFtpWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
-            _basicPublishingCredentialsPolicyFtpWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
+            _basicPublishingCredentialsPolicyFtpWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, basicPublishingCredentialsPolicyFtpWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

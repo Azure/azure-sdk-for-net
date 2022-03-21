@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectionMonitor(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _connectionMonitorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _connectionMonitorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string connectionMonitorApiVersion);
-            _connectionMonitorRestClient = new ConnectionMonitorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, connectionMonitorApiVersion);
+            _connectionMonitorRestClient = new ConnectionMonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectionMonitorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

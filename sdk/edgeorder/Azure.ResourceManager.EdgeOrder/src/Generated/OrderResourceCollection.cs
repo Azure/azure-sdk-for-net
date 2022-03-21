@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OrderResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _orderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", OrderResource.ResourceType.Namespace, DiagnosticOptions);
+            _orderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", OrderResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OrderResource.ResourceType, out string orderResourceApiVersion);
-            _orderResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderResourceApiVersion);
+            _orderResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, orderResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

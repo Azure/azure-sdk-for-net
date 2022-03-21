@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteLink(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expressRouteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _expressRouteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string expressRouteLinkApiVersion);
-            _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteLinkApiVersion);
+            _expressRouteLinkRestClient = new ExpressRouteLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

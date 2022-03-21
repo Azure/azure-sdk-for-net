@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ArcExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ArcExtension.ResourceType.Namespace, DiagnosticOptions);
+            _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ArcExtension.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ArcExtension.ResourceType, out string arcExtensionExtensionsApiVersion);
-            _arcExtensionExtensionsRestClient = new ExtensionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcExtensionExtensionsApiVersion);
+            _arcExtensionExtensionsRestClient = new ExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, arcExtensionExtensionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -62,21 +62,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RestorableDatabaseAccount(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorableDatabaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _restorableDatabaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string restorableDatabaseAccountApiVersion);
-            _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDatabaseAccountApiVersion);
-            _restorableSqlDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _restorableSqlContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _restorableSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _restorableMongodbDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _restorableMongodbCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _restorableMongodbResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorableDatabaseAccountApiVersion);
+            _restorableSqlDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableSqlContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableMongodbDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableMongodbCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _restorableMongodbResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

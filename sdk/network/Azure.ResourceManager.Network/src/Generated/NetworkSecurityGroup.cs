@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkSecurityGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _networkSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkSecurityGroupApiVersion);
-            _networkSecurityGroupRestClient = new NetworkSecurityGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkSecurityGroupApiVersion);
+            _networkSecurityGroupRestClient = new NetworkSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", Vault.ResourceType.Namespace, DiagnosticOptions);
+            _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", Vault.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(Vault.ResourceType, out string vaultApiVersion);
-            _vaultRestClient = new VaultsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultApiVersion);
+            _vaultRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vaultApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

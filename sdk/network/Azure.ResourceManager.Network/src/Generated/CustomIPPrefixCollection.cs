@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CustomIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customIPPrefixClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefix.ResourceType.Namespace, DiagnosticOptions);
+            _customIPPrefixClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefix.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CustomIPPrefix.ResourceType, out string customIPPrefixApiVersion);
-            _customIPPrefixRestClient = new CustomIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customIPPrefixApiVersion);
+            _customIPPrefixRestClient = new CustomIPPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customIPPrefixApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

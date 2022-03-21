@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal WorkloadClassifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workloadClassifierClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadClassifier.ResourceType.Namespace, DiagnosticOptions);
+            _workloadClassifierClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadClassifier.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkloadClassifier.ResourceType, out string workloadClassifierApiVersion);
-            _workloadClassifierRestClient = new WorkloadClassifiersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadClassifierApiVersion);
+            _workloadClassifierRestClient = new WorkloadClassifiersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workloadClassifierApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

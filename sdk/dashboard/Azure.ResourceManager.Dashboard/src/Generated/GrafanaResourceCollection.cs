@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GrafanaResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, DiagnosticOptions);
+            _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GrafanaResource.ResourceType, out string grafanaResourceGrafanaApiVersion);
-            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, grafanaResourceGrafanaApiVersion);
+            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaResourceGrafanaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

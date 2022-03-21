@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FlowLog(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _flowLogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _flowLogClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string flowLogApiVersion);
-            _flowLogRestClient = new FlowLogsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, flowLogApiVersion);
+            _flowLogRestClient = new FlowLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, flowLogApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

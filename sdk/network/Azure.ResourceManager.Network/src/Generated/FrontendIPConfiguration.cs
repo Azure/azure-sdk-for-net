@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontendIPConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
-            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
+            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

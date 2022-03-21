@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            _cloudServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cloudServiceApiVersion);
-            _cloudServiceRestClient = new CloudServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceApiVersion);
-            _cloudServicesUpdateDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _cloudServiceRestClient = new CloudServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceApiVersion);
+            _cloudServicesUpdateDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _cloudServicesUpdateDomainRestClient = new CloudServicesUpdateDomainRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

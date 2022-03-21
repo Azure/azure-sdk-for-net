@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CdnOrigin(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, DiagnosticOptions);
+            _cdnOriginClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cdnOriginApiVersion);
-            _cdnOriginRestClient = new CdnOriginsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnOriginApiVersion);
+            _cdnOriginRestClient = new CdnOriginsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

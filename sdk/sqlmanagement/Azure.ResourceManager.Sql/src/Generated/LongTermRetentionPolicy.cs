@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LongTermRetentionPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _longTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _longTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string longTermRetentionPolicyApiVersion);
-            _longTermRetentionPolicyRestClient = new LongTermRetentionPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, longTermRetentionPolicyApiVersion);
+            _longTermRetentionPolicyRestClient = new LongTermRetentionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, longTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

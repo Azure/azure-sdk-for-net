@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Route(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _routeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string routeApiVersion);
-            _routeRestClient = new RoutesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeApiVersion);
+            _routeRestClient = new RoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

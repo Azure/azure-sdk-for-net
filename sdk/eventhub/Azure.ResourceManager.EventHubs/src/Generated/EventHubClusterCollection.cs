@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EventHubClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, DiagnosticOptions);
+            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EventHubCluster.ResourceType, out string eventHubClusterApiVersion);
-            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
-            _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, DiagnosticOptions);
+            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterApiVersion);
+            _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubCluster.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EventHubCluster.ResourceType, out string eventHubClusterClustersApiVersion);
-            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
+            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

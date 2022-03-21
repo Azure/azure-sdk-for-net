@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlTimeZone(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _sqlTimeZoneTimeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sqlTimeZoneTimeZonesApiVersion);
-            _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTimeZoneTimeZonesApiVersion);
+            _sqlTimeZoneTimeZonesRestClient = new TimeZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlTimeZoneTimeZonesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

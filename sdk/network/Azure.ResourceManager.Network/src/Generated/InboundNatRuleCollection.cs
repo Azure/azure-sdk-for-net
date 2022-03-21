@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal InboundNatRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _inboundNatRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InboundNatRule.ResourceType.Namespace, DiagnosticOptions);
+            _inboundNatRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InboundNatRule.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(InboundNatRule.ResourceType, out string inboundNatRuleApiVersion);
-            _inboundNatRuleRestClient = new InboundNatRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inboundNatRuleApiVersion);
+            _inboundNatRuleRestClient = new InboundNatRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, inboundNatRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
