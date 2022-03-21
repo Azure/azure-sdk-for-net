@@ -439,6 +439,48 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Throws.InstanceOf<ArgumentException>());
         }
 
+        [Test]
+        public void CanMockMetricsProperty()
+        {
+            var mockClient = new Mock<ServiceBusClient>();
+            mockClient.Setup(
+                client => client.TransportMetrics).Returns(new Mock<ServiceBusTransportMetrics>().Object);
+            var metrics = mockClient.Object.TransportMetrics;
+            Assert.IsNotNull(metrics);
+        }
+
+        [Test]
+        public void CanMockIndividualMetrics()
+        {
+            var now = DateTimeOffset.UtcNow;
+            var mockMetrics = new Mock<ServiceBusTransportMetrics>();
+            mockMetrics.Setup(metrics => metrics.LastConnectionOpen).Returns(now);
+            mockMetrics.Setup(metrics => metrics.LastConnectionClose).Returns(now);
+            mockMetrics.Setup(metrics => metrics.LastHeartBeat).Returns(now);
+
+            Assert.AreEqual(now, mockMetrics.Object.LastConnectionOpen);
+            Assert.AreEqual(now, mockMetrics.Object.LastConnectionClose);
+            Assert.AreEqual(now, mockMetrics.Object.LastHeartBeat);
+        }
+
+        [Test]
+        public void MetricsPropertyThrowsWhenNotEnabled()
+        {
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
+            var client = new ServiceBusClient(fakeConnection);
+            Assert.That(
+                () => client.TransportMetrics,
+                Throws.InstanceOf<InvalidOperationException>());
+        }
+
+        [Test]
+        public void MetricsPropertyDoesNotThrowWhenEnabled()
+        {
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
+            var client = new ServiceBusClient(fakeConnection, new ServiceBusClientOptions {EnableTransportMetrics = true});
+            Assert.IsNotNull(client.TransportMetrics);
+        }
+
         /// <summary>
         ///   Allows for the options used by the client to be exposed for testing purposes.
         /// </summary>

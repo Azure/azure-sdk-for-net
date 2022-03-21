@@ -2,16 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using Azure.Messaging.ServiceBus.Amqp;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Transaction;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Transactions
@@ -1071,23 +1064,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             var receiverB = noTxClient.CreateReceiver(queueB.QueueName);
             Assert.IsNotNull(await receiverB.ReceiveMessageAsync());
-        }
-
-        private static void SimulateNetworkFailure(ServiceBusClient client)
-        {
-            var connection = client.Connection;
-            AmqpClient amqpClient = (AmqpClient) typeof(ServiceBusConnection).GetField(
-                    "_innerClient",
-                    BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(connection);
-            AmqpConnectionScope scope = (AmqpConnectionScope) typeof(AmqpClient).GetProperty(
-                "ConnectionScope",
-                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(amqpClient);
-            ((FaultTolerantAmqpObject<AmqpConnection>) typeof(AmqpConnectionScope).GetProperty(
-                "ActiveConnection",
-                BindingFlags.Instance | BindingFlags.NonPublic).GetValue(scope)).TryGetOpenedObject(out AmqpConnection activeConnection);
-
-            typeof(AmqpConnection).GetMethod("AbortInternal", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(activeConnection, null);
         }
 
         private ServiceBusClient CreateCrossEntityTxnClient() =>

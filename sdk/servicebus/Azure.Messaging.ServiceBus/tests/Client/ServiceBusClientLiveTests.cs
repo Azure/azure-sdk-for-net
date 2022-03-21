@@ -231,5 +231,42 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 Assert.AreEqual("", receiver.SessionId);
             }
         }
+
+        [Test]
+        public async Task MetricsAreUpdatedCorrectly()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions { EnableTransportMetrics = true });
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                await sender.SendMessageAsync(new ServiceBusMessage());
+                var metrics = client.TransportMetrics;
+                var firstHeartBeat = metrics.LastHeartBeat;
+                var firstOpen = metrics.LastConnectionOpen;
+                Assert.Greater(firstOpen, firstHeartBeat);
+
+                SimulateNetworkFailure(client);
+                await sender.SendMessageAsync(new ServiceBusMessage());
+
+                var secondOpen = metrics.LastConnectionOpen;
+                Assert.Greater(secondOpen, firstOpen);
+
+                SimulateNetworkFailure(client);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30));
+
+                var thirdOpen = metrics.LastConnectionOpen;
+                Assert.Greater(thirdOpen, secondOpen);
+
+                await client.DisposeAsync();
+                // The close frame does not come back from the service before the DisposeAsync
+                // call is returned.
+                await Task.Delay(500);
+                Assert.Greater(metrics.LastConnectionClose, thirdOpen);
+                Assert.Greater(metrics.LastHeartBeat, firstHeartBeat);
+            }
+        }
     }
 }

@@ -87,16 +87,23 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Can be used for mocking.
+        /// Gets the metrics associated with this <see cref="ServiceBusClient"/> instance. In order to use this property,
+        /// <see cref="ServiceBusClientOptions.EnableTransportMetrics"/> must be set to <value>true</value>.
         /// </summary>
-        protected ServiceBusClient()
-        {
-        }
+        public ServiceBusTransportMetrics TransportMetrics
+            => Connection.InnerClient.Metrics ?? throw new InvalidOperationException("Transport metrics are not enabled. To enable transport metrics, set the EnableTransportMetrics property on the ServiceBusClientOptions.");
 
         /// <summary>
         /// The connection that is used for the client.
         /// </summary>
         internal ServiceBusConnection Connection { get; }
+
+        /// <summary>
+        /// Can be used for mocking.
+        /// </summary>
+        protected ServiceBusClient()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.

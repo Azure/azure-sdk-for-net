@@ -69,6 +69,7 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public virtual string FullyQualifiedNamespace { get { throw null; } }
         public virtual bool IsClosed { get { throw null; } }
+        public Azure.Messaging.ServiceBus.ServiceBusTransportMetrics TransportMetrics { get { throw null; } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string queueName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Messaging.ServiceBus.ServiceBusSessionReceiver> AcceptNextSessionAsync(string topicName, string subscriptionName, Azure.Messaging.ServiceBus.ServiceBusSessionReceiverOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -92,6 +93,7 @@ namespace Azure.Messaging.ServiceBus
     {
         public ServiceBusClientOptions() { }
         public bool EnableCrossEntityTransactions { get { throw null; } set { } }
+        public bool EnableTransportMetrics { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
         public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
         public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
@@ -484,6 +486,13 @@ namespace Azure.Messaging.ServiceBus
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class ServiceBusTransportMetrics
+    {
+        protected internal ServiceBusTransportMetrics() { }
+        public virtual System.DateTimeOffset? LastConnectionClose { get { throw null; } }
+        public virtual System.DateTimeOffset? LastConnectionOpen { get { throw null; } }
+        public virtual System.DateTimeOffset? LastHeartBeat { get { throw null; } }
     }
     public enum ServiceBusTransportType
     {
