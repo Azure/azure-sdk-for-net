@@ -209,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public void ContructorWithConnectionStringCreatesTheTransportClient()
         {
             var connection = new ServiceBusConnection("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]", new ServiceBusClientOptions());
-            Assert.That(GetTransportClient(connection), Is.Not.Null);
+            Assert.That(connection.InnerClient, Is.Not.Null);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var signature = new SharedAccessSignature(resource, keyName, key);
             var connection = new ServiceBusConnection(fullyQualifiedNamespace, new SharedAccessCredential(signature), options);
 
-            Assert.That(GetTransportClient(connection), Is.Not.Null);
+            Assert.That(connection.InnerClient, Is.Not.Null);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var credential = new AzureNamedKeyCredential(keyName, key);
             var connection = new ServiceBusConnection(fullyQualifiedNamespace, credential, options);
 
-            Assert.That(GetTransportClient(connection), Is.Not.Null);
+            Assert.That(connection.InnerClient, Is.Not.Null);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             var credential = new AzureSasCredential(signature.Value);
             var connection = new ServiceBusConnection(fullyQualifiedNamespace, credential, options);
 
-            Assert.That(GetTransportClient(connection), Is.Not.Null);
+            Assert.That(connection.InnerClient, Is.Not.Null);
         }
 
         /// <summary>
@@ -429,20 +429,6 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             Assert.That(() => ServiceBusConnection.CreateWithCredential("fqns", credential, options), Throws.InstanceOf<ArgumentException>());
         }
-
-        /// <summary>
-        ///   Provides a test shim for retrieving the transport client contained by an
-        ///   Event Hub client instance.
-        /// </summary>
-        ///
-        /// <param name="client">The client to retrieve the transport client of.</param>
-        ///
-        /// <returns>The transport client contained by the Event Hub connection.</returns>
-        ///
-        private TransportClient GetTransportClient(ServiceBusConnection client) =>
-            typeof(ServiceBusConnection)
-                .GetField("_innerClient", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(client) as TransportClient;
 
         /// <summary>
         ///   Allows for the operations performed by the client to be observed for testing purposes.

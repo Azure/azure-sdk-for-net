@@ -24,7 +24,7 @@ To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` m
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/invoicefields).
 
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
-    Uri invoiceUri = <invoiceUri>;
+    Uri invoiceUri = new Uri("<invoiceUri>");
     var options = new RecognizeInvoicesOptions() { Locale = "en-US" };
 
     RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesFromUriAsync(invoiceUri, options);

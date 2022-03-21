@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerSampleRecognizeCustomFormsFromUri
 #if SNIPPET
             string modelId = "<modelId>";
-            Uri formUri = <formUri>;
+            Uri formUri = new Uri("<formUri>");
 #else
             Uri formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = model.ModelId;

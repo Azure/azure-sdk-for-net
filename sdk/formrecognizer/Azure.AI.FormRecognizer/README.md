@@ -208,7 +208,7 @@ The following section provides several code snippets illustrating common pattern
 Extract text, selection marks, text styles, and table structures, along with their bounding region coordinates from documents.
 
 ```C# Snippet:FormRecognizerExtractLayoutFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-layout", fileUri);
 
@@ -284,7 +284,7 @@ For more information and samples see [here][extract_layout].
 Analyze key-value pairs, entities, tables, and selection marks from documents using the general prebuilt document model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-document", fileUri);
 
@@ -388,7 +388,7 @@ For more information and samples see [here][analyze_prebuilt_document].
 Analyze textual elements, such as page words and lines, styles, and text language information from documents using the prebuilt read model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltReadFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-read", fileUri);
 
@@ -572,7 +572,7 @@ Build a custom model on your own document type. The resulting model can be used 
 // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
 // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available
@@ -605,7 +605,7 @@ Analyze text, field values, selection marks, and table data from custom document
 
 ```C# Snippet:FormRecognizerAnalyzeWithCustomModelFromUriAsync
 string modelId = "<modelId>";
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync(modelId, fileUri);
 
@@ -661,7 +661,7 @@ await foreach (DocumentModelInfo modelInfo in models)
 }
 
 // Create a new model to store in the account
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;
@@ -707,7 +707,7 @@ foreach (DocumentModelInfo modelInfo in models.Take(10))
 
 // Create a new model to store in the account
 
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = client.StartBuildModel(trainingFileUri, DocumentBuildMode.Template);
 Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
 DocumentModel model = operationResponse.Value;

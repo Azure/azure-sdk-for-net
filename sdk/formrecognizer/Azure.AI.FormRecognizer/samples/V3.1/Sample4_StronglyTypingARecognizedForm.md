@@ -56,7 +56,7 @@ public Receipt(RecognizedForm recognizedForm)
 Here we illustrate how to use the `Receipt` wrapper class described above.
 
 ```C# Snippet:FormRecognizerSampleStronglyTypingARecognizedForm
-Uri receiptUri = <receiptUri>;
+Uri receiptUri = new Uri("<receiptUri>");
 
 RecognizeReceiptsOperation operation = await client.StartRecognizeReceiptsFromUriAsync(receiptUri);
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();

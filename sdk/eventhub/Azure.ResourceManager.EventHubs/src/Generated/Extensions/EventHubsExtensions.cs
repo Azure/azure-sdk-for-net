@@ -224,7 +224,10 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         #region EventHubCluster
-        /// <summary> Gets an object representing a EventHubCluster along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubCluster" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubCluster.CreateResourceIdentifier" /> to create an <see cref="EventHubCluster" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventHubCluster" /> object. </returns>
@@ -240,7 +243,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region EventHubNamespace
-        /// <summary> Gets an object representing a EventHubNamespace along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubNamespace" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubNamespace.CreateResourceIdentifier" /> to create an <see cref="EventHubNamespace" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventHubNamespace" /> object. </returns>
@@ -256,7 +262,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region NetworkRuleSet
-        /// <summary> Gets an object representing a NetworkRuleSet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkRuleSet" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkRuleSet.CreateResourceIdentifier" /> to create a <see cref="NetworkRuleSet" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkRuleSet" /> object. </returns>
@@ -272,7 +281,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region NamespaceAuthorizationRule
-        /// <summary> Gets an object representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceAuthorizationRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceAuthorizationRule.CreateResourceIdentifier" /> to create a <see cref="NamespaceAuthorizationRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceAuthorizationRule" /> object. </returns>
@@ -288,7 +300,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region EventHubAuthorizationRule
-        /// <summary> Gets an object representing a EventHubAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHubAuthorizationRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHubAuthorizationRule.CreateResourceIdentifier" /> to create an <see cref="EventHubAuthorizationRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventHubAuthorizationRule" /> object. </returns>
@@ -304,7 +319,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region DisasterRecoveryAuthorizationRule
-        /// <summary> Gets an object representing a DisasterRecoveryAuthorizationRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DisasterRecoveryAuthorizationRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisasterRecoveryAuthorizationRule.CreateResourceIdentifier" /> to create a <see cref="DisasterRecoveryAuthorizationRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisasterRecoveryAuthorizationRule" /> object. </returns>
@@ -320,7 +338,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -336,7 +357,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region EventHub
-        /// <summary> Gets an object representing a EventHub along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EventHub" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EventHub.CreateResourceIdentifier" /> to create an <see cref="EventHub" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EventHub" /> object. </returns>
@@ -352,7 +376,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region DisasterRecovery
-        /// <summary> Gets an object representing a DisasterRecovery along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DisasterRecovery" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisasterRecovery.CreateResourceIdentifier" /> to create a <see cref="DisasterRecovery" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisasterRecovery" /> object. </returns>
@@ -368,7 +395,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region ConsumerGroup
-        /// <summary> Gets an object representing a ConsumerGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ConsumerGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConsumerGroup.CreateResourceIdentifier" /> to create a <see cref="ConsumerGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConsumerGroup" /> object. </returns>
@@ -384,7 +414,10 @@ namespace Azure.ResourceManager.EventHubs
         #endregion
 
         #region SchemaGroup
-        /// <summary> Gets an object representing a SchemaGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SchemaGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SchemaGroup.CreateResourceIdentifier" /> to create a <see cref="SchemaGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SchemaGroup" /> object. </returns>
