@@ -7,6 +7,7 @@ using Azure.Core.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace Azure.AI.TextAnalytics
     public class TextAnalyticsClient
     {
         private readonly Uri _baseUri;
-        internal readonly TextAnalyticsRestClient _serviceRestClient;
+        internal readonly AnalyzeTextRestClient _serviceRestClient;
+        internal readonly MicrosoftCognitiveLanguageServiceRestClient _cognitiveRestClient;
         internal readonly ClientDiagnostics _clientDiagnostics;
         private readonly TextAnalyticsClientOptions _options;
 
@@ -65,7 +67,7 @@ namespace Azure.AI.TextAnalytics
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
-            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
+            _serviceRestClient = new AnalyzeTextRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         /// <summary>
@@ -104,7 +106,7 @@ namespace Azure.AI.TextAnalytics
             _options = options;
 
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            _serviceRestClient = new TextAnalyticsRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
+            _serviceRestClient = new AnalyzeTextRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, TextAnalyticsClientOptions.GetVersionString(options.Version));
         }
 
         #region Detect Language
@@ -142,18 +144,35 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
+                var input = new LanguageDetectionAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = await _cognitiveRestClient.AnalyzeTextAsync(analyzeLanguageDetection, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(new LanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+                ////
+                //var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
+                //Response<LanguageResult> result = await _serviceRestClient.LanguagesAsync(new LanguageBatchInput(documents), cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                //var languageDetection = (LanguageDetectionTaskResult)result.Value;
+                var languageDetection = result.Value as LanguageDetectionTaskResult;
+                Debug.Assert(languageDetection != null);
                 Response response = result.GetRawResponse();
-
-                if (result.Value.Errors.Count > 0)
+                if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+
+                    //var error = Transforms.ConvertToError(languageDetection.Results.Errors[0].Error);
+                    //throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
+
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault() as TextAnalyticsErrorInternal); // can't make a new TextAnaltyicsErrorInternal - no constructor
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error)).ConfigureAwait(false);
                 }
 
-                return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
+                //return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response); MODIFIED Transform method
+                return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
             }
             catch (Exception e)
             {
@@ -195,17 +214,28 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 var documents = new List<LanguageInput>() { ConvertToLanguageInput(document, countryHint) };
-                Response<LanguageResult> result = _serviceRestClient.Languages(new LanguageBatchInput(documents), cancellationToken: cancellationToken);
-                Response response = result.GetRawResponse();
+                var input = new LanguageDetectionAnalysisInput();
+                foreach (var doc in documents)
+                {
+                    input.Documents.Add(doc);
+                }
+                var analyzeLanguageDetection = new AnalyzeTextLanguageDetectionInput { AnalysisInput = input };
+                Response<AnalyzeTextTaskResult> result = _cognitiveRestClient.AnalyzeText(analyzeLanguageDetection, cancellationToken: cancellationToken);
 
-                if (result.Value.Errors.Count > 0)
+                var languageDetection = result.Value as LanguageDetectionTaskResult;
+                Debug.Assert(languageDetection != null);
+                Response response = result.GetRawResponse();
+                if (languageDetection.Results.Errors.Count > 0)
                 {
                     // only one document, so we can ignore the id and grab the first error message.
-                    var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
-                    throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+                    //var error = Transforms.ConvertToError(result.Value.Errors[0].Error);
+                    //throw _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
+
+                    var error = Transforms.ConvertToError(languageDetection.Results.Errors.FirstOrDefault() as TextAnalyticsErrorInternal); // can't make a new TextAnaltyicsErrorInternal - no constructor
+                    throw  _clientDiagnostics.CreateRequestFailedException(response, new ResponseError(error.ErrorCode.ToString(), error.Message), CreateAdditionalInformation(error));
                 }
 
-                return Response.FromValue(Transforms.ConvertToDetectedLanguage(result.Value.Documents[0]), response);
+                return Response.FromValue(Transforms.ConvertToDetectedLanguage(languageDetection.Results.Documents.FirstOrDefault()), response);
             }
             catch (Exception e)
             {
@@ -243,7 +273,8 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
-            LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
+            //LanguageBatchInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
+            LanguageDetectionAnalysisInput detectLanguageInputs = ConvertToLanguageInputs(documents, countryHint);
 
             return await DetectLanguageBatchAsync(detectLanguageInputs, options, cancellationToken).ConfigureAwait(false);
         }

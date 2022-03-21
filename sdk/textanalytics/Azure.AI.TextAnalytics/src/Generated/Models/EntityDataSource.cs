@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
         /// <param name="entityId"> Entity id in the given source catalog. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="entityId"/> is null. </exception>
-        internal EntityDataSource(string name, string entityId)
+        public EntityDataSource(string name, string entityId)
         {
             if (name == null)
             {

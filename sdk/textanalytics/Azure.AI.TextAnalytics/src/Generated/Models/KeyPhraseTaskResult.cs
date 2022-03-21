@@ -8,18 +8,21 @@
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The KeyPhraseTaskResult. </summary>
-    internal partial class KeyPhraseTaskResult
+    internal partial class KeyPhraseTaskResult : AnalyzeTextTaskResult
     {
         /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
         internal KeyPhraseTaskResult()
         {
+            Kind = AnalyzeTextTaskResultsKind.KeyPhraseExtractionResults;
         }
 
         /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
         /// <param name="results"></param>
-        internal KeyPhraseTaskResult(KeyPhraseResult results)
+        internal KeyPhraseTaskResult(AnalyzeTextTaskResultsKind kind, KeyPhraseResult results) : base(kind)
         {
             Results = results;
+            Kind = kind;
         }
 
         /// <summary> Gets the results. </summary>

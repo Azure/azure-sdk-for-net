@@ -14,16 +14,21 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
-            TextAnalyticsErrorInternal error = default;
+            Optional<Error> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    error = TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    error = Error.DeserializeError(property.Value);
                     continue;
                 }
             }
-            return new ErrorResponse(error);
+            return new ErrorResponse(error.Value);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal static KeyPhraseTaskResult DeserializeKeyPhraseTaskResult(JsonElement element)
         {
             Optional<KeyPhraseResult> results = default;
+            AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
@@ -27,8 +28,13 @@ namespace Azure.AI.TextAnalytics.Models
                     results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("kind"))
+                {
+                    kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new KeyPhraseTaskResult(results.Value);
+            return new KeyPhraseTaskResult(kind, results.Value);
         }
     }
 }
