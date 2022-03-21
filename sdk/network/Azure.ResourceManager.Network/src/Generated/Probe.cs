@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         {
             _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string probeLoadBalancerProbesApiVersion);
-            _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(_probeLoadBalancerProbesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, probeLoadBalancerProbesApiVersion);
+            _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, probeLoadBalancerProbesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: LoadBalancerProbes_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Probe>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Probe>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("Probe.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _probeLoadBalancerProbesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _probeLoadBalancerProbesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Probe(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _probeLoadBalancerProbesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _probeLoadBalancerProbesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Probe(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

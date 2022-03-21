@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of SnapshotData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="supportsHibernation"> Indicates the OS on a snapshot supports hibernation. </param>
         /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
         /// <param name="completionPercent"> Percentage complete for the background copy when a resource is created via the CopyStart operation. </param>
-        internal SnapshotData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent) : base(id, name, type, systemData, tags, location)
+        internal SnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, SnapshotSku sku, ExtendedLocation extendedLocation, DateTimeOffset? timeCreated, OperatingSystemTypes? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, CreationData creationData, int? diskSizeGB, long? diskSizeBytes, DiskState? diskState, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, bool? incremental, Encryption encryption, NetworkAccessPolicy? networkAccessPolicy, string diskAccessId, DiskSecurityProfile securityProfile, bool? supportsHibernation, PublicNetworkAccess? publicNetworkAccess, float? completionPercent) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             Sku = sku;
@@ -94,7 +94,19 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Purchase plan information for the image from which the source disk for the snapshot was originally created. </summary>
         public DiskPurchasePlan PurchasePlan { get; set; }
         /// <summary> List of supported capabilities (like Accelerated Networking) for the image from which the source disk from the snapshot was originally created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
+        internal SupportedCapabilities SupportedCapabilities { get; set; }
+        /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
+        public bool? AcceleratedNetwork
+        {
+            get => SupportedCapabilities is null ? default : SupportedCapabilities.AcceleratedNetwork;
+            set
+            {
+                if (SupportedCapabilities is null)
+                    SupportedCapabilities = new SupportedCapabilities();
+                SupportedCapabilities.AcceleratedNetwork = value;
+            }
+        }
+
         /// <summary> Disk source information. CreationData information cannot be changed after the disk has been created. </summary>
         public CreationData CreationData { get; set; }
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk&apos;s size. </summary>

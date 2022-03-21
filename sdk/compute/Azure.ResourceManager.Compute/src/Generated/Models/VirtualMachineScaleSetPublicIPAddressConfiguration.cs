@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             Name = name;
-            IpTags = new ChangeTrackingList<VirtualMachineScaleSetIpTag>();
+            IPTags = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIpTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, DeleteOptions? deleteOption)
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, PublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, DeleteOptions? deleteOption)
         {
             Name = name;
             Sku = sku;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             DnsSettings = dnsSettings;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             DeleteOption = deleteOption;
@@ -57,11 +57,30 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The idle timeout of the public IP address. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
+        internal VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
+        /// <summary> The Domain name label.The concatenation of the domain name label and vm index will be the domain name labels of the PublicIPAddress resources that will be created. </summary>
+        public string DnsDomainNameLabel
+        {
+            get => DnsSettings is null ? default : DnsSettings.DomainNameLabel;
+            set => DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(value);
+        }
+
         /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineScaleSetIpTag> IpTags { get; }
+        public IList<VirtualMachineScaleSetIPTag> IPTags { get; }
         /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        public WritableSubResource PublicIPPrefix { get; set; }
+        internal WritableSubResource PublicIPPrefix { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            set
+            {
+                if (PublicIPPrefix is null)
+                    PublicIPPrefix = new WritableSubResource();
+                PublicIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
         public IPVersion? PublicIPAddressVersion { get; set; }
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>

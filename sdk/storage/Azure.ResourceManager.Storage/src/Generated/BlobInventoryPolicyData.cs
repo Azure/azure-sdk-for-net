@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastModifiedTime"> Returns the last modified date and time of the blob inventory policy. </param>
         /// <param name="policy"> The storage account blob inventory policy object. It is composed of policy rules. </param>
-        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DateTimeOffset? lastModifiedTime, BlobInventoryPolicySchema policy) : base(id, name, type, systemData)
+        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedTime, BlobInventoryPolicySchema policy) : base(id, name, resourceType, systemData)
         {
             LastModifiedTime = lastModifiedTime;
             Policy = policy;

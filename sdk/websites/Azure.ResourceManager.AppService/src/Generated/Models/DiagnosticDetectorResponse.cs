@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="startTime"> Start time of the period. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="abnormalTimePeriods"> List of Correlated events found by the detector. </param>
         /// <param name="data"> Additional Data that detector wants to send. </param>
         /// <param name="responseMetaData"> Meta Data. </param>
-        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData) : base(id, name, type, systemData, kind)
+        internal DiagnosticDetectorResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? startTime, DateTimeOffset? endTime, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData) : base(id, name, resourceType, systemData, kind)
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -64,6 +64,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Additional Data that detector wants to send. </summary>
         public IList<IList<NameValuePair>> Data { get; }
         /// <summary> Meta Data. </summary>
-        public ResponseMetaData ResponseMetaData { get; set; }
+        internal ResponseMetaData ResponseMetaData { get; set; }
+        /// <summary> Source of the Data. </summary>
+        public DataSource DataSource
+        {
+            get => ResponseMetaData is null ? default : ResponseMetaData.DataSource;
+            set
+            {
+                if (ResponseMetaData is null)
+                    ResponseMetaData = new ResponseMetaData();
+                ResponseMetaData.DataSource = value;
+            }
+        }
     }
 }

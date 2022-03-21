@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.WebPubSub
         {
             _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string webPubSubApiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(_webPubSubClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
+            _webPubSubRestClient = new WebPubSubRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
             _webPubSubPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(_webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _webPubSubPrivateLinkResourcesRestClient = new WebPubSubPrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -92,21 +92,105 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An object representing collection of WebPubSubHubs and their operations over a WebPubSubHub. </returns>
         public virtual WebPubSubHubCollection GetWebPubSubHubs()
         {
-            return new WebPubSubHubCollection(Client, Id);
+            return GetCachedClient(Client => new WebPubSubHubCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a hub setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        public virtual async Task<Response<WebPubSubHub>> GetWebPubSubHubAsync(string hubName, CancellationToken cancellationToken = default)
+        {
+            return await GetWebPubSubHubs().GetAsync(hubName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a hub setting.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/hubs/{hubName}
+        /// Operation Id: WebPubSubHubs_Get
+        /// </summary>
+        /// <param name="hubName"> The hub name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
+        public virtual Response<WebPubSubHub> GetWebPubSubHub(string hubName, CancellationToken cancellationToken = default)
+        {
+            return GetWebPubSubHubs().Get(hubName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the PrivateEndpointConnection. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the specified private endpoint connection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: WebPubSubPrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<PrivateEndpointConnection>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified private endpoint connection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: WebPubSubPrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<PrivateEndpointConnection> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SharedPrivateLinks in the SharedPrivateLink. </summary>
         /// <returns> An object representing collection of SharedPrivateLinks and their operations over a SharedPrivateLink. </returns>
         public virtual SharedPrivateLinkCollection GetSharedPrivateLinks()
         {
-            return new SharedPrivateLinkCollection(Client, Id);
+            return GetCachedClient(Client => new SharedPrivateLinkCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the specified shared private link resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+        /// Operation Id: WebPubSubSharedPrivateLinkResources_Get
+        /// </summary>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        public virtual async Task<Response<SharedPrivateLink>> GetSharedPrivateLinkAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return await GetSharedPrivateLinks().GetAsync(sharedPrivateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified shared private link resource
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}
+        /// Operation Id: WebPubSubSharedPrivateLinkResources_Get
+        /// </summary>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        public virtual Response<SharedPrivateLink> GetSharedPrivateLink(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            return GetSharedPrivateLinks().Get(sharedPrivateLinkResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -115,7 +199,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebPubSub>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Get");
             scope.Start();
@@ -123,7 +207,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webPubSubClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,7 +231,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _webPubSubClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebPubSub(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -162,9 +246,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
         /// Operation Id: WebPubSub_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Delete");
             scope.Start();
@@ -172,7 +256,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = await _webPubSubRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -188,9 +272,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
         /// Operation Id: WebPubSub_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Delete");
             scope.Start();
@@ -198,7 +282,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -214,11 +298,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
         /// Operation Id: WebPubSub_Update
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebPubSub>> UpdateAsync(bool waitForCompletion, WebPubSubData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSub>> UpdateAsync(WaitUntil waitUntil, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -228,7 +312,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = await _webPubSubRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new WebPubSubArmOperation<WebPubSub>(new WebPubSubOperationSource(Client), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -244,11 +328,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
         /// Operation Id: WebPubSub_Update
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<WebPubSub> Update(bool waitForCompletion, WebPubSubData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSub> Update(WaitUntil waitUntil, WebPubSubData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -258,7 +342,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 var operation = new WebPubSubArmOperation<WebPubSub>(new WebPubSubOperationSource(Client), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -275,7 +359,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetKeys");
             scope.Start();
@@ -318,11 +402,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/regenerateKey
         /// Operation Id: WebPubSub_RegenerateKey
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebPubSubKeys>> RegenerateKeyAsync(bool waitForCompletion, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -332,7 +416,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = await _webPubSubRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new WebPubSubArmOperation<WebPubSubKeys>(new WebPubSubKeysOperationSource(), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -348,11 +432,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/regenerateKey
         /// Operation Id: WebPubSub_RegenerateKey
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> Parameter that describes the Regenerate Key Operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<WebPubSubKeys> RegenerateKey(bool waitForCompletion, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubKeys> RegenerateKey(WaitUntil waitUntil, RegenerateKeyParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -362,7 +446,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 var operation = new WebPubSubArmOperation<WebPubSubKeys>(new WebPubSubKeysOperationSource(), _webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -378,9 +462,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/restart
         /// Operation Id: WebPubSub_Restart
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> RestartAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Restart");
             scope.Start();
@@ -388,7 +472,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = await _webPubSubRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -404,9 +488,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/restart
         /// Operation Id: WebPubSub_Restart
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Restart(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.Restart");
             scope.Start();
@@ -414,7 +498,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 var response = _webPubSubRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new WebPubSubArmOperation(_webPubSubClientDiagnostics, Pipeline, _webPubSubRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -431,10 +515,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Sku> GetSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebPubSubResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubResourceSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Sku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<WebPubSubResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetSkus");
                 scope.Start();
@@ -458,10 +542,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// Operation Id: WebPubSub_ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Sku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Sku> GetSkus(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubResourceSku> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<Sku> FirstPageFunc(int? pageSizeHint)
+            Page<WebPubSubResourceSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _webPubSubClientDiagnostics.CreateScope("WebPubSub.GetSkus");
                 scope.Start();
@@ -572,7 +656,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -582,8 +666,8 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new WebPubSub(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -613,8 +697,8 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new WebPubSub(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -633,7 +717,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -641,10 +725,10 @@ namespace Azure.ResourceManager.WebPubSub
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new WebPubSub(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -671,10 +755,10 @@ namespace Azure.ResourceManager.WebPubSub
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new WebPubSub(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -693,7 +777,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<WebPubSub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSub>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -702,8 +786,8 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webPubSubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new WebPubSub(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -731,8 +815,8 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webPubSubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new WebPubSub(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

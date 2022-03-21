@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Sql
         {
             _instancePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string instancePoolApiVersion);
-            _instancePoolRestClient = new InstancePoolsRestOperations(_instancePoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instancePoolApiVersion);
+            _instancePoolRestClient = new InstancePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instancePoolApiVersion);
             _managedInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstance.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ManagedInstance.ResourceType, out string managedInstanceApiVersion);
-            _managedInstanceRestClient = new ManagedInstancesRestOperations(_managedInstanceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceApiVersion);
+            _managedInstanceRestClient = new ManagedInstancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceApiVersion);
             _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _usagesRestClient = new UsagesRestOperations(_usagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _usagesRestClient = new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: InstancePools_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<InstancePool>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InstancePool>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePool.Get");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _instancePoolClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InstancePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _instancePoolClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InstancePool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
         /// Operation Id: InstancePools_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePool.Delete");
             scope.Start();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _instancePoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation(_instancePoolClientDiagnostics, Pipeline, _instancePoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -173,9 +173,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
         /// Operation Id: InstancePools_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _instancePoolClientDiagnostics.CreateScope("InstancePool.Delete");
             scope.Start();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _instancePoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new SqlArmOperation(_instancePoolClientDiagnostics, Pipeline, _instancePoolRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<InstancePool>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InstancePool>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -385,8 +385,8 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new InstancePool(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -416,8 +416,8 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new InstancePool(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<InstancePool>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InstancePool>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -444,10 +444,10 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new InstancePool(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -474,10 +474,10 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new InstancePool(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<InstancePool>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InstancePool>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -505,8 +505,8 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _instancePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new InstancePool(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -534,8 +534,8 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _instancePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new InstancePool(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

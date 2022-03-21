@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         {
             _restorePointGroupRestorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string restorePointGroupRestorePointCollectionsApiVersion);
-            _restorePointGroupRestorePointCollectionsRestClient = new RestorePointCollectionsRestOperations(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointGroupRestorePointCollectionsApiVersion);
+            _restorePointGroupRestorePointCollectionsRestClient = new RestorePointCollectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointGroupRestorePointCollectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,35 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of RestorePoints and their operations over a RestorePoint. </returns>
         public virtual RestorePointCollection GetRestorePoints()
         {
-            return new RestorePointCollection(Client, Id);
+            return GetCachedClient(Client => new RestorePointCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// The operation to get the restore point.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+        /// Operation Id: RestorePoints_Get
+        /// </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual async Task<Response<RestorePoint>> GetRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            return await GetRestorePoints().GetAsync(restorePointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation to get the restore point.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}
+        /// Operation Id: RestorePoints_Get
+        /// </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual Response<RestorePoint> GetRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            return GetRestorePoints().Get(restorePointName, cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RestorePointGroup>> GetAsync(RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroup>> GetAsync(RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Get");
             scope.Start();
@@ -106,7 +134,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,7 +159,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,9 +174,9 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Delete");
             scope.Start();
@@ -156,7 +184,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _restorePointGroupRestorePointCollectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ComputeArmOperation(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, _restorePointGroupRestorePointCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -172,9 +200,9 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Delete");
             scope.Start();
@@ -182,7 +210,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _restorePointGroupRestorePointCollectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ComputeArmOperation(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, _restorePointGroupRestorePointCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -198,18 +226,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="data"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<RestorePointGroup>> UpdateAsync(RestorePointGroupUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<RestorePointGroup>> UpdateAsync(PatchableRestorePointGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Update");
             scope.Start();
             try
             {
-                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,18 +252,18 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to the Update restore point collection operation. </param>
+        /// <param name="data"> Parameters supplied to the Update restore point collection operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<RestorePointGroup> Update(RestorePointGroupUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<RestorePointGroup> Update(PatchableRestorePointGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroup.Update");
             scope.Start();
             try
             {
-                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new RestorePointGroup(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +282,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<RestorePointGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -264,8 +292,8 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -295,8 +323,8 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new RestorePointGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -315,7 +343,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<RestorePointGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -323,10 +351,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -353,10 +381,10 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new RestorePointGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -375,7 +403,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<RestorePointGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -384,8 +412,8 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -413,8 +441,8 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new RestorePointGroup(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

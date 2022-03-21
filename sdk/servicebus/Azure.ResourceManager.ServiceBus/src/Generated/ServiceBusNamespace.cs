@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _serviceBusNamespaceNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serviceBusNamespaceNamespacesApiVersion);
-            _serviceBusNamespaceNamespacesRestClient = new NamespacesRestOperations(_serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusNamespaceNamespacesApiVersion);
+            _serviceBusNamespaceNamespacesRestClient = new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusNamespaceNamespacesApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", DisasterRecovery.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DisasterRecovery.ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
-            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -104,42 +104,206 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a description for the specified Private Endpoint Connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<PrivateEndpointConnection>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a description for the specified Private Endpoint Connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<PrivateEndpointConnection> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DisasterRecoveries in the DisasterRecovery. </summary>
         /// <returns> An object representing collection of DisasterRecoveries and their operations over a DisasterRecovery. </returns>
         public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
-            return new DisasterRecoveryCollection(Client, Id);
+            return GetCachedClient(Client => new DisasterRecoveryCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public virtual async Task<Response<DisasterRecovery>> GetDisasterRecoveryAsync(string @alias, CancellationToken cancellationToken = default)
+        {
+            return await GetDisasterRecoveries().GetAsync(alias, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
+        /// Operation Id: DisasterRecoveryConfigs_Get
+        /// </summary>
+        /// <param name="alias"> The Disaster Recovery configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        public virtual Response<DisasterRecovery> GetDisasterRecovery(string @alias, CancellationToken cancellationToken = default)
+        {
+            return GetDisasterRecoveries().Get(alias, cancellationToken);
         }
 
         /// <summary> Gets a collection of NamespaceAuthorizationRules in the NamespaceAuthorizationRule. </summary>
         /// <returns> An object representing collection of NamespaceAuthorizationRules and their operations over a NamespaceAuthorizationRule. </returns>
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
-            return new NamespaceAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceAuthorizationRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an authorization rule for a namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// Operation Id: NamespaceAuthorizationRules_Get
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual async Task<Response<NamespaceAuthorizationRule>> GetNamespaceAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetNamespaceAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an authorization rule for a namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
+        /// Operation Id: NamespaceAuthorizationRules_Get
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual Response<NamespaceAuthorizationRule> GetNamespaceAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MigrationConfigProperties in the MigrationConfigProperties. </summary>
         /// <returns> An object representing collection of MigrationConfigProperties and their operations over a MigrationConfigProperties. </returns>
         public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
         {
-            return new MigrationConfigPropertiesCollection(Client, Id);
+            return GetCachedClient(Client => new MigrationConfigPropertiesCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves Migration Config
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// Operation Id: MigrationConfigs_Get
+        /// </summary>
+        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MigrationConfigProperties>> GetMigrationConfigPropertiesAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        {
+            return await GetMigrationConfigProperties().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves Migration Config
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
+        /// Operation Id: MigrationConfigs_Get
+        /// </summary>
+        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MigrationConfigProperties> GetMigrationConfigProperties(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        {
+            return GetMigrationConfigProperties().Get(configName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceBusQueues in the ServiceBusQueue. </summary>
         /// <returns> An object representing collection of ServiceBusQueues and their operations over a ServiceBusQueue. </returns>
         public virtual ServiceBusQueueCollection GetServiceBusQueues()
         {
-            return new ServiceBusQueueCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusQueueCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Returns a description for the specified queue.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
+        /// <param name="queueName"> The queue name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual async Task<Response<ServiceBusQueue>> GetServiceBusQueueAsync(string queueName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceBusQueues().GetAsync(queueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a description for the specified queue.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}
+        /// Operation Id: Queues_Get
+        /// </summary>
+        /// <param name="queueName"> The queue name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
+        public virtual Response<ServiceBusQueue> GetServiceBusQueue(string queueName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceBusQueues().Get(queueName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceBusTopics in the ServiceBusTopic. </summary>
         /// <returns> An object representing collection of ServiceBusTopics and their operations over a ServiceBusTopic. </returns>
         public virtual ServiceBusTopicCollection GetServiceBusTopics()
         {
-            return new ServiceBusTopicCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceBusTopicCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Returns a description for the specified topic.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// Operation Id: Topics_Get
+        /// </summary>
+        /// <param name="topicName"> The topic name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual async Task<Response<ServiceBusTopic>> GetServiceBusTopicAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceBusTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a description for the specified topic.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}
+        /// Operation Id: Topics_Get
+        /// </summary>
+        /// <param name="topicName"> The topic name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual Response<ServiceBusTopic> GetServiceBusTopic(string topicName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceBusTopics().Get(topicName, cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +312,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: Namespaces_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServiceBusNamespace>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusNamespace>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespace.Get");
             scope.Start();
@@ -156,7 +320,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serviceBusNamespaceNamespacesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceBusNamespace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -180,7 +344,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serviceBusNamespaceNamespacesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServiceBusNamespace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,9 +359,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespace.Delete");
             scope.Start();
@@ -205,7 +369,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _serviceBusNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ServiceBusArmOperation(_serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -221,9 +385,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespace.Delete");
             scope.Start();
@@ -231,7 +395,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _serviceBusNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ServiceBusArmOperation(_serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -247,18 +411,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusNamespace>> UpdateAsync(ServiceBusNamespaceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<ServiceBusNamespace>> UpdateAsync(PatchableServiceBusNamespaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespace.Update");
             scope.Start();
             try
             {
-                var response = await _serviceBusNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceBusNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceBusNamespace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,18 +437,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Update
         /// </summary>
-        /// <param name="options"> Parameters supplied to update a namespace resource. </param>
+        /// <param name="data"> Parameters supplied to update a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<ServiceBusNamespace> Update(ServiceBusNamespaceUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<ServiceBusNamespace> Update(PatchableServiceBusNamespaceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespace.Update");
             scope.Start();
             try
             {
-                var response = _serviceBusNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
+                var response = _serviceBusNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new ServiceBusNamespace(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,7 +520,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckDisasterRecoveryNameAvailabilityAsync(CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -409,7 +573,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusNamespace>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusNamespace>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -419,8 +583,8 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceBusNamespace(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -450,8 +614,8 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ServiceBusNamespace(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -470,7 +634,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusNamespace>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusNamespace>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -478,10 +642,10 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceBusNamespace(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -508,10 +672,10 @@ namespace Azure.ResourceManager.ServiceBus
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ServiceBusNamespace(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -530,7 +694,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ServiceBusNamespace>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusNamespace>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -539,8 +703,8 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _serviceBusNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceBusNamespace(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -568,8 +732,8 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _serviceBusNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ServiceBusNamespace(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BastionShareableLink. </summary>
         /// <param name="vm"> Reference of the virtual machine resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vm"/> is null. </exception>
-        internal BastionShareableLink(VM vm)
+        internal BastionShareableLink(Vm vm)
         {
             if (vm == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Reference of the virtual machine resource. </summary>
-        public VM Vm { get; }
+        public Vm Vm { get; }
         /// <summary> The unique Bastion Shareable Link to the virtual machine. </summary>
         public string Bsl { get; }
         /// <summary> The time when the link was created. </summary>

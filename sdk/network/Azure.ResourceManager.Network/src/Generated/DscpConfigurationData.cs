@@ -12,14 +12,14 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the DscpConfiguration data model. </summary>
-    public partial class DscpConfigurationData : Resource
+    public partial class DscpConfigurationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of DscpConfigurationData. </summary>
         public DscpConfigurationData()
         {
             Markings = new ChangeTrackingList<int>();
-            SourceIpRanges = new ChangeTrackingList<QosIpRange>();
-            DestinationIpRanges = new ChangeTrackingList<QosIpRange>();
+            SourceIPRanges = new ChangeTrackingList<QosIPRange>();
+            DestinationIPRanges = new ChangeTrackingList<QosIPRange>();
             SourcePortRanges = new ChangeTrackingList<QosPortRange>();
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
             AssociatedNetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of DscpConfigurationData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
-        /// <param name="sourceIpRanges"> Source IP ranges. </param>
-        /// <param name="destinationIpRanges"> Destination IP ranges. </param>
+        /// <param name="sourceIPRanges"> Source IP ranges. </param>
+        /// <param name="destinationIPRanges"> Destination IP ranges. </param>
         /// <param name="sourcePortRanges"> Sources port ranges. </param>
         /// <param name="destinationPortRanges"> Destination port ranges. </param>
         /// <param name="protocol"> RNM supported protocol types. </param>
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedNetworkInterfaces"> Associated Network Interfaces to the DSCP Configuration. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
-        internal DscpConfigurationData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IList<int> markings, IList<QosIpRange> sourceIpRanges, IList<QosIpRange> destinationIpRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal DscpConfigurationData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             Markings = markings;
-            SourceIpRanges = sourceIpRanges;
-            DestinationIpRanges = destinationIpRanges;
+            SourceIPRanges = sourceIPRanges;
+            DestinationIPRanges = destinationIPRanges;
             SourcePortRanges = sourcePortRanges;
             DestinationPortRanges = destinationPortRanges;
             Protocol = protocol;
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of markings to be used in the configuration. </summary>
         public IList<int> Markings { get; }
         /// <summary> Source IP ranges. </summary>
-        public IList<QosIpRange> SourceIpRanges { get; }
+        public IList<QosIPRange> SourceIPRanges { get; }
         /// <summary> Destination IP ranges. </summary>
-        public IList<QosIpRange> DestinationIpRanges { get; }
+        public IList<QosIPRange> DestinationIPRanges { get; }
         /// <summary> Sources port ranges. </summary>
         public IList<QosPortRange> SourcePortRanges { get; }
         /// <summary> Destination port ranges. </summary>

@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.AppService
         {
             _webSiteWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string webSiteWebAppsApiVersion);
-            _webSiteWebAppsRestClient = new WebAppsRestOperations(_webSiteWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteWebAppsApiVersion);
+            _webSiteWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webSiteWebAppsApiVersion);
             _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _recommendationsRestClient = new RecommendationsRestOperations(_recommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _recommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendation.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteRecommendation.ResourceType, out string siteRecommendationRecommendationsApiVersion);
-            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_siteRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,42 +99,222 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteDetectors and their operations over a SiteDetector. </returns>
         public virtual SiteDetectorCollection GetSiteDetectors()
         {
-            return new SiteDetectorCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDetectorCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get site detector response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<Response<SiteDetector>> GetSiteDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get site detector response
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorResponse
+        /// </summary>
+        /// <param name="detectorName"> Detector Resource Name. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual Response<SiteDetector> GetSiteDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
         /// <summary> Gets a collection of SitePrivateEndpointConnections in the SitePrivateEndpointConnection. </summary>
         /// <returns> An object representing collection of SitePrivateEndpointConnections and their operations over a SitePrivateEndpointConnection. </returns>
         public virtual SitePrivateEndpointConnectionCollection GetSitePrivateEndpointConnections()
         {
-            return new SitePrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SitePrivateEndpointConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a private endpoint connection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: WebApps_GetPrivateEndpointConnection
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<SitePrivateEndpointConnection>> GetSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetSitePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a private endpoint connection
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: WebApps_GetPrivateEndpointConnection
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<SitePrivateEndpointConnection> GetSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteHybridConnectionNamespaceRelays in the SiteHybridConnectionNamespaceRelay. </summary>
         /// <returns> An object representing collection of SiteHybridConnectionNamespaceRelays and their operations over a SiteHybridConnectionNamespaceRelay. </returns>
         public virtual SiteHybridConnectionNamespaceRelayCollection GetSiteHybridConnectionNamespaceRelays()
         {
-            return new SiteHybridConnectionNamespaceRelayCollection(Client, Id);
+            return GetCachedClient(Client => new SiteHybridConnectionNamespaceRelayCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
+        /// Operation Id: WebApps_GetHybridConnection
+        /// </summary>
+        /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
+        /// <param name="relayName"> The relay name for this hybrid connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        public virtual async Task<Response<SiteHybridConnectionNamespaceRelay>> GetSiteHybridConnectionNamespaceRelayAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteHybridConnectionNamespaceRelays().GetAsync(namespaceName, relayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
+        /// Operation Id: WebApps_GetHybridConnection
+        /// </summary>
+        /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
+        /// <param name="relayName"> The relay name for this hybrid connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
+        public virtual Response<SiteHybridConnectionNamespaceRelay> GetSiteHybridConnectionNamespaceRelay(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteVirtualNetworkConnections in the SiteVirtualNetworkConnection. </summary>
         /// <returns> An object representing collection of SiteVirtualNetworkConnections and their operations over a SiteVirtualNetworkConnection. </returns>
         public virtual SiteVirtualNetworkConnectionCollection GetSiteVirtualNetworkConnections()
         {
-            return new SiteVirtualNetworkConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteVirtualNetworkConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_GetVnetConnection
+        /// </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public virtual async Task<Response<SiteVirtualNetworkConnection>> GetSiteVirtualNetworkConnectionAsync(string vnetName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteVirtualNetworkConnections().GetAsync(vnetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a virtual network the app (or deployment slot) is connected to by name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
+        /// Operation Id: WebApps_GetVnetConnection
+        /// </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public virtual Response<SiteVirtualNetworkConnection> GetSiteVirtualNetworkConnection(string vnetName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteVirtualNetworkConnections().Get(vnetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteDiagnostics in the SiteDiagnostic. </summary>
         /// <returns> An object representing collection of SiteDiagnostics and their operations over a SiteDiagnostic. </returns>
         public virtual SiteDiagnosticCollection GetSiteDiagnostics()
         {
-            return new SiteDiagnosticCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDiagnosticCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
+        /// Operation Id: Diagnostics_GetSiteDiagnosticCategory
+        /// </summary>
+        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        public virtual async Task<Response<SiteDiagnostic>> GetSiteDiagnosticAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDiagnostics().GetAsync(diagnosticCategory, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get Diagnostics Category
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}
+        /// Operation Id: Diagnostics_GetSiteDiagnosticCategory
+        /// </summary>
+        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
+        public virtual Response<SiteDiagnostic> GetSiteDiagnostic(string diagnosticCategory, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDiagnostics().Get(diagnosticCategory, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteRecommendations in the SiteRecommendation. </summary>
         /// <returns> An object representing collection of SiteRecommendations and their operations over a SiteRecommendation. </returns>
         public virtual SiteRecommendationCollection GetSiteRecommendations()
         {
-            return new SiteRecommendationCollection(Client, Id);
+            return GetCachedClient(Client => new SiteRecommendationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get a recommendation rule for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
+        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// </summary>
+        /// <param name="name"> Name of the recommendation. </param>
+        /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<SiteRecommendation>> GetSiteRecommendationAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteRecommendations().GetAsync(name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a recommendation rule for an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}
+        /// Operation Id: Recommendations_GetRuleDetailsByWebApp
+        /// </summary>
+        /// <param name="name"> Name of the recommendation. </param>
+        /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<SiteRecommendation> GetSiteRecommendation(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        {
+            return GetSiteRecommendations().Get(name, updateSeen, recommendationId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SiteResourceHealthMetadata along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -148,14 +328,70 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlots and their operations over a SiteSlot. </returns>
         public virtual SiteSlotCollection GetSiteSlots()
         {
-            return new SiteSlotCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
+        /// Operation Id: WebApps_GetSlot
+        /// </summary>
+        /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        public virtual async Task<Response<SiteSlot>> GetSiteSlotAsync(string slot, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlots().GetAsync(slot, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}
+        /// Operation Id: WebApps_GetSlot
+        /// </summary>
+        /// <param name="slot"> Name of the deployment slot. By default, this API returns the production slot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
+        public virtual Response<SiteSlot> GetSiteSlot(string slot, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlots().Get(slot, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteBackups in the SiteBackup. </summary>
         /// <returns> An object representing collection of SiteBackups and their operations over a SiteBackup. </returns>
         public virtual SiteBackupCollection GetSiteBackups()
         {
-            return new SiteBackupCollection(Client, Id);
+            return GetCachedClient(Client => new SiteBackupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a backup of an app by its ID.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
+        /// Operation Id: WebApps_GetBackupStatus
+        /// </summary>
+        /// <param name="backupId"> ID of the backup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        public virtual async Task<Response<SiteBackup>> GetSiteBackupAsync(string backupId, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteBackups().GetAsync(backupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a backup of an app by its ID.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}
+        /// Operation Id: WebApps_GetBackupStatus
+        /// </summary>
+        /// <param name="backupId"> ID of the backup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        public virtual Response<SiteBackup> GetSiteBackup(string backupId, CancellationToken cancellationToken = default)
+        {
+            return GetSiteBackups().Get(backupId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a BasicPublishingCredentialsPolicyFtp along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -176,14 +412,70 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteConfigAppsettings and their operations over a SiteConfigAppsetting. </returns>
         public virtual SiteConfigAppsettingCollection GetSiteConfigAppsettings()
         {
-            return new SiteConfigAppsettingCollection(Client, Id);
+            return GetCachedClient(Client => new SiteConfigAppsettingCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
+        /// Operation Id: WebApps_GetAppSettingKeyVaultReference
+        /// </summary>
+        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        public virtual async Task<Response<SiteConfigAppsetting>> GetSiteConfigAppsettingAsync(string appSettingKey, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteConfigAppsettings().GetAsync(appSettingKey, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey}
+        /// Operation Id: WebApps_GetAppSettingKeyVaultReference
+        /// </summary>
+        /// <param name="appSettingKey"> App Setting key name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="appSettingKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="appSettingKey"/> is null. </exception>
+        public virtual Response<SiteConfigAppsetting> GetSiteConfigAppsetting(string appSettingKey, CancellationToken cancellationToken = default)
+        {
+            return GetSiteConfigAppsettings().Get(appSettingKey, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteConfigConnectionStrings in the SiteConfigConnectionString. </summary>
         /// <returns> An object representing collection of SiteConfigConnectionStrings and their operations over a SiteConfigConnectionString. </returns>
         public virtual SiteConfigConnectionStringCollection GetSiteConfigConnectionStrings()
         {
-            return new SiteConfigConnectionStringCollection(Client, Id);
+            return GetCachedClient(Client => new SiteConfigConnectionStringCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
+        /// </summary>
+        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        public virtual async Task<Response<SiteConfigConnectionString>> GetSiteConfigConnectionStringAsync(string connectionStringKey, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteConfigConnectionStrings().GetAsync(connectionStringKey, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the config reference and status of an app
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey}
+        /// Operation Id: WebApps_GetSiteConnectionStringKeyVaultReference
+        /// </summary>
+        /// <param name="connectionStringKey"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionStringKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionStringKey"/> is null. </exception>
+        public virtual Response<SiteConfigConnectionString> GetSiteConfigConnectionString(string connectionStringKey, CancellationToken cancellationToken = default)
+        {
+            return GetSiteConfigConnectionStrings().Get(connectionStringKey, cancellationToken);
         }
 
         /// <summary> Gets an object representing a LogsSiteConfig along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -211,21 +503,105 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteContinuousWebJobs and their operations over a SiteContinuousWebJob. </returns>
         public virtual SiteContinuousWebJobCollection GetSiteContinuousWebJobs()
         {
-            return new SiteContinuousWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteContinuousWebJobCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
+        /// Operation Id: WebApps_GetContinuousWebJob
+        /// </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual async Task<Response<SiteContinuousWebJob>> GetSiteContinuousWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteContinuousWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a continuous web job by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}
+        /// Operation Id: WebApps_GetContinuousWebJob
+        /// </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<SiteContinuousWebJob> GetSiteContinuousWebJob(string webJobName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteContinuousWebJobs().Get(webJobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteDeployments in the SiteDeployment. </summary>
         /// <returns> An object representing collection of SiteDeployments and their operations over a SiteDeployment. </returns>
         public virtual SiteDeploymentCollection GetSiteDeployments()
         {
-            return new SiteDeploymentCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDeploymentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
+        /// Operation Id: WebApps_GetDeployment
+        /// </summary>
+        /// <param name="id"> Deployment ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual async Task<Response<SiteDeployment>> GetSiteDeploymentAsync(string id, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDeployments().GetAsync(id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a deployment by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}
+        /// Operation Id: WebApps_GetDeployment
+        /// </summary>
+        /// <param name="id"> Deployment ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual Response<SiteDeployment> GetSiteDeployment(string id, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDeployments().Get(id, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteDomainOwnershipIdentifiers in the SiteDomainOwnershipIdentifier. </summary>
         /// <returns> An object representing collection of SiteDomainOwnershipIdentifiers and their operations over a SiteDomainOwnershipIdentifier. </returns>
         public virtual SiteDomainOwnershipIdentifierCollection GetSiteDomainOwnershipIdentifiers()
         {
-            return new SiteDomainOwnershipIdentifierCollection(Client, Id);
+            return GetCachedClient(Client => new SiteDomainOwnershipIdentifierCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get domain ownership identifier for web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifier
+        /// </summary>
+        /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        public virtual async Task<Response<SiteDomainOwnershipIdentifier>> GetSiteDomainOwnershipIdentifierAsync(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteDomainOwnershipIdentifiers().GetAsync(domainOwnershipIdentifierName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get domain ownership identifier for web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifier
+        /// </summary>
+        /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
+        public virtual Response<SiteDomainOwnershipIdentifier> GetSiteDomainOwnershipIdentifier(string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteDomainOwnershipIdentifiers().Get(domainOwnershipIdentifierName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SiteExtension along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -239,35 +615,175 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteFunctions and their operations over a SiteFunction. </returns>
         public virtual SiteFunctionCollection GetSiteFunctions()
         {
-            return new SiteFunctionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteFunctionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual async Task<Response<SiteFunction>> GetSiteFunctionAsync(string functionName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get function information by its ID for web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}
+        /// Operation Id: WebApps_GetFunction
+        /// </summary>
+        /// <param name="functionName"> Function name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
+        public virtual Response<SiteFunction> GetSiteFunction(string functionName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteFunctions().Get(functionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteHostNameBindings in the SiteHostNameBinding. </summary>
         /// <returns> An object representing collection of SiteHostNameBindings and their operations over a SiteHostNameBinding. </returns>
         public virtual SiteHostNameBindingCollection GetSiteHostNameBindings()
         {
-            return new SiteHostNameBindingCollection(Client, Id);
+            return GetCachedClient(Client => new SiteHostNameBindingCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get the named hostname binding for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_GetHostNameBinding
+        /// </summary>
+        /// <param name="hostName"> Hostname in the hostname binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual async Task<Response<SiteHostNameBinding>> GetSiteHostNameBindingAsync(string hostName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteHostNameBindings().GetAsync(hostName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get the named hostname binding for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings/{hostName}
+        /// Operation Id: WebApps_GetHostNameBinding
+        /// </summary>
+        /// <param name="hostName"> Hostname in the hostname binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="hostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
+        public virtual Response<SiteHostNameBinding> GetSiteHostNameBinding(string hostName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteHostNameBindings().Get(hostName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteHybridConnections in the SiteHybridConnection. </summary>
         /// <returns> An object representing collection of SiteHybridConnections and their operations over a SiteHybridConnection. </returns>
         public virtual SiteHybridConnectionCollection GetSiteHybridConnections()
         {
-            return new SiteHybridConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteHybridConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a hybrid connection configuration by its name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
+        /// Operation Id: WebApps_GetRelayServiceConnection
+        /// </summary>
+        /// <param name="entityName"> Name of the hybrid connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        public virtual async Task<Response<SiteHybridConnection>> GetSiteHybridConnectionAsync(string entityName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteHybridConnections().GetAsync(entityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a hybrid connection configuration by its name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}
+        /// Operation Id: WebApps_GetRelayServiceConnection
+        /// </summary>
+        /// <param name="entityName"> Name of the hybrid connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="entityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityName"/> is null. </exception>
+        public virtual Response<SiteHybridConnection> GetSiteHybridConnection(string entityName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteHybridConnections().Get(entityName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteInstances in the SiteInstance. </summary>
         /// <returns> An object representing collection of SiteInstances and their operations over a SiteInstance. </returns>
         public virtual SiteInstanceCollection GetSiteInstances()
         {
-            return new SiteInstanceCollection(Client, Id);
+            return GetCachedClient(Client => new SiteInstanceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets all scale-out instances of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
+        /// Operation Id: WebApps_GetInstanceInfo
+        /// </summary>
+        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual async Task<Response<SiteInstance>> GetSiteInstanceAsync(string instanceId, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteInstances().GetAsync(instanceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets all scale-out instances of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}
+        /// Operation Id: WebApps_GetInstanceInfo
+        /// </summary>
+        /// <param name="instanceId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
+        public virtual Response<SiteInstance> GetSiteInstance(string instanceId, CancellationToken cancellationToken = default)
+        {
+            return GetSiteInstances().Get(instanceId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteProcesses in the SiteProcess. </summary>
         /// <returns> An object representing collection of SiteProcesses and their operations over a SiteProcess. </returns>
         public virtual SiteProcessCollection GetSiteProcesses()
         {
-            return new SiteProcessCollection(Client, Id);
+            return GetCachedClient(Client => new SiteProcessCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}
+        /// Operation Id: WebApps_GetProcess
+        /// </summary>
+        /// <param name="processId"> PID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        public virtual async Task<Response<SiteProcess>> GetSiteProcessAsync(string processId, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteProcesses().GetAsync(processId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}
+        /// Operation Id: WebApps_GetProcess
+        /// </summary>
+        /// <param name="processId"> PID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        public virtual Response<SiteProcess> GetSiteProcess(string processId, CancellationToken cancellationToken = default)
+        {
+            return GetSiteProcesses().Get(processId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SiteNetworkConfig along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -281,7 +797,35 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SitePremierAddons and their operations over a SitePremierAddon. </returns>
         public virtual SitePremierAddonCollection GetSitePremierAddons()
         {
-            return new SitePremierAddonCollection(Client, Id);
+            return GetCachedClient(Client => new SitePremierAddonCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a named add-on of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
+        /// <param name="premierAddOnName"> Add-on name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        public virtual async Task<Response<SitePremierAddon>> GetSitePremierAddonAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        {
+            return await GetSitePremierAddons().GetAsync(premierAddOnName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a named add-on of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
+        /// Operation Id: WebApps_GetPremierAddOn
+        /// </summary>
+        /// <param name="premierAddOnName"> Add-on name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
+        public virtual Response<SitePremierAddon> GetSitePremierAddon(string premierAddOnName, CancellationToken cancellationToken = default)
+        {
+            return GetSitePremierAddons().Get(premierAddOnName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SitePrivateAccess along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -295,14 +839,70 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SitePublicCertificates and their operations over a SitePublicCertificate. </returns>
         public virtual SitePublicCertificateCollection GetSitePublicCertificates()
         {
-            return new SitePublicCertificateCollection(Client, Id);
+            return GetCachedClient(Client => new SitePublicCertificateCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get the named public certificate for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
+        /// <param name="publicCertificateName"> Public certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        public virtual async Task<Response<SitePublicCertificate>> GetSitePublicCertificateAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        {
+            return await GetSitePublicCertificates().GetAsync(publicCertificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get the named public certificate for an app (or deployment slot, if specified).
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName}
+        /// Operation Id: WebApps_GetPublicCertificate
+        /// </summary>
+        /// <param name="publicCertificateName"> Public certificate name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
+        public virtual Response<SitePublicCertificate> GetSitePublicCertificate(string publicCertificateName, CancellationToken cancellationToken = default)
+        {
+            return GetSitePublicCertificates().Get(publicCertificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteSiteextensions in the SiteSiteextension. </summary>
         /// <returns> An object representing collection of SiteSiteextensions and their operations over a SiteSiteextension. </returns>
         public virtual SiteSiteextensionCollection GetSiteSiteextensions()
         {
-            return new SiteSiteextensionCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSiteextensionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual async Task<Response<SiteSiteextension>> GetSiteSiteextensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSiteextensions().GetAsync(siteExtensionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        public virtual Response<SiteSiteextension> GetSiteSiteextension(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSiteextensions().Get(siteExtensionId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a SiteSourceControl along with the instance operations that can be performed on it in the WebSite. </summary>
@@ -316,14 +916,70 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotTriggeredWebJobs and their operations over a SiteSlotTriggeredWebJob. </returns>
         public virtual SiteSlotTriggeredWebJobCollection GetSiteSlotTriggeredWebJobs()
         {
-            return new SiteSlotTriggeredWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteSlotTriggeredWebJobCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets a triggered web job by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// Operation Id: WebApps_GetTriggeredWebJob
+        /// </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotTriggeredWebJob>> GetSiteSlotTriggeredWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteSlotTriggeredWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets a triggered web job by its ID for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}
+        /// Operation Id: WebApps_GetTriggeredWebJob
+        /// </summary>
+        /// <param name="webJobName"> Name of Web Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<SiteSlotTriggeredWebJob> GetSiteSlotTriggeredWebJob(string webJobName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteSlotTriggeredWebJobs().Get(webJobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteWebJobs in the SiteWebJob. </summary>
         /// <returns> An object representing collection of SiteWebJobs and their operations over a SiteWebJob. </returns>
         public virtual SiteWebJobCollection GetSiteWebJobs()
         {
-            return new SiteWebJobCollection(Client, Id);
+            return GetCachedClient(Client => new SiteWebJobCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Get webjob information for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
+        /// Operation Id: WebApps_GetWebJob
+        /// </summary>
+        /// <param name="webJobName"> Name of the web job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual async Task<Response<SiteWebJob>> GetSiteWebJobAsync(string webJobName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteWebJobs().GetAsync(webJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get webjob information for an app, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}
+        /// Operation Id: WebApps_GetWebJob
+        /// </summary>
+        /// <param name="webJobName"> Name of the web job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="webJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
+        public virtual Response<SiteWebJob> GetSiteWebJob(string webJobName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteWebJobs().Get(webJobName, cancellationToken);
         }
 
         /// <summary>
@@ -332,7 +988,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<WebSite>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Get");
             scope.Start();
@@ -340,7 +996,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webSiteWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,7 +1020,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _webSiteWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,11 +1035,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
@@ -391,7 +1047,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -407,11 +1063,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteMetrics"> If true, web app metrics are also deleted. </param>
         /// <param name="deleteEmptyServerFarm"> Specify false if you want to keep empty App Service plan. By default, empty App Service plan is deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Delete");
             scope.Start();
@@ -419,7 +1075,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deleteMetrics, deleteEmptyServerFarm, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -438,7 +1094,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteEnvelope"> A JSON representation of the app properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteEnvelope"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> UpdateAsync(SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> UpdateAsync(SitePatchResource siteEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteEnvelope, nameof(siteEnvelope));
 
@@ -664,7 +1320,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_DisableAllForWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DisableAllForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableAllForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.DisableAllForWebAppRecommendation");
             scope.Start();
@@ -708,7 +1364,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Recommendations_ResetAllFiltersForWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ResetAllFiltersForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllFiltersForWebAppRecommendationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _recommendationsClientDiagnostics.CreateScope("WebSite.ResetAllFiltersForWebAppRecommendation");
             scope.Start();
@@ -753,7 +1409,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="hostName"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string hostName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string hostName = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.AnalyzeCustomHostname");
             scope.Start();
@@ -800,7 +1456,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public async virtual Task<Response> ApplySlotConfigToProductionAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ApplySlotConfigToProductionAsync(CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
@@ -852,7 +1508,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<SiteBackup>> BackupAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteBackup>> BackupAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -988,7 +1644,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="appSettings"> Application settings of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
-        public async virtual Task<Response<StringDictionary>> UpdateApplicationSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> UpdateApplicationSettingsAsync(StringDictionary appSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(appSettings, nameof(appSettings));
 
@@ -1038,7 +1694,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListApplicationSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StringDictionary>> GetApplicationSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> GetApplicationSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetApplicationSettings");
             scope.Start();
@@ -1084,7 +1740,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettings"/> is null. </exception>
-        public async virtual Task<Response<SiteAuthSettings>> UpdateAuthSettingsAsync(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettings>> UpdateAuthSettingsAsync(SiteAuthSettings siteAuthSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteAuthSettings, nameof(siteAuthSettings));
 
@@ -1134,7 +1790,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteAuthSettings>> GetAuthSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettings>> GetAuthSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettings");
             scope.Start();
@@ -1180,7 +1836,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteAuthSettingsV2"/> is null. </exception>
-        public async virtual Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(SiteAuthSettingsV2 siteAuthSettingsV2, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteAuthSettingsV2, nameof(siteAuthSettingsV2));
 
@@ -1230,7 +1886,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetAuthSettingsV2
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteAuthSettingsV2>> GetAuthSettingsV2Async(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAuthSettingsV2");
             scope.Start();
@@ -1276,7 +1932,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccounts"/> is null. </exception>
-        public async virtual Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsAsync(AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureStoragePropertyDictionaryResource>> UpdateAzureStorageAccountsAsync(AzureStoragePropertyDictionaryResource azureStorageAccounts, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(azureStorageAccounts, nameof(azureStorageAccounts));
 
@@ -1326,7 +1982,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListAzureStorageAccounts
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AzureStoragePropertyDictionaryResource>> GetAzureStorageAccountsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureStoragePropertyDictionaryResource>> GetAzureStorageAccountsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetAzureStorageAccounts");
             scope.Start();
@@ -1372,7 +2028,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<BackupRequest>> UpdateBackupConfigurationAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupRequest>> UpdateBackupConfigurationAsync(BackupRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -1422,7 +2078,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_DeleteBackupConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DeleteBackupConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteBackupConfigurationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.DeleteBackupConfiguration");
             scope.Start();
@@ -1466,7 +2122,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetBackupConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<BackupRequest>> GetBackupConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupRequest>> GetBackupConfigurationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetBackupConfiguration");
             scope.Start();
@@ -1512,7 +2168,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionStrings"/> is null. </exception>
-        public async virtual Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsAsync(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionStringDictionary>> UpdateConnectionStringsAsync(ConnectionStringDictionary connectionStrings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(connectionStrings, nameof(connectionStrings));
 
@@ -1562,7 +2218,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListConnectionStrings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ConnectionStringDictionary>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConnectionStringDictionary>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetConnectionStrings");
             scope.Start();
@@ -1608,7 +2264,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
-        public async virtual Task<Response<StringDictionary>> UpdateMetadataAsync(StringDictionary metadata, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> UpdateMetadataAsync(StringDictionary metadata, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
 
@@ -1658,7 +2314,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListMetadata
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<StringDictionary>> GetMetadataAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StringDictionary>> GetMetadataAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMetadata");
             scope.Start();
@@ -1701,9 +2357,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/publishingcredentials/list
         /// Operation Id: WebApps_ListPublishingCredentials
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<User>> GetPublishingCredentialsAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<User>> GetPublishingCredentialsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
@@ -1711,7 +2367,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.ListPublishingCredentialsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<User>(new UserOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -1727,9 +2383,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/publishingcredentials/list
         /// Operation Id: WebApps_ListPublishingCredentials
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<User> GetPublishingCredentials(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<User> GetPublishingCredentials(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPublishingCredentials");
             scope.Start();
@@ -1737,7 +2393,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.ListPublishingCredentials(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new AppServiceArmOperation<User>(new UserOperationSource(Client), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateListPublishingCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -1756,7 +2412,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="pushSettings"> Push settings associated with web app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pushSettings"/> is null. </exception>
-        public async virtual Task<Response<PushSettings>> UpdateSitePushSettingsAsync(PushSettings pushSettings, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PushSettings>> UpdateSitePushSettingsAsync(PushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(pushSettings, nameof(pushSettings));
 
@@ -1806,7 +2462,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSitePushSettings
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PushSettings>> GetSitePushSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PushSettings>> GetSitePushSettingsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePushSettings");
             scope.Start();
@@ -1850,7 +2506,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetWebSiteContainerLogs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Stream>> GetWebSiteContainerLogsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetWebSiteContainerLogsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetWebSiteContainerLogs");
             scope.Start();
@@ -1894,7 +2550,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetContainerLogsZip
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<Stream>> GetContainerLogsZipAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetContainerLogsZipAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetContainerLogsZip");
             scope.Start();
@@ -1940,7 +2596,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="request"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<Response<RestoreRequest>> DiscoverBackupAsync(RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestoreRequest>> DiscoverBackupAsync(RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -1990,7 +2646,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetFunctionsAdminToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<string>> GetFunctionsAdminTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GetFunctionsAdminTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetFunctionsAdminToken");
             scope.Start();
@@ -2034,7 +2690,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHostKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<HostKeys>> GetHostKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostKeys>> GetHostKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHostKeys");
             scope.Start();
@@ -2078,7 +2734,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSyncStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> GetSyncStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetSyncStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncStatus");
             scope.Start();
@@ -2122,7 +2778,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_SyncFunctions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SyncFunctionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SyncFunctionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctions");
             scope.Start();
@@ -2171,7 +2827,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/>, <paramref name="keyName"/> or <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, KeyInfo key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -2232,7 +2888,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyType"/> or <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyType"/> or <paramref name="keyName"/> is null. </exception>
-        public async virtual Task<Response> DeleteHostSecretAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteHostSecretAsync(string keyType, string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyType, nameof(keyType));
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
@@ -2286,7 +2942,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListHybridConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerfarmHybridConnectionNamespaceRelay>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerfarmHybridConnectionNamespaceRelay>> GetHybridConnectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetHybridConnections");
             scope.Start();
@@ -2330,7 +2986,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListRelayServiceConnections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteHybridConnection>> GetRelayServiceConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteHybridConnection>> GetRelayServiceConnectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetRelayServiceConnections");
             scope.Start();
@@ -2374,7 +3030,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_IsCloneable
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteCloneability>> IsCloneableAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteCloneability>> IsCloneableAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.IsCloneable");
             scope.Start();
@@ -2502,7 +3158,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListSyncFunctionTriggers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<FunctionSecrets>> GetSyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FunctionSecrets>> GetSyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSyncFunctionTriggers");
             scope.Start();
@@ -2545,12 +3201,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migrate
         /// Operation Id: WebApps_MigrateStorage
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionName"> Azure subscription. </param>
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
-        public async virtual Task<ArmOperation<StorageMigrationResponse>> MigrateStorageAsync(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageMigrationResponse>> MigrateStorageAsync(WaitUntil waitUntil, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
             Argument.AssertNotNull(migrationOptions, nameof(migrationOptions));
@@ -2561,7 +3217,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.MigrateStorageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<StorageMigrationResponse>(new StorageMigrationResponseOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -2577,12 +3233,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migrate
         /// Operation Id: WebApps_MigrateStorage
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionName"> Azure subscription. </param>
         /// <param name="migrationOptions"> Migration migrationOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionName"/> or <paramref name="migrationOptions"/> is null. </exception>
-        public virtual ArmOperation<StorageMigrationResponse> MigrateStorage(bool waitForCompletion, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageMigrationResponse> MigrateStorage(WaitUntil waitUntil, string subscriptionName, StorageMigrationOptions migrationOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionName, nameof(subscriptionName));
             Argument.AssertNotNull(migrationOptions, nameof(migrationOptions));
@@ -2593,7 +3249,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.MigrateStorage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions, cancellationToken);
                 var operation = new AppServiceArmOperation<StorageMigrationResponse>(new StorageMigrationResponseOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateStorageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, subscriptionName, migrationOptions).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -2609,11 +3265,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql
         /// Operation Id: WebApps_MigrateMySql
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRequestEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<OperationInformation>> MigrateMySqlAsync(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationInformation>> MigrateMySqlAsync(WaitUntil waitUntil, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(migrationRequestEnvelope, nameof(migrationRequestEnvelope));
 
@@ -2623,7 +3279,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.MigrateMySqlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<OperationInformation>(new OperationInformationOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -2639,11 +3295,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql
         /// Operation Id: WebApps_MigrateMySql
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="migrationRequestEnvelope"> MySql migration options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationRequestEnvelope"/> is null. </exception>
-        public virtual ArmOperation<OperationInformation> MigrateMySql(bool waitForCompletion, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationInformation> MigrateMySql(WaitUntil waitUntil, MigrateMySqlRequest migrationRequestEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(migrationRequestEnvelope, nameof(migrationRequestEnvelope));
 
@@ -2653,7 +3309,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.MigrateMySql(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope, cancellationToken);
                 var operation = new AppServiceArmOperation<OperationInformation>(new OperationInformationOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateMigrateMySqlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationRequestEnvelope).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -2670,7 +3326,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetMigrateMySqlStatus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MigrateMySqlStatus>> GetMigrateMySqlStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrateMySqlStatus>> GetMigrateMySqlStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetMigrateMySqlStatus");
             scope.Start();
@@ -2717,7 +3373,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
-        public async virtual Task<Response<NetworkFeatures>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkFeatures>> GetNetworkFeaturesAsync(string view, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(view, nameof(view));
 
@@ -2835,7 +3491,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<string>> StartWebSiteNetworkTraceAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> StartWebSiteNetworkTraceAsync(int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTrace");
             scope.Start();
@@ -2881,12 +3537,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/startOperation
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperation
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<IList<NetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
@@ -2894,7 +3550,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<IList<NetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -2910,12 +3566,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/startOperation
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperation
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<NetworkTrace>> StartWebSiteNetworkTraceOperation(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<NetworkTrace>> StartWebSiteNetworkTraceOperation(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartWebSiteNetworkTraceOperation");
             scope.Start();
@@ -2923,7 +3579,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.StartWebSiteNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
                 var operation = new AppServiceArmOperation<IList<NetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartWebSiteNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -2940,7 +3596,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StopWebSiteNetworkTrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StopWebSiteNetworkTraceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopWebSiteNetworkTraceAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopWebSiteNetworkTrace");
             scope.Start();
@@ -3176,7 +3832,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GenerateNewSitePublishingPassword
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> GenerateNewSitePublishingPasswordAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GenerateNewSitePublishingPasswordAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GenerateNewSitePublishingPassword");
             scope.Start();
@@ -3306,7 +3962,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSitePhpErrorLogFlag
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetSitePhpErrorLogFlag");
             scope.Start();
@@ -3350,7 +4006,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListPremierAddOns
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SitePremierAddon>> GetPremierAddOnsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitePremierAddon>> GetPremierAddOnsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.GetPremierAddOns");
             scope.Start();
@@ -3450,7 +4106,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publishingProfileOptions"/> is null. </exception>
-        public async virtual Task<Response<Stream>> GetPublishingProfileXmlWithSecretsAsync(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetPublishingProfileXmlWithSecretsAsync(CsmPublishingProfileOptions publishingProfileOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(publishingProfileOptions, nameof(publishingProfileOptions));
 
@@ -3500,7 +4156,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ResetProductionSlotConfig
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> ResetProductionSlotConfigAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetProductionSlotConfigAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.ResetProductionSlotConfig");
             scope.Start();
@@ -3546,7 +4202,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
         /// <param name="synchronous"> Specify true to block until the app is restarted. By default, it is set to false, and the API responds immediately (asynchronous). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RestartAsync(bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestartAsync(bool? softRestart = null, bool? synchronous = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Restart");
             scope.Start();
@@ -3591,11 +4247,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreFromBackupBlob
         /// Operation Id: WebApps_RestoreFromBackupBlob
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreFromBackupBlobAsync(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreFromBackupBlobAsync(WaitUntil waitUntil, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -3605,7 +4261,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.RestoreFromBackupBlobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -3621,11 +4277,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreFromBackupBlob
         /// Operation Id: WebApps_RestoreFromBackupBlob
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="request"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual ArmOperation RestoreFromBackupBlob(bool waitForCompletion, RestoreRequest request, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RestoreFromBackupBlob(WaitUntil waitUntil, RestoreRequest request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
@@ -3635,7 +4291,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.RestoreFromBackupBlob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request, cancellationToken);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromBackupBlobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, request).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -3651,11 +4307,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreFromDeletedApp
         /// Operation Id: WebApps_RestoreFromDeletedApp
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreFromDeletedAppAsync(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreFromDeletedAppAsync(WaitUntil waitUntil, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
@@ -3665,7 +4321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.RestoreFromDeletedAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -3681,11 +4337,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreFromDeletedApp
         /// Operation Id: WebApps_RestoreFromDeletedApp
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Deleted web app restore information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public virtual ArmOperation RestoreFromDeletedApp(bool waitForCompletion, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RestoreFromDeletedApp(WaitUntil waitUntil, DeletedAppRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
@@ -3695,7 +4351,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.RestoreFromDeletedApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreFromDeletedAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -3711,11 +4367,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreSnapshot
         /// Operation Id: WebApps_RestoreSnapshot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public async virtual Task<ArmOperation> RestoreSnapshotAsync(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RestoreSnapshotAsync(WaitUntil waitUntil, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
@@ -3725,7 +4381,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.RestoreSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -3741,11 +4397,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreSnapshot
         /// Operation Id: WebApps_RestoreSnapshot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="restoreRequest"> Snapshot restore settings. Snapshot information can be obtained by calling GetDeletedSites or GetSiteSnapshots API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequest"/> is null. </exception>
-        public virtual ArmOperation RestoreSnapshot(bool waitForCompletion, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RestoreSnapshot(WaitUntil waitUntil, SnapshotRestoreRequest restoreRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(restoreRequest, nameof(restoreRequest));
 
@@ -3755,7 +4411,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.RestoreSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest, cancellationToken);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateRestoreSnapshotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restoreRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -3863,11 +4519,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slotsswap
         /// Operation Id: WebApps_SwapSlotWithProduction
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public async virtual Task<ArmOperation> SwapSlotWithProductionAsync(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> SwapSlotWithProductionAsync(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
@@ -3877,7 +4533,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.SwapSlotWithProductionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -3893,11 +4549,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slotsswap
         /// Operation Id: WebApps_SwapSlotWithProduction
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slotSwapEntity"/> is null. </exception>
-        public virtual ArmOperation SwapSlotWithProduction(bool waitForCompletion, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
+        public virtual ArmOperation SwapSlotWithProduction(WaitUntil waitUntil, CsmSlotEntity slotSwapEntity, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(slotSwapEntity, nameof(slotSwapEntity));
 
@@ -3907,7 +4563,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.SwapSlotWithProduction(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity, cancellationToken);
                 var operation = new AppServiceArmOperation(_webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateSwapSlotWithProductionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, slotSwapEntity).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -4092,7 +4748,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_Start
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StartAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Start");
             scope.Start();
@@ -4135,12 +4791,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/startNetworkTrace
         /// Operation Id: WebApps_StartNetworkTrace
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<IList<NetworkTrace>>> StartNetworkTraceAsync(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<NetworkTrace>>> StartNetworkTraceAsync(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
@@ -4148,7 +4804,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _webSiteWebAppsRestClient.StartNetworkTraceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<IList<NetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -4164,12 +4820,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/startNetworkTrace
         /// Operation Id: WebApps_StartNetworkTrace
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="durationInSeconds"> The duration to keep capturing in seconds. </param>
         /// <param name="maxFrameLength"> The maximum frame length in bytes (Optional). </param>
         /// <param name="sasUrl"> The Blob URL to store capture file. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<NetworkTrace>> StartNetworkTrace(bool waitForCompletion, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<NetworkTrace>> StartNetworkTrace(WaitUntil waitUntil, int? durationInSeconds = null, int? maxFrameLength = null, string sasUrl = null, CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StartNetworkTrace");
             scope.Start();
@@ -4177,7 +4833,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.StartNetworkTrace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl, cancellationToken);
                 var operation = new AppServiceArmOperation<IList<NetworkTrace>>(new IListOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateStartNetworkTraceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, durationInSeconds, maxFrameLength, sasUrl).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -4194,7 +4850,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_Stop
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.Stop");
             scope.Start();
@@ -4238,7 +4894,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StopNetworkTrace
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> StopNetworkTraceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StopNetworkTraceAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.StopNetworkTrace");
             scope.Start();
@@ -4282,7 +4938,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_SyncRepository
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SyncRepositoryAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SyncRepositoryAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncRepository");
             scope.Start();
@@ -4326,7 +4982,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_SyncFunctionTriggers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> SyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SyncFunctionTriggersAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSite.SyncFunctionTriggers");
             scope.Start();
@@ -4459,7 +5115,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -4469,8 +5125,8 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new WebSite(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -4500,8 +5156,8 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new WebSite(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -4520,7 +5176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -4528,10 +5184,10 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new WebSite(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -4558,10 +5214,10 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new WebSite(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -4580,7 +5236,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<WebSite>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSite>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -4589,8 +5245,8 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _webSiteWebAppsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new WebSite(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -4618,8 +5274,8 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _webSiteWebAppsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new WebSite(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

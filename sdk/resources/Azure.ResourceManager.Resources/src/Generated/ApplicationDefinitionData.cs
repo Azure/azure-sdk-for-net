@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of ApplicationDefinitionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicyDefinition lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, type, systemData, tags, location, managedBy, sku)
+        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicyDefinition lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -83,17 +83,54 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application definition package file Uri. Use this element. </summary>
         public Uri PackageFileUri { get; set; }
         /// <summary> The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string. </summary>
-        public object MainTemplate { get; set; }
+        public BinaryData MainTemplate { get; set; }
         /// <summary> The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string. </summary>
-        public object CreateUiDefinition { get; set; }
+        public BinaryData CreateUiDefinition { get; set; }
         /// <summary> The managed application notification policy. </summary>
-        public ApplicationNotificationPolicy NotificationPolicy { get; set; }
+        internal ApplicationNotificationPolicy NotificationPolicy { get; set; }
+        /// <summary> The managed application notification endpoint. </summary>
+        public IList<ApplicationNotificationEndpoint> NotificationEndpoints
+        {
+            get => NotificationPolicy is null ? default : NotificationPolicy.NotificationEndpoints;
+            set => NotificationPolicy = new ApplicationNotificationPolicy(value);
+        }
+
         /// <summary> The managed application locking policy. </summary>
-        public ApplicationPackageLockingPolicyDefinition LockingPolicy { get; set; }
+        internal ApplicationPackageLockingPolicyDefinition LockingPolicy { get; set; }
+        /// <summary> The deny assignment excluded actions. </summary>
+        public IList<string> LockingAllowedActions
+        {
+            get
+            {
+                if (LockingPolicy is null)
+                    LockingPolicy = new ApplicationPackageLockingPolicyDefinition();
+                return LockingPolicy.AllowedActions;
+            }
+        }
+
         /// <summary> The managed application deployment policy. </summary>
-        public ApplicationDeploymentPolicy DeploymentPolicy { get; set; }
+        internal ApplicationDeploymentPolicy DeploymentPolicy { get; set; }
+        /// <summary> The managed application deployment mode. </summary>
+        public DeploymentMode DeploymentMode
+        {
+            get => DeploymentPolicy is null ? default : DeploymentPolicy.DeploymentMode;
+            set => DeploymentPolicy = new ApplicationDeploymentPolicy(value);
+        }
+
         /// <summary> The managed application management policy that determines publisher&apos;s access to the managed resource group. </summary>
-        public ApplicationManagementPolicy ManagementPolicy { get; set; }
+        internal ApplicationManagementPolicy ManagementPolicy { get; set; }
+        /// <summary> The managed application management mode. </summary>
+        public ApplicationManagementMode? ManagementMode
+        {
+            get => ManagementPolicy is null ? default : ManagementPolicy.Mode;
+            set
+            {
+                if (ManagementPolicy is null)
+                    ManagementPolicy = new ApplicationManagementPolicy();
+                ManagementPolicy.Mode = value;
+            }
+        }
+
         /// <summary> The managed application provider policies. </summary>
         public IList<ApplicationPolicy> Policies { get; }
     }

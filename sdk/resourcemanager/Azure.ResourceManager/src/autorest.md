@@ -39,6 +39,7 @@ directive:
   - remove-model: "locationData"
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
+  - remove-model: "ErrorResponse"
   - from: types.json
     where: $.definitions['Resource']
     transform: >
@@ -73,6 +74,9 @@ directive:
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+  - from: managedidentity.json
+    where: $.definitions.SystemAssignedServiceIdentity.properties.type
+    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
 ```
 
 ### Tag: package-resources
@@ -98,8 +102,6 @@ list-exception:
   - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
-  # model of ResourceLink has id, type and name, but its type has the type of `object` instead of `string`
-  /{linkId}: ResourceLink
   # subscription does not have name and type
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
@@ -150,7 +152,7 @@ override-operation-name:
   Resources_ListByResourceGroup: GetGenericResources
   Providers_RegisterAtManagementGroupScope: RegisterProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider
+no-property-type-replacement: ProviderData;Provider;
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -267,6 +269,46 @@ directive:
   - rename-model:
       from: ProviderRegistrationRequest
       to: ProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: resources.json
+    where: $.definitions.AliasPath
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathAttributes";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathTokenType";
+  - from: resources.json
+    where: $.definitions.AliasPattern
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+  - from: resources.json
+    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPatternType";
+  - from: resources.json
+    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasType";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameter";
+  - from: policyAssignments.json
+    where: $.definitions.ParameterValuesValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameterValue";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
@@ -396,6 +438,11 @@ directive:
   - from: locks.json
     where: $.definitions.ManagementLockObject
     transform: $["x-ms-client-name"] = "ManagementLock"
+  - from: links.json
+    where: $.definitions.ResourceLink.properties.type
+    transform: >
+      $["x-ms-client-name"] = "ResourceType";
+      $["type"] = "string";
 ```
 
 ### Tag: package-management
@@ -432,6 +479,10 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityRequest.properties.type
+    transform: >
+      $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
       to: CheckNameAvailabilityOptions

@@ -123,11 +123,6 @@ namespace Azure.AI.Translation.Document
         private int? _retryAfterHeaderValue;
 
         /// <summary>
-        /// Provides the results for the first page.
-        /// </summary>
-        private Page<DocumentStatusResult> _firstPage;
-
-        /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public override bool HasValue => _hasValue;
@@ -226,22 +221,7 @@ namespace Azure.AI.Translation.Document
             TimeSpan pollingInterval,
             CancellationToken cancellationToken = default)
         {
-            await this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
-            var response = await _serviceClient.GetDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
-            _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-            _hasValue = true;
-
-            async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                // TODO: diagnostics scope?
-                var response = await _serviceClient.GetDocumentsStatusNextPageAsync(nextLink, new Guid(Id), cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-            }
-
-            var result = PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
-            return Response.FromValue(result, response);
+            return await this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

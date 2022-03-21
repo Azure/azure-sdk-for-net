@@ -122,6 +122,68 @@ function New-DataPlanePackageFolder() {
   return $projectFolder
 }
 
+function New-MgmtPackageFolder() {
+    param(
+        [string]$service = "",
+        [string]$packageName = "",
+        [string]$sdkPath = "",
+        [string]$commitid = "",
+        [string]$readme = "",
+        [string]$AUTOREST_CONFIG_FILE = "autorest.md",
+        [string]$outputJsonFile = "newPacakgeOutput.json"
+    )
+  
+    $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.*"
+    if (Test-Path -Path $projectFolder) {
+      Write-Host "Path exists!"
+      $folderinfo = Get-ChildItem -Path $projectFolder
+      $foldername = $folderinfo.Name
+      $projectFolder = "$sdkPath/sdk/$packageName/$foldername"
+    } else {
+      Write-Host "Path doesn't exist. create template."
+      dotnet new -i $sdkPath/eng/templates/Azure.ResourceManager.Template
+      $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.$packageName"
+      Write-Host "Create project folder $projectFolder"
+      New-Item -Path $projectFolder -ItemType Directory
+      # Set-Location $projectFolder
+      Push-Location $projectFolder
+      dotnet new azuremgmt --provider $packageName --includeCI true --force
+      Pop-Location
+    }
+  
+    # update the readme url if needed.
+    if ($commitid -ne "") {
+      Write-Host "Updating autorest.md file."
+      $swaggerInfo = Get-SwaggerInfo -dir "$projectFolder/src"
+      $org = $swaggerInfo[0]
+      $rp = $swaggerInfo[1]
+      $permalinks = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/specification/$rp/resource-manager/readme.md"
+      $requirefile = "require: $permalinks"
+      $rquirefileRex = "require *:.*.md"
+      $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
+      (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
+    } elseif ($readme -ne "") {
+      Write-Host "Updating required file $readme in autorest.md file."
+      $requirefile = "require: $readme"
+      $rquirefileRex = "require *:.*.md"
+      $file="$projectFolder/src/$AUTOREST_CONFIG_FILE"
+      (Get-Content $file) -replace $rquirefileRex, "$requirefile" | Set-Content $file
+  
+      $readmefilestr = Get-Content $file
+      Write-Output "autorest.md:$readmefilestr"
+    }
+  
+    $path=$projectFolder
+    $path=$path.Replace($sdkPath + "/", "")
+    $outputJson = [PSCustomObject]@{
+      projectFolder = $projectFolder
+      path = $path
+    }
+  
+    $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
+  
+    return $projectFolder
+}
 function Invoke-Generate() {
     param(
         [string]$sdkfolder= ""
@@ -129,4 +191,20 @@ function Invoke-Generate() {
     $sdkfolder = $sdkfolder -replace "\\", "/"
     Set-Location $sdkfolder/src
     dotnet build /t:GenerateCode
+}
+function Get-ResourceProviderFromReadme($readmeFile) {
+    $readmeFileRegex = "(?<specName>.*)/resource-manager/readme.md"
+    try
+    {
+        if ($readmeFile -match $readmeFileRegex)
+        {
+            return $matches["specName"]
+        }
+    }
+    catch
+    {
+        Write-Error "Error parsing readme info"
+        Write-Error $_
+    }
+    Write-Host "Cannot find resource provider info"
 }

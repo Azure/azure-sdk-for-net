@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of ExpressRoute gateways. </summary>
-    public partial class ExpressRouteGatewayList
+    internal partial class ExpressRouteGatewayList
     {
         /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
         internal ExpressRouteGatewayList()

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverConnectionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serverConnectionPolicyApiVersion);
-            _serverConnectionPolicyRestClient = new ServerConnectionPoliciesRestOperations(_serverConnectionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverConnectionPolicyApiVersion);
+            _serverConnectionPolicyRestClient = new ServerConnectionPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverConnectionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ServerConnectionPolicies_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerConnectionPolicy>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerConnectionPolicy>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverConnectionPolicyClientDiagnostics.CreateScope("ServerConnectionPolicy.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverConnectionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverConnectionPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerConnectionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverConnectionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serverConnectionPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerConnectionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

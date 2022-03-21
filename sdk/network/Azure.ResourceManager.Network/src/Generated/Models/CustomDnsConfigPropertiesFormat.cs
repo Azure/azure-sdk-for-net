@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of CustomDnsConfigPropertiesFormat. </summary>
         public CustomDnsConfigPropertiesFormat()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CustomDnsConfigPropertiesFormat. </summary>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Network.Models
         internal CustomDnsConfigPropertiesFormat(string fqdn, IList<string> ipAddresses)
         {
             Fqdn = fqdn;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Fqdn that resolves to private endpoint ip address. </summary>
         public string Fqdn { get; set; }
         /// <summary> A list of private ip addresses of the private endpoint. </summary>
-        public IList<string> IpAddresses { get; }
+        public IList<string> IPAddresses { get; }
     }
 }

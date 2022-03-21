@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the DdosCustomPolicy data model. </summary>
-    public partial class DdosCustomPolicyData : Resource
+    public partial class DdosCustomPolicyData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
         public DdosCustomPolicyData()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </param>
         /// <param name="protocolCustomSettings"> The protocol-specific DDoS policy customization parameters. </param>
-        internal DdosCustomPolicyData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, type, location, tags)
+        internal DdosCustomPolicyData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ResourceGuid = resourceGuid;

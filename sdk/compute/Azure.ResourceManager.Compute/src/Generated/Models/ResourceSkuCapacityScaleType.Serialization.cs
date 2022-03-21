@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public static string ToSerialString(this ResourceSkuCapacityScaleType value) => value switch
         {
+            ResourceSkuCapacityScaleType.None => "None",
             ResourceSkuCapacityScaleType.Automatic => "Automatic",
             ResourceSkuCapacityScaleType.Manual => "Manual",
-            ResourceSkuCapacityScaleType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceSkuCapacityScaleType value.")
         };
 
         public static ResourceSkuCapacityScaleType ToResourceSkuCapacityScaleType(this string value)
         {
+            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ResourceSkuCapacityScaleType.None;
             if (string.Equals(value, "Automatic", StringComparison.InvariantCultureIgnoreCase)) return ResourceSkuCapacityScaleType.Automatic;
             if (string.Equals(value, "Manual", StringComparison.InvariantCultureIgnoreCase)) return ResourceSkuCapacityScaleType.Manual;
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ResourceSkuCapacityScaleType.None;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceSkuCapacityScaleType value.");
         }
     }

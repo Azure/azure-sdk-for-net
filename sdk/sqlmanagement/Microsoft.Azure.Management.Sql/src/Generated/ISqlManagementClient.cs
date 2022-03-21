@@ -443,11 +443,6 @@ namespace Microsoft.Azure.Management.Sql
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IOperationsHealthOperations.
-        /// </summary>
-        IOperationsHealthOperations OperationsHealth { get; }
-
-        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
@@ -661,6 +656,21 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerConnectionPoliciesOperations.
         /// </summary>
         IServerConnectionPoliciesOperations ServerConnectionPolicies { get; }
+
+        /// <summary>
+        /// Gets the IDistributedAvailabilityGroupsOperations.
+        /// </summary>
+        IDistributedAvailabilityGroupsOperations DistributedAvailabilityGroups { get; }
+
+        /// <summary>
+        /// Gets the IServerTrustCertificatesOperations.
+        /// </summary>
+        IServerTrustCertificatesOperations ServerTrustCertificates { get; }
+
+        /// <summary>
+        /// Gets the IIPv6FirewallRulesOperations.
+        /// </summary>
+        IIPv6FirewallRulesOperations IPv6FirewallRules { get; }
 
     }
 }

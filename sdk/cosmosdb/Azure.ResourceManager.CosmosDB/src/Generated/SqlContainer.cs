@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _sqlContainerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sqlContainerSqlResourcesApiVersion);
-            _sqlContainerSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlContainerSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlContainerSqlResourcesApiVersion);
+            _sqlContainerSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlContainerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -95,21 +95,105 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of SqlStoredProcedures and their operations over a SqlStoredProcedure. </returns>
         public virtual SqlStoredProcedureCollection GetSqlStoredProcedures()
         {
-            return new SqlStoredProcedureCollection(Client, Id);
+            return GetCachedClient(Client => new SqlStoredProcedureCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the SQL storedProcedure under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}
+        /// Operation Id: SqlResources_GetSqlStoredProcedure
+        /// </summary>
+        /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        public virtual async Task<Response<SqlStoredProcedure>> GetSqlStoredProcedureAsync(string storedProcedureName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlStoredProcedures().GetAsync(storedProcedureName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SQL storedProcedure under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/storedProcedures/{storedProcedureName}
+        /// Operation Id: SqlResources_GetSqlStoredProcedure
+        /// </summary>
+        /// <param name="storedProcedureName"> Cosmos DB storedProcedure name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="storedProcedureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
+        public virtual Response<SqlStoredProcedure> GetSqlStoredProcedure(string storedProcedureName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlStoredProcedures().Get(storedProcedureName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlUserDefinedFunctions in the SqlUserDefinedFunction. </summary>
         /// <returns> An object representing collection of SqlUserDefinedFunctions and their operations over a SqlUserDefinedFunction. </returns>
         public virtual SqlUserDefinedFunctionCollection GetSqlUserDefinedFunctions()
         {
-            return new SqlUserDefinedFunctionCollection(Client, Id);
+            return GetCachedClient(Client => new SqlUserDefinedFunctionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
+        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public virtual async Task<Response<SqlUserDefinedFunction>> GetSqlUserDefinedFunctionAsync(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlUserDefinedFunctions().GetAsync(userDefinedFunctionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SQL userDefinedFunction under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/userDefinedFunctions/{userDefinedFunctionName}
+        /// Operation Id: SqlResources_GetSqlUserDefinedFunction
+        /// </summary>
+        /// <param name="userDefinedFunctionName"> Cosmos DB userDefinedFunction name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userDefinedFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userDefinedFunctionName"/> is null. </exception>
+        public virtual Response<SqlUserDefinedFunction> GetSqlUserDefinedFunction(string userDefinedFunctionName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlUserDefinedFunctions().Get(userDefinedFunctionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlTriggers in the SqlTrigger. </summary>
         /// <returns> An object representing collection of SqlTriggers and their operations over a SqlTrigger. </returns>
         public virtual SqlTriggerCollection GetSqlTriggers()
         {
-            return new SqlTriggerCollection(Client, Id);
+            return GetCachedClient(Client => new SqlTriggerCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the SQL trigger under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
+        /// <param name="triggerName"> Cosmos DB trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual async Task<Response<SqlTrigger>> GetSqlTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the SQL trigger under an existing Azure Cosmos DB database account.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
+        /// Operation Id: SqlResources_GetSqlTrigger
+        /// </summary>
+        /// <param name="triggerName"> Cosmos DB trigger name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual Response<SqlTrigger> GetSqlTrigger(string triggerName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlTriggers().Get(triggerName, cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: SqlResources_GetSqlContainer
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SqlContainer>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlContainer>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainer.Get");
             scope.Start();
@@ -126,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlContainerSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlContainer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlContainerSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlContainer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,9 +249,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}
         /// Operation Id: SqlResources_DeleteSqlContainer
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainer.Delete");
             scope.Start();
@@ -175,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlContainerSqlResourcesRestClient.DeleteSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation(_sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateDeleteSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -191,9 +275,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}
         /// Operation Id: SqlResources_DeleteSqlContainer
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlContainerSqlResourcesClientDiagnostics.CreateScope("SqlContainer.Delete");
             scope.Start();
@@ -201,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlContainerSqlResourcesRestClient.DeleteSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new CosmosDBArmOperation(_sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateDeleteSqlContainerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -217,11 +301,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/retrieveContinuousBackupInformation
         /// Operation Id: SqlResources_RetrieveContinuousBackupInformation
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The name of the continuous backup restore location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async virtual Task<ArmOperation<BackupInformation>> RetrieveContinuousBackupInformationAsync(bool waitForCompletion, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupInformation>> RetrieveContinuousBackupInformationAsync(WaitUntil waitUntil, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(location, nameof(location));
 
@@ -231,7 +315,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlContainerSqlResourcesRestClient.RetrieveContinuousBackupInformationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location, cancellationToken).ConfigureAwait(false);
                 var operation = new CosmosDBArmOperation<BackupInformation>(new BackupInformationOperationSource(), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -247,11 +331,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/retrieveContinuousBackupInformation
         /// Operation Id: SqlResources_RetrieveContinuousBackupInformation
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The name of the continuous backup restore location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public virtual ArmOperation<BackupInformation> RetrieveContinuousBackupInformation(bool waitForCompletion, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupInformation> RetrieveContinuousBackupInformation(WaitUntil waitUntil, ContinuousBackupRestoreLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(location, nameof(location));
 
@@ -261,7 +345,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlContainerSqlResourcesRestClient.RetrieveContinuousBackupInformation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location, cancellationToken);
                 var operation = new CosmosDBArmOperation<BackupInformation>(new BackupInformationOperationSource(), _sqlContainerSqlResourcesClientDiagnostics, Pipeline, _sqlContainerSqlResourcesRestClient.CreateRetrieveContinuousBackupInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, location).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -281,7 +365,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<SqlContainer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlContainer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -291,8 +375,8 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -322,8 +406,8 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SqlContainer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -342,7 +426,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<SqlContainer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlContainer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -350,10 +434,10 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -380,10 +464,10 @@ namespace Azure.ResourceManager.CosmosDB
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SqlContainer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -402,7 +486,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<SqlContainer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlContainer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -411,8 +495,8 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _sqlContainerSqlResourcesRestClient.GetSqlContainerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlContainer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -440,8 +524,8 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _sqlContainerSqlResourcesRestClient.GetSqlContainer(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new SqlContainer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

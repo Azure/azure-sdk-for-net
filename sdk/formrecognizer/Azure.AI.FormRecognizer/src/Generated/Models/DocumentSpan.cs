@@ -8,7 +8,7 @@
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Contiguous region of the concatenated content property, specified as an offset and length. </summary>
-    public partial class DocumentSpan
+    public readonly partial struct DocumentSpan
     {
         /// <summary> Initializes a new instance of DocumentSpan. </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>

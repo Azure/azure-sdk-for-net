@@ -53,7 +53,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -71,7 +75,7 @@ namespace Azure.ResourceManager.Resources
             Optional<DateTimeOffset> expiresOn = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<object> metadata = default;
+            Optional<BinaryData> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -155,7 +159,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = property0.Value.GetObject();
+                            metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

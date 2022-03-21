@@ -1,8 +1,15 @@
 namespace Azure.ResourceManager.Communication
 {
-    public static partial class ArmClientExtensions
+    public static partial class CommunicationExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability> CheckCommunicationNameAvailability(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityOptions nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability>> CheckCommunicationNameAvailabilityAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityOptions nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Communication.CommunicationService GetCommunicationService(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Communication.CommunicationService> GetCommunicationService(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> GetCommunicationServiceAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Communication.CommunicationServiceCollection GetCommunicationServices(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Communication.CommunicationService> GetCommunicationServices(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Communication.CommunicationService> GetCommunicationServicesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CommunicationService : Azure.ResourceManager.Core.ArmResource
     {
@@ -13,8 +20,8 @@ namespace Azure.ResourceManager.Communication
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationServiceKeys> GetKeys(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -27,14 +34,14 @@ namespace Azure.ResourceManager.Communication
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Update(Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> UpdateAsync(Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Update(Azure.ResourceManager.Communication.CommunicationServiceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationService>> UpdateAsync(Azure.ResourceManager.Communication.CommunicationServiceData parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CommunicationServiceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Communication.CommunicationService>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Communication.CommunicationService>, System.Collections.IEnumerable
     {
         protected CommunicationServiceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationService> CreateOrUpdate(bool waitForCompletion, string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationService>> CreateOrUpdateAsync(bool waitForCompletion, string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationService> CreateOrUpdate(Azure.WaitUntil waitUntil, string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Communication.CommunicationService>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string communicationServiceName, Azure.ResourceManager.Communication.CommunicationServiceData parameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationService> Get(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -58,17 +65,6 @@ namespace Azure.ResourceManager.Communication
         public Azure.ResourceManager.Communication.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Version { get { throw null; } }
-    }
-    public static partial class ResourceGroupExtensions
-    {
-        public static Azure.ResourceManager.Communication.CommunicationServiceCollection GetCommunicationServices(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-    }
-    public static partial class SubscriptionExtensions
-    {
-        public static Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability> CheckCommunicationNameAvailability(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityOptions nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.NameAvailability>> CheckCommunicationNameAvailabilityAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.Communication.Models.NameAvailabilityOptions nameAvailabilityParameters = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Communication.CommunicationService> GetCommunicationServices(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Communication.CommunicationService> GetCommunicationServicesAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Communication.Models
@@ -106,9 +102,9 @@ namespace Azure.ResourceManager.Communication.Models
     }
     public partial class NameAvailabilityOptions
     {
-        public NameAvailabilityOptions(string type, string name) { }
+        public NameAvailabilityOptions(string resourceType, string name) { }
         public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
+        public string ResourceType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Communication.Models.ProvisioningState>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new ArgumentNullException(nameof(azCliVersion));
             }
 
-            Outputs = new ChangeTrackingDictionary<string, object>();
+            Outputs = new ChangeTrackingDictionary<string, BinaryData>();
             SupportingScriptUris = new ChangeTrackingList<string>();
             EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
             RetentionInterval = retentionInterval;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of AzureCliScript. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
-        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DeploymentScriptManagedIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IReadOnlyDictionary<string, object> outputs, Uri primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, type, systemData, identity, location, tags, kind)
+        internal AzureCliScript(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeploymentScriptManagedIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind, ContainerConfiguration containerSettings, StorageAccountConfiguration storageAccountSettings, CleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, IReadOnlyDictionary<string, BinaryData> outputs, Uri primaryScriptUri, IList<string> supportingScriptUris, string scriptContent, string arguments, IList<EnvironmentVariable> environmentVariables, string forceUpdateTag, TimeSpan retentionInterval, TimeSpan? timeout, string azCliVersion) : base(id, name, resourceType, systemData, identity, location, tags, kind)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -85,7 +85,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Container settings. </summary>
-        public ContainerConfiguration ContainerSettings { get; set; }
+        internal ContainerConfiguration ContainerSettings { get; set; }
+        /// <summary> Container group name, if not specified then the name will get auto-generated. Not specifying a &apos;containerGroupName&apos; indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use &apos;containerGroupName&apos; when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. &apos;containerGroupName&apos; property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a &apos;containerGroupName&apos;, add the following object to properties: { &quot;containerSettings&quot;: { &quot;containerGroupName&quot;: &quot;contoso-container&quot; } }. If you do not want to specify a &apos;containerGroupName&apos; then do not add &apos;containerSettings&apos; property. </summary>
+        public string ContainerGroupName
+        {
+            get => ContainerSettings is null ? default : ContainerSettings.ContainerGroupName;
+            set
+            {
+                if (ContainerSettings is null)
+                    ContainerSettings = new ContainerConfiguration();
+                ContainerSettings.ContainerGroupName = value;
+            }
+        }
+
         /// <summary> Storage Account settings. </summary>
         public StorageAccountConfiguration StorageAccountSettings { get; set; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
@@ -95,7 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Contains the results of script execution. </summary>
         public ScriptStatus Status { get; }
         /// <summary> List of script outputs. </summary>
-        public IReadOnlyDictionary<string, object> Outputs { get; }
+        public IReadOnlyDictionary<string, BinaryData> Outputs { get; }
         /// <summary> Uri for the script. This is the entry point for the external script. </summary>
         public Uri PrimaryScriptUri { get; set; }
         /// <summary> Supporting files for the external script. </summary>

@@ -250,7 +250,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Site load balancing. </summary>
         public SiteLoadBalancing? LoadBalancing { get; set; }
         /// <summary> This is work around for polymorphic types. </summary>
-        public Experiments Experiments { get; set; }
+        internal Experiments Experiments { get; set; }
+        /// <summary> List of ramp-up rules. </summary>
+        public IList<RampUpRule> ExperimentsRampUpRules
+        {
+            get
+            {
+                if (Experiments is null)
+                    Experiments = new Experiments();
+                return Experiments.RampUpRules;
+            }
+        }
+
         /// <summary> Site limits. </summary>
         public SiteLimits Limits { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -270,9 +281,33 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Push endpoint settings. </summary>
         public PushSettings Push { get; set; }
         /// <summary> Information about the formal API definition for the app. </summary>
-        public ApiDefinitionInfo ApiDefinition { get; set; }
+        internal ApiDefinitionInfo ApiDefinition { get; set; }
+        /// <summary> The URL of the API definition. </summary>
+        public string ApiDefinitionUrl
+        {
+            get => ApiDefinition is null ? default : ApiDefinition.Url;
+            set
+            {
+                if (ApiDefinition is null)
+                    ApiDefinition = new ApiDefinitionInfo();
+                ApiDefinition.Url = value;
+            }
+        }
+
         /// <summary> Azure API management settings linked to the app. </summary>
-        public ApiManagementConfig ApiManagementConfig { get; set; }
+        internal ApiManagementConfig ApiManagementConfig { get; set; }
+        /// <summary> APIM-Api Identifier. </summary>
+        public string ApiManagementConfigId
+        {
+            get => ApiManagementConfig is null ? default : ApiManagementConfig.Id;
+            set
+            {
+                if (ApiManagementConfig is null)
+                    ApiManagementConfig = new ApiManagementConfig();
+                ApiManagementConfig.Id = value;
+            }
+        }
+
         /// <summary> Auto-swap slot name. </summary>
         public string AutoSwapSlotName { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

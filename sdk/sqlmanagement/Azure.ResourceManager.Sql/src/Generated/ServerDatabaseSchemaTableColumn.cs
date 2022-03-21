@@ -14,6 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -54,10 +55,10 @@ namespace Azure.ResourceManager.Sql
         {
             _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
-            _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(_serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
+            _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient = new DatabaseColumnsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnDatabaseColumnsApiVersion);
             _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ServerDatabaseSchemaTableColumnSensitivityLabel.ResourceType, out string serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
-            _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(_serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
+            _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -91,7 +92,31 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerDatabaseSchemaTableColumnSensitivityLabels and their operations over a ServerDatabaseSchemaTableColumnSensitivityLabel. </returns>
         public virtual ServerDatabaseSchemaTableColumnSensitivityLabelCollection GetServerDatabaseSchemaTableColumnSensitivityLabels()
         {
-            return new ServerDatabaseSchemaTableColumnSensitivityLabelCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDatabaseSchemaTableColumnSensitivityLabelCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the sensitivity label of a given column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
+        /// Operation Id: SensitivityLabels_Get
+        /// </summary>
+        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerDatabaseSchemaTableColumnSensitivityLabel>> GetServerDatabaseSchemaTableColumnSensitivityLabelAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        {
+            return await GetServerDatabaseSchemaTableColumnSensitivityLabels().GetAsync(sensitivityLabelSource, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the sensitivity label of a given column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
+        /// Operation Id: SensitivityLabels_Get
+        /// </summary>
+        /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerDatabaseSchemaTableColumnSensitivityLabel> GetServerDatabaseSchemaTableColumnSensitivityLabel(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        {
+            return GetServerDatabaseSchemaTableColumnSensitivityLabels().Get(sensitivityLabelSource, cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseColumns_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerDatabaseSchemaTableColumn>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseSchemaTableColumn>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumn.Get");
             scope.Start();
@@ -108,7 +133,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseSchemaTableColumnDatabaseColumnsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serverDatabaseSchemaTableColumnDatabaseColumnsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDatabaseSchemaTableColumn(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -148,7 +173,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SensitivityLabels_EnableRecommendation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> EnableRecommendationSensitivityLabelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> EnableRecommendationSensitivityLabelAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumn.EnableRecommendationSensitivityLabel");
             scope.Start();
@@ -192,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SensitivityLabels_DisableRecommendation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> DisableRecommendationSensitivityLabelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableRecommendationSensitivityLabelAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverDatabaseSchemaTableColumnSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("ServerDatabaseSchemaTableColumn.DisableRecommendationSensitivityLabel");
             scope.Start();

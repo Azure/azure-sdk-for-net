@@ -14,7 +14,12 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        private Dictionary<string, object>? _properties;
+        /// <summary>
+        /// This dictionary is keyed with <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that even if the accessor methods
+        /// become public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
+        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage.
+        /// </summary>
+        private Dictionary<Type, object>? _typeProperties;
 
         private Response? _response;
 
@@ -80,7 +85,7 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout { get; set; }
 
-        internal void ApplyRequestContext(RequestContext? context, CoreResponseClassifier? classifier)
+        internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
         {
             if (context == null)
             {
@@ -112,7 +117,12 @@ namespace Azure.Core
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
-            return _properties?.TryGetValue(name, out value) == true;
+            if (_typeProperties == null || !_typeProperties.TryGetValue(typeof(MessagePropertyKey), out var rawValue))
+            {
+                return false;
+            }
+            var properties = (Dictionary<string, object>)rawValue!;
+            return properties.TryGetValue(name, out value);
         }
 
         /// <summary>
@@ -122,9 +132,42 @@ namespace Azure.Core
         /// <param name="value">The property value.</param>
         public void SetProperty(string name, object value)
         {
-            _properties ??= new Dictionary<string, object>();
+            _typeProperties ??= new Dictionary<Type, object>();
+            Dictionary<string, object> properties;
+            if (!_typeProperties.TryGetValue(typeof(MessagePropertyKey), out var rawValue))
+            {
+                properties = new Dictionary<string, object>();
+                _typeProperties[typeof(MessagePropertyKey)] = properties;
+            }
+            else
+            {
+                properties = (Dictionary<string, object>)rawValue!;
+            }
+            properties[name] = value;
+        }
 
-            _properties[name] = value;
+        /// <summary>
+        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// </summary>
+        /// <param name="type">The property type.</param>
+        /// <param name="value">The property value.</param>
+        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
+        internal bool TryGetInternalProperty(Type type, out object? value)
+        {
+            value = null;
+            return _typeProperties?.TryGetValue(type, out value) == true;
+        }
+
+        /// <summary>
+        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
+        /// </summary>
+        /// <param name="type">The key for the value.</param>
+        /// <param name="value">The property value.</param>
+        internal void SetInternalProperty(Type type, object value)
+        {
+            _typeProperties ??= new Dictionary<Type, object>();
+            _typeProperties[type] = value;
         }
 
         /// <summary>
@@ -204,5 +247,10 @@ namespace Azure.Core
                 set => throw CreateException();
             }
         }
+
+        /// <summary>
+        /// Exists as a private key entry into the <see cref="HttpMessage._typeProperties"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
+        /// </summary>
+        private class MessagePropertyKey {}
     }
 }

@@ -13,8 +13,10 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var cache = new LruCache<string, int>(10);
             for (int i = 0; i < 20; i++)
             {
-                cache.AddOrUpdate(i.ToString(), i);
+                cache.AddOrUpdate(i.ToString(), i, i.ToString().Length);
             }
+            Assert.AreEqual(10, cache.Count);
+            Assert.AreEqual(20, cache.TotalLength);
 
             for (int i = 0; i < 10; i++)
             {
@@ -33,17 +35,17 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             var cache = new LruCache<string, int>(3);
 
-            cache.AddOrUpdate("1", 1);
-            cache.AddOrUpdate("2", 2);
-            cache.AddOrUpdate("3", 3);
+            cache.AddOrUpdate("1", 1, 1);
+            cache.AddOrUpdate("2", 2, 1);
+            cache.AddOrUpdate("3", 3, 1);
             // 1 is moved to head of list
             Assert.IsTrue(cache.TryGet("1", out _));
             // 4 is added to head of list, which evicts 2, the least recently used item
-            cache.AddOrUpdate("4", 4);
+            cache.AddOrUpdate("4", 4, 1);
             // 2 should be evicted
             Assert.IsFalse(cache.TryGet("2", out _));
             // 5 is moved to head of list
-            cache.AddOrUpdate("5", 4);
+            cache.AddOrUpdate("5", 4, 1);
             // 3 should be evicted
             Assert.IsFalse(cache.TryGet("3", out _));
         }
@@ -53,10 +55,12 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
         {
             var cache = new LruCache<string, int>(10);
 
-            cache.AddOrUpdate("1", 1);
+            cache.AddOrUpdate("1", 1, 1);
             cache.TryGet("1", out int val);
             Assert.AreEqual(1, val);
-            cache.AddOrUpdate("1", 10);
+            Assert.AreEqual(1, cache.TotalLength);
+            cache.AddOrUpdate("1", 10, 2);
+            Assert.AreEqual(2, cache.TotalLength);
             cache.TryGet("1", out val);
             Assert.AreEqual(10, val);
         }

@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public static string ToSerialString(this PublicCertificateLocation value) => value switch
         {
+            PublicCertificateLocation.Unknown => "Unknown",
             PublicCertificateLocation.CurrentUserMy => "CurrentUserMy",
             PublicCertificateLocation.LocalMachineMy => "LocalMachineMy",
-            PublicCertificateLocation.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicCertificateLocation value.")
         };
 
         public static PublicCertificateLocation ToPublicCertificateLocation(this string value)
         {
+            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.Unknown;
             if (string.Equals(value, "CurrentUserMy", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.CurrentUserMy;
             if (string.Equals(value, "LocalMachineMy", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.LocalMachineMy;
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return PublicCertificateLocation.Unknown;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PublicCertificateLocation value.");
         }
     }

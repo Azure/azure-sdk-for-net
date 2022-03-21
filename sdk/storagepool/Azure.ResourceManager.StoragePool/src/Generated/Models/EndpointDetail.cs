@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="isAccessible"> Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port. </param>
         internal EndpointDetail(string ipAddress, int? port, double? latency, bool? isAccessible)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Port = port;
             Latency = latency;
             IsAccessible = isAccessible;
         }
 
         /// <summary> An IP Address that Domain Name currently resolves to. </summary>
-        public string IpAddress { get; }
+        public string IPAddress { get; }
         /// <summary> The port an endpoint is connected to. </summary>
         public int? Port { get; }
         /// <summary> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </summary>

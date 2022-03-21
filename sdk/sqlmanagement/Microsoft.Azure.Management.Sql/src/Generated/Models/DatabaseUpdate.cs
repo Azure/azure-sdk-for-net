@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Sql.Models
     using System.Linq;
 
     /// <summary>
-    /// A database resource.
+    /// A database update resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class DatabaseUpdate
@@ -143,11 +143,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="readScale">The state of read-only routing. If enabled,
         /// connections that have application intent set to readonly in their
         /// connection string may be routed to a readonly secondary replica in
-        /// the same region. Possible values include: 'Enabled',
+        /// the same region. Not applicable to a Hyperscale database within an
+        /// elastic pool. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="highAvailabilityReplicaCount">The number of secondary
         /// replicas associated with the database that are used to provide high
-        /// availability.</param>
+        /// availability. Not applicable to a Hyperscale database within an
+        /// elastic pool.</param>
         /// <param name="secondaryType">The secondary type of the database if
         /// it is a secondary.  Valid values are Geo and Named. Possible values
         /// include: 'Geo', 'Named'</param>
@@ -459,14 +461,16 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Gets or sets the state of read-only routing. If enabled,
         /// connections that have application intent set to readonly in their
         /// connection string may be routed to a readonly secondary replica in
-        /// the same region. Possible values include: 'Enabled', 'Disabled'
+        /// the same region. Not applicable to a Hyperscale database within an
+        /// elastic pool. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.readScale")]
         public string ReadScale { get; set; }
 
         /// <summary>
         /// Gets or sets the number of secondary replicas associated with the
-        /// database that are used to provide high availability.
+        /// database that are used to provide high availability. Not applicable
+        /// to a Hyperscale database within an elastic pool.
         /// </summary>
         [JsonProperty(PropertyName = "properties.highAvailabilityReplicaCount")]
         public int? HighAvailabilityReplicaCount { get; set; }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteConfigSnapshotWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteConfigSnapshotWebAppsApiVersion);
-            _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(_siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigSnapshotWebAppsApiVersion);
+            _siteConfigSnapshotWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteConfigSnapshotWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteConfigSnapshot>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteConfigSnapshot>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshot.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteConfigSnapshotWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteConfigSnapshot(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteConfigSnapshotWebAppsRestClient.GetConfigurationSnapshot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteConfigSnapshotWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteConfigSnapshot(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_RecoverSiteConfigurationSnapshot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> RecoverSiteConfigurationSnapshotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RecoverSiteConfigurationSnapshotAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteConfigSnapshotWebAppsClientDiagnostics.CreateScope("SiteConfigSnapshot.RecoverSiteConfigurationSnapshot");
             scope.Start();

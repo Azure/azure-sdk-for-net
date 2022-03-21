@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -40,10 +41,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("publisher");
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(MachineExtensionType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType);
+                writer.WriteStringValue(MachineExtensionType);
             }
             if (Optional.IsDefined(TypeHandlerVersion))
             {
@@ -58,12 +59,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings");
-                writer.WriteObjectValue(Settings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Settings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings");
-                writer.WriteObjectValue(ProtectedSettings);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ProtectedSettings);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(InstanceView))
             {
@@ -87,8 +96,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> type0 = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<object> settings = default;
-            Optional<object> protectedSettings = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<MachineExtensionPropertiesInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
@@ -174,7 +183,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            settings = property0.Value.GetObject();
+                            settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protectedSettings"))
@@ -184,7 +193,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettings = property0.Value.GetObject();
+                            protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

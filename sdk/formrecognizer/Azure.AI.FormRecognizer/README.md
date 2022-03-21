@@ -565,9 +565,12 @@ Build a custom model on your own document type. The resulting model can be used 
 
 ```C# Snippet:FormRecognizerSampleBuildModel
 // For this sample, you can use the training documents found in the `trainingFiles` folder.
-// Upload the forms to your storage container and then generate a container SAS URL.
-// For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-// https://aka.ms/azsdk/formrecognizer/buildtrainingset
+// Upload the documents to your storage container and then generate a container SAS URL. Note
+// that a container URI without SAS is accepted only when the container is public or has a
+// managed identity configured.
+//
+// For instructions to set up documents for training in an Azure Blob Storage Container, please see:
+// https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
 Uri trainingFileUri = <trainingFileUri>;
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -639,8 +642,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = await client.GetAccountPropertiesAsync();
-Console.WriteLine($"Account has {accountProperties.Count} models.");
-Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
+Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
 AsyncPageable<DocumentModelInfo> models = client.GetModelsAsync();
@@ -687,8 +690,8 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 
 // Check number of custom models in the FormRecognizer account, and the maximum number of models that can be stored.
 AccountProperties accountProperties = client.GetAccountProperties();
-Console.WriteLine($"Account has {accountProperties.Count} models.");
-Console.WriteLine($"It can have at most {accountProperties.Limit} models.");
+Console.WriteLine($"Account has {accountProperties.DocumentModelCount} models.");
+Console.WriteLine($"It can have at most {accountProperties.DocumentModelLimit} models.");
 
 // List the first ten or fewer models currently stored in the account.
 Pageable<DocumentModelInfo> models = client.GetModels();

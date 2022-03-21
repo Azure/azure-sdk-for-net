@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseAdvisor.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ServerDatabaseAdvisor.ResourceType, out string serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
-            _serverDatabaseAdvisorDatabaseAdvisorsRestClient = new DatabaseAdvisorsRestOperations(_serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
+            _serverDatabaseAdvisorDatabaseAdvisorsRestClient = new DatabaseAdvisorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseAdvisorDatabaseAdvisorsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseAdvisor>> GetAsync(string advisorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseAdvisor>> GetAsync(string advisorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseAdvisorDatabaseAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDatabaseAdvisor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseAdvisorDatabaseAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advisorName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerDatabaseAdvisor(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseAdvisor>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseAdvisor>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
 

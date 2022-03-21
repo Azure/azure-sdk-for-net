@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> List storage account local users. </summary>
-    public partial class LocalUsers
+    internal partial class LocalUsers
     {
         /// <summary> Initializes a new instance of LocalUsers. </summary>
         internal LocalUsers()

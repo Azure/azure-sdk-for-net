@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancingRule.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(LoadBalancingRule.ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
-            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(_loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public async virtual Task<Response<LoadBalancingRule>> GetAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadBalancingRule>> GetAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancingRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loadBalancingRuleName, cancellationToken);
                 if (response.Value == null)
-                    throw _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LoadBalancingRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
-        public async virtual Task<Response<LoadBalancingRule>> GetIfExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadBalancingRule>> GetIfExistsAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadBalancingRuleName, nameof(loadBalancingRuleName));
 

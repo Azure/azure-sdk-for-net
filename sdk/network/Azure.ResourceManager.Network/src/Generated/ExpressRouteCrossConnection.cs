@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             _expressRouteCrossConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string expressRouteCrossConnectionApiVersion);
-            _expressRouteCrossConnectionRestClient = new ExpressRouteCrossConnectionsRestOperations(_expressRouteCrossConnectionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionApiVersion);
+            _expressRouteCrossConnectionRestClient = new ExpressRouteCrossConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,7 +87,35 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCrossConnectionPeerings and their operations over a ExpressRouteCrossConnectionPeering. </returns>
         public virtual ExpressRouteCrossConnectionPeeringCollection GetExpressRouteCrossConnectionPeerings()
         {
-            return new ExpressRouteCrossConnectionPeeringCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCrossConnectionPeeringCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified peering for the ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}
+        /// Operation Id: ExpressRouteCrossConnectionPeerings_Get
+        /// </summary>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        public virtual async Task<Response<ExpressRouteCrossConnectionPeering>> GetExpressRouteCrossConnectionPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
+        {
+            return await GetExpressRouteCrossConnectionPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified peering for the ExpressRouteCrossConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/peerings/{peeringName}
+        /// Operation Id: ExpressRouteCrossConnectionPeerings_Get
+        /// </summary>
+        /// <param name="peeringName"> The name of the peering. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        public virtual Response<ExpressRouteCrossConnectionPeering> GetExpressRouteCrossConnectionPeering(string peeringName, CancellationToken cancellationToken = default)
+        {
+            return GetExpressRouteCrossConnectionPeerings().Get(peeringName, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +124,7 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ExpressRouteCrossConnections_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnection.Get");
             scope.Start();
@@ -104,7 +132,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _expressRouteCrossConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _expressRouteCrossConnectionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +156,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _expressRouteCrossConnectionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,7 +175,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnection>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -157,8 +185,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues[key] = value;
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _expressRouteCrossConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -188,8 +216,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues[key] = value;
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -208,7 +236,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnection>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -216,10 +244,10 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _expressRouteCrossConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -246,10 +274,10 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -268,7 +296,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<ExpressRouteCrossConnection>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCrossConnection>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -277,8 +305,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                originalTags.Value.Data.TagValues.Remove(key);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _expressRouteCrossConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -306,8 +334,8 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var originalTags = TagResource.Get(cancellationToken);
-                originalTags.Value.Data.Properties.TagsValue.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                originalTags.Value.Data.TagValues.Remove(key);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _expressRouteCrossConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ExpressRouteCrossConnection(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
