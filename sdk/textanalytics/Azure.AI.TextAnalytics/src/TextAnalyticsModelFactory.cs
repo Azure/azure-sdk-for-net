@@ -1510,23 +1510,33 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion Healthcare
 
-        /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
-        /// <param name="conditionality"> Describes any conditionality on the entity. </param>
-        /// <param name="certainty"> Describes the entities certainty and polarity. </param>
-        /// <param name="association"> Describes if the entity is the subject of the text or if it describes someone else. </param>
-        /// <returns> A new <see cref="TextAnalytics.HealthcareEntityAssertion"/> instance for mocking. </returns>
-        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? conditionality = null, EntityCertainty? certainty = null, EntityAssociation? association = null)
+        // added for compilation
+        /// <summary>
+        /// added for compilation
+        /// </summary>
+        /// <returns></returns>
+        public static HealthcareEntityAssertion HealthcareEntityAssertion()
         {
-            return new HealthcareEntityAssertion(conditionality, certainty, association);
+            return new HealthcareEntityAssertion();
         }
 
-        /// <summary> Initializes a new instance of EntityDataSource. </summary>
-        /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
-        /// <param name="entityId"> Entity id in the given source catalog. </param>
-        /// <returns> A new <see cref="TextAnalytics.EntityDataSource"/> instance for mocking. </returns>
-        public static EntityDataSource EntityDataSource(string name = null, string entityId = null)
+        /// <summary>
+        /// added for compilation
+        /// </summary>
+        /// <returns></returns>
+        public static EntityDataSource EntityDataSource(string name, string entityId)
         {
             return new EntityDataSource(name, entityId);
+        }
+
+        // added for compilation
+        /// <summary>
+        /// added for compilation
+        /// </summary>
+        /// <returns></returns>
+        public static HealthcareEntityAssertion HealthcareEntityAssertion(EntityConditionality? entityConditionality, EntityCertainty? entityCertainty, EntityAssociation? entityAssociation)
+        {
+            return new HealthcareEntityAssertion(entityConditionality, entityCertainty, entityAssociation);
         }
     }
 }

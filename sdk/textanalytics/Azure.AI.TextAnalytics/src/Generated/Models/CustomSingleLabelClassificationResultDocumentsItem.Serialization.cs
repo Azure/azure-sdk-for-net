@@ -12,13 +12,13 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomSingleLabelClassificationResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class CustomSingleClassificationResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("class");
-            writer.WriteObjectValue(Class);
+            writer.WritePropertyName("classification");
+            writer.WriteObjectValue(Classification);
             writer.WritePropertyName("id");
             writer.WriteStringValue(Id);
             writer.WritePropertyName("warnings");
@@ -36,17 +36,17 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomSingleLabelClassificationResultDocumentsItem DeserializeCustomSingleLabelClassificationResultDocumentsItem(JsonElement element)
+        internal static CustomSingleClassificationResultDocumentsItem DeserializeCustomSingleClassificationResultDocumentsItem(JsonElement element)
         {
-            ClassificationResult @class = default;
+            ClassificationResult classification = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("class"))
+                if (property.NameEquals("classification"))
                 {
-                    @class = ClassificationResult.DeserializeClassificationResult(property.Value);
+                    classification = ClassificationResult.DeserializeClassificationResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -75,7 +75,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomSingleLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class);
+            return new CustomSingleClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), classification);
         }
     }
 }
