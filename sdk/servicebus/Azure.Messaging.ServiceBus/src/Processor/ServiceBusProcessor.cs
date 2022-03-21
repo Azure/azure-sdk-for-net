@@ -745,9 +745,13 @@ namespace Azure.Messaging.ServiceBus
                     {
                         // Nothing to do here.  These exceptions are expected.
                     }
-
-                    ActiveReceiveTask.Dispose();
-                    ActiveReceiveTask = null;
+                    finally
+                    {
+                        // If an unexpected exception occurred while awaiting the receive task, we still want to dispose and set to null
+                        // as the task is complete and there is no use in awaiting it again if StopProcessingAsync is called again.
+                        ActiveReceiveTask.Dispose();
+                        ActiveReceiveTask = null;
+                    }
                 }
             }
             catch (Exception exception)

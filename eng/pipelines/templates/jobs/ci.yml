@@ -17,6 +17,9 @@ parameters:
 - name: ServiceToTest
   type: string
   default: ''
+- name: BuildSnippets
+  type: boolean
+  default: false
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -189,6 +192,20 @@ jobs:
            -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr: false
+      - script: >-
+          dotnet build eng/service.proj -warnaserror
+          /t:rebuild
+          /p:DebugType=none
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludePerf=false
+          /p:IncludeStress=false
+          /p:PublicSign=false
+          /p:Configuration=$(BuildConfiguration)
+          /p:EnableSourceLink=false
+          /p:BuildSnippets=true
+        displayName: Build snippets
+        condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
   - job: Compliance

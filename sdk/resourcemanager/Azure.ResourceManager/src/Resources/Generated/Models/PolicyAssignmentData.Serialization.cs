@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -69,7 +70,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata");
-                writer.WriteObjectValue(Metadata);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(EnforcementMode))
             {
@@ -102,9 +107,9 @@ namespace Azure.ResourceManager.Resources
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
             Optional<IList<string>> notScopes = default;
-            Optional<IDictionary<string, ParameterValuesValue>> parameters = default;
+            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
             Optional<string> description = default;
-            Optional<object> metadata = default;
+            Optional<BinaryData> metadata = default;
             Optional<EnforcementMode> enforcementMode = default;
             Optional<IList<NonComplianceMessage>> nonComplianceMessages = default;
             foreach (var property in element.EnumerateObject())
@@ -190,10 +195,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, ParameterValuesValue> dictionary = new Dictionary<string, ParameterValuesValue>();
+                            Dictionary<string, ArmPolicyParameterValue> dictionary = new Dictionary<string, ArmPolicyParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValuesValue.DeserializeParameterValuesValue(property1.Value));
+                                dictionary.Add(property1.Name, ArmPolicyParameterValue.DeserializeArmPolicyParameterValue(property1.Value));
                             }
                             parameters = dictionary;
                             continue;
@@ -210,7 +215,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            metadata = property0.Value.GetObject();
+                            metadata = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enforcementMode"))

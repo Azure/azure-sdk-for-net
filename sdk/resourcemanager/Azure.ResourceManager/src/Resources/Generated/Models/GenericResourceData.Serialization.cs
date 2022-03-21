@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Properties.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(Kind))
             {
@@ -70,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         internal static GenericResourceData DeserializeGenericResourceData(JsonElement element)
         {
             Optional<ArmPlan> plan = default;
-            Optional<object> properties = default;
+            Optional<BinaryData> properties = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             Optional<ResourcesSku> sku = default;
@@ -104,7 +108,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = property.Value.GetObject();
+                    properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("kind"))

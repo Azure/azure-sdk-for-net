@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 return;
             }
 
-            Assert.Fail($"{nameof(SubscriptionExtensions)}.{nameof(SubscriptionExtensions.GetAvailableClusterRegionClustersAsync)} has returned an empty collection of AvailableClusters.");
+            Assert.Fail($"{nameof(EventHubsExtensions)}.{nameof(EventHubsExtensions.GetAvailableClusterRegionClustersAsync)} has returned an empty collection of AvailableClusters.");
         }
 
         [Test]

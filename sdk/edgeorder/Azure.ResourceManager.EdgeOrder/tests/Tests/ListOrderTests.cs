@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(1)]
         public async Task TestListOrdersAtSubscriptionLevel()
         {
-            AsyncPageable<OrderResource> orders = SubscriptionExtensions.GetOrderResourcesAsync(Subscription);
+            AsyncPageable<OrderResource> orders = Subscription.GetOrderResourcesAsync();
             List<OrderResource> ordersResult = await orders.ToEnumerableAsync();
 
             Assert.NotNull(ordersResult);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         public async Task TestListOrdersAtResourceGroupLevel()
         {
             ResourceGroup rg = await GetResourceGroupAsync(_resourceGroupName);
-            AsyncPageable<OrderResource> orders = ResourceGroupExtensions.GetOrderResourcesAsync(rg);
+            AsyncPageable<OrderResource> orders = rg.GetOrderResourcesAsync();
             List<OrderResource> ordersResult = await orders.ToEnumerableAsync();
 
             Assert.NotNull(ordersResult);

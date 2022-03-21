@@ -47,6 +47,7 @@ override-operation-name:
   Deployments_WhatIfAtTenantScope: WhatIf
   Deployments_CheckExistenceAtScope: CheckExistence
   JitRequests_ListBySubscription: GetJitRequestDefinitions
+  Deployments_CalculateTemplateHash: CalculateDeploymentTemplateHash 
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
@@ -166,6 +167,38 @@ directive:
     transform: >
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentOperationProperties.properties.duration["format"] = "duration";
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: resources.json
+    where: $.definitions.AliasPath
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathAttributes";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathTokenType";
+  - from: resources.json
+    where: $.definitions.AliasPattern
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+  - from: resources.json
+    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPatternType";
+  - from: resources.json
+    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasType";
 ```
 
 ### Tag: package-track2-preview

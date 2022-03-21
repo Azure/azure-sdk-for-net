@@ -131,7 +131,30 @@ Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(cont
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be provided as potential issues are discovered.
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema ID (when deserializing). Any errors related to serialization to Avro, or deserialization from Avro, will be thrown as a `AvroSerializationException`. The `InnerException` property will contain the underlying exception that was thrown from the Apache Avro library. When deserializing, the `SerializedSchemaId` property will contain the schema ID corresponding to the serialized data. Using our `Employee` schema example, if we add an `Employee_V2` model that adds a new required field, this would not be compatible with `Employee`. If the data we are attempting to deserialize may contain a schema that would not be compatible with our `Employee_V2` model, then we might write code like the following:
+
+```C# Snippet:SchemaRegistryAvroException
+try
+{
+    Employee_V2 employeeV2 = await serializer.DeserializeAsync<Employee_V2>(content);
+}
+catch (AvroSerializationException exception)
+{
+    // When this exception occurs when deserializing, the exception message will contain the schema ID that was used to
+    // serialize the data.
+    Console.WriteLine(exception);
+
+    // We might also want to look up the specific schema from Schema Registry so that we can log the schema definition
+    if (exception.SerializedSchemaId != null)
+    {
+        SchemaRegistrySchema schema = await client.GetSchemaAsync(exception.SerializedSchemaId);
+        Console.WriteLine(schema.Definition);
+    }
+}
+```
+
+In general, any invalid Avro schemas would probably be caught during testing, but such schemas will also result in a `AvroSerializationException` being thrown when attempting to serialize using an invalid writer schema, or deserialize when using an invalid reader schema.
+
 
 ## Next steps
 
@@ -169,3 +192,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [specific_record]: https://avro.apache.org/docs/current/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry
+[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

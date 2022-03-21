@@ -52,22 +52,30 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// rule.</param>
         /// <param name="displayName">The display name for alerts created by
         /// this alert rule.</param>
+        /// <param name="sourceSettings">Configuration for all supported source
+        /// signals in fusion detection.</param>
+        /// <param name="scenarioExclusionPatterns">Configuration to exclude
+        /// scenarios in fusion detection.</param>
         /// <param name="lastModifiedUtc">The last time that this alert has
         /// been modified.</param>
         /// <param name="severity">The severity for alerts created by this
         /// alert rule. Possible values include: 'High', 'Medium', 'Low',
         /// 'Informational'</param>
         /// <param name="tactics">The tactics of the alert rule</param>
-        public FusionAlertRule(string alertRuleTemplateName, bool enabled, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string description = default(string), string displayName = default(string), System.DateTime? lastModifiedUtc = default(System.DateTime?), string severity = default(string), IList<string> tactics = default(IList<string>))
+        /// <param name="techniques">The techniques of the alert rule</param>
+        public FusionAlertRule(string alertRuleTemplateName, bool enabled, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string description = default(string), string displayName = default(string), IList<FusionSourceSettings> sourceSettings = default(IList<FusionSourceSettings>), IList<FusionScenarioExclusionPattern> scenarioExclusionPatterns = default(IList<FusionScenarioExclusionPattern>), System.DateTime? lastModifiedUtc = default(System.DateTime?), string severity = default(string), IList<string> tactics = default(IList<string>), IList<string> techniques = default(IList<string>))
             : base(id, name, type, systemData, etag)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
             Description = description;
             DisplayName = displayName;
             Enabled = enabled;
+            SourceSettings = sourceSettings;
+            ScenarioExclusionPatterns = scenarioExclusionPatterns;
             LastModifiedUtc = lastModifiedUtc;
             Severity = severity;
             Tactics = tactics;
+            Techniques = techniques;
             CustomInit();
         }
 
@@ -103,6 +111,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public bool Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets configuration for all supported source signals in
+        /// fusion detection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceSettings")]
+        public IList<FusionSourceSettings> SourceSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets configuration to exclude scenarios in fusion
+        /// detection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scenarioExclusionPatterns")]
+        public IList<FusionScenarioExclusionPattern> ScenarioExclusionPatterns { get; set; }
+
+        /// <summary>
         /// Gets the last time that this alert has been modified.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedUtc")]
@@ -122,6 +144,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         public IList<string> Tactics { get; private set; }
 
         /// <summary>
+        /// Gets the techniques of the alert rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.techniques")]
+        public IList<string> Techniques { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -132,6 +160,26 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
             if (AlertRuleTemplateName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "AlertRuleTemplateName");
+            }
+            if (SourceSettings != null)
+            {
+                foreach (var element in SourceSettings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (ScenarioExclusionPatterns != null)
+            {
+                foreach (var element1 in ScenarioExclusionPatterns)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }

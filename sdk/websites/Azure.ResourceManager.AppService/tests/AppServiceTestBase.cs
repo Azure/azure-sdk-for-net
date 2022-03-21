@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.AppService.Tests
         {
         }
 
+        public AppServiceTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
+
         [SetUp]
         public async Task CreateCommonClient()
         {

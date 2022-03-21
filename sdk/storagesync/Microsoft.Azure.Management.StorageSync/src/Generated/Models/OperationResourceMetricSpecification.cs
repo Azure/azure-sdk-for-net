@@ -40,17 +40,20 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="unit">Unit for the metric.</param>
         /// <param name="aggregationType">Aggregation type for the
         /// metric.</param>
+        /// <param name="supportedAggregationTypes">Supported aggregation types
+        /// for the metric.</param>
         /// <param name="fillGapWithZero">Fill gaps in the metric with
         /// zero.</param>
         /// <param name="dimensions">Dimensions for the metric
         /// specification.</param>
-        public OperationResourceMetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), bool? fillGapWithZero = default(bool?), IList<OperationResourceMetricSpecificationDimension> dimensions = default(IList<OperationResourceMetricSpecificationDimension>))
+        public OperationResourceMetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), IList<string> supportedAggregationTypes = default(IList<string>), bool? fillGapWithZero = default(bool?), IList<OperationResourceMetricSpecificationDimension> dimensions = default(IList<OperationResourceMetricSpecificationDimension>))
         {
             Name = name;
             DisplayName = displayName;
             DisplayDescription = displayDescription;
             Unit = unit;
             AggregationType = aggregationType;
+            SupportedAggregationTypes = supportedAggregationTypes;
             FillGapWithZero = fillGapWithZero;
             Dimensions = dimensions;
             CustomInit();
@@ -90,6 +93,12 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// </summary>
         [JsonProperty(PropertyName = "aggregationType")]
         public string AggregationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets supported aggregation types for the metric.
+        /// </summary>
+        [JsonProperty(PropertyName = "supportedAggregationTypes")]
+        public IList<string> SupportedAggregationTypes { get; set; }
 
         /// <summary>
         /// Gets or sets fill gaps in the metric with zero.

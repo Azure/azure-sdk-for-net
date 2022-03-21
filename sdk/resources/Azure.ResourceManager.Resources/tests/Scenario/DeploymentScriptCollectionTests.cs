@@ -126,7 +126,12 @@ namespace Azure.ResourceManager.Resources.Tests
                 Assert.AreEqual(model.Status.ExpirationTime, getResult.Status.ExpirationTime);
                 //Assert.AreEqual(model.Status.Error, getResult.Status.Error);
             }
-            Assert.AreEqual(model.Outputs, getResult.Outputs);
+            Assert.AreEqual(model.Outputs.Count, getResult.Outputs.Count);
+            foreach (var kv in model.Outputs)
+            {
+                Assert.IsTrue(getResult.Outputs.ContainsKey(kv.Key));
+                Assert.AreEqual(kv.Value.ToArray(), getResult.Outputs[kv.Key].ToArray());
+            }
             Assert.AreEqual(model.PrimaryScriptUri, getResult.PrimaryScriptUri);
             Assert.AreEqual(model.SupportingScriptUris, getResult.SupportingScriptUris);
             Assert.AreEqual(model.ScriptContent, getResult.ScriptContent);
