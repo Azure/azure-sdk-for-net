@@ -12,12 +12,41 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiClassificationResult
+    internal partial class CustomMultiClassificationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documents");
+            writer.WriteStartArray();
+            foreach (var item in Documents)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("errors");
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics");
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("projectName");
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deploymentName");
+            writer.WriteStringValue(DeploymentName);
+            writer.WriteEndObject();
+        }
+
         internal static CustomMultiClassificationResult DeserializeCustomMultiClassificationResult(JsonElement element)
         {
-            IReadOnlyList<MultiClassificationDocument> documents = default;
-            IReadOnlyList<DocumentError> errors = default;
+            IList<CustomMultiClassificationResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
@@ -25,10 +54,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<MultiClassificationDocument> array = new List<MultiClassificationDocument>();
+                    List<CustomMultiClassificationResultDocumentsItem> array = new List<CustomMultiClassificationResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MultiClassificationDocument.DeserializeMultiClassificationDocument(item));
+                        array.Add(CustomMultiClassificationResultDocumentsItem.DeserializeCustomMultiClassificationResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -64,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiClassificationResult(documents, errors, statistics.Value, projectName, deploymentName);
+            return new CustomMultiClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
         }
     }
 }
