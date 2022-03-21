@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
@@ -67,6 +68,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 ExtractProperties(ref message, properties, logRecord.StateValues);
             }
 
+            WriteScopeInformation(logRecord, properties);
+
             if (logRecord.EventId.Id != 0)
             {
                 properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
@@ -78,6 +81,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return message;
+        }
+
+        internal static void WriteScopeInformation(LogRecord logRecord, IDictionary<string, string> properties)
+        {
+            StringBuilder builder = null;
+            logRecord.ForEachScope(ProcessScope, properties);
+
+            void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
+            {
+                if (scope.Scope is IEnumerable<KeyValuePair<string, object>> stateDictionary)
+                {
+                    int originalFormatDepth = 1;
+                    foreach (KeyValuePair<string, object> scopeItem in scope)
+                    {
+                        if (scopeItem.Key == "{OriginalFormat}")
+                        {
+                            properties.Add($"OriginalFormatScope_{originalFormatDepth++}", Convert.ToString(scope.Scope.ToString(), CultureInfo.InvariantCulture));
+                        }
+                        else
+                        {
+                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture));
+                        }
+                    }
+                }
+                else
+                {
+                    builder ??= new StringBuilder();
+                    builder.Append(" => ").Append(scope.Scope);
+                }
+            }
+
+            if (builder?.Length > 0)
+            {
+                properties.Add("Scope", builder.ToString());
+            }
         }
 
         internal static string GetProblemId(Exception exception)
