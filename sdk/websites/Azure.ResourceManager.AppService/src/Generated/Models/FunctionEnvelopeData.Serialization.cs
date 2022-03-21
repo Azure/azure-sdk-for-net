@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -62,7 +63,11 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config");
-                writer.WriteObjectValue(Config);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Config);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Config.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(Files))
             {
@@ -113,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> testDataHref = default;
             Optional<string> secretsFileHref = default;
             Optional<string> href = default;
-            Optional<object> config = default;
+            Optional<BinaryData> config = default;
             Optional<IDictionary<string, string>> files = default;
             Optional<string> testData = default;
             Optional<string> invokeUrlTemplate = default;
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            config = property0.Value.GetObject();
+                            config = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("files"))

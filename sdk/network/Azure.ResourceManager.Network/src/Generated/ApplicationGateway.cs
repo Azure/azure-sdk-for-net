@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationGatewayPrivateEndpointConnections and their operations over a ApplicationGatewayPrivateEndpointConnection. </returns>
         public virtual ApplicationGatewayPrivateEndpointConnectionCollection GetApplicationGatewayPrivateEndpointConnections()
         {
-            return new ApplicationGatewayPrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new ApplicationGatewayPrivateEndpointConnectionCollection(Client, Id));
         }
 
         /// <summary>

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of Tables and their operations over a Table. </returns>
         public virtual TableCollection GetTables()
         {
-            return new TableCollection(Client, Id);
+            return GetCachedClient(Client => new TableCollection(Client, Id));
         }
 
         /// <summary>

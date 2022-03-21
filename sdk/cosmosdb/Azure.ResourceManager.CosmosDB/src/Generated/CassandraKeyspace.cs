@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraTables and their operations over a CassandraTable. </returns>
         public virtual CassandraTableCollection GetCassandraTables()
         {
-            return new CassandraTableCollection(Client, Id);
+            return GetCachedClient(Client => new CassandraTableCollection(Client, Id));
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelays and their operations over a ServerfarmHybridConnectionNamespaceRelay. </returns>
         public virtual ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
         {
-            return new ServerfarmHybridConnectionNamespaceRelayCollection(Client, Id);
+            return GetCachedClient(Client => new ServerfarmHybridConnectionNamespaceRelayCollection(Client, Id));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnections and their operations over a ServerfarmVirtualNetworkConnection. </returns>
         public virtual ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
         {
-            return new ServerfarmVirtualNetworkConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new ServerfarmVirtualNetworkConnectionCollection(Client, Id));
         }
 
         /// <summary>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<object>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetServerFarmSkusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServicePlans_GetServerFarmSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<object> GetServerFarmSkus(CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetServerFarmSkus(CancellationToken cancellationToken = default)
         {
             using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlan.GetServerFarmSkus");
             scope.Start();

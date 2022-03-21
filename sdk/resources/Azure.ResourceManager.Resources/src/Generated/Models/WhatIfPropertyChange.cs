@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="before"> The value of the property before the deployment is executed. </param>
         /// <param name="after"> The value of the property after the deployment is executed. </param>
         /// <param name="children"> Nested property changes. </param>
-        internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType, object before, object after, IReadOnlyList<WhatIfPropertyChange> children)
+        internal WhatIfPropertyChange(string path, PropertyChangeType propertyChangeType, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> children)
         {
             Path = path;
             PropertyChangeType = propertyChangeType;
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The type of property change. </summary>
         public PropertyChangeType PropertyChangeType { get; }
         /// <summary> The value of the property before the deployment is executed. </summary>
-        public object Before { get; }
+        public BinaryData Before { get; }
         /// <summary> The value of the property after the deployment is executed. </summary>
-        public object After { get; }
+        public BinaryData After { get; }
         /// <summary> Nested property changes. </summary>
         public IReadOnlyList<WhatIfPropertyChange> Children { get; }
     }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CapacityReservations and their operations over a CapacityReservation. </returns>
         public virtual CapacityReservationCollection GetCapacityReservations()
         {
-            return new CapacityReservationCollection(Client, Id);
+            return GetCachedClient(Client => new CapacityReservationCollection(Client, Id));
         }
 
         /// <summary>

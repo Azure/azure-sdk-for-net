@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of WorkloadClassifiers and their operations over a WorkloadClassifier. </returns>
         public virtual WorkloadClassifierCollection GetWorkloadClassifiers()
         {
-            return new WorkloadClassifierCollection(Client, Id);
+            return GetCachedClient(Client => new WorkloadClassifierCollection(Client, Id));
         }
 
         /// <summary>

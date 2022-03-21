@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicies and their operations over a ManagedRestorableDroppedDbBackupShortTermRetentionPolicy. </returns>
         public virtual ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection GetManagedRestorableDroppedDbBackupShortTermRetentionPolicies()
         {
-            return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection(Client, Id));
         }
 
         /// <summary>

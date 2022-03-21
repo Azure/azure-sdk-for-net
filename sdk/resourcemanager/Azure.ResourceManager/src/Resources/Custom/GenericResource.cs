@@ -69,7 +69,9 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+#pragma warning disable CA1801 // Review unused parameters
         internal static void ValidateResourceId(ResourceIdentifier id)
+#pragma warning restore CA1801 // Review unused parameters
         {
             //no op but here for code generation
         }

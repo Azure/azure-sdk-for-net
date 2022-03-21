@@ -6,8 +6,6 @@ namespace Azure.ResourceManager
         public ArmClient(Azure.Core.TokenCredential credential) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public virtual T GetClient<T>(System.Func<T> ctor) where T : Azure.ResourceManager.Core.ArmResource { throw null; }
         public virtual Azure.ResourceManager.Resources.DataPolicyManifest GetDataPolicyManifest(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Subscription GetDefaultSubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.Resources.Subscription> GetDefaultSubscriptionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -22,6 +20,8 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.PolicyAssignment GetPolicyAssignment(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.PolicyExemption GetPolicyExemption(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Provider GetProvider(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual T GetResourceClient<T>(System.Func<T> resourceFactory) where T : Azure.ResourceManager.Core.ArmResource { throw null; }
         public virtual Azure.ResourceManager.Resources.ResourceGroup GetResourceGroup(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ResourceLink GetResourceLink(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.Subscription GetSubscription(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureChinaCloud;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureCloud;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureGermanCloud;
-        public static readonly Azure.ResourceManager.ArmEnvironment AzureUSGovernment;
-        public ArmEnvironment(System.Uri baseUri, string audience) { throw null; }
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureChina;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureGerman;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzureGovernment;
+        public static readonly Azure.ResourceManager.ArmEnvironment AzurePublicCloud;
+        public ArmEnvironment(System.Uri endpoint, string audience) { throw null; }
         public string Audience { get { throw null; } }
-        public System.Uri BaseUri { get { throw null; } }
         public string DefaultScope { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ArmEnvironment other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Models
     {
         public ErrorAdditionalInfo() { }
         public string ErrorAdditionalInfoType { get { throw null; } }
-        public object Info { get { throw null; } }
+        public System.BinaryData Info { get { throw null; } }
     }
     public partial class ErrorDetail
     {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Resources
         public string Kind { get { throw null; } set { } }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ArmPlan Plan { get { throw null; } set { } }
-        public object Properties { get { throw null; } set { } }
+        public System.BinaryData Properties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ResourcesSku Sku { get { throw null; } set { } }
     }
@@ -762,10 +762,10 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.EnforcementMode? EnforcementMode { get { throw null; } set { } }
         public Azure.ResourceManager.Models.SystemAssignedServiceIdentity Identity { get { throw null; } set { } }
         public string Location { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.NonComplianceMessage> NonComplianceMessages { get { throw null; } }
         public System.Collections.Generic.IList<string> NotScopes { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterValuesValue> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string Scope { get { throw null; } }
     }
@@ -774,10 +774,10 @@ namespace Azure.ResourceManager.Resources
         public PolicyDefinitionData() { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public string Mode { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterDefinitionsValue> Parameters { get { throw null; } }
-        public object PolicyRule { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> Parameters { get { throw null; } }
+        public System.BinaryData PolicyRule { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
     }
     public partial class PolicyExemption : Azure.ResourceManager.Core.ArmResource
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Resources
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExemptionCategory ExemptionCategory { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
         public string PolicyAssignmentId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PolicyDefinitionReferenceIds { get { throw null; } }
     }
@@ -825,8 +825,8 @@ namespace Azure.ResourceManager.Resources
         public PolicySetDefinitionData() { }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public object Metadata { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterDefinitionsValue> Parameters { get { throw null; } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> Parameters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup> PolicyDefinitionGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference> PolicyDefinitions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.PolicyType? PolicyType { get { throw null; } set { } }
@@ -1230,100 +1230,29 @@ namespace Azure.ResourceManager.Resources
 }
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class Alias
-    {
-        internal Alias() { }
-        public Azure.ResourceManager.Resources.Models.AliasType? AliasType { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPathMetadata DefaultMetadata { get { throw null; } }
-        public string DefaultPath { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPattern DefaultPattern { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AliasPath> Paths { get { throw null; } }
-    }
-    public partial class AliasPath
-    {
-        internal AliasPath() { }
-        public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPathMetadata Metadata { get { throw null; } }
-        public string Path { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPattern Pattern { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AliasPathAttributes : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathAttributes>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AliasPathAttributes(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.AliasPathAttributes Modifiable { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathAttributes None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.AliasPathAttributes other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.AliasPathAttributes left, Azure.ResourceManager.Resources.Models.AliasPathAttributes right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.AliasPathAttributes (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.AliasPathAttributes left, Azure.ResourceManager.Resources.Models.AliasPathAttributes right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AliasPathMetadata
-    {
-        internal AliasPathMetadata() { }
-        public Azure.ResourceManager.Resources.Models.AliasPathTokenType? AliasPathTokenType { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.AliasPathAttributes? Attributes { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.AliasPathTokenType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AliasPathTokenType(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Any { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Array { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Boolean { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Integer { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType NotSpecified { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Number { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType Object { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.AliasPathTokenType String { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.AliasPathTokenType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.AliasPathTokenType left, Azure.ResourceManager.Resources.Models.AliasPathTokenType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.AliasPathTokenType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.AliasPathTokenType left, Azure.ResourceManager.Resources.Models.AliasPathTokenType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class AliasPattern
-    {
-        internal AliasPattern() { }
-        public Azure.ResourceManager.Resources.Models.AliasPatternType? AliasPatternType { get { throw null; } }
-        public string Phrase { get { throw null; } }
-        public string Variable { get { throw null; } }
-    }
-    public enum AliasPatternType
-    {
-        NotSpecified = 0,
-        Extract = 1,
-    }
-    public enum AliasType
-    {
-        NotSpecified = 0,
-        PlainText = 1,
-        Mask = 2,
-    }
     public partial class ApiProfile
     {
         internal ApiProfile() { }
         public string ApiVersion { get { throw null; } }
         public string ProfileVersion { get { throw null; } }
     }
+    public partial class ArmPolicyParameter
+    {
+        public ArmPolicyParameter() { }
+        public System.Collections.Generic.IList<System.BinaryData> AllowedValues { get { throw null; } }
+        public System.BinaryData DefaultValue { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ParameterType? ParameterType { get { throw null; } set { } }
+    }
+    public partial class ArmPolicyParameterValue
+    {
+        public ArmPolicyParameterValue() { }
+        public System.BinaryData Value { get { throw null; } set { } }
+    }
     public partial class DataEffect
     {
         internal DataEffect() { }
-        public object DetailsSchema { get { throw null; } }
+        public System.BinaryData DetailsSchema { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class DataManifestCustomResourceFunctionDefinition
@@ -1475,18 +1404,10 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
     }
-    public partial class ParameterDefinitionsValue
-    {
-        public ParameterDefinitionsValue() { }
-        public System.Collections.Generic.IList<object> AllowedValues { get { throw null; } }
-        public object DefaultValue { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ParameterDefinitionsValueMetadata Metadata { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ParameterType? ParameterType { get { throw null; } set { } }
-    }
     public partial class ParameterDefinitionsValueMetadata
     {
         public ParameterDefinitionsValueMetadata() { }
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public bool? AssignPermissions { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -1514,11 +1435,6 @@ namespace Azure.ResourceManager.Resources.Models
         public static implicit operator Azure.ResourceManager.Resources.Models.ParameterType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ParameterType left, Azure.ResourceManager.Resources.Models.ParameterType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ParameterValuesValue
-    {
-        public ParameterValuesValue() { }
-        public object Value { get { throw null; } set { } }
     }
     public partial class PatchableResourceGroupData
     {
@@ -1555,7 +1471,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         public PolicyDefinitionReference(string policyDefinitionId) { }
         public System.Collections.Generic.IList<string> GroupNames { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ParameterValuesValue> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
     }
@@ -1660,7 +1576,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ProviderResourceType
     {
         internal ProviderResourceType() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> Aliases { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ApiProfile> ApiProfiles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
         public string Capabilities { get { throw null; } }
@@ -1717,7 +1633,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal ResourceGroupExportResult() { }
         public Azure.ResourceManager.Models.ErrorDetail Error { get { throw null; } }
-        public object Template { get { throw null; } }
+        public System.BinaryData Template { get { throw null; } }
     }
     public partial class ResourceGroupProperties
     {
@@ -1747,11 +1663,95 @@ namespace Azure.ResourceManager.Resources.Models
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
     }
+    public partial class ResourceTypeAlias
+    {
+        internal ResourceTypeAlias() { }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata DefaultMetadata { get { throw null; } }
+        public string DefaultPath { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern DefaultPattern { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath> Paths { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasType? ResourceTypeAliasType { get { throw null; } }
+    }
     public partial class ResourceTypeAliases
     {
         internal ResourceTypeAliases() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.Alias> Aliases { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> Aliases { get { throw null; } }
         public string ResourceType { get { throw null; } }
+    }
+    public partial class ResourceTypeAliasPath
+    {
+        internal ResourceTypeAliasPath() { }
+        public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata Metadata { get { throw null; } }
+        public string Path { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern Pattern { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceTypeAliasPathAttributes : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceTypeAliasPathAttributes(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes Modifiable { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes left, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes left, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceTypeAliasPathMetadata
+    {
+        internal ResourceTypeAliasPathMetadata() { }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes? Attributes { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType? ResourceTypeAliasPathTokenType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceTypeAliasPathTokenType : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceTypeAliasPathTokenType(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType Any { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType Array { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType Boolean { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType Integer { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType Number { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType Object { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType left, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType left, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ResourceTypeAliasPattern
+    {
+        internal ResourceTypeAliasPattern() { }
+        public string Phrase { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceTypeAliasPatternType? ResourceTypeAliasPatternType { get { throw null; } }
+        public string Variable { get { throw null; } }
+    }
+    public enum ResourceTypeAliasPatternType
+    {
+        NotSpecified = 0,
+        Extract = 1,
+    }
+    public enum ResourceTypeAliasType
+    {
+        NotSpecified = 0,
+        PlainText = 1,
+        Mask = 2,
     }
     public partial class RestApi
     {

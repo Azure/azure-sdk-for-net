@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(model.Data.Mode, getResult.Data.Mode);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.PolicyRule, getResult.Data.PolicyRule);
-            Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
+            Assert.AreEqual(model.Data.PolicyRule.ToArray(), getResult.Data.PolicyRule.ToArray());
+            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
             if(model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
                 Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
-                foreach (KeyValuePair<string, ParameterDefinitionsValue> kvp in model.Data.Parameters)
+                foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
-                    ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
+                    ArmPolicyParameter getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
                     Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {

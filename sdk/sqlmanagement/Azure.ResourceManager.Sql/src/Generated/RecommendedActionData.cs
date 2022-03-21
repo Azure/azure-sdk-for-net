@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
             ObservedImpact = new ChangeTrackingList<RecommendedActionImpactRecord>();
             TimeSeries = new ChangeTrackingList<RecommendedActionMetricInfo>();
             LinkedObjects = new ChangeTrackingList<string>();
-            Details = new ChangeTrackingDictionary<string, object>();
+            Details = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of RecommendedActionData. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
         /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
         /// <param name="details"> Gets additional details specific to this recommended action. </param>
-        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartTime, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartTime, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedTime, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedTime, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, object> details) : base(id, name, resourceType, systemData)
+        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartTime, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartTime, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedTime, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedTime, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, BinaryData> details) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -134,6 +134,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets the linked objects, if any. </summary>
         public IReadOnlyList<string> LinkedObjects { get; }
         /// <summary> Gets additional details specific to this recommended action. </summary>
-        public IReadOnlyDictionary<string, object> Details { get; }
+        public IReadOnlyDictionary<string, BinaryData> Details { get; }
     }
 }

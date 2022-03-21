@@ -35,6 +35,13 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <param name='watchlistAlias'>
         /// Watchlist Alias
         /// </param>
+        /// <param name='skipToken'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// Optional.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -50,7 +57,7 @@ namespace Microsoft.Azure.Management.SecurityInsights
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<WatchlistItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WatchlistItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string watchlistAlias, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a watchlist, without its watchlist items.
         /// </summary>
