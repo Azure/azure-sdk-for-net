@@ -9,7 +9,9 @@ namespace Azure.ResourceManager
 {
     internal class MgmtTelemetryPolicy : HttpPipelineSynchronousPolicy
     {
+#pragma warning disable CA1801
         public MgmtTelemetryPolicy(object source, ClientOptions options)
+#pragma warning restore CA1801
         {
         }
 
