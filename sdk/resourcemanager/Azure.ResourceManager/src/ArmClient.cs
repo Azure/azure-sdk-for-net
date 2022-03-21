@@ -71,12 +71,13 @@ namespace Azure.ResourceManager
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new ArmClientOptions();
+            ArmEnvironment environment = options.Environment.HasValue ? options.Environment.Value : ArmEnvironment.AzurePublicCloud;
 
-            Argument.AssertNotNull(options.Environment.Endpoint, nameof(options.Environment.Endpoint));
+            Argument.AssertNotNull(environment.Endpoint, nameof(environment.Endpoint));
 
-            BaseUri = options.Environment.Endpoint;
+            BaseUri = environment.Endpoint;
 
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
+            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, environment.DefaultScope));
 
             DiagnosticOptions = options.Diagnostics;
             _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions);
