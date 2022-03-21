@@ -98,17 +98,18 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<AzureLocation>> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            ProviderInfo resourcePageableProvider = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
+            Response<ProviderInfo> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
+            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
-            return theResource.Locations.Select(l => new AzureLocation(l));
+            return Response.FromValue(theResource.Locations.Select(l => new AzureLocation(l)), resourcePageableProviderResponse.GetRawResponse());
         }
 
         /// <summary>
@@ -117,17 +118,18 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual async Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<AzureLocation>>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            ProviderInfo resourcePageableProvider = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            Response<ProviderInfo> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
-            return theResource.Locations.Select(l => new AzureLocation(l));
+            return Response.FromValue(theResource.Locations.Select(l => new AzureLocation(l)), resourcePageableProviderResponse.GetRawResponse());
         }
 
         /// <summary>
