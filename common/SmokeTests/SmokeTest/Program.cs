@@ -27,6 +27,7 @@ using System.Threading;
 
 const string AssemblyFileMask = "*.dll";
 
+var IsDevOpsHost = (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECTID")));
 LogInformation($"Smoke Test run starting...{ Environment.NewLine }");
 
 var returnCode = 0;
@@ -106,31 +107,45 @@ void ReportError() => returnCode = -1;
 
 void LogError(string message, ConsoleColor? color = default)
 {
-    var previousForeground = Console.ForegroundColor;
-    Console.ForegroundColor = color ?? ConsoleColor.Red;
-
-    try
+    if (IsDevOpsHost)
     {
-        Console.Error.WriteLine(message);
+        Console.WriteLine($"[debug]{ message })");
     }
-    finally
+    else
     {
-        Console.ForegroundColor = previousForeground;
+        var previousForeground = Console.ForegroundColor;
+        Console.ForegroundColor = color ?? ConsoleColor.Red;
+
+        try
+        {
+            Console.Error.WriteLine(message);
+        }
+        finally
+        {
+            Console.ForegroundColor = previousForeground;
+        }
     }
 }
 
 void LogInformation(string message, ConsoleColor? color = default)
 {
-    var previousForeground = Console.ForegroundColor;
-    Console.ForegroundColor = color ?? Console.ForegroundColor;
-
-    try
+    if (IsDevOpsHost)
     {
-        Console.WriteLine(message);
+        Console.WriteLine($"##vso[task.LogIssue type=error;]{ message }");
     }
-    finally
+    else
     {
-        Console.ForegroundColor = previousForeground;
+        var previousForeground = Console.ForegroundColor;
+        Console.ForegroundColor = color ?? Console.ForegroundColor;
+
+        try
+        {
+            Console.WriteLine(message);
+        }
+        finally
+        {
+            Console.ForegroundColor = previousForeground;
+        }
     }
 }
 
@@ -231,7 +246,7 @@ IEnumerable<Assembly> LoadAssemblies(Assembly rootAssembly, string assemblyFileM
     while (assembliesToProcess.Count > 0)
     {
         var assembly = assembliesToProcess.Pop();
-        
+
         if ((!assembly.FullName.StartsWith("System.")) && (!processedAssemblies.Contains(assembly.FullName)))
         {
             processedAssemblies.Add(assembly.FullName);
