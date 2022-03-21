@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
-- Added the `SetUserAgentString` extension method to `HttpMessage` accepting a `UserAgentValue` and an optional application Id string. This allows assembly specific user agent header information to be set with proper formatting on a per-message basis.
+- Added the `TelemetryDetails` type which enables customization of UserAgent header values on a per-request basis based on a specified `Assembly` and an optional application Id string.
 - Added an extension method to `BinaryData` called `ToObjectFromJson` which converts the json value represented by `BinaryData` to an object of a specific type.
 - Additional data center locations were added to `AzureLocation`.
 
