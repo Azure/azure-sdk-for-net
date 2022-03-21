@@ -2128,7 +2128,10 @@ namespace Azure.ResourceManager.Compute
         }
 
         #region AvailabilitySet
-        /// <summary> Gets an object representing a AvailabilitySet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AvailabilitySet" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvailabilitySet.CreateResourceIdentifier" /> to create an <see cref="AvailabilitySet" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvailabilitySet" /> object. </returns>
@@ -2144,7 +2147,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region ProximityPlacementGroup
-        /// <summary> Gets an object representing a ProximityPlacementGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ProximityPlacementGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProximityPlacementGroup.CreateResourceIdentifier" /> to create a <see cref="ProximityPlacementGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProximityPlacementGroup" /> object. </returns>
@@ -2160,7 +2166,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DedicatedHostGroup
-        /// <summary> Gets an object representing a DedicatedHostGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DedicatedHostGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DedicatedHostGroup.CreateResourceIdentifier" /> to create a <see cref="DedicatedHostGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DedicatedHostGroup" /> object. </returns>
@@ -2176,7 +2185,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DedicatedHost
-        /// <summary> Gets an object representing a DedicatedHost along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DedicatedHost" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DedicatedHost.CreateResourceIdentifier" /> to create a <see cref="DedicatedHost" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DedicatedHost" /> object. </returns>
@@ -2192,7 +2204,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SshPublicKey
-        /// <summary> Gets an object representing a SshPublicKey along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SshPublicKey" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SshPublicKey.CreateResourceIdentifier" /> to create a <see cref="SshPublicKey" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SshPublicKey" /> object. </returns>
@@ -2208,7 +2223,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineExtensionImage
-        /// <summary> Gets an object representing a VirtualMachineExtensionImage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineExtensionImage" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineExtensionImage.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionImage" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineExtensionImage" /> object. </returns>
@@ -2224,7 +2242,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineExtension
-        /// <summary> Gets an object representing a VirtualMachineExtension along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineExtension" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineExtension.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtension" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineExtension" /> object. </returns>
@@ -2240,7 +2261,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachine
-        /// <summary> Gets an object representing a VirtualMachine along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachine" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachine.CreateResourceIdentifier" /> to create a <see cref="VirtualMachine" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachine" /> object. </returns>
@@ -2256,7 +2280,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSet
-        /// <summary> Gets an object representing a VirtualMachineScaleSet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSet" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSet.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSet" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSet" /> object. </returns>
@@ -2272,7 +2299,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region Image
-        /// <summary> Gets an object representing a Image along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="Image" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Image.CreateResourceIdentifier" /> to create an <see cref="Image" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Image" /> object. </returns>
@@ -2288,7 +2318,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region RestorePointGroup
-        /// <summary> Gets an object representing a RestorePointGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorePointGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorePointGroup.CreateResourceIdentifier" /> to create a <see cref="RestorePointGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorePointGroup" /> object. </returns>
@@ -2304,7 +2337,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region RestorePoint
-        /// <summary> Gets an object representing a RestorePoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorePoint" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorePoint.CreateResourceIdentifier" /> to create a <see cref="RestorePoint" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
@@ -2320,7 +2356,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CapacityReservationGroup
-        /// <summary> Gets an object representing a CapacityReservationGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CapacityReservationGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapacityReservationGroup.CreateResourceIdentifier" /> to create a <see cref="CapacityReservationGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CapacityReservationGroup" /> object. </returns>
@@ -2336,7 +2375,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CapacityReservation
-        /// <summary> Gets an object representing a CapacityReservation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CapacityReservation" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapacityReservation.CreateResourceIdentifier" /> to create a <see cref="CapacityReservation" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CapacityReservation" /> object. </returns>
@@ -2352,7 +2394,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetExtension
-        /// <summary> Gets an object representing a VirtualMachineScaleSetExtension along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetExtension" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetExtension.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetExtension" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetExtension" /> object. </returns>
@@ -2368,7 +2413,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetRollingUpgrade
-        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgrade along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgrade" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetRollingUpgrade.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetRollingUpgrade" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgrade" /> object. </returns>
@@ -2384,7 +2432,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetVmExtension
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVmExtension along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmExtension" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmExtension.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmExtension" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtension" /> object. </returns>
@@ -2400,7 +2451,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetVm
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVm along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVm" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVm.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVm" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVm" /> object. </returns>
@@ -2416,7 +2470,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineRunCommand
-        /// <summary> Gets an object representing a VirtualMachineRunCommand along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineRunCommand" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineRunCommand.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineRunCommand" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineRunCommand" /> object. </returns>
@@ -2432,7 +2489,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetVirtualMachineRunCommand
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVirtualMachineRunCommand along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVirtualMachineRunCommand.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVirtualMachineRunCommand" /> object. </returns>
@@ -2448,7 +2508,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region Disk
-        /// <summary> Gets an object representing a Disk along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Disk" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Disk.CreateResourceIdentifier" /> to create a <see cref="Disk" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Disk" /> object. </returns>
@@ -2464,7 +2527,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region Snapshot
-        /// <summary> Gets an object representing a Snapshot along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Snapshot" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Snapshot.CreateResourceIdentifier" /> to create a <see cref="Snapshot" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Snapshot" /> object. </returns>
@@ -2480,7 +2546,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskEncryptionSet
-        /// <summary> Gets an object representing a DiskEncryptionSet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskEncryptionSet" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskEncryptionSet.CreateResourceIdentifier" /> to create a <see cref="DiskEncryptionSet" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskEncryptionSet" /> object. </returns>
@@ -2496,7 +2565,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskAccess
-        /// <summary> Gets an object representing a DiskAccess along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskAccess" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskAccess.CreateResourceIdentifier" /> to create a <see cref="DiskAccess" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskAccess" /> object. </returns>
@@ -2512,7 +2584,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -2528,7 +2603,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskRestorePoint
-        /// <summary> Gets an object representing a DiskRestorePoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskRestorePoint" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskRestorePoint.CreateResourceIdentifier" /> to create a <see cref="DiskRestorePoint" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskRestorePoint" /> object. </returns>
@@ -2544,7 +2622,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region Gallery
-        /// <summary> Gets an object representing a Gallery along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Gallery" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Gallery.CreateResourceIdentifier" /> to create a <see cref="Gallery" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Gallery" /> object. </returns>
@@ -2560,7 +2641,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryImage
-        /// <summary> Gets an object representing a GalleryImage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryImage" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryImage.CreateResourceIdentifier" /> to create a <see cref="GalleryImage" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryImage" /> object. </returns>
@@ -2576,7 +2660,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryImageVersion
-        /// <summary> Gets an object representing a GalleryImageVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryImageVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryImageVersion.CreateResourceIdentifier" /> to create a <see cref="GalleryImageVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryImageVersion" /> object. </returns>
@@ -2592,7 +2679,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryApplication
-        /// <summary> Gets an object representing a GalleryApplication along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryApplication" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryApplication.CreateResourceIdentifier" /> to create a <see cref="GalleryApplication" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryApplication" /> object. </returns>
@@ -2608,7 +2698,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryApplicationVersion
-        /// <summary> Gets an object representing a GalleryApplicationVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryApplicationVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryApplicationVersion.CreateResourceIdentifier" /> to create a <see cref="GalleryApplicationVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryApplicationVersion" /> object. </returns>
@@ -2624,7 +2717,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SharedGallery
-        /// <summary> Gets an object representing a SharedGallery along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedGallery" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedGallery.CreateResourceIdentifier" /> to create a <see cref="SharedGallery" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedGallery" /> object. </returns>
@@ -2640,7 +2736,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SharedGalleryImage
-        /// <summary> Gets an object representing a SharedGalleryImage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedGalleryImage" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedGalleryImage.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImage" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedGalleryImage" /> object. </returns>
@@ -2656,7 +2755,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SharedGalleryImageVersion
-        /// <summary> Gets an object representing a SharedGalleryImageVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedGalleryImageVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedGalleryImageVersion.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedGalleryImageVersion" /> object. </returns>
@@ -2672,7 +2774,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region RoleInstance
-        /// <summary> Gets an object representing a RoleInstance along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleInstance" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleInstance.CreateResourceIdentifier" /> to create a <see cref="RoleInstance" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleInstance" /> object. </returns>
@@ -2688,7 +2793,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CloudServiceRole
-        /// <summary> Gets an object representing a CloudServiceRole along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceRole" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceRole.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRole" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CloudServiceRole" /> object. </returns>
@@ -2704,7 +2812,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CloudService
-        /// <summary> Gets an object representing a CloudService along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudService" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudService.CreateResourceIdentifier" /> to create a <see cref="CloudService" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CloudService" /> object. </returns>
@@ -2720,7 +2831,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region OSVersion
-        /// <summary> Gets an object representing a OSVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OSVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OSVersion.CreateResourceIdentifier" /> to create an <see cref="OSVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OSVersion" /> object. </returns>
@@ -2736,7 +2850,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region OSFamily
-        /// <summary> Gets an object representing a OSFamily along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OSFamily" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OSFamily.CreateResourceIdentifier" /> to create an <see cref="OSFamily" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OSFamily" /> object. </returns>
