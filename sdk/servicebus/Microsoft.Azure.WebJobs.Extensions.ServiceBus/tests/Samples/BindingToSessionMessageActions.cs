@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.Samples
                 }
             }
 
+            // We can also perform session-specific operations using the actions, such as setting state that is specific to this session.
             await sessionActions.SetSessionStateAsync(new BinaryData("<session state>"));
         }
         #endregion
