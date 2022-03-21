@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.Storage.Models
         public NetworkRuleSet(Azure.ResourceManager.Storage.Models.DefaultAction defaultAction) { }
         public Azure.ResourceManager.Storage.Models.Bypass? Bypass { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.DefaultAction DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.IPRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.IPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.ResourceAccessRule> ResourceAccessRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Storage.Models.VirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
     }
@@ -1852,7 +1852,7 @@ namespace Azure.ResourceManager.Storage.Models
     public enum ProvisioningState
     {
         Creating = 0,
-        ResolvingDNS = 1,
+        ResolvingDns = 1,
         Succeeded = 2,
     }
     public enum PublicAccess
