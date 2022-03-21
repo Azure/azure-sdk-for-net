@@ -90,7 +90,7 @@ namespace Azure
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
-        internal ResponseErrorFormatter ErrorFormatter { get; set; } = new ResponseErrorFormatter(); // shared instance
+        internal ErrorResponseFormatter ErrorFormatter { get; set; } = ErrorResponseFormatter.Default;
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.

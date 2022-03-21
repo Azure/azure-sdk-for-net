@@ -65,4 +65,8 @@
     <Compile Include="Shared\DelayStrategy.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20220321.3" />
+  </ItemGroup>
+
 </Project>

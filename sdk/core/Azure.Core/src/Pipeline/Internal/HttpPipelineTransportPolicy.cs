@@ -11,11 +11,13 @@ namespace Azure.Core.Pipeline
     {
         private readonly HttpPipelineTransport _transport;
         private readonly HttpMessageSanitizer _sanitizer;
+        private readonly ErrorResponseFormatter _errorFormatter;
 
-        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer)
+        public HttpPipelineTransportPolicy(HttpPipelineTransport transport, HttpMessageSanitizer sanitizer, ErrorResponseFormatter errorFormatter)
         {
             _transport = transport;
             _sanitizer = sanitizer;
+            _errorFormatter = errorFormatter;
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -25,6 +27,7 @@ namespace Azure.Core.Pipeline
             await _transport.ProcessAsync(message).ConfigureAwait(false);
 
             message.Response.Sanitizer = _sanitizer;
+            message.Response.ErrorFormatter = _errorFormatter;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
 
@@ -35,6 +38,7 @@ namespace Azure.Core.Pipeline
             _transport.Process(message);
 
             message.Response.Sanitizer = _sanitizer;
+            message.Response.ErrorFormatter = _errorFormatter;
             message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
     }

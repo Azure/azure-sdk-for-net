@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ApiVersionIsNotSanitizedByDefault()
         {
-            HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(ClientOptions.Default.Diagnostics);
+            HttpMessageSanitizer sanitizer = ErrorResponseFormatter.CreateMessageSanitizer(ClientOptions.Default.Diagnostics);
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("api-version", "2021-11-01");
@@ -65,7 +65,7 @@ namespace Azure.Core.Tests
             var options = new DefaultClientOptions();
             options.Diagnostics.LoggedQueryParameters.Add("api-version");
 
-            HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(options.Diagnostics);
+            HttpMessageSanitizer sanitizer = ErrorResponseFormatter.CreateMessageSanitizer(options.Diagnostics);
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("api-version", "2021-11-01");
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests
             var options = new DefaultClientOptions();
             options.Diagnostics.LoggedQueryParameters.Remove("api-version");
 
-            HttpMessageSanitizer sanitizer = ClientDiagnostics.CreateMessageSanitizer(options.Diagnostics);
+            HttpMessageSanitizer sanitizer = ErrorResponseFormatter.CreateMessageSanitizer(options.Diagnostics);
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Reset(new Uri("http://localhost/"));
             uriBuilder.AppendQuery("api-version", "2021-11-01");

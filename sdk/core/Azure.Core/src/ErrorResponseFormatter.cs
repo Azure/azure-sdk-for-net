@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,10 +16,11 @@ namespace Azure.Core
 {
     /// <summary>
     /// </summary>
-    public class ResponseErrorFormatter
+    public class ErrorResponseFormatter
     {
-        //private readonly HttpMessageSanitizer _sanitizer;
         private const string DefaultMessage = "Service request failed.";
+
+        internal static ErrorResponseFormatter Default = new ErrorResponseFormatter();
 
         /// <summary>
         /// </summary>
@@ -55,20 +57,6 @@ namespace Azure.Core
             return null;
         }
 
-        //public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
-        //{
-        //    var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-        //    error ??= ExtractErrorContent(content, response.Headers, ref additionalInfo);
-        //    return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
-        //}
-
-        //public RequestFailedException CreateRequestFailedException(Response response, ResponseError? error = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
-        //{
-        //    string? content = ReadContentAsync(response, false).EnsureCompleted();
-        //    error ??= ExtractErrorContent(content, response.Headers, ref additionalInfo);
-        //    return CreateRequestFailedExceptionWithContent(response, error, content, additionalInfo, innerException);
-        //}
-
         private static RequestFailedException CreateRequestFailedExceptionWithContent(
             Response response,
             HttpMessageSanitizer sanitizer,
@@ -90,12 +78,6 @@ namespace Azure.Core
 
             return exception;
         }
-
-        //public async ValueTask<string> CreateRequestFailedMessageAsync(Response response, ResponseError? error, IDictionary<string, string>? additionalInfo, bool async)
-        //{
-        //    var content = await ReadContentAsync(response, async).ConfigureAwait(false);
-        //    return CreateRequestFailedMessageWithContent(response, error, content, additionalInfo, _sanitizer);
-        //}
 
         internal static string CreateRequestFailedMessageWithContent(Response response, ResponseError? error, string? content, IDictionary<string, string>? additionalInfo, HttpMessageSanitizer sanitizer)
         {
@@ -173,6 +155,13 @@ namespace Azure.Core
             }
 
             return content;
+        }
+
+        internal static HttpMessageSanitizer CreateMessageSanitizer(DiagnosticsOptions diagnostics)
+        {
+            return new HttpMessageSanitizer(
+                diagnostics.LoggedQueryParameters.ToArray(),
+                diagnostics.LoggedHeaderNames.ToArray());
         }
 
         private class ErrorResponse

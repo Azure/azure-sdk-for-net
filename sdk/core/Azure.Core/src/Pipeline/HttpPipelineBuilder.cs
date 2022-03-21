@@ -58,7 +58,7 @@ namespace Azure.Core.Pipeline
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
             ResponseClassifier? responseClassifier,
-            ResponseErrorFormatter? errorFormatter)
+            ErrorResponseFormatter? errorFormatter)
         {
             var result = BuildInternal(options, perCallPolicies, perRetryPolicies, null, responseClassifier, errorFormatter);
             return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.ErrorFormatter);
@@ -80,13 +80,13 @@ namespace Azure.Core.Pipeline
             return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned, result.ErrorFormatter);
         }
 
-        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned, ResponseErrorFormatter ErrorFormatter) BuildInternal(
+        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned, ErrorResponseFormatter ErrorFormatter) BuildInternal(
             ClientOptions options,
             HttpPipelinePolicy[] perCallPolicies,
             HttpPipelinePolicy[] perRetryPolicies,
             HttpPipelineTransportOptions? defaultTransportOptions,
             ResponseClassifier? responseClassifier,
-            ResponseErrorFormatter? errorFormatter)
+            ErrorResponseFormatter? errorFormatter)
         {
             if (perCallPolicies == null)
             {
@@ -198,10 +198,11 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer));
+            errorFormatter ??= ErrorResponseFormatter.Default;
+
+            policies.Add(new HttpPipelineTransportPolicy(transport, sanitizer, errorFormatter));
 
             responseClassifier ??= ResponseClassifier.Shared;
-            errorFormatter ??= new ResponseErrorFormatter(); // TODO: use shared instance?
 
             return (responseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated, errorFormatter);
         }

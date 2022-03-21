@@ -25,7 +25,7 @@ namespace Azure.Core.Pipeline
         /// <param name="responseClassifier">The response classifier to be used in invocations.</param>
         /// <param name="isTransportOwnedInternally"> </param>
         /// <param name="errorFormatter"> TODO </param>
-        internal DisposableHttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[] policies, ResponseClassifier responseClassifier, bool isTransportOwnedInternally, ResponseErrorFormatter errorFormatter)
+        internal DisposableHttpPipeline(HttpPipelineTransport transport, int perCallIndex, int perRetryIndex, HttpPipelinePolicy[] policies, ResponseClassifier responseClassifier, bool isTransportOwnedInternally, ErrorResponseFormatter errorFormatter)
             : base(transport, perCallIndex, perRetryIndex, policies, responseClassifier, errorFormatter)
         {
             this.isTransportOwnedInternally = isTransportOwnedInternally;
