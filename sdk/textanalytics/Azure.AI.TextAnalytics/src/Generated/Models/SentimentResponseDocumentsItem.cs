@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentimentResponseDocumentsItem. </summary>
-    public partial class SentimentResponseDocumentsItem : SentimentDocumentResult
+    internal partial class SentimentResponseDocumentsItem : SentimentDocumentResult
     {
         /// <summary> Initializes a new instance of SentimentResponseDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

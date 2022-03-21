@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomSingleClassificationResultDocumentsItem. </summary>
-    public partial class CustomSingleClassificationResultDocumentsItem : SingleClassificationDocumentResult
+    internal partial class CustomSingleClassificationResultDocumentsItem : SingleClassificationDocumentResult
     {
         /// <summary> Initializes a new instance of CustomSingleClassificationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

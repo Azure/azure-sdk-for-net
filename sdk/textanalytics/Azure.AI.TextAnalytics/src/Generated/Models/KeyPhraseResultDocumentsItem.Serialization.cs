@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class KeyPhraseResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class KeyPhraseResultDocumentsItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

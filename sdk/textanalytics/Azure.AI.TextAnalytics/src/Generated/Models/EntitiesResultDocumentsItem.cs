@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntitiesResultDocumentsItem. </summary>
-    public partial class EntitiesResultDocumentsItem : EntitiesDocumentResult
+    internal partial class EntitiesResultDocumentsItem : EntitiesDocumentResult
     {
         /// <summary> Initializes a new instance of EntitiesResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
