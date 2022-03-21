@@ -9,6 +9,7 @@
 - Added a new `StatusCodeClassifier` type that will be used as the default `ResponseClassifier` for some libraries.
 - Added an extension method to `BinaryData` called `ToObjectFromJson` which converts the json value represented by `BinaryData` to an object of a specific type.
 - Additional data center locations were added to `AzureLocation`.
+- Added `WaitUntil` enum to allow callers to set whether a method invoking a long running operation should return when the operation starts or once it has completed.
 
 ### Breaking Changes
 
