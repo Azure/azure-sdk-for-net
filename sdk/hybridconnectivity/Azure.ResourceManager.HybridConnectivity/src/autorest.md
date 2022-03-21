@@ -15,6 +15,8 @@ clear-output-folder: true
 skip-csproj: true
  
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -30,7 +32,9 @@ rename-rules:
   Ipv4: IPv4
   Ipv6: IPv6
   Ipsec: IPsec
+  SSO: Sso
   URI: Uri
+
 directive:
   - from: swagger-document
     where: $.definitions.EndpointProperties.properties.type
