@@ -400,6 +400,11 @@ namespace Azure.Core
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
     }
+    public partial class ErrorResponseFormatter
+    {
+        public ErrorResponseFormatter() { }
+        public virtual Azure.ResponseError? ExtractErrorContent(string? content, Azure.Core.ResponseHeaders responseHeaders, ref System.Collections.Generic.IDictionary<string, string>? additionalInfo) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
     {
@@ -617,11 +622,6 @@ namespace Azure.Core
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }
         public virtual bool IsRetriableResponse(Azure.Core.HttpMessage message) { throw null; }
-    }
-    public partial class ResponseErrorFormatter
-    {
-        public ResponseErrorFormatter() { }
-        public virtual Azure.ResponseError? ExtractErrorContent(string? content, Azure.Core.ResponseHeaders responseHeaders, ref System.Collections.Generic.IDictionary<string, string>? additionalInfo) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseHeaders : System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader>, System.Collections.IEnumerable
@@ -937,7 +937,7 @@ namespace Azure.Core.Pipeline
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, params Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies) { throw null; }
         public static Azure.Core.Pipeline.DisposableHttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
         public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier) { throw null; }
-        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier, Azure.Core.ResponseErrorFormatter? errorFormatter) { throw null; }
+        public static Azure.Core.Pipeline.HttpPipeline Build(Azure.Core.ClientOptions options, Azure.Core.Pipeline.HttpPipelinePolicy[] perCallPolicies, Azure.Core.Pipeline.HttpPipelinePolicy[] perRetryPolicies, Azure.Core.ResponseClassifier? responseClassifier, Azure.Core.ErrorResponseFormatter? errorFormatter) { throw null; }
     }
     public abstract partial class HttpPipelinePolicy
     {
