@@ -11,15 +11,15 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomSingleLabelClassificationResultDocumentsItem. </summary>
-    internal partial class CustomSingleLabelClassificationResultDocumentsItem : SingleClassificationDocumentResult
+    /// <summary> The CustomSingleClassificationResultDocumentsItem. </summary>
+    internal partial class CustomSingleClassificationResultDocumentsItem : SingleClassificationDocumentResult
     {
-        /// <summary> Initializes a new instance of CustomSingleLabelClassificationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of CustomSingleClassificationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="class"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="class"/> is null. </exception>
-        public CustomSingleLabelClassificationResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, ClassificationResult @class) : base(id, warnings, @class)
+        /// <param name="classification"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="classification"/> is null. </exception>
+        public CustomSingleClassificationResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, ClassificationResult classification) : base(id, warnings, classification)
         {
             if (id == null)
             {
@@ -29,18 +29,18 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(warnings));
             }
-            if (@class == null)
+            if (classification == null)
             {
-                throw new ArgumentNullException(nameof(@class));
+                throw new ArgumentNullException(nameof(classification));
             }
         }
 
-        /// <summary> Initializes a new instance of CustomSingleLabelClassificationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of CustomSingleClassificationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="class"></param>
-        internal CustomSingleLabelClassificationResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, ClassificationResult @class) : base(id, warnings, statistics, @class)
+        /// <param name="classification"></param>
+        internal CustomSingleClassificationResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, ClassificationResult classification) : base(id, warnings, statistics, classification)
         {
         }
     }

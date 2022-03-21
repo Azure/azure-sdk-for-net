@@ -11,15 +11,15 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The CustomMultiLabelClassificationResultDocumentsItem. </summary>
-    internal partial class CustomMultiLabelClassificationResultDocumentsItem : MultiClassificationDocumentResult
+    /// <summary> The CustomMultiClassificationResultDocumentsItem. </summary>
+    internal partial class CustomMultiClassificationResultDocumentsItem : MultiClassificationDocumentResult
     {
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of CustomMultiClassificationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
-        /// <param name="class"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="class"/> is null. </exception>
-        public CustomMultiLabelClassificationResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ClassificationResult> @class) : base(id, warnings, @class)
+        /// <param name="classifications"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/> or <paramref name="classifications"/> is null. </exception>
+        public CustomMultiClassificationResultDocumentsItem(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<ClassificationResult> classifications) : base(id, warnings, classifications)
         {
             if (id == null)
             {
@@ -29,18 +29,18 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 throw new ArgumentNullException(nameof(warnings));
             }
-            if (@class == null)
+            if (classifications == null)
             {
-                throw new ArgumentNullException(nameof(@class));
+                throw new ArgumentNullException(nameof(classifications));
             }
         }
 
-        /// <summary> Initializes a new instance of CustomMultiLabelClassificationResultDocumentsItem. </summary>
+        /// <summary> Initializes a new instance of CustomMultiClassificationResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        /// <param name="class"></param>
-        internal CustomMultiLabelClassificationResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<ClassificationResult> @class) : base(id, warnings, statistics, @class)
+        /// <param name="classifications"></param>
+        internal CustomMultiClassificationResultDocumentsItem(string id, IList<DocumentWarning> warnings, TextDocumentStatistics? statistics, IList<ClassificationResult> classifications) : base(id, warnings, statistics, classifications)
         {
         }
     }
