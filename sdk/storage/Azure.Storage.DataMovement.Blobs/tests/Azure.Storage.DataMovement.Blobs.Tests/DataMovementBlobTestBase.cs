@@ -464,5 +464,19 @@ namespace Azure.Storage.DataMovement.Blobs.Tests.Shared
                 minute: initalDateTimeOffset.Minute,
                 second: initalDateTimeOffset.Second,
                 offset: TimeSpan.Zero);
+
+        internal void AssertContentFile(string sourceFile, string destinationFile)
+        {
+            FileInfo sourceFileInfo = new FileInfo(sourceFile);
+            FileInfo destFileInfo = new FileInfo(destinationFile);
+            Assert.AreEqual(sourceFileInfo.Length, destFileInfo.Length);
+            using (FileStream sourceStream = File.OpenRead(sourceFile))
+            {
+                using (FileStream resultStream = File.OpenRead(destinationFile))
+                {
+                    TestHelper.AssertSequenceEqual(sourceStream.AsBytes(), resultStream.AsBytes());
+                }
+            }
+        }
     }
 }

@@ -43,6 +43,29 @@ namespace Azure.Storage.DataMovement.Blobs
         // for each operation type.
         public BlobDirectoryUploadOptions UploadOptions => _uploadOptions;
 
+        /*
+        /// <summary>
+        /// Number of Blobs that succeeded in transfer
+        /// </summary>
+        internal int CurrentBlobsSuccesfullyTransferred;
+        /// <summary>
+        /// Number of blobs that were skipped in transfer due to overwrite being set to not overwrite files, but the files exists already
+        /// </summary>
+        internal int CurrentBlobsSkippedTransferring;
+        /// <summary>
+        /// Number of blobs that failed transferred.
+        /// </summary>
+        internal int CurrentBlobsFailedTransferred;
+        /// <summary>
+        /// Number of bytes transferred succesfully.
+        /// </summary>
+        internal long CurrentTotalBytesTransferred;
+        /// <summary>
+        /// Transfer Status
+        /// </summary>
+        internal StorageJobTransferStatus TransferStatus;
+        */
+
         private bool _overwrite;
 
         /// <summary>

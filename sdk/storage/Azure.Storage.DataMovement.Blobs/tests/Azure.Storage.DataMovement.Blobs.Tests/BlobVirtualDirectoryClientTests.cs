@@ -660,6 +660,32 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        public async Task UploadDirectoryAsync_Empty()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            // Act
+            await client.UploadAsync(folder, false, options);
+
+            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert
+            Assert.IsEmpty(blobs);
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
         public async Task DownloadDirectoryAsync()
         {
             // Arrange
@@ -728,29 +754,156 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task UploadDirectoryAsync_Empty()
+        public async Task DownloadDirectoryAsync_SingleFile()
         {
             // Arrange
             await using DisposingBlobContainer test = await GetTestContainerAsync();
 
-            string dirName = GetNewBlobName();
+            string dirName = GetNewBlobDirectoryName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+            string sourceFolder = CreateRandomDirectory(folder);
+            string openSubchild = CreateRandomFile(sourceFolder);
+            string localDirName = sourceFolder.Split('\\').Last();
+
+            string destinationFolder = CreateRandomDirectory(folder);
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+            await client.UploadAsync(sourceFolder, false, options);
+
+            // Act
+            await client.DownloadToAsync(destinationFolder);
+
+            List<string> localItemsAfterDownload = Directory.GetFiles(destinationFolder, "*", SearchOption.AllDirectories).ToList();
+
+            // Assert
+            Assert.Equals(1, localItemsAfterDownload.Count());
+            AssertContentFile(openSubchild, destinationFolder + "/" + localItemsAfterDownload.First());
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task DownloadDirectoryAsync_SingleSubDirectory()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobDirectoryName();
             BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
 
             string folder = CreateRandomDirectory(Path.GetTempPath());
 
-            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+            string mainSubFolder = CreateRandomDirectory(folder);
+            string sourceSubFolder = CreateRandomDirectory(mainSubFolder);
+            string sourceSubChild = CreateRandomFile(sourceSubFolder);
 
-            // Act
+            string destinationSubfolder = CreateRandomDirectory(mainSubFolder);
+            string destinationSubchild = CreateRandomFile(destinationSubfolder);
+
+            string localDirName = folder.Split('\\').Last();
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
             await client.UploadAsync(folder, false, options);
 
-            List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                .Select((BlobItem blob) => blob.Name).ToList();
+            Directory.Delete(folder, true);
+
+            // Act
+            await client.DownloadToAsync(folder);
+
+            List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
 
             // Assert
-            Assert.IsEmpty(blobs);
+            Assert.Equals(1, localItemsAfterDownload.Count());
+            Assert.Equals(localItemsAfterDownload.First(), destinationSubchild);
+            AssertContentFile(sourceSubChild, destinationSubchild);
 
             // Cleanup
             Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        public async Task DownloadDirectoryAsync_ManySubDirectories()
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobDirectoryName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string folder = CreateRandomDirectory(Path.GetTempPath());
+
+            string mainFolder = CreateRandomDirectory(folder);
+            string souceSubFolder = CreateRandomDirectory(mainFolder);
+            string openSubchild = CreateRandomFile(souceSubFolder);
+            string souceSubFolder2 = CreateRandomDirectory(mainFolder);
+            string openSubchild2 = CreateRandomFile(souceSubFolder2);
+            string souceSubFolder3 = CreateRandomDirectory(mainFolder);
+            string openSubchild3 = CreateRandomFile(souceSubFolder3);
+
+            string destinationFolder = CreateRandomDirectory(souceSubFolder);
+
+            string localDirName = folder.Split('\\').Last();
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+
+            await client.UploadAsync(folder, false, options);
+
+            // Act
+            await client.DownloadToAsync(folder);
+
+            List<string> localItemsAfterDownload = Directory.GetFiles(folder, "*", SearchOption.AllDirectories).ToList();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                CollectionAssert.Contains(localItemsAfterDownload, openSubchild);
+                CollectionAssert.Contains(localItemsAfterDownload, openSubchild2);
+                CollectionAssert.Contains(localItemsAfterDownload, openSubchild3);
+            });
+
+            // Cleanup
+            Directory.Delete(folder, true);
+        }
+
+        [RecordedTest]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public async Task DownloadDirectoryAsync_SubDirectoriesLevels(int level)
+        {
+            // Arrange
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            string dirName = GetNewBlobDirectoryName();
+            BlobVirtualDirectoryClient client = test.Container.GetBlobVirtualDirectoryClient(dirName);
+
+            string sourceFolder = CreateRandomDirectory(Path.GetTempPath());
+            string destinationFolder = CreateRandomDirectory(Path.GetTempPath());
+
+            string subfolderName = sourceFolder;
+            for (int i = 0; i < level; i++)
+            {
+                string openSubfolder = CreateRandomDirectory(subfolderName);
+                string openSubchild = CreateRandomFile(openSubfolder);
+                subfolderName = openSubfolder;
+            }
+
+            BlobDirectoryUploadOptions options = new BlobDirectoryUploadOptions();
+            IEnumerable<SingleBlobContentInfo> response = await client.UploadAsync(sourceFolder, false, options);
+
+            // Act
+            await client.DownloadToAsync(destinationFolder);
+
+            List<string> localItemsAfterDownload = Directory.GetFiles(destinationFolder, "*", SearchOption.AllDirectories).ToList();
+
+            Assert.Equals(level, localItemsAfterDownload);
+
+            // Cleanup
+            Directory.Delete(sourceFolder, true);
+            Directory.Delete(destinationFolder, true);
         }
 
         // This test is here just to see if DM stuff works, but shouldn't sit in here
