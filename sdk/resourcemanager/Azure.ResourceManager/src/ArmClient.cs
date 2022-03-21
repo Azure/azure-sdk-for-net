@@ -75,12 +75,12 @@ namespace Azure.ResourceManager
 
             Argument.AssertNotNull(environment.Endpoint, nameof(environment.Endpoint));
 
-            BaseUri = environment.Endpoint;
+            Endpoint = environment.Endpoint;
 
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, environment.DefaultScope));
 
-            DiagnosticOptions = options.Diagnostics;
-            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions);
+            Diagnostics = options.Diagnostics;
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, Diagnostics);
 
             CopyApiVersionOverrides(options);
 
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
-        internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+        internal virtual DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        internal virtual Uri BaseUri { get; private set; }
+        internal virtual Uri Endpoint { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
