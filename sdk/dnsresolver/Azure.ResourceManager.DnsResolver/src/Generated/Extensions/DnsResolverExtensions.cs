@@ -10,15 +10,81 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary> A class to add extension methods to ResourceGroup. </summary>
-    public static partial class ResourceGroupExtensions
+    /// <summary> A class to add extension methods to Azure.ResourceManager.DnsResolver. </summary>
+    public static partial class DnsResolverExtensions
     {
+        private static SubscriptionExtensionClient GetExtensionClient(Subscription subscription)
+        {
+            return subscription.GetCachedClient((client) =>
+            {
+                return new SubscriptionExtensionClient(client, subscription.Id);
+            }
+            );
+        }
+
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
+        /// Operation Id: DnsResolvers_List
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DnsResolver" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DnsResolver> GetDnsResolversAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetDnsResolversAsync(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolvers in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsResolvers
+        /// Operation Id: DnsResolvers_List
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsResolver" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DnsResolver> GetDnsResolvers(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetDnsResolvers(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS forwarding rulesets in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_List
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DnsForwardingRuleset> GetDnsForwardingRulesetsAsync(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetDnsForwardingRulesetsAsync(top, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS forwarding rulesets in all resource groups of a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Network/dnsForwardingRulesets
+        /// Operation Id: DnsForwardingRulesets_List
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsForwardingRuleset" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DnsForwardingRuleset> GetDnsForwardingRulesets(this Subscription subscription, int? top = null, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscription).GetDnsForwardingRulesets(top, cancellationToken);
+        }
+
         private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
         {
             return resourceGroup.GetCachedClient((client) =>
@@ -179,5 +245,101 @@ namespace Azure.ResourceManager.DnsResolver
 
             return GetExtensionClient(resourceGroup).GetDnsForwardingRulesetsByVirtualNetwork(virtualNetworkName, top, cancellationToken);
         }
+
+        #region DnsResolver
+        /// <summary> Gets an object representing a DnsResolver along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolver" /> object. </returns>
+        public static DnsResolver GetDnsResolver(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DnsResolver.ValidateResourceId(id);
+                return new DnsResolver(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region InboundEndpoint
+        /// <summary> Gets an object representing a InboundEndpoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InboundEndpoint" /> object. </returns>
+        public static InboundEndpoint GetInboundEndpoint(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                InboundEndpoint.ValidateResourceId(id);
+                return new InboundEndpoint(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region OutboundEndpoint
+        /// <summary> Gets an object representing a OutboundEndpoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OutboundEndpoint" /> object. </returns>
+        public static OutboundEndpoint GetOutboundEndpoint(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                OutboundEndpoint.ValidateResourceId(id);
+                return new OutboundEndpoint(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DnsForwardingRuleset
+        /// <summary> Gets an object representing a DnsForwardingRuleset along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsForwardingRuleset" /> object. </returns>
+        public static DnsForwardingRuleset GetDnsForwardingRuleset(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DnsForwardingRuleset.ValidateResourceId(id);
+                return new DnsForwardingRuleset(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region ForwardingRule
+        /// <summary> Gets an object representing a ForwardingRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ForwardingRule" /> object. </returns>
+        public static ForwardingRule GetForwardingRule(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ForwardingRule.ValidateResourceId(id);
+                return new ForwardingRule(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region VirtualNetworkLink
+        /// <summary> Gets an object representing a VirtualNetworkLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkLink" /> object. </returns>
+        public static VirtualNetworkLink GetVirtualNetworkLink(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                VirtualNetworkLink.ValidateResourceId(id);
+                return new VirtualNetworkLink(client, id);
+            }
+            );
+        }
+        #endregion
     }
 }

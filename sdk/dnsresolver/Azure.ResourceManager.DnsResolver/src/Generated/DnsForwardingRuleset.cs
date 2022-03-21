@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of ForwardingRules and their operations over a ForwardingRule. </returns>
         public virtual ForwardingRuleCollection GetForwardingRules()
         {
-            return new ForwardingRuleCollection(Client, Id);
+            return GetCachedClient(Client => new ForwardingRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of VirtualNetworkLinks and their operations over a VirtualNetworkLink. </returns>
         public virtual VirtualNetworkLinkCollection GetVirtualNetworkLinks()
         {
-            return new VirtualNetworkLinkCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkLinkCollection(Client, Id));
         }
 
         /// <summary>

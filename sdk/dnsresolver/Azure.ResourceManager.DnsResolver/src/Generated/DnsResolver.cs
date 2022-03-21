@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of InboundEndpoints and their operations over a InboundEndpoint. </returns>
         public virtual InboundEndpointCollection GetInboundEndpoints()
         {
-            return new InboundEndpointCollection(Client, Id);
+            return GetCachedClient(Client => new InboundEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of OutboundEndpoints and their operations over a OutboundEndpoint. </returns>
         public virtual OutboundEndpointCollection GetOutboundEndpoints()
         {
-            return new OutboundEndpointCollection(Client, Id);
+            return GetCachedClient(Client => new OutboundEndpointCollection(Client, Id));
         }
 
         /// <summary>

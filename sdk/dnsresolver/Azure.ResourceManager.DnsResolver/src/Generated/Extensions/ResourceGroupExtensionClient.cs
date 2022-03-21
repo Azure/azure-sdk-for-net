@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolver. </returns>
         public virtual DnsResolverCollection GetDnsResolvers()
         {
-            return new DnsResolverCollection(Client, Id);
+            return GetCachedClient(Client => new DnsResolverCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DnsForwardingRulesets in the DnsForwardingRuleset. </summary>
         /// <returns> An object representing collection of DnsForwardingRulesets and their operations over a DnsForwardingRuleset. </returns>
         public virtual DnsForwardingRulesetCollection GetDnsForwardingRulesets()
         {
-            return new DnsForwardingRulesetCollection(Client, Id);
+            return GetCachedClient(Client => new DnsForwardingRulesetCollection(Client, Id));
         }
 
         /// <summary>
