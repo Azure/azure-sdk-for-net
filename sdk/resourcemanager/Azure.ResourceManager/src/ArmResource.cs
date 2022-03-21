@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
+        protected internal TagResource TagHelper => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
 
         /// <summary>
         /// Gets the api version override if it has been set for the current client options.

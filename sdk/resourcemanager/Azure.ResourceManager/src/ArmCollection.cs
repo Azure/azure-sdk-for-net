@@ -7,7 +7,7 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// Base class representing collection of resources.

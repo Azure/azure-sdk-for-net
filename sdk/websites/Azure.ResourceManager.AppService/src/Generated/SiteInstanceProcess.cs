@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {

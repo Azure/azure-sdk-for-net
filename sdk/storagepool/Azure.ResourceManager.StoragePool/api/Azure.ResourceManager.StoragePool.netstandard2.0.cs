@@ -1,11 +1,6 @@
 namespace Azure.ResourceManager.StoragePool
 {
-    public static partial class ArmClientExtensions
-    {
-        public static Azure.ResourceManager.StoragePool.DiskPool GetDiskPool(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.StoragePool.IscsiTarget GetIscsiTarget(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-    }
-    public partial class DiskPool : Azure.ResourceManager.Core.ArmResource
+    public partial class DiskPool : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DiskPool() { }
@@ -36,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool
         public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DiskPoolCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPool>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPool>, System.Collections.IEnumerable
+    public partial class DiskPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPool>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPool>, System.Collections.IEnumerable
     {
         protected DiskPoolCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.DiskPool> CreateOrUpdate(Azure.WaitUntil waitUntil, string diskPoolName, Azure.ResourceManager.StoragePool.Models.DiskPoolCreate diskPoolCreatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -66,7 +61,7 @@ namespace Azure.ResourceManager.StoragePool
         public Azure.ResourceManager.StoragePool.Models.OperationalStatus Status { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
     }
-    public partial class IscsiTarget : Azure.ResourceManager.Core.ArmResource
+    public partial class IscsiTarget : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected IscsiTarget() { }
@@ -80,7 +75,7 @@ namespace Azure.ResourceManager.StoragePool
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTarget> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.PatchableIscsiTargetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTarget>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StoragePool.Models.PatchableIscsiTargetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class IscsiTargetCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.IscsiTarget>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.IscsiTarget>, System.Collections.IEnumerable
+    public partial class IscsiTargetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.IscsiTarget>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.IscsiTarget>, System.Collections.IEnumerable
     {
         protected IscsiTargetCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StoragePool.IscsiTarget> CreateOrUpdate(Azure.WaitUntil waitUntil, string iscsiTargetName, Azure.ResourceManager.StoragePool.Models.IscsiTargetCreate iscsiTargetCreatePayload, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -112,18 +107,17 @@ namespace Azure.ResourceManager.StoragePool
         public Azure.ResourceManager.StoragePool.Models.OperationalStatus Status { get { throw null; } set { } }
         public string TargetIqn { get { throw null; } set { } }
     }
-    public static partial class ResourceGroupExtensions
+    public static partial class StoragePoolExtensions
     {
+        public static Azure.ResourceManager.StoragePool.DiskPool GetDiskPool(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.StoragePool.DiskPool> GetDiskPool(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.DiskPool>> GetDiskPoolAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.StoragePool.DiskPoolCollection GetDiskPools(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
-    }
-    public static partial class SubscriptionExtensions
-    {
         public static Azure.Pageable<Azure.ResourceManager.StoragePool.DiskPool> GetDiskPools(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.StoragePool.DiskPool> GetDiskPoolsAsync(this Azure.ResourceManager.Resources.Subscription subscription, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo> GetDiskPoolZones(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo> GetDiskPoolZonesAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.StoragePool.IscsiTarget GetIscsiTarget(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.StoragePool.Models.ResourceSkuInfo> GetResourceSkus(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.StoragePool.Models.ResourceSkuInfo> GetResourceSkusAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

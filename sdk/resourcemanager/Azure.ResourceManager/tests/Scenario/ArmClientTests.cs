@@ -294,39 +294,6 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
         }
 
-        [RecordedTest]
-        [SyncOnly]
-        public void ValidateMgmtTelemetry()
-        {
-            var options = new ArmClientOptions();
-            options.Diagnostics.IsTelemetryEnabled = true;
-            var client = GetArmClient(options);
-            Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-
-            options.Diagnostics.IsTelemetryEnabled = false;
-            client = GetArmClient(options);
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), "TelemetryPolicy"));
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        public void ValidateMgmtTelemetryComesAfterTelemetry()
-        {
-            var client = GetArmClient();
-            var pipeline = GetPipelineFromClient(client);
-            bool foundTelemetry = false;
-            foreach (var policy in GetPoliciesFromPipeline(pipeline).ToArray())
-            {
-                foundTelemetry |= policy.GetType().Name == "TelemetryPolicy";
-                if (policy.GetType() == typeof(MgmtTelemetryPolicy))
-                {
-                    Assert.IsTrue(foundTelemetry);
-                    break;
-                }
-            }
-        }
-
         private static HttpPipeline GetPipelineFromClient(ArmClient client)
         {
             var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);
