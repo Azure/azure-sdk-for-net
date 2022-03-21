@@ -39,6 +39,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -186,6 +187,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -521,6 +523,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn

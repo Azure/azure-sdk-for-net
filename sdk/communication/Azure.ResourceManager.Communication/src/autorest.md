@@ -12,7 +12,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 override-operation-name:
-    CommunicationService_CheckNameAvailability: CheckCommunicationNameAvailability
+  CommunicationService_CheckNameAvailability: CheckCommunicationNameAvailability
+
 rename-rules:
   CPU: Cpu
   CPUs: Cpus
@@ -23,6 +24,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -33,6 +35,7 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
+
 directive:
   - rename-model:
       from: CommunicationServiceResource
