@@ -174,7 +174,10 @@ namespace Azure.ResourceManager.StoragePool
         }
 
         #region DiskPool
-        /// <summary> Gets an object representing a DiskPool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskPool" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskPool.CreateResourceIdentifier" /> to create a <see cref="DiskPool" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskPool" /> object. </returns>
@@ -190,7 +193,10 @@ namespace Azure.ResourceManager.StoragePool
         #endregion
 
         #region IscsiTarget
-        /// <summary> Gets an object representing a IscsiTarget along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="IscsiTarget" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IscsiTarget.CreateResourceIdentifier" /> to create an <see cref="IscsiTarget" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IscsiTarget" /> object. </returns>

@@ -323,7 +323,10 @@ namespace Azure.ResourceManager.Cdn
         }
 
         #region Profile
-        /// <summary> Gets an object representing a Profile along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Profile" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Profile.CreateResourceIdentifier" /> to create a <see cref="Profile" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Profile" /> object. </returns>
@@ -339,7 +342,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnEndpoint
-        /// <summary> Gets an object representing a CdnEndpoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnEndpoint" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnEndpoint.CreateResourceIdentifier" /> to create a <see cref="CdnEndpoint" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnEndpoint" /> object. </returns>
@@ -355,7 +361,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnOrigin
-        /// <summary> Gets an object representing a CdnOrigin along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnOrigin" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnOrigin.CreateResourceIdentifier" /> to create a <see cref="CdnOrigin" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnOrigin" /> object. </returns>
@@ -371,7 +380,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnOriginGroup
-        /// <summary> Gets an object representing a CdnOriginGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnOriginGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnOriginGroup.CreateResourceIdentifier" /> to create a <see cref="CdnOriginGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnOriginGroup" /> object. </returns>
@@ -387,7 +399,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnCustomDomain
-        /// <summary> Gets an object representing a CdnCustomDomain along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnCustomDomain" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnCustomDomain.CreateResourceIdentifier" /> to create a <see cref="CdnCustomDomain" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnCustomDomain" /> object. </returns>
@@ -403,7 +418,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnWebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnWebApplicationFirewallPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnWebApplicationFirewallPolicy.CreateResourceIdentifier" /> to create a <see cref="CdnWebApplicationFirewallPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicy" /> object. </returns>
