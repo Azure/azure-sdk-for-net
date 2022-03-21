@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The HealthcareResultDocumentsItem. </summary>
-    public partial class HealthcareResultDocumentsItem : HealthcareEntitiesDocumentResult
+    internal partial class HealthcareResultDocumentsItem : HealthcareEntitiesDocumentResult
     {
         /// <summary> Initializes a new instance of HealthcareResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
