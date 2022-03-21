@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of Providers in the Provider. </summary>
-        /// <returns> An object representing collection of Providers and their operations over a Provider. </returns>
-        public virtual ProviderCollection GetProviders()
+        /// <summary> Gets a collection of ResourceProviders in the ResourceProvider. </summary>
+        /// <returns> An object representing collection of ResourceProviders and their operations over a ResourceProvider. </returns>
+        public virtual ResourceProviderCollection GetResourceProviders()
         {
-            return GetCachedClient(Client => new ProviderCollection(Client, Id));
+            return GetCachedClient(Client => new ResourceProviderCollection(Client, Id));
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<Provider>> GetProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProvider>> GetResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            return await GetResourceProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<Provider> GetProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProvider> GetResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetProviders().Get(resourceProviderNamespace, expand, cancellationToken);
+            return GetResourceProviders().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGroups in the ResourceGroup. </summary>

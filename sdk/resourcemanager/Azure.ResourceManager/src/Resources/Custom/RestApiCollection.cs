@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;
-        private readonly ProviderCollection _providerCollection;
+        private readonly ResourceProviderCollection _providerCollection;
 
         /// <summary> Represents the REST operations. </summary>
         private RestOperations _restClient;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
             _nameSpace = nameSpace;
-            _providerCollection = new ProviderCollection(Client.GetSubscription(Id));
+            _providerCollection = new ResourceProviderCollection(Client.GetSubscription(Id));
         }
 
 

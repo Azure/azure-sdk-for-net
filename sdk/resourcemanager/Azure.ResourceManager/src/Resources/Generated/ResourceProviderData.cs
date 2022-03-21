@@ -11,8 +11,8 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Provider data model. </summary>
-    public partial class ProviderData
+    /// <summary> A class representing the ResourceProvider data model. </summary>
+    public partial class ResourceProviderData
     {
         /// <summary> The namespace of the resource provider. </summary>
         public string Namespace { get; }

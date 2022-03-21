@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Provider.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Provider.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceProvider.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceProvider.ResourceType), nameof(id));
         }
 
         /// <summary>

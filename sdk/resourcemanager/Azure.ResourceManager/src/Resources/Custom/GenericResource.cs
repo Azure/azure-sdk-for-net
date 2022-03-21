@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
         private readonly GenericResourceData _data;
-        private readonly ProviderCollection _providerCollection;
+        private readonly ResourceProviderCollection _providerCollection;
 
         /// <summary> Initializes a new instance of the <see cref="GenericResource"/> class for mocking. </summary>
         protected GenericResource()
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Id.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Id.ResourceType, out string apiVersion);
             _resourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, apiVersion);
-            _providerCollection = new ProviderCollection(Client.GetSubscription(subscription));
+            _providerCollection = new ResourceProviderCollection(Client.GetSubscription(subscription));
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

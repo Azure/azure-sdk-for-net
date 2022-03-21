@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class representing the Provider data model. </summary>
     [PropertyReferenceType]
     [JsonConverter(typeof(ProviderDataConverter))]
-    public partial class ProviderData
+    public partial class ResourceProviderData
     {
         /// <summary> Initializes a new instance of ProviderData. </summary>
         [InitializationConstructor]
-        public ProviderData()
+        public ResourceProviderData()
         {
             ResourceTypes = new ChangeTrackingList<ProviderResourceType>();
         }
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
         [SerializationConstructor]
-        internal ProviderData(ResourceIdentifier id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
+        internal ResourceProviderData(ResourceIdentifier id, string @namespace, string registrationState, string registrationPolicy, IReadOnlyList<ProviderResourceType> resourceTypes, ProviderAuthorizationConsentState? providerAuthorizationConsentState)
         {
             Id = id;
             Namespace = @namespace;
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The provider ID. </summary>
         public ResourceIdentifier Id { get; }
 
-        internal partial class ProviderDataConverter : JsonConverter<ProviderData>
+        internal partial class ProviderDataConverter : JsonConverter<ResourceProviderData>
         {
-            public override void Write(Utf8JsonWriter writer, ProviderData providerData, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ResourceProviderData providerData, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(providerData);
             }
-            public override ProviderData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ResourceProviderData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeProviderData(document.RootElement);
+                return DeserializeResourceProviderData(document.RootElement);
             }
         }
     }
