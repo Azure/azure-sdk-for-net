@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// Extension class for resource manager.
