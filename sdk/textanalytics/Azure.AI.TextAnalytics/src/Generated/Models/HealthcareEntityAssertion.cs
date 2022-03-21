@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics
     public partial class HealthcareEntityAssertion
     {
         /// <summary> Initializes a new instance of HealthcareEntityAssertion. </summary>
-        internal HealthcareEntityAssertion()
+        public HealthcareEntityAssertion()
         {
         }
 
@@ -27,10 +27,10 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary> Describes any conditionality on the entity. </summary>
-        public EntityConditionality? Conditionality { get; }
+        public EntityConditionality? Conditionality { get; set; }
         /// <summary> Describes the entities certainty and polarity. </summary>
-        public EntityCertainty? Certainty { get; }
+        public EntityCertainty? Certainty { get; set; }
         /// <summary> Describes if the entity is the subject of the text or if it describes someone else. </summary>
-        public EntityAssociation? Association { get; }
+        public EntityAssociation? Association { get; set; }
     }
 }

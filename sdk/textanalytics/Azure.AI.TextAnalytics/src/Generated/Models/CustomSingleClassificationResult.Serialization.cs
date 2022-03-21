@@ -12,12 +12,41 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomSingleClassificationResult
+    internal partial class CustomSingleClassificationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("documents");
+            writer.WriteStartArray();
+            foreach (var item in Documents)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("errors");
+            writer.WriteStartArray();
+            foreach (var item in Errors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics");
+                writer.WriteObjectValue(Statistics);
+            }
+            writer.WritePropertyName("projectName");
+            writer.WriteStringValue(ProjectName);
+            writer.WritePropertyName("deploymentName");
+            writer.WriteStringValue(DeploymentName);
+            writer.WriteEndObject();
+        }
+
         internal static CustomSingleClassificationResult DeserializeCustomSingleClassificationResult(JsonElement element)
         {
-            IReadOnlyList<SingleClassificationDocument> documents = default;
-            IReadOnlyList<DocumentError> errors = default;
+            IList<CustomSingleClassificationResultDocumentsItem> documents = default;
+            IList<DocumentError> errors = default;
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
@@ -25,10 +54,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("documents"))
                 {
-                    List<SingleClassificationDocument> array = new List<SingleClassificationDocument>();
+                    List<CustomSingleClassificationResultDocumentsItem> array = new List<CustomSingleClassificationResultDocumentsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SingleClassificationDocument.DeserializeSingleClassificationDocument(item));
+                        array.Add(CustomSingleClassificationResultDocumentsItem.DeserializeCustomSingleClassificationResultDocumentsItem(item));
                     }
                     documents = array;
                     continue;
@@ -64,7 +93,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomSingleClassificationResult(documents, errors, statistics.Value, projectName, deploymentName);
+            return new CustomSingleClassificationResult(errors, statistics.Value, projectName, deploymentName, documents);
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics
 
         #region DetectLanguage
 
-        internal static DetectedLanguage ConvertToDetectedLanguage(DocumentLanguage documentLanguage)
+        internal static DetectedLanguage ConvertToDetectedLanguage(LanguageDetectionDocumentResult documentLanguage) //TODO: CHANGED
         {
             return new DetectedLanguage(documentLanguage.DetectedLanguage, ConvertToWarnings(documentLanguage.Warnings));
         }
