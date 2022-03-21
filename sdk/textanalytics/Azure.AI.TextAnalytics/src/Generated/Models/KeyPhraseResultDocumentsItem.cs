@@ -12,7 +12,7 @@ using Azure.AI.TextAnalytics;
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The KeyPhraseResultDocumentsItem. </summary>
-    public partial class KeyPhraseResultDocumentsItem : KeyPhrasesDocumentResult
+    internal partial class KeyPhraseResultDocumentsItem : KeyPhrasesDocumentResult
     {
         /// <summary> Initializes a new instance of KeyPhraseResultDocumentsItem. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>

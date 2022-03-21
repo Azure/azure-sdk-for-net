@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    public partial class CustomEntitiesResultDocumentsItem : IUtf8JsonSerializable
+    internal partial class CustomEntitiesResultDocumentsitem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomEntitiesResultDocumentsItem DeserializeCustomEntitiesResultDocumentsItem(JsonElement element)
+        internal static CustomEntitiesResultDocumentsitem DeserializeCustomEntitiesResultDocumentsitem(JsonElement element)
         {
             IList<Entity> entities = default;
             string id = default;
@@ -85,7 +85,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities);
+            return new CustomEntitiesResultDocumentsitem(id, warnings, Optional.ToNullable(statistics), entities);
         }
     }
 }

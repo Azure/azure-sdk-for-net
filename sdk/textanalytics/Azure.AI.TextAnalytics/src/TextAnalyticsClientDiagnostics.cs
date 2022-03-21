@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
@@ -32,28 +33,29 @@ namespace Azure.Core.Pipeline
             ResponseHeaders responseHeaders,
             ref IDictionary<string, string>? additionalInfo)
         {
-            if (!string.IsNullOrEmpty(content))
-            {
-                try
-                {
-                    // Try to parse the failure content and use that as the
-                    // default value for the message, error code, etc.
-                    using JsonDocument doc = JsonDocument.Parse(content);
-                    if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
-                    {
-                        TextAnalyticsError error = Transforms.ConvertToError(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(errorElement));
+            //if (!string.IsNullOrEmpty(content))
+            //{
+            //    try
+            //    {
+            //        // Try to parse the failure content and use that as the
+            //        // default value for the message, error code, etc.
+            //        using JsonDocument doc = JsonDocument.Parse(content);
+            //        if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
+            //        {
+            //            TextAnalyticsError error = Transforms.ConvertToError(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(errorElement));
 
-                        return new ResponseError(error.ErrorCode.ToString(), error.Message);
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore any failures - unexpected content will be
-                    // included verbatim in the detailed error message
-                }
-            }
+            //            return new ResponseError(error.ErrorCode.ToString(), error.Message);
+            //        }
+            //    }
+            //    catch (JsonException)
+            //    {
+            //        // Ignore any failures - unexpected content will be
+            //        // included verbatim in the detailed error message
+            //    }
+            //}
 
-            return null;
+            //return null;
+            throw new NotImplementedException();
         }
     }
 }
