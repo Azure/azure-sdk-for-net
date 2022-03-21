@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private AmqpConnectionScope ConnectionScope { get; }
 
-        public override ServiceBusTransportMetrics Metrics { get; }
+        public override ServiceBusTransportMetrics TransportMetrics { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpClient"/> class.
@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Credential = credential;
             if (options.EnableTransportMetrics)
             {
-                Metrics = new ServiceBusTransportMetrics();
+                TransportMetrics = new ServiceBusTransportMetrics();
             }
             ConnectionScope = new AmqpConnectionScope(
                 ServiceEndpoint,
@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 options.WebProxy,
                 options.EnableCrossEntityTransactions,
                 options.RetryOptions.TryTimeout,
-                Metrics);
+                TransportMetrics);
         }
 
         /// <summary>

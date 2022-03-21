@@ -16,21 +16,30 @@ namespace Azure.Messaging.ServiceBus
         protected internal ServiceBusTransportMetrics()
         {
         }
+
         /// <summary>
         /// Gets the last time that a heartbeat was received from the Service Bus service. These heartbeats are sent from the
         /// service approximately every 30 seconds.
         /// </summary>
-        public virtual DateTimeOffset? LastHeartBeat { get; internal set; }
+        public DateTimeOffset? LastHeartBeat { get; internal set; }
 
         /// <summary>
         /// Gets the last time that a connection was opened for the associated <see cref="ServiceBusClient"/> instance.
         /// </summary>
-        public virtual DateTimeOffset? LastConnectionOpen { get; internal set; }
+        public DateTimeOffset? LastConnectionOpen { get; internal set; }
 
         /// <summary>
         /// Gets the last time that a connection was closed for the associated <see cref="ServiceBusClient"/> instance. If the <see cref="ServiceBusClient"/>
         /// was disposed, then this time will not be updated again. It may be updated multiple times if the close is initiated by the service.
         /// </summary>
-        public virtual DateTimeOffset? LastConnectionClose { get; internal set; }
+        public DateTimeOffset? LastConnectionClose { get; internal set; }
+
+        internal ServiceBusTransportMetrics Clone() =>
+            new()
+            {
+                LastHeartBeat = LastHeartBeat,
+                LastConnectionOpen = LastConnectionOpen,
+                LastConnectionClose = LastConnectionClose
+            };
     }
 }

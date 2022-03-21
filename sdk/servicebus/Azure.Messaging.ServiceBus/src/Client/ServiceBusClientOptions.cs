@@ -63,7 +63,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets whether or not to enable metrics for the associated <see cref="ServiceBusClient"/> instance.
-        /// If set to <value>true</value>, <see cref="ServiceBusClient.TransportMetrics"/> will be populated.
+        /// If set to <value>true</value>, <see cref="ServiceBusClient.GetTransportMetrics"/> can be called.
         /// </summary>
         public bool EnableTransportMetrics { get; set; }
 

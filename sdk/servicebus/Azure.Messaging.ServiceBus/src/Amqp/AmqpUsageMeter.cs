@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp

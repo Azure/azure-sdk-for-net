@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         /// The metrics related to the client.
         /// </summary>
-        public virtual ServiceBusTransportMetrics Metrics { get; }
+        public virtual ServiceBusTransportMetrics TransportMetrics { get; }
 
         /// <summary>
         ///   Creates a sender strongly aligned with the active protocol and transport,

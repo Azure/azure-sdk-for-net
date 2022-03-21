@@ -444,23 +444,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             var mockClient = new Mock<ServiceBusClient>();
             mockClient.Setup(
-                client => client.TransportMetrics).Returns(new Mock<ServiceBusTransportMetrics>().Object);
-            var metrics = mockClient.Object.TransportMetrics;
+                client => client.GetTransportMetrics()).Returns(new Mock<ServiceBusTransportMetrics>().Object);
+            var metrics = mockClient.Object.GetTransportMetrics();
             Assert.IsNotNull(metrics);
-        }
-
-        [Test]
-        public void CanMockIndividualMetrics()
-        {
-            var now = DateTimeOffset.UtcNow;
-            var mockMetrics = new Mock<ServiceBusTransportMetrics>();
-            mockMetrics.Setup(metrics => metrics.LastConnectionOpen).Returns(now);
-            mockMetrics.Setup(metrics => metrics.LastConnectionClose).Returns(now);
-            mockMetrics.Setup(metrics => metrics.LastHeartBeat).Returns(now);
-
-            Assert.AreEqual(now, mockMetrics.Object.LastConnectionOpen);
-            Assert.AreEqual(now, mockMetrics.Object.LastConnectionClose);
-            Assert.AreEqual(now, mockMetrics.Object.LastHeartBeat);
         }
 
         [Test]
@@ -469,7 +455,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
             var client = new ServiceBusClient(fakeConnection);
             Assert.That(
-                () => client.TransportMetrics,
+                () => client.GetTransportMetrics(),
                 Throws.InstanceOf<InvalidOperationException>());
         }
 
@@ -478,7 +464,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
             var client = new ServiceBusClient(fakeConnection, new ServiceBusClientOptions {EnableTransportMetrics = true});
-            Assert.IsNotNull(client.TransportMetrics);
+            Assert.IsNotNull(client.GetTransportMetrics());
         }
 
         /// <summary>
