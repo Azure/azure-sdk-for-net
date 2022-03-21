@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                IpRules = { new IpAddressOrRange("23.43.230.120") },
+                IPRules = { new IPAddressOrRange("23.43.230.120") },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
