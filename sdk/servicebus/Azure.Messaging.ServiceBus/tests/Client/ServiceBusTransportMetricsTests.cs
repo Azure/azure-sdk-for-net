@@ -17,9 +17,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var tomorrow = now.Add(TimeSpan.FromDays(1));
             var metrics = ServiceBusModelFactory.ServiceBusTransportMetrics(now, yesterday, tomorrow);
 
-            Assert.AreEqual(now, metrics.LastConnectionOpen);
-            Assert.AreEqual(yesterday, metrics.LastConnectionClose);
-            Assert.AreEqual(tomorrow, metrics.LastHeartBeat);
+            Assert.AreEqual(now, metrics.LastHeartBeat);
+            Assert.AreEqual(yesterday, metrics.LastConnectionOpen);
+            Assert.AreEqual(tomorrow, metrics.LastConnectionClose);
         }
 
         [Test]
