@@ -15,13 +15,6 @@ namespace Azure.AI.TextAnalytics.Models
         {
         }
 
-        /// <summary> Initializes a new instance of Pagination. </summary>
-        /// <param name="nextLink"></param>
-        internal Pagination(string nextLink)
-        {
-            NextLink = nextLink;
-        }
-
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
     }
