@@ -1242,7 +1242,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         #region RecoverableDatabase
-        /// <summary> Gets an object representing a RecoverableDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoverableDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoverableDatabase.CreateResourceIdentifier" /> to create a <see cref="RecoverableDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoverableDatabase" /> object. </returns>
@@ -1258,7 +1261,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region DataMaskingPolicy
-        /// <summary> Gets an object representing a DataMaskingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DataMaskingPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMaskingPolicy.CreateResourceIdentifier" /> to create a <see cref="DataMaskingPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataMaskingPolicy" /> object. </returns>
@@ -1274,7 +1280,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region GeoBackupPolicy
-        /// <summary> Gets an object representing a GeoBackupPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GeoBackupPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GeoBackupPolicy.CreateResourceIdentifier" /> to create a <see cref="GeoBackupPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GeoBackupPolicy" /> object. </returns>
@@ -1290,7 +1299,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SqlDatabase
-        /// <summary> Gets an object representing a SqlDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlDatabase.CreateResourceIdentifier" /> to create a <see cref="SqlDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlDatabase" /> object. </returns>
@@ -1306,7 +1318,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ElasticPool
-        /// <summary> Gets an object representing a ElasticPool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticPool" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticPool.CreateResourceIdentifier" /> to create an <see cref="ElasticPool" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticPool" /> object. </returns>
@@ -1322,7 +1337,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ReplicationLink
-        /// <summary> Gets an object representing a ReplicationLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ReplicationLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicationLink.CreateResourceIdentifier" /> to create a <see cref="ReplicationLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ReplicationLink" /> object. </returns>
@@ -1338,7 +1356,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerCommunicationLink
-        /// <summary> Gets an object representing a ServerCommunicationLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerCommunicationLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerCommunicationLink.CreateResourceIdentifier" /> to create a <see cref="ServerCommunicationLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerCommunicationLink" /> object. </returns>
@@ -1354,7 +1375,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServiceObjective
-        /// <summary> Gets an object representing a ServiceObjective along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceObjective" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceObjective.CreateResourceIdentifier" /> to create a <see cref="ServiceObjective" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceObjective" /> object. </returns>
@@ -1370,7 +1394,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ExtendedDatabaseBlobAuditingPolicy
-        /// <summary> Gets an object representing a ExtendedDatabaseBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedDatabaseBlobAuditingPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedDatabaseBlobAuditingPolicy.CreateResourceIdentifier" /> to create an <see cref="ExtendedDatabaseBlobAuditingPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicy" /> object. </returns>
@@ -1386,7 +1413,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ExtendedServerBlobAuditingPolicy
-        /// <summary> Gets an object representing a ExtendedServerBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedServerBlobAuditingPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedServerBlobAuditingPolicy.CreateResourceIdentifier" /> to create an <see cref="ExtendedServerBlobAuditingPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicy" /> object. </returns>
@@ -1402,7 +1432,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerBlobAuditingPolicy
-        /// <summary> Gets an object representing a ServerBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerBlobAuditingPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerBlobAuditingPolicy.CreateResourceIdentifier" /> to create a <see cref="ServerBlobAuditingPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerBlobAuditingPolicy" /> object. </returns>
@@ -1418,7 +1451,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region DatabaseBlobAuditingPolicy
-        /// <summary> Gets an object representing a DatabaseBlobAuditingPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseBlobAuditingPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseBlobAuditingPolicy.CreateResourceIdentifier" /> to create a <see cref="DatabaseBlobAuditingPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseBlobAuditingPolicy" /> object. </returns>
@@ -1434,7 +1470,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseAdvisor
-        /// <summary> Gets an object representing a ServerDatabaseAdvisor along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseAdvisor" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseAdvisor.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseAdvisor" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseAdvisor" /> object. </returns>
@@ -1450,7 +1489,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerAdvisor
-        /// <summary> Gets an object representing a ServerAdvisor along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAdvisor" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAdvisor.CreateResourceIdentifier" /> to create a <see cref="ServerAdvisor" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerAdvisor" /> object. </returns>
@@ -1466,7 +1508,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region DatabaseAutomaticTuning
-        /// <summary> Gets an object representing a DatabaseAutomaticTuning along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseAutomaticTuning" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseAutomaticTuning.CreateResourceIdentifier" /> to create a <see cref="DatabaseAutomaticTuning" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseAutomaticTuning" /> object. </returns>
@@ -1482,7 +1527,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseSchemaTableColumn
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumn along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaTableColumn" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaTableColumn.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaTableColumn" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumn" /> object. </returns>
@@ -1498,7 +1546,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseSchemaTableColumn
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumn along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaTableColumn.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumn" /> object. </returns>
@@ -1514,7 +1565,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region RecommendedAction
-        /// <summary> Gets an object representing a RecommendedAction along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RecommendedAction" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecommendedAction.CreateResourceIdentifier" /> to create a <see cref="RecommendedAction" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecommendedAction" /> object. </returns>
@@ -1530,7 +1584,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseSchema
-        /// <summary> Gets an object representing a ServerDatabaseSchema along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchema" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchema.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchema" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseSchema" /> object. </returns>
@@ -1546,7 +1603,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseSchema
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchema along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchema" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchema.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchema" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchema" /> object. </returns>
@@ -1562,7 +1622,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region DatabaseSecurityAlertPolicy
-        /// <summary> Gets an object representing a DatabaseSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseSecurityAlertPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseSecurityAlertPolicy.CreateResourceIdentifier" /> to create a <see cref="DatabaseSecurityAlertPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseSecurityAlertPolicy" /> object. </returns>
@@ -1578,7 +1641,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseSchemaTable
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTable along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaTable" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaTable.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaTable" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTable" /> object. </returns>
@@ -1594,7 +1660,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseSchemaTable
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTable along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaTable" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaTable.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaTable" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTable" /> object. </returns>
@@ -1610,7 +1679,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseVulnerabilityAssessmentRuleBaseline
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentRuleBaseline along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
@@ -1626,7 +1698,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentRuleBaseline" /> object. </returns>
@@ -1642,7 +1717,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseVulnerabilityAssessment
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseVulnerabilityAssessment" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseVulnerabilityAssessment.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseVulnerabilityAssessment" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessment" /> object. </returns>
@@ -1658,7 +1736,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseVulnerabilityAssessment
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseVulnerabilityAssessment.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessment" /> object. </returns>
@@ -1674,7 +1755,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseVulnerabilityAssessmentScan
-        /// <summary> Gets an object representing a ServerDatabaseVulnerabilityAssessmentScan along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseVulnerabilityAssessmentScan.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseVulnerabilityAssessmentScan" /> object. </returns>
@@ -1690,7 +1774,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseVulnerabilityAssessmentScan
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseVulnerabilityAssessmentScan along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseVulnerabilityAssessmentScan" /> object. </returns>
@@ -1706,7 +1793,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region DataWarehouseUserActivities
-        /// <summary> Gets an object representing a DataWarehouseUserActivities along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DataWarehouseUserActivities" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataWarehouseUserActivities.CreateResourceIdentifier" /> to create a <see cref="DataWarehouseUserActivities" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataWarehouseUserActivities" /> object. </returns>
@@ -1722,7 +1812,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region DeletedServer
-        /// <summary> Gets an object representing a DeletedServer along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedServer" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedServer.CreateResourceIdentifier" /> to create a <see cref="DeletedServer" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedServer" /> object. </returns>
@@ -1738,7 +1831,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region EncryptionProtector
-        /// <summary> Gets an object representing a EncryptionProtector along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EncryptionProtector" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EncryptionProtector.CreateResourceIdentifier" /> to create an <see cref="EncryptionProtector" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EncryptionProtector" /> object. </returns>
@@ -1754,7 +1850,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region FailoverGroup
-        /// <summary> Gets an object representing a FailoverGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FailoverGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FailoverGroup.CreateResourceIdentifier" /> to create a <see cref="FailoverGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FailoverGroup" /> object. </returns>
@@ -1770,7 +1869,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region FirewallRule
-        /// <summary> Gets an object representing a FirewallRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallRule.CreateResourceIdentifier" /> to create a <see cref="FirewallRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallRule" /> object. </returns>
@@ -1786,7 +1888,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region InstanceFailoverGroup
-        /// <summary> Gets an object representing a InstanceFailoverGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="InstanceFailoverGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstanceFailoverGroup.CreateResourceIdentifier" /> to create an <see cref="InstanceFailoverGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InstanceFailoverGroup" /> object. </returns>
@@ -1802,7 +1907,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region InstancePool
-        /// <summary> Gets an object representing a InstancePool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="InstancePool" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InstancePool.CreateResourceIdentifier" /> to create an <see cref="InstancePool" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InstancePool" /> object. </returns>
@@ -1818,7 +1926,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region JobAgent
-        /// <summary> Gets an object representing a JobAgent along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="JobAgent" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobAgent.CreateResourceIdentifier" /> to create a <see cref="JobAgent" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JobAgent" /> object. </returns>
@@ -1834,7 +1945,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region JobCredential
-        /// <summary> Gets an object representing a JobCredential along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="JobCredential" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobCredential.CreateResourceIdentifier" /> to create a <see cref="JobCredential" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JobCredential" /> object. </returns>
@@ -1850,7 +1964,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerJobAgentJobExecution
-        /// <summary> Gets an object representing a ServerJobAgentJobExecution along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobExecution" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobExecution.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobExecution" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerJobAgentJobExecution" /> object. </returns>
@@ -1866,7 +1983,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerJobAgentJobExecutionStep
-        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStep along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobExecutionStep" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobExecutionStep.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobExecutionStep" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStep" /> object. </returns>
@@ -1882,7 +2002,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerJobAgentJobExecutionStepTarget
-        /// <summary> Gets an object representing a ServerJobAgentJobExecutionStepTarget along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobExecutionStepTarget" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobExecutionStepTarget.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobExecutionStepTarget" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerJobAgentJobExecutionStepTarget" /> object. </returns>
@@ -1898,7 +2021,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SqlJob
-        /// <summary> Gets an object representing a SqlJob along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlJob" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlJob.CreateResourceIdentifier" /> to create a <see cref="SqlJob" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlJob" /> object. </returns>
@@ -1914,7 +2040,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerJobAgentJobVersionStep
-        /// <summary> Gets an object representing a ServerJobAgentJobVersionStep along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobVersionStep" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobVersionStep.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobVersionStep" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerJobAgentJobVersionStep" /> object. </returns>
@@ -1930,7 +2059,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerJobAgentJobStep
-        /// <summary> Gets an object representing a ServerJobAgentJobStep along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerJobAgentJobStep" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerJobAgentJobStep.CreateResourceIdentifier" /> to create a <see cref="ServerJobAgentJobStep" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerJobAgentJobStep" /> object. </returns>
@@ -1946,7 +2078,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region JobTargetGroup
-        /// <summary> Gets an object representing a JobTargetGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="JobTargetGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobTargetGroup.CreateResourceIdentifier" /> to create a <see cref="JobTargetGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JobTargetGroup" /> object. </returns>
@@ -1962,7 +2097,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region JobVersion
-        /// <summary> Gets an object representing a JobVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="JobVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JobVersion.CreateResourceIdentifier" /> to create a <see cref="JobVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JobVersion" /> object. </returns>
@@ -1978,7 +2116,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SubscriptionLongTermRetentionBackup
-        /// <summary> Gets an object representing a SubscriptionLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionBackup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionBackup.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionBackup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackup" /> object. </returns>
@@ -1994,7 +2135,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ResourceGroupLongTermRetentionBackup
-        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionBackup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionBackup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionBackup.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionBackup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackup" /> object. </returns>
@@ -2010,7 +2154,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SubscriptionLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a SubscriptionLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionLongTermRetentionManagedInstanceBackup.CreateResourceIdentifier" /> to create a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackup" /> object. </returns>
@@ -2026,7 +2173,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ResourceGroupLongTermRetentionManagedInstanceBackup
-        /// <summary> Gets an object representing a ResourceGroupLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackup" /> object. </returns>
@@ -2042,7 +2192,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region LongTermRetentionPolicy
-        /// <summary> Gets an object representing a LongTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LongTermRetentionPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LongTermRetentionPolicy.CreateResourceIdentifier" /> to create a <see cref="LongTermRetentionPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LongTermRetentionPolicy" /> object. </returns>
@@ -2058,7 +2211,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region MaintenanceWindowOptions
-        /// <summary> Gets an object representing a MaintenanceWindowOptions along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceWindowOptions" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindowOptions.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindowOptions" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MaintenanceWindowOptions" /> object. </returns>
@@ -2074,7 +2230,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region MaintenanceWindows
-        /// <summary> Gets an object representing a MaintenanceWindows along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceWindows" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceWindows.CreateResourceIdentifier" /> to create a <see cref="MaintenanceWindows" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MaintenanceWindows" /> object. </returns>
@@ -2090,7 +2249,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicy" /> object. </returns>
@@ -2106,7 +2268,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedRestorableDroppedDbBackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedRestorableDroppedDbBackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy.CreateResourceIdentifier" /> to create a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicy" /> object. </returns>
@@ -2122,7 +2287,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedDatabaseRestoreDetailsResult
-        /// <summary> Gets an object representing a ManagedDatabaseRestoreDetailsResult along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseRestoreDetailsResult" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseRestoreDetailsResult.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseRestoreDetailsResult" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailsResult" /> object. </returns>
@@ -2138,7 +2306,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedDatabase
-        /// <summary> Gets an object representing a ManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabase.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedDatabase" /> object. </returns>
@@ -2154,7 +2325,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedDatabaseSecurityAlertPolicy
-        /// <summary> Gets an object representing a ManagedDatabaseSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedDatabaseSecurityAlertPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedDatabaseSecurityAlertPolicy.CreateResourceIdentifier" /> to create a <see cref="ManagedDatabaseSecurityAlertPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicy" /> object. </returns>
@@ -2170,7 +2344,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel
-        /// <summary> Gets an object representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
@@ -2186,7 +2363,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDatabaseSchemaTableColumnSensitivityLabel
-        /// <summary> Gets an object representing a ServerDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel.CreateResourceIdentifier" /> to create a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDatabaseSchemaTableColumnSensitivityLabel" /> object. </returns>
@@ -2202,7 +2382,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedTransparentDataEncryption
-        /// <summary> Gets an object representing a ManagedTransparentDataEncryption along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedTransparentDataEncryption" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedTransparentDataEncryption.CreateResourceIdentifier" /> to create a <see cref="ManagedTransparentDataEncryption" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedTransparentDataEncryption" /> object. </returns>
@@ -2218,7 +2401,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceAdministrator
-        /// <summary> Gets an object representing a ManagedInstanceAdministrator along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceAdministrator" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceAdministrator.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAdministrator" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceAdministrator" /> object. </returns>
@@ -2234,7 +2420,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceAzureADOnlyAuthentication
-        /// <summary> Gets an object representing a ManagedInstanceAzureADOnlyAuthentication along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceAzureADOnlyAuthentication.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthentication" /> object. </returns>
@@ -2250,7 +2439,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceEncryptionProtector
-        /// <summary> Gets an object representing a ManagedInstanceEncryptionProtector along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceEncryptionProtector" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceEncryptionProtector.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceEncryptionProtector" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtector" /> object. </returns>
@@ -2266,7 +2458,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceKey
-        /// <summary> Gets an object representing a ManagedInstanceKey along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceKey" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceKey.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceKey" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceKey" /> object. </returns>
@@ -2282,7 +2477,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceLongTermRetentionPolicy
-        /// <summary> Gets an object representing a ManagedInstanceLongTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceLongTermRetentionPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceLongTermRetentionPolicy.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceLongTermRetentionPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicy" /> object. </returns>
@@ -2298,7 +2496,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceOperation
-        /// <summary> Gets an object representing a ManagedInstanceOperation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceOperation" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceOperation.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceOperation" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceOperation" /> object. </returns>
@@ -2314,7 +2515,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstancePrivateEndpointConnection
-        /// <summary> Gets an object representing a ManagedInstancePrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstancePrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstancePrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="ManagedInstancePrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnection" /> object. </returns>
@@ -2330,7 +2534,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstancePrivateLink
-        /// <summary> Gets an object representing a ManagedInstancePrivateLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstancePrivateLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstancePrivateLink.CreateResourceIdentifier" /> to create a <see cref="ManagedInstancePrivateLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstancePrivateLink" /> object. </returns>
@@ -2346,7 +2553,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstance
-        /// <summary> Gets an object representing a ManagedInstance along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstance" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstance.CreateResourceIdentifier" /> to create a <see cref="ManagedInstance" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstance" /> object. </returns>
@@ -2362,7 +2572,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedInstanceVulnerabilityAssessment
-        /// <summary> Gets an object representing a ManagedInstanceVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedInstanceVulnerabilityAssessment" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedInstanceVulnerabilityAssessment.CreateResourceIdentifier" /> to create a <see cref="ManagedInstanceVulnerabilityAssessment" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessment" /> object. </returns>
@@ -2378,7 +2591,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ManagedServerSecurityAlertPolicy
-        /// <summary> Gets an object representing a ManagedServerSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServerSecurityAlertPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServerSecurityAlertPolicy.CreateResourceIdentifier" /> to create a <see cref="ManagedServerSecurityAlertPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicy" /> object. </returns>
@@ -2394,7 +2610,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -2410,7 +2629,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region PrivateLinkResource
-        /// <summary> Gets an object representing a PrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
@@ -2426,7 +2648,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region RecoverableManagedDatabase
-        /// <summary> Gets an object representing a RecoverableManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoverableManagedDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoverableManagedDatabase.CreateResourceIdentifier" /> to create a <see cref="RecoverableManagedDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RecoverableManagedDatabase" /> object. </returns>
@@ -2442,7 +2667,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region RestorePoint
-        /// <summary> Gets an object representing a RestorePoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorePoint" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorePoint.CreateResourceIdentifier" /> to create a <see cref="RestorePoint" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorePoint" /> object. </returns>
@@ -2458,7 +2686,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerAutomaticTuning
-        /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAutomaticTuning" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAutomaticTuning.CreateResourceIdentifier" /> to create a <see cref="ServerAutomaticTuning" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerAutomaticTuning" /> object. </returns>
@@ -2474,7 +2705,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerAzureADAdministrator
-        /// <summary> Gets an object representing a ServerAzureADAdministrator along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAzureADAdministrator" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAzureADAdministrator.CreateResourceIdentifier" /> to create a <see cref="ServerAzureADAdministrator" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerAzureADAdministrator" /> object. </returns>
@@ -2490,7 +2724,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerAzureADOnlyAuthentication
-        /// <summary> Gets an object representing a ServerAzureADOnlyAuthentication along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerAzureADOnlyAuthentication" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerAzureADOnlyAuthentication.CreateResourceIdentifier" /> to create a <see cref="ServerAzureADOnlyAuthentication" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerAzureADOnlyAuthentication" /> object. </returns>
@@ -2506,7 +2743,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDevOpsAuditingSettings
-        /// <summary> Gets an object representing a ServerDevOpsAuditingSettings along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDevOpsAuditingSettings" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDevOpsAuditingSettings.CreateResourceIdentifier" /> to create a <see cref="ServerDevOpsAuditingSettings" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDevOpsAuditingSettings" /> object. </returns>
@@ -2522,7 +2762,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerDnsAlias
-        /// <summary> Gets an object representing a ServerDnsAlias along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerDnsAlias" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerDnsAlias.CreateResourceIdentifier" /> to create a <see cref="ServerDnsAlias" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerDnsAlias" /> object. </returns>
@@ -2538,7 +2781,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerKey
-        /// <summary> Gets an object representing a ServerKey along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerKey" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerKey.CreateResourceIdentifier" /> to create a <see cref="ServerKey" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerKey" /> object. </returns>
@@ -2554,7 +2800,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerSecurityAlertPolicy
-        /// <summary> Gets an object representing a ServerSecurityAlertPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerSecurityAlertPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerSecurityAlertPolicy.CreateResourceIdentifier" /> to create a <see cref="ServerSecurityAlertPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerSecurityAlertPolicy" /> object. </returns>
@@ -2570,7 +2819,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerTrustGroup
-        /// <summary> Gets an object representing a ServerTrustGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerTrustGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerTrustGroup.CreateResourceIdentifier" /> to create a <see cref="ServerTrustGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerTrustGroup" /> object. </returns>
@@ -2586,7 +2838,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerVulnerabilityAssessment
-        /// <summary> Gets an object representing a ServerVulnerabilityAssessment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerVulnerabilityAssessment" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerVulnerabilityAssessment.CreateResourceIdentifier" /> to create a <see cref="ServerVulnerabilityAssessment" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessment" /> object. </returns>
@@ -2602,7 +2857,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SqlAgentConfiguration
-        /// <summary> Gets an object representing a SqlAgentConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlAgentConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlAgentConfiguration.CreateResourceIdentifier" /> to create a <see cref="SqlAgentConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlAgentConfiguration" /> object. </returns>
@@ -2618,7 +2876,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SubscriptionUsage
-        /// <summary> Gets an object representing a SubscriptionUsage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionUsage" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionUsage.CreateResourceIdentifier" /> to create a <see cref="SubscriptionUsage" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionUsage" /> object. </returns>
@@ -2634,7 +2895,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SyncAgent
-        /// <summary> Gets an object representing a SyncAgent along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SyncAgent" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SyncAgent.CreateResourceIdentifier" /> to create a <see cref="SyncAgent" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SyncAgent" /> object. </returns>
@@ -2650,7 +2914,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SyncGroup
-        /// <summary> Gets an object representing a SyncGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SyncGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SyncGroup.CreateResourceIdentifier" /> to create a <see cref="SyncGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SyncGroup" /> object. </returns>
@@ -2666,7 +2933,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SyncMember
-        /// <summary> Gets an object representing a SyncMember along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SyncMember" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SyncMember.CreateResourceIdentifier" /> to create a <see cref="SyncMember" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SyncMember" /> object. </returns>
@@ -2682,7 +2952,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SqlTimeZone
-        /// <summary> Gets an object representing a SqlTimeZone along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlTimeZone" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlTimeZone.CreateResourceIdentifier" /> to create a <see cref="SqlTimeZone" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlTimeZone" /> object. </returns>
@@ -2698,7 +2971,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region VirtualCluster
-        /// <summary> Gets an object representing a VirtualCluster along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualCluster" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualCluster.CreateResourceIdentifier" /> to create a <see cref="VirtualCluster" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualCluster" /> object. </returns>
@@ -2714,7 +2990,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region VirtualNetworkRule
-        /// <summary> Gets an object representing a VirtualNetworkRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkRule.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkRule" /> object. </returns>
@@ -2730,7 +3009,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region WorkloadClassifier
-        /// <summary> Gets an object representing a WorkloadClassifier along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadClassifier" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadClassifier.CreateResourceIdentifier" /> to create a <see cref="WorkloadClassifier" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadClassifier" /> object. </returns>
@@ -2746,7 +3028,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region WorkloadGroup
-        /// <summary> Gets an object representing a WorkloadGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadGroup.CreateResourceIdentifier" /> to create a <see cref="WorkloadGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadGroup" /> object. </returns>
@@ -2762,7 +3047,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region LogicalDatabaseTransparentDataEncryption
-        /// <summary> Gets an object representing a LogicalDatabaseTransparentDataEncryption along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicalDatabaseTransparentDataEncryption" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicalDatabaseTransparentDataEncryption.CreateResourceIdentifier" /> to create a <see cref="LogicalDatabaseTransparentDataEncryption" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryption" /> object. </returns>
@@ -2778,7 +3066,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region BackupShortTermRetentionPolicy
-        /// <summary> Gets an object representing a BackupShortTermRetentionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BackupShortTermRetentionPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupShortTermRetentionPolicy.CreateResourceIdentifier" /> to create a <see cref="BackupShortTermRetentionPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BackupShortTermRetentionPolicy" /> object. </returns>
@@ -2794,7 +3085,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region LedgerDigestUploads
-        /// <summary> Gets an object representing a LedgerDigestUploads along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LedgerDigestUploads" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LedgerDigestUploads.CreateResourceIdentifier" /> to create a <see cref="LedgerDigestUploads" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LedgerDigestUploads" /> object. </returns>
@@ -2810,7 +3104,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region OutboundFirewallRule
-        /// <summary> Gets an object representing a OutboundFirewallRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OutboundFirewallRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OutboundFirewallRule.CreateResourceIdentifier" /> to create an <see cref="OutboundFirewallRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OutboundFirewallRule" /> object. </returns>
@@ -2826,7 +3123,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region RestorableDroppedDatabase
-        /// <summary> Gets an object representing a RestorableDroppedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedDatabase.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorableDroppedDatabase" /> object. </returns>
@@ -2842,7 +3142,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region RestorableDroppedManagedDatabase
-        /// <summary> Gets an object representing a RestorableDroppedManagedDatabase along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorableDroppedManagedDatabase" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorableDroppedManagedDatabase.CreateResourceIdentifier" /> to create a <see cref="RestorableDroppedManagedDatabase" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorableDroppedManagedDatabase" /> object. </returns>
@@ -2858,7 +3161,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region SqlServer
-        /// <summary> Gets an object representing a SqlServer along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SqlServer" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlServer.CreateResourceIdentifier" /> to create a <see cref="SqlServer" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlServer" /> object. </returns>
@@ -2874,7 +3180,10 @@ namespace Azure.ResourceManager.Sql
         #endregion
 
         #region ServerConnectionPolicy
-        /// <summary> Gets an object representing a ServerConnectionPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerConnectionPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerConnectionPolicy.CreateResourceIdentifier" /> to create a <see cref="ServerConnectionPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerConnectionPolicy" /> object. </returns>

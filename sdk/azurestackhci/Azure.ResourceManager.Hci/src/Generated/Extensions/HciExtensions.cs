@@ -101,7 +101,10 @@ namespace Azure.ResourceManager.Hci
         }
 
         #region ArcSetting
-        /// <summary> Gets an object representing a ArcSetting along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ArcSetting" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcSetting.CreateResourceIdentifier" /> to create an <see cref="ArcSetting" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArcSetting" /> object. </returns>
@@ -117,7 +120,10 @@ namespace Azure.ResourceManager.Hci
         #endregion
 
         #region HciCluster
-        /// <summary> Gets an object representing a HciCluster along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HciCluster" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciCluster.CreateResourceIdentifier" /> to create a <see cref="HciCluster" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HciCluster" /> object. </returns>
@@ -133,7 +139,10 @@ namespace Azure.ResourceManager.Hci
         #endregion
 
         #region ArcExtension
-        /// <summary> Gets an object representing a ArcExtension along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ArcExtension" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcExtension.CreateResourceIdentifier" /> to create an <see cref="ArcExtension" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArcExtension" /> object. </returns>

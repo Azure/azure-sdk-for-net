@@ -128,7 +128,10 @@ namespace Azure.ResourceManager.Communication
         }
 
         #region CommunicationService
-        /// <summary> Gets an object representing a CommunicationService along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunicationService" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationService.CreateResourceIdentifier" /> to create a <see cref="CommunicationService" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CommunicationService" /> object. </returns>
