@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary> A class representing the operations that can be performed over a specific resource. </summary>
     [CodeGenSuppress("GetTagResource")] // suppress due to error CA1721: The property name 'TagResource' is confusing given the existence of method 'GetTagResource'. Rename or remove one of these members.

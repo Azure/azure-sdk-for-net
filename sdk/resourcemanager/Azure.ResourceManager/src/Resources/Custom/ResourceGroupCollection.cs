@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {

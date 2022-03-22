@@ -51,13 +51,6 @@ namespace Azure.ResourceManager
             return GetPolicyAssignments().Get(policyAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
-        public virtual TagResource GetTagResource()
-        {
-            return new TagResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Resources/tags/default"));
-        }
-
         /// <summary> Gets a collection of PolicyExemptions in the PolicyExemption. </summary>
         /// <returns> An object representing collection of PolicyExemptions and their operations over a PolicyExemption. </returns>
         public virtual PolicyExemptionCollection GetPolicyExemptions()
