@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 
             var serializer = new SchemaRegistryAvroSerializer(client, groupName);
             Assert.ThrowsAsync<RequestFailedException>(
-                async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }));
+                async () => await serializer.SerializeAsync(new Employee_Unregistered { Age = 42, Name = "Caketown"}));
         }
 
         [RecordedTest]
