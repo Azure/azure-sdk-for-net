@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.WebPubSub
             return GetExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of WebPubSubResources in the WebPubSubResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
-        public static WebPubSubCollection GetWebPubSubs(this ResourceGroup resourceGroup)
+        public static WebPubSubCollection GetWebPubSubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetWebPubSubs();
+            return GetExtensionClient(resourceGroupResource).GetWebPubSubs();
         }
 
         /// <summary>
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
         /// Operation Id: WebPubSub_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<WebPubSubResource>> GetWebPubSubAsync(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<WebPubSubResource>> GetWebPubSubAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetWebPubSubs().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetWebPubSubs().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,18 +165,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}
         /// Operation Id: WebPubSub_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static Response<WebPubSubResource> GetWebPubSub(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<WebPubSubResource> GetWebPubSub(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetWebPubSubs().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetWebPubSubs().Get(resourceName, cancellationToken);
         }
 
         #region WebPubSubResource
-        /// <summary> Gets an object representing a WebPubSubResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebPubSubResource" /> object. </returns>
@@ -192,7 +195,10 @@ namespace Azure.ResourceManager.WebPubSub
         #endregion
 
         #region WebPubSubHubResource
-        /// <summary> Gets an object representing a WebPubSubHubResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebPubSubHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubHubResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebPubSubHubResource" /> object. </returns>
@@ -208,7 +214,10 @@ namespace Azure.ResourceManager.WebPubSub
         #endregion
 
         #region PrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
@@ -224,7 +233,10 @@ namespace Azure.ResourceManager.WebPubSub
         #endregion
 
         #region SharedPrivateLinkResource
-        /// <summary> Gets an object representing a SharedPrivateLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedPrivateLinkResource" /> object. </returns>

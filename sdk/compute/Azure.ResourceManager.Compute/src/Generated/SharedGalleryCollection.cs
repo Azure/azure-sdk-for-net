@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -43,9 +42,9 @@ namespace Azure.ResourceManager.Compute
         internal SharedGalleryCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
             _location = location;
-            _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, DiagnosticOptions);
+            _sharedGalleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SharedGalleryResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedGalleryResource.ResourceType, out string sharedGalleryApiVersion);
-            _sharedGalleryRestClient = new SharedGalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryApiVersion);
+            _sharedGalleryRestClient = new SharedGalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

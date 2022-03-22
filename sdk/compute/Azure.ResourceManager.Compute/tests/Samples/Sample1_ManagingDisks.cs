@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the disk collection from the resource group
             DiskCollection diskCollection = resourceGroup.GetDisks();
             // Use the same location as the resource group
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the disk collection from the resource group
             DiskCollection diskCollection = resourceGroup.GetDisks();
             // With ListAsync(), we can get a list of the disks
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             // first we need to get the resource group
             string rgName = "myRgName";
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync(rgName);
             // Now we get the disk collection from the resource group
             DiskCollection diskCollection = resourceGroup.GetDisks();
             string diskName = "myDisk";

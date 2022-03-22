@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 
@@ -49,9 +48,9 @@ namespace Azure.ResourceManager.Sql
             _locationName = locationName;
             _longTermRetentionServerName = longTermRetentionServerName;
             _longTermRetentionDatabaseName = longTermRetentionDatabaseName;
-            _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionBackupResource.ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionBackupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SubscriptionLongTermRetentionBackupResource.ResourceType, out string subscriptionLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
-            _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
+            _subscriptionLongTermRetentionBackupLongTermRetentionBackupsRestClient = new LongTermRetentionBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionBackupLongTermRetentionBackupsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

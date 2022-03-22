@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
 {
     public class Sample1_ManagingBlobContainers
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
         private StorageAccount storageAccount;
         private BlobService blobService;
         [SetUp]
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = operation.Value;
+            ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = operation.Value;
             this.resourceGroup = resourceGroup;
             StorageSku sku = new StorageSku(StorageSkuName.StandardGRS);
             StorageKind kind = StorageKind.Storage;

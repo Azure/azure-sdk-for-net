@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CdnEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpointResource.ResourceType.Namespace, DiagnosticOptions);
+            _cdnEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnEndpointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CdnEndpointResource.ResourceType, out string cdnEndpointApiVersion);
-            _cdnEndpointRestClient = new CdnEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cdnEndpointApiVersion);
+            _cdnEndpointRestClient = new CdnEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cdnEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

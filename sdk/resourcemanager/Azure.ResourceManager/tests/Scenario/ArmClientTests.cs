@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupVersionTracker tracker2 = new ResourceGroupVersionTracker();
             ArmClientOptions options1 = new ArmClientOptions();
             string versionOverride = "2021-01-01";
-            options1.SetApiVersion(ResourceGroup.ResourceType, versionOverride);
+            options1.SetApiVersion(ResourceGroupResource.ResourceType, versionOverride);
             ArmClientOptions options2 = new ArmClientOptions();
             options1.AddPolicy(tracker1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(tracker2, HttpPipelinePosition.PerCall);
@@ -292,39 +292,6 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceIdentifier x = null;
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        public void ValidateMgmtTelemetry()
-        {
-            var options = new ArmClientOptions();
-            options.Diagnostics.IsTelemetryEnabled = true;
-            var client = GetArmClient(options);
-            Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-
-            options.Diagnostics.IsTelemetryEnabled = false;
-            client = GetArmClient(options);
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), "TelemetryPolicy"));
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        public void ValidateMgmtTelemetryComesAfterTelemetry()
-        {
-            var client = GetArmClient();
-            var pipeline = GetPipelineFromClient(client);
-            bool foundTelemetry = false;
-            foreach (var policy in GetPoliciesFromPipeline(pipeline).ToArray())
-            {
-                foundTelemetry |= policy.GetType().Name == "TelemetryPolicy";
-                if (policy.GetType() == typeof(MgmtTelemetryPolicy))
-                {
-                    Assert.IsTrue(foundTelemetry);
-                    break;
-                }
-            }
         }
 
         private static HttpPipeline GetPipelineFromClient(ArmClient client)

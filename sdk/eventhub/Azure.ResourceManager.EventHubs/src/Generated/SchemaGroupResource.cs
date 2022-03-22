@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SchemaGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _schemaGroupSchemaRegistryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            _schemaGroupSchemaRegistryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string schemaGroupSchemaRegistryApiVersion);
-            _schemaGroupSchemaRegistryRestClient = new SchemaRegistryRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, schemaGroupSchemaRegistryApiVersion);
+            _schemaGroupSchemaRegistryRestClient = new SchemaRegistryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, schemaGroupSchemaRegistryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

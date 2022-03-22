@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.MongoDB)).Id;
             await StopSessionRecordingAsync();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SetUp()
         {
             // need to overwrite with the resource group fetched by ArmClient, otherwise it won't be recorded
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await ArmClient.GetDatabaseAccountResource(_databaseAccountIdentifier).GetAsync();
         }

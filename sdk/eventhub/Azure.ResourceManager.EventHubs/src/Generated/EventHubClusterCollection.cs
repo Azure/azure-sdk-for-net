@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EventHubClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubClusterResource.ResourceType.Namespace, DiagnosticOptions);
+            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EventHubClusterResource.ResourceType, out string eventHubClusterApiVersion);
-            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
-            _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubClusterResource.ResourceType.Namespace, DiagnosticOptions);
+            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterApiVersion);
+            _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EventHubClusterResource.ResourceType, out string eventHubClusterClustersApiVersion);
-            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
+            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,8 +51,8 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

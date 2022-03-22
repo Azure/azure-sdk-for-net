@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class DisasterRecoveryTests : EventHubTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)
         {
         }

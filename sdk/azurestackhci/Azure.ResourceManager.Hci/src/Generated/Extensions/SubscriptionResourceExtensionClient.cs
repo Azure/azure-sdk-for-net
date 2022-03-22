@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -35,8 +34,8 @@ namespace Azure.ResourceManager.Hci
         {
         }
 
-        private ClientDiagnostics HciClusterClustersClientDiagnostics => _hciClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, DiagnosticOptions);
-        private ClustersRestOperations HciClusterClustersRestClient => _hciClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HciClusterResource.ResourceType));
+        private ClientDiagnostics HciClusterClustersClientDiagnostics => _hciClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations HciClusterClustersRestClient => _hciClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HciClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

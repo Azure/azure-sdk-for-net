@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-D-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
             DeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             ResourceIdentifier deploymentResourceIdentifier = DeploymentResource.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
             DeploymentResource deployment = Client.GetDeploymentResource(deploymentResourceIdentifier);
             DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)

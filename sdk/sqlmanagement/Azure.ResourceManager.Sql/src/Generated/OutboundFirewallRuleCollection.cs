@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OutboundFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _outboundFirewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", OutboundFirewallRuleResource.ResourceType.Namespace, DiagnosticOptions);
+            _outboundFirewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", OutboundFirewallRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OutboundFirewallRuleResource.ResourceType, out string outboundFirewallRuleApiVersion);
-            _outboundFirewallRuleRestClient = new OutboundFirewallRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, outboundFirewallRuleApiVersion);
+            _outboundFirewallRuleRestClient = new OutboundFirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, outboundFirewallRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

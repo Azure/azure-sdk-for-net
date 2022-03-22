@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceUpdateAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceUpdateAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccountResource.ResourceType.Namespace, DiagnosticOptions);
+            _deviceUpdateAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccountResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeviceUpdateAccountResource.ResourceType, out string deviceUpdateAccountAccountsApiVersion);
-            _deviceUpdateAccountAccountsRestClient = new AccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deviceUpdateAccountAccountsApiVersion);
+            _deviceUpdateAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceUpdateAccountAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

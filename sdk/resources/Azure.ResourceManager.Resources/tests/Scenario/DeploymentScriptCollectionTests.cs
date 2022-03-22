@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-C-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
             DeploymentScriptResource deploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-L-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
             _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-L-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
             _ = await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployScriptName = Recording.GenerateAssetName("deployScript-G-");
             DeploymentScriptData deploymentScriptData = await GetDeploymentScriptDataAsync();
             DeploymentScriptResource tempDeploymentScript = (await rg.GetDeploymentScripts().CreateOrUpdateAsync(WaitUntil.Completed, deployScriptName, deploymentScriptData)).Value;

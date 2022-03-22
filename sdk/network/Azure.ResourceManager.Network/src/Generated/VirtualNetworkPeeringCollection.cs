@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualNetworkPeeringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualNetworkPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkPeeringResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualNetworkPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkPeeringResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualNetworkPeeringResource.ResourceType, out string virtualNetworkPeeringApiVersion);
-            _virtualNetworkPeeringRestClient = new VirtualNetworkPeeringsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkPeeringApiVersion);
+            _virtualNetworkPeeringRestClient = new VirtualNetworkPeeringsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkPeeringApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

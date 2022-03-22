@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
 {
     public class Sample1_ManagingWebPubSub
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             // With the Colletion, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

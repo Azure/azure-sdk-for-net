@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualMachineScaleSetVirtualMachineRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetVirtualMachineRunCommandResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetVirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualMachineScaleSetVirtualMachineRunCommandResource.ResourceType, out string virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsApiVersion);
-            _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsApiVersion);
+            _virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsRestClient = new VirtualMachineScaleSetVMRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetVirtualMachineRunCommandVirtualMachineScaleSetVMRunCommandsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

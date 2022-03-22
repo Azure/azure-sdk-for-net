@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -42,9 +41,9 @@ namespace Azure.ResourceManager.Compute
         internal OSVersionCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
             _location = location;
-            _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersionResource.ResourceType.Namespace, DiagnosticOptions);
+            _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OSVersionResource.ResourceType, out string osVersionCloudServiceOperatingSystemsApiVersion);
-            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, osVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

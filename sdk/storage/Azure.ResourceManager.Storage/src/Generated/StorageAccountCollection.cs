@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 
@@ -38,9 +37,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StorageAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, DiagnosticOptions);
+            _storageAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StorageAccountResource.ResourceType, out string storageAccountApiVersion);
-            _storageAccountRestClient = new StorageAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageAccountApiVersion);
+            _storageAccountRestClient = new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,8 +47,8 @@ namespace Azure.ResourceManager.Storage
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

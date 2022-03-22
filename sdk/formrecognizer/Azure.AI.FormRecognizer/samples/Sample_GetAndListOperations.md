@@ -28,7 +28,7 @@ If the operation failed, the error information can be accessed using the `Error`
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Make sure there is at least one operation, so we are going to build a custom model.
-Uri trainingFileUri = <trainingFileUri>;
+Uri trainingFileUri = new Uri("<trainingFileUri>");
 BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
 await operation.WaitForCompletionAsync();
 

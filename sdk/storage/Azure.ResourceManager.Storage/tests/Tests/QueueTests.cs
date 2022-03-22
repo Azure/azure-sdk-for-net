@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class QueueTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private StorageAccount _storageAccount;
         private QueueService _queueService;
         private StorageQueueCollection _storageQueueCollection;

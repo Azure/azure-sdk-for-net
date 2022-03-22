@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
@@ -38,10 +37,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
         }
 
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private DeviceUpdateRestOperations DefaultRestClient => _defaultRestClient ??= new DeviceUpdateRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics DeviceUpdateAccountAccountsClientDiagnostics => _deviceUpdateAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccountResource.ResourceType.Namespace, DiagnosticOptions);
-        private AccountsRestOperations DeviceUpdateAccountAccountsRestClient => _deviceUpdateAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeviceUpdateAccountResource.ResourceType));
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DeviceUpdateRestOperations DefaultRestClient => _defaultRestClient ??= new DeviceUpdateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DeviceUpdateAccountAccountsClientDiagnostics => _deviceUpdateAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccountResource.ResourceType.Namespace, Diagnostics);
+        private AccountsRestOperations DeviceUpdateAccountAccountsRestClient => _deviceUpdateAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceUpdateAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

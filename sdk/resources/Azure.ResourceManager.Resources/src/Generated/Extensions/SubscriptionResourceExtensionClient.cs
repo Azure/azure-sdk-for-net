@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -42,14 +41,14 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        private ClientDiagnostics ApplicationClientDiagnostics => _applicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationResource.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationsRestOperations ApplicationRestClient => _applicationRestClient ??= new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ApplicationResource.ResourceType));
-        private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestResource.ResourceType.Namespace, DiagnosticOptions);
-        private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequestResource.ResourceType));
-        private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, DiagnosticOptions);
-        private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeploymentScriptResource.ResourceType));
-        private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, DiagnosticOptions);
-        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(TemplateSpecResource.ResourceType));
+        private ClientDiagnostics ApplicationClientDiagnostics => _applicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationResource.ResourceType.Namespace, Diagnostics);
+        private ApplicationsRestOperations ApplicationRestClient => _applicationRestClient ??= new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationResource.ResourceType));
+        private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestResource.ResourceType.Namespace, Diagnostics);
+        private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitRequestResource.ResourceType));
+        private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeploymentScriptResource.ResourceType));
+        private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, Diagnostics);
+        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TemplateSpecResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

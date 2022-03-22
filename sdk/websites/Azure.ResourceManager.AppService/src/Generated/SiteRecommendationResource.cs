@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecommendationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string siteRecommendationRecommendationsApiVersion);
-            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteRecommendationRecommendationsApiVersion);
+            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

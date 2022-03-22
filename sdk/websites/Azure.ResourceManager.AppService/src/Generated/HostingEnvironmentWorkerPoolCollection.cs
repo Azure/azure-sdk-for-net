@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HostingEnvironmentWorkerPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentWorkerPoolResource.ResourceType.Namespace, DiagnosticOptions);
+            _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentWorkerPoolResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HostingEnvironmentWorkerPoolResource.ResourceType, out string hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
-            _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
+            _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hostingEnvironmentWorkerPoolAppServiceEnvironmentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

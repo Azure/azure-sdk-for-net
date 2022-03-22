@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal TenantCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantResource.ResourceType.Namespace, DiagnosticOptions);
+            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(TenantResource.ResourceType, out string tenantApiVersion);
-            _tenantRestClient = new TenantsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
+            _tenantRestClient = new TenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

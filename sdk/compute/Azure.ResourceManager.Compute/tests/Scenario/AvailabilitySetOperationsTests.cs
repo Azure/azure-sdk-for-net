@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var setName = Recording.GenerateAssetName("testAS-");
             var set = await CreateAvailabilitySetAsync(setName);
             var locations = await set.GetAvailableLocationsAsync();
-            Assert.IsNotEmpty(locations);
+            Assert.IsNotEmpty(locations.Value);
         }
 
         [RecordedTest]
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Tests
             AvailabilitySetResource aset = await CreateAvailabilitySetAsync(asetName);
             var beforeAdd = aset.Data.ProximityPlacementGroupId;
 
-            ResourceGroup rg = Client.GetResourceGroup(ResourceGroup.CreateResourceIdentifier(aset.Id.SubscriptionId, aset.Id.ResourceGroupName));
+            ResourceGroupResource rg = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(aset.Id.SubscriptionId, aset.Id.ResourceGroupName));
             var proxGrpName = Recording.GenerateAssetName("proxGrp-");
             ProximityPlacementGroupResource proxGrp = (await rg.GetProximityPlacementGroups().CreateOrUpdateAsync(WaitUntil.Completed, proxGrpName, new ProximityPlacementGroupData(DefaultLocation))).Value;
 

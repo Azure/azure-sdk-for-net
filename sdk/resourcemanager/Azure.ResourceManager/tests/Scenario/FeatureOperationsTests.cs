@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceProvider provider = await subscription.GetResourceProviders().GetAsync("Microsoft.Compute");
+            ResourceProviderResource provider = await subscription.GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource featureFromCollection = await GetFirst(provider.GetFeatures().GetAllAsync());
             FeatureResource feature = await featureFromCollection.GetAsync();
             Assert.AreEqual(featureFromCollection.Data.Id, feature.Data.Id);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
         public async Task RegisterAndUnregister()
         {
             //testing both register and unregister in the same test to avoid feature creep in our test subscription
-            ResourceProvider provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
+            ResourceProviderResource provider = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders().GetAsync("Microsoft.Compute");
             FeatureResource feature = await provider.GetFeatures().GetAsync("AHUB");
             FeatureResource afterRegister = await feature.RegisterAsync();
             Assert.AreEqual(feature.Data.Id, afterRegister.Data.Id);

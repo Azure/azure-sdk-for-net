@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
             PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");

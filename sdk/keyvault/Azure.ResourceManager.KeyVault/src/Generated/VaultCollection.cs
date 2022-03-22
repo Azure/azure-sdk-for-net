@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
@@ -38,9 +37,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultResource.ResourceType.Namespace, DiagnosticOptions);
+            _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", VaultResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VaultResource.ResourceType, out string vaultApiVersion);
-            _vaultRestClient = new VaultsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultApiVersion);
+            _vaultRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vaultApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,8 +47,8 @@ namespace Azure.ResourceManager.KeyVault
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

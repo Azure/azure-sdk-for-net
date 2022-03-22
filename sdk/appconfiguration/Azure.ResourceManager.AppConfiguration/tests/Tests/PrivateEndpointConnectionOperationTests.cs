@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateEndpointConnectionOperationTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
         private Network.PrivateEndpointResource PrivateEndpointResource { get; set; }
         private PrivateEndpointConnectionResource Connection { get; set; }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<AzureLocation> locations =  await Connection.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations =  (await Connection.GetAvailableLocationsAsync()).Value;
 
             Assert.IsNotEmpty(locations);
         }

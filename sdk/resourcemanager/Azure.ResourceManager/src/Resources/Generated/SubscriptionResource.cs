@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -61,21 +60,21 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string subscriptionApiVersion);
-            _subscriptionRestClient = new SubscriptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionApiVersion);
-            _subscriptionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionRestClient = new SubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionApiVersion);
+            _subscriptionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string subscriptionResourcesApiVersion);
-            _subscriptionResourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionResourcesApiVersion);
-            _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionResourcesRestClient = new ResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionResourcesApiVersion);
+            _subscriptionTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string subscriptionTagsApiVersion);
-            _subscriptionTagsRestClient = new TagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionTagsApiVersion);
-            _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLink.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceLink.ResourceType, out string resourceLinkApiVersion);
-            _resourceLinkRestClient = new ResourceLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceLinkApiVersion);
-            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", FeatureResource.ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionTagsRestClient = new TagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionTagsApiVersion);
+            _resourceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceLinkResource.ResourceType, out string resourceLinkApiVersion);
+            _resourceLinkRestClient = new ResourceLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceLinkApiVersion);
+            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", FeatureResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FeatureResource.ResourceType, out string featureApiVersion);
-            _featureRestClient = new FeaturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
+            _featureRestClient = new FeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,8 +104,8 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ResourceProviders in the ResourceProvider. </summary>
-        /// <returns> An object representing collection of ResourceProviders and their operations over a ResourceProvider. </returns>
+        /// <summary> Gets a collection of ResourceProviderResources in the ResourceProviderResource. </summary>
+        /// <returns> An object representing collection of ResourceProviderResources and their operations over a ResourceProviderResource. </returns>
         public virtual ResourceProviderCollection GetResourceProviders()
         {
             return GetCachedClient(Client => new ResourceProviderCollection(Client, Id));
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ResourceProvider>> GetResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProviderResource>> GetResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetResourceProviders().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -137,13 +136,13 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ResourceProvider> GetResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProviderResource> GetResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetResourceProviders().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGroups in the ResourceGroup. </summary>
-        /// <returns> An object representing collection of ResourceGroups and their operations over a ResourceGroup. </returns>
+        /// <summary> Gets a collection of ResourceGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ResourceGroupResources and their operations over a ResourceGroupResource. </returns>
         public virtual ResourceGroupCollection GetResourceGroups()
         {
             return GetCachedClient(Client => new ResourceGroupCollection(Client, Id));
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroup>> GetResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupResource>> GetResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return await GetResourceGroups().GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<ResourceGroup> GetResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupResource> GetResourceGroup(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             return GetResourceGroups().Get(resourceGroupName, cancellationToken);
         }
@@ -610,17 +609,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceLink> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceLinkResource> GetResourceLinksAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceLink>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -628,14 +627,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ResourceLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = await _resourceLinkRestClient.ListAtSubscriptionNextPageAsync(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -653,17 +652,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the list resource links operation. The supported filter for list resource links is targetId. For example, $filter=targetId eq {value}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceLink> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceLinkResource> GetResourceLinks(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceLink> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -671,14 +670,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ResourceLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceLinkClientDiagnostics.CreateScope("SubscriptionResource.GetResourceLinks");
                 scope.Start();
                 try
                 {
                     var response = _resourceLinkRestClient.ListAtSubscriptionNextPage(nextLink, Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -847,9 +846,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -878,9 +877,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -907,10 +906,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await TagHelper.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -937,10 +936,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                TagHelper.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -967,9 +966,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _subscriptionRestClient.GetAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -996,9 +995,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _subscriptionRestClient.Get(Id.SubscriptionId, cancellationToken);
                 return Response.FromValue(new SubscriptionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

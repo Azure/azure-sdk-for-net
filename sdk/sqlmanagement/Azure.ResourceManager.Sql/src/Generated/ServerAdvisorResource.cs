@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerAdvisorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverAdvisorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _serverAdvisorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverAdvisorApiVersion);
-            _serverAdvisorRestClient = new ServerAdvisorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAdvisorApiVersion);
+            _serverAdvisorRestClient = new ServerAdvisorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverAdvisorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

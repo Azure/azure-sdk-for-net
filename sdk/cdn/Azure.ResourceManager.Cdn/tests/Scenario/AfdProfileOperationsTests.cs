@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task Delete()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             await afdProfile.DeleteAsync(WaitUntil.Completed);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task Update()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             var lro = await afdProfile.AddTagAsync("newTag", "newValue");
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task CheckResourceUsage()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             int count = 0;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetLogAnalyticsLocations()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string afdProfileName = Recording.GenerateAssetName("AFDProfile-");
             ProfileResource afdProfileResource = await CreateAfdProfile(rg, afdProfileName, CdnSkuName.StandardAzureFrontDoor);
             ContinentsResponse continentsResponse = await afdProfile.GetLogAnalyticsLocationsAsync();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetLogAnalyticsMetrics()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogMetric> metric = new List<LogMetric>() { LogMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetLogAnalyticsRankings()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDProfile");
             List<LogRanking> rankings = new List<LogRanking>() { LogRanking.Url };
             List<LogRankingMetric> metric = new List<LogRankingMetric>() { LogRankingMetric.ClientRequestCount };
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetLogAnalyticsResources()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDProfile");
             ResourcesResponse resourcesResponse = await afdProfile.GetLogAnalyticsResourcesAsync();
             Assert.AreEqual(resourcesResponse.CustomDomains.Count, 0);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetWafLogAnalyticsMetrics()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
             List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task GetWafLogAnalyticsRankings()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
             ProfileResource afdProfileResource = await rg.GetProfiles().GetAsync("testAFDPremiumProfile");
             List<WafMetric> metric = new List<WafMetric>() { WafMetric.ClientRequestCount };
             DateTimeOffset dateTimeBegin = new DateTimeOffset(2021, 9, 23, 0, 0, 0, TimeSpan.Zero);

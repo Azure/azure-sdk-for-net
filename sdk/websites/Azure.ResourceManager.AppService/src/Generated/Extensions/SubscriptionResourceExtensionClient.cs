@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -68,40 +67,40 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        private ClientDiagnostics AppServiceCertificateOrderClientDiagnostics => _appServiceCertificateOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateOrderResource.ResourceType.Namespace, DiagnosticOptions);
-        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrderRestClient => _appServiceCertificateOrderRestClient ??= new AppServiceCertificateOrdersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceCertificateOrderResource.ResourceType));
-        private ClientDiagnostics AppServiceCertificateOrdersClientDiagnostics => _appServiceCertificateOrdersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrdersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private DomainsRestOperations DomainsRestClient => _domainsRestClient ??= new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics AppServiceDomainDomainsClientDiagnostics => _appServiceDomainDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomainResource.ResourceType.Namespace, DiagnosticOptions);
-        private DomainsRestOperations AppServiceDomainDomainsRestClient => _appServiceDomainDomainsRestClient ??= new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceDomainResource.ResourceType));
-        private ClientDiagnostics AppServiceEnvironmentClientDiagnostics => _appServiceEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, DiagnosticOptions);
-        private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServiceEnvironmentResource.ResourceType));
-        private ClientDiagnostics AppServicePlanClientDiagnostics => _appServicePlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanResource.ResourceType.Namespace, DiagnosticOptions);
-        private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(AppServicePlanResource.ResourceType));
-        private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateResource.ResourceType.Namespace, DiagnosticOptions);
-        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CertificateResource.ResourceType));
-        private ClientDiagnostics DeletedSiteDeletedWebAppsClientDiagnostics => _deletedSiteDeletedWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, DiagnosticOptions);
-        private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
-        private ClientDiagnostics DeletedSiteGlobalClientDiagnostics => _deletedSiteGlobalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, DiagnosticOptions);
-        private GlobalRestOperations DeletedSiteGlobalRestClient => _deletedSiteGlobalRestClient ??= new GlobalRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
-        private ClientDiagnostics KubeEnvironmentClientDiagnostics => _kubeEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, DiagnosticOptions);
-        private KubeEnvironmentsRestOperations KubeEnvironmentRestClient => _kubeEnvironmentRestClient ??= new KubeEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(KubeEnvironmentResource.ResourceType));
-        private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics RecommendationsClientDiagnostics => _recommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private RecommendationsRestOperations RecommendationsRestClient => _recommendationsRestClient ??= new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics ResourceHealthMetadataClientDiagnostics => _resourceHealthMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics StaticSitesClientDiagnostics => _staticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics StaticSiteARMResourceStaticSitesClientDiagnostics => _staticSiteARMResourceStaticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteARMResource.ResourceType.Namespace, DiagnosticOptions);
-        private StaticSitesRestOperations StaticSiteARMResourceStaticSitesRestClient => _staticSiteARMResourceStaticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(StaticSiteARMResource.ResourceType));
-        private ClientDiagnostics WebSiteWebAppsClientDiagnostics => _webSiteWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, DiagnosticOptions);
-        private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebSiteResource.ResourceType));
+        private ClientDiagnostics AppServiceCertificateOrderClientDiagnostics => _appServiceCertificateOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceCertificateOrderResource.ResourceType.Namespace, Diagnostics);
+        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrderRestClient => _appServiceCertificateOrderRestClient ??= new AppServiceCertificateOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceCertificateOrderResource.ResourceType));
+        private ClientDiagnostics AppServiceCertificateOrdersClientDiagnostics => _appServiceCertificateOrdersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private AppServiceCertificateOrdersRestOperations AppServiceCertificateOrdersRestClient => _appServiceCertificateOrdersRestClient ??= new AppServiceCertificateOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DomainsClientDiagnostics => _domainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DomainsRestOperations DomainsRestClient => _domainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics AppServiceDomainDomainsClientDiagnostics => _appServiceDomainDomainsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceDomainResource.ResourceType.Namespace, Diagnostics);
+        private DomainsRestOperations AppServiceDomainDomainsRestClient => _appServiceDomainDomainsRestClient ??= new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceDomainResource.ResourceType));
+        private ClientDiagnostics AppServiceEnvironmentClientDiagnostics => _appServiceEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
+        private AppServiceEnvironmentsRestOperations AppServiceEnvironmentRestClient => _appServiceEnvironmentRestClient ??= new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServiceEnvironmentResource.ResourceType));
+        private ClientDiagnostics AppServicePlanClientDiagnostics => _appServicePlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", AppServicePlanResource.ResourceType.Namespace, Diagnostics);
+        private AppServicePlansRestOperations AppServicePlanRestClient => _appServicePlanRestClient ??= new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AppServicePlanResource.ResourceType));
+        private ClientDiagnostics CertificateClientDiagnostics => _certificateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateResource.ResourceType.Namespace, Diagnostics);
+        private CertificatesRestOperations CertificateRestClient => _certificateRestClient ??= new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CertificateResource.ResourceType));
+        private ClientDiagnostics DeletedSiteDeletedWebAppsClientDiagnostics => _deletedSiteDeletedWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
+        private DeletedWebAppsRestOperations DeletedSiteDeletedWebAppsRestClient => _deletedSiteDeletedWebAppsRestClient ??= new DeletedWebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
+        private ClientDiagnostics DeletedSiteGlobalClientDiagnostics => _deletedSiteGlobalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteResource.ResourceType.Namespace, Diagnostics);
+        private GlobalRestOperations DeletedSiteGlobalRestClient => _deletedSiteGlobalRestClient ??= new GlobalRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeletedSiteResource.ResourceType));
+        private ClientDiagnostics KubeEnvironmentClientDiagnostics => _kubeEnvironmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
+        private KubeEnvironmentsRestOperations KubeEnvironmentRestClient => _kubeEnvironmentRestClient ??= new KubeEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KubeEnvironmentResource.ResourceType));
+        private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics RecommendationsClientDiagnostics => _recommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private RecommendationsRestOperations RecommendationsRestClient => _recommendationsRestClient ??= new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ResourceHealthMetadataClientDiagnostics => _resourceHealthMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ResourceHealthMetadataRestOperations ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private WebSiteManagementRestOperations DefaultRestClient => _defaultRestClient ??= new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics StaticSitesClientDiagnostics => _staticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private StaticSitesRestOperations StaticSitesRestClient => _staticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics StaticSiteARMResourceStaticSitesClientDiagnostics => _staticSiteARMResourceStaticSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteARMResource.ResourceType.Namespace, Diagnostics);
+        private StaticSitesRestOperations StaticSiteARMResourceStaticSitesRestClient => _staticSiteARMResourceStaticSitesRestClient ??= new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StaticSiteARMResource.ResourceType));
+        private ClientDiagnostics WebSiteWebAppsClientDiagnostics => _webSiteWebAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteResource.ResourceType.Namespace, Diagnostics);
+        private WebAppsRestOperations WebSiteWebAppsRestClient => _webSiteWebAppsRestClient ??= new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebSiteResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -1046,10 +1045,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1089,10 +1088,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
             {

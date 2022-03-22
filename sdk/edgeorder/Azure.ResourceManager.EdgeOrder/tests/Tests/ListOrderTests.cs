@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(2)]
         public async Task TestListOrdersAtResourceGroupLevel()
         {
-            ResourceGroup rg = await GetResourceGroupAsync(_resourceGroupName);
+            ResourceGroupResource rg = await GetResourceGroupAsync(_resourceGroupName);
             AsyncPageable<OrderResource> orders = EdgeOrderExtensions.GetOrderResourcesAsync(rg);
             List<OrderResource> ordersResult = await orders.ToEnumerableAsync();
 

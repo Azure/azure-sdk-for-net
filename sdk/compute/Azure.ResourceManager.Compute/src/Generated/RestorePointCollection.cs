@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -33,9 +32,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointResource.ResourceType.Namespace, DiagnosticOptions);
+            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RestorePointResource.ResourceType, out string restorePointApiVersion);
-            _restorePointRestClient = new RestorePointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointApiVersion);
+            _restorePointRestClient = new RestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

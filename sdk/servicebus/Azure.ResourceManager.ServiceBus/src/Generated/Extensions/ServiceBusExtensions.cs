@@ -86,21 +86,21 @@ namespace Azure.ResourceManager.ServiceBus
             return GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailability(parameters, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of ServiceBusNamespaceResources in the ServiceBusNamespaceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceBusNamespaceResources and their operations over a ServiceBusNamespaceResource. </returns>
-        public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroup resourceGroup)
+        public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetServiceBusNamespaces();
+            return GetExtensionClient(resourceGroupResource).GetServiceBusNamespaces();
         }
 
         /// <summary>
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroup resourceGroup, string namespaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetServiceBusNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetServiceBusNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,18 +123,21 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
         /// Operation Id: Namespaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroup resourceGroup, string namespaceName, CancellationToken cancellationToken = default)
+        public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetServiceBusNamespaces().Get(namespaceName, cancellationToken);
+            return resourceGroupResource.GetServiceBusNamespaces().Get(namespaceName, cancellationToken);
         }
 
         #region ServiceBusNamespaceResource
-        /// <summary> Gets an object representing a ServiceBusNamespaceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusNamespaceResource" /> object. </returns>
@@ -150,7 +153,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region NetworkRuleSetResource
-        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
@@ -166,7 +172,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region PrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
@@ -182,7 +191,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region DisasterRecoveryResource
-        /// <summary> Gets an object representing a DisasterRecoveryResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="DisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DisasterRecoveryResource" /> object. </returns>
@@ -198,7 +210,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region NamespaceDisasterRecoveryAuthorizationRuleResource
-        /// <summary> Gets an object representing a NamespaceDisasterRecoveryAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> object. </returns>
@@ -214,7 +229,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region NamespaceAuthorizationRuleResource
-        /// <summary> Gets an object representing a NamespaceAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceAuthorizationRuleResource" /> object. </returns>
@@ -230,7 +248,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region NamespaceQueueAuthorizationRuleResource
-        /// <summary> Gets an object representing a NamespaceQueueAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceQueueAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceQueueAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceQueueAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceQueueAuthorizationRuleResource" /> object. </returns>
@@ -246,7 +267,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region NamespaceTopicAuthorizationRuleResource
-        /// <summary> Gets an object representing a NamespaceTopicAuthorizationRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NamespaceTopicAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NamespaceTopicAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NamespaceTopicAuthorizationRuleResource" /> object. </returns>
@@ -262,7 +286,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region MigrationConfigPropertiesResource
-        /// <summary> Gets an object representing a MigrationConfigPropertiesResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MigrationConfigPropertiesResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationConfigPropertiesResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigPropertiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MigrationConfigPropertiesResource" /> object. </returns>
@@ -278,7 +305,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region ServiceBusQueueResource
-        /// <summary> Gets an object representing a ServiceBusQueueResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusQueueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusQueueResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusQueueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusQueueResource" /> object. </returns>
@@ -294,7 +324,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region ServiceBusTopicResource
-        /// <summary> Gets an object representing a ServiceBusTopicResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusTopicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusTopicResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusTopicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusTopicResource" /> object. </returns>
@@ -310,7 +343,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region ServiceBusRuleResource
-        /// <summary> Gets an object representing a ServiceBusRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusRuleResource" /> object. </returns>
@@ -326,7 +362,10 @@ namespace Azure.ResourceManager.ServiceBus
         #endregion
 
         #region ServiceBusSubscriptionResource
-        /// <summary> Gets an object representing a ServiceBusSubscriptionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceBusSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceBusSubscriptionResource" /> object. </returns>

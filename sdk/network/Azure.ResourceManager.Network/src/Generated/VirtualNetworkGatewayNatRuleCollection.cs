@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualNetworkGatewayNatRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualNetworkGatewayNatRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkGatewayNatRuleResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualNetworkGatewayNatRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkGatewayNatRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualNetworkGatewayNatRuleResource.ResourceType, out string virtualNetworkGatewayNatRuleApiVersion);
-            _virtualNetworkGatewayNatRuleRestClient = new VirtualNetworkGatewayNatRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkGatewayNatRuleApiVersion);
+            _virtualNetworkGatewayNatRuleRestClient = new VirtualNetworkGatewayNatRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkGatewayNatRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ResourcePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourcePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourcePoolResource.ResourceType.Namespace, DiagnosticOptions);
+            _resourcePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourcePoolResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourcePoolResource.ResourceType, out string resourcePoolApiVersion);
-            _resourcePoolRestClient = new ResourcePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourcePoolApiVersion);
+            _resourcePoolRestClient = new ResourcePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourcePoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

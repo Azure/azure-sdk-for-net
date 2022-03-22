@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class BlobContainerTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private StorageAccount _storageAccount;
         private BlobService _blobService;
         private BlobContainerCollection _blobContainerCollection;

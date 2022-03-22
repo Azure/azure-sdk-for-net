@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class ConfigurationStoreCollectionTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
 
         public ConfigurationStoreCollectionTests(bool isAsync)
             : base(isAsync)

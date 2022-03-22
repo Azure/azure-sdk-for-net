@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MigrateMySqlStatusResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _migrateMySqlStatusWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _migrateMySqlStatusWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string migrateMySqlStatusWebAppsApiVersion);
-            _migrateMySqlStatusWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrateMySqlStatusWebAppsApiVersion);
+            _migrateMySqlStatusWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, migrateMySqlStatusWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

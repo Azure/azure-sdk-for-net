@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
 {
     public class Sample1_ManagingCdnOriginGroups
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
             #endregion
 
             this.resourceGroup = resourceGroup;

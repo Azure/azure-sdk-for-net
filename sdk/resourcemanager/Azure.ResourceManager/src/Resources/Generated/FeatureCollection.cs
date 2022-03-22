@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FeatureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", FeatureResource.ResourceType.Namespace, DiagnosticOptions);
+            _featureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", FeatureResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FeatureResource.ResourceType, out string featureApiVersion);
-            _featureRestClient = new FeaturesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, featureApiVersion);
+            _featureRestClient = new FeaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, featureApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceProvider.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceProvider.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceProviderResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceProviderResource.ResourceType), nameof(id));
         }
 
         /// <summary>

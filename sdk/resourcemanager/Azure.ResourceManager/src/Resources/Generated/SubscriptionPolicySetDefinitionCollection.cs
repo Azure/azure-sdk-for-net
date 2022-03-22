@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SubscriptionPolicySetDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", SubscriptionPolicySetDefinitionResource.ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", SubscriptionPolicySetDefinitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SubscriptionPolicySetDefinitionResource.ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
-            _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

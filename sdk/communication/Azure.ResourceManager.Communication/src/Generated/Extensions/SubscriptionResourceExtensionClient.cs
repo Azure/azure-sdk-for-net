@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Communication
 {
@@ -36,8 +35,8 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, DiagnosticOptions);
-        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CommunicationServiceResource.ResourceType));
+        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, Diagnostics);
+        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunicationServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

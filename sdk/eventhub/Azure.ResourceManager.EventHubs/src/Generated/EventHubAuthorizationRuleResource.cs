@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EventHubAuthorizationRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventHubAuthorizationRuleEventHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            _eventHubAuthorizationRuleEventHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventHubAuthorizationRuleEventHubsApiVersion);
-            _eventHubAuthorizationRuleEventHubsRestClient = new EventHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubAuthorizationRuleEventHubsApiVersion);
+            _eventHubAuthorizationRuleEventHubsRestClient = new EventHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubAuthorizationRuleEventHubsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

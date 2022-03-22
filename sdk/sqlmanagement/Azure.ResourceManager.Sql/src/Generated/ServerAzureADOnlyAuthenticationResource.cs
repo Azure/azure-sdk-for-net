@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerAzureADOnlyAuthenticationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverAzureADOnlyAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _serverAzureADOnlyAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverAzureADOnlyAuthenticationApiVersion);
-            _serverAzureADOnlyAuthenticationRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAzureADOnlyAuthenticationApiVersion);
+            _serverAzureADOnlyAuthenticationRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverAzureADOnlyAuthenticationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

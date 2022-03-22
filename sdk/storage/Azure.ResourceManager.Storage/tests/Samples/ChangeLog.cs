@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
 string accountName = "myaccount";
 string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-ResourceGroup resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
+ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
 StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
 StorageAccountCreateParameters parameters = new StorageAccountCreateParameters(new StorageSku(StorageSkuName.StandardGRS), StorageKind.Storage, AzureLocation.WestUS);

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockResource mgmtLockObject = await CreateManagementLockObject(rg, mgmtLockObjectName);
             Assert.AreEqual(mgmtLockObjectName, mgmtLockObject.Data.Name);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string vnName = Recording.GenerateAssetName("testVn-");
             GenericResource vn = await CreateGenericVirtualNetwork(subscription, rg, vnName);
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string mgmtLockObjectName1 = Recording.GenerateAssetName("mgmtLock-");
             string mgmtLockObjectName2 = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockResource mgmtLockObject1 = await CreateManagementLockObject(rg, mgmtLockObjectName1);

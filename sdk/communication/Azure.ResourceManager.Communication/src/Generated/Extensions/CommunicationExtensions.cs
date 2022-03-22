@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.Communication
             return GetExtensionClient(subscriptionResource).GetCommunicationServices(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of CommunicationServiceResources in the CommunicationServiceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
-        public static CommunicationServiceCollection GetCommunicationServices(this ResourceGroup resourceGroup)
+        public static CommunicationServiceCollection GetCommunicationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCommunicationServices();
+            return GetExtensionClient(resourceGroupResource).GetCommunicationServices();
         }
 
         /// <summary>
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationService_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceAsync(this ResourceGroup resourceGroup, string communicationServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCommunicationServices().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCommunicationServices().GetAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,18 +117,21 @@ namespace Azure.ResourceManager.Communication
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}
         /// Operation Id: CommunicationService_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="communicationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationServiceName"/> is null. </exception>
-        public static Response<CommunicationServiceResource> GetCommunicationService(this ResourceGroup resourceGroup, string communicationServiceName, CancellationToken cancellationToken = default)
+        public static Response<CommunicationServiceResource> GetCommunicationService(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCommunicationServices().Get(communicationServiceName, cancellationToken);
+            return resourceGroupResource.GetCommunicationServices().Get(communicationServiceName, cancellationToken);
         }
 
         #region CommunicationServiceResource
-        /// <summary> Gets an object representing a CommunicationServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CommunicationServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CommunicationServiceResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CommunicationServiceResource" /> object. </returns>

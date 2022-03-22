@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CertificateOrderDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateOrderDetectorResource.ResourceType.Namespace, DiagnosticOptions);
+            _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateOrderDetectorResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CertificateOrderDetectorResource.ResourceType, out string certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
-            _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
+            _certificateOrderDetectorCertificateOrdersDiagnosticsRestClient = new CertificateOrdersDiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, certificateOrderDetectorCertificateOrdersDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

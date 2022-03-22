@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.Dashboard
             return GetExtensionClient(subscriptionResource).GetGrafanaResources(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of GrafanaResources in the GrafanaResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GrafanaResources and their operations over a GrafanaResource. </returns>
-        public static GrafanaResourceCollection GetGrafanaResources(this ResourceGroup resourceGroup)
+        public static GrafanaResourceCollection GetGrafanaResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetGrafanaResources();
+            return GetExtensionClient(resourceGroupResource).GetGrafanaResources();
         }
 
         /// <summary>
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static async Task<Response<GrafanaResource>> GetGrafanaResourceAsync(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<GrafanaResource>> GetGrafanaResourceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetGrafanaResources().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetGrafanaResources().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -90,18 +90,21 @@ namespace Azure.ResourceManager.Dashboard
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}
         /// Operation Id: Grafana_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static Response<GrafanaResource> GetGrafanaResource(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<GrafanaResource> GetGrafanaResource(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetGrafanaResources().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetGrafanaResources().Get(workspaceName, cancellationToken);
         }
 
         #region GrafanaResource
-        /// <summary> Gets an object representing a GrafanaResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GrafanaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GrafanaResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GrafanaResource" /> object. </returns>

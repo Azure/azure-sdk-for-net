@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(AzureLocation.WestUS);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             return lro.Value;
         }
 
-        protected async Task<DeviceUpdateAccountResource> CreateAccount(ResourceGroup rg, string accountName)
+        protected async Task<DeviceUpdateAccountResource> CreateAccount(ResourceGroupResource rg, string accountName)
         {
             DeviceUpdateAccountData input = ResourceDataHelper.CreateAccountData();
             var lro = await rg.GetDeviceUpdateAccounts().CreateOrUpdateAsync(WaitUntil.Completed, accountName, input);

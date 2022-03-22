@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AzureWebCategoryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
-            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureWebCategoryWebCategoriesApiVersion);
+            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureWebCategoryWebCategoriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

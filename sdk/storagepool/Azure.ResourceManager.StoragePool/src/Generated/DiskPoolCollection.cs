@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StoragePool.Models;
 
@@ -38,9 +37,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DiskPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPoolResource.ResourceType.Namespace, DiagnosticOptions);
+            _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPoolResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DiskPoolResource.ResourceType, out string diskPoolApiVersion);
-            _diskPoolRestClient = new DiskPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
+            _diskPoolRestClient = new DiskPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -48,8 +47,8 @@ namespace Azure.ResourceManager.StoragePool
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

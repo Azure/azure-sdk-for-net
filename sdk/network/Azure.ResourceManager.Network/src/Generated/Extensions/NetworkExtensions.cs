@@ -1708,21 +1708,21 @@ namespace Azure.ResourceManager.Network
             return GetExtensionClient(subscriptionResource).GetWebApplicationFirewallPolicies(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of ApplicationGatewayResources in the ApplicationGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
-        public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroup resourceGroup)
+        public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetApplicationGateways();
+            return GetExtensionClient(resourceGroupResource).GetApplicationGateways();
         }
 
         /// <summary>
@@ -1730,14 +1730,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
         /// Operation Id: ApplicationGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public static async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(this ResourceGroup resourceGroup, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationGatewayResource>> GetApplicationGatewayAsync(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetApplicationGateways().GetAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetApplicationGateways().GetAsync(applicationGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1745,22 +1745,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}
         /// Operation Id: ApplicationGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayName"/> is null. </exception>
-        public static Response<ApplicationGatewayResource> GetApplicationGateway(this ResourceGroup resourceGroup, string applicationGatewayName, CancellationToken cancellationToken = default)
+        public static Response<ApplicationGatewayResource> GetApplicationGateway(this ResourceGroupResource resourceGroupResource, string applicationGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetApplicationGateways().Get(applicationGatewayName, cancellationToken);
+            return resourceGroupResource.GetApplicationGateways().Get(applicationGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ApplicationSecurityGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
-        public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroup resourceGroup)
+        public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetApplicationSecurityGroups();
+            return GetExtensionClient(resourceGroupResource).GetApplicationSecurityGroups();
         }
 
         /// <summary>
@@ -1768,14 +1768,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
         /// Operation Id: ApplicationSecurityGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public static async Task<Response<ApplicationSecurityGroupResource>> GetApplicationSecurityGroupAsync(this ResourceGroup resourceGroup, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApplicationSecurityGroupResource>> GetApplicationSecurityGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetApplicationSecurityGroups().GetAsync(applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetApplicationSecurityGroups().GetAsync(applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1783,22 +1783,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}
         /// Operation Id: ApplicationSecurityGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public static Response<ApplicationSecurityGroupResource> GetApplicationSecurityGroup(this ResourceGroup resourceGroup, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public static Response<ApplicationSecurityGroupResource> GetApplicationSecurityGroup(this ResourceGroupResource resourceGroupResource, string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetApplicationSecurityGroups().Get(applicationSecurityGroupName, cancellationToken);
+            return resourceGroupResource.GetApplicationSecurityGroups().Get(applicationSecurityGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AzureFirewallResources in the AzureFirewallResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
-        public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroup resourceGroup)
+        public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAzureFirewalls();
+            return GetExtensionClient(resourceGroupResource).GetAzureFirewalls();
         }
 
         /// <summary>
@@ -1806,14 +1806,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
         /// Operation Id: AzureFirewalls_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public static async Task<Response<AzureFirewallResource>> GetAzureFirewallAsync(this ResourceGroup resourceGroup, string azureFirewallName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AzureFirewallResource>> GetAzureFirewallAsync(this ResourceGroupResource resourceGroupResource, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAzureFirewalls().GetAsync(azureFirewallName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAzureFirewalls().GetAsync(azureFirewallName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1821,22 +1821,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/azureFirewalls/{azureFirewallName}
         /// Operation Id: AzureFirewalls_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureFirewallName"/> is null. </exception>
-        public static Response<AzureFirewallResource> GetAzureFirewall(this ResourceGroup resourceGroup, string azureFirewallName, CancellationToken cancellationToken = default)
+        public static Response<AzureFirewallResource> GetAzureFirewall(this ResourceGroupResource resourceGroupResource, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAzureFirewalls().Get(azureFirewallName, cancellationToken);
+            return resourceGroupResource.GetAzureFirewalls().Get(azureFirewallName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BastionHostResources in the BastionHostResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
-        public static BastionHostCollection GetBastionHosts(this ResourceGroup resourceGroup)
+        public static BastionHostCollection GetBastionHosts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetBastionHosts();
+            return GetExtensionClient(resourceGroupResource).GetBastionHosts();
         }
 
         /// <summary>
@@ -1844,14 +1844,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}
         /// Operation Id: BastionHosts_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
-        public static async Task<Response<BastionHostResource>> GetBastionHostAsync(this ResourceGroup resourceGroup, string bastionHostName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BastionHostResource>> GetBastionHostAsync(this ResourceGroupResource resourceGroupResource, string bastionHostName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetBastionHosts().GetAsync(bastionHostName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetBastionHosts().GetAsync(bastionHostName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1859,62 +1859,62 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}
         /// Operation Id: BastionHosts_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bastionHostName"/> is null. </exception>
-        public static Response<BastionHostResource> GetBastionHost(this ResourceGroup resourceGroup, string bastionHostName, CancellationToken cancellationToken = default)
+        public static Response<BastionHostResource> GetBastionHost(this ResourceGroupResource resourceGroupResource, string bastionHostName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetBastionHosts().Get(bastionHostName, cancellationToken);
+            return resourceGroupResource.GetBastionHosts().Get(bastionHostName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CustomIPPrefixResources in the CustomIPPrefixResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
-        public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroup resourceGroup)
+        public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCustomIPPrefixes();
+            return GetExtensionClient(resourceGroupResource).GetCustomIPPrefixes();
         }
 
         /// <summary>
         /// Gets the specified custom IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
         /// Operation Id: CustomIPPrefixes_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
-        public static async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(this ResourceGroup resourceGroup, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCustomIPPrefixes().GetAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCustomIPPrefixes().GetAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified custom IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIpPrefixName}
         /// Operation Id: CustomIPPrefixes_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
-        public static Response<CustomIPPrefixResource> GetCustomIPPrefix(this ResourceGroup resourceGroup, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<CustomIPPrefixResource> GetCustomIPPrefix(this ResourceGroupResource resourceGroupResource, string customIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
+            return resourceGroupResource.GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DdosCustomPolicyResources in the DdosCustomPolicyResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
-        public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroup resourceGroup)
+        public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDdosCustomPolicies();
+            return GetExtensionClient(resourceGroupResource).GetDdosCustomPolicies();
         }
 
         /// <summary>
@@ -1922,14 +1922,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
         /// Operation Id: DdosCustomPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public static async Task<Response<DdosCustomPolicyResource>> GetDdosCustomPolicyAsync(this ResourceGroup resourceGroup, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DdosCustomPolicyResource>> GetDdosCustomPolicyAsync(this ResourceGroupResource resourceGroupResource, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDdosCustomPolicies().GetAsync(ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDdosCustomPolicies().GetAsync(ddosCustomPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1937,22 +1937,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosCustomPolicies/{ddosCustomPolicyName}
         /// Operation Id: DdosCustomPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ddosCustomPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosCustomPolicyName"/> is null. </exception>
-        public static Response<DdosCustomPolicyResource> GetDdosCustomPolicy(this ResourceGroup resourceGroup, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
+        public static Response<DdosCustomPolicyResource> GetDdosCustomPolicy(this ResourceGroupResource resourceGroupResource, string ddosCustomPolicyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDdosCustomPolicies().Get(ddosCustomPolicyName, cancellationToken);
+            return resourceGroupResource.GetDdosCustomPolicies().Get(ddosCustomPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DdosProtectionPlanResources in the DdosProtectionPlanResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
-        public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroup resourceGroup)
+        public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDdosProtectionPlans();
+            return GetExtensionClient(resourceGroupResource).GetDdosProtectionPlans();
         }
 
         /// <summary>
@@ -1960,14 +1960,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
         /// Operation Id: DdosProtectionPlans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
-        public static async Task<Response<DdosProtectionPlanResource>> GetDdosProtectionPlanAsync(this ResourceGroup resourceGroup, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DdosProtectionPlanResource>> GetDdosProtectionPlanAsync(this ResourceGroupResource resourceGroupResource, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDdosProtectionPlans().GetAsync(ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDdosProtectionPlans().GetAsync(ddosProtectionPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1975,22 +1975,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ddosProtectionPlans/{ddosProtectionPlanName}
         /// Operation Id: DdosProtectionPlans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ddosProtectionPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ddosProtectionPlanName"/> is null. </exception>
-        public static Response<DdosProtectionPlanResource> GetDdosProtectionPlan(this ResourceGroup resourceGroup, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
+        public static Response<DdosProtectionPlanResource> GetDdosProtectionPlan(this ResourceGroupResource resourceGroupResource, string ddosProtectionPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDdosProtectionPlans().Get(ddosProtectionPlanName, cancellationToken);
+            return resourceGroupResource.GetDdosProtectionPlans().Get(ddosProtectionPlanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DscpConfigurationResources in the DscpConfigurationResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
-        public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroup resourceGroup)
+        public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDscpConfigurations();
+            return GetExtensionClient(resourceGroupResource).GetDscpConfigurations();
         }
 
         /// <summary>
@@ -1998,14 +1998,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
         /// Operation Id: DscpConfiguration_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        public static async Task<Response<DscpConfigurationResource>> GetDscpConfigurationAsync(this ResourceGroup resourceGroup, string dscpConfigurationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DscpConfigurationResource>> GetDscpConfigurationAsync(this ResourceGroupResource resourceGroupResource, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDscpConfigurations().GetAsync(dscpConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDscpConfigurations().GetAsync(dscpConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2013,22 +2013,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dscpConfigurations/{dscpConfigurationName}
         /// Operation Id: DscpConfiguration_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="dscpConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dscpConfigurationName"/> is null. </exception>
-        public static Response<DscpConfigurationResource> GetDscpConfiguration(this ResourceGroup resourceGroup, string dscpConfigurationName, CancellationToken cancellationToken = default)
+        public static Response<DscpConfigurationResource> GetDscpConfiguration(this ResourceGroupResource resourceGroupResource, string dscpConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDscpConfigurations().Get(dscpConfigurationName, cancellationToken);
+            return resourceGroupResource.GetDscpConfigurations().Get(dscpConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteCircuitResources in the ExpressRouteCircuitResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
-        public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroup resourceGroup)
+        public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetExpressRouteCircuits();
+            return GetExtensionClient(resourceGroupResource).GetExpressRouteCircuits();
         }
 
         /// <summary>
@@ -2036,14 +2036,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
         /// Operation Id: ExpressRouteCircuits_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
-        public static async Task<Response<ExpressRouteCircuitResource>> GetExpressRouteCircuitAsync(this ResourceGroup resourceGroup, string circuitName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ExpressRouteCircuitResource>> GetExpressRouteCircuitAsync(this ResourceGroupResource resourceGroupResource, string circuitName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetExpressRouteCircuits().GetAsync(circuitName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetExpressRouteCircuits().GetAsync(circuitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2051,22 +2051,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}
         /// Operation Id: ExpressRouteCircuits_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="circuitName"> The name of express route circuit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="circuitName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="circuitName"/> is null. </exception>
-        public static Response<ExpressRouteCircuitResource> GetExpressRouteCircuit(this ResourceGroup resourceGroup, string circuitName, CancellationToken cancellationToken = default)
+        public static Response<ExpressRouteCircuitResource> GetExpressRouteCircuit(this ResourceGroupResource resourceGroupResource, string circuitName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetExpressRouteCircuits().Get(circuitName, cancellationToken);
+            return resourceGroupResource.GetExpressRouteCircuits().Get(circuitName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ExpressRouteCrossConnectionResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
-        public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroup resourceGroup)
+        public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetExpressRouteCrossConnections();
+            return GetExtensionClient(resourceGroupResource).GetExpressRouteCrossConnections();
         }
 
         /// <summary>
@@ -2074,14 +2074,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
         /// Operation Id: ExpressRouteCrossConnections_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
-        public static async Task<Response<ExpressRouteCrossConnectionResource>> GetExpressRouteCrossConnectionAsync(this ResourceGroup resourceGroup, string crossConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ExpressRouteCrossConnectionResource>> GetExpressRouteCrossConnectionAsync(this ResourceGroupResource resourceGroupResource, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetExpressRouteCrossConnections().GetAsync(crossConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetExpressRouteCrossConnections().GetAsync(crossConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2089,22 +2089,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}
         /// Operation Id: ExpressRouteCrossConnections_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="crossConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="crossConnectionName"/> is null. </exception>
-        public static Response<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnection(this ResourceGroup resourceGroup, string crossConnectionName, CancellationToken cancellationToken = default)
+        public static Response<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnection(this ResourceGroupResource resourceGroupResource, string crossConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetExpressRouteCrossConnections().Get(crossConnectionName, cancellationToken);
+            return resourceGroupResource.GetExpressRouteCrossConnections().Get(crossConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRoutePortResources in the ExpressRoutePortResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
-        public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroup resourceGroup)
+        public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetExpressRoutePorts();
+            return GetExtensionClient(resourceGroupResource).GetExpressRoutePorts();
         }
 
         /// <summary>
@@ -2112,14 +2112,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
         /// Operation Id: ExpressRoutePorts_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
-        public static async Task<Response<ExpressRoutePortResource>> GetExpressRoutePortAsync(this ResourceGroup resourceGroup, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ExpressRoutePortResource>> GetExpressRoutePortAsync(this ResourceGroupResource resourceGroupResource, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetExpressRoutePorts().GetAsync(expressRoutePortName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetExpressRoutePorts().GetAsync(expressRoutePortName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2127,22 +2127,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}
         /// Operation Id: ExpressRoutePorts_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
-        public static Response<ExpressRoutePortResource> GetExpressRoutePort(this ResourceGroup resourceGroup, string expressRoutePortName, CancellationToken cancellationToken = default)
+        public static Response<ExpressRoutePortResource> GetExpressRoutePort(this ResourceGroupResource resourceGroupResource, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetExpressRoutePorts().Get(expressRoutePortName, cancellationToken);
+            return resourceGroupResource.GetExpressRoutePorts().Get(expressRoutePortName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FirewallPolicyResources in the FirewallPolicyResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
-        public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroup resourceGroup)
+        public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetFirewallPolicies();
+            return GetExtensionClient(resourceGroupResource).GetFirewallPolicies();
         }
 
         /// <summary>
@@ -2150,15 +2150,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
         /// Operation Id: FirewallPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
-        public static async Task<Response<FirewallPolicyResource>> GetFirewallPolicyAsync(this ResourceGroup resourceGroup, string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<FirewallPolicyResource>> GetFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetFirewallPolicies().GetAsync(firewallPolicyName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetFirewallPolicies().GetAsync(firewallPolicyName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2166,23 +2166,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}
         /// Operation Id: FirewallPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
-        public static Response<FirewallPolicyResource> GetFirewallPolicy(this ResourceGroup resourceGroup, string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<FirewallPolicyResource> GetFirewallPolicy(this ResourceGroupResource resourceGroupResource, string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetFirewallPolicies().Get(firewallPolicyName, expand, cancellationToken);
+            return resourceGroupResource.GetFirewallPolicies().Get(firewallPolicyName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of IPAllocationResources in the IPAllocationResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
-        public static IPAllocationCollection GetIPAllocations(this ResourceGroup resourceGroup)
+        public static IPAllocationCollection GetIPAllocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetIPAllocations();
+            return GetExtensionClient(resourceGroupResource).GetIPAllocations();
         }
 
         /// <summary>
@@ -2190,15 +2190,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}
         /// Operation Id: IpAllocations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        public static async Task<Response<IPAllocationResource>> GetIPAllocationAsync(this ResourceGroup resourceGroup, string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPAllocationResource>> GetIPAllocationAsync(this ResourceGroupResource resourceGroupResource, string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetIPAllocations().GetAsync(ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIPAllocations().GetAsync(ipAllocationName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2206,23 +2206,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/IpAllocations/{ipAllocationName}
         /// Operation Id: IpAllocations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipAllocationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAllocationName"/> is null. </exception>
-        public static Response<IPAllocationResource> GetIPAllocation(this ResourceGroup resourceGroup, string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<IPAllocationResource> GetIPAllocation(this ResourceGroupResource resourceGroupResource, string ipAllocationName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetIPAllocations().Get(ipAllocationName, expand, cancellationToken);
+            return resourceGroupResource.GetIPAllocations().Get(ipAllocationName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of IPGroupResources in the IPGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
-        public static IPGroupCollection GetIPGroups(this ResourceGroup resourceGroup)
+        public static IPGroupCollection GetIPGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetIPGroups();
+            return GetExtensionClient(resourceGroupResource).GetIPGroups();
         }
 
         /// <summary>
@@ -2230,15 +2230,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
         /// Operation Id: IpGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public static async Task<Response<IPGroupResource>> GetIPGroupAsync(this ResourceGroup resourceGroup, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<IPGroupResource>> GetIPGroupAsync(this ResourceGroupResource resourceGroupResource, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetIPGroups().GetAsync(ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetIPGroups().GetAsync(ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2246,23 +2246,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}
         /// Operation Id: IpGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public static Response<IPGroupResource> GetIPGroup(this ResourceGroup resourceGroup, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<IPGroupResource> GetIPGroup(this ResourceGroupResource resourceGroupResource, string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetIPGroups().Get(ipGroupsName, expand, cancellationToken);
+            return resourceGroupResource.GetIPGroups().Get(ipGroupsName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of LoadBalancerResources in the LoadBalancerResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
-        public static LoadBalancerCollection GetLoadBalancers(this ResourceGroup resourceGroup)
+        public static LoadBalancerCollection GetLoadBalancers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetLoadBalancers();
+            return GetExtensionClient(resourceGroupResource).GetLoadBalancers();
         }
 
         /// <summary>
@@ -2270,15 +2270,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
         /// Operation Id: LoadBalancers_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public static async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ResourceGroup resourceGroup, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetLoadBalancers().GetAsync(loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetLoadBalancers().GetAsync(loadBalancerName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2286,23 +2286,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}
         /// Operation Id: LoadBalancers_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
-        public static Response<LoadBalancerResource> GetLoadBalancer(this ResourceGroup resourceGroup, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<LoadBalancerResource> GetLoadBalancer(this ResourceGroupResource resourceGroupResource, string loadBalancerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetLoadBalancers().Get(loadBalancerName, expand, cancellationToken);
+            return resourceGroupResource.GetLoadBalancers().Get(loadBalancerName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NatGatewayResources in the NatGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
-        public static NatGatewayCollection GetNatGateways(this ResourceGroup resourceGroup)
+        public static NatGatewayCollection GetNatGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetNatGateways();
+            return GetExtensionClient(resourceGroupResource).GetNatGateways();
         }
 
         /// <summary>
@@ -2310,15 +2310,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
         /// Operation Id: NatGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
-        public static async Task<Response<NatGatewayResource>> GetNatGatewayAsync(this ResourceGroup resourceGroup, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NatGatewayResource>> GetNatGatewayAsync(this ResourceGroupResource resourceGroupResource, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetNatGateways().GetAsync(natGatewayName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNatGateways().GetAsync(natGatewayName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2326,23 +2326,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/natGateways/{natGatewayName}
         /// Operation Id: NatGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="natGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natGatewayName"/> is null. </exception>
-        public static Response<NatGatewayResource> GetNatGateway(this ResourceGroup resourceGroup, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<NatGatewayResource> GetNatGateway(this ResourceGroupResource resourceGroupResource, string natGatewayName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetNatGateways().Get(natGatewayName, expand, cancellationToken);
+            return resourceGroupResource.GetNatGateways().Get(natGatewayName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkInterfaceResources in the NetworkInterfaceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
-        public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroup resourceGroup)
+        public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetNetworkInterfaces();
+            return GetExtensionClient(resourceGroupResource).GetNetworkInterfaces();
         }
 
         /// <summary>
@@ -2350,15 +2350,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
         /// Operation Id: NetworkInterfaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroup resourceGroup, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetNetworkInterfaces().GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkInterfaces().GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2366,23 +2366,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}
         /// Operation Id: NetworkInterfaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
-        public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroup resourceGroup, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
+            return resourceGroupResource.GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkProfileResources in the NetworkProfileResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
-        public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroup resourceGroup)
+        public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetNetworkProfiles();
+            return GetExtensionClient(resourceGroupResource).GetNetworkProfiles();
         }
 
         /// <summary>
@@ -2390,15 +2390,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}
         /// Operation Id: NetworkProfiles_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
-        public static async Task<Response<NetworkProfileResource>> GetNetworkProfileAsync(this ResourceGroup resourceGroup, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkProfileResource>> GetNetworkProfileAsync(this ResourceGroupResource resourceGroupResource, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetNetworkProfiles().GetAsync(networkProfileName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkProfiles().GetAsync(networkProfileName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2406,23 +2406,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}
         /// Operation Id: NetworkProfiles_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkProfileName"/> is null. </exception>
-        public static Response<NetworkProfileResource> GetNetworkProfile(this ResourceGroup resourceGroup, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<NetworkProfileResource> GetNetworkProfile(this ResourceGroupResource resourceGroupResource, string networkProfileName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetNetworkProfiles().Get(networkProfileName, expand, cancellationToken);
+            return resourceGroupResource.GetNetworkProfiles().Get(networkProfileName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkSecurityGroupResources in the NetworkSecurityGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
-        public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroup resourceGroup)
+        public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetNetworkSecurityGroups();
+            return GetExtensionClient(resourceGroupResource).GetNetworkSecurityGroups();
         }
 
         /// <summary>
@@ -2430,15 +2430,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
         /// Operation Id: NetworkSecurityGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public static async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(this ResourceGroup resourceGroup, string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkSecurityGroupResource>> GetNetworkSecurityGroupAsync(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetNetworkSecurityGroups().GetAsync(networkSecurityGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkSecurityGroups().GetAsync(networkSecurityGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2446,23 +2446,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}
         /// Operation Id: NetworkSecurityGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityGroupName"/> is null. </exception>
-        public static Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(this ResourceGroup resourceGroup, string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<NetworkSecurityGroupResource> GetNetworkSecurityGroup(this ResourceGroupResource resourceGroupResource, string networkSecurityGroupName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetNetworkSecurityGroups().Get(networkSecurityGroupName, expand, cancellationToken);
+            return resourceGroupResource.GetNetworkSecurityGroups().Get(networkSecurityGroupName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkVirtualApplianceResources in the NetworkVirtualApplianceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
-        public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroup resourceGroup)
+        public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetNetworkVirtualAppliances();
+            return GetExtensionClient(resourceGroupResource).GetNetworkVirtualAppliances();
         }
 
         /// <summary>
@@ -2470,15 +2470,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
         /// Operation Id: NetworkVirtualAppliances_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public static async Task<Response<NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(this ResourceGroup resourceGroup, string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkVirtualApplianceResource>> GetNetworkVirtualApplianceAsync(this ResourceGroupResource resourceGroupResource, string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetNetworkVirtualAppliances().GetAsync(networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkVirtualAppliances().GetAsync(networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2486,23 +2486,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}
         /// Operation Id: NetworkVirtualAppliances_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public static Response<NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(this ResourceGroup resourceGroup, string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<NetworkVirtualApplianceResource> GetNetworkVirtualAppliance(this ResourceGroupResource resourceGroupResource, string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetNetworkVirtualAppliances().Get(networkVirtualApplianceName, expand, cancellationToken);
+            return resourceGroupResource.GetNetworkVirtualAppliances().Get(networkVirtualApplianceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkWatcherResources in the NetworkWatcherResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
-        public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroup resourceGroup)
+        public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetNetworkWatchers();
+            return GetExtensionClient(resourceGroupResource).GetNetworkWatchers();
         }
 
         /// <summary>
@@ -2510,14 +2510,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
         /// Operation Id: NetworkWatchers_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public static async Task<Response<NetworkWatcherResource>> GetNetworkWatcherAsync(this ResourceGroup resourceGroup, string networkWatcherName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkWatcherResource>> GetNetworkWatcherAsync(this ResourceGroupResource resourceGroupResource, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetNetworkWatchers().GetAsync(networkWatcherName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkWatchers().GetAsync(networkWatcherName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2525,22 +2525,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}
         /// Operation Id: NetworkWatchers_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkWatcherName"/> is null. </exception>
-        public static Response<NetworkWatcherResource> GetNetworkWatcher(this ResourceGroup resourceGroup, string networkWatcherName, CancellationToken cancellationToken = default)
+        public static Response<NetworkWatcherResource> GetNetworkWatcher(this ResourceGroupResource resourceGroupResource, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetNetworkWatchers().Get(networkWatcherName, cancellationToken);
+            return resourceGroupResource.GetNetworkWatchers().Get(networkWatcherName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateEndpointResources in the PrivateEndpointResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
-        public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroup resourceGroup)
+        public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetPrivateEndpoints();
+            return GetExtensionClient(resourceGroupResource).GetPrivateEndpoints();
         }
 
         /// <summary>
@@ -2548,15 +2548,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
         /// Operation Id: PrivateEndpoints_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public static async Task<Response<PrivateEndpointResource>> GetPrivateEndpointAsync(this ResourceGroup resourceGroup, string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PrivateEndpointResource>> GetPrivateEndpointAsync(this ResourceGroupResource resourceGroupResource, string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetPrivateEndpoints().GetAsync(privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPrivateEndpoints().GetAsync(privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2564,23 +2564,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
         /// Operation Id: PrivateEndpoints_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public static Response<PrivateEndpointResource> GetPrivateEndpoint(this ResourceGroup resourceGroup, string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<PrivateEndpointResource> GetPrivateEndpoint(this ResourceGroupResource resourceGroupResource, string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetPrivateEndpoints().Get(privateEndpointName, expand, cancellationToken);
+            return resourceGroupResource.GetPrivateEndpoints().Get(privateEndpointName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateLinkServiceResources in the PrivateLinkServiceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
-        public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroup resourceGroup)
+        public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetPrivateLinkServices();
+            return GetExtensionClient(resourceGroupResource).GetPrivateLinkServices();
         }
 
         /// <summary>
@@ -2588,15 +2588,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
         /// Operation Id: PrivateLinkServices_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
-        public static async Task<Response<PrivateLinkServiceResource>> GetPrivateLinkServiceAsync(this ResourceGroup resourceGroup, string serviceName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PrivateLinkServiceResource>> GetPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetPrivateLinkServices().GetAsync(serviceName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPrivateLinkServices().GetAsync(serviceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2604,103 +2604,103 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}
         /// Operation Id: PrivateLinkServices_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> The name of the private link service. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
-        public static Response<PrivateLinkServiceResource> GetPrivateLinkService(this ResourceGroup resourceGroup, string serviceName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<PrivateLinkServiceResource> GetPrivateLinkService(this ResourceGroupResource resourceGroupResource, string serviceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetPrivateLinkServices().Get(serviceName, expand, cancellationToken);
+            return resourceGroupResource.GetPrivateLinkServices().Get(serviceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PublicIPAddressResources in the PublicIPAddressResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
-        public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroup resourceGroup)
+        public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetPublicIPAddresses();
+            return GetExtensionClient(resourceGroupResource).GetPublicIPAddresses();
         }
 
         /// <summary>
         /// Gets the specified public IP address in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIPAddressName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
         /// Operation Id: PublicIPAddresses_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        public static async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(this ResourceGroup resourceGroup, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(this ResourceGroupResource resourceGroupResource, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetPublicIPAddresses().GetAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPublicIPAddresses().GetAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified public IP address in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIPAddressName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}
         /// Operation Id: PublicIPAddresses_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
-        public static Response<PublicIPAddressResource> GetPublicIPAddress(this ResourceGroup resourceGroup, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<PublicIPAddressResource> GetPublicIPAddress(this ResourceGroupResource resourceGroupResource, string publicIPAddressName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
+            return resourceGroupResource.GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of PublicIPPrefixResources in the PublicIPPrefixResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
-        public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroup resourceGroup)
+        public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetPublicIPPrefixes();
+            return GetExtensionClient(resourceGroupResource).GetPublicIPPrefixes();
         }
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
-        public static async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(this ResourceGroup resourceGroup, string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetPublicIPPrefixes().GetAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPublicIPPrefixes().GetAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
-        public static Response<PublicIPPrefixResource> GetPublicIPPrefix(this ResourceGroup resourceGroup, string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<PublicIPPrefixResource> GetPublicIPPrefix(this ResourceGroupResource resourceGroupResource, string publicIPPrefixName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
+            return resourceGroupResource.GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RouteFilterResources in the RouteFilterResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
-        public static RouteFilterCollection GetRouteFilters(this ResourceGroup resourceGroup)
+        public static RouteFilterCollection GetRouteFilters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetRouteFilters();
+            return GetExtensionClient(resourceGroupResource).GetRouteFilters();
         }
 
         /// <summary>
@@ -2708,15 +2708,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
         /// Operation Id: RouteFilters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public static async Task<Response<RouteFilterResource>> GetRouteFilterAsync(this ResourceGroup resourceGroup, string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RouteFilterResource>> GetRouteFilterAsync(this ResourceGroupResource resourceGroupResource, string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetRouteFilters().GetAsync(routeFilterName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetRouteFilters().GetAsync(routeFilterName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2724,23 +2724,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}
         /// Operation Id: RouteFilters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="routeFilterName"> The name of the route filter. </param>
         /// <param name="expand"> Expands referenced express route bgp peering resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeFilterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeFilterName"/> is null. </exception>
-        public static Response<RouteFilterResource> GetRouteFilter(this ResourceGroup resourceGroup, string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<RouteFilterResource> GetRouteFilter(this ResourceGroupResource resourceGroupResource, string routeFilterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetRouteFilters().Get(routeFilterName, expand, cancellationToken);
+            return resourceGroupResource.GetRouteFilters().Get(routeFilterName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RouteTableResources in the RouteTableResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
-        public static RouteTableCollection GetRouteTables(this ResourceGroup resourceGroup)
+        public static RouteTableCollection GetRouteTables(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetRouteTables();
+            return GetExtensionClient(resourceGroupResource).GetRouteTables();
         }
 
         /// <summary>
@@ -2748,15 +2748,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}
         /// Operation Id: RouteTables_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public static async Task<Response<RouteTableResource>> GetRouteTableAsync(this ResourceGroup resourceGroup, string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RouteTableResource>> GetRouteTableAsync(this ResourceGroupResource resourceGroupResource, string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetRouteTables().GetAsync(routeTableName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetRouteTables().GetAsync(routeTableName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2764,23 +2764,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}
         /// Operation Id: RouteTables_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="routeTableName"> The name of the route table. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public static Response<RouteTableResource> GetRouteTable(this ResourceGroup resourceGroup, string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<RouteTableResource> GetRouteTable(this ResourceGroupResource resourceGroupResource, string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetRouteTables().Get(routeTableName, expand, cancellationToken);
+            return resourceGroupResource.GetRouteTables().Get(routeTableName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityPartnerProviderResources in the SecurityPartnerProviderResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
-        public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroup resourceGroup)
+        public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetSecurityPartnerProviders();
+            return GetExtensionClient(resourceGroupResource).GetSecurityPartnerProviders();
         }
 
         /// <summary>
@@ -2788,14 +2788,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
         /// Operation Id: SecurityPartnerProviders_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
-        public static async Task<Response<SecurityPartnerProviderResource>> GetSecurityPartnerProviderAsync(this ResourceGroup resourceGroup, string securityPartnerProviderName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityPartnerProviderResource>> GetSecurityPartnerProviderAsync(this ResourceGroupResource resourceGroupResource, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetSecurityPartnerProviders().GetAsync(securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSecurityPartnerProviders().GetAsync(securityPartnerProviderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2803,22 +2803,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/securityPartnerProviders/{securityPartnerProviderName}
         /// Operation Id: SecurityPartnerProviders_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPartnerProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPartnerProviderName"/> is null. </exception>
-        public static Response<SecurityPartnerProviderResource> GetSecurityPartnerProvider(this ResourceGroup resourceGroup, string securityPartnerProviderName, CancellationToken cancellationToken = default)
+        public static Response<SecurityPartnerProviderResource> GetSecurityPartnerProvider(this ResourceGroupResource resourceGroupResource, string securityPartnerProviderName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetSecurityPartnerProviders().Get(securityPartnerProviderName, cancellationToken);
+            return resourceGroupResource.GetSecurityPartnerProviders().Get(securityPartnerProviderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ServiceEndpointPolicyResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
-        public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroup resourceGroup)
+        public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetServiceEndpointPolicies();
+            return GetExtensionClient(resourceGroupResource).GetServiceEndpointPolicies();
         }
 
         /// <summary>
@@ -2826,15 +2826,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
         /// Operation Id: ServiceEndpointPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public static async Task<Response<ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(this ResourceGroup resourceGroup, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceEndpointPolicyResource>> GetServiceEndpointPolicyAsync(this ResourceGroupResource resourceGroupResource, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetServiceEndpointPolicies().GetAsync(serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetServiceEndpointPolicies().GetAsync(serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2842,23 +2842,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}
         /// Operation Id: ServiceEndpointPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public static Response<ServiceEndpointPolicyResource> GetServiceEndpointPolicy(this ResourceGroup resourceGroup, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ServiceEndpointPolicyResource> GetServiceEndpointPolicy(this ResourceGroupResource resourceGroupResource, string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetServiceEndpointPolicies().Get(serviceEndpointPolicyName, expand, cancellationToken);
+            return resourceGroupResource.GetServiceEndpointPolicies().Get(serviceEndpointPolicyName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkResources in the VirtualNetworkResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
-        public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroup resourceGroup)
+        public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualNetworks();
+            return GetExtensionClient(resourceGroupResource).GetVirtualNetworks();
         }
 
         /// <summary>
@@ -2866,15 +2866,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
         /// Operation Id: VirtualNetworks_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        public static async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroup resourceGroup, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualNetworks().GetAsync(virtualNetworkName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualNetworks().GetAsync(virtualNetworkName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2882,23 +2882,23 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}
         /// Operation Id: VirtualNetworks_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
-        public static Response<VirtualNetworkResource> GetVirtualNetwork(this ResourceGroup resourceGroup, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualNetworkResource> GetVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualNetworks().Get(virtualNetworkName, expand, cancellationToken);
+            return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworkName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkGatewayResources in the VirtualNetworkGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
-        public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroup resourceGroup)
+        public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualNetworkGateways();
+            return GetExtensionClient(resourceGroupResource).GetVirtualNetworkGateways();
         }
 
         /// <summary>
@@ -2906,14 +2906,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
         /// Operation Id: VirtualNetworkGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public static async Task<Response<VirtualNetworkGatewayResource>> GetVirtualNetworkGatewayAsync(this ResourceGroup resourceGroup, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkGatewayResource>> GetVirtualNetworkGatewayAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualNetworkGateways().GetAsync(virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualNetworkGateways().GetAsync(virtualNetworkGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2921,22 +2921,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}
         /// Operation Id: VirtualNetworkGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayName"/> is null. </exception>
-        public static Response<VirtualNetworkGatewayResource> GetVirtualNetworkGateway(this ResourceGroup resourceGroup, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
+        public static Response<VirtualNetworkGatewayResource> GetVirtualNetworkGateway(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualNetworkGateways().Get(virtualNetworkGatewayName, cancellationToken);
+            return resourceGroupResource.GetVirtualNetworkGateways().Get(virtualNetworkGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the VirtualNetworkGatewayConnectionResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
-        public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroup resourceGroup)
+        public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualNetworkGatewayConnections();
+            return GetExtensionClient(resourceGroupResource).GetVirtualNetworkGatewayConnections();
         }
 
         /// <summary>
@@ -2944,14 +2944,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
         /// Operation Id: VirtualNetworkGatewayConnections_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public static async Task<Response<VirtualNetworkGatewayConnectionResource>> GetVirtualNetworkGatewayConnectionAsync(this ResourceGroup resourceGroup, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkGatewayConnectionResource>> GetVirtualNetworkGatewayConnectionAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualNetworkGatewayConnections().GetAsync(virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualNetworkGatewayConnections().GetAsync(virtualNetworkGatewayConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2959,22 +2959,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/connections/{virtualNetworkGatewayConnectionName}
         /// Operation Id: VirtualNetworkGatewayConnections_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkGatewayConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGatewayConnectionName"/> is null. </exception>
-        public static Response<VirtualNetworkGatewayConnectionResource> GetVirtualNetworkGatewayConnection(this ResourceGroup resourceGroup, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
+        public static Response<VirtualNetworkGatewayConnectionResource> GetVirtualNetworkGatewayConnection(this ResourceGroupResource resourceGroupResource, string virtualNetworkGatewayConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualNetworkGatewayConnections().Get(virtualNetworkGatewayConnectionName, cancellationToken);
+            return resourceGroupResource.GetVirtualNetworkGatewayConnections().Get(virtualNetworkGatewayConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LocalNetworkGatewayResources in the LocalNetworkGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
-        public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroup resourceGroup)
+        public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetLocalNetworkGateways();
+            return GetExtensionClient(resourceGroupResource).GetLocalNetworkGateways();
         }
 
         /// <summary>
@@ -2982,14 +2982,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
         /// Operation Id: LocalNetworkGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
-        public static async Task<Response<LocalNetworkGatewayResource>> GetLocalNetworkGatewayAsync(this ResourceGroup resourceGroup, string localNetworkGatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LocalNetworkGatewayResource>> GetLocalNetworkGatewayAsync(this ResourceGroupResource resourceGroupResource, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetLocalNetworkGateways().GetAsync(localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetLocalNetworkGateways().GetAsync(localNetworkGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2997,22 +2997,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/localNetworkGateways/{localNetworkGatewayName}
         /// Operation Id: LocalNetworkGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="localNetworkGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="localNetworkGatewayName"/> is null. </exception>
-        public static Response<LocalNetworkGatewayResource> GetLocalNetworkGateway(this ResourceGroup resourceGroup, string localNetworkGatewayName, CancellationToken cancellationToken = default)
+        public static Response<LocalNetworkGatewayResource> GetLocalNetworkGateway(this ResourceGroupResource resourceGroupResource, string localNetworkGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetLocalNetworkGateways().Get(localNetworkGatewayName, cancellationToken);
+            return resourceGroupResource.GetLocalNetworkGateways().Get(localNetworkGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkTapResources in the VirtualNetworkTapResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
-        public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroup resourceGroup)
+        public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualNetworkTaps();
+            return GetExtensionClient(resourceGroupResource).GetVirtualNetworkTaps();
         }
 
         /// <summary>
@@ -3020,14 +3020,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
         /// Operation Id: VirtualNetworkTaps_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
-        public static async Task<Response<VirtualNetworkTapResource>> GetVirtualNetworkTapAsync(this ResourceGroup resourceGroup, string tapName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualNetworkTapResource>> GetVirtualNetworkTapAsync(this ResourceGroupResource resourceGroupResource, string tapName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualNetworkTaps().GetAsync(tapName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualNetworkTaps().GetAsync(tapName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3035,22 +3035,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkTaps/{tapName}
         /// Operation Id: VirtualNetworkTaps_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="tapName"> The name of virtual network tap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="tapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapName"/> is null. </exception>
-        public static Response<VirtualNetworkTapResource> GetVirtualNetworkTap(this ResourceGroup resourceGroup, string tapName, CancellationToken cancellationToken = default)
+        public static Response<VirtualNetworkTapResource> GetVirtualNetworkTap(this ResourceGroupResource resourceGroupResource, string tapName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualNetworkTaps().Get(tapName, cancellationToken);
+            return resourceGroupResource.GetVirtualNetworkTaps().Get(tapName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualRouterResources in the VirtualRouterResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
-        public static VirtualRouterCollection GetVirtualRouters(this ResourceGroup resourceGroup)
+        public static VirtualRouterCollection GetVirtualRouters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualRouters();
+            return GetExtensionClient(resourceGroupResource).GetVirtualRouters();
         }
 
         /// <summary>
@@ -3058,15 +3058,15 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}
         /// Operation Id: VirtualRouters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
-        public static async Task<Response<VirtualRouterResource>> GetVirtualRouterAsync(this ResourceGroup resourceGroup, string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualRouterResource>> GetVirtualRouterAsync(this ResourceGroupResource resourceGroupResource, string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualRouters().GetAsync(virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualRouters().GetAsync(virtualRouterName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3074,61 +3074,61 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}
         /// Operation Id: VirtualRouters_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualRouterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualRouterName"/> is null. </exception>
-        public static Response<VirtualRouterResource> GetVirtualRouter(this ResourceGroup resourceGroup, string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualRouterResource> GetVirtualRouter(this ResourceGroupResource resourceGroupResource, string virtualRouterName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualRouters().Get(virtualRouterName, expand, cancellationToken);
+            return resourceGroupResource.GetVirtualRouters().Get(virtualRouterName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualWanResources in the VirtualWanResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
-        public static VirtualWanCollection GetVirtualWans(this ResourceGroup resourceGroup)
+        public static VirtualWanCollection GetVirtualWans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualWans();
+            return GetExtensionClient(resourceGroupResource).GetVirtualWans();
         }
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public static async Task<Response<VirtualWanResource>> GetVirtualWanAsync(this ResourceGroup resourceGroup, string virtualWanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualWanResource>> GetVirtualWanAsync(this ResourceGroupResource resourceGroupResource, string virtualWanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualWans().GetAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualWans().GetAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public static Response<VirtualWanResource> GetVirtualWan(this ResourceGroup resourceGroup, string virtualWanName, CancellationToken cancellationToken = default)
+        public static Response<VirtualWanResource> GetVirtualWan(this ResourceGroupResource resourceGroupResource, string virtualWanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualWans().Get(virtualWanName, cancellationToken);
+            return resourceGroupResource.GetVirtualWans().Get(virtualWanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnSiteResources in the VpnSiteResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
-        public static VpnSiteCollection GetVpnSites(this ResourceGroup resourceGroup)
+        public static VpnSiteCollection GetVpnSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVpnSites();
+            return GetExtensionClient(resourceGroupResource).GetVpnSites();
         }
 
         /// <summary>
@@ -3136,14 +3136,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}
         /// Operation Id: VpnSites_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
-        public static async Task<Response<VpnSiteResource>> GetVpnSiteAsync(this ResourceGroup resourceGroup, string vpnSiteName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VpnSiteResource>> GetVpnSiteAsync(this ResourceGroupResource resourceGroupResource, string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVpnSites().GetAsync(vpnSiteName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVpnSites().GetAsync(vpnSiteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3151,22 +3151,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnSites/{vpnSiteName}
         /// Operation Id: VpnSites_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vpnSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteName"/> is null. </exception>
-        public static Response<VpnSiteResource> GetVpnSite(this ResourceGroup resourceGroup, string vpnSiteName, CancellationToken cancellationToken = default)
+        public static Response<VpnSiteResource> GetVpnSite(this ResourceGroupResource resourceGroupResource, string vpnSiteName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVpnSites().Get(vpnSiteName, cancellationToken);
+            return resourceGroupResource.GetVpnSites().Get(vpnSiteName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnServerConfigurationResources in the VpnServerConfigurationResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
-        public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroup resourceGroup)
+        public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVpnServerConfigurations();
+            return GetExtensionClient(resourceGroupResource).GetVpnServerConfigurations();
         }
 
         /// <summary>
@@ -3174,14 +3174,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
         /// Operation Id: VpnServerConfigurations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
-        public static async Task<Response<VpnServerConfigurationResource>> GetVpnServerConfigurationAsync(this ResourceGroup resourceGroup, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VpnServerConfigurationResource>> GetVpnServerConfigurationAsync(this ResourceGroupResource resourceGroupResource, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVpnServerConfigurations().GetAsync(vpnServerConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVpnServerConfigurations().GetAsync(vpnServerConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3189,22 +3189,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}
         /// Operation Id: VpnServerConfigurations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vpnServerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vpnServerConfigurationName"/> is null. </exception>
-        public static Response<VpnServerConfigurationResource> GetVpnServerConfiguration(this ResourceGroup resourceGroup, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
+        public static Response<VpnServerConfigurationResource> GetVpnServerConfiguration(this ResourceGroupResource resourceGroupResource, string vpnServerConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVpnServerConfigurations().Get(vpnServerConfigurationName, cancellationToken);
+            return resourceGroupResource.GetVpnServerConfigurations().Get(vpnServerConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualHubResources in the VirtualHubResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
-        public static VirtualHubCollection GetVirtualHubs(this ResourceGroup resourceGroup)
+        public static VirtualHubCollection GetVirtualHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualHubs();
+            return GetExtensionClient(resourceGroupResource).GetVirtualHubs();
         }
 
         /// <summary>
@@ -3212,14 +3212,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
         /// Operation Id: VirtualHubs_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
-        public static async Task<Response<VirtualHubResource>> GetVirtualHubAsync(this ResourceGroup resourceGroup, string virtualHubName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualHubResource>> GetVirtualHubAsync(this ResourceGroupResource resourceGroupResource, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualHubs().GetAsync(virtualHubName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualHubs().GetAsync(virtualHubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3227,22 +3227,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}
         /// Operation Id: VirtualHubs_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualHubName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
-        public static Response<VirtualHubResource> GetVirtualHub(this ResourceGroup resourceGroup, string virtualHubName, CancellationToken cancellationToken = default)
+        public static Response<VirtualHubResource> GetVirtualHub(this ResourceGroupResource resourceGroupResource, string virtualHubName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualHubs().Get(virtualHubName, cancellationToken);
+            return resourceGroupResource.GetVirtualHubs().Get(virtualHubName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnGatewayResources in the VpnGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
-        public static VpnGatewayCollection GetVpnGateways(this ResourceGroup resourceGroup)
+        public static VpnGatewayCollection GetVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVpnGateways();
+            return GetExtensionClient(resourceGroupResource).GetVpnGateways();
         }
 
         /// <summary>
@@ -3250,14 +3250,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}
         /// Operation Id: VpnGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public static async Task<Response<VpnGatewayResource>> GetVpnGatewayAsync(this ResourceGroup resourceGroup, string gatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VpnGatewayResource>> GetVpnGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3265,22 +3265,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}
         /// Operation Id: VpnGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public static Response<VpnGatewayResource> GetVpnGateway(this ResourceGroup resourceGroup, string gatewayName, CancellationToken cancellationToken = default)
+        public static Response<VpnGatewayResource> GetVpnGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVpnGateways().Get(gatewayName, cancellationToken);
+            return resourceGroupResource.GetVpnGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of P2SVpnGatewayResources in the P2SVpnGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
-        public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroup resourceGroup)
+        public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetP2SVpnGateways();
+            return GetExtensionClient(resourceGroupResource).GetP2SVpnGateways();
         }
 
         /// <summary>
@@ -3288,14 +3288,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
         /// Operation Id: P2sVpnGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public static async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(this ResourceGroup resourceGroup, string gatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<P2SVpnGatewayResource>> GetP2SVpnGatewayAsync(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetP2SVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetP2SVpnGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3303,22 +3303,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/p2svpnGateways/{gatewayName}
         /// Operation Id: P2sVpnGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public static Response<P2SVpnGatewayResource> GetP2SVpnGateway(this ResourceGroup resourceGroup, string gatewayName, CancellationToken cancellationToken = default)
+        public static Response<P2SVpnGatewayResource> GetP2SVpnGateway(this ResourceGroupResource resourceGroupResource, string gatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetP2SVpnGateways().Get(gatewayName, cancellationToken);
+            return resourceGroupResource.GetP2SVpnGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteGatewayResources in the ExpressRouteGatewayResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
-        public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroup resourceGroup)
+        public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetExpressRouteGateways();
+            return GetExtensionClient(resourceGroupResource).GetExpressRouteGateways();
         }
 
         /// <summary>
@@ -3326,14 +3326,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
         /// Operation Id: ExpressRouteGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public static async Task<Response<ExpressRouteGatewayResource>> GetExpressRouteGatewayAsync(this ResourceGroup resourceGroup, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ExpressRouteGatewayResource>> GetExpressRouteGatewayAsync(this ResourceGroupResource resourceGroupResource, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetExpressRouteGateways().GetAsync(expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetExpressRouteGateways().GetAsync(expressRouteGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3341,22 +3341,22 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}
         /// Operation Id: ExpressRouteGateways_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="expressRouteGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
-        public static Response<ExpressRouteGatewayResource> GetExpressRouteGateway(this ResourceGroup resourceGroup, string expressRouteGatewayName, CancellationToken cancellationToken = default)
+        public static Response<ExpressRouteGatewayResource> GetExpressRouteGateway(this ResourceGroupResource resourceGroupResource, string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetExpressRouteGateways().Get(expressRouteGatewayName, cancellationToken);
+            return resourceGroupResource.GetExpressRouteGateways().Get(expressRouteGatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the WebApplicationFirewallPolicyResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
-        public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
+        public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetWebApplicationFirewallPolicies();
+            return GetExtensionClient(resourceGroupResource).GetWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -3364,14 +3364,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: WebApplicationFirewallPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public static async Task<Response<WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3379,14 +3379,14 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: WebApplicationFirewallPolicies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public static Response<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
+        public static Response<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
+            return resourceGroupResource.GetWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
 
         /// <summary>
@@ -3394,17 +3394,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
         /// Operation Id: AvailableResourceGroupDelegations_List
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAvailableResourceGroupDelegationsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3412,17 +3412,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableDelegations
         /// Operation Id: AvailableResourceGroupDelegations_List
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailableDelegation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAvailableResourceGroupDelegations(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAvailableResourceGroupDelegations(location, cancellationToken);
         }
 
         /// <summary>
@@ -3430,17 +3430,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
         /// Operation Id: AvailableServiceAliases_ListByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAvailableServiceAliasesAsync(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAvailableServiceAliasesByResourceGroupAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3448,17 +3448,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availableServiceAliases
         /// Operation Id: AvailableServiceAliases_ListByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailableServiceAlias" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableServiceAlias> GetAvailableServiceAliases(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAvailableServiceAliases(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAvailableServiceAliasesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -3466,17 +3466,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
         /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAvailablePrivateEndpointTypesAsync(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroupAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3484,17 +3484,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes
         /// Operation Id: AvailablePrivateEndpointTypes_ListByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAvailablePrivateEndpointTypes(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAvailablePrivateEndpointTypesByResourceGroup(location, cancellationToken);
         }
 
         /// <summary>
@@ -3502,19 +3502,19 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
         /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroup resourceGroup, WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return await GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, parameters, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(waitUntil, location, parameters, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3522,19 +3522,19 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
         /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="parameters"/> is null. </exception>
-        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroup resourceGroup, WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public static ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            return GetExtensionClient(resourceGroup).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, parameters, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(waitUntil, location, parameters, cancellationToken);
         }
 
         /// <summary>
@@ -3542,17 +3542,17 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
         /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3560,21 +3560,24 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices
         /// Operation Id: PrivateLinkServices_ListAutoApprovedPrivateLinkServicesByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(this ResourceGroup resourceGroup, string location, CancellationToken cancellationToken = default)
+        public static Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(this ResourceGroupResource resourceGroupResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(resourceGroup).GetAutoApprovedPrivateLinkServicesPrivateLinkServices(location, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
         }
 
         #region ApplicationGatewayResource
-        /// <summary> Gets an object representing a ApplicationGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGatewayResource" /> object. </returns>
@@ -3590,7 +3593,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ApplicationGatewayPrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a ApplicationGatewayPrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnectionResource" /> object. </returns>
@@ -3606,7 +3612,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ApplicationSecurityGroupResource
-        /// <summary> Gets an object representing a ApplicationSecurityGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationSecurityGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationSecurityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationSecurityGroupResource" /> object. </returns>
@@ -3622,7 +3631,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region AzureFirewallResource
-        /// <summary> Gets an object representing a AzureFirewallResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AzureFirewallResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureFirewallResource.CreateResourceIdentifier" /> to create an <see cref="AzureFirewallResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureFirewallResource" /> object. </returns>
@@ -3638,7 +3650,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region AzureWebCategoryResource
-        /// <summary> Gets an object representing a AzureWebCategoryResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AzureWebCategoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureWebCategoryResource.CreateResourceIdentifier" /> to create an <see cref="AzureWebCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureWebCategoryResource" /> object. </returns>
@@ -3654,7 +3669,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region BastionHostResource
-        /// <summary> Gets an object representing a BastionHostResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BastionHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BastionHostResource.CreateResourceIdentifier" /> to create a <see cref="BastionHostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BastionHostResource" /> object. </returns>
@@ -3670,7 +3688,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region CustomIPPrefixResource
-        /// <summary> Gets an object representing a CustomIPPrefixResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CustomIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="CustomIPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomIPPrefixResource" /> object. </returns>
@@ -3686,7 +3707,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DdosCustomPolicyResource
-        /// <summary> Gets an object representing a DdosCustomPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DdosCustomPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DdosCustomPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DdosCustomPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosCustomPolicyResource" /> object. </returns>
@@ -3702,7 +3726,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DdosProtectionPlanResource
-        /// <summary> Gets an object representing a DdosProtectionPlanResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DdosProtectionPlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DdosProtectionPlanResource.CreateResourceIdentifier" /> to create a <see cref="DdosProtectionPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosProtectionPlanResource" /> object. </returns>
@@ -3718,7 +3745,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DscpConfigurationResource
-        /// <summary> Gets an object representing a DscpConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DscpConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscpConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscpConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DscpConfigurationResource" /> object. </returns>
@@ -3734,7 +3764,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitAuthorizationResource
-        /// <summary> Gets an object representing a ExpressRouteCircuitAuthorizationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorizationResource" /> object. </returns>
@@ -3750,7 +3783,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitPeeringResource
-        /// <summary> Gets an object representing a ExpressRouteCircuitPeeringResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitPeeringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitPeeringResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeeringResource" /> object. </returns>
@@ -3766,7 +3802,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitConnectionResource
-        /// <summary> Gets an object representing a ExpressRouteCircuitConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnectionResource" /> object. </returns>
@@ -3782,7 +3821,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PeerExpressRouteCircuitConnectionResource
-        /// <summary> Gets an object representing a PeerExpressRouteCircuitConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PeerExpressRouteCircuitConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeerExpressRouteCircuitConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PeerExpressRouteCircuitConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnectionResource" /> object. </returns>
@@ -3798,7 +3840,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitResource
-        /// <summary> Gets an object representing a ExpressRouteCircuitResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitResource" /> object. </returns>
@@ -3814,7 +3859,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCrossConnectionResource
-        /// <summary> Gets an object representing a ExpressRouteCrossConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCrossConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCrossConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCrossConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionResource" /> object. </returns>
@@ -3830,7 +3878,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCrossConnectionPeeringResource
-        /// <summary> Gets an object representing a ExpressRouteCrossConnectionPeeringResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCrossConnectionPeeringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCrossConnectionPeeringResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCrossConnectionPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeeringResource" /> object. </returns>
@@ -3846,7 +3897,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRoutePortsLocationResource
-        /// <summary> Gets an object representing a ExpressRoutePortsLocationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRoutePortsLocationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRoutePortsLocationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortsLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRoutePortsLocationResource" /> object. </returns>
@@ -3862,7 +3916,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRoutePortResource
-        /// <summary> Gets an object representing a ExpressRoutePortResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRoutePortResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRoutePortResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRoutePortResource" /> object. </returns>
@@ -3878,7 +3935,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteLinkResource
-        /// <summary> Gets an object representing a ExpressRouteLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteLinkResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteLinkResource" /> object. </returns>
@@ -3894,7 +3954,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FirewallPolicyResource
-        /// <summary> Gets an object representing a FirewallPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicyResource" /> object. </returns>
@@ -3910,7 +3973,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FirewallPolicyRuleCollectionGroupResource
-        /// <summary> Gets an object representing a FirewallPolicyRuleCollectionGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicyRuleCollectionGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallPolicyRuleCollectionGroupResource.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyRuleCollectionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupResource" /> object. </returns>
@@ -3926,7 +3992,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region IPAllocationResource
-        /// <summary> Gets an object representing a IPAllocationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="IPAllocationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPAllocationResource.CreateResourceIdentifier" /> to create an <see cref="IPAllocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IPAllocationResource" /> object. </returns>
@@ -3942,7 +4011,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region IPGroupResource
-        /// <summary> Gets an object representing a IPGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="IPGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPGroupResource.CreateResourceIdentifier" /> to create an <see cref="IPGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IPGroupResource" /> object. </returns>
@@ -3958,7 +4030,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region LoadBalancerResource
-        /// <summary> Gets an object representing a LoadBalancerResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadBalancerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadBalancerResource.CreateResourceIdentifier" /> to create a <see cref="LoadBalancerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadBalancerResource" /> object. </returns>
@@ -3974,7 +4049,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region BackendAddressPoolResource
-        /// <summary> Gets an object representing a BackendAddressPoolResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BackendAddressPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackendAddressPoolResource.CreateResourceIdentifier" /> to create a <see cref="BackendAddressPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BackendAddressPoolResource" /> object. </returns>
@@ -3990,7 +4068,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FrontendIPConfigurationResource
-        /// <summary> Gets an object representing a FrontendIPConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontendIPConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontendIPConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="FrontendIPConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FrontendIPConfigurationResource" /> object. </returns>
@@ -4006,7 +4087,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region InboundNatRuleResource
-        /// <summary> Gets an object representing a InboundNatRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="InboundNatRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InboundNatRuleResource.CreateResourceIdentifier" /> to create an <see cref="InboundNatRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InboundNatRuleResource" /> object. </returns>
@@ -4022,7 +4106,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region LoadBalancingRuleResource
-        /// <summary> Gets an object representing a LoadBalancingRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadBalancingRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadBalancingRuleResource.CreateResourceIdentifier" /> to create a <see cref="LoadBalancingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadBalancingRuleResource" /> object. </returns>
@@ -4038,7 +4125,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region OutboundRuleResource
-        /// <summary> Gets an object representing a OutboundRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OutboundRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OutboundRuleResource.CreateResourceIdentifier" /> to create an <see cref="OutboundRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OutboundRuleResource" /> object. </returns>
@@ -4054,7 +4144,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ProbeResource
-        /// <summary> Gets an object representing a ProbeResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ProbeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProbeResource.CreateResourceIdentifier" /> to create a <see cref="ProbeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProbeResource" /> object. </returns>
@@ -4070,7 +4163,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NatGatewayResource
-        /// <summary> Gets an object representing a NatGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NatGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NatGatewayResource.CreateResourceIdentifier" /> to create a <see cref="NatGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NatGatewayResource" /> object. </returns>
@@ -4086,7 +4182,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkInterfaceResource
-        /// <summary> Gets an object representing a NetworkInterfaceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterfaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceResource" /> object. </returns>
@@ -4102,7 +4201,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkInterfaceIPConfigurationResource
-        /// <summary> Gets an object representing a NetworkInterfaceIPConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterfaceIPConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceIPConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceIPConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfigurationResource" /> object. </returns>
@@ -4118,7 +4220,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkInterfaceTapConfigurationResource
-        /// <summary> Gets an object representing a NetworkInterfaceTapConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterfaceTapConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceTapConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceTapConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfigurationResource" /> object. </returns>
@@ -4134,7 +4239,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkProfileResource
-        /// <summary> Gets an object representing a NetworkProfileResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkProfileResource.CreateResourceIdentifier" /> to create a <see cref="NetworkProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkProfileResource" /> object. </returns>
@@ -4150,7 +4258,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkSecurityGroupResource
-        /// <summary> Gets an object representing a NetworkSecurityGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkSecurityGroupResource" /> object. </returns>
@@ -4166,7 +4277,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region SecurityRuleResource
-        /// <summary> Gets an object representing a SecurityRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityRuleResource" /> object. </returns>
@@ -4182,7 +4296,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DefaultSecurityRuleResource
-        /// <summary> Gets an object representing a DefaultSecurityRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DefaultSecurityRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DefaultSecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="DefaultSecurityRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DefaultSecurityRuleResource" /> object. </returns>
@@ -4198,7 +4315,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkVirtualApplianceResource
-        /// <summary> Gets an object representing a NetworkVirtualApplianceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkVirtualApplianceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkVirtualApplianceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkVirtualApplianceResource" /> object. </returns>
@@ -4214,7 +4334,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualApplianceSiteResource
-        /// <summary> Gets an object representing a VirtualApplianceSiteResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualApplianceSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualApplianceSiteResource.CreateResourceIdentifier" /> to create a <see cref="VirtualApplianceSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplianceSiteResource" /> object. </returns>
@@ -4230,7 +4353,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkVirtualApplianceSkuResource
-        /// <summary> Gets an object representing a NetworkVirtualApplianceSkuResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkVirtualApplianceSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkVirtualApplianceSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSkuResource" /> object. </returns>
@@ -4246,7 +4372,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkWatcherResource
-        /// <summary> Gets an object representing a NetworkWatcherResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkWatcherResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkWatcherResource.CreateResourceIdentifier" /> to create a <see cref="NetworkWatcherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkWatcherResource" /> object. </returns>
@@ -4262,7 +4391,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PacketCaptureResource
-        /// <summary> Gets an object representing a PacketCaptureResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PacketCaptureResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="PacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PacketCaptureResource" /> object. </returns>
@@ -4278,7 +4410,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ConnectionMonitorResource
-        /// <summary> Gets an object representing a ConnectionMonitorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectionMonitorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectionMonitorResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConnectionMonitorResource" /> object. </returns>
@@ -4294,7 +4429,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FlowLogResource
-        /// <summary> Gets an object representing a FlowLogResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FlowLogResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FlowLogResource.CreateResourceIdentifier" /> to create a <see cref="FlowLogResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FlowLogResource" /> object. </returns>
@@ -4310,7 +4448,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateEndpointResource
-        /// <summary> Gets an object representing a PrivateEndpointResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointResource" /> object. </returns>
@@ -4326,7 +4467,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateDnsZoneGroupResource
-        /// <summary> Gets an object representing a PrivateDnsZoneGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneGroupResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateDnsZoneGroupResource" /> object. </returns>
@@ -4342,7 +4486,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateLinkServiceResource
-        /// <summary> Gets an object representing a PrivateLinkServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateLinkServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateLinkServiceResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkServiceResource" /> object. </returns>
@@ -4358,7 +4505,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
@@ -4374,7 +4524,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PublicIPAddressResource
-        /// <summary> Gets an object representing a PublicIPAddressResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PublicIPAddressResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublicIPAddressResource.CreateResourceIdentifier" /> to create a <see cref="PublicIPAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicIPAddressResource" /> object. </returns>
@@ -4390,7 +4543,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PublicIPPrefixResource
-        /// <summary> Gets an object representing a PublicIPPrefixResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PublicIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublicIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PublicIPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicIPPrefixResource" /> object. </returns>
@@ -4406,7 +4562,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteFilterResource
-        /// <summary> Gets an object representing a RouteFilterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteFilterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteFilterResource.CreateResourceIdentifier" /> to create a <see cref="RouteFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteFilterResource" /> object. </returns>
@@ -4422,7 +4581,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteFilterRuleResource
-        /// <summary> Gets an object representing a RouteFilterRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteFilterRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteFilterRuleResource.CreateResourceIdentifier" /> to create a <see cref="RouteFilterRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteFilterRuleResource" /> object. </returns>
@@ -4438,7 +4600,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteTableResource
-        /// <summary> Gets an object representing a RouteTableResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteTableResource.CreateResourceIdentifier" /> to create a <see cref="RouteTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteTableResource" /> object. </returns>
@@ -4454,7 +4619,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteResource
-        /// <summary> Gets an object representing a RouteResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteResource.CreateResourceIdentifier" /> to create a <see cref="RouteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteResource" /> object. </returns>
@@ -4470,7 +4638,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region SecurityPartnerProviderResource
-        /// <summary> Gets an object representing a SecurityPartnerProviderResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityPartnerProviderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityPartnerProviderResource.CreateResourceIdentifier" /> to create a <see cref="SecurityPartnerProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityPartnerProviderResource" /> object. </returns>
@@ -4486,7 +4657,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ServiceEndpointPolicyResource
-        /// <summary> Gets an object representing a ServiceEndpointPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceEndpointPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEndpointPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEndpointPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceEndpointPolicyResource" /> object. </returns>
@@ -4502,7 +4676,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ServiceEndpointPolicyDefinitionResource
-        /// <summary> Gets an object representing a ServiceEndpointPolicyDefinitionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceEndpointPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEndpointPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEndpointPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinitionResource" /> object. </returns>
@@ -4518,7 +4695,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkResource
-        /// <summary> Gets an object representing a VirtualNetworkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkResource" /> object. </returns>
@@ -4534,7 +4714,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region SubnetResource
-        /// <summary> Gets an object representing a SubnetResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SubnetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubnetResource.CreateResourceIdentifier" /> to create a <see cref="SubnetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubnetResource" /> object. </returns>
@@ -4550,7 +4733,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkPeeringResource
-        /// <summary> Gets an object representing a VirtualNetworkPeeringResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkPeeringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkPeeringResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkPeeringResource" /> object. </returns>
@@ -4566,7 +4752,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkGatewayResource
-        /// <summary> Gets an object representing a VirtualNetworkGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayResource" /> object. </returns>
@@ -4582,7 +4771,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkGatewayConnectionResource
-        /// <summary> Gets an object representing a VirtualNetworkGatewayConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkGatewayConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnectionResource" /> object. </returns>
@@ -4598,7 +4790,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region LocalNetworkGatewayResource
-        /// <summary> Gets an object representing a LocalNetworkGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LocalNetworkGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="LocalNetworkGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LocalNetworkGatewayResource" /> object. </returns>
@@ -4614,7 +4809,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkGatewayNatRuleResource
-        /// <summary> Gets an object representing a VirtualNetworkGatewayNatRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkGatewayNatRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkGatewayNatRuleResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayNatRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRuleResource" /> object. </returns>
@@ -4630,7 +4828,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkTapResource
-        /// <summary> Gets an object representing a VirtualNetworkTapResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkTapResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkTapResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkTapResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkTapResource" /> object. </returns>
@@ -4646,7 +4847,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualRouterResource
-        /// <summary> Gets an object representing a VirtualRouterResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualRouterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualRouterResource.CreateResourceIdentifier" /> to create a <see cref="VirtualRouterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualRouterResource" /> object. </returns>
@@ -4662,7 +4866,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualRouterPeeringResource
-        /// <summary> Gets an object representing a VirtualRouterPeeringResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualRouterPeeringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualRouterPeeringResource.CreateResourceIdentifier" /> to create a <see cref="VirtualRouterPeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualRouterPeeringResource" /> object. </returns>
@@ -4678,7 +4885,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualWanResource
-        /// <summary> Gets an object representing a VirtualWanResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualWanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualWanResource.CreateResourceIdentifier" /> to create a <see cref="VirtualWanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualWanResource" /> object. </returns>
@@ -4694,7 +4904,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnSiteResource
-        /// <summary> Gets an object representing a VpnSiteResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnSiteResource.CreateResourceIdentifier" /> to create a <see cref="VpnSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteResource" /> object. </returns>
@@ -4710,7 +4923,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnSiteLinkResource
-        /// <summary> Gets an object representing a VpnSiteLinkResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnSiteLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnSiteLinkResource.CreateResourceIdentifier" /> to create a <see cref="VpnSiteLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteLinkResource" /> object. </returns>
@@ -4726,7 +4942,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnServerConfigurationResource
-        /// <summary> Gets an object representing a VpnServerConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnServerConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnServerConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="VpnServerConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnServerConfigurationResource" /> object. </returns>
@@ -4742,7 +4961,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualHubResource
-        /// <summary> Gets an object representing a VirtualHubResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualHubResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualHubResource.CreateResourceIdentifier" /> to create a <see cref="VirtualHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualHubResource" /> object. </returns>
@@ -4758,7 +4980,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region HubVirtualNetworkConnectionResource
-        /// <summary> Gets an object representing a HubVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HubVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HubVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubVirtualNetworkConnectionResource" /> object. </returns>
@@ -4774,7 +4999,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnGatewayResource
-        /// <summary> Gets an object representing a VpnGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VpnGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnGatewayResource" /> object. </returns>
@@ -4790,7 +5018,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnConnectionResource
-        /// <summary> Gets an object representing a VpnConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VpnConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnConnectionResource" /> object. </returns>
@@ -4806,7 +5037,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnSiteLinkConnectionResource
-        /// <summary> Gets an object representing a VpnSiteLinkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnSiteLinkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnSiteLinkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="VpnSiteLinkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteLinkConnectionResource" /> object. </returns>
@@ -4822,7 +5056,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnGatewayNatRuleResource
-        /// <summary> Gets an object representing a VpnGatewayNatRuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnGatewayNatRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnGatewayNatRuleResource.CreateResourceIdentifier" /> to create a <see cref="VpnGatewayNatRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnGatewayNatRuleResource" /> object. </returns>
@@ -4838,7 +5075,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region P2SVpnGatewayResource
-        /// <summary> Gets an object representing a P2SVpnGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="P2SVpnGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="P2SVpnGatewayResource.CreateResourceIdentifier" /> to create a <see cref="P2SVpnGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="P2SVpnGatewayResource" /> object. </returns>
@@ -4854,7 +5094,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualHubRouteTableV2Resource
-        /// <summary> Gets an object representing a VirtualHubRouteTableV2Resource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualHubRouteTableV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualHubRouteTableV2Resource.CreateResourceIdentifier" /> to create a <see cref="VirtualHubRouteTableV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2Resource" /> object. </returns>
@@ -4870,7 +5113,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteGatewayResource
-        /// <summary> Gets an object representing a ExpressRouteGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteGatewayResource" /> object. </returns>
@@ -4886,7 +5132,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteConnectionResource
-        /// <summary> Gets an object representing a ExpressRouteConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteConnectionResource" /> object. </returns>
@@ -4902,7 +5151,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region BgpConnectionResource
-        /// <summary> Gets an object representing a BgpConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BgpConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BgpConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BgpConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BgpConnectionResource" /> object. </returns>
@@ -4918,7 +5170,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region HubIPConfigurationResource
-        /// <summary> Gets an object representing a HubIPConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HubIPConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubIPConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="HubIPConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubIPConfigurationResource" /> object. </returns>
@@ -4934,7 +5189,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region HubRouteTableResource
-        /// <summary> Gets an object representing a HubRouteTableResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HubRouteTableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubRouteTableResource.CreateResourceIdentifier" /> to create a <see cref="HubRouteTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubRouteTableResource" /> object. </returns>
@@ -4950,7 +5208,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region WebApplicationFirewallPolicyResource
-        /// <summary> Gets an object representing a WebApplicationFirewallPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebApplicationFirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebApplicationFirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicyResource" /> object. </returns>

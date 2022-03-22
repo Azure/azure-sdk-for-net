@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualRouterPeeringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualRouterPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterPeeringResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualRouterPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterPeeringResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualRouterPeeringResource.ResourceType, out string virtualRouterPeeringApiVersion);
-            _virtualRouterPeeringRestClient = new VirtualRouterPeeringsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualRouterPeeringApiVersion);
+            _virtualRouterPeeringRestClient = new VirtualRouterPeeringsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualRouterPeeringApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

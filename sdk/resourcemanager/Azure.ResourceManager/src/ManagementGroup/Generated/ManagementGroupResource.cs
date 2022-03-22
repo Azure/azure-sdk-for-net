@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management.Models;
 
 namespace Azure.ResourceManager.Management
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.Management
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ResourceType.Namespace, DiagnosticOptions);
+            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managementGroupApiVersion);
-            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
+            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

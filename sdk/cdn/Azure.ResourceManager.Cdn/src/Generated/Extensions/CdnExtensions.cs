@@ -237,21 +237,21 @@ namespace Azure.ResourceManager.Cdn
             return GetExtensionClient(subscriptionResource).GetManagedRuleSets(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of ProfileResources in the ProfileResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
-        public static ProfileCollection GetProfiles(this ResourceGroup resourceGroup)
+        public static ProfileCollection GetProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetProfiles();
+            return GetExtensionClient(resourceGroupResource).GetProfiles();
         }
 
         /// <summary>
@@ -259,14 +259,14 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroup resourceGroup, string profileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -274,22 +274,22 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}
         /// Operation Id: Profiles_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="profileName"> Name of the CDN profile which is unique within the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public static Response<ProfileResource> GetProfile(this ResourceGroup resourceGroup, string profileName, CancellationToken cancellationToken = default)
+        public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetProfiles().Get(profileName, cancellationToken);
+            return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the CdnWebApplicationFirewallPolicyResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
-        public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroup resourceGroup)
+        public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCdnWebApplicationFirewallPolicies();
+            return GetExtensionClient(resourceGroupResource).GetCdnWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -297,14 +297,14 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: Policies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -312,18 +312,21 @@ namespace Azure.ResourceManager.Cdn
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/CdnWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: Policies_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroup resourceGroup, string policyName, CancellationToken cancellationToken = default)
+        public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
+            return resourceGroupResource.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
 
         #region ProfileResource
-        /// <summary> Gets an object representing a ProfileResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProfileResource" /> object. </returns>
@@ -339,7 +342,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnEndpointResource
-        /// <summary> Gets an object representing a CdnEndpointResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnEndpointResource.CreateResourceIdentifier" /> to create a <see cref="CdnEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnEndpointResource" /> object. </returns>
@@ -355,7 +361,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnOriginResource
-        /// <summary> Gets an object representing a CdnOriginResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnOriginResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnOriginResource.CreateResourceIdentifier" /> to create a <see cref="CdnOriginResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnOriginResource" /> object. </returns>
@@ -371,7 +380,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnOriginGroupResource
-        /// <summary> Gets an object representing a CdnOriginGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnOriginGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnOriginGroupResource.CreateResourceIdentifier" /> to create a <see cref="CdnOriginGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnOriginGroupResource" /> object. </returns>
@@ -387,7 +399,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnCustomDomainResource
-        /// <summary> Gets an object representing a CdnCustomDomainResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="CdnCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnCustomDomainResource" /> object. </returns>
@@ -403,7 +418,10 @@ namespace Azure.ResourceManager.Cdn
         #endregion
 
         #region CdnWebApplicationFirewallPolicyResource
-        /// <summary> Gets an object representing a CdnWebApplicationFirewallPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CdnWebApplicationFirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CdnWebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CdnWebApplicationFirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource" /> object. </returns>

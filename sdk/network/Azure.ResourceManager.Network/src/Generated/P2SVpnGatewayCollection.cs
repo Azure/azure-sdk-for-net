@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal P2SVpnGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, DiagnosticOptions);
+            _p2SVpnGatewayP2sVpnGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(P2SVpnGatewayResource.ResourceType, out string p2SVpnGatewayP2sVpnGatewaysApiVersion);
-            _p2SVpnGatewayP2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, p2SVpnGatewayP2sVpnGatewaysApiVersion);
+            _p2SVpnGatewayP2sVpnGatewaysRestClient = new P2SVpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, p2SVpnGatewayP2sVpnGatewaysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties)
+        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, ResourceProviderRegistrationOptions properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceProviderData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceProviderData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, ResourceProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceProviderData> Register(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public Response<ResourceProviderData> Register(string subscriptionId, string resourceProviderNamespace, ResourceProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));

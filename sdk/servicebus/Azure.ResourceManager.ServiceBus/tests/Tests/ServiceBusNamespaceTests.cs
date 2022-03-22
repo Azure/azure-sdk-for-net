@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class ServiceBusNamespaceTests : ServiceBusTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
 
         public ServiceBusNamespaceTests(bool isAsync) : base(isAsync)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             //create two namespaces in two resourcegroups
             string namespaceName1 = await CreateValidNamespaceName(namespacePrefix);
             _resourceGroup = await CreateResourceGroupAsync();
-            ResourceGroup resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
             ServiceBusNamespaceCollection namespaceCollection1 = _resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceCollection namespaceCollection2 = resourceGroup.GetServiceBusNamespaces();
             _ = (await namespaceCollection1.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName1, new ServiceBusNamespaceData(DefaultLocation))).Value;

@@ -10,7 +10,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing collection of Tenant and their operations over their parent.
+    /// A class representing collection of TenantResource and their operations over their parent.
     /// </summary>
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]

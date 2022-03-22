@@ -126,21 +126,21 @@ namespace Azure.ResourceManager.StoragePool
             return GetExtensionClient(subscriptionResource).GetResourceSkus(location, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of DiskPoolResources in the DiskPoolResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
-        public static DiskPoolCollection GetDiskPools(this ResourceGroup resourceGroup)
+        public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDiskPools();
+            return GetExtensionClient(resourceGroupResource).GetDiskPools();
         }
 
         /// <summary>
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.StoragePool
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
         /// Operation Id: DiskPools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
-        public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroup resourceGroup, string diskPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDiskPools().GetAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDiskPools().GetAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,18 +163,21 @@ namespace Azure.ResourceManager.StoragePool
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StoragePool/diskPools/{diskPoolName}
         /// Operation Id: DiskPools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
-        public static Response<DiskPoolResource> GetDiskPool(this ResourceGroup resourceGroup, string diskPoolName, CancellationToken cancellationToken = default)
+        public static Response<DiskPoolResource> GetDiskPool(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDiskPools().Get(diskPoolName, cancellationToken);
+            return resourceGroupResource.GetDiskPools().Get(diskPoolName, cancellationToken);
         }
 
         #region DiskPoolResource
-        /// <summary> Gets an object representing a DiskPoolResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskPoolResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
@@ -190,7 +193,10 @@ namespace Azure.ResourceManager.StoragePool
         #endregion
 
         #region IscsiTargetResource
-        /// <summary> Gets an object representing a IscsiTargetResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="IscsiTargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IscsiTargetResource.CreateResourceIdentifier" /> to create an <see cref="IscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IscsiTargetResource" /> object. </returns>

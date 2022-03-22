@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DomainOwnershipIdentifierCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _domainOwnershipIdentifierDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DomainOwnershipIdentifierResource.ResourceType.Namespace, DiagnosticOptions);
+            _domainOwnershipIdentifierDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DomainOwnershipIdentifierResource.ResourceType, out string domainOwnershipIdentifierDomainsApiVersion);
-            _domainOwnershipIdentifierDomainsRestClient = new DomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, domainOwnershipIdentifierDomainsApiVersion);
+            _domainOwnershipIdentifierDomainsRestClient = new DomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainOwnershipIdentifierDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

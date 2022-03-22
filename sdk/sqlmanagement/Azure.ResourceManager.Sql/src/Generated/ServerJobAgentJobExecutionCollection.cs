@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -38,12 +37,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerJobAgentJobExecutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionResource.ResourceType.Namespace, DiagnosticOptions);
+            _serverJobAgentJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServerJobAgentJobExecutionResource.ResourceType, out string serverJobAgentJobExecutionJobExecutionsApiVersion);
-            _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionJobExecutionsApiVersion);
-            _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionStepTargetResource.ResourceType.Namespace, DiagnosticOptions);
+            _serverJobAgentJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverJobAgentJobExecutionJobExecutionsApiVersion);
+            _serverJobAgentJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobExecutionStepTargetResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServerJobAgentJobExecutionStepTargetResource.ResourceType, out string serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
-            _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
+            _serverJobAgentJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverJobAgentJobExecutionStepTargetJobTargetExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

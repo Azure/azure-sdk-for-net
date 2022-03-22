@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualApplicationResource.ResourceType, out string virtualApplicationApplicationsApiVersion);
-            _virtualApplicationApplicationsRestClient = new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualApplicationApplicationsApiVersion);
+            _virtualApplicationApplicationsRestClient = new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplicationApplicationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

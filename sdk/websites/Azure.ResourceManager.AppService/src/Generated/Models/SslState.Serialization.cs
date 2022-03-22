@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             SslState.Disabled => "Disabled",
             SslState.SniEnabled => "SniEnabled",
-            SslState.IpBasedEnabled => "IpBasedEnabled",
+            SslState.IPBasedEnabled => "IpBasedEnabled",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SslState value.")
         };
 
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return SslState.Disabled;
             if (string.Equals(value, "SniEnabled", StringComparison.InvariantCultureIgnoreCase)) return SslState.SniEnabled;
-            if (string.Equals(value, "IpBasedEnabled", StringComparison.InvariantCultureIgnoreCase)) return SslState.IpBasedEnabled;
+            if (string.Equals(value, "IpBasedEnabled", StringComparison.InvariantCultureIgnoreCase)) return SslState.IPBasedEnabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SslState value.");
         }
     }

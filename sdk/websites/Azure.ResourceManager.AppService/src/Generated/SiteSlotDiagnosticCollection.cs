@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticResource.ResourceType.Namespace, DiagnosticOptions);
+            _siteSlotDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteSlotDiagnosticResource.ResourceType, out string siteSlotDiagnosticDiagnosticsApiVersion);
-            _siteSlotDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticDiagnosticsApiVersion);
+            _siteSlotDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

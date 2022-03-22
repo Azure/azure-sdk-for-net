@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RecommendedActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedActionResource.ResourceType.Namespace, DiagnosticOptions);
+            _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedActionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RecommendedActionResource.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
-            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
+            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

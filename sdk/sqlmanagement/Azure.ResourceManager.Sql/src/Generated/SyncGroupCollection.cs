@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SyncGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _syncGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, DiagnosticOptions);
+            _syncGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SyncGroupResource.ResourceType, out string syncGroupApiVersion);
-            _syncGroupRestClient = new SyncGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncGroupApiVersion);
+            _syncGroupRestClient = new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, syncGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class IpGroupTests : NetworkServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private string _iPGroupName;
 
         private ResourceIdentifier _resourceGroupIdentifier;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("IpGroupRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _iPGroupName = SessionRecording.GenerateAssetName("IpGroupRG-");
             await StopSessionRecordingAsync();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

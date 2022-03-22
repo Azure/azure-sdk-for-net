@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -49,22 +48,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
         }
 
-        private ClientDiagnostics ResourcePoolClientDiagnostics => _resourcePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourcePoolResource.ResourceType.Namespace, DiagnosticOptions);
-        private ResourcePoolsRestOperations ResourcePoolRestClient => _resourcePoolRestClient ??= new ResourcePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ResourcePoolResource.ResourceType));
-        private ClientDiagnostics VMwareClusterClustersClientDiagnostics => _vMwareClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareClusterResource.ResourceType.Namespace, DiagnosticOptions);
-        private ClustersRestOperations VMwareClusterClustersRestClient => _vMwareClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VMwareClusterResource.ResourceType));
-        private ClientDiagnostics VMwareHostHostsClientDiagnostics => _vMwareHostHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHostResource.ResourceType.Namespace, DiagnosticOptions);
-        private HostsRestOperations VMwareHostHostsRestClient => _vMwareHostHostsRestClient ??= new HostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VMwareHostResource.ResourceType));
-        private ClientDiagnostics VMwareDatastoreDatastoresClientDiagnostics => _vMwareDatastoreDatastoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareDatastoreResource.ResourceType.Namespace, DiagnosticOptions);
-        private DatastoresRestOperations VMwareDatastoreDatastoresRestClient => _vMwareDatastoreDatastoresRestClient ??= new DatastoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VMwareDatastoreResource.ResourceType));
-        private ClientDiagnostics VCenterClientDiagnostics => _vCenterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VCenterResource.ResourceType.Namespace, DiagnosticOptions);
-        private VCentersRestOperations VCenterRestClient => _vCenterRestClient ??= new VCentersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VCenterResource.ResourceType));
-        private ClientDiagnostics VirtualMachineClientDiagnostics => _virtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualMachineResource.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
-        private ClientDiagnostics VirtualMachineTemplateClientDiagnostics => _virtualMachineTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualMachineTemplateResource.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualMachineTemplatesRestOperations VirtualMachineTemplateRestClient => _virtualMachineTemplateRestClient ??= new VirtualMachineTemplatesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualMachineTemplateResource.ResourceType));
-        private ClientDiagnostics VirtualNetworkClientDiagnostics => _virtualNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualNetworkResource.ResourceType.Namespace, DiagnosticOptions);
-        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualNetworkResource.ResourceType));
+        private ClientDiagnostics ResourcePoolClientDiagnostics => _resourcePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourcePoolResource.ResourceType.Namespace, Diagnostics);
+        private ResourcePoolsRestOperations ResourcePoolRestClient => _resourcePoolRestClient ??= new ResourcePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourcePoolResource.ResourceType));
+        private ClientDiagnostics VMwareClusterClustersClientDiagnostics => _vMwareClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations VMwareClusterClustersRestClient => _vMwareClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareClusterResource.ResourceType));
+        private ClientDiagnostics VMwareHostHostsClientDiagnostics => _vMwareHostHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareHostResource.ResourceType.Namespace, Diagnostics);
+        private HostsRestOperations VMwareHostHostsRestClient => _vMwareHostHostsRestClient ??= new HostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareHostResource.ResourceType));
+        private ClientDiagnostics VMwareDatastoreDatastoresClientDiagnostics => _vMwareDatastoreDatastoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareDatastoreResource.ResourceType.Namespace, Diagnostics);
+        private DatastoresRestOperations VMwareDatastoreDatastoresRestClient => _vMwareDatastoreDatastoresRestClient ??= new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VMwareDatastoreResource.ResourceType));
+        private ClientDiagnostics VCenterClientDiagnostics => _vCenterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VCenterResource.ResourceType.Namespace, Diagnostics);
+        private VCentersRestOperations VCenterRestClient => _vCenterRestClient ??= new VCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VCenterResource.ResourceType));
+        private ClientDiagnostics VirtualMachineClientDiagnostics => _virtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
+        private ClientDiagnostics VirtualMachineTemplateClientDiagnostics => _virtualMachineTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualMachineTemplateResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachineTemplatesRestOperations VirtualMachineTemplateRestClient => _virtualMachineTemplateRestClient ??= new VirtualMachineTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineTemplateResource.ResourceType));
+        private ClientDiagnostics VirtualNetworkClientDiagnostics => _virtualNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
+        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualNetworkResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

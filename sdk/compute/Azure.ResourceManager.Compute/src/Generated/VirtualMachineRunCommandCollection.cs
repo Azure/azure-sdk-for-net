@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualMachineRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineRunCommandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommandResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualMachineRunCommandClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualMachineRunCommandResource.ResourceType, out string virtualMachineRunCommandApiVersion);
-            _virtualMachineRunCommandRestClient = new VirtualMachineRunCommandsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineRunCommandApiVersion);
+            _virtualMachineRunCommandRestClient = new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineRunCommandApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

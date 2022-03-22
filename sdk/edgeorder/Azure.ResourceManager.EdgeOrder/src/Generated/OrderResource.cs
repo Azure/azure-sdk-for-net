@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OrderResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _orderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, DiagnosticOptions);
+            _orderResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string orderResourceApiVersion);
-            _orderResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderResourceApiVersion);
+            _orderResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, orderResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

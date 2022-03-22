@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteTriggeredwebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteTriggeredwebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteTriggeredwebJobResource.ResourceType.Namespace, DiagnosticOptions);
+            _siteTriggeredwebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteTriggeredwebJobResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteTriggeredwebJobResource.ResourceType, out string siteTriggeredwebJobWebAppsApiVersion);
-            _siteTriggeredwebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteTriggeredwebJobWebAppsApiVersion);
+            _siteTriggeredwebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteTriggeredwebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

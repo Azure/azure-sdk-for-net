@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class StorageAccountManagedIdentityTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
         public StorageAccountManagedIdentityTests(bool isAsync) : base(isAsync)
         {

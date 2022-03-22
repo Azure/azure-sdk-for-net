@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Storage.Tests.Helpers
             }
         }
 
-        public async Task<ResourceGroup> CreateResourceGroupAsync()
+        public async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
-            ArmOperation<ResourceGroup> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroupResource> operation = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)

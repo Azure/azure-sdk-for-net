@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 using Azure.ResourceManager.Resources.Models;
 
@@ -55,11 +54,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _deploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string deploymentApiVersion);
-            _deploymentRestClient = new DeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentApiVersion);
-            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _deploymentOperationsRestClient = new DeploymentRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _deploymentRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentApiVersion);
+            _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _deploymentOperationsRestClient = new DeploymentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -384,7 +383,7 @@ namespace Azure.ResourceManager.Resources
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
-                else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
+                else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
                     var response = await _deploymentRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
@@ -451,7 +450,7 @@ namespace Azure.ResourceManager.Resources
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
-                else if (Id.Parent.ResourceType == ResourceGroup.ResourceType)
+                else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
                     var response = _deploymentRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                     var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
@@ -673,9 +672,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -704,9 +703,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -733,10 +732,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await TagHelper.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -763,10 +762,10 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                TagHelper.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -793,9 +792,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -822,9 +821,9 @@ namespace Azure.ResourceManager.Resources
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

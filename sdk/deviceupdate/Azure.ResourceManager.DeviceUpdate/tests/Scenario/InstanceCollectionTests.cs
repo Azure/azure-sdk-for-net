@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task CreateOrUpdate()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task List()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         public async Task Get()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class ConfigurationStoreOperationTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
         private string ConfigurationStoreName { get; set; }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<AzureLocation> locations = await ConfigStore.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations = (await ConfigStore.GetAvailableLocationsAsync()).Value;
 
             Assert.IsTrue(locations.Count() >= 0);
         }

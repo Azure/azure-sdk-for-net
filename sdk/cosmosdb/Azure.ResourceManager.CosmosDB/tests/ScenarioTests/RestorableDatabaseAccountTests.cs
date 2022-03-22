@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task TestSetup()
         {
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                IpRules = { new IpAddressOrRange("23.43.231.120") },
+                IPRules = { new IPAddressOrRange("23.43.231.120") },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,

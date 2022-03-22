@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PublicIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publicIPPrefixClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPPrefixResource.ResourceType.Namespace, DiagnosticOptions);
+            _publicIPPrefixClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPPrefixResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PublicIPPrefixResource.ResourceType, out string publicIPPrefixApiVersion);
-            _publicIPPrefixRestClient = new PublicIPPrefixesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, publicIPPrefixApiVersion);
+            _publicIPPrefixRestClient = new PublicIPPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPPrefixApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,13 +46,13 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a static or dynamic public IP prefix.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates or updates a static or dynamic public IP prefix.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Gets the specified public IP prefix in a specified resource group.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
@@ -319,7 +318,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIpPrefixName}
         /// Operation Id: PublicIPPrefixes_Get
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>

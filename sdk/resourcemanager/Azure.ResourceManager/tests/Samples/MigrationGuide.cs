@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Tests.Samples
             string resourceGroupName = "QuickStartRG";
 
             ResourceGroupData resourceGroupData = new ResourceGroupData(location);
-            ArmOperation<ResourceGroup> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
-            ResourceGroup resourceGroup = resourceGroupOperation.Value;
+            ArmOperation<ResourceGroupResource> resourceGroupOperation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
+            ResourceGroupResource resourceGroup = resourceGroupOperation.Value;
             #endregion
 
             #region Snippet:Create_AvailabilitySet

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Tests
 {
     public class NotificationHubTests : CommunicationManagementClientLiveTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
         private string _notificationHubsResourceId;
         private string _notificationHubsConnectionString;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Tests
         public async Task OneTimeSetup()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName(ResourceGroupPrefix), new ResourceGroupData(new AzureLocation("westus2")));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
             await StopSessionRecordingAsync();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Communication.Tests
             ArmClient = GetArmClient();
             _notificationHubsResourceId = TestEnvironment.NotificationHubsResourceId;
             _notificationHubsConnectionString = TestEnvironment.NotificationHubsConnectionString;
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]

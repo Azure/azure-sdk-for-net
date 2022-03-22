@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TopLevelDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _topLevelDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string topLevelDomainApiVersion);
-            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, topLevelDomainApiVersion);
+            _topLevelDomainRestClient = new TopLevelDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

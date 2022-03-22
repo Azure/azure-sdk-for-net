@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.Storage
             return GetExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of StorageAccountResources in the StorageAccountResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
-        public static StorageAccountCollection GetStorageAccounts(this ResourceGroup resourceGroup)
+        public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetStorageAccounts();
+            return GetExtensionClient(resourceGroupResource).GetStorageAccounts();
         }
 
         /// <summary>
@@ -236,15 +236,15 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}
         /// Operation Id: StorageAccounts_GetProperties
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account&apos;s properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static async Task<Response<StorageAccountResource>> GetStorageAccountAsync(this ResourceGroup resourceGroup, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<StorageAccountResource>> GetStorageAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,19 +252,22 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}
         /// Operation Id: StorageAccounts_GetProperties
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="expand"> May be used to expand the properties within account&apos;s properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public static Response<StorageAccountResource> GetStorageAccount(this ResourceGroup resourceGroup, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
+        public static Response<StorageAccountResource> GetStorageAccount(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetStorageAccounts().Get(accountName, expand, cancellationToken);
+            return resourceGroupResource.GetStorageAccounts().Get(accountName, expand, cancellationToken);
         }
 
         #region StorageAccountResource
-        /// <summary> Gets an object representing a StorageAccountResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageAccountResource" /> object. </returns>
@@ -280,7 +283,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region DeletedAccountResource
-        /// <summary> Gets an object representing a DeletedAccountResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedAccountResource" /> object. </returns>
@@ -296,7 +302,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region ManagementPolicyResource
-        /// <summary> Gets an object representing a ManagementPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagementPolicyResource" /> object. </returns>
@@ -312,7 +321,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region BlobInventoryPolicyResource
-        /// <summary> Gets an object representing a BlobInventoryPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobInventoryPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobInventoryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BlobInventoryPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
@@ -328,7 +340,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region PrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
@@ -344,7 +359,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region ObjectReplicationPolicyResource
-        /// <summary> Gets an object representing a ObjectReplicationPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ObjectReplicationPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ObjectReplicationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ObjectReplicationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ObjectReplicationPolicyResource" /> object. </returns>
@@ -360,7 +378,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region LocalUserResource
-        /// <summary> Gets an object representing a LocalUserResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LocalUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalUserResource.CreateResourceIdentifier" /> to create a <see cref="LocalUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LocalUserResource" /> object. </returns>
@@ -376,7 +397,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region EncryptionScopeResource
-        /// <summary> Gets an object representing a EncryptionScopeResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="EncryptionScopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EncryptionScopeResource.CreateResourceIdentifier" /> to create an <see cref="EncryptionScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EncryptionScopeResource" /> object. </returns>
@@ -392,7 +416,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region BlobServiceResource
-        /// <summary> Gets an object representing a BlobServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobServiceResource.CreateResourceIdentifier" /> to create a <see cref="BlobServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobServiceResource" /> object. </returns>
@@ -408,7 +435,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region BlobContainerResource
-        /// <summary> Gets an object representing a BlobContainerResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BlobContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BlobContainerResource.CreateResourceIdentifier" /> to create a <see cref="BlobContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BlobContainerResource" /> object. </returns>
@@ -424,7 +454,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region ImmutabilityPolicyResource
-        /// <summary> Gets an object representing a ImmutabilityPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ImmutabilityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImmutabilityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ImmutabilityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
@@ -440,7 +473,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region FileServiceResource
-        /// <summary> Gets an object representing a FileServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FileServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileServiceResource.CreateResourceIdentifier" /> to create a <see cref="FileServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FileServiceResource" /> object. </returns>
@@ -456,7 +492,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region FileShareResource
-        /// <summary> Gets an object representing a FileShareResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FileShareResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FileShareResource.CreateResourceIdentifier" /> to create a <see cref="FileShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FileShareResource" /> object. </returns>
@@ -472,7 +511,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region QueueServiceResource
-        /// <summary> Gets an object representing a QueueServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="QueueServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QueueServiceResource.CreateResourceIdentifier" /> to create a <see cref="QueueServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="QueueServiceResource" /> object. </returns>
@@ -488,7 +530,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region StorageQueueResource
-        /// <summary> Gets an object representing a StorageQueueResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageQueueResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageQueueResource.CreateResourceIdentifier" /> to create a <see cref="StorageQueueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageQueueResource" /> object. </returns>
@@ -504,7 +549,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region TableServiceResource
-        /// <summary> Gets an object representing a TableServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TableServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TableServiceResource.CreateResourceIdentifier" /> to create a <see cref="TableServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TableServiceResource" /> object. </returns>
@@ -520,7 +568,10 @@ namespace Azure.ResourceManager.Storage
         #endregion
 
         #region TableResource
-        /// <summary> Gets an object representing a TableResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TableResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TableResource.CreateResourceIdentifier" /> to create a <see cref="TableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TableResource" /> object. </returns>

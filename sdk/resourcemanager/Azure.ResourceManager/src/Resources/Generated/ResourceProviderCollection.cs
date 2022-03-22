@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ResourceProvider and their operations over its parent. </summary>
-    public partial class ResourceProviderCollection : ArmCollection, IEnumerable<ResourceProvider>, IAsyncEnumerable<ResourceProvider>
+    public partial class ResourceProviderCollection : ArmCollection, IEnumerable<ResourceProviderResource>, IAsyncEnumerable<ResourceProviderResource>
     {
         private readonly ClientDiagnostics _resourceProviderProvidersClientDiagnostics;
         private readonly ProvidersRestOperations _resourceProviderProvidersRestClient;
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ResourceProvider>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProviderResource>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourceProviderProvidersRestClient.GetAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceProvider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ResourceProvider> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProviderResource> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceProvider(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -105,17 +104,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceProvider> GetAllAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceProvider>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceProviderResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _resourceProviderProvidersRestClient.ListAsync(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -123,14 +122,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ResourceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _resourceProviderProvidersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -149,17 +148,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceProvider" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceProvider> GetAll(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceProviderResource> GetAll(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceProvider> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceProviderResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _resourceProviderProvidersRestClient.List(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -167,14 +166,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ResourceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _resourceProviderProvidersRestClient.ListNextPage(nextLink, Id.SubscriptionId, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProvider(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ResourceProvider>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProviderResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -261,8 +260,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _resourceProviderProvidersRestClient.GetAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ResourceProvider>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceProvider(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ResourceProviderResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,7 +280,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ResourceProvider> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProviderResource> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
@@ -291,8 +290,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ResourceProvider>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceProvider(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ResourceProviderResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -301,7 +300,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<ResourceProvider> IEnumerable<ResourceProvider>.GetEnumerator()
+        IEnumerator<ResourceProviderResource> IEnumerable<ResourceProviderResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ResourceProvider> IAsyncEnumerable<ResourceProvider>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceProviderResource> IAsyncEnumerable<ResourceProviderResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

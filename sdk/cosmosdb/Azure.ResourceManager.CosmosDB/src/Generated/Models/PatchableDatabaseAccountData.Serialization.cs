@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }

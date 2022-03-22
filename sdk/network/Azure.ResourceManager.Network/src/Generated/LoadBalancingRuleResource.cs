@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LoadBalancingRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
-            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
+            _loadBalancingRuleLoadBalancerLoadBalancingRulesRestClient = new LoadBalancerLoadBalancingRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancingRuleLoadBalancerLoadBalancingRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

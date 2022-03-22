@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal UserSessionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSessionResource.ResourceType.Namespace, DiagnosticOptions);
+            _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSessionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(UserSessionResource.ResourceType, out string userSessionApiVersion);
-            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userSessionApiVersion);
+            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, userSessionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

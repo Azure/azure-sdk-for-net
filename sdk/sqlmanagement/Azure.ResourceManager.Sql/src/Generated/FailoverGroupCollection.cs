@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FailoverGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _failoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FailoverGroupResource.ResourceType.Namespace, DiagnosticOptions);
+            _failoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FailoverGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FailoverGroupResource.ResourceType, out string failoverGroupApiVersion);
-            _failoverGroupRestClient = new FailoverGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, failoverGroupApiVersion);
+            _failoverGroupRestClient = new FailoverGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, failoverGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

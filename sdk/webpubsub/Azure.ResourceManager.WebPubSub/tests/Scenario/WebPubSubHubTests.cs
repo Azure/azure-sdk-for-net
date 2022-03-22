@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class WebPubSubHubTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
 
         private ResourceIdentifier _resourceGroupIdentifier;
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }

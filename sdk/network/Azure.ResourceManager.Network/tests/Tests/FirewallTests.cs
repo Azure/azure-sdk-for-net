@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class FirewallTests : NetworkServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private VirtualNetworkResource _network;
         private PublicIPAddressResource _publicIPAddress;
         private string _firewallName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("FirewallRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
 
             VirtualNetworkData vnetData = new VirtualNetworkData()
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             _network = await _resourceGroup.GetVirtualNetworks().GetAsync(_networkIdentifier.Name);
             _publicIPAddress = await _resourceGroup.GetPublicIPAddresses().GetAsync(_publicIPAddressIdentifier.Name);
         }

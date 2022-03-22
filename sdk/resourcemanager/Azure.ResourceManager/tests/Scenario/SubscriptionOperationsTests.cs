@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Tests
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
-                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                ResourceGroupResource rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
             catch (RequestFailedException e) when (e.Status == 400)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Tests
             var subOps = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             try
             {
-                ResourceGroup rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                ResourceGroupResource rg = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
                 Assert.Fail("Expected exception was not thrown");
             }
             catch (ArgumentException)

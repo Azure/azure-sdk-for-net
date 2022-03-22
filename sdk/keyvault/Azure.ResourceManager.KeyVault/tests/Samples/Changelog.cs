@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Tests.Samples
             #region Snippet:Changelog_NewCode
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("myRgName");
 
             VaultCollection vaultCollection = resourceGroup.GetVaults();
             VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS2, new VaultProperties(Guid.NewGuid(), new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard)));

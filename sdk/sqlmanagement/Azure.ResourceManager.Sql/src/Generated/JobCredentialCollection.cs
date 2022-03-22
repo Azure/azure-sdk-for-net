@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal JobCredentialCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobCredentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobCredentialResource.ResourceType.Namespace, DiagnosticOptions);
+            _jobCredentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobCredentialResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JobCredentialResource.ResourceType, out string jobCredentialApiVersion);
-            _jobCredentialRestClient = new JobCredentialsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobCredentialApiVersion);
+            _jobCredentialRestClient = new JobCredentialsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobCredentialApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

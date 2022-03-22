@@ -1532,21 +1532,21 @@ namespace Azure.ResourceManager.Compute
             return GetExtensionClient(subscriptionResource).GetCloudServices(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of AvailabilitySetResources in the AvailabilitySetResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
-        public static AvailabilitySetCollection GetAvailabilitySets(this ResourceGroup resourceGroup)
+        public static AvailabilitySetCollection GetAvailabilitySets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAvailabilitySets();
+            return GetExtensionClient(resourceGroupResource).GetAvailabilitySets();
         }
 
         /// <summary>
@@ -1554,14 +1554,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public static async Task<Response<AvailabilitySetResource>> GetAvailabilitySetAsync(this ResourceGroup resourceGroup, string availabilitySetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AvailabilitySetResource>> GetAvailabilitySetAsync(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAvailabilitySets().GetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAvailabilitySets().GetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1569,22 +1569,22 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}
         /// Operation Id: AvailabilitySets_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="availabilitySetName"> The name of the availability set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="availabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
-        public static Response<AvailabilitySetResource> GetAvailabilitySet(this ResourceGroup resourceGroup, string availabilitySetName, CancellationToken cancellationToken = default)
+        public static Response<AvailabilitySetResource> GetAvailabilitySet(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAvailabilitySets().Get(availabilitySetName, cancellationToken);
+            return resourceGroupResource.GetAvailabilitySets().Get(availabilitySetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ProximityPlacementGroupResources in the ProximityPlacementGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProximityPlacementGroupResources and their operations over a ProximityPlacementGroupResource. </returns>
-        public static ProximityPlacementGroupCollection GetProximityPlacementGroups(this ResourceGroup resourceGroup)
+        public static ProximityPlacementGroupCollection GetProximityPlacementGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetProximityPlacementGroups();
+            return GetExtensionClient(resourceGroupResource).GetProximityPlacementGroups();
         }
 
         /// <summary>
@@ -1592,15 +1592,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}
         /// Operation Id: ProximityPlacementGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
-        public static async Task<Response<ProximityPlacementGroupResource>> GetProximityPlacementGroupAsync(this ResourceGroup resourceGroup, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ProximityPlacementGroupResource>> GetProximityPlacementGroupAsync(this ResourceGroupResource resourceGroupResource, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetProximityPlacementGroups().GetAsync(proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetProximityPlacementGroups().GetAsync(proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1608,23 +1608,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}
         /// Operation Id: ProximityPlacementGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="proximityPlacementGroupName"> The name of the proximity placement group. </param>
         /// <param name="includeColocationStatus"> includeColocationStatus=true enables fetching the colocation status of all the resources in the proximity placement group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
-        public static Response<ProximityPlacementGroupResource> GetProximityPlacementGroup(this ResourceGroup resourceGroup, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public static Response<ProximityPlacementGroupResource> GetProximityPlacementGroup(this ResourceGroupResource resourceGroupResource, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetProximityPlacementGroups().Get(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
+            return resourceGroupResource.GetProximityPlacementGroups().Get(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
         }
 
         /// <summary> Gets a collection of DedicatedHostGroupResources in the DedicatedHostGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DedicatedHostGroupResources and their operations over a DedicatedHostGroupResource. </returns>
-        public static DedicatedHostGroupCollection GetDedicatedHostGroups(this ResourceGroup resourceGroup)
+        public static DedicatedHostGroupCollection GetDedicatedHostGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDedicatedHostGroups();
+            return GetExtensionClient(resourceGroupResource).GetDedicatedHostGroups();
         }
 
         /// <summary>
@@ -1632,15 +1632,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}
         /// Operation Id: DedicatedHostGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated hosts under the dedicated host group. &apos;UserData&apos; is not supported for dedicated host group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
-        public static async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this ResourceGroup resourceGroup, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDedicatedHostGroups().GetAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDedicatedHostGroups().GetAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1648,23 +1648,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}
         /// Operation Id: DedicatedHostGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostGroupName"> The name of the dedicated host group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the dedicated hosts under the dedicated host group. &apos;UserData&apos; is not supported for dedicated host group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
-        public static Response<DedicatedHostGroupResource> GetDedicatedHostGroup(this ResourceGroup resourceGroup, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<DedicatedHostGroupResource> GetDedicatedHostGroup(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
+            return resourceGroupResource.GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SshPublicKeyResources in the SshPublicKeyResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
-        public static SshPublicKeyCollection GetSshPublicKeys(this ResourceGroup resourceGroup)
+        public static SshPublicKeyCollection GetSshPublicKeys(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetSshPublicKeys();
+            return GetExtensionClient(resourceGroupResource).GetSshPublicKeys();
         }
 
         /// <summary>
@@ -1672,14 +1672,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}
         /// Operation Id: SshPublicKeys_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
-        public static async Task<Response<SshPublicKeyResource>> GetSshPublicKeyAsync(this ResourceGroup resourceGroup, string sshPublicKeyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SshPublicKeyResource>> GetSshPublicKeyAsync(this ResourceGroupResource resourceGroupResource, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetSshPublicKeys().GetAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSshPublicKeys().GetAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1687,22 +1687,22 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}
         /// Operation Id: SshPublicKeys_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sshPublicKeyName"> The name of the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sshPublicKeyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sshPublicKeyName"/> is null. </exception>
-        public static Response<SshPublicKeyResource> GetSshPublicKey(this ResourceGroup resourceGroup, string sshPublicKeyName, CancellationToken cancellationToken = default)
+        public static Response<SshPublicKeyResource> GetSshPublicKey(this ResourceGroupResource resourceGroupResource, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
+            return resourceGroupResource.GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroup resourceGroup)
+        public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualMachines();
+            return GetExtensionClient(resourceGroupResource).GetVirtualMachines();
         }
 
         /// <summary>
@@ -1710,15 +1710,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroup resourceGroup, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1726,23 +1726,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}
         /// Operation Id: VirtualMachines_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. &apos;UserData&apos; retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroup resourceGroup, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualMachines().Get(vmName, expand, cancellationToken);
+            return resourceGroupResource.GetVirtualMachines().Get(vmName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineScaleSetResources in the VirtualMachineScaleSetResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
-        public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroup resourceGroup)
+        public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualMachineScaleSets();
+            return GetExtensionClient(resourceGroupResource).GetVirtualMachineScaleSets();
         }
 
         /// <summary>
@@ -1750,15 +1750,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}
         /// Operation Id: VirtualMachineScaleSets_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroup resourceGroup, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1766,23 +1766,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}
         /// Operation Id: VirtualMachineScaleSets_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;UserData&apos; retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
-        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroup resourceGroup, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string vmScaleSetName, ExpandTypesForGetVmScaleSets? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
+            return resourceGroupResource.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ImageResources in the ImageResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
-        public static ImageCollection GetImages(this ResourceGroup resourceGroup)
+        public static ImageCollection GetImages(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetImages();
+            return GetExtensionClient(resourceGroupResource).GetImages();
         }
 
         /// <summary>
@@ -1790,15 +1790,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}
         /// Operation Id: Images_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public static async Task<Response<ImageResource>> GetImageAsync(this ResourceGroup resourceGroup, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<ImageResource>> GetImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1806,23 +1806,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}
         /// Operation Id: Images_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        public static Response<ImageResource> GetImage(this ResourceGroup resourceGroup, string imageName, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<ImageResource> GetImage(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetImages().Get(imageName, expand, cancellationToken);
+            return resourceGroupResource.GetImages().Get(imageName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RestorePointGroupResources in the RestorePointGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RestorePointGroupResources and their operations over a RestorePointGroupResource. </returns>
-        public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroup resourceGroup)
+        public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetRestorePointGroups();
+            return GetExtensionClient(resourceGroupResource).GetRestorePointGroups();
         }
 
         /// <summary>
@@ -1830,15 +1830,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroup resourceGroup, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetRestorePointGroups().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetRestorePointGroups().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1846,23 +1846,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}
         /// Operation Id: RestorePointCollections_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
         /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
-        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroup resourceGroup, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
+        public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
+            return resourceGroupResource.GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of CapacityReservationGroupResources in the CapacityReservationGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CapacityReservationGroupResources and their operations over a CapacityReservationGroupResource. </returns>
-        public static CapacityReservationGroupCollection GetCapacityReservationGroups(this ResourceGroup resourceGroup)
+        public static CapacityReservationGroupCollection GetCapacityReservationGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCapacityReservationGroups();
+            return GetExtensionClient(resourceGroupResource).GetCapacityReservationGroups();
         }
 
         /// <summary>
@@ -1870,15 +1870,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}
         /// Operation Id: CapacityReservationGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroup resourceGroup, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCapacityReservationGroups().GetAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCapacityReservationGroups().GetAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1886,23 +1886,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}
         /// Operation Id: CapacityReservationGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
         /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroup resourceGroup, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
+            return resourceGroupResource.GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiskResources in the DiskResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskResources and their operations over a DiskResource. </returns>
-        public static DiskCollection GetDisks(this ResourceGroup resourceGroup)
+        public static DiskCollection GetDisks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDisks();
+            return GetExtensionClient(resourceGroupResource).GetDisks();
         }
 
         /// <summary>
@@ -1910,14 +1910,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
         /// Operation Id: Disks_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public static async Task<Response<DiskResource>> GetDiskAsync(this ResourceGroup resourceGroup, string diskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskResource>> GetDiskAsync(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1925,22 +1925,22 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
         /// Operation Id: Disks_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public static Response<DiskResource> GetDisk(this ResourceGroup resourceGroup, string diskName, CancellationToken cancellationToken = default)
+        public static Response<DiskResource> GetDisk(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDisks().Get(diskName, cancellationToken);
+            return resourceGroupResource.GetDisks().Get(diskName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SnapshotResources in the SnapshotResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public static SnapshotCollection GetSnapshots(this ResourceGroup resourceGroup)
+        public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetSnapshots();
+            return GetExtensionClient(resourceGroupResource).GetSnapshots();
         }
 
         /// <summary>
@@ -1948,14 +1948,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
         /// Operation Id: Snapshots_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroup resourceGroup, string snapshotName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1963,22 +1963,22 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}
         /// Operation Id: Snapshots_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can&apos;t be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public static Response<SnapshotResource> GetSnapshot(this ResourceGroup resourceGroup, string snapshotName, CancellationToken cancellationToken = default)
+        public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetSnapshots().Get(snapshotName, cancellationToken);
+            return resourceGroupResource.GetSnapshots().Get(snapshotName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiskEncryptionSetResources in the DiskEncryptionSetResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskEncryptionSetResources and their operations over a DiskEncryptionSetResource. </returns>
-        public static DiskEncryptionSetCollection GetDiskEncryptionSets(this ResourceGroup resourceGroup)
+        public static DiskEncryptionSetCollection GetDiskEncryptionSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDiskEncryptionSets();
+            return GetExtensionClient(resourceGroupResource).GetDiskEncryptionSets();
         }
 
         /// <summary>
@@ -1986,14 +1986,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}
         /// Operation Id: DiskEncryptionSets_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public static async Task<Response<DiskEncryptionSetResource>> GetDiskEncryptionSetAsync(this ResourceGroup resourceGroup, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskEncryptionSetResource>> GetDiskEncryptionSetAsync(this ResourceGroupResource resourceGroupResource, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDiskEncryptionSets().GetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDiskEncryptionSets().GetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2001,22 +2001,22 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}
         /// Operation Id: DiskEncryptionSets_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        public static Response<DiskEncryptionSetResource> GetDiskEncryptionSet(this ResourceGroup resourceGroup, string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public static Response<DiskEncryptionSetResource> GetDiskEncryptionSet(this ResourceGroupResource resourceGroupResource, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
+            return resourceGroupResource.GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DiskAccessResources in the DiskAccessResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
-        public static DiskAccessCollection GetDiskAccesses(this ResourceGroup resourceGroup)
+        public static DiskAccessCollection GetDiskAccesses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetDiskAccesses();
+            return GetExtensionClient(resourceGroupResource).GetDiskAccesses();
         }
 
         /// <summary>
@@ -2024,14 +2024,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}
         /// Operation Id: DiskAccesses_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public static async Task<Response<DiskAccessResource>> GetDiskAccessAsync(this ResourceGroup resourceGroup, string diskAccessName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DiskAccessResource>> GetDiskAccessAsync(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2039,22 +2039,22 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}
         /// Operation Id: DiskAccesses_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can&apos;t be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        public static Response<DiskAccessResource> GetDiskAccess(this ResourceGroup resourceGroup, string diskAccessName, CancellationToken cancellationToken = default)
+        public static Response<DiskAccessResource> GetDiskAccess(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetDiskAccesses().Get(diskAccessName, cancellationToken);
+            return resourceGroupResource.GetDiskAccesses().Get(diskAccessName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GalleryResources in the GalleryResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
-        public static GalleryCollection GetGalleries(this ResourceGroup resourceGroup)
+        public static GalleryCollection GetGalleries(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetGalleries();
+            return GetExtensionClient(resourceGroupResource).GetGalleries();
         }
 
         /// <summary>
@@ -2062,15 +2062,15 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}
         /// Operation Id: Galleries_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroup resourceGroup, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetGalleries().GetAsync(galleryName, select, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetGalleries().GetAsync(galleryName, select, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2078,23 +2078,23 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}
         /// Operation Id: Galleries_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="galleryName"> The name of the Shared Image Gallery. </param>
         /// <param name="select"> The select expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
-        public static Response<GalleryResource> GetGallery(this ResourceGroup resourceGroup, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
+        public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermissions? select = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetGalleries().Get(galleryName, select, cancellationToken);
+            return resourceGroupResource.GetGalleries().Get(galleryName, select, cancellationToken);
         }
 
         /// <summary> Gets a collection of CloudServiceResources in the CloudServiceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
-        public static CloudServiceCollection GetCloudServices(this ResourceGroup resourceGroup)
+        public static CloudServiceCollection GetCloudServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCloudServices();
+            return GetExtensionClient(resourceGroupResource).GetCloudServices();
         }
 
         /// <summary>
@@ -2102,14 +2102,14 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}
         /// Operation Id: CloudServices_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public static async Task<Response<CloudServiceResource>> GetCloudServiceAsync(this ResourceGroup resourceGroup, string cloudServiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CloudServiceResource>> GetCloudServiceAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCloudServices().GetAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCloudServices().GetAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2117,18 +2117,21 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}
         /// Operation Id: CloudServices_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        public static Response<CloudServiceResource> GetCloudService(this ResourceGroup resourceGroup, string cloudServiceName, CancellationToken cancellationToken = default)
+        public static Response<CloudServiceResource> GetCloudService(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCloudServices().Get(cloudServiceName, cancellationToken);
+            return resourceGroupResource.GetCloudServices().Get(cloudServiceName, cancellationToken);
         }
 
         #region AvailabilitySetResource
-        /// <summary> Gets an object representing a AvailabilitySetResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AvailabilitySetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvailabilitySetResource.CreateResourceIdentifier" /> to create an <see cref="AvailabilitySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AvailabilitySetResource" /> object. </returns>
@@ -2144,7 +2147,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region ProximityPlacementGroupResource
-        /// <summary> Gets an object representing a ProximityPlacementGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ProximityPlacementGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProximityPlacementGroupResource.CreateResourceIdentifier" /> to create a <see cref="ProximityPlacementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProximityPlacementGroupResource" /> object. </returns>
@@ -2160,7 +2166,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DedicatedHostGroupResource
-        /// <summary> Gets an object representing a DedicatedHostGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DedicatedHostGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DedicatedHostGroupResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHostGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DedicatedHostGroupResource" /> object. </returns>
@@ -2176,7 +2185,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DedicatedHostResource
-        /// <summary> Gets an object representing a DedicatedHostResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DedicatedHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DedicatedHostResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DedicatedHostResource" /> object. </returns>
@@ -2192,7 +2204,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SshPublicKeyResource
-        /// <summary> Gets an object representing a SshPublicKeyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SshPublicKeyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SshPublicKeyResource.CreateResourceIdentifier" /> to create a <see cref="SshPublicKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SshPublicKeyResource" /> object. </returns>
@@ -2208,7 +2223,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineExtensionImageResource
-        /// <summary> Gets an object representing a VirtualMachineExtensionImageResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineExtensionImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineExtensionImageResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineExtensionImageResource" /> object. </returns>
@@ -2224,7 +2242,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineExtensionResource
-        /// <summary> Gets an object representing a VirtualMachineExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineExtensionResource" /> object. </returns>
@@ -2240,7 +2261,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineResource
-        /// <summary> Gets an object representing a VirtualMachineResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
@@ -2256,7 +2280,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetResource
-        /// <summary> Gets an object representing a VirtualMachineScaleSetResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetResource" /> object. </returns>
@@ -2272,7 +2299,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region ImageResource
-        /// <summary> Gets an object representing a ImageResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImageResource.CreateResourceIdentifier" /> to create an <see cref="ImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImageResource" /> object. </returns>
@@ -2288,7 +2318,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region RestorePointGroupResource
-        /// <summary> Gets an object representing a RestorePointGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorePointGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorePointGroupResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorePointGroupResource" /> object. </returns>
@@ -2304,7 +2337,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region RestorePointResource
-        /// <summary> Gets an object representing a RestorePointResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RestorePointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RestorePointResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
@@ -2320,7 +2356,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CapacityReservationGroupResource
-        /// <summary> Gets an object representing a CapacityReservationGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CapacityReservationGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapacityReservationGroupResource.CreateResourceIdentifier" /> to create a <see cref="CapacityReservationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CapacityReservationGroupResource" /> object. </returns>
@@ -2336,7 +2375,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CapacityReservationResource
-        /// <summary> Gets an object representing a CapacityReservationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CapacityReservationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapacityReservationResource.CreateResourceIdentifier" /> to create a <see cref="CapacityReservationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CapacityReservationResource" /> object. </returns>
@@ -2352,7 +2394,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetExtensionResource
-        /// <summary> Gets an object representing a VirtualMachineScaleSetExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetExtensionResource" /> object. </returns>
@@ -2368,7 +2413,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetRollingUpgradeResource
-        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgradeResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> object. </returns>
@@ -2384,7 +2432,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetVmExtensionResource
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVmExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource" /> object. </returns>
@@ -2400,7 +2451,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetVmResource
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVmResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVmResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVmResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource" /> object. </returns>
@@ -2416,7 +2470,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineRunCommandResource
-        /// <summary> Gets an object representing a VirtualMachineRunCommandResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineRunCommandResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineRunCommandResource" /> object. </returns>
@@ -2432,7 +2489,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region VirtualMachineScaleSetVirtualMachineRunCommandResource
-        /// <summary> Gets an object representing a VirtualMachineScaleSetVirtualMachineRunCommandResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVirtualMachineRunCommandResource" /> object. </returns>
@@ -2448,7 +2508,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskResource
-        /// <summary> Gets an object representing a DiskResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskResource.CreateResourceIdentifier" /> to create a <see cref="DiskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskResource" /> object. </returns>
@@ -2464,7 +2527,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SnapshotResource
-        /// <summary> Gets an object representing a SnapshotResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
@@ -2480,7 +2546,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskEncryptionSetResource
-        /// <summary> Gets an object representing a DiskEncryptionSetResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskEncryptionSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskEncryptionSetResource.CreateResourceIdentifier" /> to create a <see cref="DiskEncryptionSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskEncryptionSetResource" /> object. </returns>
@@ -2496,7 +2565,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskAccessResource
-        /// <summary> Gets an object representing a DiskAccessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskAccessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskAccessResource.CreateResourceIdentifier" /> to create a <see cref="DiskAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskAccessResource" /> object. </returns>
@@ -2512,7 +2584,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region PrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a PrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
@@ -2528,7 +2603,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region DiskRestorePointResource
-        /// <summary> Gets an object representing a DiskRestorePointResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DiskRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiskRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="DiskRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiskRestorePointResource" /> object. </returns>
@@ -2544,7 +2622,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryResource
-        /// <summary> Gets an object representing a GalleryResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryResource.CreateResourceIdentifier" /> to create a <see cref="GalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryResource" /> object. </returns>
@@ -2560,7 +2641,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryImageResource
-        /// <summary> Gets an object representing a GalleryImageResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryImageResource" /> object. </returns>
@@ -2576,7 +2660,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryImageVersionResource
-        /// <summary> Gets an object representing a GalleryImageVersionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryImageVersionResource" /> object. </returns>
@@ -2592,7 +2679,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryApplicationResource
-        /// <summary> Gets an object representing a GalleryApplicationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryApplicationResource.CreateResourceIdentifier" /> to create a <see cref="GalleryApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryApplicationResource" /> object. </returns>
@@ -2608,7 +2698,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region GalleryApplicationVersionResource
-        /// <summary> Gets an object representing a GalleryApplicationVersionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryApplicationVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryApplicationVersionResource.CreateResourceIdentifier" /> to create a <see cref="GalleryApplicationVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GalleryApplicationVersionResource" /> object. </returns>
@@ -2624,7 +2717,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SharedGalleryResource
-        /// <summary> Gets an object representing a SharedGalleryResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedGalleryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedGalleryResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedGalleryResource" /> object. </returns>
@@ -2640,7 +2736,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SharedGalleryImageResource
-        /// <summary> Gets an object representing a SharedGalleryImageResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedGalleryImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedGalleryImageResource" /> object. </returns>
@@ -2656,7 +2755,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region SharedGalleryImageVersionResource
-        /// <summary> Gets an object representing a SharedGalleryImageVersionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SharedGalleryImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedGalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SharedGalleryImageVersionResource" /> object. </returns>
@@ -2672,7 +2774,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region RoleInstanceResource
-        /// <summary> Gets an object representing a RoleInstanceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RoleInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleInstanceResource" /> object. </returns>
@@ -2688,7 +2793,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CloudServiceRoleResource
-        /// <summary> Gets an object representing a CloudServiceRoleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceRoleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceRoleResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CloudServiceRoleResource" /> object. </returns>
@@ -2704,7 +2812,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region CloudServiceResource
-        /// <summary> Gets an object representing a CloudServiceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CloudServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CloudServiceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CloudServiceResource" /> object. </returns>
@@ -2720,7 +2831,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region OSVersionResource
-        /// <summary> Gets an object representing a OSVersionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OSVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OSVersionResource.CreateResourceIdentifier" /> to create an <see cref="OSVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OSVersionResource" /> object. </returns>
@@ -2736,7 +2850,10 @@ namespace Azure.ResourceManager.Compute
         #endregion
 
         #region OSFamilyResource
-        /// <summary> Gets an object representing a OSFamilyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OSFamilyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OSFamilyResource.CreateResourceIdentifier" /> to create an <see cref="OSFamilyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OSFamilyResource" /> object. </returns>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class PrivateEndpointConnectionTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private StorageAccount _storageAccount;
         private PrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _storageAccount.GetPrivateEndpointConnections(); }
         public PrivateEndpointConnectionTests(bool isAsync) : base(isAsync)

@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ReplicationLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string replicationLinkApiVersion);
-            _replicationLinkRestClient = new ReplicationLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
+            _replicationLinkRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

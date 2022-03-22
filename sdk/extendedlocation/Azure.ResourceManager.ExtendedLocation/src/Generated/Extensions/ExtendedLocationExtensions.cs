@@ -89,21 +89,21 @@ namespace Azure.ResourceManager.ExtendedLocation
             return GetExtensionClient(subscriptionResource).GetCustomLocations(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of CustomLocationResources in the CustomLocationResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
-        public static CustomLocationCollection GetCustomLocations(this ResourceGroup resourceGroup)
+        public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCustomLocations();
+            return GetExtensionClient(resourceGroupResource).GetCustomLocations();
         }
 
         /// <summary>
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,18 +126,21 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}
         /// Operation Id: CustomLocations_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> Custom Locations name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroup resourceGroup, string resourceName, CancellationToken cancellationToken = default)
+        public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCustomLocations().Get(resourceName, cancellationToken);
+            return resourceGroupResource.GetCustomLocations().Get(resourceName, cancellationToken);
         }
 
         #region CustomLocationResource
-        /// <summary> Gets an object representing a CustomLocationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CustomLocationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomLocationResource.CreateResourceIdentifier" /> to create a <see cref="CustomLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomLocationResource" /> object. </returns>

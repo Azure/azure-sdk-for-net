@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerDatabaseSchemaTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableResource.ResourceType.Namespace, DiagnosticOptions);
+            _serverDatabaseSchemaTableDatabaseTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaTableResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServerDatabaseSchemaTableResource.ResourceType, out string serverDatabaseSchemaTableDatabaseTablesApiVersion);
-            _serverDatabaseSchemaTableDatabaseTablesRestClient = new DatabaseTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaTableDatabaseTablesApiVersion);
+            _serverDatabaseSchemaTableDatabaseTablesRestClient = new DatabaseTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDatabaseSchemaTableDatabaseTablesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

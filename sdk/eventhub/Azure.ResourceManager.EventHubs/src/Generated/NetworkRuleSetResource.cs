@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkRuleSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkRuleSetNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            _networkRuleSetNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkRuleSetNamespacesApiVersion);
-            _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkRuleSetNamespacesApiVersion);
+            _networkRuleSetNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkRuleSetNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

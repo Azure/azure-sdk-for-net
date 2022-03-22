@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SqlDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlDatabaseSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlDatabaseResource.ResourceType.Namespace, DiagnosticOptions);
+            _sqlDatabaseSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseSqlResourcesApiVersion);
-            _sqlDatabaseSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseSqlResourcesApiVersion);
+            _sqlDatabaseSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

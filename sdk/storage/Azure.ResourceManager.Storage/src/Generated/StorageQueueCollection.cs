@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StorageQueueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, DiagnosticOptions);
+            _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StorageQueueResource.ResourceType, out string storageQueueQueueApiVersion);
-            _storageQueueQueueRestClient = new QueueRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageQueueQueueApiVersion);
+            _storageQueueQueueRestClient = new QueueRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageQueueQueueApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

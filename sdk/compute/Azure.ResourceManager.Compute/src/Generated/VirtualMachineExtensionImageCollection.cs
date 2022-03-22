@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -45,9 +44,9 @@ namespace Azure.ResourceManager.Compute
         {
             _location = location;
             _publisherName = publisherName;
-            _virtualMachineExtensionImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualMachineExtensionImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualMachineExtensionImageResource.ResourceType, out string virtualMachineExtensionImageApiVersion);
-            _virtualMachineExtensionImageRestClient = new VirtualMachineExtensionImagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineExtensionImageApiVersion);
+            _virtualMachineExtensionImageRestClient = new VirtualMachineExtensionImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineExtensionImageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

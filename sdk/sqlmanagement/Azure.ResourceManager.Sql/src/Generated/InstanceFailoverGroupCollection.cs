@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -42,9 +41,9 @@ namespace Azure.ResourceManager.Sql
         internal InstanceFailoverGroupCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
             _locationName = locationName;
-            _instanceFailoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstanceFailoverGroupResource.ResourceType.Namespace, DiagnosticOptions);
+            _instanceFailoverGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", InstanceFailoverGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(InstanceFailoverGroupResource.ResourceType, out string instanceFailoverGroupApiVersion);
-            _instanceFailoverGroupRestClient = new InstanceFailoverGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, instanceFailoverGroupApiVersion);
+            _instanceFailoverGroupRestClient = new InstanceFailoverGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, instanceFailoverGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -52,8 +51,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

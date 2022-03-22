@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccountResource.ResourceType.Namespace, DiagnosticOptions);
-        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DatabaseAccountResource.ResourceType));
-        private ClientDiagnostics RestorableDatabaseAccountClientDiagnostics => _restorableDatabaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableDatabaseAccountResource.ResourceType.Namespace, DiagnosticOptions);
-        private RestorableDatabaseAccountsRestOperations RestorableDatabaseAccountRestClient => _restorableDatabaseAccountRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(RestorableDatabaseAccountResource.ResourceType));
-        private ClientDiagnostics ClusterResourceCassandraClustersClientDiagnostics => _clusterResourceCassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ClusterResource.ResourceType.Namespace, DiagnosticOptions);
-        private CassandraClustersRestOperations ClusterResourceCassandraClustersRestClient => _clusterResourceCassandraClustersRestClient ??= new CassandraClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ClusterResource.ResourceType));
+        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccountResource.ResourceType.Namespace, Diagnostics);
+        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatabaseAccountResource.ResourceType));
+        private ClientDiagnostics RestorableDatabaseAccountClientDiagnostics => _restorableDatabaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableDatabaseAccountResource.ResourceType.Namespace, Diagnostics);
+        private RestorableDatabaseAccountsRestOperations RestorableDatabaseAccountRestClient => _restorableDatabaseAccountRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RestorableDatabaseAccountResource.ResourceType));
+        private ClientDiagnostics ClusterResourceCassandraClustersClientDiagnostics => _clusterResourceCassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ClusterResource.ResourceType.Namespace, Diagnostics);
+        private CassandraClustersRestOperations ClusterResourceCassandraClustersRestClient => _clusterResourceCassandraClustersRestClient ??= new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetFunctionAppStacksProvidersAsync(stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetFunctionAppStacksProviders(stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -189,16 +189,16 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -208,16 +208,16 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Function App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -227,16 +227,16 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -246,16 +246,16 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="location"> Web App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksForLocationProviders(this TenantResource tenantResource, string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-            return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProviders(location, stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetWebAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -290,12 +290,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetWebAppStacksProvidersAsync(stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -304,12 +304,12 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetWebAppStacksProviders(stackOsType, cancellationToken);
+            return GetExtensionClient(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -803,10 +803,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
         }
@@ -817,10 +817,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetAvailableStacksOnPrem
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
         }
@@ -1269,21 +1269,21 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(subscriptionResource).GetWebSites(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of AppServiceCertificateOrderResources in the AppServiceCertificateOrderResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
-        public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroup resourceGroup)
+        public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAppServiceCertificateOrders();
+            return GetExtensionClient(resourceGroupResource).GetAppServiceCertificateOrders();
         }
 
         /// <summary>
@@ -1291,14 +1291,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroup resourceGroup, string certificateOrderName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAppServiceCertificateOrders().GetAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppServiceCertificateOrders().GetAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1306,22 +1306,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}
         /// Operation Id: AppServiceCertificateOrders_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
-        public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroup resourceGroup, string certificateOrderName, CancellationToken cancellationToken = default)
+        public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAppServiceCertificateOrders().Get(certificateOrderName, cancellationToken);
+            return resourceGroupResource.GetAppServiceCertificateOrders().Get(certificateOrderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AppServiceDomainResources in the AppServiceDomainResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
-        public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroup resourceGroup)
+        public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAppServiceDomains();
+            return GetExtensionClient(resourceGroupResource).GetAppServiceDomains();
         }
 
         /// <summary>
@@ -1329,14 +1329,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroup resourceGroup, string domainName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAppServiceDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppServiceDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1344,22 +1344,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}
         /// Operation Id: Domains_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="domainName"> Name of the domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroup resourceGroup, string domainName, CancellationToken cancellationToken = default)
+        public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAppServiceDomains().Get(domainName, cancellationToken);
+            return resourceGroupResource.GetAppServiceDomains().Get(domainName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AppServiceEnvironmentResources in the AppServiceEnvironmentResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
-        public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroup resourceGroup)
+        public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAppServiceEnvironments();
+            return GetExtensionClient(resourceGroupResource).GetAppServiceEnvironments();
         }
 
         /// <summary>
@@ -1367,14 +1367,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1382,22 +1382,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}
         /// Operation Id: AppServiceEnvironments_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAppServiceEnvironments().Get(name, cancellationToken);
+            return resourceGroupResource.GetAppServiceEnvironments().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of AppServicePlanResources in the AppServicePlanResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
-        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroup resourceGroup)
+        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetAppServicePlans();
+            return GetExtensionClient(resourceGroupResource).GetAppServicePlans();
         }
 
         /// <summary>
@@ -1405,14 +1405,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetAppServicePlans().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetAppServicePlans().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1420,22 +1420,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}
         /// Operation Id: AppServicePlans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the App Service plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetAppServicePlans().Get(name, cancellationToken);
+            return resourceGroupResource.GetAppServicePlans().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of CertificateResources in the CertificateResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
-        public static CertificateCollection GetCertificates(this ResourceGroup resourceGroup)
+        public static CertificateCollection GetCertificates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetCertificates();
+            return GetExtensionClient(resourceGroupResource).GetCertificates();
         }
 
         /// <summary>
@@ -1443,14 +1443,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1458,22 +1458,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
         /// Operation Id: Certificates_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<CertificateResource> GetCertificate(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetCertificates().Get(name, cancellationToken);
+            return resourceGroupResource.GetCertificates().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of KubeEnvironmentResources in the KubeEnvironmentResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
-        public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroup resourceGroup)
+        public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetKubeEnvironments();
+            return GetExtensionClient(resourceGroupResource).GetKubeEnvironments();
         }
 
         /// <summary>
@@ -1481,14 +1481,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetKubeEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1496,22 +1496,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/kubeEnvironments/{name}
         /// Operation Id: KubeEnvironments_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<KubeEnvironmentResource> GetKubeEnvironment(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static Response<KubeEnvironmentResource> GetKubeEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetKubeEnvironments().Get(name, cancellationToken);
+            return resourceGroupResource.GetKubeEnvironments().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
-        public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroup resourceGroup)
+        public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetStaticSiteARMResources();
+            return GetExtensionClient(resourceGroupResource).GetStaticSiteARMResources();
         }
 
         /// <summary>
@@ -1519,14 +1519,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetStaticSiteARMResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetStaticSiteARMResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1534,22 +1534,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}
         /// Operation Id: StaticSites_GetStaticSite
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the static site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<StaticSiteARMResource> GetStaticSiteARMResource(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static Response<StaticSiteARMResource> GetStaticSiteARMResource(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetStaticSiteARMResources().Get(name, cancellationToken);
+            return resourceGroupResource.GetStaticSiteARMResources().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebSiteResources in the WebSiteResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
-        public static WebSiteCollection GetWebSites(this ResourceGroup resourceGroup)
+        public static WebSiteCollection GetWebSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetWebSites();
+            return GetExtensionClient(resourceGroupResource).GetWebSites();
         }
 
         /// <summary>
@@ -1557,14 +1557,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static async Task<Response<WebSiteResource>> GetWebSiteAsync(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<WebSiteResource>> GetWebSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1572,14 +1572,14 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public static Response<WebSiteResource> GetWebSite(this ResourceGroup resourceGroup, string name, CancellationToken cancellationToken = default)
+        public static Response<WebSiteResource> GetWebSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetWebSites().Get(name, cancellationToken);
+            return resourceGroupResource.GetWebSites().Get(name, cancellationToken);
         }
 
         /// <summary>
@@ -1587,12 +1587,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataAsync(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetAllResourceHealthMetadataAsync(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataByResourceGroupAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1600,12 +1600,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
         /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SiteResourceHealthMetadataResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadata(this ResourceGroup resourceGroup, CancellationToken cancellationToken = default)
+        public static Pageable<SiteResourceHealthMetadataResource> GetAllResourceHealthMetadataByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroup).GetAllResourceHealthMetadata(cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataByResourceGroup(cancellationToken);
         }
 
         /// <summary>
@@ -1613,15 +1613,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static async Task<Response> MoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public static async Task<Response> MoveAsync(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
-            return await GetExtensionClient(resourceGroup).MoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).MoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1629,15 +1629,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources
         /// Operation Id: Move
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static Response Move(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public static Response Move(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
-            return GetExtensionClient(resourceGroup).Move(moveResourceEnvelope, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).Move(moveResourceEnvelope, cancellationToken);
         }
 
         /// <summary>
@@ -1645,15 +1645,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public static async Task<Response<ValidateResponse>> ValidateAsync(this ResourceGroupResource resourceGroupResource, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
-            return await GetExtensionClient(resourceGroup).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).ValidateAsync(validateRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1661,15 +1661,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validate
         /// Operation Id: Validate
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="validateRequest"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="validateRequest"/> is null. </exception>
-        public static Response<ValidateResponse> Validate(this ResourceGroup resourceGroup, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
+        public static Response<ValidateResponse> Validate(this ResourceGroupResource resourceGroupResource, ValidateRequest validateRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(validateRequest, nameof(validateRequest));
 
-            return GetExtensionClient(resourceGroup).Validate(validateRequest, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).Validate(validateRequest, cancellationToken);
         }
 
         /// <summary>
@@ -1677,15 +1677,15 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static async Task<Response> ValidateMoveAsync(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public static async Task<Response> ValidateMoveAsync(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
-            return await GetExtensionClient(resourceGroup).ValidateMoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(resourceGroupResource).ValidateMoveAsync(moveResourceEnvelope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1693,19 +1693,22 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources
         /// Operation Id: ValidateMove
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="moveResourceEnvelope"/> is null. </exception>
-        public static Response ValidateMove(this ResourceGroup resourceGroup, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        public static Response ValidateMove(this ResourceGroupResource resourceGroupResource, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
 
-            return GetExtensionClient(resourceGroup).ValidateMove(moveResourceEnvelope, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).ValidateMove(moveResourceEnvelope, cancellationToken);
         }
 
         #region AppServiceCertificateOrderResource
-        /// <summary> Gets an object representing a AppServiceCertificateOrderResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceCertificateOrderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateOrderResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServiceCertificateOrderResource" /> object. </returns>
@@ -1721,7 +1724,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region AppServiceCertificateResource
-        /// <summary> Gets an object representing a AppServiceCertificateResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServiceCertificateResource" /> object. </returns>
@@ -1737,7 +1743,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region CertificateOrderDetectorResource
-        /// <summary> Gets an object representing a CertificateOrderDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CertificateOrderDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CertificateOrderDetectorResource.CreateResourceIdentifier" /> to create a <see cref="CertificateOrderDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CertificateOrderDetectorResource" /> object. </returns>
@@ -1753,7 +1762,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region HostingEnvironmentDetectorResource
-        /// <summary> Gets an object representing a HostingEnvironmentDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource" /> object. </returns>
@@ -1769,7 +1781,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteDetectorResource
-        /// <summary> Gets an object representing a SiteDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteDetectorResource" /> object. </returns>
@@ -1785,7 +1800,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotDetectorResource
-        /// <summary> Gets an object representing a SiteSlotDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotDetectorResource" /> object. </returns>
@@ -1801,7 +1819,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region AppServiceDomainResource
-        /// <summary> Gets an object representing a AppServiceDomainResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServiceDomainResource" /> object. </returns>
@@ -1817,7 +1838,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region DomainOwnershipIdentifierResource
-        /// <summary> Gets an object representing a DomainOwnershipIdentifierResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainOwnershipIdentifierResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="DomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource" /> object. </returns>
@@ -1833,7 +1857,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region TopLevelDomainResource
-        /// <summary> Gets an object representing a TopLevelDomainResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TopLevelDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopLevelDomainResource.CreateResourceIdentifier" /> to create a <see cref="TopLevelDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TopLevelDomainResource" /> object. </returns>
@@ -1849,7 +1876,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region AppServiceEnvironmentResource
-        /// <summary> Gets an object representing a AppServiceEnvironmentResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServiceEnvironmentResource" /> object. </returns>
@@ -1865,7 +1895,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region AseV3NetworkingConfigurationResource
-        /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AseV3NetworkingConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AseV3NetworkingConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="AseV3NetworkingConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
@@ -1881,7 +1914,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region HostingEnvironmentMultiRolePoolResource
-        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePoolResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentMultiRolePoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentMultiRolePoolResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentMultiRolePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource" /> object. </returns>
@@ -1897,7 +1933,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region HostingEnvironmentWorkerPoolResource
-        /// <summary> Gets an object representing a HostingEnvironmentWorkerPoolResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentWorkerPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentWorkerPoolResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentWorkerPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostingEnvironmentWorkerPoolResource" /> object. </returns>
@@ -1913,7 +1952,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region HostingEnvironmentPrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a HostingEnvironmentPrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> object. </returns>
@@ -1929,7 +1971,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region StaticSitePrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a StaticSitePrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSitePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSitePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSitePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StaticSitePrivateEndpointConnectionResource" /> object. </returns>
@@ -1945,7 +1990,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SitePrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a SitePrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SitePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SitePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SitePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SitePrivateEndpointConnectionResource" /> object. </returns>
@@ -1961,7 +2009,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotPrivateEndpointConnectionResource
-        /// <summary> Gets an object representing a SiteSlotPrivateEndpointConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotPrivateEndpointConnectionResource" /> object. </returns>
@@ -1977,7 +2028,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region AppServicePlanResource
-        /// <summary> Gets an object representing a AppServicePlanResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServicePlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServicePlanResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServicePlanResource" /> object. </returns>
@@ -1993,7 +2047,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region ServerfarmHybridConnectionNamespaceRelayResource
-        /// <summary> Gets an object representing a ServerfarmHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerfarmHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> object. </returns>
@@ -2009,7 +2066,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteHybridConnectionNamespaceRelayResource
-        /// <summary> Gets an object representing a SiteHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="SiteHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelayResource" /> object. </returns>
@@ -2025,7 +2085,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotHybridConnectionNamespaceRelayResource
-        /// <summary> Gets an object representing a SiteSlotHybridConnectionNamespaceRelayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> object. </returns>
@@ -2041,7 +2104,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region HybridConnectionLimitsResource
-        /// <summary> Gets an object representing a HybridConnectionLimitsResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridConnectionLimitsResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridConnectionLimitsResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionLimitsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
@@ -2057,7 +2123,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region ServerfarmVirtualNetworkConnectionResource
-        /// <summary> Gets an object representing a ServerfarmVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerfarmVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerfarmVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionResource" /> object. </returns>
@@ -2073,7 +2142,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotVirtualNetworkConnectionResource
-        /// <summary> Gets an object representing a SiteSlotVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionResource" /> object. </returns>
@@ -2089,7 +2161,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteVirtualNetworkConnectionResource
-        /// <summary> Gets an object representing a SiteVirtualNetworkConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteVirtualNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionResource" /> object. </returns>
@@ -2105,7 +2180,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region ServerfarmVirtualNetworkConnectionGatewayResource
-        /// <summary> Gets an object representing a ServerfarmVirtualNetworkConnectionGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerfarmVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerfarmVirtualNetworkConnectionGatewayResource" /> object. </returns>
@@ -2121,7 +2199,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotVirtualNetworkConnectionGatewayResource
-        /// <summary> Gets an object representing a SiteSlotVirtualNetworkConnectionGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> object. </returns>
@@ -2137,7 +2218,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteVirtualNetworkConnectionGatewayResource
-        /// <summary> Gets an object representing a SiteVirtualNetworkConnectionGatewayResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteVirtualNetworkConnectionGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="SiteVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGatewayResource" /> object. </returns>
@@ -2153,7 +2237,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region CertificateResource
-        /// <summary> Gets an object representing a CertificateResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CertificateResource.CreateResourceIdentifier" /> to create a <see cref="CertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CertificateResource" /> object. </returns>
@@ -2169,7 +2256,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteDiagnosticResource
-        /// <summary> Gets an object representing a SiteDiagnosticResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteDiagnosticResource" /> object. </returns>
@@ -2185,7 +2275,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotDiagnosticResource
-        /// <summary> Gets an object representing a SiteSlotDiagnosticResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotDiagnosticResource" /> object. </returns>
@@ -2201,7 +2294,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteDiagnosticAnalysisResource
-        /// <summary> Gets an object representing a SiteDiagnosticAnalysisResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticAnalysisResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource" /> object. </returns>
@@ -2217,7 +2313,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotDiagnosticAnalysisResource
-        /// <summary> Gets an object representing a SiteSlotDiagnosticAnalysisResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource" /> object. </returns>
@@ -2233,7 +2332,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteDiagnosticDetectorResource
-        /// <summary> Gets an object representing a SiteDiagnosticDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource" /> object. </returns>
@@ -2249,7 +2351,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotDiagnosticDetectorResource
-        /// <summary> Gets an object representing a SiteSlotDiagnosticDetectorResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource" /> object. </returns>
@@ -2265,7 +2370,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region DeletedSiteResource
-        /// <summary> Gets an object representing a DeletedSiteResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedSiteResource.CreateResourceIdentifier" /> to create a <see cref="DeletedSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedSiteResource" /> object. </returns>
@@ -2281,7 +2389,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region KubeEnvironmentResource
-        /// <summary> Gets an object representing a KubeEnvironmentResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="KubeEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="KubeEnvironmentResource" /> object. </returns>
@@ -2297,7 +2408,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region HostingEnvironmentRecommendationResource
-        /// <summary> Gets an object representing a HostingEnvironmentRecommendationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource" /> object. </returns>
@@ -2313,7 +2427,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteRecommendationResource
-        /// <summary> Gets an object representing a SiteRecommendationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteRecommendationResource" /> object. </returns>
@@ -2329,7 +2446,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteResourceHealthMetadataResource
-        /// <summary> Gets an object representing a SiteResourceHealthMetadataResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="SiteResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteResourceHealthMetadataResource" /> object. </returns>
@@ -2345,7 +2465,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotResourceHealthMetadataResource
-        /// <summary> Gets an object representing a SiteSlotResourceHealthMetadataResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadataResource" /> object. </returns>
@@ -2361,7 +2484,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region UserResource
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="UserResource" /> object. </returns>
@@ -2377,7 +2503,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SourceControlResource
-        /// <summary> Gets an object representing a SourceControlResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SourceControlResource" /> object. </returns>
@@ -2393,7 +2522,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region StaticSiteARMResource
-        /// <summary> Gets an object representing a StaticSiteARMResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteARMResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StaticSiteARMResource" /> object. </returns>
@@ -2409,7 +2541,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region StaticSiteBuildARMResource
-        /// <summary> Gets an object representing a StaticSiteBuildARMResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildARMResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StaticSiteBuildARMResource" /> object. </returns>
@@ -2425,7 +2560,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region StaticSiteBuildUserProvidedFunctionAppResource
-        /// <summary> Gets an object representing a StaticSiteBuildUserProvidedFunctionAppResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> object. </returns>
@@ -2441,7 +2579,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region StaticSiteUserProvidedFunctionAppResource
-        /// <summary> Gets an object representing a StaticSiteUserProvidedFunctionAppResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteUserProvidedFunctionAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource" /> object. </returns>
@@ -2457,7 +2598,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region StaticSiteCustomDomainOverviewARMResource
-        /// <summary> Gets an object representing a StaticSiteCustomDomainOverviewARMResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewARMResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteCustomDomainOverviewARMResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewARMResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewARMResource" /> object. </returns>
@@ -2473,7 +2617,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region WebSiteResource
-        /// <summary> Gets an object representing a WebSiteResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebSiteResource" /> object. </returns>
@@ -2489,7 +2636,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotResource
-        /// <summary> Gets an object representing a SiteSlotResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotResource" /> object. </returns>
@@ -2505,7 +2655,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteBackupResource
-        /// <summary> Gets an object representing a SiteBackupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteBackupResource.CreateResourceIdentifier" /> to create a <see cref="SiteBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteBackupResource" /> object. </returns>
@@ -2521,7 +2674,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotBackupResource
-        /// <summary> Gets an object representing a SiteSlotBackupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotBackupResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotBackupResource" /> object. </returns>
@@ -2537,7 +2693,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region BasicPublishingCredentialsPolicyFtpResource
-        /// <summary> Gets an object representing a BasicPublishingCredentialsPolicyFtpResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BasicPublishingCredentialsPolicyFtpResource.CreateResourceIdentifier" /> to create a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BasicPublishingCredentialsPolicyFtpResource" /> object. </returns>
@@ -2553,7 +2712,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region ScmSiteBasicPublishingCredentialsPolicyResource
-        /// <summary> Gets an object representing a ScmSiteBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScmSiteBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
@@ -2569,7 +2731,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region FtpSiteSlotBasicPublishingCredentialsPolicyResource
-        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
@@ -2585,7 +2750,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region ScmSiteSlotBasicPublishingCredentialsPolicyResource
-        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
@@ -2601,7 +2769,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteConfigAppsettingResource
-        /// <summary> Gets an object representing a SiteConfigAppsettingResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteConfigAppsettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteConfigAppsettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigAppsettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteConfigAppsettingResource" /> object. </returns>
@@ -2617,7 +2788,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteConfigConnectionStringResource
-        /// <summary> Gets an object representing a SiteConfigConnectionStringResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteConfigConnectionStringResource" /> object. </returns>
@@ -2633,7 +2807,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotConfigAppSettingResource
-        /// <summary> Gets an object representing a SiteSlotConfigAppSettingResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotConfigAppSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotConfigAppSettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotConfigAppSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotConfigAppSettingResource" /> object. </returns>
@@ -2649,7 +2826,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotConfigConnectionStringResource
-        /// <summary> Gets an object representing a SiteSlotConfigConnectionStringResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotConfigConnectionStringResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotConfigConnectionStringResource" /> object. </returns>
@@ -2665,7 +2845,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region LogsSiteConfigResource
-        /// <summary> Gets an object representing a LogsSiteConfigResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LogsSiteConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogsSiteConfigResource.CreateResourceIdentifier" /> to create a <see cref="LogsSiteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LogsSiteConfigResource" /> object. </returns>
@@ -2681,7 +2864,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region LogsSiteSlotConfigResource
-        /// <summary> Gets an object representing a LogsSiteSlotConfigResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LogsSiteSlotConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogsSiteSlotConfigResource.CreateResourceIdentifier" /> to create a <see cref="LogsSiteSlotConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource" /> object. </returns>
@@ -2697,7 +2883,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SlotConfigNamesResource
-        /// <summary> Gets an object representing a SlotConfigNamesResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SlotConfigNamesResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SlotConfigNamesResource.CreateResourceIdentifier" /> to create a <see cref="SlotConfigNamesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
@@ -2713,7 +2902,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region WebSiteConfigResource
-        /// <summary> Gets an object representing a WebSiteConfigResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebSiteConfigResource" /> object. </returns>
@@ -2729,7 +2921,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteConfigSnapshotResource
-        /// <summary> Gets an object representing a SiteConfigSnapshotResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteConfigSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteConfigSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteConfigSnapshotResource" /> object. </returns>
@@ -2745,7 +2940,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region WebSiteSlotConfigResource
-        /// <summary> Gets an object representing a WebSiteSlotConfigResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteSlotConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource" /> object. </returns>
@@ -2761,7 +2959,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotConfigSnapshotResource
-        /// <summary> Gets an object representing a SiteSlotConfigSnapshotResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotConfigSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotConfigSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotConfigSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotConfigSnapshotResource" /> object. </returns>
@@ -2777,7 +2978,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteContinuousWebJobResource
-        /// <summary> Gets an object representing a SiteContinuousWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteContinuousWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteContinuousWebJobResource" /> object. </returns>
@@ -2793,7 +2997,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotContinuousWebJobResource
-        /// <summary> Gets an object representing a SiteSlotContinuousWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotContinuousWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotContinuousWebJobResource" /> object. </returns>
@@ -2809,7 +3016,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteDeploymentResource
-        /// <summary> Gets an object representing a SiteDeploymentResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteDeploymentResource" /> object. </returns>
@@ -2825,7 +3035,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotDeploymentResource
-        /// <summary> Gets an object representing a SiteSlotDeploymentResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotDeploymentResource" /> object. </returns>
@@ -2841,7 +3054,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteDomainOwnershipIdentifierResource
-        /// <summary> Gets an object representing a SiteDomainOwnershipIdentifierResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDomainOwnershipIdentifierResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="SiteDomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifierResource" /> object. </returns>
@@ -2857,7 +3073,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotDomainOwnershipIdentifierResource
-        /// <summary> Gets an object representing a SiteSlotDomainOwnershipIdentifierResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDomainOwnershipIdentifierResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifierResource" /> object. </returns>
@@ -2873,7 +3092,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteExtensionResource
-        /// <summary> Gets an object representing a SiteExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
@@ -2889,7 +3111,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteInstanceExtensionResource
-        /// <summary> Gets an object representing a SiteInstanceExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteInstanceExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteInstanceExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteInstanceExtensionResource" /> object. </returns>
@@ -2905,7 +3130,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotExtensionResource
-        /// <summary> Gets an object representing a SiteSlotExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
@@ -2921,7 +3149,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotInstanceExtensionResource
-        /// <summary> Gets an object representing a SiteSlotInstanceExtensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotInstanceExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotInstanceExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource" /> object. </returns>
@@ -2937,7 +3168,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteFunctionResource
-        /// <summary> Gets an object representing a SiteFunctionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteFunctionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteFunctionResource.CreateResourceIdentifier" /> to create a <see cref="SiteFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteFunctionResource" /> object. </returns>
@@ -2953,7 +3187,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotFunctionResource
-        /// <summary> Gets an object representing a SiteSlotFunctionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotFunctionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotFunctionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotFunctionResource" /> object. </returns>
@@ -2969,7 +3206,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteHostNameBindingResource
-        /// <summary> Gets an object representing a SiteHostNameBindingResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteHostNameBindingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteHostNameBindingResource.CreateResourceIdentifier" /> to create a <see cref="SiteHostNameBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteHostNameBindingResource" /> object. </returns>
@@ -2985,7 +3225,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotHostNameBindingResource
-        /// <summary> Gets an object representing a SiteSlotHostNameBindingResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotHostNameBindingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotHostNameBindingResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHostNameBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotHostNameBindingResource" /> object. </returns>
@@ -3001,7 +3244,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteHybridConnectionResource
-        /// <summary> Gets an object representing a SiteHybridConnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteHybridConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteHybridConnectionResource" /> object. </returns>
@@ -3017,7 +3263,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotHybridconnectionResource
-        /// <summary> Gets an object representing a SiteSlotHybridconnectionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotHybridconnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotHybridconnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHybridconnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotHybridconnectionResource" /> object. </returns>
@@ -3033,7 +3282,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteInstanceResource
-        /// <summary> Gets an object representing a SiteInstanceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteInstanceResource" /> object. </returns>
@@ -3049,7 +3301,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotInstanceResource
-        /// <summary> Gets an object representing a SiteSlotInstanceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotInstanceResource" /> object. </returns>
@@ -3065,7 +3320,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteInstanceProcessResource
-        /// <summary> Gets an object representing a SiteInstanceProcessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteInstanceProcessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteInstanceProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteInstanceProcessResource" /> object. </returns>
@@ -3081,7 +3339,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteProcessResource
-        /// <summary> Gets an object representing a SiteProcessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteProcessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteProcessResource" /> object. </returns>
@@ -3097,7 +3358,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotInstanceProcessResource
-        /// <summary> Gets an object representing a SiteSlotInstanceProcessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotInstanceProcessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotInstanceProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessResource" /> object. </returns>
@@ -3113,7 +3377,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotProcessResource
-        /// <summary> Gets an object representing a SiteSlotProcessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotProcessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotProcessResource" /> object. </returns>
@@ -3129,7 +3396,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteInstanceProcessModuleResource
-        /// <summary> Gets an object representing a SiteInstanceProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteInstanceProcessModuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteInstanceProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteInstanceProcessModuleResource" /> object. </returns>
@@ -3145,7 +3415,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteProcessModuleResource
-        /// <summary> Gets an object representing a SiteProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteProcessModuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteProcessModuleResource" /> object. </returns>
@@ -3161,7 +3434,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotInstanceProcessModuleResource
-        /// <summary> Gets an object representing a SiteSlotInstanceProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotInstanceProcessModuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotInstanceProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessModuleResource" /> object. </returns>
@@ -3177,7 +3453,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotProcessModuleResource
-        /// <summary> Gets an object representing a SiteSlotProcessModuleResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotProcessModuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotProcessModuleResource" /> object. </returns>
@@ -3193,7 +3472,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteNetworkConfigResource
-        /// <summary> Gets an object representing a SiteNetworkConfigResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteNetworkConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteNetworkConfigResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteNetworkConfigResource" /> object. </returns>
@@ -3209,7 +3491,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotNetworkConfigResource
-        /// <summary> Gets an object representing a SiteSlotNetworkConfigResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotNetworkConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotNetworkConfigResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotNetworkConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource" /> object. </returns>
@@ -3225,7 +3510,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SitePremierAddonResource
-        /// <summary> Gets an object representing a SitePremierAddonResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SitePremierAddonResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SitePremierAddonResource.CreateResourceIdentifier" /> to create a <see cref="SitePremierAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SitePremierAddonResource" /> object. </returns>
@@ -3241,7 +3529,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotPremierAddOnResource
-        /// <summary> Gets an object representing a SiteSlotPremierAddOnResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotPremierAddOnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotPremierAddOnResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPremierAddOnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotPremierAddOnResource" /> object. </returns>
@@ -3257,7 +3548,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SitePrivateAccessResource
-        /// <summary> Gets an object representing a SitePrivateAccessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SitePrivateAccessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SitePrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="SitePrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SitePrivateAccessResource" /> object. </returns>
@@ -3273,7 +3567,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotPrivateAccessResource
-        /// <summary> Gets an object representing a SiteSlotPrivateAccessResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotPrivateAccessResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotPrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotPrivateAccessResource" /> object. </returns>
@@ -3289,7 +3586,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SitePublicCertificateResource
-        /// <summary> Gets an object representing a SitePublicCertificateResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SitePublicCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SitePublicCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SitePublicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SitePublicCertificateResource" /> object. </returns>
@@ -3305,7 +3605,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotPublicCertificateResource
-        /// <summary> Gets an object representing a SiteSlotPublicCertificateResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotPublicCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotPublicCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPublicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotPublicCertificateResource" /> object. </returns>
@@ -3321,7 +3624,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSiteextensionResource
-        /// <summary> Gets an object representing a SiteSiteextensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSiteextensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSiteextensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSiteextensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSiteextensionResource" /> object. </returns>
@@ -3337,7 +3643,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotSiteextensionResource
-        /// <summary> Gets an object representing a SiteSlotSiteextensionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotSiteextensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotSiteextensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSiteextensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotSiteextensionResource" /> object. </returns>
@@ -3353,7 +3662,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region MigrateMySqlStatusResource
-        /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MigrateMySqlStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrateMySqlStatusResource.CreateResourceIdentifier" /> to create a <see cref="MigrateMySqlStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource" /> object. </returns>
@@ -3369,7 +3681,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region NetworkFeaturesResource
-        /// <summary> Gets an object representing a NetworkFeaturesResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkFeaturesResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFeaturesResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFeaturesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkFeaturesResource" /> object. </returns>
@@ -3385,7 +3700,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotSourcecontrolResource
-        /// <summary> Gets an object representing a SiteSlotSourcecontrolResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotSourcecontrolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotSourcecontrolResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotSourcecontrolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotSourcecontrolResource" /> object. </returns>
@@ -3401,7 +3719,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSourceControlResource
-        /// <summary> Gets an object representing a SiteSourceControlResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="SiteSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSourceControlResource" /> object. </returns>
@@ -3417,7 +3738,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteTriggeredwebJobResource
-        /// <summary> Gets an object representing a SiteTriggeredwebJobResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteTriggeredwebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteTriggeredwebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteTriggeredwebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteTriggeredwebJobResource" /> object. </returns>
@@ -3433,7 +3757,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotTriggeredWebJobResource
-        /// <summary> Gets an object representing a SiteSlotTriggeredWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotTriggeredWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotTriggeredWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobResource" /> object. </returns>
@@ -3449,7 +3776,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteTriggeredWebJobHistoryResource
-        /// <summary> Gets an object representing a SiteTriggeredWebJobHistoryResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="SiteTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteTriggeredWebJobHistoryResource" /> object. </returns>
@@ -3465,7 +3795,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotTriggeredWebJobHistoryResource
-        /// <summary> Gets an object representing a SiteSlotTriggeredWebJobHistoryResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotTriggeredWebJobHistoryResource" /> object. </returns>
@@ -3481,7 +3814,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteSlotWebJobResource
-        /// <summary> Gets an object representing a SiteSlotWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteSlotWebJobResource" /> object. </returns>
@@ -3497,7 +3833,10 @@ namespace Azure.ResourceManager.AppService
         #endregion
 
         #region SiteWebJobResource
-        /// <summary> Gets an object representing a SiteWebJobResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteWebJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteWebJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SiteWebJobResource" /> object. </returns>

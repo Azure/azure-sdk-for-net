@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HciClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, DiagnosticOptions);
+            _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HciClusterResource.ResourceType, out string hciClusterClustersApiVersion);
-            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
+            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Hci
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

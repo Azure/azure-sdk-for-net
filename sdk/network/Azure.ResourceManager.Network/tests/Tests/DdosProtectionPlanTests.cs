@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Tests
         : NetworkServiceClientTestBase
     {
         private const string NamePrefix = "test_ddos_";
-        private Resources.ResourceGroup resourceGroup;
+        private Resources.ResourceGroupResource resourceGroup;
         private Resources.SubscriptionResource _subscription;
 
         public DdosProtectionPlanTests(bool isAsync) : base(isAsync)

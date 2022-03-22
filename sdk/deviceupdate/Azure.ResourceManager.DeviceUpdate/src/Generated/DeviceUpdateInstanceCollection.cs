@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceUpdateInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceUpdateInstanceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateInstanceResource.ResourceType.Namespace, DiagnosticOptions);
+            _deviceUpdateInstanceInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateInstanceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeviceUpdateInstanceResource.ResourceType, out string deviceUpdateInstanceInstancesApiVersion);
-            _deviceUpdateInstanceInstancesRestClient = new InstancesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deviceUpdateInstanceInstancesApiVersion);
+            _deviceUpdateInstanceInstancesRestClient = new InstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceUpdateInstanceInstancesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

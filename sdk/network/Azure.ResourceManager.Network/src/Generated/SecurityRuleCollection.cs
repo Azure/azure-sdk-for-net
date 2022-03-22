@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SecurityRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityRuleResource.ResourceType.Namespace, DiagnosticOptions);
+            _securityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", SecurityRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityRuleResource.ResourceType, out string securityRuleApiVersion);
-            _securityRuleRestClient = new SecurityRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityRuleApiVersion);
+            _securityRuleRestClient = new SecurityRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

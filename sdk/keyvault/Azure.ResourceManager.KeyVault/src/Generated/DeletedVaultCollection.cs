@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
@@ -34,9 +33,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeletedVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedVaultResource.ResourceType.Namespace, DiagnosticOptions);
+            _deletedVaultVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedVaultResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeletedVaultResource.ResourceType, out string deletedVaultVaultsApiVersion);
-            _deletedVaultVaultsRestClient = new VaultsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedVaultVaultsApiVersion);
+            _deletedVaultVaultsRestClient = new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedVaultVaultsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

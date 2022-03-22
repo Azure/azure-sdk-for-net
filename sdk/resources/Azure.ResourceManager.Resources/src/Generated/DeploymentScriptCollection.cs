@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeploymentScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, DiagnosticOptions);
+            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeploymentScriptResource.ResourceType, out string deploymentScriptApiVersion);
-            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
+            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentScriptApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

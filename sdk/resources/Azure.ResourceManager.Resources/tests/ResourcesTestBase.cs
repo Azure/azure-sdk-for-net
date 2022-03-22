@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
             var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName4Identities, rgData);
-            ResourceGroup rg4Identities = lro.Value;
+            ResourceGroupResource rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
             var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userAssignedIdentitiesId, userAssignedIdentitiesData);

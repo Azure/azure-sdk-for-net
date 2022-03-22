@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -42,9 +41,9 @@ namespace Azure.ResourceManager.Sql
         internal DeletedServerCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
         {
             _locationName = locationName;
-            _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServerResource.ResourceType.Namespace, DiagnosticOptions);
+            _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DeletedServerResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeletedServerResource.ResourceType, out string deletedServerApiVersion);
-            _deletedServerRestClient = new DeletedServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
+            _deletedServerRestClient = new DeletedServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedServerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

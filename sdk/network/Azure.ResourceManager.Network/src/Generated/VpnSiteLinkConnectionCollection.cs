@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -38,12 +37,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VpnSiteLinkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnectionResource.ResourceType.Namespace, DiagnosticOptions);
+            _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VpnSiteLinkConnectionResource.ResourceType, out string vpnSiteLinkConnectionApiVersion);
-            _vpnSiteLinkConnectionRestClient = new VpnSiteLinkConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionApiVersion);
-            _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnectionResource.ResourceType.Namespace, DiagnosticOptions);
+            _vpnSiteLinkConnectionRestClient = new VpnSiteLinkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkConnectionApiVersion);
+            _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VpnSiteLinkConnectionResource.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
-            _vpnSiteLinkConnectionVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
+            _vpnSiteLinkConnectionVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

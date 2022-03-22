@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GremlinGraphCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _gremlinGraphGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GremlinGraphResource.ResourceType.Namespace, DiagnosticOptions);
+            _gremlinGraphGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", GremlinGraphResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GremlinGraphResource.ResourceType, out string gremlinGraphGremlinResourcesApiVersion);
-            _gremlinGraphGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, gremlinGraphGremlinResourcesApiVersion);
+            _gremlinGraphGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinGraphGremlinResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

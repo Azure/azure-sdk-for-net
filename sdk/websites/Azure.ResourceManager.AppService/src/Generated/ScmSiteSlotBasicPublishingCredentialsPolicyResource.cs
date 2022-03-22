@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScmSiteSlotBasicPublishingCredentialsPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
-            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
+            _scmSiteSlotBasicPublishingCredentialsPolicyWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scmSiteSlotBasicPublishingCredentialsPolicyWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

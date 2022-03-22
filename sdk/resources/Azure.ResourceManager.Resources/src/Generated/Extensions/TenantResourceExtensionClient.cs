@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -35,8 +34,8 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-        private ClientDiagnostics DeploymentClientDiagnostics => _deploymentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentResource.ResourceType.Namespace, DiagnosticOptions);
-        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeploymentResource.ResourceType));
+        private ClientDiagnostics DeploymentClientDiagnostics => _deploymentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeploymentResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

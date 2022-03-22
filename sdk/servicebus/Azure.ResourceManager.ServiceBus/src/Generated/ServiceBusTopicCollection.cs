@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServiceBusTopicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceBusTopicTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusTopicResource.ResourceType.Namespace, DiagnosticOptions);
+            _serviceBusTopicTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusTopicResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceBusTopicResource.ResourceType, out string serviceBusTopicTopicsApiVersion);
-            _serviceBusTopicTopicsRestClient = new TopicsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusTopicTopicsApiVersion);
+            _serviceBusTopicTopicsRestClient = new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusTopicTopicsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

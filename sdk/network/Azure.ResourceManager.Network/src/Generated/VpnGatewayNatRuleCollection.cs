@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VpnGatewayNatRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnGatewayNatRuleNatRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayNatRuleResource.ResourceType.Namespace, DiagnosticOptions);
+            _vpnGatewayNatRuleNatRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayNatRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VpnGatewayNatRuleResource.ResourceType, out string vpnGatewayNatRuleNatRulesApiVersion);
-            _vpnGatewayNatRuleNatRulesRestClient = new NatRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnGatewayNatRuleNatRulesApiVersion);
+            _vpnGatewayNatRuleNatRulesRestClient = new NatRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnGatewayNatRuleNatRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

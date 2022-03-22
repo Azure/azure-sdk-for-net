@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PrivateEndpointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpointResource.ResourceType.Namespace, DiagnosticOptions);
+            _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PrivateEndpointResource.ResourceType, out string privateEndpointApiVersion);
-            _privateEndpointRestClient = new PrivateEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointApiVersion);
+            _privateEndpointRestClient = new PrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

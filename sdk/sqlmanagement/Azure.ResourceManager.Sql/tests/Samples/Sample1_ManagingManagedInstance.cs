@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
 {
     public class Sample1_ManagingManagedInstance
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [SetUp]
         protected async Task initialize()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Tests.Samples
             // With the Collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 
             this.resourceGroup = resourceGroup;
         }

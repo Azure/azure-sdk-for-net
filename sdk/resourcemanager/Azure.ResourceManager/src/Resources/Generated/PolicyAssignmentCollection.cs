@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PolicyAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignmentResource.ResourceType.Namespace, DiagnosticOptions);
+            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PolicyAssignmentResource.ResourceType, out string policyAssignmentApiVersion);
-            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
+            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyAssignmentApiVersion);
         }
 
         /// <summary>
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="PolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyAssignmentResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroup.ResourceType)
+            if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
                 async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
@@ -337,7 +336,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="PolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyAssignmentResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroup.ResourceType)
+            if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
                 Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {

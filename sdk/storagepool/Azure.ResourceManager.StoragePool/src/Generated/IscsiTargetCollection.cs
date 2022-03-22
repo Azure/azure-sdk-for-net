@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal IscsiTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iscsiTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", IscsiTargetResource.ResourceType.Namespace, DiagnosticOptions);
+            _iscsiTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", IscsiTargetResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(IscsiTargetResource.ResourceType, out string iscsiTargetApiVersion);
-            _iscsiTargetRestClient = new IscsiTargetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, iscsiTargetApiVersion);
+            _iscsiTargetRestClient = new IscsiTargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iscsiTargetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

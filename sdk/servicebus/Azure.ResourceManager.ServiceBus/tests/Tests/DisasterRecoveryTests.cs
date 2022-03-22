@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 {
     public class DisasterRecoveryTests : ServiceBusTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)
         {
         }

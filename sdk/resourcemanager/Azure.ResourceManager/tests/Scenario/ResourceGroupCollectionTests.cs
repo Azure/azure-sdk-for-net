@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Tests
             };
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
-            ResourceGroup rg = rgOp.Value;
+            ResourceGroupResource rg = rgOp.Value;
             Assert.AreEqual(rgName, rg.Data.Name);
 
             Assert.Throws<ArgumentNullException>(() => { subscription.GetResourceGroups().Construct(null); });
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             string rgName = Recording.GenerateAssetName("testRg-");
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(rgName, WaitUntil.Started);
-            ResourceGroup rg = await rgOp.WaitForCompletionAsync();
+            ResourceGroupResource rg = await rgOp.WaitForCompletionAsync();
             Assert.AreEqual(rgName, rg.Data.Name);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             string rgName = Recording.GenerateAssetName("testRg-");
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(rgName);
-            ResourceGroup rg = rgOp.Value;
-            ResourceGroup rg2 = await subscription.GetResourceGroups().GetAsync(rgName);
+            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroupResource rg2 = await subscription.GetResourceGroups().GetAsync(rgName);
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
             Assert.AreEqual(rg.Data.Id, rg2.Data.Id);
             Assert.AreEqual(rg.Data.ResourceType, rg2.Data.ResourceType);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgName = Recording.GenerateAssetName("testRg-");
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(rgName);
-            ResourceGroup rg = rgOp.Value;
+            ResourceGroupResource rg = rgOp.Value;
             Assert.IsTrue(await subscription.GetResourceGroups().ExistsAsync(rgName));
             Assert.IsFalse(await subscription.GetResourceGroups().ExistsAsync(rgName + "1"));
 
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             var rgName = Recording.GenerateAssetName("testRg-");
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(rgName);
-            ResourceGroup rg = rgOp.Value;
-            ResourceGroup rg2 = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
+            ResourceGroupResource rg = rgOp.Value;
+            ResourceGroupResource rg2 = await subscription.GetResourceGroups().GetIfExistsAsync(rgName);
             Assert.AreEqual(rg.Data.Name, rg2.Data.Name);
 
             var response = await subscription.GetResourceGroups().GetIfExistsAsync(rgName + "1");
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Tests
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             var rgOp = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testRg-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgOp.Value;
+            ResourceGroupResource rg = rgOp.Value;
             int count = 0;
             await foreach(var rgFromList in subscription.GetResourceGroups())
             {

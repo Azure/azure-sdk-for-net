@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class TableTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private StorageAccount _storageAccount;
         private TableService _tableService;
         private TableCollection _tableCollection;

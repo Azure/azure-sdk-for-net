@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SharedGalleryImageVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sharedGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            _sharedGalleryImageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sharedGalleryImageVersionApiVersion);
-            _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryImageVersionApiVersion);
+            _sharedGalleryImageVersionRestClient = new SharedGalleryImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedGalleryImageVersionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

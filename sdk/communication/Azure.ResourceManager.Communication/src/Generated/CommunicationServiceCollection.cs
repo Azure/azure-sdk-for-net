@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Communication
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CommunicationServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _communicationServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, DiagnosticOptions);
+            _communicationServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationServiceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CommunicationServiceResource.ResourceType, out string communicationServiceApiVersion);
-            _communicationServiceRestClient = new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, communicationServiceApiVersion);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communicationServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Communication
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

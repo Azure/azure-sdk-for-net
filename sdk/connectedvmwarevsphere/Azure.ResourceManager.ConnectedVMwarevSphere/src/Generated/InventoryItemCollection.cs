@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal InventoryItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _inventoryItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", InventoryItemResource.ResourceType.Namespace, DiagnosticOptions);
+            _inventoryItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", InventoryItemResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(InventoryItemResource.ResourceType, out string inventoryItemApiVersion);
-            _inventoryItemRestClient = new InventoryItemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, inventoryItemApiVersion);
+            _inventoryItemRestClient = new InventoryItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, inventoryItemApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

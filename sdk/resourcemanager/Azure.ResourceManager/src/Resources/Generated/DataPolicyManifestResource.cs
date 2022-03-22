@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataPolicyManifestResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataPolicyManifestApiVersion);
-            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
+            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

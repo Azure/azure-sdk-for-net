@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
@@ -40,12 +39,12 @@ namespace Azure.ResourceManager.StoragePool
         {
         }
 
-        private ClientDiagnostics DiskPoolClientDiagnostics => _diskPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPoolResource.ResourceType.Namespace, DiagnosticOptions);
-        private DiskPoolsRestOperations DiskPoolRestClient => _diskPoolRestClient ??= new DiskPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DiskPoolResource.ResourceType));
-        private ClientDiagnostics DiskPoolZonesClientDiagnostics => _diskPoolZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private DiskPoolZonesRestOperations DiskPoolZonesRestClient => _diskPoolZonesRestClient ??= new DiskPoolZonesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ClientDiagnostics DiskPoolClientDiagnostics => _diskPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", DiskPoolResource.ResourceType.Namespace, Diagnostics);
+        private DiskPoolsRestOperations DiskPoolRestClient => _diskPoolRestClient ??= new DiskPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DiskPoolResource.ResourceType));
+        private ClientDiagnostics DiskPoolZonesClientDiagnostics => _diskPoolZonesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiskPoolZonesRestOperations DiskPoolZonesRestClient => _diskPoolZonesRestClient ??= new DiskPoolZonesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StoragePool", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ResourceSkusRestOperations ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

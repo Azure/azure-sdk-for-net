@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
             ApplicationDefinitionResource applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-L-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
             _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-G-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
             ApplicationDefinitionResource applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;

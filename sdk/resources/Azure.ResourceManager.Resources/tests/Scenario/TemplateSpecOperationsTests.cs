@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Tests
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string templateSpecName = Recording.GenerateAssetName("templateSpec-G-");
             TemplateSpecData templateSpecData = CreateTemplateSpecData(templateSpecName);
             TemplateSpecResource templateSpec = (await rg.GetTemplateSpecs().CreateOrUpdateAsync(WaitUntil.Completed, templateSpecName, templateSpecData)).Value;

@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -51,9 +50,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SessionHostResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
+            _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sessionHostApiVersion);
-            _sessionHostRestClient = new SessionHostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sessionHostApiVersion);
+            _sessionHostRestClient = new SessionHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sessionHostApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

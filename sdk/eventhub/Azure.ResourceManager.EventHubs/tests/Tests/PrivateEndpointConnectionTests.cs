@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class PrivateEndpointConnectionTests : EventHubTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private EventHubNamespaceResource _eventHubNamespace;
         private PrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _eventHubNamespace.GetPrivateEndpointConnections(); }
         public PrivateEndpointConnectionTests(bool async) : base(async)

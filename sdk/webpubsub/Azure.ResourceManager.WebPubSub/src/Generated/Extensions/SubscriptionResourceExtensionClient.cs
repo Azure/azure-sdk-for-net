@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
@@ -38,10 +37,10 @@ namespace Azure.ResourceManager.WebPubSub
         {
         }
 
-        private ClientDiagnostics WebPubSubClientDiagnostics => _webPubSubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, DiagnosticOptions);
-        private WebPubSubRestOperations WebPubSubRestClient => _webPubSubRestClient ??= new WebPubSubRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(WebPubSubResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ClientDiagnostics WebPubSubClientDiagnostics => _webPubSubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
+        private WebPubSubRestOperations WebPubSubRestClient => _webPubSubRestClient ??= new WebPubSubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebPubSubResource.ResourceType));
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
 {
     public class Sample1_ManagingVirtualNetworks
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Started, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+            ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Started, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
             #endregion
 
             this.resourceGroup = resourceGroup;

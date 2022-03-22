@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
 {
     public class ReadMe_ManagingStorageAccounts
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
         [SetUp]
         public async Task createResourceGroup()
         {
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             #region Snippet:Managing_StorageAccounts_GetResourceGroupCollection
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = operation.Value;
+            ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = operation.Value;
             #endregion
 
             this.resourceGroup = resourceGroup;

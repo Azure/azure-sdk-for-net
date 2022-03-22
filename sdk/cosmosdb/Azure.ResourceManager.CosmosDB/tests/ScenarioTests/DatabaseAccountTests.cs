@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task TestSetup()
         {
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.ProvisioningState, actualData.ProvisioningState);
             Assert.AreEqual(expectedData.DocumentEndpoint, actualData.DocumentEndpoint);
             Assert.AreEqual(expectedData.DatabaseAccountOfferType, actualData.DatabaseAccountOfferType);
-            Assert.AreEqual(expectedData.IpRules.Count, actualData.IpRules.Count);
-            Assert.AreEqual(expectedData.IpRules[0].IpAddressOrRangeValue, actualData.IpRules[0].IpAddressOrRangeValue);
+            Assert.AreEqual(expectedData.IPRules.Count, actualData.IPRules.Count);
+            Assert.AreEqual(expectedData.IPRules[0].IPAddressOrRangeValue, actualData.IPRules[0].IPAddressOrRangeValue);
             Assert.AreEqual(expectedData.IsVirtualNetworkFilterEnabled, actualData.IsVirtualNetworkFilterEnabled);
             Assert.AreEqual(expectedData.EnableAutomaticFailover, actualData.EnableAutomaticFailover);
             VerifyConsistencyPolicy(expectedData.ConsistencyPolicy, actualData.ConsistencyPolicy);

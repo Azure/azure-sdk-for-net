@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     internal class BastionHostCollectionTests : NetworkServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private SubnetResource _subnet;
         private PublicIPAddressResource _publicIPAddress;
         private string _bastionName;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             VirtualNetworkData vnetData = new VirtualNetworkData();
             vnetData.Location = AzureLocation.WestUS2;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var client = GetArmClient();
             var _ = await client.GetDefaultSubscriptionAsync(); // TODO: hack to avoid mismatch of recordings so we don't need to re-record for the change. Remove when you need to run live tests next time.
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             VirtualNetworkResource vnet = await _resourceGroup.GetVirtualNetworks().GetAsync(_subnetIdentifier.Parent.Name);
             _subnet = await vnet.GetSubnets().GetAsync(_subnetIdentifier.Name);
             _publicIPAddress = await _resourceGroup.GetPublicIPAddresses().GetAsync(_publicIPAddressIdentifier.Name);

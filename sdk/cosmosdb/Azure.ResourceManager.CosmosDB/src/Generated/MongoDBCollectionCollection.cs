@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MongoDBCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mongoDBCollectionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBCollectionResource.ResourceType.Namespace, DiagnosticOptions);
+            _mongoDBCollectionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBCollectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MongoDBCollectionResource.ResourceType, out string mongoDBCollectionMongoDBResourcesApiVersion);
-            _mongoDBCollectionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, mongoDBCollectionMongoDBResourcesApiVersion);
+            _mongoDBCollectionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBCollectionMongoDBResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NamespaceQueueAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _namespaceQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceQueueAuthorizationRuleResource.ResourceType.Namespace, DiagnosticOptions);
+            _namespaceQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceQueueAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NamespaceQueueAuthorizationRuleResource.ResourceType, out string namespaceQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
-            _namespaceQueueAuthorizationRuleQueueAuthorizationRulesRestClient = new QueueAuthorizationRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
+            _namespaceQueueAuthorizationRuleQueueAuthorizationRulesRestClient = new QueueAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, namespaceQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

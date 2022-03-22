@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.WebPubSub
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SharedPrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", SharedPrivateLinkResource.ResourceType.Namespace, DiagnosticOptions);
+            _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", SharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SharedPrivateLinkResource.ResourceType, out string sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
-            _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
+            _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

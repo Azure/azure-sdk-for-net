@@ -133,21 +133,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetExtensionClient(subscriptionResource).GetHostPools(cancellationToken);
         }
 
-        private static ResourceGroupExtensionClient GetExtensionClient(ResourceGroup resourceGroup)
+        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroup.GetCachedClient((client) =>
+            return resourceGroupResource.GetCachedClient((client) =>
             {
-                return new ResourceGroupExtensionClient(client, resourceGroup.Id);
+                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
             }
             );
         }
 
         /// <summary> Gets a collection of VirtualWorkspaceResources in the VirtualWorkspaceResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualWorkspaceResources and their operations over a VirtualWorkspaceResource. </returns>
-        public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroup resourceGroup)
+        public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualWorkspaces();
+            return GetExtensionClient(resourceGroupResource).GetVirtualWorkspaces();
         }
 
         /// <summary>
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}
         /// Operation Id: Workspaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,22 +170,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}
         /// Operation Id: Workspaces_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public static Response<VirtualWorkspaceResource> GetVirtualWorkspace(this ResourceGroup resourceGroup, string workspaceName, CancellationToken cancellationToken = default)
+        public static Response<VirtualWorkspaceResource> GetVirtualWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
+            return resourceGroupResource.GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScalingPlanResources in the ScalingPlanResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScalingPlanResources and their operations over a ScalingPlanResource. </returns>
-        public static ScalingPlanCollection GetScalingPlans(this ResourceGroup resourceGroup)
+        public static ScalingPlanCollection GetScalingPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetScalingPlans();
+            return GetExtensionClient(resourceGroupResource).GetScalingPlans();
         }
 
         /// <summary>
@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
         /// Operation Id: ScalingPlans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public static async Task<Response<ScalingPlanResource>> GetScalingPlanAsync(this ResourceGroup resourceGroup, string scalingPlanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScalingPlanResource>> GetScalingPlanAsync(this ResourceGroupResource resourceGroupResource, string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetScalingPlans().GetAsync(scalingPlanName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetScalingPlans().GetAsync(scalingPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -208,22 +208,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}
         /// Operation Id: ScalingPlans_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="scalingPlanName"> The name of the scaling plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public static Response<ScalingPlanResource> GetScalingPlan(this ResourceGroup resourceGroup, string scalingPlanName, CancellationToken cancellationToken = default)
+        public static Response<ScalingPlanResource> GetScalingPlan(this ResourceGroupResource resourceGroupResource, string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetScalingPlans().Get(scalingPlanName, cancellationToken);
+            return resourceGroupResource.GetScalingPlans().Get(scalingPlanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualApplicationGroupResources in the VirtualApplicationGroupResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualApplicationGroupResources and their operations over a VirtualApplicationGroupResource. </returns>
-        public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroup resourceGroup)
+        public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetVirtualApplicationGroups();
+            return GetExtensionClient(resourceGroupResource).GetVirtualApplicationGroups();
         }
 
         /// <summary>
@@ -231,14 +231,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}
         /// Operation Id: ApplicationGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public static async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(this ResourceGroup resourceGroup, string applicationGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetVirtualApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetVirtualApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -246,22 +246,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}
         /// Operation Id: ApplicationGroups_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="applicationGroupName"> The name of the application group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
-        public static Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(this ResourceGroup resourceGroup, string applicationGroupName, CancellationToken cancellationToken = default)
+        public static Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetVirtualApplicationGroups().Get(applicationGroupName, cancellationToken);
+            return resourceGroupResource.GetVirtualApplicationGroups().Get(applicationGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HostPoolResources in the HostPoolResource. </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HostPoolResources and their operations over a HostPoolResource. </returns>
-        public static HostPoolCollection GetHostPools(this ResourceGroup resourceGroup)
+        public static HostPoolCollection GetHostPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroup).GetHostPools();
+            return GetExtensionClient(resourceGroupResource).GetHostPools();
         }
 
         /// <summary>
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
         /// Operation Id: HostPools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public static async Task<Response<HostPoolResource>> GetHostPoolAsync(this ResourceGroup resourceGroup, string hostPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HostPoolResource>> GetHostPoolAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroup.GetHostPools().GetAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHostPools().GetAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -284,18 +284,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}
         /// Operation Id: HostPools_Get
         /// </summary>
-        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="hostPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
-        public static Response<HostPoolResource> GetHostPool(this ResourceGroup resourceGroup, string hostPoolName, CancellationToken cancellationToken = default)
+        public static Response<HostPoolResource> GetHostPool(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroup.GetHostPools().Get(hostPoolName, cancellationToken);
+            return resourceGroupResource.GetHostPools().Get(hostPoolName, cancellationToken);
         }
 
         #region VirtualWorkspaceResource
-        /// <summary> Gets an object representing a VirtualWorkspaceResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualWorkspaceResource" /> object. </returns>
@@ -311,7 +314,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region ScalingPlanResource
-        /// <summary> Gets an object representing a ScalingPlanResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ScalingPlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScalingPlanResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScalingPlanResource" /> object. </returns>
@@ -327,7 +333,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region VirtualApplicationGroupResource
-        /// <summary> Gets an object representing a VirtualApplicationGroupResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualApplicationGroupResource.CreateResourceIdentifier" /> to create a <see cref="VirtualApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplicationGroupResource" /> object. </returns>
@@ -343,7 +352,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region VirtualApplicationResource
-        /// <summary> Gets an object representing a VirtualApplicationResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualApplicationResource.CreateResourceIdentifier" /> to create a <see cref="VirtualApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplicationResource" /> object. </returns>
@@ -359,7 +371,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region VirtualDesktopResource
-        /// <summary> Gets an object representing a VirtualDesktopResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualDesktopResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualDesktopResource.CreateResourceIdentifier" /> to create a <see cref="VirtualDesktopResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualDesktopResource" /> object. </returns>
@@ -375,7 +390,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region HostPoolResource
-        /// <summary> Gets an object representing a HostPoolResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostPoolResource.CreateResourceIdentifier" /> to create a <see cref="HostPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostPoolResource" /> object. </returns>
@@ -391,7 +409,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region UserSessionResource
-        /// <summary> Gets an object representing a UserSessionResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="UserSessionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserSessionResource.CreateResourceIdentifier" /> to create an <see cref="UserSessionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="UserSessionResource" /> object. </returns>
@@ -407,7 +428,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region SessionHostResource
-        /// <summary> Gets an object representing a SessionHostResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SessionHostResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SessionHostResource.CreateResourceIdentifier" /> to create a <see cref="SessionHostResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SessionHostResource" /> object. </returns>
@@ -423,7 +447,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region MsixPackageResource
-        /// <summary> Gets an object representing a MsixPackageResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MsixPackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MsixPackageResource.CreateResourceIdentifier" /> to create a <see cref="MsixPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MsixPackageResource" /> object. </returns>

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ExpressRouteCrossConnectionPeeringCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expressRouteCrossConnectionPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnectionPeeringResource.ResourceType.Namespace, DiagnosticOptions);
+            _expressRouteCrossConnectionPeeringClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnectionPeeringResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ExpressRouteCrossConnectionPeeringResource.ResourceType, out string expressRouteCrossConnectionPeeringApiVersion);
-            _expressRouteCrossConnectionPeeringRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteCrossConnectionPeeringApiVersion);
+            _expressRouteCrossConnectionPeeringRestClient = new ExpressRouteCrossConnectionPeeringsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCrossConnectionPeeringApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

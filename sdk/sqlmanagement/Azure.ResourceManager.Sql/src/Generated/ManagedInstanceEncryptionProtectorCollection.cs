@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedInstanceEncryptionProtectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceEncryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceEncryptionProtectorResource.ResourceType.Namespace, DiagnosticOptions);
+            _managedInstanceEncryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceEncryptionProtectorResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedInstanceEncryptionProtectorResource.ResourceType, out string managedInstanceEncryptionProtectorApiVersion);
-            _managedInstanceEncryptionProtectorRestClient = new ManagedInstanceEncryptionProtectorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceEncryptionProtectorApiVersion);
+            _managedInstanceEncryptionProtectorRestClient = new ManagedInstanceEncryptionProtectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceEncryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

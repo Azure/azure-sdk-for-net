@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceBusQueueResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceBusQueueQueuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
+            _serviceBusQueueQueuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serviceBusQueueQueuesApiVersion);
-            _serviceBusQueueQueuesRestClient = new QueuesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusQueueQueuesApiVersion);
+            _serviceBusQueueQueuesRestClient = new QueuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusQueueQueuesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

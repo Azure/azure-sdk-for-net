@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private WebPubSub _webPubSub;
         private VirtualNetwork _vnet;
         private string _vnetName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _vnetName = SessionRecording.GenerateAssetName("Vnet-");
             _privateEndPointName = SessionRecording.GenerateAssetName("PrivateEndPoint-");

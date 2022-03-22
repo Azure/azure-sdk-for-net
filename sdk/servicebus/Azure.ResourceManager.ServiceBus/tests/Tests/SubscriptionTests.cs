@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
         {
             IgnoreTestInLiveMode();
             //create namespace
-            ResourceGroup resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NamespaceDisasterRecoveryAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceDisasterRecoveryAuthorizationRuleResource.ResourceType.Namespace, DiagnosticOptions);
+            _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", NamespaceDisasterRecoveryAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NamespaceDisasterRecoveryAuthorizationRuleResource.ResourceType, out string namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
-            _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient = new DisasterRecoveryAuthorizationRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
+            _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient = new DisasterRecoveryAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

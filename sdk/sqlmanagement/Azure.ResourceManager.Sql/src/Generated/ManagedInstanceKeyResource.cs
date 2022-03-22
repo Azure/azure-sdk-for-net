@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedInstanceKeyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _managedInstanceKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedInstanceKeyApiVersion);
-            _managedInstanceKeyRestClient = new ManagedInstanceKeysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceKeyApiVersion);
+            _managedInstanceKeyRestClient = new ManagedInstanceKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceKeyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontendIPConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FrontendIPConfigurationResource.ResourceType.Namespace, DiagnosticOptions);
+            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FrontendIPConfigurationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontendIPConfigurationResource.ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
-            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
+            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

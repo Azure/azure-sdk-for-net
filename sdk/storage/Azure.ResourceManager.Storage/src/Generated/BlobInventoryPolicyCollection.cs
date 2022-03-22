@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BlobInventoryPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _blobInventoryPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobInventoryPolicyResource.ResourceType.Namespace, DiagnosticOptions);
+            _blobInventoryPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobInventoryPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BlobInventoryPolicyResource.ResourceType, out string blobInventoryPolicyApiVersion);
-            _blobInventoryPolicyRestClient = new BlobInventoryPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, blobInventoryPolicyApiVersion);
+            _blobInventoryPolicyRestClient = new BlobInventoryPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, blobInventoryPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

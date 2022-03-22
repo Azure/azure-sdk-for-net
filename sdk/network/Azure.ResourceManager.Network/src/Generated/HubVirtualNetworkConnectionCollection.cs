@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HubVirtualNetworkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hubVirtualNetworkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubVirtualNetworkConnectionResource.ResourceType.Namespace, DiagnosticOptions);
+            _hubVirtualNetworkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubVirtualNetworkConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HubVirtualNetworkConnectionResource.ResourceType, out string hubVirtualNetworkConnectionApiVersion);
-            _hubVirtualNetworkConnectionRestClient = new HubVirtualNetworkConnectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubVirtualNetworkConnectionApiVersion);
+            _hubVirtualNetworkConnectionRestClient = new HubVirtualNetworkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubVirtualNetworkConnectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

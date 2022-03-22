@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ApplicationDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationDefinitionResource.ResourceType.Namespace, DiagnosticOptions);
+            _applicationDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationDefinitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApplicationDefinitionResource.ResourceType, out string applicationDefinitionApiVersion);
-            _applicationDefinitionRestClient = new ApplicationDefinitionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationDefinitionApiVersion);
+            _applicationDefinitionRestClient = new ApplicationDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationDefinitionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

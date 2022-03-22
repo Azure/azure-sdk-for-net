@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Tests
 {
     public class FileShareTests : StorageTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private StorageAccount _storageAccount;
         private FileService _fileService;
         private FileShareCollection _fileShareCollection;

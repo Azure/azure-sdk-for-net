@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(

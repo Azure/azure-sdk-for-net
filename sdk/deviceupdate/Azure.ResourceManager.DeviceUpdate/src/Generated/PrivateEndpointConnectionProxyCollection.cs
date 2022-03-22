@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PrivateEndpointConnectionProxyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateEndpointConnectionProxyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", PrivateEndpointConnectionProxyResource.ResourceType.Namespace, DiagnosticOptions);
+            _privateEndpointConnectionProxyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", PrivateEndpointConnectionProxyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PrivateEndpointConnectionProxyResource.ResourceType, out string privateEndpointConnectionProxyApiVersion);
-            _privateEndpointConnectionProxyRestClient = new PrivateEndpointConnectionProxiesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointConnectionProxyApiVersion);
+            _privateEndpointConnectionProxyRestClient = new PrivateEndpointConnectionProxiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateEndpointConnectionProxyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

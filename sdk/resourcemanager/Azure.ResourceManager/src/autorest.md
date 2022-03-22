@@ -28,6 +28,29 @@ namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -144,19 +167,39 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
-  Providers_ListAtTenantScope: GetTenantProviders
-  Providers_GetAtTenantScope: GetTenantProvider
+  Providers_ListAtTenantScope: GetTenantResourceProviders
+  Providers_GetAtTenantScope: GetTenantResourceProvider
   Resources_MoveResources: MoveResources
   Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
-  Providers_RegisterAtManagementGroupScope: RegisterProvider
+  Providers_RegisterAtManagementGroupScope: RegisterResourceProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
+
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
-no-resource-suffix:
-  - ResourceGroup
-  - ResourceLink
-  - ResourceProvider
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -278,7 +321,11 @@ directive:
       to: TrackedResourceExtended
   - rename-model:
       from: ProviderRegistrationRequest
-      to: ProviderRegistrationOptions
+      to: ResourceProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Provider
+    transform:
+      $["x-ms-client-name"] = "ResourceProvider";
   - from: resources.json
     where: $.definitions.Alias
     transform:
@@ -476,6 +523,29 @@ operation-groups-to-omit:
   - Entities
   - TenantBackfill
 no-property-type-replacement: CheckNameAvailabilityOptions;DescendantParentGroupInfo
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - rename-model:
       from: PatchManagementGroupRequest

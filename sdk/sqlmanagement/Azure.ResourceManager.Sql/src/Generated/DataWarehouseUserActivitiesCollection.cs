@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataWarehouseUserActivitiesCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataWarehouseUserActivitiesDataWarehouseUserActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataWarehouseUserActivitiesResource.ResourceType.Namespace, DiagnosticOptions);
+            _dataWarehouseUserActivitiesDataWarehouseUserActivitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DataWarehouseUserActivitiesResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataWarehouseUserActivitiesResource.ResourceType, out string dataWarehouseUserActivitiesDataWarehouseUserActivitiesApiVersion);
-            _dataWarehouseUserActivitiesDataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivitiesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataWarehouseUserActivitiesDataWarehouseUserActivitiesApiVersion);
+            _dataWarehouseUserActivitiesDataWarehouseUserActivitiesRestClient = new DataWarehouseUserActivitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataWarehouseUserActivitiesDataWarehouseUserActivitiesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

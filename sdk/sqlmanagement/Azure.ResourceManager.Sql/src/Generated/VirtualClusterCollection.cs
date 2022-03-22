@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, DiagnosticOptions);
+            _virtualClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualClusterResource.ResourceType, out string virtualClusterApiVersion);
-            _virtualClusterRestClient = new VirtualClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualClusterApiVersion);
+            _virtualClusterRestClient = new VirtualClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualClusterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

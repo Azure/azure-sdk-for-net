@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RouteFilterRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string routeFilterRuleApiVersion);
-            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
+            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routeFilterRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

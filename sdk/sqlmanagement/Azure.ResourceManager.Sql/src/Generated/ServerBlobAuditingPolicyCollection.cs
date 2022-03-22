@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerBlobAuditingPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerBlobAuditingPolicyResource.ResourceType.Namespace, DiagnosticOptions);
+            _serverBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerBlobAuditingPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServerBlobAuditingPolicyResource.ResourceType, out string serverBlobAuditingPolicyApiVersion);
-            _serverBlobAuditingPolicyRestClient = new ServerBlobAuditingPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverBlobAuditingPolicyApiVersion);
+            _serverBlobAuditingPolicyRestClient = new ServerBlobAuditingPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

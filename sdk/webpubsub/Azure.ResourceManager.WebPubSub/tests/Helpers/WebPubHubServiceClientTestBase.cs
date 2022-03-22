@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             }
         }
 
-        public Resources.ResourceGroup ResourceGroup
+        public Resources.ResourceGroupResource ResourceGroupResource
         {
             get
             {
-                return Subscription.GetResourceGroups().Get(TestEnvironment.ResourceGroup).Value;
+                return Subscription.GetResourceGroups().Get(TestEnvironment.ResourceGroupResource).Value;
             }
         }
 
-        public Resources.ResourceGroup GetResourceGroup(string name)
+        public Resources.ResourceGroupResource GetResourceGroup(string name)
         {
             return Subscription.GetResourceGroups().Get(name).Value;
         }
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             ArmClient = GetArmClient();
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroup(string name)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string name)
         {
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroup(string name, string location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string name, string location)
         {
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
         }
 
-        protected async Task<WebPubSub> CreateDefaultWebPubSub(string webPubSubName, AzureLocation location, ResourceGroup resourceGroup)
+        protected async Task<WebPubSub> CreateDefaultWebPubSub(string webPubSubName, AzureLocation location, ResourceGroupResource resourceGroup)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>()

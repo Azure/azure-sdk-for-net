@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateLinkResourceOperationTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
         private ConfigurationStoreResource ConfigStore { get; set; }
         private PrivateLinkResource LinkResource { get; set; }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<AzureLocation> locations = await LinkResource.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locations = (await LinkResource.GetAvailableLocationsAsync()).Value;
 
             Assert.IsTrue(locations.Count() >= 0);
         }

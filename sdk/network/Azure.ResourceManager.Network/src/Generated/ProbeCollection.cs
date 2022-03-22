@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ProbeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProbeResource.ResourceType.Namespace, DiagnosticOptions);
+            _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProbeResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ProbeResource.ResourceType, out string probeLoadBalancerProbesApiVersion);
-            _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, probeLoadBalancerProbesApiVersion);
+            _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, probeLoadBalancerProbesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

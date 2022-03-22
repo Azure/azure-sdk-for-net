@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagementLockResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managementLockApiVersion);
-            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
+            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementLockApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
