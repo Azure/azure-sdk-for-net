@@ -12,9 +12,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ProviderData
+    public partial class ResourceProviderData
     {
-        internal static ProviderData DeserializeProviderData(JsonElement element)
+        internal static ResourceProviderData DeserializeResourceProviderData(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<string> @namespace = default;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
+            return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, Optional.ToList(resourceTypes), Optional.ToNullable(providerAuthorizationConsentState));
         }
     }
 }

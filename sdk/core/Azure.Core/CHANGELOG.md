@@ -1,12 +1,15 @@
 # Release History
 
-## 1.23.0-beta.1 (Unreleased)
+## 1.23.0 (2022-03-21)
 
 ### Features Added
 
+- Added the `TelemetryDetails` type which enables customization of UserAgent header values on a per-request basis based on a specified `Assembly` and an optional application Id string.
 - Added `AddClassifier` methods to `RequestContext`. These methods allow callers to change the response classification behavior for a given method invocation.
-- Added type `RequestOptions` to the `Azure` namespace and made `RequestContext` a subclass of `RequestOptions`.  This enables `RequestOptions` to be exposed in methods that take `CancellationToken` without causing confusion regarding which cancellation token will take effect.
-- Added the `SetUserAgentString` extension method to `HttpMessage` accepting a `UserAgentValue` and an optional application Id string. This allows assembly specific user agent header information to be set with proper formatting on a per-message basis.
+- Added a new `StatusCodeClassifier` type that will be used as the default `ResponseClassifier` for some libraries.
+- Added an extension method to `BinaryData` called `ToObjectFromJson` which converts the json value represented by `BinaryData` to an object of a specific type.
+- Additional data center locations were added to `AzureLocation`.
+- Added `WaitUntil` enum to allow callers to set whether a method invoking a long running operation should return when the operation starts or once it has completed.
 
 ### Breaking Changes
 
@@ -16,10 +19,6 @@
     <RuntimeHostConfigurationOption Include="Azure.Core.Pipeline.HttpClientTransport.EnableCookies" Value="true" />
   </ItemGroup>
 ```
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.22.0 (2022-01-11)
 

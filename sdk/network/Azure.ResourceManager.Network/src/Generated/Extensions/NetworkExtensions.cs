@@ -3574,7 +3574,10 @@ namespace Azure.ResourceManager.Network
         }
 
         #region ApplicationGateway
-        /// <summary> Gets an object representing a ApplicationGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGateway.CreateResourceIdentifier" /> to create an <see cref="ApplicationGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGateway" /> object. </returns>
@@ -3590,7 +3593,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ApplicationGatewayPrivateEndpointConnection
-        /// <summary> Gets an object representing a ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayPrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayPrivateEndpointConnection.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayPrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGatewayPrivateEndpointConnection" /> object. </returns>
@@ -3606,7 +3612,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ApplicationSecurityGroup
-        /// <summary> Gets an object representing a ApplicationSecurityGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ApplicationSecurityGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationSecurityGroup.CreateResourceIdentifier" /> to create an <see cref="ApplicationSecurityGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationSecurityGroup" /> object. </returns>
@@ -3622,7 +3631,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region AzureFirewall
-        /// <summary> Gets an object representing a AzureFirewall along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AzureFirewall" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureFirewall.CreateResourceIdentifier" /> to create an <see cref="AzureFirewall" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureFirewall" /> object. </returns>
@@ -3638,7 +3650,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region AzureWebCategory
-        /// <summary> Gets an object representing a AzureWebCategory along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="AzureWebCategory" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AzureWebCategory.CreateResourceIdentifier" /> to create an <see cref="AzureWebCategory" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AzureWebCategory" /> object. </returns>
@@ -3654,7 +3669,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region BastionHost
-        /// <summary> Gets an object representing a BastionHost along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BastionHost" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BastionHost.CreateResourceIdentifier" /> to create a <see cref="BastionHost" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BastionHost" /> object. </returns>
@@ -3670,7 +3688,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region CustomIPPrefix
-        /// <summary> Gets an object representing a CustomIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="CustomIPPrefix" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomIPPrefix.CreateResourceIdentifier" /> to create a <see cref="CustomIPPrefix" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomIPPrefix" /> object. </returns>
@@ -3686,7 +3707,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DdosCustomPolicy
-        /// <summary> Gets an object representing a DdosCustomPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DdosCustomPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DdosCustomPolicy.CreateResourceIdentifier" /> to create a <see cref="DdosCustomPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosCustomPolicy" /> object. </returns>
@@ -3702,7 +3726,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DdosProtectionPlan
-        /// <summary> Gets an object representing a DdosProtectionPlan along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DdosProtectionPlan" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DdosProtectionPlan.CreateResourceIdentifier" /> to create a <see cref="DdosProtectionPlan" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DdosProtectionPlan" /> object. </returns>
@@ -3718,7 +3745,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DscpConfiguration
-        /// <summary> Gets an object representing a DscpConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DscpConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscpConfiguration.CreateResourceIdentifier" /> to create a <see cref="DscpConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DscpConfiguration" /> object. </returns>
@@ -3734,7 +3764,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitAuthorization
-        /// <summary> Gets an object representing a ExpressRouteCircuitAuthorization along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitAuthorization" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitAuthorization.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitAuthorization" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorization" /> object. </returns>
@@ -3750,7 +3783,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitPeering
-        /// <summary> Gets an object representing a ExpressRouteCircuitPeering along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitPeering" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitPeering.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitPeering" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitPeering" /> object. </returns>
@@ -3766,7 +3802,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuitConnection
-        /// <summary> Gets an object representing a ExpressRouteCircuitConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuitConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuitConnection.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuitConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuitConnection" /> object. </returns>
@@ -3782,7 +3821,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PeerExpressRouteCircuitConnection
-        /// <summary> Gets an object representing a PeerExpressRouteCircuitConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PeerExpressRouteCircuitConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PeerExpressRouteCircuitConnection.CreateResourceIdentifier" /> to create a <see cref="PeerExpressRouteCircuitConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PeerExpressRouteCircuitConnection" /> object. </returns>
@@ -3798,7 +3840,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCircuit
-        /// <summary> Gets an object representing a ExpressRouteCircuit along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCircuit" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCircuit.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCircuit" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCircuit" /> object. </returns>
@@ -3814,7 +3859,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCrossConnection
-        /// <summary> Gets an object representing a ExpressRouteCrossConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCrossConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCrossConnection.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCrossConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCrossConnection" /> object. </returns>
@@ -3830,7 +3878,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteCrossConnectionPeering
-        /// <summary> Gets an object representing a ExpressRouteCrossConnectionPeering along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteCrossConnectionPeering" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteCrossConnectionPeering.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteCrossConnectionPeering" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteCrossConnectionPeering" /> object. </returns>
@@ -3846,7 +3897,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRoutePortsLocation
-        /// <summary> Gets an object representing a ExpressRoutePortsLocation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRoutePortsLocation" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRoutePortsLocation.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePortsLocation" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRoutePortsLocation" /> object. </returns>
@@ -3862,7 +3916,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRoutePort
-        /// <summary> Gets an object representing a ExpressRoutePort along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRoutePort" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRoutePort.CreateResourceIdentifier" /> to create an <see cref="ExpressRoutePort" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRoutePort" /> object. </returns>
@@ -3878,7 +3935,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteLink
-        /// <summary> Gets an object representing a ExpressRouteLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteLink.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteLink" /> object. </returns>
@@ -3894,7 +3954,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FirewallPolicy
-        /// <summary> Gets an object representing a FirewallPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallPolicy.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicy" /> object. </returns>
@@ -3910,7 +3973,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FirewallPolicyRuleCollectionGroup
-        /// <summary> Gets an object representing a FirewallPolicyRuleCollectionGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicyRuleCollectionGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallPolicyRuleCollectionGroup.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyRuleCollectionGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroup" /> object. </returns>
@@ -3926,7 +3992,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region IPAllocation
-        /// <summary> Gets an object representing a IPAllocation along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="IPAllocation" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPAllocation.CreateResourceIdentifier" /> to create an <see cref="IPAllocation" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IPAllocation" /> object. </returns>
@@ -3942,7 +4011,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region IPGroup
-        /// <summary> Gets an object representing a IPGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="IPGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IPGroup.CreateResourceIdentifier" /> to create an <see cref="IPGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="IPGroup" /> object. </returns>
@@ -3958,7 +4030,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region LoadBalancer
-        /// <summary> Gets an object representing a LoadBalancer along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadBalancer" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadBalancer.CreateResourceIdentifier" /> to create a <see cref="LoadBalancer" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadBalancer" /> object. </returns>
@@ -3974,7 +4049,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region BackendAddressPool
-        /// <summary> Gets an object representing a BackendAddressPool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BackendAddressPool" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackendAddressPool.CreateResourceIdentifier" /> to create a <see cref="BackendAddressPool" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BackendAddressPool" /> object. </returns>
@@ -3990,7 +4068,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FrontendIPConfiguration
-        /// <summary> Gets an object representing a FrontendIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FrontendIPConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontendIPConfiguration.CreateResourceIdentifier" /> to create a <see cref="FrontendIPConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FrontendIPConfiguration" /> object. </returns>
@@ -4006,7 +4087,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region InboundNatRule
-        /// <summary> Gets an object representing a InboundNatRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="InboundNatRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InboundNatRule.CreateResourceIdentifier" /> to create an <see cref="InboundNatRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="InboundNatRule" /> object. </returns>
@@ -4022,7 +4106,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region LoadBalancingRule
-        /// <summary> Gets an object representing a LoadBalancingRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LoadBalancingRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LoadBalancingRule.CreateResourceIdentifier" /> to create a <see cref="LoadBalancingRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LoadBalancingRule" /> object. </returns>
@@ -4038,7 +4125,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region OutboundRule
-        /// <summary> Gets an object representing a OutboundRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="OutboundRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OutboundRule.CreateResourceIdentifier" /> to create an <see cref="OutboundRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="OutboundRule" /> object. </returns>
@@ -4054,7 +4144,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region Probe
-        /// <summary> Gets an object representing a Probe along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Probe" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Probe.CreateResourceIdentifier" /> to create a <see cref="Probe" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Probe" /> object. </returns>
@@ -4070,7 +4163,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NatGateway
-        /// <summary> Gets an object representing a NatGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NatGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NatGateway.CreateResourceIdentifier" /> to create a <see cref="NatGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NatGateway" /> object. </returns>
@@ -4086,7 +4182,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkInterface
-        /// <summary> Gets an object representing a NetworkInterface along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterface" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterface.CreateResourceIdentifier" /> to create a <see cref="NetworkInterface" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterface" /> object. </returns>
@@ -4102,7 +4201,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkInterfaceIPConfiguration
-        /// <summary> Gets an object representing a NetworkInterfaceIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterfaceIPConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceIPConfiguration.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceIPConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceIPConfiguration" /> object. </returns>
@@ -4118,7 +4220,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkInterfaceTapConfiguration
-        /// <summary> Gets an object representing a NetworkInterfaceTapConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterfaceTapConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceTapConfiguration.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceTapConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkInterfaceTapConfiguration" /> object. </returns>
@@ -4134,7 +4239,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkProfile
-        /// <summary> Gets an object representing a NetworkProfile along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkProfile" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkProfile.CreateResourceIdentifier" /> to create a <see cref="NetworkProfile" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkProfile" /> object. </returns>
@@ -4150,7 +4258,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkSecurityGroup
-        /// <summary> Gets an object representing a NetworkSecurityGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityGroup.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkSecurityGroup" /> object. </returns>
@@ -4166,7 +4277,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region SecurityRule
-        /// <summary> Gets an object representing a SecurityRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityRule.CreateResourceIdentifier" /> to create a <see cref="SecurityRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityRule" /> object. </returns>
@@ -4182,7 +4296,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region DefaultSecurityRule
-        /// <summary> Gets an object representing a DefaultSecurityRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DefaultSecurityRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DefaultSecurityRule.CreateResourceIdentifier" /> to create a <see cref="DefaultSecurityRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DefaultSecurityRule" /> object. </returns>
@@ -4198,7 +4315,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkVirtualAppliance
-        /// <summary> Gets an object representing a NetworkVirtualAppliance along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkVirtualAppliance" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkVirtualAppliance.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualAppliance" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkVirtualAppliance" /> object. </returns>
@@ -4214,7 +4334,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualApplianceSite
-        /// <summary> Gets an object representing a VirtualApplianceSite along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualApplianceSite" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualApplianceSite.CreateResourceIdentifier" /> to create a <see cref="VirtualApplianceSite" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplianceSite" /> object. </returns>
@@ -4230,7 +4353,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkVirtualApplianceSku
-        /// <summary> Gets an object representing a NetworkVirtualApplianceSku along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkVirtualApplianceSku" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkVirtualApplianceSku.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceSku" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkVirtualApplianceSku" /> object. </returns>
@@ -4246,7 +4372,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region NetworkWatcher
-        /// <summary> Gets an object representing a NetworkWatcher along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkWatcher" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkWatcher.CreateResourceIdentifier" /> to create a <see cref="NetworkWatcher" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetworkWatcher" /> object. </returns>
@@ -4262,7 +4391,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PacketCapture
-        /// <summary> Gets an object representing a PacketCapture along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PacketCapture" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PacketCapture.CreateResourceIdentifier" /> to create a <see cref="PacketCapture" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PacketCapture" /> object. </returns>
@@ -4278,7 +4410,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ConnectionMonitor
-        /// <summary> Gets an object representing a ConnectionMonitor along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectionMonitor" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectionMonitor.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitor" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ConnectionMonitor" /> object. </returns>
@@ -4294,7 +4429,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region FlowLog
-        /// <summary> Gets an object representing a FlowLog along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="FlowLog" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FlowLog.CreateResourceIdentifier" /> to create a <see cref="FlowLog" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FlowLog" /> object. </returns>
@@ -4310,7 +4448,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateEndpoint
-        /// <summary> Gets an object representing a PrivateEndpoint along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpoint" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpoint.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpoint" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpoint" /> object. </returns>
@@ -4326,7 +4467,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateDnsZoneGroup
-        /// <summary> Gets an object representing a PrivateDnsZoneGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneGroup.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateDnsZoneGroup" /> object. </returns>
@@ -4342,7 +4486,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateLinkService
-        /// <summary> Gets an object representing a PrivateLinkService along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateLinkService" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateLinkService.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkService" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLinkService" /> object. </returns>
@@ -4358,7 +4505,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -4374,7 +4524,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PublicIPAddress
-        /// <summary> Gets an object representing a PublicIPAddress along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PublicIPAddress" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublicIPAddress.CreateResourceIdentifier" /> to create a <see cref="PublicIPAddress" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicIPAddress" /> object. </returns>
@@ -4390,7 +4543,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region PublicIPPrefix
-        /// <summary> Gets an object representing a PublicIPPrefix along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PublicIPPrefix" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublicIPPrefix.CreateResourceIdentifier" /> to create a <see cref="PublicIPPrefix" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PublicIPPrefix" /> object. </returns>
@@ -4406,7 +4562,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteFilter
-        /// <summary> Gets an object representing a RouteFilter along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteFilter" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteFilter.CreateResourceIdentifier" /> to create a <see cref="RouteFilter" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteFilter" /> object. </returns>
@@ -4422,7 +4581,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteFilterRule
-        /// <summary> Gets an object representing a RouteFilterRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteFilterRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteFilterRule.CreateResourceIdentifier" /> to create a <see cref="RouteFilterRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteFilterRule" /> object. </returns>
@@ -4438,7 +4600,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region RouteTable
-        /// <summary> Gets an object representing a RouteTable along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RouteTable" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RouteTable.CreateResourceIdentifier" /> to create a <see cref="RouteTable" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RouteTable" /> object. </returns>
@@ -4454,7 +4619,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region Route
-        /// <summary> Gets an object representing a Route along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Route" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Route.CreateResourceIdentifier" /> to create a <see cref="Route" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Route" /> object. </returns>
@@ -4470,7 +4638,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region SecurityPartnerProvider
-        /// <summary> Gets an object representing a SecurityPartnerProvider along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityPartnerProvider" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityPartnerProvider.CreateResourceIdentifier" /> to create a <see cref="SecurityPartnerProvider" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityPartnerProvider" /> object. </returns>
@@ -4486,7 +4657,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ServiceEndpointPolicy
-        /// <summary> Gets an object representing a ServiceEndpointPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceEndpointPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEndpointPolicy.CreateResourceIdentifier" /> to create a <see cref="ServiceEndpointPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceEndpointPolicy" /> object. </returns>
@@ -4502,7 +4676,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ServiceEndpointPolicyDefinition
-        /// <summary> Gets an object representing a ServiceEndpointPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceEndpointPolicyDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceEndpointPolicyDefinition.CreateResourceIdentifier" /> to create a <see cref="ServiceEndpointPolicyDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceEndpointPolicyDefinition" /> object. </returns>
@@ -4518,7 +4695,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetwork
-        /// <summary> Gets an object representing a VirtualNetwork along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetwork" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetwork.CreateResourceIdentifier" /> to create a <see cref="VirtualNetwork" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetwork" /> object. </returns>
@@ -4534,7 +4714,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region Subnet
-        /// <summary> Gets an object representing a Subnet along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Subnet" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Subnet.CreateResourceIdentifier" /> to create a <see cref="Subnet" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Subnet" /> object. </returns>
@@ -4550,7 +4733,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkPeering
-        /// <summary> Gets an object representing a VirtualNetworkPeering along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkPeering" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkPeering.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkPeering" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkPeering" /> object. </returns>
@@ -4566,7 +4752,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkGateway
-        /// <summary> Gets an object representing a VirtualNetworkGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkGateway.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGateway" /> object. </returns>
@@ -4582,7 +4771,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkGatewayConnection
-        /// <summary> Gets an object representing a VirtualNetworkGatewayConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkGatewayConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkGatewayConnection.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayConnection" /> object. </returns>
@@ -4598,7 +4790,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region LocalNetworkGateway
-        /// <summary> Gets an object representing a LocalNetworkGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="LocalNetworkGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalNetworkGateway.CreateResourceIdentifier" /> to create a <see cref="LocalNetworkGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="LocalNetworkGateway" /> object. </returns>
@@ -4614,7 +4809,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkGatewayNatRule
-        /// <summary> Gets an object representing a VirtualNetworkGatewayNatRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkGatewayNatRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkGatewayNatRule.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkGatewayNatRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkGatewayNatRule" /> object. </returns>
@@ -4630,7 +4828,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualNetworkTap
-        /// <summary> Gets an object representing a VirtualNetworkTap along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualNetworkTap" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualNetworkTap.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkTap" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualNetworkTap" /> object. </returns>
@@ -4646,7 +4847,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualRouter
-        /// <summary> Gets an object representing a VirtualRouter along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualRouter" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualRouter.CreateResourceIdentifier" /> to create a <see cref="VirtualRouter" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualRouter" /> object. </returns>
@@ -4662,7 +4866,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualRouterPeering
-        /// <summary> Gets an object representing a VirtualRouterPeering along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualRouterPeering" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualRouterPeering.CreateResourceIdentifier" /> to create a <see cref="VirtualRouterPeering" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualRouterPeering" /> object. </returns>
@@ -4678,7 +4885,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualWan
-        /// <summary> Gets an object representing a VirtualWan along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualWan" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualWan.CreateResourceIdentifier" /> to create a <see cref="VirtualWan" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualWan" /> object. </returns>
@@ -4694,7 +4904,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnSite
-        /// <summary> Gets an object representing a VpnSite along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnSite" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnSite.CreateResourceIdentifier" /> to create a <see cref="VpnSite" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSite" /> object. </returns>
@@ -4710,7 +4923,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnSiteLink
-        /// <summary> Gets an object representing a VpnSiteLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnSiteLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnSiteLink.CreateResourceIdentifier" /> to create a <see cref="VpnSiteLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteLink" /> object. </returns>
@@ -4726,7 +4942,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnServerConfiguration
-        /// <summary> Gets an object representing a VpnServerConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnServerConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnServerConfiguration.CreateResourceIdentifier" /> to create a <see cref="VpnServerConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnServerConfiguration" /> object. </returns>
@@ -4742,7 +4961,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualHub
-        /// <summary> Gets an object representing a VirtualHub along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualHub" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualHub.CreateResourceIdentifier" /> to create a <see cref="VirtualHub" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualHub" /> object. </returns>
@@ -4758,7 +4980,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region HubVirtualNetworkConnection
-        /// <summary> Gets an object representing a HubVirtualNetworkConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HubVirtualNetworkConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubVirtualNetworkConnection.CreateResourceIdentifier" /> to create a <see cref="HubVirtualNetworkConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubVirtualNetworkConnection" /> object. </returns>
@@ -4774,7 +4999,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnGateway
-        /// <summary> Gets an object representing a VpnGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnGateway.CreateResourceIdentifier" /> to create a <see cref="VpnGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnGateway" /> object. </returns>
@@ -4790,7 +5018,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnConnection
-        /// <summary> Gets an object representing a VpnConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnConnection.CreateResourceIdentifier" /> to create a <see cref="VpnConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnConnection" /> object. </returns>
@@ -4806,7 +5037,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnSiteLinkConnection
-        /// <summary> Gets an object representing a VpnSiteLinkConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnSiteLinkConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnSiteLinkConnection.CreateResourceIdentifier" /> to create a <see cref="VpnSiteLinkConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnSiteLinkConnection" /> object. </returns>
@@ -4822,7 +5056,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VpnGatewayNatRule
-        /// <summary> Gets an object representing a VpnGatewayNatRule along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VpnGatewayNatRule" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VpnGatewayNatRule.CreateResourceIdentifier" /> to create a <see cref="VpnGatewayNatRule" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VpnGatewayNatRule" /> object. </returns>
@@ -4838,7 +5075,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region P2SVpnGateway
-        /// <summary> Gets an object representing a P2SVpnGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="P2SVpnGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="P2SVpnGateway.CreateResourceIdentifier" /> to create a <see cref="P2SVpnGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="P2SVpnGateway" /> object. </returns>
@@ -4854,7 +5094,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region VirtualHubRouteTableV2
-        /// <summary> Gets an object representing a VirtualHubRouteTableV2 along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualHubRouteTableV2" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualHubRouteTableV2.CreateResourceIdentifier" /> to create a <see cref="VirtualHubRouteTableV2" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualHubRouteTableV2" /> object. </returns>
@@ -4870,7 +5113,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteGateway
-        /// <summary> Gets an object representing a ExpressRouteGateway along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteGateway" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteGateway.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteGateway" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteGateway" /> object. </returns>
@@ -4886,7 +5132,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region ExpressRouteConnection
-        /// <summary> Gets an object representing a ExpressRouteConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="ExpressRouteConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteConnection.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ExpressRouteConnection" /> object. </returns>
@@ -4902,7 +5151,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region BgpConnection
-        /// <summary> Gets an object representing a BgpConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BgpConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BgpConnection.CreateResourceIdentifier" /> to create a <see cref="BgpConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BgpConnection" /> object. </returns>
@@ -4918,7 +5170,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region HubIPConfiguration
-        /// <summary> Gets an object representing a HubIPConfiguration along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HubIPConfiguration" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubIPConfiguration.CreateResourceIdentifier" /> to create a <see cref="HubIPConfiguration" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubIPConfiguration" /> object. </returns>
@@ -4934,7 +5189,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region HubRouteTable
-        /// <summary> Gets an object representing a HubRouteTable along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HubRouteTable" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubRouteTable.CreateResourceIdentifier" /> to create a <see cref="HubRouteTable" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HubRouteTable" /> object. </returns>
@@ -4950,7 +5208,10 @@ namespace Azure.ResourceManager.Network
         #endregion
 
         #region WebApplicationFirewallPolicy
-        /// <summary> Gets an object representing a WebApplicationFirewallPolicy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="WebApplicationFirewallPolicy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebApplicationFirewallPolicy.CreateResourceIdentifier" /> to create a <see cref="WebApplicationFirewallPolicy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebApplicationFirewallPolicy" /> object. </returns>

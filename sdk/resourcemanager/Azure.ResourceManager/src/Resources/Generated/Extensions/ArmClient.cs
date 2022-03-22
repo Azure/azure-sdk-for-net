@@ -13,7 +13,10 @@ namespace Azure.ResourceManager
     public partial class ArmClient
     {
         #region PolicyAssignment
-        /// <summary> Gets an object representing a PolicyAssignment along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicyAssignment" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyAssignment.CreateResourceIdentifier" /> to create a <see cref="PolicyAssignment" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicyAssignment" /> object. </returns>
         public virtual PolicyAssignment GetPolicyAssignment(ResourceIdentifier id)
@@ -23,30 +26,25 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region Provider
-        /// <summary> Gets an object representing a Provider along with the instance operations that can be performed on it but with no data. </summary>
+        #region ResourceProvider
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceProvider" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceProvider.CreateResourceIdentifier" /> to create a <see cref="ResourceProvider" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Provider" /> object. </returns>
-        public virtual Provider GetProvider(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceProvider" /> object. </returns>
+        public virtual ResourceProvider GetResourceProvider(ResourceIdentifier id)
         {
-            Provider.ValidateResourceId(id);
-            return new Provider(this, id);
-        }
-        #endregion
-
-        #region GenericResource
-        /// <summary> Gets an object representing a GenericResource along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GenericResource" /> object. </returns>
-        public virtual GenericResource GetGenericResource(ResourceIdentifier id)
-        {
-            GenericResource.ValidateResourceId(id);
-            return new GenericResource(this, id);
+            ResourceProvider.ValidateResourceId(id);
+            return new ResourceProvider(this, id);
         }
         #endregion
 
         #region ResourceGroup
-        /// <summary> Gets an object representing a ResourceGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroup.CreateResourceIdentifier" /> to create a <see cref="ResourceGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceGroup" /> object. </returns>
         public virtual ResourceGroup GetResourceGroup(ResourceIdentifier id)
@@ -57,7 +55,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region TagResource
-        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TagResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TagResource.CreateResourceIdentifier" /> to create a <see cref="TagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TagResource" /> object. </returns>
         public virtual TagResource GetTagResource(ResourceIdentifier id)
@@ -68,7 +69,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region SubscriptionPolicyDefinition
-        /// <summary> Gets an object representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicyDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicyDefinition.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionPolicyDefinition" /> object. </returns>
         public virtual SubscriptionPolicyDefinition GetSubscriptionPolicyDefinition(ResourceIdentifier id)
@@ -79,7 +83,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region TenantPolicyDefinition
-        /// <summary> Gets an object representing a TenantPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantPolicyDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicyDefinition.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TenantPolicyDefinition" /> object. </returns>
         public virtual TenantPolicyDefinition GetTenantPolicyDefinition(ResourceIdentifier id)
@@ -90,7 +97,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region ManagementGroupPolicyDefinition
-        /// <summary> Gets an object representing a ManagementGroupPolicyDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupPolicyDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupPolicyDefinition.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupPolicyDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagementGroupPolicyDefinition" /> object. </returns>
         public virtual ManagementGroupPolicyDefinition GetManagementGroupPolicyDefinition(ResourceIdentifier id)
@@ -101,7 +111,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region SubscriptionPolicySetDefinition
-        /// <summary> Gets an object representing a SubscriptionPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionPolicySetDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionPolicySetDefinition.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicySetDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionPolicySetDefinition" /> object. </returns>
         public virtual SubscriptionPolicySetDefinition GetSubscriptionPolicySetDefinition(ResourceIdentifier id)
@@ -112,7 +125,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region TenantPolicySetDefinition
-        /// <summary> Gets an object representing a TenantPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantPolicySetDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicySetDefinition.CreateResourceIdentifier" /> to create a <see cref="TenantPolicySetDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TenantPolicySetDefinition" /> object. </returns>
         public virtual TenantPolicySetDefinition GetTenantPolicySetDefinition(ResourceIdentifier id)
@@ -123,7 +139,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region ManagementGroupPolicySetDefinition
-        /// <summary> Gets an object representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementGroupPolicySetDefinition" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupPolicySetDefinition.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupPolicySetDefinition" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagementGroupPolicySetDefinition" /> object. </returns>
         public virtual ManagementGroupPolicySetDefinition GetManagementGroupPolicySetDefinition(ResourceIdentifier id)
@@ -134,7 +153,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region PolicyExemption
-        /// <summary> Gets an object representing a PolicyExemption along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PolicyExemption" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyExemption.CreateResourceIdentifier" /> to create a <see cref="PolicyExemption" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicyExemption" /> object. </returns>
         public virtual PolicyExemption GetPolicyExemption(ResourceIdentifier id)
@@ -145,7 +167,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region DataPolicyManifest
-        /// <summary> Gets an object representing a DataPolicyManifest along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DataPolicyManifest" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataPolicyManifest.CreateResourceIdentifier" /> to create a <see cref="DataPolicyManifest" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataPolicyManifest" /> object. </returns>
         public virtual DataPolicyManifest GetDataPolicyManifest(ResourceIdentifier id)
@@ -156,7 +181,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region ManagementLock
-        /// <summary> Gets an object representing a ManagementLock along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagementLock" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementLock.CreateResourceIdentifier" /> to create a <see cref="ManagementLock" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagementLock" /> object. </returns>
         public virtual ManagementLock GetManagementLock(ResourceIdentifier id)
@@ -167,7 +195,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region ResourceLink
-        /// <summary> Gets an object representing a ResourceLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceLink.CreateResourceIdentifier" /> to create a <see cref="ResourceLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceLink" /> object. </returns>
         public virtual ResourceLink GetResourceLink(ResourceIdentifier id)
@@ -178,7 +209,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region Subscription
-        /// <summary> Gets an object representing a Subscription along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Subscription" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Subscription.CreateResourceIdentifier" /> to create a <see cref="Subscription" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Subscription" /> object. </returns>
         public virtual Subscription GetSubscription(ResourceIdentifier id)
@@ -189,7 +223,10 @@ namespace Azure.ResourceManager
         #endregion
 
         #region Feature
-        /// <summary> Gets an object representing a Feature along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Feature" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Feature.CreateResourceIdentifier" /> to create a <see cref="Feature" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Feature" /> object. </returns>
         public virtual Feature GetFeature(ResourceIdentifier id)

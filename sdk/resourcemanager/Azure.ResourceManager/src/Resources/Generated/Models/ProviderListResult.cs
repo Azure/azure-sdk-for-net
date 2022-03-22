@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ProviderListResult. </summary>
         internal ProviderListResult()
         {
-            Value = new ChangeTrackingList<ProviderData>();
+            Value = new ChangeTrackingList<ResourceProviderData>();
         }
 
         /// <summary> Initializes a new instance of ProviderListResult. </summary>
         /// <param name="value"> An array of resource providers. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ProviderListResult(IReadOnlyList<ProviderData> value, string nextLink)
+        internal ProviderListResult(IReadOnlyList<ResourceProviderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> An array of resource providers. </summary>
-        public IReadOnlyList<ProviderData> Value { get; }
+        public IReadOnlyList<ResourceProviderData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

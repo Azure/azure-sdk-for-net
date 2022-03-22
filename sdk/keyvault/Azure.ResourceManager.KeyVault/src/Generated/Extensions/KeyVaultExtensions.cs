@@ -334,7 +334,10 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         #region VaultKey
-        /// <summary> Gets an object representing a VaultKey along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VaultKey" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VaultKey.CreateResourceIdentifier" /> to create a <see cref="VaultKey" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VaultKey" /> object. </returns>
@@ -350,7 +353,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region VaultKeyVersion
-        /// <summary> Gets an object representing a VaultKeyVersion along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VaultKeyVersion" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VaultKeyVersion.CreateResourceIdentifier" /> to create a <see cref="VaultKeyVersion" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VaultKeyVersion" /> object. </returns>
@@ -366,7 +372,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region Vault
-        /// <summary> Gets an object representing a Vault along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Vault" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Vault.CreateResourceIdentifier" /> to create a <see cref="Vault" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Vault" /> object. </returns>
@@ -382,7 +391,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region DeletedVault
-        /// <summary> Gets an object representing a DeletedVault along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedVault" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedVault.CreateResourceIdentifier" /> to create a <see cref="DeletedVault" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedVault" /> object. </returns>
@@ -398,7 +410,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -414,7 +429,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region ManagedHsm
-        /// <summary> Gets an object representing a ManagedHsm along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedHsm" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedHsm.CreateResourceIdentifier" /> to create a <see cref="ManagedHsm" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ManagedHsm" /> object. </returns>
@@ -430,7 +448,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region DeletedManagedHsm
-        /// <summary> Gets an object representing a DeletedManagedHsm along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedManagedHsm" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedManagedHsm.CreateResourceIdentifier" /> to create a <see cref="DeletedManagedHsm" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeletedManagedHsm" /> object. </returns>
@@ -446,7 +467,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region MhsmPrivateEndpointConnection
-        /// <summary> Gets an object representing a MhsmPrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MhsmPrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MhsmPrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="MhsmPrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MhsmPrivateEndpointConnection" /> object. </returns>
@@ -462,7 +486,10 @@ namespace Azure.ResourceManager.KeyVault
         #endregion
 
         #region Secret
-        /// <summary> Gets an object representing a Secret along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="Secret" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="Secret.CreateResourceIdentifier" /> to create a <see cref="Secret" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="Secret" /> object. </returns>

@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.Storage.Tests
             StorageAccount account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
 
             //get available locations
-            IEnumerable<AzureLocation> locationList = await account.GetAvailableLocationsAsync();
+            IEnumerable<AzureLocation> locationList = (await account.GetAvailableLocationsAsync()).Value;
             Assert.NotNull(locationList);
         }
 
