@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.Tests
                 StorageVersionExtensions.MaxVersion)
         {
             RecordingServiceVersion = StorageVersionExtensions.MaxVersion;
-            LiveServiceVersions = new object[] { StorageVersionExtensions.MaxVersion };
+            LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion };
         }
     }
 }
