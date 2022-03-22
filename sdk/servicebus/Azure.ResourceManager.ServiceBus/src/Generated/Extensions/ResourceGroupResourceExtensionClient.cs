@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServiceBusNamespaceResources in the ServiceBusNamespaceResource. </summary>
+        /// <summary> Gets a collection of ServiceBusNamespaceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ServiceBusNamespaceResources and their operations over a ServiceBusNamespaceResource. </returns>
         public virtual ServiceBusNamespaceCollection GetServiceBusNamespaces()
         {

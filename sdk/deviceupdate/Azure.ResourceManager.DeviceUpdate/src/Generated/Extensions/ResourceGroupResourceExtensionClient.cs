@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeviceUpdateAccountResources in the DeviceUpdateAccountResource. </summary>
+        /// <summary> Gets a collection of DeviceUpdateAccountResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DeviceUpdateAccountResources and their operations over a DeviceUpdateAccountResource. </returns>
         public virtual DeviceUpdateAccountCollection GetDeviceUpdateAccounts()
         {

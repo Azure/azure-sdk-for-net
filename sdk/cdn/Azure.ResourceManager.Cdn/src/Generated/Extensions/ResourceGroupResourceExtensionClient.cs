@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Cdn
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ProfileResources in the ProfileResource. </summary>
+        /// <summary> Gets a collection of ProfileResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public virtual ProfileCollection GetProfiles()
         {
             return GetCachedClient(Client => new ProfileCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the CdnWebApplicationFirewallPolicyResource. </summary>
+        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public virtual CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies()
         {

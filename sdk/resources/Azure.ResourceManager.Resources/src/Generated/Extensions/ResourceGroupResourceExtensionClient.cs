@@ -31,42 +31,42 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the DeploymentResource. </summary>
+        /// <summary> Gets a collection of DeploymentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
         public virtual DeploymentCollection GetDeployments()
         {
             return GetCachedClient(Client => new DeploymentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ApplicationResources in the ApplicationResource. </summary>
+        /// <summary> Gets a collection of ApplicationResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ApplicationResources and their operations over a ApplicationResource. </returns>
         public virtual ApplicationCollection GetApplications()
         {
             return GetCachedClient(Client => new ApplicationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ApplicationDefinitionResources in the ApplicationDefinitionResource. </summary>
+        /// <summary> Gets a collection of ApplicationDefinitionResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ApplicationDefinitionResources and their operations over a ApplicationDefinitionResource. </returns>
         public virtual ApplicationDefinitionCollection GetApplicationDefinitions()
         {
             return GetCachedClient(Client => new ApplicationDefinitionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of JitRequestResources in the JitRequestResource. </summary>
+        /// <summary> Gets a collection of JitRequestResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of JitRequestResources and their operations over a JitRequestResource. </returns>
         public virtual JitRequestCollection GetJitRequests()
         {
             return GetCachedClient(Client => new JitRequestCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DeploymentScriptResources in the DeploymentScriptResource. </summary>
+        /// <summary> Gets a collection of DeploymentScriptResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DeploymentScriptResources and their operations over a DeploymentScriptResource. </returns>
         public virtual DeploymentScriptCollection GetDeploymentScripts()
         {
             return GetCachedClient(Client => new DeploymentScriptCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of TemplateSpecResources in the TemplateSpecResource. </summary>
+        /// <summary> Gets a collection of TemplateSpecResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
         public virtual TemplateSpecCollection GetTemplateSpecs()
         {

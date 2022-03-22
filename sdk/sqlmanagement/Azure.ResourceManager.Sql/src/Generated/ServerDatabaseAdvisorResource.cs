@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RecommendedActionResources in the RecommendedActionResource. </summary>
+        /// <summary> Gets a collection of RecommendedActionResources in the ServerDatabaseAdvisor. </summary>
         /// <returns> An object representing collection of RecommendedActionResources and their operations over a RecommendedActionResource. </returns>
         public virtual RecommendedActionCollection GetRecommendedActions()
         {

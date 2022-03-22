@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VirtualApplianceSiteResources in the VirtualApplianceSiteResource. </summary>
+        /// <summary> Gets a collection of VirtualApplianceSiteResources in the NetworkVirtualAppliance. </summary>
         /// <returns> An object representing collection of VirtualApplianceSiteResources and their operations over a VirtualApplianceSiteResource. </returns>
         public virtual VirtualApplianceSiteCollection GetVirtualApplianceSites()
         {

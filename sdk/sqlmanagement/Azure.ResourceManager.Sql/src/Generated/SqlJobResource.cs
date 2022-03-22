@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServerJobAgentJobExecutionResources in the ServerJobAgentJobExecutionResource. </summary>
+        /// <summary> Gets a collection of ServerJobAgentJobExecutionResources in the SqlJob. </summary>
         /// <returns> An object representing collection of ServerJobAgentJobExecutionResources and their operations over a ServerJobAgentJobExecutionResource. </returns>
         public virtual ServerJobAgentJobExecutionCollection GetServerJobAgentJobExecutions()
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
             return GetServerJobAgentJobExecutions().Get(jobExecutionId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerJobAgentJobStepResources in the ServerJobAgentJobStepResource. </summary>
+        /// <summary> Gets a collection of ServerJobAgentJobStepResources in the SqlJob. </summary>
         /// <returns> An object representing collection of ServerJobAgentJobStepResources and their operations over a ServerJobAgentJobStepResource. </returns>
         public virtual ServerJobAgentJobStepCollection GetServerJobAgentJobSteps()
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql
             return GetServerJobAgentJobSteps().Get(stepName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobVersionResources in the JobVersionResource. </summary>
+        /// <summary> Gets a collection of JobVersionResources in the SqlJob. </summary>
         /// <returns> An object representing collection of JobVersionResources and their operations over a JobVersionResource. </returns>
         public virtual JobVersionCollection GetJobVersions()
         {

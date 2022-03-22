@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Gets a collection of DeletedVaultResources in the DeletedVaultResource. </summary>
+        /// <summary> Gets a collection of DeletedVaultResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedVaultResources and their operations over a DeletedVaultResource. </returns>
         public static DeletedVaultCollection GetDeletedVaults(this SubscriptionResource subscriptionResource)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault
             return subscriptionResource.GetDeletedVaults().Get(location, vaultName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeletedManagedHsmResources in the DeletedManagedHsmResource. </summary>
+        /// <summary> Gets a collection of DeletedManagedHsmResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedManagedHsmResources and their operations over a DeletedManagedHsmResource. </returns>
         public static DeletedManagedHsmCollection GetDeletedManagedHsms(this SubscriptionResource subscriptionResource)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.KeyVault
             );
         }
 
-        /// <summary> Gets a collection of VaultResources in the VaultResource. </summary>
+        /// <summary> Gets a collection of VaultResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VaultResources and their operations over a VaultResource. </returns>
         public static VaultCollection GetVaults(this ResourceGroupResource resourceGroupResource)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.KeyVault
             return resourceGroupResource.GetVaults().Get(vaultName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedHsmResources in the ManagedHsmResource. </summary>
+        /// <summary> Gets a collection of ManagedHsmResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedHsmResources and their operations over a ManagedHsmResource. </returns>
         public static ManagedHsmCollection GetManagedHsms(this ResourceGroupResource resourceGroupResource)

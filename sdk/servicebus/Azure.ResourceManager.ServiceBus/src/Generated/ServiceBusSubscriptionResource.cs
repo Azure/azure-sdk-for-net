@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServiceBusRuleResources in the ServiceBusRuleResource. </summary>
+        /// <summary> Gets a collection of ServiceBusRuleResources in the ServiceBusSubscription. </summary>
         /// <returns> An object representing collection of ServiceBusRuleResources and their operations over a ServiceBusRuleResource. </returns>
         public virtual ServiceBusRuleCollection GetServiceBusRules()
         {

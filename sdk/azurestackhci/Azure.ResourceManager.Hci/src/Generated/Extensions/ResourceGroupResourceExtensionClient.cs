@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of HciClusterResources in the HciClusterResource. </summary>
+        /// <summary> Gets a collection of HciClusterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
         public virtual HciClusterCollection GetHciClusters()
         {

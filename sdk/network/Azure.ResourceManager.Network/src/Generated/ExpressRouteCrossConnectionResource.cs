@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteCrossConnectionPeeringResources in the ExpressRouteCrossConnectionPeeringResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCrossConnectionPeeringResources in the ExpressRouteCrossConnection. </summary>
         /// <returns> An object representing collection of ExpressRouteCrossConnectionPeeringResources and their operations over a ExpressRouteCrossConnectionPeeringResource. </returns>
         public virtual ExpressRouteCrossConnectionPeeringCollection GetExpressRouteCrossConnectionPeerings()
         {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager
 {
     public partial class ArmResource
     {
-        /// <summary> Gets a collection of PolicyAssignmentResources in the PolicyAssignmentResource. </summary>
+        /// <summary> Gets a collection of PolicyAssignmentResources in the ArmResource. </summary>
         /// <returns> An object representing collection of PolicyAssignmentResources and their operations over a PolicyAssignmentResource. </returns>
         public virtual PolicyAssignmentCollection GetPolicyAssignments()
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager
             return new TagResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Resources/tags/default"));
         }
 
-        /// <summary> Gets a collection of PolicyExemptionResources in the PolicyExemptionResource. </summary>
+        /// <summary> Gets a collection of PolicyExemptionResources in the ArmResource. </summary>
         /// <returns> An object representing collection of PolicyExemptionResources and their operations over a PolicyExemptionResource. </returns>
         public virtual PolicyExemptionCollection GetPolicyExemptions()
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager
             return GetPolicyExemptions().Get(policyExemptionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagementLockResources in the ManagementLockResource. </summary>
+        /// <summary> Gets a collection of ManagementLockResources in the ArmResource. </summary>
         /// <returns> An object representing collection of ManagementLockResources and their operations over a ManagementLockResource. </returns>
         public virtual ManagementLockCollection GetManagementLocks()
         {

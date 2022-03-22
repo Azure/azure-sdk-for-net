@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CosmosDBLocationResources in the CosmosDBLocationResource. </summary>
+        /// <summary> Gets a collection of CosmosDBLocationResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public virtual CosmosDBLocationCollection GetCosmosDBLocations()
         {

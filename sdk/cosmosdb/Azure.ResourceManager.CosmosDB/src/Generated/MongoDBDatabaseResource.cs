@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the MongoDBDatabaseResource. </summary>
+        /// <summary> Gets an object representing a DatabaseAccountMongodbDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the MongoDBDatabase. </summary>
         /// <returns> Returns a <see cref="DatabaseAccountMongodbDatabaseThroughputSettingResource" /> object. </returns>
         public virtual DatabaseAccountMongodbDatabaseThroughputSettingResource GetDatabaseAccountMongodbDatabaseThroughputSetting()
         {
             return new DatabaseAccountMongodbDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
-        /// <summary> Gets a collection of MongoDBCollectionResources in the MongoDBCollectionResource. </summary>
+        /// <summary> Gets a collection of MongoDBCollectionResources in the MongoDBDatabase. </summary>
         /// <returns> An object representing collection of MongoDBCollectionResources and their operations over a MongoDBCollectionResource. </returns>
         public virtual MongoDBCollectionCollection GetMongoDBCollections()
         {

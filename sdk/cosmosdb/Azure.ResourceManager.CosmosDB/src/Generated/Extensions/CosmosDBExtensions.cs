@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Gets a collection of CosmosDBLocationResources in the CosmosDBLocationResource. </summary>
+        /// <summary> Gets a collection of CosmosDBLocationResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public static CosmosDBLocationCollection GetCosmosDBLocations(this SubscriptionResource subscriptionResource)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB
             );
         }
 
-        /// <summary> Gets a collection of DatabaseAccountResources in the DatabaseAccountResource. </summary>
+        /// <summary> Gets a collection of DatabaseAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DatabaseAccountResources and their operations over a DatabaseAccountResource. </returns>
         public static DatabaseAccountCollection GetDatabaseAccounts(this ResourceGroupResource resourceGroupResource)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.CosmosDB
             return resourceGroupResource.GetDatabaseAccounts().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ClusterResource. </summary>
+        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
         public static ClusterResourceCollection GetClusterResources(this ResourceGroupResource resourceGroupResource)

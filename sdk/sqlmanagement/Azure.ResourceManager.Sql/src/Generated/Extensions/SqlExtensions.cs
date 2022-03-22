@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql
             );
         }
 
-        /// <summary> Gets a collection of DeletedServerResources in the DeletedServerResource. </summary>
+        /// <summary> Gets a collection of DeletedServerResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
             return subscriptionResource.GetDeletedServers(locationName).Get(deletedServerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionLongTermRetentionBackupResource. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             return subscriptionResource.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionLongTermRetentionManagedInstanceBackupResource. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
             return subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionUsageResource. </summary>
+        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
             return subscriptionResource.GetSubscriptionUsages(locationName).Get(usageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlTimeZoneResources in the SqlTimeZoneResource. </summary>
+        /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The String to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Sql
             );
         }
 
-        /// <summary> Gets a collection of InstanceFailoverGroupResources in the InstanceFailoverGroupResource. </summary>
+        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetInstanceFailoverGroups(locationName).Get(failoverGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of InstancePoolResources in the InstancePoolResource. </summary>
+        /// <summary> Gets a collection of InstancePoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
         public static InstancePoolCollection GetInstancePools(this ResourceGroupResource resourceGroupResource)
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetInstancePools().Get(instancePoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupLongTermRetentionBackupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupLongTermRetentionManagedInstanceBackupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedInstanceResources in the ManagedInstanceResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
         public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerTrustGroupResources in the ServerTrustGroupResource. </summary>
+        /// <summary> Gets a collection of ServerTrustGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualClusterResources in the VirtualClusterResource. </summary>
+        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
         public static VirtualClusterCollection GetVirtualClusters(this ResourceGroupResource resourceGroupResource)
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.Sql
             return resourceGroupResource.GetVirtualClusters().Get(virtualClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlServerResources in the SqlServerResource. </summary>
+        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
         public static SqlServerCollection GetSqlServers(this ResourceGroupResource resourceGroupResource)

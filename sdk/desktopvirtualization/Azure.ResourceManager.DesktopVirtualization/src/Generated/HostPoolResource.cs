@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SessionHostResources in the SessionHostResource. </summary>
+        /// <summary> Gets a collection of SessionHostResources in the HostPool. </summary>
         /// <returns> An object representing collection of SessionHostResources and their operations over a SessionHostResource. </returns>
         public virtual SessionHostCollection GetSessionHosts()
         {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetSessionHosts().Get(sessionHostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MsixPackageResources in the MsixPackageResource. </summary>
+        /// <summary> Gets a collection of MsixPackageResources in the HostPool. </summary>
         /// <returns> An object representing collection of MsixPackageResources and their operations over a MsixPackageResource. </returns>
         public virtual MsixPackageCollection GetMsixPackages()
         {

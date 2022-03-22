@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SecurityRuleResources in the SecurityRuleResource. </summary>
+        /// <summary> Gets a collection of SecurityRuleResources in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of SecurityRuleResources and their operations over a SecurityRuleResource. </returns>
         public virtual SecurityRuleCollection GetSecurityRules()
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
             return GetSecurityRules().Get(securityRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DefaultSecurityRuleResources in the DefaultSecurityRuleResource. </summary>
+        /// <summary> Gets a collection of DefaultSecurityRuleResources in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of DefaultSecurityRuleResources and their operations over a DefaultSecurityRuleResource. </returns>
         public virtual DefaultSecurityRuleCollection GetDefaultSecurityRules()
         {

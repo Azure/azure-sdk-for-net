@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CdnOriginResources in the CdnOriginResource. </summary>
+        /// <summary> Gets a collection of CdnOriginResources in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnOriginResources and their operations over a CdnOriginResource. </returns>
         public virtual CdnOriginCollection GetCdnOrigins()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn
             return GetCdnOrigins().Get(originName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnOriginGroupResources in the CdnOriginGroupResource. </summary>
+        /// <summary> Gets a collection of CdnOriginGroupResources in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnOriginGroupResources and their operations over a CdnOriginGroupResource. </returns>
         public virtual CdnOriginGroupCollection GetCdnOriginGroups()
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Cdn
             return GetCdnOriginGroups().Get(originGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnCustomDomainResources in the CdnCustomDomainResource. </summary>
+        /// <summary> Gets a collection of CdnCustomDomainResources in the CdnEndpoint. </summary>
         /// <returns> An object representing collection of CdnCustomDomainResources and their operations over a CdnCustomDomainResource. </returns>
         public virtual CdnCustomDomainCollection GetCdnCustomDomains()
         {

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VaultKeyResources in the VaultKeyResource. </summary>
+        /// <summary> Gets a collection of VaultKeyResources in the Vault. </summary>
         /// <returns> An object representing collection of VaultKeyResources and their operations over a VaultKeyResource. </returns>
         public virtual VaultKeyCollection GetVaultKeys()
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KeyVault
             return GetVaultKeys().Get(keyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the Vault. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.KeyVault
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecretResources in the SecretResource. </summary>
+        /// <summary> Gets a collection of SecretResources in the Vault. </summary>
         /// <returns> An object representing collection of SecretResources and their operations over a SecretResource. </returns>
         public virtual SecretCollection GetSecrets()
         {

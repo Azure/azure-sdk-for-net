@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HybridIdentityMetadataResources in the HybridIdentityMetadataResource. </summary>
+        /// <summary> Gets a collection of HybridIdentityMetadataResources in the VirtualMachine. </summary>
         /// <returns> An object representing collection of HybridIdentityMetadataResources and their operations over a HybridIdentityMetadataResource. </returns>
         public virtual HybridIdentityMetadataCollection GetAllHybridIdentityMetadata()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAllHybridIdentityMetadata().Get(metadataName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MachineExtensionResources in the MachineExtensionResource. </summary>
+        /// <summary> Gets a collection of MachineExtensionResources in the VirtualMachine. </summary>
         /// <returns> An object representing collection of MachineExtensionResources and their operations over a MachineExtensionResource. </returns>
         public virtual MachineExtensionCollection GetMachineExtensions()
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetMachineExtensions().Get(extensionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GuestAgentResources in the GuestAgentResource. </summary>
+        /// <summary> Gets a collection of GuestAgentResources in the VirtualMachine. </summary>
         /// <returns> An object representing collection of GuestAgentResources and their operations over a GuestAgentResource. </returns>
         public virtual GuestAgentCollection GetGuestAgents()
         {

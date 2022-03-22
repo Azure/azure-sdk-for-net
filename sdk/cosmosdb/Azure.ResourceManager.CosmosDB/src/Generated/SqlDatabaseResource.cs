@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the SqlDatabaseResource. </summary>
+        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseThroughputSettingResource along with the instance operations that can be performed on it in the SqlDatabase. </summary>
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseThroughputSettingResource" /> object. </returns>
         public virtual DatabaseAccountSqlDatabaseThroughputSettingResource GetDatabaseAccountSqlDatabaseThroughputSetting()
         {
             return new DatabaseAccountSqlDatabaseThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
-        /// <summary> Gets a collection of SqlContainerResources in the SqlContainerResource. </summary>
+        /// <summary> Gets a collection of SqlContainerResources in the SqlDatabase. </summary>
         /// <returns> An object representing collection of SqlContainerResources and their operations over a SqlContainerResource. </returns>
         public virtual SqlContainerCollection GetSqlContainers()
         {

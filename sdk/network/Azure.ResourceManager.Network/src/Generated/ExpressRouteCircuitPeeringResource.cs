@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteCircuitConnectionResources in the ExpressRouteCircuitConnectionResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCircuitConnectionResources in the ExpressRouteCircuitPeering. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitConnectionResources and their operations over a ExpressRouteCircuitConnectionResource. </returns>
         public virtual ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             return GetExpressRouteCircuitConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PeerExpressRouteCircuitConnectionResources in the PeerExpressRouteCircuitConnectionResource. </summary>
+        /// <summary> Gets a collection of PeerExpressRouteCircuitConnectionResources in the ExpressRouteCircuitPeering. </summary>
         /// <returns> An object representing collection of PeerExpressRouteCircuitConnectionResources and their operations over a PeerExpressRouteCircuitConnectionResource. </returns>
         public virtual PeerExpressRouteCircuitConnectionCollection GetPeerExpressRouteCircuitConnections()
         {

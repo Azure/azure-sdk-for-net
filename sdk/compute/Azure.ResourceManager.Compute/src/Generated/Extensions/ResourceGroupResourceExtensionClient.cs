@@ -31,105 +31,105 @@ namespace Azure.ResourceManager.Compute
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AvailabilitySetResources in the AvailabilitySetResource. </summary>
+        /// <summary> Gets a collection of AvailabilitySetResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
         public virtual AvailabilitySetCollection GetAvailabilitySets()
         {
             return GetCachedClient(Client => new AvailabilitySetCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ProximityPlacementGroupResources in the ProximityPlacementGroupResource. </summary>
+        /// <summary> Gets a collection of ProximityPlacementGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ProximityPlacementGroupResources and their operations over a ProximityPlacementGroupResource. </returns>
         public virtual ProximityPlacementGroupCollection GetProximityPlacementGroups()
         {
             return GetCachedClient(Client => new ProximityPlacementGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DedicatedHostGroupResources in the DedicatedHostGroupResource. </summary>
+        /// <summary> Gets a collection of DedicatedHostGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DedicatedHostGroupResources and their operations over a DedicatedHostGroupResource. </returns>
         public virtual DedicatedHostGroupCollection GetDedicatedHostGroups()
         {
             return GetCachedClient(Client => new DedicatedHostGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SshPublicKeyResources in the SshPublicKeyResource. </summary>
+        /// <summary> Gets a collection of SshPublicKeyResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
         public virtual SshPublicKeyCollection GetSshPublicKeys()
         {
             return GetCachedClient(Client => new SshPublicKeyCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public virtual VirtualMachineCollection GetVirtualMachines()
         {
             return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the VirtualMachineScaleSetResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
         public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
         {
             return GetCachedClient(Client => new VirtualMachineScaleSetCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ImageResources in the ImageResource. </summary>
+        /// <summary> Gets a collection of ImageResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
         public virtual ImageCollection GetImages()
         {
             return GetCachedClient(Client => new ImageCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RestorePointGroupResources in the RestorePointGroupResource. </summary>
+        /// <summary> Gets a collection of RestorePointGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of RestorePointGroupResources and their operations over a RestorePointGroupResource. </returns>
         public virtual RestorePointGroupCollection GetRestorePointGroups()
         {
             return GetCachedClient(Client => new RestorePointGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CapacityReservationGroupResources in the CapacityReservationGroupResource. </summary>
+        /// <summary> Gets a collection of CapacityReservationGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CapacityReservationGroupResources and their operations over a CapacityReservationGroupResource. </returns>
         public virtual CapacityReservationGroupCollection GetCapacityReservationGroups()
         {
             return GetCachedClient(Client => new CapacityReservationGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DiskResources in the DiskResource. </summary>
+        /// <summary> Gets a collection of DiskResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DiskResources and their operations over a DiskResource. </returns>
         public virtual DiskCollection GetDisks()
         {
             return GetCachedClient(Client => new DiskCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the SnapshotResource. </summary>
+        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
         public virtual SnapshotCollection GetSnapshots()
         {
             return GetCachedClient(Client => new SnapshotCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DiskEncryptionSetResources in the DiskEncryptionSetResource. </summary>
+        /// <summary> Gets a collection of DiskEncryptionSetResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DiskEncryptionSetResources and their operations over a DiskEncryptionSetResource. </returns>
         public virtual DiskEncryptionSetCollection GetDiskEncryptionSets()
         {
             return GetCachedClient(Client => new DiskEncryptionSetCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DiskAccessResources in the DiskAccessResource. </summary>
+        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
         public virtual DiskAccessCollection GetDiskAccesses()
         {
             return GetCachedClient(Client => new DiskAccessCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of GalleryResources in the GalleryResource. </summary>
+        /// <summary> Gets a collection of GalleryResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
         public virtual GalleryCollection GetGalleries()
         {
             return GetCachedClient(Client => new GalleryCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CloudServiceResources in the CloudServiceResource. </summary>
+        /// <summary> Gets a collection of CloudServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
         public virtual CloudServiceCollection GetCloudServices()
         {

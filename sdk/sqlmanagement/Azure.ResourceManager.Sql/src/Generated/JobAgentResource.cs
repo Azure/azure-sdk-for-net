@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of JobCredentialResources in the JobCredentialResource. </summary>
+        /// <summary> Gets a collection of JobCredentialResources in the JobAgent. </summary>
         /// <returns> An object representing collection of JobCredentialResources and their operations over a JobCredentialResource. </returns>
         public virtual JobCredentialCollection GetJobCredentials()
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
             return GetJobCredentials().Get(credentialName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlJobResources in the SqlJobResource. </summary>
+        /// <summary> Gets a collection of SqlJobResources in the JobAgent. </summary>
         /// <returns> An object representing collection of SqlJobResources and their operations over a SqlJobResource. </returns>
         public virtual SqlJobCollection GetSqlJobs()
         {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
             return GetSqlJobs().Get(jobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobTargetGroupResources in the JobTargetGroupResource. </summary>
+        /// <summary> Gets a collection of JobTargetGroupResources in the JobAgent. </summary>
         /// <returns> An object representing collection of JobTargetGroupResources and their operations over a JobTargetGroupResource. </returns>
         public virtual JobTargetGroupCollection GetJobTargetGroups()
         {

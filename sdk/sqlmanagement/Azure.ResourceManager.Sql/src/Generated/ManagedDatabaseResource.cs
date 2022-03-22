@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaResources in the ManagedInstanceDatabaseSchemaResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaResources and their operations over a ManagedInstanceDatabaseSchemaResource. </returns>
         public virtual ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas()
         {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql
             return GetManagedInstanceDatabaseSchemas().Get(schemaName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseVulnerabilityAssessmentResources in the ManagedInstanceDatabaseVulnerabilityAssessmentResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceDatabaseVulnerabilityAssessmentResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseVulnerabilityAssessmentResources and their operations over a ManagedInstanceDatabaseVulnerabilityAssessmentResource. </returns>
         public virtual ManagedInstanceDatabaseVulnerabilityAssessmentCollection GetManagedInstanceDatabaseVulnerabilityAssessments()
         {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
             return GetManagedInstanceDatabaseVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicyResources in the ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicyResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseBackupShortTermRetentionPolicyResources and their operations over a ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource. </returns>
         public virtual ManagedInstanceDatabaseBackupShortTermRetentionPolicyCollection GetManagedInstanceDatabaseBackupShortTermRetentionPolicies()
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
             return GetManagedInstanceDatabaseBackupShortTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseRestoreDetailsResultResources in the ManagedDatabaseRestoreDetailsResultResource. </summary>
+        /// <summary> Gets a collection of ManagedDatabaseRestoreDetailsResultResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedDatabaseRestoreDetailsResultResources and their operations over a ManagedDatabaseRestoreDetailsResultResource. </returns>
         public virtual ManagedDatabaseRestoreDetailsResultCollection GetManagedDatabaseRestoreDetailsResults()
         {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql
             return GetManagedDatabaseRestoreDetailsResults().Get(restoreDetailsName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseSecurityAlertPolicyResources in the ManagedDatabaseSecurityAlertPolicyResource. </summary>
+        /// <summary> Gets a collection of ManagedDatabaseSecurityAlertPolicyResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicyResources and their operations over a ManagedDatabaseSecurityAlertPolicyResource. </returns>
         public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
         {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql
             return GetManagedDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedTransparentDataEncryptionResources in the ManagedTransparentDataEncryptionResource. </summary>
+        /// <summary> Gets a collection of ManagedTransparentDataEncryptionResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedTransparentDataEncryptionResources and their operations over a ManagedTransparentDataEncryptionResource. </returns>
         public virtual ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
         {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Sql
             return GetManagedTransparentDataEncryptions().Get(tdeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedInstanceLongTermRetentionPolicyResources in the ManagedInstanceLongTermRetentionPolicyResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceLongTermRetentionPolicyResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedInstanceLongTermRetentionPolicyResources and their operations over a ManagedInstanceLongTermRetentionPolicyResource. </returns>
         public virtual ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
         {

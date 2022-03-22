@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServerDatabaseSchemaTableColumnResources in the ServerDatabaseSchemaTableColumnResource. </summary>
+        /// <summary> Gets a collection of ServerDatabaseSchemaTableColumnResources in the ServerDatabaseSchemaTable. </summary>
         /// <returns> An object representing collection of ServerDatabaseSchemaTableColumnResources and their operations over a ServerDatabaseSchemaTableColumnResource. </returns>
         public virtual ServerDatabaseSchemaTableColumnCollection GetServerDatabaseSchemaTableColumns()
         {

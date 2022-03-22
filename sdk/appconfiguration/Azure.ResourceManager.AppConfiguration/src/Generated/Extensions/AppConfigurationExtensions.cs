@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
             );
         }
 
-        /// <summary> Gets a collection of ConfigurationStoreResources in the ConfigurationStoreResource. </summary>
+        /// <summary> Gets a collection of ConfigurationStoreResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ConfigurationStoreResources and their operations over a ConfigurationStoreResource. </returns>
         public static ConfigurationStoreCollection GetConfigurationStores(this ResourceGroupResource resourceGroupResource)

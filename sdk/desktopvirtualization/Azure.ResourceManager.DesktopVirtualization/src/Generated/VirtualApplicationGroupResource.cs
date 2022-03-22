@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VirtualApplicationResources in the VirtualApplicationResource. </summary>
+        /// <summary> Gets a collection of VirtualApplicationResources in the VirtualApplicationGroup. </summary>
         /// <returns> An object representing collection of VirtualApplicationResources and their operations over a VirtualApplicationResource. </returns>
         public virtual VirtualApplicationCollection GetVirtualApplications()
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetVirtualApplications().Get(applicationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualDesktopResources in the VirtualDesktopResource. </summary>
+        /// <summary> Gets a collection of VirtualDesktopResources in the VirtualApplicationGroup. </summary>
         /// <returns> An object representing collection of VirtualDesktopResources and their operations over a VirtualDesktopResource. </returns>
         public virtual VirtualDesktopCollection GetVirtualDesktops()
         {

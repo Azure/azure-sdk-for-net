@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ResourceProviderResources in the ResourceProviderResource. </summary>
+        /// <summary> Gets a collection of ResourceProviderResources in the Subscription. </summary>
         /// <returns> An object representing collection of ResourceProviderResources and their operations over a ResourceProviderResource. </returns>
         public virtual ResourceProviderCollection GetResourceProviders()
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources
             return GetResourceProviders().Get(resourceProviderNamespace, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceGroupResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupResources in the Subscription. </summary>
         /// <returns> An object representing collection of ResourceGroupResources and their operations over a ResourceGroupResource. </returns>
         public virtual ResourceGroupCollection GetResourceGroups()
         {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Resources
             return GetResourceGroups().Get(resourceGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionPolicyDefinitionResources in the SubscriptionPolicyDefinitionResource. </summary>
+        /// <summary> Gets a collection of SubscriptionPolicyDefinitionResources in the Subscription. </summary>
         /// <returns> An object representing collection of SubscriptionPolicyDefinitionResources and their operations over a SubscriptionPolicyDefinitionResource. </returns>
         public virtual SubscriptionPolicyDefinitionCollection GetSubscriptionPolicyDefinitions()
         {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources
             return GetSubscriptionPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionPolicySetDefinitionResources in the SubscriptionPolicySetDefinitionResource. </summary>
+        /// <summary> Gets a collection of SubscriptionPolicySetDefinitionResources in the Subscription. </summary>
         /// <returns> An object representing collection of SubscriptionPolicySetDefinitionResources and their operations over a SubscriptionPolicySetDefinitionResource. </returns>
         public virtual SubscriptionPolicySetDefinitionCollection GetSubscriptionPolicySetDefinitions()
         {

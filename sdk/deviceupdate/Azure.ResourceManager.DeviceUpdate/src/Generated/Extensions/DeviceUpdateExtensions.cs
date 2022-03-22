@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             );
         }
 
-        /// <summary> Gets a collection of DeviceUpdateAccountResources in the DeviceUpdateAccountResource. </summary>
+        /// <summary> Gets a collection of DeviceUpdateAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeviceUpdateAccountResources and their operations over a DeviceUpdateAccountResource. </returns>
         public static DeviceUpdateAccountCollection GetDeviceUpdateAccounts(this ResourceGroupResource resourceGroupResource)

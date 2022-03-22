@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VpnConnectionResources in the VpnConnectionResource. </summary>
+        /// <summary> Gets a collection of VpnConnectionResources in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnConnectionResources and their operations over a VpnConnectionResource. </returns>
         public virtual VpnConnectionCollection GetVpnConnections()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             return GetVpnConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnGatewayNatRuleResources in the VpnGatewayNatRuleResource. </summary>
+        /// <summary> Gets a collection of VpnGatewayNatRuleResources in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnGatewayNatRuleResources and their operations over a VpnGatewayNatRuleResource. </returns>
         public virtual VpnGatewayNatRuleCollection GetVpnGatewayNatRules()
         {

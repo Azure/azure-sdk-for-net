@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DeviceUpdateInstanceResources in the DeviceUpdateInstanceResource. </summary>
+        /// <summary> Gets a collection of DeviceUpdateInstanceResources in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of DeviceUpdateInstanceResources and their operations over a DeviceUpdateInstanceResource. </returns>
         public virtual DeviceUpdateInstanceCollection GetDeviceUpdateInstances()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetDeviceUpdateInstances().Get(instanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the PrivateLinkResource. </summary>
+        /// <summary> Gets a collection of PrivateLinkResources in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
         public virtual PrivateLinkCollection GetPrivateLinks()
         {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetPrivateLinks().Get(groupId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionProxyResources in the PrivateEndpointConnectionProxyResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionProxyResources in the DeviceUpdateAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionProxyResources and their operations over a PrivateEndpointConnectionProxyResource. </returns>
         public virtual PrivateEndpointConnectionProxyCollection GetPrivateEndpointConnectionProxies()
         {

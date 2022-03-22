@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SqlDatabaseResources in the SqlDatabaseResource. </summary>
+        /// <summary> Gets a collection of SqlDatabaseResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of SqlDatabaseResources and their operations over a SqlDatabaseResource. </returns>
         public virtual SqlDatabaseCollection GetSqlDatabases()
         {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetSqlDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MongoDBDatabaseResources in the MongoDBDatabaseResource. </summary>
+        /// <summary> Gets a collection of MongoDBDatabaseResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of MongoDBDatabaseResources and their operations over a MongoDBDatabaseResource. </returns>
         public virtual MongoDBDatabaseCollection GetMongoDBDatabases()
         {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetMongoDBDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosTableResources in the CosmosTableResource. </summary>
+        /// <summary> Gets a collection of CosmosTableResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of CosmosTableResources and their operations over a CosmosTableResource. </returns>
         public virtual CosmosTableCollection GetCosmosTables()
         {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCosmosTables().Get(tableName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CassandraKeyspaceResources in the CassandraKeyspaceResource. </summary>
+        /// <summary> Gets a collection of CassandraKeyspaceResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of CassandraKeyspaceResources and their operations over a CassandraKeyspaceResource. </returns>
         public virtual CassandraKeyspaceCollection GetCassandraKeyspaces()
         {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetCassandraKeyspaces().Get(keyspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GremlinDatabaseResources in the GremlinDatabaseResource. </summary>
+        /// <summary> Gets a collection of GremlinDatabaseResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of GremlinDatabaseResources and their operations over a GremlinDatabaseResource. </returns>
         public virtual GremlinDatabaseCollection GetGremlinDatabases()
         {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetGremlinDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the PrivateLinkResource. </summary>
+        /// <summary> Gets a collection of PrivateLinkResources in the DatabaseAccount. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
         public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {

@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             );
         }
 
-        /// <summary> Gets a collection of ResourcePoolResources in the ResourcePoolResource. </summary>
+        /// <summary> Gets a collection of ResourcePoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourcePoolResources and their operations over a ResourcePoolResource. </returns>
         public static ResourcePoolCollection GetResourcePools(this ResourceGroupResource resourceGroupResource)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetResourcePools().Get(resourcePoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VMwareClusterResources in the VMwareClusterResource. </summary>
+        /// <summary> Gets a collection of VMwareClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VMwareClusterResources and their operations over a VMwareClusterResource. </returns>
         public static VMwareClusterCollection GetVMwareClusters(this ResourceGroupResource resourceGroupResource)
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetVMwareClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VMwareHostResources in the VMwareHostResource. </summary>
+        /// <summary> Gets a collection of VMwareHostResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VMwareHostResources and their operations over a VMwareHostResource. </returns>
         public static VMwareHostCollection GetVMwareHosts(this ResourceGroupResource resourceGroupResource)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetVMwareHosts().Get(hostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VMwareDatastoreResources in the VMwareDatastoreResource. </summary>
+        /// <summary> Gets a collection of VMwareDatastoreResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VMwareDatastoreResources and their operations over a VMwareDatastoreResource. </returns>
         public static VMwareDatastoreCollection GetVMwareDatastores(this ResourceGroupResource resourceGroupResource)
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetVMwareDatastores().Get(datastoreName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VCenterResources in the VCenterResource. </summary>
+        /// <summary> Gets a collection of VCenterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
         public static VCenterCollection GetVCenters(this ResourceGroupResource resourceGroupResource)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetVCenters().Get(vcenterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetVirtualMachines().Get(virtualMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineTemplateResources in the VirtualMachineTemplateResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineTemplateResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
         public static VirtualMachineTemplateCollection GetVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return resourceGroupResource.GetVirtualMachineTemplates().Get(virtualMachineTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the VirtualNetworkResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)

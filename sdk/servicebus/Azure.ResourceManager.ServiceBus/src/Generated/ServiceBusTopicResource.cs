@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NamespaceTopicAuthorizationRuleResources in the NamespaceTopicAuthorizationRuleResource. </summary>
+        /// <summary> Gets a collection of NamespaceTopicAuthorizationRuleResources in the ServiceBusTopic. </summary>
         /// <returns> An object representing collection of NamespaceTopicAuthorizationRuleResources and their operations over a NamespaceTopicAuthorizationRuleResource. </returns>
         public virtual NamespaceTopicAuthorizationRuleCollection GetNamespaceTopicAuthorizationRules()
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetNamespaceTopicAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceBusSubscriptionResources in the ServiceBusSubscriptionResource. </summary>
+        /// <summary> Gets a collection of ServiceBusSubscriptionResources in the ServiceBusTopic. </summary>
         /// <returns> An object representing collection of ServiceBusSubscriptionResources and their operations over a ServiceBusSubscriptionResource. </returns>
         public virtual ServiceBusSubscriptionCollection GetServiceBusSubscriptions()
         {

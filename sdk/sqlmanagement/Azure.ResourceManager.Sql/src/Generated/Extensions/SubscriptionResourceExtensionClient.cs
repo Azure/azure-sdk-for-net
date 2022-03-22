@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeletedServerResources in the DeletedServerResource. </summary>
+        /// <summary> Gets a collection of DeletedServerResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
         public virtual DeletedServerCollection GetDeletedServers(string locationName)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
             return new DeletedServerCollection(Client, Id, locationName);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionLongTermRetentionBackupResource. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql
             return new SubscriptionLongTermRetentionBackupCollection(Client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
-        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionLongTermRetentionManagedInstanceBackupResource. </summary>
+        /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
             return new SubscriptionLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
-        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionUsageResource. </summary>
+        /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
         public virtual SubscriptionUsageCollection GetSubscriptionUsages(string locationName)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql
             return new SubscriptionUsageCollection(Client, Id, locationName);
         }
 
-        /// <summary> Gets a collection of SqlTimeZoneResources in the SqlTimeZoneResource. </summary>
+        /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The String to use. </param>
         /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public virtual SqlTimeZoneCollection GetSqlTimeZones(string locationName)

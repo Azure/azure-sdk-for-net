@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ArcSettingResources in the ArcSettingResource. </summary>
+        /// <summary> Gets a collection of ArcSettingResources in the HciCluster. </summary>
         /// <returns> An object representing collection of ArcSettingResources and their operations over a ArcSettingResource. </returns>
         public virtual ArcSettingCollection GetArcSettings()
         {

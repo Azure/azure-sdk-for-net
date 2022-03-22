@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a ScriptLogResource along with the instance operations that can be performed on it in the DeploymentScriptResource. </summary>
+        /// <summary> Gets an object representing a ScriptLogResource along with the instance operations that can be performed on it in the DeploymentScript. </summary>
         /// <returns> Returns a <see cref="ScriptLogResource" /> object. </returns>
         public virtual ScriptLogResource GetScriptLog()
         {

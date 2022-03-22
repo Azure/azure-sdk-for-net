@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Hci
             );
         }
 
-        /// <summary> Gets a collection of HciClusterResources in the HciClusterResource. </summary>
+        /// <summary> Gets a collection of HciClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
         public static HciClusterCollection GetHciClusters(this ResourceGroupResource resourceGroupResource)

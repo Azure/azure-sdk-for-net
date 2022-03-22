@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventHubs
             );
         }
 
-        /// <summary> Gets a collection of EventHubClusterResources in the EventHubClusterResource. </summary>
+        /// <summary> Gets a collection of EventHubClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EventHubClusterResources and their operations over a EventHubClusterResource. </returns>
         public static EventHubClusterCollection GetEventHubClusters(this ResourceGroupResource resourceGroupResource)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.EventHubs
             return resourceGroupResource.GetEventHubClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubNamespaceResources in the EventHubNamespaceResource. </summary>
+        /// <summary> Gets a collection of EventHubNamespaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EventHubNamespaceResources and their operations over a EventHubNamespaceResource. </returns>
         public static EventHubNamespaceCollection GetEventHubNamespaces(this ResourceGroupResource resourceGroupResource)

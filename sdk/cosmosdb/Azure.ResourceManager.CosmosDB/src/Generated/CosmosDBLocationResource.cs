@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RestorableDatabaseAccountResources in the RestorableDatabaseAccountResource. </summary>
+        /// <summary> Gets a collection of RestorableDatabaseAccountResources in the CosmosDBLocation. </summary>
         /// <returns> An object representing collection of RestorableDatabaseAccountResources and their operations over a RestorableDatabaseAccountResource. </returns>
         public virtual RestorableDatabaseAccountCollection GetRestorableDatabaseAccounts()
         {

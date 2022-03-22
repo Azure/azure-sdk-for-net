@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Management
 {
     public partial class ManagementGroupResource
     {
-        /// <summary> Gets a collection of ManagementGroupPolicyDefinitionResources in the ManagementGroupPolicyDefinitionResource. </summary>
+        /// <summary> Gets a collection of ManagementGroupPolicyDefinitionResources in the ManagementGroupResource. </summary>
         /// <returns> An object representing collection of ManagementGroupPolicyDefinitionResources and their operations over a ManagementGroupPolicyDefinitionResource. </returns>
         public virtual ManagementGroupPolicyDefinitionCollection GetManagementGroupPolicyDefinitions()
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Management
             return GetManagementGroupPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagementGroupPolicySetDefinitionResources in the ManagementGroupPolicySetDefinitionResource. </summary>
+        /// <summary> Gets a collection of ManagementGroupPolicySetDefinitionResources in the ManagementGroupResource. </summary>
         /// <returns> An object representing collection of ManagementGroupPolicySetDefinitionResources and their operations over a ManagementGroupPolicySetDefinitionResource. </returns>
         public virtual ManagementGroupPolicySetDefinitionCollection GetManagementGroupPolicySetDefinitions()
         {

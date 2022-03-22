@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceIPConfigurationResources in the NetworkInterfaceIPConfigurationResource. </summary>
+        /// <summary> Gets a collection of NetworkInterfaceIPConfigurationResources in the NetworkInterface. </summary>
         /// <returns> An object representing collection of NetworkInterfaceIPConfigurationResources and their operations over a NetworkInterfaceIPConfigurationResource. </returns>
         public virtual NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
             return GetNetworkInterfaceIPConfigurations().Get(ipConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceTapConfigurationResources in the NetworkInterfaceTapConfigurationResource. </summary>
+        /// <summary> Gets a collection of NetworkInterfaceTapConfigurationResources in the NetworkInterface. </summary>
         /// <returns> An object representing collection of NetworkInterfaceTapConfigurationResources and their operations over a NetworkInterfaceTapConfigurationResource. </returns>
         public virtual NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
         {

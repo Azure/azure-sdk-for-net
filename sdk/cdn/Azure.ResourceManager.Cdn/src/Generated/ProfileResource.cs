@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CdnEndpointResources in the CdnEndpointResource. </summary>
+        /// <summary> Gets a collection of CdnEndpointResources in the Profile. </summary>
         /// <returns> An object representing collection of CdnEndpointResources and their operations over a CdnEndpointResource. </returns>
         public virtual CdnEndpointCollection GetCdnEndpoints()
         {

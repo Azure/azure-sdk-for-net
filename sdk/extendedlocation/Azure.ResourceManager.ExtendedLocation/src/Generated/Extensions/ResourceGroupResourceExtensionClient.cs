@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CustomLocationResources in the CustomLocationResource. </summary>
+        /// <summary> Gets a collection of CustomLocationResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public virtual CustomLocationCollection GetCustomLocations()
         {

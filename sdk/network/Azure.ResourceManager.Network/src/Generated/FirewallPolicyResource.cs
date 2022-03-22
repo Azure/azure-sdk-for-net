@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FirewallPolicyRuleCollectionGroupResources in the FirewallPolicyRuleCollectionGroupResource. </summary>
+        /// <summary> Gets a collection of FirewallPolicyRuleCollectionGroupResources in the FirewallPolicy. </summary>
         /// <returns> An object representing collection of FirewallPolicyRuleCollectionGroupResources and their operations over a FirewallPolicyRuleCollectionGroupResource. </returns>
         public virtual FirewallPolicyRuleCollectionGroupCollection GetFirewallPolicyRuleCollectionGroups()
         {

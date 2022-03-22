@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RouteResources in the RouteResource. </summary>
+        /// <summary> Gets a collection of RouteResources in the RouteTable. </summary>
         /// <returns> An object representing collection of RouteResources and their operations over a RouteResource. </returns>
         public virtual RouteCollection GetRoutes()
         {

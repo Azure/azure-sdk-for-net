@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Hci
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ArcExtensionResources in the ArcExtensionResource. </summary>
+        /// <summary> Gets a collection of ArcExtensionResources in the ArcSetting. </summary>
         /// <returns> An object representing collection of ArcExtensionResources and their operations over a ArcExtensionResource. </returns>
         public virtual ArcExtensionCollection GetArcExtensions()
         {

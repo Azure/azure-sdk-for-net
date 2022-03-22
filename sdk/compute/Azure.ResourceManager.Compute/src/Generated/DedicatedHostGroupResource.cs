@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DedicatedHostResources in the DedicatedHostResource. </summary>
+        /// <summary> Gets a collection of DedicatedHostResources in the DedicatedHostGroup. </summary>
         /// <returns> An object representing collection of DedicatedHostResources and their operations over a DedicatedHostResource. </returns>
         public virtual DedicatedHostCollection GetDedicatedHosts()
         {

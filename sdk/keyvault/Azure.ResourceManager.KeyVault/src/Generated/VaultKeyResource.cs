@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VaultKeyVersionResources in the VaultKeyVersionResource. </summary>
+        /// <summary> Gets a collection of VaultKeyVersionResources in the VaultKey. </summary>
         /// <returns> An object representing collection of VaultKeyVersionResources and their operations over a VaultKeyVersionResource. </returns>
         public virtual VaultKeyVersionCollection GetVaultKeyVersions()
         {

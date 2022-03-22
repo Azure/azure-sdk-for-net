@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources
             );
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the DeploymentResource. </summary>
+        /// <summary> Gets a collection of DeploymentResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
         public static DeploymentCollection GetDeployments(this TenantResource tenantResource)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             );
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the DeploymentResource. </summary>
+        /// <summary> Gets a collection of DeploymentResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
         public static DeploymentCollection GetDeployments(this SubscriptionResource subscriptionResource)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Resources
             );
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the DeploymentResource. </summary>
+        /// <summary> Gets a collection of DeploymentResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
         public static DeploymentCollection GetDeployments(this ResourceGroupResource resourceGroupResource)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Resources
             return resourceGroupResource.GetDeployments().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationResources in the ApplicationResource. </summary>
+        /// <summary> Gets a collection of ApplicationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationResources and their operations over a ApplicationResource. </returns>
         public static ApplicationCollection GetApplications(this ResourceGroupResource resourceGroupResource)
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Resources
             return resourceGroupResource.GetApplications().Get(applicationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationDefinitionResources in the ApplicationDefinitionResource. </summary>
+        /// <summary> Gets a collection of ApplicationDefinitionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationDefinitionResources and their operations over a ApplicationDefinitionResource. </returns>
         public static ApplicationDefinitionCollection GetApplicationDefinitions(this ResourceGroupResource resourceGroupResource)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Resources
             return resourceGroupResource.GetApplicationDefinitions().Get(applicationDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JitRequestResources in the JitRequestResource. </summary>
+        /// <summary> Gets a collection of JitRequestResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of JitRequestResources and their operations over a JitRequestResource. </returns>
         public static JitRequestCollection GetJitRequests(this ResourceGroupResource resourceGroupResource)
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Resources
             return resourceGroupResource.GetJitRequests().Get(jitRequestName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeploymentScriptResources in the DeploymentScriptResource. </summary>
+        /// <summary> Gets a collection of DeploymentScriptResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeploymentScriptResources and their operations over a DeploymentScriptResource. </returns>
         public static DeploymentScriptCollection GetDeploymentScripts(this ResourceGroupResource resourceGroupResource)
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Resources
             return resourceGroupResource.GetDeploymentScripts().Get(scriptName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TemplateSpecResources in the TemplateSpecResource. </summary>
+        /// <summary> Gets a collection of TemplateSpecResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
         public static TemplateSpecCollection GetTemplateSpecs(this ResourceGroupResource resourceGroupResource)
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Resources
             );
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the DeploymentResource. </summary>
+        /// <summary> Gets a collection of DeploymentResources in the ManagementGroupResource. </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
         public static DeploymentCollection GetDeployments(this ManagementGroupResource managementGroupResource)

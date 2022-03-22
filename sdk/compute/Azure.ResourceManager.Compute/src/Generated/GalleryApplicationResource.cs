@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of GalleryApplicationVersionResources in the GalleryApplicationVersionResource. </summary>
+        /// <summary> Gets a collection of GalleryApplicationVersionResources in the GalleryApplication. </summary>
         /// <returns> An object representing collection of GalleryApplicationVersionResources and their operations over a GalleryApplicationVersionResource. </returns>
         public virtual GalleryApplicationVersionCollection GetGalleryApplicationVersions()
         {

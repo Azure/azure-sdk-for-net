@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SyncMemberResources in the SyncMemberResource. </summary>
+        /// <summary> Gets a collection of SyncMemberResources in the SyncGroup. </summary>
         /// <returns> An object representing collection of SyncMemberResources and their operations over a SyncMemberResource. </returns>
         public virtual SyncMemberCollection GetSyncMembers()
         {

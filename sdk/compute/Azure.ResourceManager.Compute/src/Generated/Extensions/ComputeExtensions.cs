@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             );
         }
 
-        /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the VirtualMachineExtensionImageResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetVirtualMachineExtensionImages(location, publisherName).Get(type, version, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SharedGalleryResources in the SharedGalleryResource. </summary>
+        /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Resource location. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetSharedGalleries(location).Get(galleryUniqueName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OSVersionResources in the OSVersionResource. </summary>
+        /// <summary> Gets a collection of OSVersionResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetOSVersions(location).Get(osVersionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OSFamilyResources in the OSFamilyResource. </summary>
+        /// <summary> Gets a collection of OSFamilyResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.Compute
             );
         }
 
-        /// <summary> Gets a collection of AvailabilitySetResources in the AvailabilitySetResource. </summary>
+        /// <summary> Gets a collection of AvailabilitySetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
         public static AvailabilitySetCollection GetAvailabilitySets(this ResourceGroupResource resourceGroupResource)
@@ -1579,7 +1579,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetAvailabilitySets().Get(availabilitySetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProximityPlacementGroupResources in the ProximityPlacementGroupResource. </summary>
+        /// <summary> Gets a collection of ProximityPlacementGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProximityPlacementGroupResources and their operations over a ProximityPlacementGroupResource. </returns>
         public static ProximityPlacementGroupCollection GetProximityPlacementGroups(this ResourceGroupResource resourceGroupResource)
@@ -1619,7 +1619,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetProximityPlacementGroups().Get(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DedicatedHostGroupResources in the DedicatedHostGroupResource. </summary>
+        /// <summary> Gets a collection of DedicatedHostGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DedicatedHostGroupResources and their operations over a DedicatedHostGroupResource. </returns>
         public static DedicatedHostGroupCollection GetDedicatedHostGroups(this ResourceGroupResource resourceGroupResource)
@@ -1659,7 +1659,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SshPublicKeyResources in the SshPublicKeyResource. </summary>
+        /// <summary> Gets a collection of SshPublicKeyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
         public static SshPublicKeyCollection GetSshPublicKeys(this ResourceGroupResource resourceGroupResource)
@@ -1697,7 +1697,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetVirtualMachines().Get(vmName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the VirtualMachineScaleSetResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
         public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroupResource resourceGroupResource)
@@ -1777,7 +1777,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ImageResources in the ImageResource. </summary>
+        /// <summary> Gets a collection of ImageResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ImageResources and their operations over a ImageResource. </returns>
         public static ImageCollection GetImages(this ResourceGroupResource resourceGroupResource)
@@ -1817,7 +1817,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetImages().Get(imageName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RestorePointGroupResources in the RestorePointGroupResource. </summary>
+        /// <summary> Gets a collection of RestorePointGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RestorePointGroupResources and their operations over a RestorePointGroupResource. </returns>
         public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroupResource resourceGroupResource)
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CapacityReservationGroupResources in the CapacityReservationGroupResource. </summary>
+        /// <summary> Gets a collection of CapacityReservationGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CapacityReservationGroupResources and their operations over a CapacityReservationGroupResource. </returns>
         public static CapacityReservationGroupCollection GetCapacityReservationGroups(this ResourceGroupResource resourceGroupResource)
@@ -1897,7 +1897,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskResources in the DiskResource. </summary>
+        /// <summary> Gets a collection of DiskResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskResources and their operations over a DiskResource. </returns>
         public static DiskCollection GetDisks(this ResourceGroupResource resourceGroupResource)
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetDisks().Get(diskName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the SnapshotResource. </summary>
+        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
         public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
@@ -1973,7 +1973,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetSnapshots().Get(snapshotName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskEncryptionSetResources in the DiskEncryptionSetResource. </summary>
+        /// <summary> Gets a collection of DiskEncryptionSetResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskEncryptionSetResources and their operations over a DiskEncryptionSetResource. </returns>
         public static DiskEncryptionSetCollection GetDiskEncryptionSets(this ResourceGroupResource resourceGroupResource)
@@ -2011,7 +2011,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskAccessResources in the DiskAccessResource. </summary>
+        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
         public static DiskAccessCollection GetDiskAccesses(this ResourceGroupResource resourceGroupResource)
@@ -2049,7 +2049,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetDiskAccesses().Get(diskAccessName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GalleryResources in the GalleryResource. </summary>
+        /// <summary> Gets a collection of GalleryResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
         public static GalleryCollection GetGalleries(this ResourceGroupResource resourceGroupResource)
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.Compute
             return resourceGroupResource.GetGalleries().Get(galleryName, select, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServiceResources in the CloudServiceResource. </summary>
+        /// <summary> Gets a collection of CloudServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
         public static CloudServiceCollection GetCloudServices(this ResourceGroupResource resourceGroupResource)

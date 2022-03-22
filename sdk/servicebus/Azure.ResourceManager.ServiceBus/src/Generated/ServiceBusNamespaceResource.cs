@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it in the ServiceBusNamespaceResource. </summary>
+        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it in the ServiceBusNamespace. </summary>
         /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
         public virtual NetworkRuleSetResource GetNetworkRuleSet()
         {
             return new NetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DisasterRecoveryResources in the DisasterRecoveryResource. </summary>
+        /// <summary> Gets a collection of DisasterRecoveryResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of DisasterRecoveryResources and their operations over a DisasterRecoveryResource. </returns>
         public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetDisasterRecoveries().Get(alias, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the NamespaceAuthorizationRuleResource. </summary>
+        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of NamespaceAuthorizationRuleResources and their operations over a NamespaceAuthorizationRuleResource. </returns>
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MigrationConfigPropertiesResources in the MigrationConfigPropertiesResource. </summary>
+        /// <summary> Gets a collection of MigrationConfigPropertiesResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of MigrationConfigPropertiesResources and their operations over a MigrationConfigPropertiesResource. </returns>
         public virtual MigrationConfigPropertiesCollection GetMigrationConfigProperties()
         {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetMigrationConfigProperties().Get(configName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceBusQueueResources in the ServiceBusQueueResource. </summary>
+        /// <summary> Gets a collection of ServiceBusQueueResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of ServiceBusQueueResources and their operations over a ServiceBusQueueResource. </returns>
         public virtual ServiceBusQueueCollection GetServiceBusQueues()
         {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ServiceBus
             return GetServiceBusQueues().Get(queueName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceBusTopicResources in the ServiceBusTopicResource. </summary>
+        /// <summary> Gets a collection of ServiceBusTopicResources in the ServiceBusNamespace. </summary>
         /// <returns> An object representing collection of ServiceBusTopicResources and their operations over a ServiceBusTopicResource. </returns>
         public virtual ServiceBusTopicCollection GetServiceBusTopics()
         {

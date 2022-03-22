@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Cdn
             );
         }
 
-        /// <summary> Gets a collection of ProfileResources in the ProfileResource. </summary>
+        /// <summary> Gets a collection of ProfileResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public static ProfileCollection GetProfiles(this ResourceGroupResource resourceGroupResource)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Cdn
             return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the CdnWebApplicationFirewallPolicyResource. </summary>
+        /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)

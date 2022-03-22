@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of InstanceFailoverGroupResources in the InstanceFailoverGroupResource. </summary>
+        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
         public virtual InstanceFailoverGroupCollection GetInstanceFailoverGroups(string locationName)
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Sql
             return new InstanceFailoverGroupCollection(Client, Id, locationName);
         }
 
-        /// <summary> Gets a collection of InstancePoolResources in the InstancePoolResource. </summary>
+        /// <summary> Gets a collection of InstancePoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
         public virtual InstancePoolCollection GetInstancePools()
         {
             return GetCachedClient(Client => new InstancePoolCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupLongTermRetentionBackupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
             return new ResourceGroupLongTermRetentionBackupCollection(Client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
-        /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupLongTermRetentionManagedInstanceBackupResource. </summary>
+        /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupResource. </summary>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the managed database. </param>
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Sql
             return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
-        /// <summary> Gets a collection of ManagedInstanceResources in the ManagedInstanceResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
         public virtual ManagedInstanceCollection GetManagedInstances()
         {
             return GetCachedClient(Client => new ManagedInstanceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ServerTrustGroupResources in the ServerTrustGroupResource. </summary>
+        /// <summary> Gets a collection of ServerTrustGroupResources in the ResourceGroupResource. </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <returns> An object representing collection of ServerTrustGroupResources and their operations over a ServerTrustGroupResource. </returns>
         public virtual ServerTrustGroupCollection GetServerTrustGroups(string locationName)
@@ -98,14 +98,14 @@ namespace Azure.ResourceManager.Sql
             return new ServerTrustGroupCollection(Client, Id, locationName);
         }
 
-        /// <summary> Gets a collection of VirtualClusterResources in the VirtualClusterResource. </summary>
+        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
         public virtual VirtualClusterCollection GetVirtualClusters()
         {
             return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SqlServerResources in the SqlServerResource. </summary>
+        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
         public virtual SqlServerCollection GetSqlServers()
         {

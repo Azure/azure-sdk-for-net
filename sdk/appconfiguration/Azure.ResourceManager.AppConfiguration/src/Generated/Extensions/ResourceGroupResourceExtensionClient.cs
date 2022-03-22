@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ConfigurationStoreResources in the ConfigurationStoreResource. </summary>
+        /// <summary> Gets a collection of ConfigurationStoreResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ConfigurationStoreResources and their operations over a ConfigurationStoreResource. </returns>
         public virtual ConfigurationStoreCollection GetConfigurationStores()
         {

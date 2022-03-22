@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of BackendAddressPoolResources in the BackendAddressPoolResource. </summary>
+        /// <summary> Gets a collection of BackendAddressPoolResources in the LoadBalancer. </summary>
         /// <returns> An object representing collection of BackendAddressPoolResources and their operations over a BackendAddressPoolResource. </returns>
         public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             return GetBackendAddressPools().Get(backendAddressPoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FrontendIPConfigurationResources in the FrontendIPConfigurationResource. </summary>
+        /// <summary> Gets a collection of FrontendIPConfigurationResources in the LoadBalancer. </summary>
         /// <returns> An object representing collection of FrontendIPConfigurationResources and their operations over a FrontendIPConfigurationResource. </returns>
         public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             return GetFrontendIPConfigurations().Get(frontendIPConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of InboundNatRuleResources in the InboundNatRuleResource. </summary>
+        /// <summary> Gets a collection of InboundNatRuleResources in the LoadBalancer. </summary>
         /// <returns> An object representing collection of InboundNatRuleResources and their operations over a InboundNatRuleResource. </returns>
         public virtual InboundNatRuleCollection GetInboundNatRules()
         {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
             return GetInboundNatRules().Get(inboundNatRuleName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LoadBalancingRuleResources in the LoadBalancingRuleResource. </summary>
+        /// <summary> Gets a collection of LoadBalancingRuleResources in the LoadBalancer. </summary>
         /// <returns> An object representing collection of LoadBalancingRuleResources and their operations over a LoadBalancingRuleResource. </returns>
         public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
             return GetLoadBalancingRules().Get(loadBalancingRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OutboundRuleResources in the OutboundRuleResource. </summary>
+        /// <summary> Gets a collection of OutboundRuleResources in the LoadBalancer. </summary>
         /// <returns> An object representing collection of OutboundRuleResources and their operations over a OutboundRuleResource. </returns>
         public virtual OutboundRuleCollection GetOutboundRules()
         {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
             return GetOutboundRules().Get(outboundRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ProbeResources in the ProbeResource. </summary>
+        /// <summary> Gets a collection of ProbeResources in the LoadBalancer. </summary>
         /// <returns> An object representing collection of ProbeResources and their operations over a ProbeResource. </returns>
         public virtual ProbeCollection GetProbes()
         {

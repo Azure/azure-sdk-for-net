@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of PacketCaptureResources in the PacketCaptureResource. </summary>
+        /// <summary> Gets a collection of PacketCaptureResources in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of PacketCaptureResources and their operations over a PacketCaptureResource. </returns>
         public virtual PacketCaptureCollection GetPacketCaptures()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             return GetPacketCaptures().Get(packetCaptureName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConnectionMonitorResources in the ConnectionMonitorResource. </summary>
+        /// <summary> Gets a collection of ConnectionMonitorResources in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of ConnectionMonitorResources and their operations over a ConnectionMonitorResource. </returns>
         public virtual ConnectionMonitorCollection GetConnectionMonitors()
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
             return GetConnectionMonitors().Get(connectionMonitorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FlowLogResources in the FlowLogResource. </summary>
+        /// <summary> Gets a collection of FlowLogResources in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of FlowLogResources and their operations over a FlowLogResource. </returns>
         public virtual FlowLogCollection GetFlowLogs()
         {

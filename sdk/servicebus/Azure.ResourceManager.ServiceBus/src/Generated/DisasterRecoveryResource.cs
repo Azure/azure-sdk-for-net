@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceBus
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NamespaceDisasterRecoveryAuthorizationRuleResources in the NamespaceDisasterRecoveryAuthorizationRuleResource. </summary>
+        /// <summary> Gets a collection of NamespaceDisasterRecoveryAuthorizationRuleResources in the DisasterRecovery. </summary>
         /// <returns> An object representing collection of NamespaceDisasterRecoveryAuthorizationRuleResources and their operations over a NamespaceDisasterRecoveryAuthorizationRuleResource. </returns>
         public virtual NamespaceDisasterRecoveryAuthorizationRuleCollection GetNamespaceDisasterRecoveryAuthorizationRules()
         {

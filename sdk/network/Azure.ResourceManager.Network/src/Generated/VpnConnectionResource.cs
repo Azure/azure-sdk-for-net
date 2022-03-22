@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VpnSiteLinkConnectionResources in the VpnSiteLinkConnectionResource. </summary>
+        /// <summary> Gets a collection of VpnSiteLinkConnectionResources in the VpnConnection. </summary>
         /// <returns> An object representing collection of VpnSiteLinkConnectionResources and their operations over a VpnSiteLinkConnectionResource. </returns>
         public virtual VpnSiteLinkConnectionCollection GetVpnSiteLinkConnections()
         {

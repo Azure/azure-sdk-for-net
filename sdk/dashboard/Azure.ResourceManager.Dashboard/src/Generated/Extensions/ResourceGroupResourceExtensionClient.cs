@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Dashboard
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GrafanaResources in the GrafanaResource. </summary>
+        /// <summary> Gets a collection of GrafanaResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of GrafanaResources and their operations over a GrafanaResource. </returns>
         public virtual GrafanaResourceCollection GetGrafanaResources()
         {

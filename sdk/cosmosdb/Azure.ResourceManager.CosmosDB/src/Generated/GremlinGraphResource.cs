@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseGraphThroughputSettingResource along with the instance operations that can be performed on it in the GremlinGraphResource. </summary>
+        /// <summary> Gets an object representing a DatabaseAccountGremlinDatabaseGraphThroughputSettingResource along with the instance operations that can be performed on it in the GremlinGraph. </summary>
         /// <returns> Returns a <see cref="DatabaseAccountGremlinDatabaseGraphThroughputSettingResource" /> object. </returns>
         public virtual DatabaseAccountGremlinDatabaseGraphThroughputSettingResource GetDatabaseAccountGremlinDatabaseGraphThroughputSetting()
         {

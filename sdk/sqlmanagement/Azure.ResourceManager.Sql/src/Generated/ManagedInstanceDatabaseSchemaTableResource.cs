@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumnResources in the ManagedInstanceDatabaseSchemaTableColumnResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumnResources in the ManagedInstanceDatabaseSchemaTable. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableColumnResources and their operations over a ManagedInstanceDatabaseSchemaTableColumnResource. </returns>
         public virtual ManagedInstanceDatabaseSchemaTableColumnCollection GetManagedInstanceDatabaseSchemaTableColumns()
         {

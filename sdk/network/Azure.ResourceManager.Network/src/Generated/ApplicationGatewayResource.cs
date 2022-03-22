@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayPrivateEndpointConnectionResources in the ApplicationGatewayPrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of ApplicationGatewayPrivateEndpointConnectionResources in the ApplicationGateway. </summary>
         /// <returns> An object representing collection of ApplicationGatewayPrivateEndpointConnectionResources and their operations over a ApplicationGatewayPrivateEndpointConnectionResource. </returns>
         public virtual ApplicationGatewayPrivateEndpointConnectionCollection GetApplicationGatewayPrivateEndpointConnections()
         {

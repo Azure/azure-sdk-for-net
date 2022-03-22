@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of WorkloadClassifierResources in the WorkloadClassifierResource. </summary>
+        /// <summary> Gets a collection of WorkloadClassifierResources in the WorkloadGroup. </summary>
         /// <returns> An object representing collection of WorkloadClassifierResources and their operations over a WorkloadClassifierResource. </returns>
         public virtual WorkloadClassifierCollection GetWorkloadClassifiers()
         {

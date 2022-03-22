@@ -55,301 +55,301 @@ namespace Azure.ResourceManager.Network
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayResources in the ApplicationGatewayResource. </summary>
+        /// <summary> Gets a collection of ApplicationGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
         public virtual ApplicationGatewayCollection GetApplicationGateways()
         {
             return GetCachedClient(Client => new ApplicationGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ApplicationSecurityGroupResource. </summary>
+        /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
         public virtual ApplicationSecurityGroupCollection GetApplicationSecurityGroups()
         {
             return GetCachedClient(Client => new ApplicationSecurityGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AzureFirewallResources in the AzureFirewallResource. </summary>
+        /// <summary> Gets a collection of AzureFirewallResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
         public virtual AzureFirewallCollection GetAzureFirewalls()
         {
             return GetCachedClient(Client => new AzureFirewallCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of BastionHostResources in the BastionHostResource. </summary>
+        /// <summary> Gets a collection of BastionHostResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
         public virtual BastionHostCollection GetBastionHosts()
         {
             return GetCachedClient(Client => new BastionHostCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CustomIPPrefixResources in the CustomIPPrefixResource. </summary>
+        /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
         public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
         {
             return GetCachedClient(Client => new CustomIPPrefixCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DdosCustomPolicyResources in the DdosCustomPolicyResource. </summary>
+        /// <summary> Gets a collection of DdosCustomPolicyResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
         public virtual DdosCustomPolicyCollection GetDdosCustomPolicies()
         {
             return GetCachedClient(Client => new DdosCustomPolicyCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DdosProtectionPlanResources in the DdosProtectionPlanResource. </summary>
+        /// <summary> Gets a collection of DdosProtectionPlanResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
         public virtual DdosProtectionPlanCollection GetDdosProtectionPlans()
         {
             return GetCachedClient(Client => new DdosProtectionPlanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DscpConfigurationResources in the DscpConfigurationResource. </summary>
+        /// <summary> Gets a collection of DscpConfigurationResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
         public virtual DscpConfigurationCollection GetDscpConfigurations()
         {
             return GetCachedClient(Client => new DscpConfigurationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteCircuitResources in the ExpressRouteCircuitResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCircuitResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
         public virtual ExpressRouteCircuitCollection GetExpressRouteCircuits()
         {
             return GetCachedClient(Client => new ExpressRouteCircuitCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ExpressRouteCrossConnectionResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
         public virtual ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections()
         {
             return GetCachedClient(Client => new ExpressRouteCrossConnectionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ExpressRoutePortResources in the ExpressRoutePortResource. </summary>
+        /// <summary> Gets a collection of ExpressRoutePortResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
         public virtual ExpressRoutePortCollection GetExpressRoutePorts()
         {
             return GetCachedClient(Client => new ExpressRoutePortCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of FirewallPolicyResources in the FirewallPolicyResource. </summary>
+        /// <summary> Gets a collection of FirewallPolicyResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
         public virtual FirewallPolicyCollection GetFirewallPolicies()
         {
             return GetCachedClient(Client => new FirewallPolicyCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPAllocationResources in the IPAllocationResource. </summary>
+        /// <summary> Gets a collection of IPAllocationResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
         public virtual IPAllocationCollection GetIPAllocations()
         {
             return GetCachedClient(Client => new IPAllocationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPGroupResources in the IPGroupResource. </summary>
+        /// <summary> Gets a collection of IPGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
         public virtual IPGroupCollection GetIPGroups()
         {
             return GetCachedClient(Client => new IPGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of LoadBalancerResources in the LoadBalancerResource. </summary>
+        /// <summary> Gets a collection of LoadBalancerResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
         public virtual LoadBalancerCollection GetLoadBalancers()
         {
             return GetCachedClient(Client => new LoadBalancerCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NatGatewayResources in the NatGatewayResource. </summary>
+        /// <summary> Gets a collection of NatGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
         public virtual NatGatewayCollection GetNatGateways()
         {
             return GetCachedClient(Client => new NatGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceResources in the NetworkInterfaceResource. </summary>
+        /// <summary> Gets a collection of NetworkInterfaceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public virtual NetworkInterfaceCollection GetNetworkInterfaces()
         {
             return GetCachedClient(Client => new NetworkInterfaceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkProfileResources in the NetworkProfileResource. </summary>
+        /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
         public virtual NetworkProfileCollection GetNetworkProfiles()
         {
             return GetCachedClient(Client => new NetworkProfileCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkSecurityGroupResources in the NetworkSecurityGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkSecurityGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
         public virtual NetworkSecurityGroupCollection GetNetworkSecurityGroups()
         {
             return GetCachedClient(Client => new NetworkSecurityGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceResources in the NetworkVirtualApplianceResource. </summary>
+        /// <summary> Gets a collection of NetworkVirtualApplianceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
         public virtual NetworkVirtualApplianceCollection GetNetworkVirtualAppliances()
         {
             return GetCachedClient(Client => new NetworkVirtualApplianceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkWatcherResources in the NetworkWatcherResource. </summary>
+        /// <summary> Gets a collection of NetworkWatcherResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
         public virtual NetworkWatcherCollection GetNetworkWatchers()
         {
             return GetCachedClient(Client => new NetworkWatcherCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateEndpointResources in the PrivateEndpointResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
         public virtual PrivateEndpointCollection GetPrivateEndpoints()
         {
             return GetCachedClient(Client => new PrivateEndpointCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateLinkServiceResources in the PrivateLinkServiceResource. </summary>
+        /// <summary> Gets a collection of PrivateLinkServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
         public virtual PrivateLinkServiceCollection GetPrivateLinkServices()
         {
             return GetCachedClient(Client => new PrivateLinkServiceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PublicIPAddressResources in the PublicIPAddressResource. </summary>
+        /// <summary> Gets a collection of PublicIPAddressResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
         public virtual PublicIPAddressCollection GetPublicIPAddresses()
         {
             return GetCachedClient(Client => new PublicIPAddressCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PublicIPPrefixResources in the PublicIPPrefixResource. </summary>
+        /// <summary> Gets a collection of PublicIPPrefixResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
         public virtual PublicIPPrefixCollection GetPublicIPPrefixes()
         {
             return GetCachedClient(Client => new PublicIPPrefixCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RouteFilterResources in the RouteFilterResource. </summary>
+        /// <summary> Gets a collection of RouteFilterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
         public virtual RouteFilterCollection GetRouteFilters()
         {
             return GetCachedClient(Client => new RouteFilterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RouteTableResources in the RouteTableResource. </summary>
+        /// <summary> Gets a collection of RouteTableResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
         public virtual RouteTableCollection GetRouteTables()
         {
             return GetCachedClient(Client => new RouteTableCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SecurityPartnerProviderResources in the SecurityPartnerProviderResource. </summary>
+        /// <summary> Gets a collection of SecurityPartnerProviderResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
         public virtual SecurityPartnerProviderCollection GetSecurityPartnerProviders()
         {
             return GetCachedClient(Client => new SecurityPartnerProviderCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ServiceEndpointPolicyResource. </summary>
+        /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
         public virtual ServiceEndpointPolicyCollection GetServiceEndpointPolicies()
         {
             return GetCachedClient(Client => new ServiceEndpointPolicyCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the VirtualNetworkResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {
             return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworkGatewayResources in the VirtualNetworkGatewayResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
         public virtual VirtualNetworkGatewayCollection GetVirtualNetworkGateways()
         {
             return GetCachedClient(Client => new VirtualNetworkGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the VirtualNetworkGatewayConnectionResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
         public virtual VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections()
         {
             return GetCachedClient(Client => new VirtualNetworkGatewayConnectionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of LocalNetworkGatewayResources in the LocalNetworkGatewayResource. </summary>
+        /// <summary> Gets a collection of LocalNetworkGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
         public virtual LocalNetworkGatewayCollection GetLocalNetworkGateways()
         {
             return GetCachedClient(Client => new LocalNetworkGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworkTapResources in the VirtualNetworkTapResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkTapResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
         public virtual VirtualNetworkTapCollection GetVirtualNetworkTaps()
         {
             return GetCachedClient(Client => new VirtualNetworkTapCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualRouterResources in the VirtualRouterResource. </summary>
+        /// <summary> Gets a collection of VirtualRouterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
         public virtual VirtualRouterCollection GetVirtualRouters()
         {
             return GetCachedClient(Client => new VirtualRouterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualWanResources in the VirtualWanResource. </summary>
+        /// <summary> Gets a collection of VirtualWanResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
         public virtual VirtualWanCollection GetVirtualWans()
         {
             return GetCachedClient(Client => new VirtualWanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VpnSiteResources in the VpnSiteResource. </summary>
+        /// <summary> Gets a collection of VpnSiteResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
         public virtual VpnSiteCollection GetVpnSites()
         {
             return GetCachedClient(Client => new VpnSiteCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VpnServerConfigurationResources in the VpnServerConfigurationResource. </summary>
+        /// <summary> Gets a collection of VpnServerConfigurationResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
         public virtual VpnServerConfigurationCollection GetVpnServerConfigurations()
         {
             return GetCachedClient(Client => new VpnServerConfigurationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualHubResources in the VirtualHubResource. </summary>
+        /// <summary> Gets a collection of VirtualHubResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
         public virtual VirtualHubCollection GetVirtualHubs()
         {
             return GetCachedClient(Client => new VirtualHubCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VpnGatewayResources in the VpnGatewayResource. </summary>
+        /// <summary> Gets a collection of VpnGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
         public virtual VpnGatewayCollection GetVpnGateways()
         {
             return GetCachedClient(Client => new VpnGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of P2SVpnGatewayResources in the P2SVpnGatewayResource. </summary>
+        /// <summary> Gets a collection of P2SVpnGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
         public virtual P2SVpnGatewayCollection GetP2SVpnGateways()
         {
             return GetCachedClient(Client => new P2SVpnGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteGatewayResources in the ExpressRouteGatewayResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteGatewayResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
         public virtual ExpressRouteGatewayCollection GetExpressRouteGateways()
         {
             return GetCachedClient(Client => new ExpressRouteGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the WebApplicationFirewallPolicyResource. </summary>
+        /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
         public virtual WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies()
         {

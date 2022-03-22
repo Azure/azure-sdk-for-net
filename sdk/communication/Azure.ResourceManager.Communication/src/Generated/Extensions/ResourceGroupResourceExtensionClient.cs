@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Communication
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CommunicationServiceResources in the CommunicationServiceResource. </summary>
+        /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public virtual CommunicationServiceCollection GetCommunicationServices()
         {

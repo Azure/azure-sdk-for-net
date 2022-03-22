@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EventHubAuthorizationRuleResources in the EventHubAuthorizationRuleResource. </summary>
+        /// <summary> Gets a collection of EventHubAuthorizationRuleResources in the EventHub. </summary>
         /// <returns> An object representing collection of EventHubAuthorizationRuleResources and their operations over a EventHubAuthorizationRuleResource. </returns>
         public virtual EventHubAuthorizationRuleCollection GetEventHubAuthorizationRules()
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ConsumerGroupResources in the ConsumerGroupResource. </summary>
+        /// <summary> Gets a collection of ConsumerGroupResources in the EventHub. </summary>
         /// <returns> An object representing collection of ConsumerGroupResources and their operations over a ConsumerGroupResource. </returns>
         public virtual ConsumerGroupCollection GetConsumerGroups()
         {

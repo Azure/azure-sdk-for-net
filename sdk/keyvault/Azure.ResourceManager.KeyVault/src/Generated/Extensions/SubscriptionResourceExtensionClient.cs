@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.KeyVault
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeletedVaultResources in the DeletedVaultResource. </summary>
+        /// <summary> Gets a collection of DeletedVaultResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of DeletedVaultResources and their operations over a DeletedVaultResource. </returns>
         public virtual DeletedVaultCollection GetDeletedVaults()
         {
             return GetCachedClient(Client => new DeletedVaultCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DeletedManagedHsmResources in the DeletedManagedHsmResource. </summary>
+        /// <summary> Gets a collection of DeletedManagedHsmResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of DeletedManagedHsmResources and their operations over a DeletedManagedHsmResource. </returns>
         public virtual DeletedManagedHsmCollection GetDeletedManagedHsms()
         {

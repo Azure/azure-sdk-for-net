@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             );
         }
 
-        /// <summary> Gets a collection of VirtualWorkspaceResources in the VirtualWorkspaceResource. </summary>
+        /// <summary> Gets a collection of VirtualWorkspaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualWorkspaceResources and their operations over a VirtualWorkspaceResource. </returns>
         public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroupResource resourceGroupResource)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return resourceGroupResource.GetVirtualWorkspaces().Get(workspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScalingPlanResources in the ScalingPlanResource. </summary>
+        /// <summary> Gets a collection of ScalingPlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScalingPlanResources and their operations over a ScalingPlanResource. </returns>
         public static ScalingPlanCollection GetScalingPlans(this ResourceGroupResource resourceGroupResource)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return resourceGroupResource.GetScalingPlans().Get(scalingPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualApplicationGroupResources in the VirtualApplicationGroupResource. </summary>
+        /// <summary> Gets a collection of VirtualApplicationGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualApplicationGroupResources and their operations over a VirtualApplicationGroupResource. </returns>
         public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroupResource resourceGroupResource)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return resourceGroupResource.GetVirtualApplicationGroups().Get(applicationGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HostPoolResources in the HostPoolResource. </summary>
+        /// <summary> Gets a collection of HostPoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HostPoolResources and their operations over a HostPoolResource. </returns>
         public static HostPoolCollection GetHostPools(this ResourceGroupResource resourceGroupResource)

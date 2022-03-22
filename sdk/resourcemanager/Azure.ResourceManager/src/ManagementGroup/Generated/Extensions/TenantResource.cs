@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TenantResource
     {
-        /// <summary> Gets a collection of ManagementGroupResources in the ManagementGroupResource. </summary>
+        /// <summary> Gets a collection of ManagementGroupResources in the TenantResource. </summary>
         /// <returns> An object representing collection of ManagementGroupResources and their operations over a ManagementGroupResource. </returns>
         public virtual ManagementGroupCollection GetManagementGroups()
         {

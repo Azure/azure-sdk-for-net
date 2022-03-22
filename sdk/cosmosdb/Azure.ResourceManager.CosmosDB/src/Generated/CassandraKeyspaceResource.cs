@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceThroughputSettingResource along with the instance operations that can be performed on it in the CassandraKeyspaceResource. </summary>
+        /// <summary> Gets an object representing a DatabaseAccountCassandraKeyspaceThroughputSettingResource along with the instance operations that can be performed on it in the CassandraKeyspace. </summary>
         /// <returns> Returns a <see cref="DatabaseAccountCassandraKeyspaceThroughputSettingResource" /> object. </returns>
         public virtual DatabaseAccountCassandraKeyspaceThroughputSettingResource GetDatabaseAccountCassandraKeyspaceThroughputSetting()
         {
             return new DatabaseAccountCassandraKeyspaceThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
-        /// <summary> Gets a collection of CassandraTableResources in the CassandraTableResource. </summary>
+        /// <summary> Gets a collection of CassandraTableResources in the CassandraKeyspace. </summary>
         /// <returns> An object representing collection of CassandraTableResources and their operations over a CassandraTableResource. </returns>
         public virtual CassandraTableCollection GetCassandraTables()
         {

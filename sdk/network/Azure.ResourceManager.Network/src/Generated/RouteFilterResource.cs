@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RouteFilterRuleResources in the RouteFilterRuleResource. </summary>
+        /// <summary> Gets a collection of RouteFilterRuleResources in the RouteFilter. </summary>
         /// <returns> An object representing collection of RouteFilterRuleResources and their operations over a RouteFilterRuleResource. </returns>
         public virtual RouteFilterRuleCollection GetRouteFilterRules()
         {

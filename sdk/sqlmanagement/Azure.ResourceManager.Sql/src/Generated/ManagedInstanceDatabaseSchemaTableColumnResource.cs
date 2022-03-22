@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResources in the ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource. </summary>
+        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResources in the ManagedInstanceDatabaseSchemaTableColumn. </summary>
         /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResources and their operations over a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource. </returns>
         public virtual ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelCollection GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabels()
         {

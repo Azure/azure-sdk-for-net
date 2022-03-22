@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountTableThroughputSettingResource along with the instance operations that can be performed on it in the CosmosTableResource. </summary>
+        /// <summary> Gets an object representing a DatabaseAccountTableThroughputSettingResource along with the instance operations that can be performed on it in the CosmosTable. </summary>
         /// <returns> Returns a <see cref="DatabaseAccountTableThroughputSettingResource" /> object. </returns>
         public virtual DatabaseAccountTableThroughputSettingResource GetDatabaseAccountTableThroughputSetting()
         {

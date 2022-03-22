@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HubVirtualNetworkConnectionResources in the HubVirtualNetworkConnectionResource. </summary>
+        /// <summary> Gets a collection of HubVirtualNetworkConnectionResources in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubVirtualNetworkConnectionResources and their operations over a HubVirtualNetworkConnectionResource. </returns>
         public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             return GetHubVirtualNetworkConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualHubRouteTableV2Resources in the VirtualHubRouteTableV2Resource. </summary>
+        /// <summary> Gets a collection of VirtualHubRouteTableV2Resources in the VirtualHub. </summary>
         /// <returns> An object representing collection of VirtualHubRouteTableV2Resources and their operations over a VirtualHubRouteTableV2Resource. </returns>
         public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
             return GetVirtualHubRouteTableV2s().Get(routeTableName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BgpConnectionResources in the BgpConnectionResource. </summary>
+        /// <summary> Gets a collection of BgpConnectionResources in the VirtualHub. </summary>
         /// <returns> An object representing collection of BgpConnectionResources and their operations over a BgpConnectionResource. </returns>
         public virtual BgpConnectionCollection GetBgpConnections()
         {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
             return GetBgpConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HubIPConfigurationResources in the HubIPConfigurationResource. </summary>
+        /// <summary> Gets a collection of HubIPConfigurationResources in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubIPConfigurationResources and their operations over a HubIPConfigurationResource. </returns>
         public virtual HubIPConfigurationCollection GetHubIPConfigurations()
         {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
             return GetHubIPConfigurations().Get(ipConfigName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HubRouteTableResources in the HubRouteTableResource. </summary>
+        /// <summary> Gets a collection of HubRouteTableResources in the VirtualHub. </summary>
         /// <returns> An object representing collection of HubRouteTableResources and their operations over a HubRouteTableResource. </returns>
         public virtual HubRouteTableCollection GetHubRouteTables()
         {

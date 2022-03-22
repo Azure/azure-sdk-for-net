@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteConnectionResources in the ExpressRouteConnectionResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteConnectionResources in the ExpressRouteGateway. </summary>
         /// <returns> An object representing collection of ExpressRouteConnectionResources and their operations over a ExpressRouteConnectionResource. </returns>
         public virtual ExpressRouteConnectionCollection GetExpressRouteConnections()
         {

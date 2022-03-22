@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ExpressRouteCircuitAuthorizationResources in the ExpressRouteCircuitAuthorizationResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCircuitAuthorizationResources in the ExpressRouteCircuit. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitAuthorizationResources and their operations over a ExpressRouteCircuitAuthorizationResource. </returns>
         public virtual ExpressRouteCircuitAuthorizationCollection GetExpressRouteCircuitAuthorizations()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             return GetExpressRouteCircuitAuthorizations().Get(authorizationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRouteCircuitPeeringResources in the ExpressRouteCircuitPeeringResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCircuitPeeringResources in the ExpressRouteCircuit. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuitPeeringResources and their operations over a ExpressRouteCircuitPeeringResource. </returns>
         public virtual ExpressRouteCircuitPeeringCollection GetExpressRouteCircuitPeerings()
         {

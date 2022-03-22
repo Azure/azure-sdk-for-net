@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RoleInstanceResources in the RoleInstanceResource. </summary>
+        /// <summary> Gets a collection of RoleInstanceResources in the CloudService. </summary>
         /// <returns> An object representing collection of RoleInstanceResources and their operations over a RoleInstanceResource. </returns>
         public virtual RoleInstanceCollection GetRoleInstances()
         {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
             return GetRoleInstances().Get(roleInstanceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServiceRoleResources in the CloudServiceRoleResource. </summary>
+        /// <summary> Gets a collection of CloudServiceRoleResources in the CloudService. </summary>
         /// <returns> An object representing collection of CloudServiceRoleResources and their operations over a CloudServiceRoleResource. </returns>
         public virtual CloudServiceRoleCollection GetCloudServiceRoles()
         {

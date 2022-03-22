@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServerJobAgentJobVersionStepResources in the ServerJobAgentJobVersionStepResource. </summary>
+        /// <summary> Gets a collection of ServerJobAgentJobVersionStepResources in the JobVersion. </summary>
         /// <returns> An object representing collection of ServerJobAgentJobVersionStepResources and their operations over a ServerJobAgentJobVersionStepResource. </returns>
         public virtual ServerJobAgentJobVersionStepCollection GetServerJobAgentJobVersionSteps()
         {

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of GenericResources in the GenericResource. </summary>
+        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
         /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
         public virtual GenericResourceCollection GetGenericResources()
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Resources
             return GetGenericResources().Get(resourceId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantPolicyDefinitionResources in the TenantPolicyDefinitionResource. </summary>
+        /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
         {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
             return GetTenantPolicyDefinitions().Get(policyDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of TenantPolicySetDefinitionResources in the TenantPolicySetDefinitionResource. </summary>
+        /// <summary> Gets a collection of TenantPolicySetDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicySetDefinitionResources and their operations over a TenantPolicySetDefinitionResource. </returns>
         public virtual TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions()
         {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Resources
             return GetTenantPolicySetDefinitions().Get(policySetDefinitionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataPolicyManifestResources in the DataPolicyManifestResource. </summary>
+        /// <summary> Gets a collection of DataPolicyManifestResources in the Tenant. </summary>
         /// <returns> An object representing collection of DataPolicyManifestResources and their operations over a DataPolicyManifestResource. </returns>
         public virtual DataPolicyManifestCollection GetDataPolicyManifests()
         {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Resources
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResourceLinkResources in the ResourceLinkResource. </summary>
+        /// <summary> Gets a collection of ResourceLinkResources in the Tenant. </summary>
         /// <param name="scope"> The fully qualified ID of the scope for getting the resource links. For example, to list resource links at and under a resource group, set the scope to /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> An object representing collection of ResourceLinkResources and their operations over a ResourceLinkResource. </returns>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Resources
             return GetResourceLinks(scope).Get(cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of SubscriptionResources in the Tenant. </summary>
         /// <returns> An object representing collection of SubscriptionResources and their operations over a SubscriptionResource. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
         {

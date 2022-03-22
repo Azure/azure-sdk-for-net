@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the DeploymentResource. </summary>
+        /// <summary> Gets a collection of DeploymentResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
         public virtual DeploymentCollection GetDeployments()
         {

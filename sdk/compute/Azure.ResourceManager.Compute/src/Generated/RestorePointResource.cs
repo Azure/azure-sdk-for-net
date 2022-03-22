@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DiskRestorePointResources in the DiskRestorePointResource. </summary>
+        /// <summary> Gets a collection of DiskRestorePointResources in the RestorePoint. </summary>
         /// <returns> An object representing collection of DiskRestorePointResources and their operations over a DiskRestorePointResource. </returns>
         public virtual DiskRestorePointCollection GetDiskRestorePoints()
         {

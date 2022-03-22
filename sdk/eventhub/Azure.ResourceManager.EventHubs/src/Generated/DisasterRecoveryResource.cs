@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DisasterRecoveryAuthorizationRuleResources in the DisasterRecoveryAuthorizationRuleResource. </summary>
+        /// <summary> Gets a collection of DisasterRecoveryAuthorizationRuleResources in the DisasterRecovery. </summary>
         /// <returns> An object representing collection of DisasterRecoveryAuthorizationRuleResources and their operations over a DisasterRecoveryAuthorizationRuleResource. </returns>
         public virtual DisasterRecoveryAuthorizationRuleCollection GetDisasterRecoveryAuthorizationRules()
         {

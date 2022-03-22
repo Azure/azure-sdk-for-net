@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EdgeOrder
             );
         }
 
-        /// <summary> Gets a collection of AddressResources in the AddressResource. </summary>
+        /// <summary> Gets a collection of AddressResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AddressResources and their operations over a AddressResource. </returns>
         public static AddressResourceCollection GetAddressResources(this ResourceGroupResource resourceGroupResource)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return resourceGroupResource.GetAddressResources().Get(addressName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OrderResources in the OrderResource. </summary>
+        /// <summary> Gets a collection of OrderResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrderResources and their operations over a OrderResource. </returns>
         public static OrderResourceCollection GetOrderResources(this ResourceGroupResource resourceGroupResource)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.EdgeOrder
             return resourceGroupResource.GetOrderResources().Get(location, orderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OrderItemResources in the OrderItemResource. </summary>
+        /// <summary> Gets a collection of OrderItemResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrderItemResources and their operations over a OrderItemResource. </returns>
         public static OrderItemResourceCollection GetOrderItemResources(this ResourceGroupResource resourceGroupResource)

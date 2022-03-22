@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KeyVault
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of MhsmPrivateEndpointConnectionResources in the MhsmPrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of MhsmPrivateEndpointConnectionResources in the ManagedHsm. </summary>
         /// <returns> An object representing collection of MhsmPrivateEndpointConnectionResources and their operations over a MhsmPrivateEndpointConnectionResource. </returns>
         public virtual MhsmPrivateEndpointConnectionCollection GetMhsmPrivateEndpointConnections()
         {

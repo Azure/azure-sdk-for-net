@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the VirtualMachineExtensionImageResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineExtensionImageResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
         /// <param name="publisherName"> The String to use. </param>
         /// <returns> An object representing collection of VirtualMachineExtensionImageResources and their operations over a VirtualMachineExtensionImageResource. </returns>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
             return new VirtualMachineExtensionImageCollection(Client, Id, location, publisherName);
         }
 
-        /// <summary> Gets a collection of SharedGalleryResources in the SharedGalleryResource. </summary>
+        /// <summary> Gets a collection of SharedGalleryResources in the SubscriptionResource. </summary>
         /// <param name="location"> Resource location. </param>
         /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
         public virtual SharedGalleryCollection GetSharedGalleries(string location)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             return new SharedGalleryCollection(Client, Id, location);
         }
 
-        /// <summary> Gets a collection of OSVersionResources in the OSVersionResource. </summary>
+        /// <summary> Gets a collection of OSVersionResources in the SubscriptionResource. </summary>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <returns> An object representing collection of OSVersionResources and their operations over a OSVersionResource. </returns>
         public virtual OSVersionCollection GetOSVersions(string location)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
             return new OSVersionCollection(Client, Id, location);
         }
 
-        /// <summary> Gets a collection of OSFamilyResources in the OSFamilyResource. </summary>
+        /// <summary> Gets a collection of OSFamilyResources in the SubscriptionResource. </summary>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
         /// <returns> An object representing collection of OSFamilyResources and their operations over a OSFamilyResource. </returns>
         public virtual OSFamilyCollection GetOSFamilies(string location)

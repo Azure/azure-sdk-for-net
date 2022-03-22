@@ -240,21 +240,21 @@ namespace Azure.ResourceManager.Network
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AzureWebCategoryResources in the AzureWebCategoryResource. </summary>
+        /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
         public virtual AzureWebCategoryCollection GetAzureWebCategories()
         {
             return GetCachedClient(Client => new AzureWebCategoryCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the ExpressRoutePortsLocationResource. </summary>
+        /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
         public virtual ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations()
         {
             return GetCachedClient(Client => new ExpressRoutePortsLocationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the NetworkVirtualApplianceSkuResource. </summary>
+        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
         public virtual NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus()
         {

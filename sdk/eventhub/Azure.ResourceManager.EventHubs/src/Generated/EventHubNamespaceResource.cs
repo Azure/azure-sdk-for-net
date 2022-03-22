@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.EventHubs
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it in the EventHubNamespaceResource. </summary>
+        /// <summary> Gets an object representing a NetworkRuleSetResource along with the instance operations that can be performed on it in the EventHubNamespace. </summary>
         /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
         public virtual NetworkRuleSetResource GetNetworkRuleSet()
         {
             return new NetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
         }
 
-        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the NamespaceAuthorizationRuleResource. </summary>
+        /// <summary> Gets a collection of NamespaceAuthorizationRuleResources in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of NamespaceAuthorizationRuleResources and their operations over a NamespaceAuthorizationRuleResource. </returns>
         public virtual NamespaceAuthorizationRuleCollection GetNamespaceAuthorizationRules()
         {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetNamespaceAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubResources in the EventHubResource. </summary>
+        /// <summary> Gets a collection of EventHubResources in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of EventHubResources and their operations over a EventHubResource. </returns>
         public virtual EventHubCollection GetEventHubs()
         {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubs().Get(eventHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DisasterRecoveryResources in the DisasterRecoveryResource. </summary>
+        /// <summary> Gets a collection of DisasterRecoveryResources in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of DisasterRecoveryResources and their operations over a DisasterRecoveryResource. </returns>
         public virtual DisasterRecoveryCollection GetDisasterRecoveries()
         {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetDisasterRecoveries().Get(alias, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SchemaGroupResources in the SchemaGroupResource. </summary>
+        /// <summary> Gets a collection of SchemaGroupResources in the EventHubNamespace. </summary>
         /// <returns> An object representing collection of SchemaGroupResources and their operations over a SchemaGroupResource. </returns>
         public virtual SchemaGroupCollection GetSchemaGroups()
         {

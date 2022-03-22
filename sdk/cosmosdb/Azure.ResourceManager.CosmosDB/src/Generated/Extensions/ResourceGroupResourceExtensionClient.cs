@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.CosmosDB
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DatabaseAccountResources in the DatabaseAccountResource. </summary>
+        /// <summary> Gets a collection of DatabaseAccountResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DatabaseAccountResources and their operations over a DatabaseAccountResource. </returns>
         public virtual DatabaseAccountCollection GetDatabaseAccounts()
         {
             return GetCachedClient(Client => new DatabaseAccountCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ClusterResources in the ClusterResource. </summary>
+        /// <summary> Gets a collection of ClusterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ClusterResources and their operations over a ClusterResource. </returns>
         public virtual ClusterResourceCollection GetClusterResources()
         {

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ExtendedLocation
             );
         }
 
-        /// <summary> Gets a collection of CustomLocationResources in the CustomLocationResource. </summary>
+        /// <summary> Gets a collection of CustomLocationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)

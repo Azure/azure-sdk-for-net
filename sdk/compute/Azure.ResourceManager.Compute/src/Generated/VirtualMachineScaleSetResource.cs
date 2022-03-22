@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetExtensionResources in the VirtualMachineScaleSetExtensionResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetExtensionResources in the VirtualMachineScaleSet. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetExtensionResources and their operations over a VirtualMachineScaleSetExtensionResource. </returns>
         public virtual VirtualMachineScaleSetExtensionCollection GetVirtualMachineScaleSetExtensions()
         {
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Compute
             return GetVirtualMachineScaleSetExtensions().Get(vmssExtensionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgradeResource along with the instance operations that can be performed on it in the VirtualMachineScaleSetResource. </summary>
+        /// <summary> Gets an object representing a VirtualMachineScaleSetRollingUpgradeResource along with the instance operations that can be performed on it in the VirtualMachineScaleSet. </summary>
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> object. </returns>
         public virtual VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgrade()
         {
             return new VirtualMachineScaleSetRollingUpgradeResource(Client, new ResourceIdentifier(Id.ToString() + "/rollingUpgrades/latest"));
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetVmResources in the VirtualMachineScaleSetVmResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetVmResources in the VirtualMachineScaleSet. </summary>
         /// <returns> An object representing collection of VirtualMachineScaleSetVmResources and their operations over a VirtualMachineScaleSetVmResource. </returns>
         public virtual VirtualMachineScaleSetVmCollection GetVirtualMachineScaleSetVms()
         {

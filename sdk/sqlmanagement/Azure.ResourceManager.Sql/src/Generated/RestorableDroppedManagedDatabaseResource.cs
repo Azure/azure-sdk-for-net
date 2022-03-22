@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResources in the ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource. </summary>
+        /// <summary> Gets a collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResources in the RestorableDroppedManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResources and their operations over a ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource. </returns>
         public virtual ManagedRestorableDroppedDbBackupShortTermRetentionPolicyCollection GetManagedRestorableDroppedDbBackupShortTermRetentionPolicies()
         {

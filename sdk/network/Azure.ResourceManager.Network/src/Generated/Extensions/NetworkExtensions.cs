@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Gets a collection of AzureWebCategoryResources in the AzureWebCategoryResource. </summary>
+        /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
         public static AzureWebCategoryCollection GetAzureWebCategories(this SubscriptionResource subscriptionResource)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             return subscriptionResource.GetAzureWebCategories().Get(name, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the ExpressRoutePortsLocationResource. </summary>
+        /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
         public static ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations(this SubscriptionResource subscriptionResource)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             return subscriptionResource.GetExpressRoutePortsLocations().Get(locationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the NetworkVirtualApplianceSkuResource. </summary>
+        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
         public static NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus(this SubscriptionResource subscriptionResource)
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.Network
             );
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayResources in the ApplicationGatewayResource. </summary>
+        /// <summary> Gets a collection of ApplicationGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationGatewayResources and their operations over a ApplicationGatewayResource. </returns>
         public static ApplicationGatewayCollection GetApplicationGateways(this ResourceGroupResource resourceGroupResource)
@@ -1755,7 +1755,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetApplicationGateways().Get(applicationGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ApplicationSecurityGroupResource. </summary>
+        /// <summary> Gets a collection of ApplicationSecurityGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationSecurityGroupResources and their operations over a ApplicationSecurityGroupResource. </returns>
         public static ApplicationSecurityGroupCollection GetApplicationSecurityGroups(this ResourceGroupResource resourceGroupResource)
@@ -1793,7 +1793,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetApplicationSecurityGroups().Get(applicationSecurityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AzureFirewallResources in the AzureFirewallResource. </summary>
+        /// <summary> Gets a collection of AzureFirewallResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureFirewallResources and their operations over a AzureFirewallResource. </returns>
         public static AzureFirewallCollection GetAzureFirewalls(this ResourceGroupResource resourceGroupResource)
@@ -1831,7 +1831,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetAzureFirewalls().Get(azureFirewallName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BastionHostResources in the BastionHostResource. </summary>
+        /// <summary> Gets a collection of BastionHostResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BastionHostResources and their operations over a BastionHostResource. </returns>
         public static BastionHostCollection GetBastionHosts(this ResourceGroupResource resourceGroupResource)
@@ -1869,7 +1869,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetBastionHosts().Get(bastionHostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CustomIPPrefixResources in the CustomIPPrefixResource. </summary>
+        /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomIPPrefixResources and their operations over a CustomIPPrefixResource. </returns>
         public static CustomIPPrefixCollection GetCustomIPPrefixes(this ResourceGroupResource resourceGroupResource)
@@ -1909,7 +1909,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DdosCustomPolicyResources in the DdosCustomPolicyResource. </summary>
+        /// <summary> Gets a collection of DdosCustomPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DdosCustomPolicyResources and their operations over a DdosCustomPolicyResource. </returns>
         public static DdosCustomPolicyCollection GetDdosCustomPolicies(this ResourceGroupResource resourceGroupResource)
@@ -1947,7 +1947,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetDdosCustomPolicies().Get(ddosCustomPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DdosProtectionPlanResources in the DdosProtectionPlanResource. </summary>
+        /// <summary> Gets a collection of DdosProtectionPlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DdosProtectionPlanResources and their operations over a DdosProtectionPlanResource. </returns>
         public static DdosProtectionPlanCollection GetDdosProtectionPlans(this ResourceGroupResource resourceGroupResource)
@@ -1985,7 +1985,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetDdosProtectionPlans().Get(ddosProtectionPlanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DscpConfigurationResources in the DscpConfigurationResource. </summary>
+        /// <summary> Gets a collection of DscpConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DscpConfigurationResources and their operations over a DscpConfigurationResource. </returns>
         public static DscpConfigurationCollection GetDscpConfigurations(this ResourceGroupResource resourceGroupResource)
@@ -2023,7 +2023,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetDscpConfigurations().Get(dscpConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRouteCircuitResources in the ExpressRouteCircuitResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCircuitResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRouteCircuitResources and their operations over a ExpressRouteCircuitResource. </returns>
         public static ExpressRouteCircuitCollection GetExpressRouteCircuits(this ResourceGroupResource resourceGroupResource)
@@ -2061,7 +2061,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetExpressRouteCircuits().Get(circuitName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ExpressRouteCrossConnectionResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteCrossConnectionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRouteCrossConnectionResources and their operations over a ExpressRouteCrossConnectionResource. </returns>
         public static ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections(this ResourceGroupResource resourceGroupResource)
@@ -2099,7 +2099,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetExpressRouteCrossConnections().Get(crossConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRoutePortResources in the ExpressRoutePortResource. </summary>
+        /// <summary> Gets a collection of ExpressRoutePortResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRoutePortResources and their operations over a ExpressRoutePortResource. </returns>
         public static ExpressRoutePortCollection GetExpressRoutePorts(this ResourceGroupResource resourceGroupResource)
@@ -2137,7 +2137,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetExpressRoutePorts().Get(expressRoutePortName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FirewallPolicyResources in the FirewallPolicyResource. </summary>
+        /// <summary> Gets a collection of FirewallPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FirewallPolicyResources and their operations over a FirewallPolicyResource. </returns>
         public static FirewallPolicyCollection GetFirewallPolicies(this ResourceGroupResource resourceGroupResource)
@@ -2177,7 +2177,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetFirewallPolicies().Get(firewallPolicyName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPAllocationResources in the IPAllocationResource. </summary>
+        /// <summary> Gets a collection of IPAllocationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of IPAllocationResources and their operations over a IPAllocationResource. </returns>
         public static IPAllocationCollection GetIPAllocations(this ResourceGroupResource resourceGroupResource)
@@ -2217,7 +2217,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetIPAllocations().Get(ipAllocationName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPGroupResources in the IPGroupResource. </summary>
+        /// <summary> Gets a collection of IPGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of IPGroupResources and their operations over a IPGroupResource. </returns>
         public static IPGroupCollection GetIPGroups(this ResourceGroupResource resourceGroupResource)
@@ -2257,7 +2257,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetIPGroups().Get(ipGroupsName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LoadBalancerResources in the LoadBalancerResource. </summary>
+        /// <summary> Gets a collection of LoadBalancerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LoadBalancerResources and their operations over a LoadBalancerResource. </returns>
         public static LoadBalancerCollection GetLoadBalancers(this ResourceGroupResource resourceGroupResource)
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetLoadBalancers().Get(loadBalancerName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NatGatewayResources in the NatGatewayResource. </summary>
+        /// <summary> Gets a collection of NatGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NatGatewayResources and their operations over a NatGatewayResource. </returns>
         public static NatGatewayCollection GetNatGateways(this ResourceGroupResource resourceGroupResource)
@@ -2337,7 +2337,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetNatGateways().Get(natGatewayName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceResources in the NetworkInterfaceResource. </summary>
+        /// <summary> Gets a collection of NetworkInterfaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
@@ -2377,7 +2377,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetNetworkInterfaces().Get(networkInterfaceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkProfileResources in the NetworkProfileResource. </summary>
+        /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkProfileResources and their operations over a NetworkProfileResource. </returns>
         public static NetworkProfileCollection GetNetworkProfiles(this ResourceGroupResource resourceGroupResource)
@@ -2417,7 +2417,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetNetworkProfiles().Get(networkProfileName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityGroupResources in the NetworkSecurityGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkSecurityGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkSecurityGroupResources and their operations over a NetworkSecurityGroupResource. </returns>
         public static NetworkSecurityGroupCollection GetNetworkSecurityGroups(this ResourceGroupResource resourceGroupResource)
@@ -2457,7 +2457,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetNetworkSecurityGroups().Get(networkSecurityGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceResources in the NetworkVirtualApplianceResource. </summary>
+        /// <summary> Gets a collection of NetworkVirtualApplianceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkVirtualApplianceResources and their operations over a NetworkVirtualApplianceResource. </returns>
         public static NetworkVirtualApplianceCollection GetNetworkVirtualAppliances(this ResourceGroupResource resourceGroupResource)
@@ -2497,7 +2497,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetNetworkVirtualAppliances().Get(networkVirtualApplianceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkWatcherResources in the NetworkWatcherResource. </summary>
+        /// <summary> Gets a collection of NetworkWatcherResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetworkWatcherResources and their operations over a NetworkWatcherResource. </returns>
         public static NetworkWatcherCollection GetNetworkWatchers(this ResourceGroupResource resourceGroupResource)
@@ -2535,7 +2535,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetNetworkWatchers().Get(networkWatcherName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointResources in the PrivateEndpointResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PrivateEndpointResources and their operations over a PrivateEndpointResource. </returns>
         public static PrivateEndpointCollection GetPrivateEndpoints(this ResourceGroupResource resourceGroupResource)
@@ -2575,7 +2575,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetPrivateEndpoints().Get(privateEndpointName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkServiceResources in the PrivateLinkServiceResource. </summary>
+        /// <summary> Gets a collection of PrivateLinkServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PrivateLinkServiceResources and their operations over a PrivateLinkServiceResource. </returns>
         public static PrivateLinkServiceCollection GetPrivateLinkServices(this ResourceGroupResource resourceGroupResource)
@@ -2615,7 +2615,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetPrivateLinkServices().Get(serviceName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PublicIPAddressResources in the PublicIPAddressResource. </summary>
+        /// <summary> Gets a collection of PublicIPAddressResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PublicIPAddressResources and their operations over a PublicIPAddressResource. </returns>
         public static PublicIPAddressCollection GetPublicIPAddresses(this ResourceGroupResource resourceGroupResource)
@@ -2655,7 +2655,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PublicIPPrefixResources in the PublicIPPrefixResource. </summary>
+        /// <summary> Gets a collection of PublicIPPrefixResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PublicIPPrefixResources and their operations over a PublicIPPrefixResource. </returns>
         public static PublicIPPrefixCollection GetPublicIPPrefixes(this ResourceGroupResource resourceGroupResource)
@@ -2695,7 +2695,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RouteFilterResources in the RouteFilterResource. </summary>
+        /// <summary> Gets a collection of RouteFilterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RouteFilterResources and their operations over a RouteFilterResource. </returns>
         public static RouteFilterCollection GetRouteFilters(this ResourceGroupResource resourceGroupResource)
@@ -2735,7 +2735,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetRouteFilters().Get(routeFilterName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RouteTableResources in the RouteTableResource. </summary>
+        /// <summary> Gets a collection of RouteTableResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RouteTableResources and their operations over a RouteTableResource. </returns>
         public static RouteTableCollection GetRouteTables(this ResourceGroupResource resourceGroupResource)
@@ -2775,7 +2775,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetRouteTables().Get(routeTableName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecurityPartnerProviderResources in the SecurityPartnerProviderResource. </summary>
+        /// <summary> Gets a collection of SecurityPartnerProviderResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SecurityPartnerProviderResources and their operations over a SecurityPartnerProviderResource. </returns>
         public static SecurityPartnerProviderCollection GetSecurityPartnerProviders(this ResourceGroupResource resourceGroupResource)
@@ -2813,7 +2813,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetSecurityPartnerProviders().Get(securityPartnerProviderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ServiceEndpointPolicyResource. </summary>
+        /// <summary> Gets a collection of ServiceEndpointPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceEndpointPolicyResources and their operations over a ServiceEndpointPolicyResource. </returns>
         public static ServiceEndpointPolicyCollection GetServiceEndpointPolicies(this ResourceGroupResource resourceGroupResource)
@@ -2853,7 +2853,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetServiceEndpointPolicies().Get(serviceEndpointPolicyName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the VirtualNetworkResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
@@ -2893,7 +2893,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworkName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkGatewayResources in the VirtualNetworkGatewayResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkGatewayResources and their operations over a VirtualNetworkGatewayResource. </returns>
         public static VirtualNetworkGatewayCollection GetVirtualNetworkGateways(this ResourceGroupResource resourceGroupResource)
@@ -2931,7 +2931,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualNetworkGateways().Get(virtualNetworkGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the VirtualNetworkGatewayConnectionResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkGatewayConnectionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkGatewayConnectionResources and their operations over a VirtualNetworkGatewayConnectionResource. </returns>
         public static VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections(this ResourceGroupResource resourceGroupResource)
@@ -2969,7 +2969,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualNetworkGatewayConnections().Get(virtualNetworkGatewayConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LocalNetworkGatewayResources in the LocalNetworkGatewayResource. </summary>
+        /// <summary> Gets a collection of LocalNetworkGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LocalNetworkGatewayResources and their operations over a LocalNetworkGatewayResource. </returns>
         public static LocalNetworkGatewayCollection GetLocalNetworkGateways(this ResourceGroupResource resourceGroupResource)
@@ -3007,7 +3007,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetLocalNetworkGateways().Get(localNetworkGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkTapResources in the VirtualNetworkTapResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkTapResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualNetworkTapResources and their operations over a VirtualNetworkTapResource. </returns>
         public static VirtualNetworkTapCollection GetVirtualNetworkTaps(this ResourceGroupResource resourceGroupResource)
@@ -3045,7 +3045,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualNetworkTaps().Get(tapName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualRouterResources in the VirtualRouterResource. </summary>
+        /// <summary> Gets a collection of VirtualRouterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualRouterResources and their operations over a VirtualRouterResource. </returns>
         public static VirtualRouterCollection GetVirtualRouters(this ResourceGroupResource resourceGroupResource)
@@ -3085,7 +3085,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualRouters().Get(virtualRouterName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualWanResources in the VirtualWanResource. </summary>
+        /// <summary> Gets a collection of VirtualWanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualWanResources and their operations over a VirtualWanResource. </returns>
         public static VirtualWanCollection GetVirtualWans(this ResourceGroupResource resourceGroupResource)
@@ -3123,7 +3123,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualWans().Get(virtualWanName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnSiteResources in the VpnSiteResource. </summary>
+        /// <summary> Gets a collection of VpnSiteResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VpnSiteResources and their operations over a VpnSiteResource. </returns>
         public static VpnSiteCollection GetVpnSites(this ResourceGroupResource resourceGroupResource)
@@ -3161,7 +3161,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVpnSites().Get(vpnSiteName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnServerConfigurationResources in the VpnServerConfigurationResource. </summary>
+        /// <summary> Gets a collection of VpnServerConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VpnServerConfigurationResources and their operations over a VpnServerConfigurationResource. </returns>
         public static VpnServerConfigurationCollection GetVpnServerConfigurations(this ResourceGroupResource resourceGroupResource)
@@ -3199,7 +3199,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVpnServerConfigurations().Get(vpnServerConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualHubResources in the VirtualHubResource. </summary>
+        /// <summary> Gets a collection of VirtualHubResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualHubResources and their operations over a VirtualHubResource. </returns>
         public static VirtualHubCollection GetVirtualHubs(this ResourceGroupResource resourceGroupResource)
@@ -3237,7 +3237,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVirtualHubs().Get(virtualHubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VpnGatewayResources in the VpnGatewayResource. </summary>
+        /// <summary> Gets a collection of VpnGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VpnGatewayResources and their operations over a VpnGatewayResource. </returns>
         public static VpnGatewayCollection GetVpnGateways(this ResourceGroupResource resourceGroupResource)
@@ -3275,7 +3275,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetVpnGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of P2SVpnGatewayResources in the P2SVpnGatewayResource. </summary>
+        /// <summary> Gets a collection of P2SVpnGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of P2SVpnGatewayResources and their operations over a P2SVpnGatewayResource. </returns>
         public static P2SVpnGatewayCollection GetP2SVpnGateways(this ResourceGroupResource resourceGroupResource)
@@ -3313,7 +3313,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetP2SVpnGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRouteGatewayResources in the ExpressRouteGatewayResource. </summary>
+        /// <summary> Gets a collection of ExpressRouteGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExpressRouteGatewayResources and their operations over a ExpressRouteGatewayResource. </returns>
         public static ExpressRouteGatewayCollection GetExpressRouteGateways(this ResourceGroupResource resourceGroupResource)
@@ -3351,7 +3351,7 @@ namespace Azure.ResourceManager.Network
             return resourceGroupResource.GetExpressRouteGateways().Get(expressRouteGatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the WebApplicationFirewallPolicyResource. </summary>
+        /// <summary> Gets a collection of WebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebApplicationFirewallPolicyResources and their operations over a WebApplicationFirewallPolicyResource. </returns>
         public static WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)

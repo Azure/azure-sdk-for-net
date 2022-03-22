@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of GalleryImageResources in the GalleryImageResource. </summary>
+        /// <summary> Gets a collection of GalleryImageResources in the Gallery. </summary>
         /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
         public virtual GalleryImageCollection GetGalleryImages()
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Compute
             return GetGalleryImages().Get(galleryImageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GalleryApplicationResources in the GalleryApplicationResource. </summary>
+        /// <summary> Gets a collection of GalleryApplicationResources in the Gallery. </summary>
         /// <returns> An object representing collection of GalleryApplicationResources and their operations over a GalleryApplicationResource. </returns>
         public virtual GalleryApplicationCollection GetGalleryApplications()
         {

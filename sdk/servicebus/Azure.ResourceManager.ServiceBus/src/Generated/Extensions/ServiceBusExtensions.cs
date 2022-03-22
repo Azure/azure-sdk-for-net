@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus
             );
         }
 
-        /// <summary> Gets a collection of ServiceBusNamespaceResources in the ServiceBusNamespaceResource. </summary>
+        /// <summary> Gets a collection of ServiceBusNamespaceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceBusNamespaceResources and their operations over a ServiceBusNamespaceResource. </returns>
         public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroupResource resourceGroupResource)

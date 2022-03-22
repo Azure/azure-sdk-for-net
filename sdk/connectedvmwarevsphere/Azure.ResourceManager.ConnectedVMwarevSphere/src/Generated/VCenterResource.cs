@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of InventoryItemResources in the InventoryItemResource. </summary>
+        /// <summary> Gets a collection of InventoryItemResources in the VCenter. </summary>
         /// <returns> An object representing collection of InventoryItemResources and their operations over a InventoryItemResource. </returns>
         public virtual InventoryItemCollection GetInventoryItems()
         {

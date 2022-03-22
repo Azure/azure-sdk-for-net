@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Communication
             );
         }
 
-        /// <summary> Gets a collection of CommunicationServiceResources in the CommunicationServiceResource. </summary>
+        /// <summary> Gets a collection of CommunicationServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public static CommunicationServiceCollection GetCommunicationServices(this ResourceGroupResource resourceGroupResource)

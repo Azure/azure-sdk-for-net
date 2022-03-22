@@ -31,56 +31,56 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ResourcePoolResources in the ResourcePoolResource. </summary>
+        /// <summary> Gets a collection of ResourcePoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ResourcePoolResources and their operations over a ResourcePoolResource. </returns>
         public virtual ResourcePoolCollection GetResourcePools()
         {
             return GetCachedClient(Client => new ResourcePoolCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VMwareClusterResources in the VMwareClusterResource. </summary>
+        /// <summary> Gets a collection of VMwareClusterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VMwareClusterResources and their operations over a VMwareClusterResource. </returns>
         public virtual VMwareClusterCollection GetVMwareClusters()
         {
             return GetCachedClient(Client => new VMwareClusterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VMwareHostResources in the VMwareHostResource. </summary>
+        /// <summary> Gets a collection of VMwareHostResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VMwareHostResources and their operations over a VMwareHostResource. </returns>
         public virtual VMwareHostCollection GetVMwareHosts()
         {
             return GetCachedClient(Client => new VMwareHostCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VMwareDatastoreResources in the VMwareDatastoreResource. </summary>
+        /// <summary> Gets a collection of VMwareDatastoreResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VMwareDatastoreResources and their operations over a VMwareDatastoreResource. </returns>
         public virtual VMwareDatastoreCollection GetVMwareDatastores()
         {
             return GetCachedClient(Client => new VMwareDatastoreCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VCenterResources in the VCenterResource. </summary>
+        /// <summary> Gets a collection of VCenterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
         public virtual VCenterCollection GetVCenters()
         {
             return GetCachedClient(Client => new VCenterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the VirtualMachineResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public virtual VirtualMachineCollection GetVirtualMachines()
         {
             return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineTemplateResources in the VirtualMachineTemplateResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineTemplateResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
         public virtual VirtualMachineTemplateCollection GetVirtualMachineTemplates()
         {
             return GetCachedClient(Client => new VirtualMachineTemplateCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualNetworkResources in the VirtualNetworkResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {

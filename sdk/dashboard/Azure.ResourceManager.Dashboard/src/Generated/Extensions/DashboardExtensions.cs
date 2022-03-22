@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dashboard
             );
         }
 
-        /// <summary> Gets a collection of GrafanaResources in the GrafanaResource. </summary>
+        /// <summary> Gets a collection of GrafanaResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GrafanaResources and their operations over a GrafanaResource. </returns>
         public static GrafanaResourceCollection GetGrafanaResources(this ResourceGroupResource resourceGroupResource)

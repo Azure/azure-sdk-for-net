@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SubnetResources in the SubnetResource. </summary>
+        /// <summary> Gets a collection of SubnetResources in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of SubnetResources and their operations over a SubnetResource. </returns>
         public virtual SubnetCollection GetSubnets()
         {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             return GetSubnets().Get(subnetName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkPeeringResources in the VirtualNetworkPeeringResource. </summary>
+        /// <summary> Gets a collection of VirtualNetworkPeeringResources in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of VirtualNetworkPeeringResources and their operations over a VirtualNetworkPeeringResource. </returns>
         public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of UserSessionResources in the UserSessionResource. </summary>
+        /// <summary> Gets a collection of UserSessionResources in the SessionHost. </summary>
         /// <returns> An object representing collection of UserSessionResources and their operations over a UserSessionResource. </returns>
         public virtual UserSessionCollection GetUserSessions()
         {

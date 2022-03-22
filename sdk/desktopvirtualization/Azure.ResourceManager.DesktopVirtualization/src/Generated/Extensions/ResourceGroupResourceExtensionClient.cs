@@ -31,28 +31,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of VirtualWorkspaceResources in the VirtualWorkspaceResource. </summary>
+        /// <summary> Gets a collection of VirtualWorkspaceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualWorkspaceResources and their operations over a VirtualWorkspaceResource. </returns>
         public virtual VirtualWorkspaceCollection GetVirtualWorkspaces()
         {
             return GetCachedClient(Client => new VirtualWorkspaceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ScalingPlanResources in the ScalingPlanResource. </summary>
+        /// <summary> Gets a collection of ScalingPlanResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ScalingPlanResources and their operations over a ScalingPlanResource. </returns>
         public virtual ScalingPlanCollection GetScalingPlans()
         {
             return GetCachedClient(Client => new ScalingPlanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualApplicationGroupResources in the VirtualApplicationGroupResource. </summary>
+        /// <summary> Gets a collection of VirtualApplicationGroupResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualApplicationGroupResources and their operations over a VirtualApplicationGroupResource. </returns>
         public virtual VirtualApplicationGroupCollection GetVirtualApplicationGroups()
         {
             return GetCachedClient(Client => new VirtualApplicationGroupCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of HostPoolResources in the HostPoolResource. </summary>
+        /// <summary> Gets a collection of HostPoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of HostPoolResources and their operations over a HostPoolResource. </returns>
         public virtual HostPoolCollection GetHostPools()
         {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineExtensionResources in the VirtualMachineExtensionResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineExtensionResources in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachineExtensionResources and their operations over a VirtualMachineExtensionResource. </returns>
         public virtual VirtualMachineExtensionCollection GetVirtualMachineExtensions()
         {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
             return GetVirtualMachineExtensions().Get(vmExtensionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineRunCommandResources in the VirtualMachineRunCommandResource. </summary>
+        /// <summary> Gets a collection of VirtualMachineRunCommandResources in the VirtualMachine. </summary>
         /// <returns> An object representing collection of VirtualMachineRunCommandResources and their operations over a VirtualMachineRunCommandResource. </returns>
         public virtual VirtualMachineRunCommandCollection GetVirtualMachineRunCommands()
         {

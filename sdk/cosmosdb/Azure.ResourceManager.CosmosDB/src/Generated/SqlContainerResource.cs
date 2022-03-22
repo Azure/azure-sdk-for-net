@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseContainerThroughputSettingResource along with the instance operations that can be performed on it in the SqlContainerResource. </summary>
+        /// <summary> Gets an object representing a DatabaseAccountSqlDatabaseContainerThroughputSettingResource along with the instance operations that can be performed on it in the SqlContainer. </summary>
         /// <returns> Returns a <see cref="DatabaseAccountSqlDatabaseContainerThroughputSettingResource" /> object. </returns>
         public virtual DatabaseAccountSqlDatabaseContainerThroughputSettingResource GetDatabaseAccountSqlDatabaseContainerThroughputSetting()
         {
             return new DatabaseAccountSqlDatabaseContainerThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
         }
 
-        /// <summary> Gets a collection of SqlStoredProcedureResources in the SqlStoredProcedureResource. </summary>
+        /// <summary> Gets a collection of SqlStoredProcedureResources in the SqlContainer. </summary>
         /// <returns> An object representing collection of SqlStoredProcedureResources and their operations over a SqlStoredProcedureResource. </returns>
         public virtual SqlStoredProcedureCollection GetSqlStoredProcedures()
         {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetSqlStoredProcedures().Get(storedProcedureName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlUserDefinedFunctionResources in the SqlUserDefinedFunctionResource. </summary>
+        /// <summary> Gets a collection of SqlUserDefinedFunctionResources in the SqlContainer. </summary>
         /// <returns> An object representing collection of SqlUserDefinedFunctionResources and their operations over a SqlUserDefinedFunctionResource. </returns>
         public virtual SqlUserDefinedFunctionCollection GetSqlUserDefinedFunctions()
         {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetSqlUserDefinedFunctions().Get(userDefinedFunctionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlTriggerResources in the SqlTriggerResource. </summary>
+        /// <summary> Gets a collection of SqlTriggerResources in the SqlContainer. </summary>
         /// <returns> An object representing collection of SqlTriggerResources and their operations over a SqlTriggerResource. </returns>
         public virtual SqlTriggerCollection GetSqlTriggers()
         {

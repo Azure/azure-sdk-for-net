@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FeatureResources in the FeatureResource. </summary>
+        /// <summary> Gets a collection of FeatureResources in the ResourceProvider. </summary>
         /// <returns> An object representing collection of FeatureResources and their operations over a FeatureResource. </returns>
         public virtual FeatureCollection GetFeatures()
         {
