@@ -39,6 +39,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
+            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
+            CompareBodies = false;
         }
 
         [SetUp]
