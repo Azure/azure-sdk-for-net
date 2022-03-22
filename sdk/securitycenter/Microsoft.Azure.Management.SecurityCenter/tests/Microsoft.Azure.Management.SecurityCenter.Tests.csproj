@@ -12,6 +12,9 @@
     <ExcludeFromTest>true</ExcludeFromTest>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Microsoft.Azure.Management.SecurityCenter.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
-                new Tuple<string, string, string>("Security", "Alerts", "2021-01-01"),
+                new Tuple<string, string, string>("Security", "Alerts", "2021-11-01"),
                 new Tuple<string, string, string>("Security", "AlertsSuppressionRules", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "AllowedConnections", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "Assessments", "2020-01-01"),
@@ -71,10 +71,10 @@ namespace Microsoft.Azure.Management.Security
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/security/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c981b81aa26ad4d0d156e034e6782853b4e747a1";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "c104edf0f93bef19cc9d156053c2cf1358e22934";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

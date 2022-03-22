@@ -69,6 +69,10 @@ namespace Microsoft.Azure.Management.Security
         /// List all the alerts that are associated with the subscription that
         /// are stored in a specific location
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -84,11 +88,15 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelByRegionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> ListSubscriptionLevelByRegionWithHttpMessagesAsync(string ascLocation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the alerts that are associated with the resource group
         /// that are stored in a specific location
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
         /// name is case insensitive.
@@ -108,10 +116,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelByRegionWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Alert>>> ListResourceGroupLevelByRegionWithHttpMessagesAsync(string ascLocation, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get an alert that is associated with a subscription
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -130,11 +142,15 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Alert>> GetSubscriptionLevelWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Alert>> GetSubscriptionLevelWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get an alert that is associated a resource group or a resource in a
         /// resource group
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -157,10 +173,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Alert>> GetResourceGroupLevelWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Alert>> GetResourceGroupLevelWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -176,10 +196,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToDismissWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -195,10 +219,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToResolveWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToResolveWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -214,33 +242,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateSubscriptionLevelStateToActivateWithHttpMessagesAsync(string ascLocation, string alertName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
-        /// <param name='alertName'>
-        /// Name of the alert object
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Update the alert's state
-        /// </summary>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -260,10 +269,14 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToResolveWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update the alert's state
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='alertName'>
         /// Name of the alert object
         /// </param>
@@ -283,10 +296,41 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToDismissWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update the alert's state
+        /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
+        /// <param name='alertName'>
+        /// Name of the alert object
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateResourceGroupLevelStateToActivateWithHttpMessagesAsync(string ascLocation, string alertName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Simulate security alerts
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='properties'>
         /// Alert Simulator request body data.
         /// </param>
@@ -302,26 +346,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> SimulateWithHttpMessagesAsync(AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Simulate security alerts
-        /// </summary>
-        /// <param name='properties'>
-        /// Alert Simulator request body data.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginSimulateWithHttpMessagesAsync(AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> SimulateWithHttpMessagesAsync(string ascLocation, AlertSimulatorRequestProperties properties = default(AlertSimulatorRequestProperties), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all the alerts that are associated with the subscription
         /// </summary>
