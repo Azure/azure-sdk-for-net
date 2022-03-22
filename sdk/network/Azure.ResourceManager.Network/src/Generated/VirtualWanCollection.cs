@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Creates a VirtualWAN resource if it doesn&apos;t exist else updates the existing VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a VirtualWAN.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Tries to get details for this resource from the service.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{VirtualWANName}
         /// Operation Id: VirtualWans_Get
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
