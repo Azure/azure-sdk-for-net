@@ -109,6 +109,7 @@ namespace Azure.ResourceManager
         public virtual Azure.Response<Azure.ResourceManager.Resources.PolicyExemptionResource> GetPolicyExemption(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyExemptionResource>> GetPolicyExemptionAsync(string policyExemptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.PolicyExemptionCollection GetPolicyExemptions() { throw null; }
+        public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
 }
