@@ -5801,6 +5801,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task SetTierAsync_PremiumToStandardDown()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey());
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response response = await blob.SetAccessTierAsync(AccessTier.Hot);
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Hot.ToString(), propertiesResponse.Value.AccessTier);
+
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync())
+            {
+                blobItems.Add(blobItem);
+            }
+            BlobItem item = blobItems.Where(r => r.Name == blob.Name).FirstOrDefault();
+            Assert.AreEqual(AccessTier.Hot, item.Properties.AccessTier);
+        }
+
+        [RecordedTest]
         [TestCase(nameof(BlobRequestConditions.IfModifiedSince))]
         [TestCase(nameof(BlobRequestConditions.IfUnmodifiedSince))]
         [TestCase(nameof(BlobRequestConditions.IfMatch))]
