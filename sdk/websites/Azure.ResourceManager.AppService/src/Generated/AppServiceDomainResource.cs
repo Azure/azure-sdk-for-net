@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DomainOwnershipIdentifierResources in the DomainOwnershipIdentifierResource. </summary>
+        /// <summary> Gets a collection of DomainOwnershipIdentifierResources in the AppServiceDomain. </summary>
         /// <returns> An object representing collection of DomainOwnershipIdentifierResources and their operations over a DomainOwnershipIdentifierResource. </returns>
         public virtual DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StorageQueueResources in the StorageQueueResource. </summary>
+        /// <summary> Gets a collection of StorageQueueResources in the QueueService. </summary>
         /// <returns> An object representing collection of StorageQueueResources and their operations over a StorageQueueResource. </returns>
         public virtual StorageQueueCollection GetStorageQueues()
         {

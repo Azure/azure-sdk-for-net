@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteConfigSnapshotResources in the SiteConfigSnapshotResource. </summary>
+        /// <summary> Gets a collection of SiteConfigSnapshotResources in the WebSiteConfig. </summary>
         /// <returns> An object representing collection of SiteConfigSnapshotResources and their operations over a SiteConfigSnapshotResource. </returns>
         public virtual SiteConfigSnapshotCollection GetSiteConfigSnapshots()
         {

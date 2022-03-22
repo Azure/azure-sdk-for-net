@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 
         public ArmClient ArmClient { get; set; }
 
-        public Resources.Subscription Subscription
+        public SubscriptionResource Subscription
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
         {
             get
             {
-                return Subscription.GetResourceGroups().Get(TestEnvironment.ResourceGroupResource).Value;
+                return Subscription.GetResourceGroups().Get(TestEnvironment.ResourceGroup).Value;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
         }
 
-        protected async Task<WebPubSub> CreateDefaultWebPubSub(string webPubSubName, AzureLocation location, ResourceGroupResource resourceGroup)
+        protected async Task<WebPubSubResource> CreateDefaultWebPubSub(string webPubSubName, AzureLocation location, ResourceGroupResource resourceGroup)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>()

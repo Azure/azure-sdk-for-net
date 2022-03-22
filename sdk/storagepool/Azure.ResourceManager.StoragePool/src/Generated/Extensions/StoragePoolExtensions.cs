@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StoragePool
             );
         }
 
-        /// <summary> Gets a collection of DiskPoolResources in the DiskPoolResource. </summary>
+        /// <summary> Gets a collection of DiskPoolResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)

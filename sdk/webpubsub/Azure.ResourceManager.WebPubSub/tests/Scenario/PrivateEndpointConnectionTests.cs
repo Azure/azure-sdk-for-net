@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
     public class PrivateEndpointConnectionTests : WebPubHubServiceClientTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private WebPubSub _webPubSub;
-        private VirtualNetwork _vnet;
+        private WebPubSubResource _webPubSub;
+        private VirtualNetworkResource _vnet;
         private string _vnetName;
         private string _privateEndPointName;
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             }
         }
 
-        public async Task<WebPubSub> CreateWebPubSub(string webPubSubName)
+        public async Task<WebPubSubResource> CreateWebPubSub(string webPubSubName)
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();

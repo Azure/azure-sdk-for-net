@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteDiagnosticAnalysisResources in the SiteDiagnosticAnalysisResource. </summary>
+        /// <summary> Gets a collection of SiteDiagnosticAnalysisResources in the SiteDiagnostic. </summary>
         /// <returns> An object representing collection of SiteDiagnosticAnalysisResources and their operations over a SiteDiagnosticAnalysisResource. </returns>
         public virtual SiteDiagnosticAnalysisCollection GetSiteDiagnosticAnalyses()
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteDiagnosticAnalyses().Get(analysisName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteDiagnosticDetectorResources in the SiteDiagnosticDetectorResource. </summary>
+        /// <summary> Gets a collection of SiteDiagnosticDetectorResources in the SiteDiagnostic. </summary>
         /// <returns> An object representing collection of SiteDiagnosticDetectorResources and their operations over a SiteDiagnosticDetectorResource. </returns>
         public virtual SiteDiagnosticDetectorCollection GetSiteDiagnosticDetectors()
         {

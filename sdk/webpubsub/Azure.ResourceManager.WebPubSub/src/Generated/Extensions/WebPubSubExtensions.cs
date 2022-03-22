@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WebPubSub
             );
         }
 
-        /// <summary> Gets a collection of WebPubSubResources in the WebPubSubResource. </summary>
+        /// <summary> Gets a collection of WebPubSubResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
         public static WebPubSubCollection GetWebPubSubs(this ResourceGroupResource resourceGroupResource)

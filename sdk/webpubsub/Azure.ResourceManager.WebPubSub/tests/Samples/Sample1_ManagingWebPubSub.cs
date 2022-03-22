@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
         {
             #region Snippet:Managing_Resource_Groups_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
 
             #region Snippet:Managing_Resource_Groups_GetResourceGroupCollection
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
                 ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
             };
 
-            WebPubSub webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(WaitUntil.Started, webPubSubName, data)).WaitForCompletionAsync();
+            WebPubSubResource webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(WaitUntil.Started, webPubSubName, data)).WaitForCompletionAsync();
 
             #endregion
         }
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_ListAllWebPubSub
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            AsyncPageable<WebPubSub> response = WebPubSubColletion.GetAllAsync();
-            await foreach (WebPubSub WebPubSub in response)
+            AsyncPageable<WebPubSubResource> response = WebPubSubColletion.GetAllAsync();
+            await foreach (WebPubSubResource WebPubSub in response)
             {
                 Console.WriteLine(WebPubSub.Data.Name);
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_GetWebPubSub
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
+            WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
             Console.WriteLine(webPubSub.Data.Name);
             #endregion
         }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_GetWebPubSubIfExists
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
+            WebPubSubResource webPubSub = await WebPubSubColletion.GetIfExistsAsync("foo");
             if (webPubSub != null)
             {
                 Console.WriteLine(webPubSub.Data.Name);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             #region Snippet:Managing_WebPubSub_DeleteWebPubSub
             WebPubSubCollection WebPubSubColletion = resourceGroup.GetWebPubSubs();
 
-            WebPubSub webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
+            WebPubSubResource webPubSub = await WebPubSubColletion.GetAsync("myWebPubSubName");
             await webPubSub.DeleteAsync(WaitUntil.Completed);
             #endregion
         }

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServerfarmHybridConnectionNamespaceRelayResources in the ServerfarmHybridConnectionNamespaceRelayResource. </summary>
+        /// <summary> Gets a collection of ServerfarmHybridConnectionNamespaceRelayResources in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmHybridConnectionNamespaceRelayResources and their operations over a ServerfarmHybridConnectionNamespaceRelayResource. </returns>
         public virtual ServerfarmHybridConnectionNamespaceRelayCollection GetServerfarmHybridConnectionNamespaceRelays()
         {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.AppService
             return GetServerfarmHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a HybridConnectionLimitsResource along with the instance operations that can be performed on it in the AppServicePlanResource. </summary>
+        /// <summary> Gets an object representing a HybridConnectionLimitsResource along with the instance operations that can be performed on it in the AppServicePlan. </summary>
         /// <returns> Returns a <see cref="HybridConnectionLimitsResource" /> object. </returns>
         public virtual HybridConnectionLimitsResource GetHybridConnectionLimits()
         {
             return new HybridConnectionLimitsResource(Client, new ResourceIdentifier(Id.ToString() + "/hybridConnectionPlanLimits/limit"));
         }
 
-        /// <summary> Gets a collection of ServerfarmVirtualNetworkConnectionResources in the ServerfarmVirtualNetworkConnectionResource. </summary>
+        /// <summary> Gets a collection of ServerfarmVirtualNetworkConnectionResources in the AppServicePlan. </summary>
         /// <returns> An object representing collection of ServerfarmVirtualNetworkConnectionResources and their operations over a ServerfarmVirtualNetworkConnectionResource. </returns>
         public virtual ServerfarmVirtualNetworkConnectionCollection GetServerfarmVirtualNetworkConnections()
         {

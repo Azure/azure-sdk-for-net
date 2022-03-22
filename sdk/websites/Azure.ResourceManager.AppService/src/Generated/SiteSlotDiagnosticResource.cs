@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteSlotDiagnosticAnalysisResources in the SiteSlotDiagnosticAnalysisResource. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnosticAnalysisResources in the SiteSlotDiagnostic. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnosticAnalysisResources and their operations over a SiteSlotDiagnosticAnalysisResource. </returns>
         public virtual SiteSlotDiagnosticAnalysisCollection GetSiteSlotDiagnosticAnalyses()
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotDiagnosticAnalyses().Get(analysisName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotDiagnosticDetectorResources in the SiteSlotDiagnosticDetectorResource. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnosticDetectorResources in the SiteSlotDiagnostic. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnosticDetectorResources and their operations over a SiteSlotDiagnosticDetectorResource. </returns>
         public virtual SiteSlotDiagnosticDetectorCollection GetSiteSlotDiagnosticDetectors()
         {

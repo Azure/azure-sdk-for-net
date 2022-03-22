@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Tests
     {
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         public AppServiceTestBase(bool isAsync) : base(isAsync)
         {

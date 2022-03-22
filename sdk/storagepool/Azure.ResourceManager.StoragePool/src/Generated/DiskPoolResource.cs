@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StoragePool
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of IscsiTargetResources in the IscsiTargetResource. </summary>
+        /// <summary> Gets a collection of IscsiTargetResources in the DiskPool. </summary>
         /// <returns> An object representing collection of IscsiTargetResources and their operations over a IscsiTargetResource. </returns>
         public virtual IscsiTargetCollection GetIscsiTargets()
         {

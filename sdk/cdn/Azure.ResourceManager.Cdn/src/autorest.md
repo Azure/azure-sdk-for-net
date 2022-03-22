@@ -7,7 +7,6 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-use: C:/Users/mingzhehuang/workspaces/archerzz/autorest.csharp/artifacts/bin/AutoRest.CSharp/Debug/netcoreapp3.1
 input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2020-09-01/cdn.json
   - https://github.com/Azure/azure-rest-api-specs/blob/2cd7c6eacc5430d8956885e8d19b87ce3f3ebd6e/specification/cdn/resource-manager/Microsoft.Cdn/stable/2020-09-01/cdnwebapplicationfirewall.json

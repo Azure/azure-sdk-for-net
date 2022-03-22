@@ -48,56 +48,56 @@ namespace Azure.ResourceManager.AppService
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AppServiceCertificateOrderResources in the AppServiceCertificateOrderResource. </summary>
+        /// <summary> Gets a collection of AppServiceCertificateOrderResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
         public virtual AppServiceCertificateOrderCollection GetAppServiceCertificateOrders()
         {
             return GetCachedClient(Client => new AppServiceCertificateOrderCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AppServiceDomainResources in the AppServiceDomainResource. </summary>
+        /// <summary> Gets a collection of AppServiceDomainResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
         public virtual AppServiceDomainCollection GetAppServiceDomains()
         {
             return GetCachedClient(Client => new AppServiceDomainCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AppServiceEnvironmentResources in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of AppServiceEnvironmentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
         public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
         {
             return GetCachedClient(Client => new AppServiceEnvironmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of AppServicePlanResources in the AppServicePlanResource. </summary>
+        /// <summary> Gets a collection of AppServicePlanResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
         public virtual AppServicePlanCollection GetAppServicePlans()
         {
             return GetCachedClient(Client => new AppServicePlanCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CertificateResources in the CertificateResource. </summary>
+        /// <summary> Gets a collection of CertificateResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
         public virtual CertificateCollection GetCertificates()
         {
             return GetCachedClient(Client => new CertificateCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of KubeEnvironmentResources in the KubeEnvironmentResource. </summary>
+        /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
         public virtual KubeEnvironmentCollection GetKubeEnvironments()
         {
             return GetCachedClient(Client => new KubeEnvironmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteARMResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
         public virtual StaticSiteARMResourceCollection GetStaticSiteARMResources()
         {
             return GetCachedClient(Client => new StaticSiteARMResourceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of WebSiteResources in the WebSiteResource. </summary>
+        /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
         public virtual WebSiteCollection GetWebSites()
         {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteTriggeredWebJobHistoryResources in the SiteTriggeredWebJobHistoryResource. </summary>
+        /// <summary> Gets a collection of SiteTriggeredWebJobHistoryResources in the SiteTriggeredwebJob. </summary>
         /// <returns> An object representing collection of SiteTriggeredWebJobHistoryResources and their operations over a SiteTriggeredWebJobHistoryResource. </returns>
         public virtual SiteTriggeredWebJobHistoryCollection GetSiteTriggeredWebJobHistories()
         {

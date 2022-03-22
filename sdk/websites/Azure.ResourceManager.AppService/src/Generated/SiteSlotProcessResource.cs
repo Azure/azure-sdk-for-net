@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteSlotProcessModuleResources in the SiteSlotProcessModuleResource. </summary>
+        /// <summary> Gets a collection of SiteSlotProcessModuleResources in the SiteSlotProcess. </summary>
         /// <returns> An object representing collection of SiteSlotProcessModuleResources and their operations over a SiteSlotProcessModuleResource. </returns>
         public virtual SiteSlotProcessModuleCollection GetSiteSlotProcessModules()
         {

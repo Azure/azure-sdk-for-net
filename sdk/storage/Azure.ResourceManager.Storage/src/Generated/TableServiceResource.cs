@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of TableResources in the TableResource. </summary>
+        /// <summary> Gets a collection of TableResources in the TableService. </summary>
         /// <returns> An object representing collection of TableResources and their operations over a TableResource. </returns>
         public virtual TableCollection GetTables()
         {

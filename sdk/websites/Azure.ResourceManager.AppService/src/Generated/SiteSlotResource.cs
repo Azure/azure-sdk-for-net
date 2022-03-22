@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteSlotDetectorResources in the SiteSlotDetectorResource. </summary>
+        /// <summary> Gets a collection of SiteSlotDetectorResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDetectorResources and their operations over a SiteSlotDetectorResource. </returns>
         public virtual SiteSlotDetectorCollection GetSiteSlotDetectors()
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotPrivateEndpointConnectionResources in the SiteSlotPrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of SiteSlotPrivateEndpointConnectionResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPrivateEndpointConnectionResources and their operations over a SiteSlotPrivateEndpointConnectionResource. </returns>
         public virtual SiteSlotPrivateEndpointConnectionCollection GetSiteSlotPrivateEndpointConnections()
         {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotHybridConnectionNamespaceRelayResources in the SiteSlotHybridConnectionNamespaceRelayResource. </summary>
+        /// <summary> Gets a collection of SiteSlotHybridConnectionNamespaceRelayResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHybridConnectionNamespaceRelayResources and their operations over a SiteSlotHybridConnectionNamespaceRelayResource. </returns>
         public virtual SiteSlotHybridConnectionNamespaceRelayCollection GetSiteSlotHybridConnectionNamespaceRelays()
         {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotHybridConnectionNamespaceRelays().Get(namespaceName, relayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotVirtualNetworkConnectionResources in the SiteSlotVirtualNetworkConnectionResource. </summary>
+        /// <summary> Gets a collection of SiteSlotVirtualNetworkConnectionResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnectionResources and their operations over a SiteSlotVirtualNetworkConnectionResource. </returns>
         public virtual SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections()
         {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotVirtualNetworkConnections().Get(vnetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotDiagnosticResources in the SiteSlotDiagnosticResource. </summary>
+        /// <summary> Gets a collection of SiteSlotDiagnosticResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDiagnosticResources and their operations over a SiteSlotDiagnosticResource. </returns>
         public virtual SiteSlotDiagnosticCollection GetSiteSlotDiagnostics()
         {
@@ -268,14 +268,14 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotDiagnostics().Get(diagnosticCategory, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a SiteSlotResourceHealthMetadataResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a SiteSlotResourceHealthMetadataResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotResourceHealthMetadataResource" /> object. </returns>
         public virtual SiteSlotResourceHealthMetadataResource GetSiteSlotResourceHealthMetadata()
         {
             return new SiteSlotResourceHealthMetadataResource(Client, new ResourceIdentifier(Id.ToString() + "/resourceHealthMetadata/default"));
         }
 
-        /// <summary> Gets a collection of SiteSlotBackupResources in the SiteSlotBackupResource. </summary>
+        /// <summary> Gets a collection of SiteSlotBackupResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotBackupResources and their operations over a SiteSlotBackupResource. </returns>
         public virtual SiteSlotBackupCollection GetSiteSlotBackups()
         {
@@ -310,21 +310,21 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotBackups().Get(backupId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a FtpSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="FtpSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual FtpSiteSlotBasicPublishingCredentialsPolicyResource GetFtpSiteSlotBasicPublishingCredentialsPolicy()
         {
             return new FtpSiteSlotBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/ftp"));
         }
 
-        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy()
         {
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/basicPublishingCredentialsPolicies/scm"));
         }
 
-        /// <summary> Gets a collection of SiteSlotConfigAppSettingResources in the SiteSlotConfigAppSettingResource. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigAppSettingResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigAppSettingResources and their operations over a SiteSlotConfigAppSettingResource. </returns>
         public virtual SiteSlotConfigAppSettingCollection GetSiteSlotConfigAppSettings()
         {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotConfigAppSettings().Get(appSettingKey, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotConfigConnectionStringResources in the SiteSlotConfigConnectionStringResource. </summary>
+        /// <summary> Gets a collection of SiteSlotConfigConnectionStringResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotConfigConnectionStringResources and their operations over a SiteSlotConfigConnectionStringResource. </returns>
         public virtual SiteSlotConfigConnectionStringCollection GetSiteSlotConfigConnectionStrings()
         {
@@ -394,21 +394,21 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotConfigConnectionStrings().Get(connectionStringKey, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a LogsSiteSlotConfigResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a LogsSiteSlotConfigResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource" /> object. </returns>
         public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfig()
         {
             return new LogsSiteSlotConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/logs"));
         }
 
-        /// <summary> Gets an object representing a WebSiteSlotConfigResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a WebSiteSlotConfigResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource" /> object. </returns>
         public virtual WebSiteSlotConfigResource GetWebSiteSlotConfig()
         {
             return new WebSiteSlotConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/config/web"));
         }
 
-        /// <summary> Gets a collection of SiteSlotContinuousWebJobResources in the SiteSlotContinuousWebJobResource. </summary>
+        /// <summary> Gets a collection of SiteSlotContinuousWebJobResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotContinuousWebJobResources and their operations over a SiteSlotContinuousWebJobResource. </returns>
         public virtual SiteSlotContinuousWebJobCollection GetSiteSlotContinuousWebJobs()
         {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotContinuousWebJobs().Get(webJobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotDeploymentResources in the SiteSlotDeploymentResource. </summary>
+        /// <summary> Gets a collection of SiteSlotDeploymentResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDeploymentResources and their operations over a SiteSlotDeploymentResource. </returns>
         public virtual SiteSlotDeploymentCollection GetSiteSlotDeployments()
         {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotDeployments().Get(id, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotDomainOwnershipIdentifierResources in the SiteSlotDomainOwnershipIdentifierResource. </summary>
+        /// <summary> Gets a collection of SiteSlotDomainOwnershipIdentifierResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotDomainOwnershipIdentifierResources and their operations over a SiteSlotDomainOwnershipIdentifierResource. </returns>
         public virtual SiteSlotDomainOwnershipIdentifierCollection GetSiteSlotDomainOwnershipIdentifiers()
         {
@@ -513,14 +513,14 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotDomainOwnershipIdentifiers().Get(domainOwnershipIdentifierName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a SiteSlotExtensionResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a SiteSlotExtensionResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
         public virtual SiteSlotExtensionResource GetSiteSlotExtension()
         {
             return new SiteSlotExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
 
-        /// <summary> Gets a collection of SiteSlotFunctionResources in the SiteSlotFunctionResource. </summary>
+        /// <summary> Gets a collection of SiteSlotFunctionResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotFunctionResources and their operations over a SiteSlotFunctionResource. </returns>
         public virtual SiteSlotFunctionCollection GetSiteSlotFunctions()
         {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotFunctions().Get(functionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotHostNameBindingResources in the SiteSlotHostNameBindingResource. </summary>
+        /// <summary> Gets a collection of SiteSlotHostNameBindingResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHostNameBindingResources and their operations over a SiteSlotHostNameBindingResource. </returns>
         public virtual SiteSlotHostNameBindingCollection GetSiteSlotHostNameBindings()
         {
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotHostNameBindings().Get(hostName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotHybridconnectionResources in the SiteSlotHybridconnectionResource. </summary>
+        /// <summary> Gets a collection of SiteSlotHybridconnectionResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotHybridconnectionResources and their operations over a SiteSlotHybridconnectionResource. </returns>
         public virtual SiteSlotHybridconnectionCollection GetSiteSlotHybridconnections()
         {
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotHybridconnections().Get(entityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotInstanceResources in the SiteSlotInstanceResource. </summary>
+        /// <summary> Gets a collection of SiteSlotInstanceResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotInstanceResources and their operations over a SiteSlotInstanceResource. </returns>
         public virtual SiteSlotInstanceCollection GetSiteSlotInstances()
         {
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotInstances().Get(instanceId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotProcessResources in the SiteSlotProcessResource. </summary>
+        /// <summary> Gets a collection of SiteSlotProcessResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotProcessResources and their operations over a SiteSlotProcessResource. </returns>
         public virtual SiteSlotProcessCollection GetSiteSlotProcesses()
         {
@@ -695,14 +695,14 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotProcesses().Get(processId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a SiteSlotNetworkConfigResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a SiteSlotNetworkConfigResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource" /> object. </returns>
         public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfig()
         {
             return new SiteSlotNetworkConfigResource(Client, new ResourceIdentifier(Id.ToString() + "/networkConfig/virtualNetwork"));
         }
 
-        /// <summary> Gets a collection of SiteSlotPremierAddOnResources in the SiteSlotPremierAddOnResource. </summary>
+        /// <summary> Gets a collection of SiteSlotPremierAddOnResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPremierAddOnResources and their operations over a SiteSlotPremierAddOnResource. </returns>
         public virtual SiteSlotPremierAddOnCollection GetSiteSlotPremierAddOns()
         {
@@ -737,14 +737,14 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotPremierAddOns().Get(premierAddOnName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a SiteSlotPrivateAccessResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a SiteSlotPrivateAccessResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotPrivateAccessResource" /> object. </returns>
         public virtual SiteSlotPrivateAccessResource GetSiteSlotPrivateAccess()
         {
             return new SiteSlotPrivateAccessResource(Client, new ResourceIdentifier(Id.ToString() + "/privateAccess/virtualNetworks"));
         }
 
-        /// <summary> Gets a collection of SiteSlotPublicCertificateResources in the SiteSlotPublicCertificateResource. </summary>
+        /// <summary> Gets a collection of SiteSlotPublicCertificateResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotPublicCertificateResources and their operations over a SiteSlotPublicCertificateResource. </returns>
         public virtual SiteSlotPublicCertificateCollection GetSiteSlotPublicCertificates()
         {
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotPublicCertificates().Get(publicCertificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotSiteextensionResources in the SiteSlotSiteextensionResource. </summary>
+        /// <summary> Gets a collection of SiteSlotSiteextensionResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotSiteextensionResources and their operations over a SiteSlotSiteextensionResource. </returns>
         public virtual SiteSlotSiteextensionCollection GetSiteSlotSiteextensions()
         {
@@ -814,14 +814,14 @@ namespace Azure.ResourceManager.AppService
             return GetSiteSlotSiteextensions().Get(siteExtensionId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a MigrateMySqlStatusResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource" /> object. </returns>
         public virtual MigrateMySqlStatusResource GetMigrateMySqlStatus()
         {
             return new MigrateMySqlStatusResource(Client, new ResourceIdentifier(Id.ToString() + "/migratemysql/status"));
         }
 
-        /// <summary> Gets a collection of NetworkFeaturesResources in the NetworkFeaturesResource. </summary>
+        /// <summary> Gets a collection of NetworkFeaturesResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of NetworkFeaturesResources and their operations over a NetworkFeaturesResource. </returns>
         public virtual NetworkFeaturesCollection GetNetworkFeatures()
         {
@@ -856,14 +856,14 @@ namespace Azure.ResourceManager.AppService
             return GetNetworkFeatures().Get(view, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a SiteSlotSourcecontrolResource along with the instance operations that can be performed on it in the SiteSlotResource. </summary>
+        /// <summary> Gets an object representing a SiteSlotSourcecontrolResource along with the instance operations that can be performed on it in the SiteSlot. </summary>
         /// <returns> Returns a <see cref="SiteSlotSourcecontrolResource" /> object. </returns>
         public virtual SiteSlotSourcecontrolResource GetSiteSlotSourcecontrol()
         {
             return new SiteSlotSourcecontrolResource(Client, new ResourceIdentifier(Id.ToString() + "/sourcecontrols/web"));
         }
 
-        /// <summary> Gets a collection of SiteTriggeredwebJobResources in the SiteTriggeredwebJobResource. </summary>
+        /// <summary> Gets a collection of SiteTriggeredwebJobResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteTriggeredwebJobResources and their operations over a SiteTriggeredwebJobResource. </returns>
         public virtual SiteTriggeredwebJobCollection GetSiteTriggeredwebJobs()
         {
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppService
             return GetSiteTriggeredwebJobs().Get(webJobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteSlotWebJobResources in the SiteSlotWebJobResource. </summary>
+        /// <summary> Gets a collection of SiteSlotWebJobResources in the SiteSlot. </summary>
         /// <returns> An object representing collection of SiteSlotWebJobResources and their operations over a SiteSlotWebJobResource. </returns>
         public virtual SiteSlotWebJobCollection GetSiteSlotWebJobs()
         {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DiskPoolResources in the DiskPoolResource. </summary>
+        /// <summary> Gets a collection of DiskPoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public virtual DiskPoolCollection GetDiskPools()
         {

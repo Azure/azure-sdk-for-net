@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a SiteSlotInstanceExtensionResource along with the instance operations that can be performed on it in the SiteSlotInstanceResource. </summary>
+        /// <summary> Gets an object representing a SiteSlotInstanceExtensionResource along with the instance operations that can be performed on it in the SiteSlotInstance. </summary>
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource" /> object. </returns>
         public virtual SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtension()
         {
             return new SiteSlotInstanceExtensionResource(Client, new ResourceIdentifier(Id.ToString() + "/extensions/MSDeploy"));
         }
 
-        /// <summary> Gets a collection of SiteSlotInstanceProcessResources in the SiteSlotInstanceProcessResource. </summary>
+        /// <summary> Gets a collection of SiteSlotInstanceProcessResources in the SiteSlotInstance. </summary>
         /// <returns> An object representing collection of SiteSlotInstanceProcessResources and their operations over a SiteSlotInstanceProcessResource. </returns>
         public virtual SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
         {

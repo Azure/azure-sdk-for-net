@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage
             );
         }
 
-        /// <summary> Gets a collection of DeletedAccountResources in the DeletedAccountResource. </summary>
+        /// <summary> Gets a collection of DeletedAccountResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
         public static DeletedAccountCollection GetDeletedAccounts(this SubscriptionResource subscriptionResource)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Storage
             );
         }
 
-        /// <summary> Gets a collection of StorageAccountResources in the StorageAccountResource. </summary>
+        /// <summary> Gets a collection of StorageAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
         public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of WebPubSubResources in the WebPubSubResource. </summary>
+        /// <summary> Gets a collection of WebPubSubResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
         public virtual WebPubSubCollection GetWebPubSubs()
         {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets an object representing a ImmutabilityPolicyResource along with the instance operations that can be performed on it in the BlobContainerResource. </summary>
+        /// <summary> Gets an object representing a ImmutabilityPolicyResource along with the instance operations that can be performed on it in the BlobContainer. </summary>
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicy()
         {

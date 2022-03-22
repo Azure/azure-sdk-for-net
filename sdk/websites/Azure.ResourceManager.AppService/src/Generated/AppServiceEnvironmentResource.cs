@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of HostingEnvironmentDetectorResources in the HostingEnvironmentDetectorResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentDetectorResources in the AppServiceEnvironment. </summary>
         /// <returns> An object representing collection of HostingEnvironmentDetectorResources and their operations over a HostingEnvironmentDetectorResource. </returns>
         public virtual HostingEnvironmentDetectorCollection GetHostingEnvironmentDetectors()
         {
@@ -134,21 +134,21 @@ namespace Azure.ResourceManager.AppService
             return GetHostingEnvironmentDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
         public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfiguration()
         {
             return new AseV3NetworkingConfigurationResource(Client, new ResourceIdentifier(Id.ToString() + "/configurations/networking"));
         }
 
-        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePoolResource along with the instance operations that can be performed on it in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets an object representing a HostingEnvironmentMultiRolePoolResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource" /> object. </returns>
         public virtual HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePool()
         {
             return new HostingEnvironmentMultiRolePoolResource(Client, new ResourceIdentifier(Id.ToString() + "/multiRolePools/default"));
         }
 
-        /// <summary> Gets a collection of HostingEnvironmentWorkerPoolResources in the HostingEnvironmentWorkerPoolResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentWorkerPoolResources in the AppServiceEnvironment. </summary>
         /// <returns> An object representing collection of HostingEnvironmentWorkerPoolResources and their operations over a HostingEnvironmentWorkerPoolResource. </returns>
         public virtual HostingEnvironmentWorkerPoolCollection GetHostingEnvironmentWorkerPools()
         {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
             return GetHostingEnvironmentWorkerPools().Get(workerPoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HostingEnvironmentPrivateEndpointConnectionResources in the HostingEnvironmentPrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentPrivateEndpointConnectionResources in the AppServiceEnvironment. </summary>
         /// <returns> An object representing collection of HostingEnvironmentPrivateEndpointConnectionResources and their operations over a HostingEnvironmentPrivateEndpointConnectionResource. </returns>
         public virtual HostingEnvironmentPrivateEndpointConnectionCollection GetHostingEnvironmentPrivateEndpointConnections()
         {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
             return GetHostingEnvironmentPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HostingEnvironmentRecommendationResources in the HostingEnvironmentRecommendationResource. </summary>
+        /// <summary> Gets a collection of HostingEnvironmentRecommendationResources in the AppServiceEnvironment. </summary>
         /// <returns> An object representing collection of HostingEnvironmentRecommendationResources and their operations over a HostingEnvironmentRecommendationResource. </returns>
         public virtual HostingEnvironmentRecommendationCollection GetHostingEnvironmentRecommendations()
         {

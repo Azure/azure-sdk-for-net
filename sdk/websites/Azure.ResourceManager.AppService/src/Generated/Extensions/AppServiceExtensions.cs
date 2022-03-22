@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             );
         }
 
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResourceExtensions. </summary>
+        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="UserResource" /> object. </returns>
         public static UserResource GetUser(this TenantResource tenantResource)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
             return GetExtensionClient(tenantResource).GetUser();
         }
 
-        /// <summary> Gets a collection of SourceControlResources in the SourceControlResource. </summary>
+        /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
         public static SourceControlCollection GetSourceControls(this TenantResource tenantResource)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             );
         }
 
-        /// <summary> Gets a collection of TopLevelDomainResources in the TopLevelDomainResource. </summary>
+        /// <summary> Gets a collection of TopLevelDomainResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TopLevelDomainResources and their operations over a TopLevelDomainResource. </returns>
         public static TopLevelDomainCollection GetTopLevelDomains(this SubscriptionResource subscriptionResource)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppService
             return subscriptionResource.GetTopLevelDomains().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DeletedSiteResources in the DeletedSiteResource. </summary>
+        /// <summary> Gets a collection of DeletedSiteResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedSiteResources and their operations over a DeletedSiteResource. </returns>
         public static DeletedSiteCollection GetDeletedSites(this SubscriptionResource subscriptionResource)
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.AppService
             );
         }
 
-        /// <summary> Gets a collection of AppServiceCertificateOrderResources in the AppServiceCertificateOrderResource. </summary>
+        /// <summary> Gets a collection of AppServiceCertificateOrderResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
         public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroupResource resourceGroupResource)
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetAppServiceCertificateOrders().Get(certificateOrderName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AppServiceDomainResources in the AppServiceDomainResource. </summary>
+        /// <summary> Gets a collection of AppServiceDomainResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
         public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroupResource resourceGroupResource)
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetAppServiceDomains().Get(domainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AppServiceEnvironmentResources in the AppServiceEnvironmentResource. </summary>
+        /// <summary> Gets a collection of AppServiceEnvironmentResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
         public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroupResource resourceGroupResource)
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetAppServiceEnvironments().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AppServicePlanResources in the AppServicePlanResource. </summary>
+        /// <summary> Gets a collection of AppServicePlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
         public static AppServicePlanCollection GetAppServicePlans(this ResourceGroupResource resourceGroupResource)
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetAppServicePlans().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateResources in the CertificateResource. </summary>
+        /// <summary> Gets a collection of CertificateResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CertificateResources and their operations over a CertificateResource. </returns>
         public static CertificateCollection GetCertificates(this ResourceGroupResource resourceGroupResource)
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetCertificates().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of KubeEnvironmentResources in the KubeEnvironmentResource. </summary>
+        /// <summary> Gets a collection of KubeEnvironmentResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
         public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroupResource resourceGroupResource)
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetKubeEnvironments().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteARMResources in the StaticSiteARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteARMResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
         public static StaticSiteARMResourceCollection GetStaticSiteARMResources(this ResourceGroupResource resourceGroupResource)
@@ -1544,7 +1544,7 @@ namespace Azure.ResourceManager.AppService
             return resourceGroupResource.GetStaticSiteARMResources().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebSiteResources in the WebSiteResource. </summary>
+        /// <summary> Gets a collection of WebSiteResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
         public static WebSiteCollection GetWebSites(this ResourceGroupResource resourceGroupResource)

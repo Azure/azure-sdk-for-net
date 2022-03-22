@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SiteSlotVirtualNetworkConnectionGatewayResources in the SiteSlotVirtualNetworkConnectionGatewayResource. </summary>
+        /// <summary> Gets a collection of SiteSlotVirtualNetworkConnectionGatewayResources in the SiteSlotVirtualNetworkConnection. </summary>
         /// <returns> An object representing collection of SiteSlotVirtualNetworkConnectionGatewayResources and their operations over a SiteSlotVirtualNetworkConnectionGatewayResource. </returns>
         public virtual SiteSlotVirtualNetworkConnectionGatewayCollection GetSiteSlotVirtualNetworkConnectionGateways()
         {

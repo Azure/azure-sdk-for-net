@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FileShareResources in the FileShareResource. </summary>
+        /// <summary> Gets a collection of FileShareResources in the FileService. </summary>
         /// <returns> An object representing collection of FileShareResources and their operations over a FileShareResource. </returns>
         public virtual FileShareCollection GetFileShares()
         {

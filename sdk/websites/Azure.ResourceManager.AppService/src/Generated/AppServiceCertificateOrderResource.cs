@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AppServiceCertificateResources in the AppServiceCertificateResource. </summary>
+        /// <summary> Gets a collection of AppServiceCertificateResources in the AppServiceCertificateOrder. </summary>
         /// <returns> An object representing collection of AppServiceCertificateResources and their operations over a AppServiceCertificateResource. </returns>
         public virtual AppServiceCertificateResourceCollection GetAppServiceCertificateResources()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             return GetAppServiceCertificateResources().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CertificateOrderDetectorResources in the CertificateOrderDetectorResource. </summary>
+        /// <summary> Gets a collection of CertificateOrderDetectorResources in the AppServiceCertificateOrder. </summary>
         /// <returns> An object representing collection of CertificateOrderDetectorResources and their operations over a CertificateOrderDetectorResource. </returns>
         public virtual CertificateOrderDetectorCollection GetCertificateOrderDetectors()
         {

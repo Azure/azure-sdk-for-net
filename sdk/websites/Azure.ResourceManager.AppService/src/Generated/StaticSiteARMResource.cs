@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of StaticSitePrivateEndpointConnectionResources in the StaticSitePrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of StaticSitePrivateEndpointConnectionResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSitePrivateEndpointConnectionResources and their operations over a StaticSitePrivateEndpointConnectionResource. </returns>
         public virtual StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections()
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteBuildARMResources in the StaticSiteBuildARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteBuildARMResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteBuildARMResources and their operations over a StaticSiteBuildARMResource. </returns>
         public virtual StaticSiteBuildARMResourceCollection GetStaticSiteBuildARMResources()
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteBuildARMResources().Get(environmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionAppResources in the StaticSiteUserProvidedFunctionAppResource. </summary>
+        /// <summary> Gets a collection of StaticSiteUserProvidedFunctionAppResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteUserProvidedFunctionAppResources and their operations over a StaticSiteUserProvidedFunctionAppResource. </returns>
         public virtual StaticSiteUserProvidedFunctionAppCollection GetStaticSiteUserProvidedFunctionApps()
         {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteCustomDomainOverviewARMResources in the StaticSiteCustomDomainOverviewARMResource. </summary>
+        /// <summary> Gets a collection of StaticSiteCustomDomainOverviewARMResources in the StaticSiteARMResource. </summary>
         /// <returns> An object representing collection of StaticSiteCustomDomainOverviewARMResources and their operations over a StaticSiteCustomDomainOverviewARMResource. </returns>
         public virtual StaticSiteCustomDomainOverviewARMResourceCollection GetStaticSiteCustomDomainOverviewARMResources()
         {

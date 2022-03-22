@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of WebPubSubHubResources in the WebPubSubHubResource. </summary>
+        /// <summary> Gets a collection of WebPubSubHubResources in the WebPubSub. </summary>
         /// <returns> An object representing collection of WebPubSubHubResources and their operations over a WebPubSubHubResource. </returns>
         public virtual WebPubSubHubCollection GetWebPubSubHubs()
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WebPubSub
             return GetWebPubSubHubs().Get(hubName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the PrivateEndpointConnectionResource. </summary>
+        /// <summary> Gets a collection of PrivateEndpointConnectionResources in the WebPubSub. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnectionResources and their operations over a PrivateEndpointConnectionResource. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.WebPubSub
             return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SharedPrivateLinkResources in the SharedPrivateLinkResource. </summary>
+        /// <summary> Gets a collection of SharedPrivateLinkResources in the WebPubSub. </summary>
         /// <returns> An object representing collection of SharedPrivateLinkResources and their operations over a SharedPrivateLinkResource. </returns>
         public virtual SharedPrivateLinkCollection GetSharedPrivateLinks()
         {
