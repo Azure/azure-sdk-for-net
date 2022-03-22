@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a Tenant along with the instance operations that can be performed on it. </summary>
     public partial class Tenant : ArmResource
     {
+
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
         private readonly ClientDiagnostics _providersClientDiagnostics;
