@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityPartnerProvider(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityPartnerProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _securityPartnerProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string securityPartnerProviderApiVersion);
-            _securityPartnerProviderRestClient = new SecurityPartnerProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, securityPartnerProviderApiVersion);
+            _securityPartnerProviderRestClient = new SecurityPartnerProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityPartnerProviderApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HciClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciCluster.ResourceType.Namespace, DiagnosticOptions);
+            _hciClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciCluster.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HciCluster.ResourceType, out string hciClusterClustersApiVersion);
-            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hciClusterClustersApiVersion);
+            _hciClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

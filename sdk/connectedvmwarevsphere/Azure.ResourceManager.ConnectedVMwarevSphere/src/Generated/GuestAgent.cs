@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GuestAgent(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _guestAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            _guestAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string guestAgentApiVersion);
-            _guestAgentRestClient = new GuestAgentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, guestAgentApiVersion);
+            _guestAgentRestClient = new GuestAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, guestAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

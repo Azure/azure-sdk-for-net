@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, DiagnosticOptions);
+            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string endpointResourceEndpointsApiVersion);
-            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, endpointResourceEndpointsApiVersion);
+            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, endpointResourceEndpointsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

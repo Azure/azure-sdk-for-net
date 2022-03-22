@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LocalNetworkGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _localNetworkGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _localNetworkGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string localNetworkGatewayApiVersion);
-            _localNetworkGatewayRestClient = new LocalNetworkGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, localNetworkGatewayApiVersion);
+            _localNetworkGatewayRestClient = new LocalNetworkGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, localNetworkGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

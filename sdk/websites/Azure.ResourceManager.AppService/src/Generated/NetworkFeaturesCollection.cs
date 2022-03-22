@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetworkFeaturesCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFeaturesWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", NetworkFeatures.ResourceType.Namespace, DiagnosticOptions);
+            _networkFeaturesWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", NetworkFeatures.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkFeatures.ResourceType, out string networkFeaturesWebAppsApiVersion);
-            _networkFeaturesWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkFeaturesWebAppsApiVersion);
+            _networkFeaturesWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFeaturesWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CloudServiceRoleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudServiceRoleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceRole.ResourceType.Namespace, DiagnosticOptions);
+            _cloudServiceRoleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CloudServiceRole.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CloudServiceRole.ResourceType, out string cloudServiceRoleApiVersion);
-            _cloudServiceRoleRestClient = new CloudServiceRolesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cloudServiceRoleApiVersion);
+            _cloudServiceRoleRestClient = new CloudServiceRolesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceRoleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

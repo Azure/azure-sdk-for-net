@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ExpressRoutePortsLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expressRoutePortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortsLocation.ResourceType.Namespace, DiagnosticOptions);
+            _expressRoutePortsLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortsLocation.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ExpressRoutePortsLocation.ResourceType, out string expressRoutePortsLocationApiVersion);
-            _expressRoutePortsLocationRestClient = new ExpressRoutePortsLocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortsLocationApiVersion);
+            _expressRoutePortsLocationRestClient = new ExpressRoutePortsLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortsLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

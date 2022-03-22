@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RouteTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routeTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteTable.ResourceType.Namespace, DiagnosticOptions);
+            _routeTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteTable.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RouteTable.ResourceType, out string routeTableApiVersion);
-            _routeTableRestClient = new RouteTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeTableApiVersion);
+            _routeTableRestClient = new RouteTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routeTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

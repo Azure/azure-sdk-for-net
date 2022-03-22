@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SyncAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncAgent.ResourceType.Namespace, DiagnosticOptions);
+            _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SyncAgent.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SyncAgent.ResourceType, out string syncAgentApiVersion);
-            _syncAgentRestClient = new SyncAgentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
+            _syncAgentRestClient = new SyncAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, syncAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

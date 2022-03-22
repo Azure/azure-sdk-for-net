@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal JobAgentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobAgent.ResourceType.Namespace, DiagnosticOptions);
+            _jobAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobAgent.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JobAgent.ResourceType, out string jobAgentApiVersion);
-            _jobAgentRestClient = new JobAgentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobAgentApiVersion);
+            _jobAgentRestClient = new JobAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

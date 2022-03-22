@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServiceBusRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceBusRuleRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusRule.ResourceType.Namespace, DiagnosticOptions);
+            _serviceBusRuleRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusRule.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceBusRule.ResourceType, out string serviceBusRuleRulesApiVersion);
-            _serviceBusRuleRulesRestClient = new RulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceBusRuleRulesApiVersion);
+            _serviceBusRuleRulesRestClient = new RulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusRuleRulesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

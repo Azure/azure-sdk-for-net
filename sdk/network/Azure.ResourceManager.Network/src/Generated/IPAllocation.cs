@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IPAllocation(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ipAllocationIpAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _ipAllocationIpAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string ipAllocationIpAllocationsApiVersion);
-            _ipAllocationIpAllocationsRestClient = new IpAllocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ipAllocationIpAllocationsApiVersion);
+            _ipAllocationIpAllocationsRestClient = new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipAllocationIpAllocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

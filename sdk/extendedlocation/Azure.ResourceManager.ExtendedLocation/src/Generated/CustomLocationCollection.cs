@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CustomLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, DiagnosticOptions);
+            _customLocationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CustomLocation.ResourceType, out string customLocationApiVersion);
-            _customLocationRestClient = new CustomLocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, customLocationApiVersion);
+            _customLocationRestClient = new CustomLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customLocationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Communication
         {
         }
 
-        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationService.ResourceType.Namespace, DiagnosticOptions);
-        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CommunicationService.ResourceType));
+        private ClientDiagnostics CommunicationServiceClientDiagnostics => _communicationServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication", CommunicationService.ResourceType.Namespace, Diagnostics);
+        private CommunicationServiceRestOperations CommunicationServiceRestClient => _communicationServiceRestClient ??= new CommunicationServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommunicationService.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

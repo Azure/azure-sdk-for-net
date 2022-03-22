@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyExemption(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string policyExemptionApiVersion);
-            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
+            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyExemptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

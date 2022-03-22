@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PublicIPAddressCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publicIPAddressClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddress.ResourceType.Namespace, DiagnosticOptions);
+            _publicIPAddressClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddress.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PublicIPAddress.ResourceType, out string publicIPAddressApiVersion);
-            _publicIPAddressRestClient = new PublicIPAddressesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, publicIPAddressApiVersion);
+            _publicIPAddressRestClient = new PublicIPAddressesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

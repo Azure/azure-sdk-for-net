@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Table(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
+            _tableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tableApiVersion);
-            _tableRestClient = new TableRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tableApiVersion);
+            _tableRestClient = new TableRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

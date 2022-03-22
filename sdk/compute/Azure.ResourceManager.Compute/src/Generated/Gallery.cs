@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Gallery(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string galleryApiVersion);
-            _galleryRestClient = new GalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
-            _gallerySharingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _galleryRestClient = new GalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApiVersion);
+            _gallerySharingProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _gallerySharingProfileRestClient = new GallerySharingProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

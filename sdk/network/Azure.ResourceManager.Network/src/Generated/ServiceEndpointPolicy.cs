@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceEndpointPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceEndpointPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _serviceEndpointPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serviceEndpointPolicyApiVersion);
-            _serviceEndpointPolicyRestClient = new ServiceEndpointPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceEndpointPolicyApiVersion);
+            _serviceEndpointPolicyRestClient = new ServiceEndpointPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HubRouteTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hubRouteTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubRouteTable.ResourceType.Namespace, DiagnosticOptions);
+            _hubRouteTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubRouteTable.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(HubRouteTable.ResourceType, out string hubRouteTableApiVersion);
-            _hubRouteTableRestClient = new HubRouteTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hubRouteTableApiVersion);
+            _hubRouteTableRestClient = new HubRouteTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubRouteTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

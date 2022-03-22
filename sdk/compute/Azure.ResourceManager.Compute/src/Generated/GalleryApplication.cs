@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GalleryApplication(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _galleryApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            _galleryApplicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string galleryApplicationApiVersion);
-            _galleryApplicationRestClient = new GalleryApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApplicationApiVersion);
+            _galleryApplicationRestClient = new GalleryApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApplicationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

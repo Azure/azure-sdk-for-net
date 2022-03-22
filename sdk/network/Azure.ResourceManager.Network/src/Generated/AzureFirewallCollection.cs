@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AzureFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _azureFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, DiagnosticOptions);
+            _azureFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewall.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AzureFirewall.ResourceType, out string azureFirewallApiVersion);
-            _azureFirewallRestClient = new AzureFirewallsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureFirewallApiVersion);
+            _azureFirewallRestClient = new AzureFirewallsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureFirewallApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

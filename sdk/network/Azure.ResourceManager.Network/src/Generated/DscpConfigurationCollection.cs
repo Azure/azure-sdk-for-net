@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DscpConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dscpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfiguration.ResourceType.Namespace, DiagnosticOptions);
+            _dscpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfiguration.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DscpConfiguration.ResourceType, out string dscpConfigurationApiVersion);
-            _dscpConfigurationRestClient = new DscpConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dscpConfigurationApiVersion);
+            _dscpConfigurationRestClient = new DscpConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dscpConfigurationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

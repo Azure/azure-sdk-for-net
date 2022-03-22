@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Probe(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _probeLoadBalancerProbesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string probeLoadBalancerProbesApiVersion);
-            _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, probeLoadBalancerProbesApiVersion);
+            _probeLoadBalancerProbesRestClient = new LoadBalancerProbesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, probeLoadBalancerProbesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

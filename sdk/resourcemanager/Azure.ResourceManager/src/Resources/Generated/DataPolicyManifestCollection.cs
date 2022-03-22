@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataPolicyManifestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DataPolicyManifest.ResourceType.Namespace, DiagnosticOptions);
+            _dataPolicyManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DataPolicyManifest.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataPolicyManifest.ResourceType, out string dataPolicyManifestApiVersion);
-            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataPolicyManifestApiVersion);
+            _dataPolicyManifestRestClient = new DataPolicyManifestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataPolicyManifestApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
