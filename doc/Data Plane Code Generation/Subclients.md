@@ -58,7 +58,7 @@ single-top-level-client: true
 **Generated code after:**
 
 ``` diff
-//Add Top-level-client Generated\SubClientsClient.cs
+//Add Top-level-client as service client, Generated\SubClientsClient.cs
 namespace Azure.Service.SubClients
 {
 +   public partial class SubClientsClient
@@ -198,7 +198,7 @@ namespace Azure.Service.SubClients
 -   public partial class SubClientsClientOptions : ClientOptions{}
 +   public partial class Client1ClientOptions : ClientOptions{}
 }
-//Parent client: Client1Client Generated\Client1Client.cs
+//Promote Parent client to service client: Client1Client Generated\Client1Client.cs
 namespace Azure.Service.SubClients
 {
     public partial class Client1ClientOptions
