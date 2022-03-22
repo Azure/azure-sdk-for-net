@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ApplicationStackResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /providers/Microsoft.Web/availableStacks
         /// Operation Id: Provider_GetAvailableStacks
         /// </summary>
-        /// <param name="osTypeSelected"> The ProviderOsTypeSelected to use. </param>
+        /// <param name="osTypeSelected"> The ProviderOSTypeSelected to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksProviders(ProviderOsTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationStackResource> GetAvailableStacksProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
             Page<ApplicationStackResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
             {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetFunctionAppStacksAsync(stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetFunctionAppStacksAsync(stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetFunctionAppStacksNextPageAsync(nextLink, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetFunctionAppStacksNextPageAsync(nextLink, stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -367,10 +367,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /providers/Microsoft.Web/functionAppStacks
         /// Operation Id: Provider_GetFunctionAppStacks
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksProviders(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksProviders(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetFunctionAppStacks(stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetFunctionAppStacks(stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetFunctionAppStacksNextPage(nextLink, stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetFunctionAppStacksNextPage(nextLink, stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -411,10 +411,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
         /// <param name="location"> Function App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<FunctionAppStack>> FirstPageFunc(int? pageSizeHint)
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetFunctionAppStacksForLocationAsync(location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetFunctionAppStacksForLocationAsync(location, stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetFunctionAppStacksForLocationNextPageAsync(nextLink, location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetFunctionAppStacksForLocationNextPageAsync(nextLink, location, stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -455,10 +455,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetFunctionAppStacksForLocation
         /// </summary>
         /// <param name="location"> Function App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<FunctionAppStack> FirstPageFunc(int? pageSizeHint)
             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetFunctionAppStacksForLocation(location, stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetFunctionAppStacksForLocation(location, stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetFunctionAppStacksForLocationNextPage(nextLink, location, stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetFunctionAppStacksForLocationNextPage(nextLink, location, stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -499,10 +499,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
         /// <param name="location"> Web App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationProvidersAsync(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
             {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetWebAppStacksForLocationAsync(location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetWebAppStacksForLocationAsync(location, stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetWebAppStacksForLocationNextPageAsync(nextLink, location, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetWebAppStacksForLocationNextPageAsync(nextLink, location, stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -543,10 +543,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Provider_GetWebAppStacksForLocation
         /// </summary>
         /// <param name="location"> Web App stack location. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(string location, ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksForLocationProviders(string location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetWebAppStacksForLocation(location, stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetWebAppStacksForLocation(location, stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetWebAppStacksForLocationNextPage(nextLink, location, stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetWebAppStacksForLocationNextPage(nextLink, location, stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -670,10 +670,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<WebAppStack>> FirstPageFunc(int? pageSizeHint)
             {
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetWebAppStacksAsync(stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetWebAppStacksAsync(stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await ProviderRestClient.GetWebAppStacksNextPageAsync(nextLink, stackOsType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ProviderRestClient.GetWebAppStacksNextPageAsync(nextLink, stackOSType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -713,10 +713,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /providers/Microsoft.Web/webAppStacks
         /// Operation Id: Provider_GetWebAppStacks
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksProviders(ProviderStackOsType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksProviders(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             Page<WebAppStack> FirstPageFunc(int? pageSizeHint)
             {
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetWebAppStacks(stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetWebAppStacks(stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = ProviderRestClient.GetWebAppStacksNextPage(nextLink, stackOsType, cancellationToken: cancellationToken);
+                    var response = ProviderRestClient.GetWebAppStacksNextPage(nextLink, stackOSType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

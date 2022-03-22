@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
         public bool? Suspended { get { throw null; } }
-        public System.Collections.Generic.IList<string> UserWhitelistedIpRanges { get { throw null; } }
+        public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.VirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
@@ -361,10 +361,10 @@ namespace Azure.ResourceManager.AppService
         public static Azure.Pageable<Azure.ResourceManager.AppService.AppServicePlan> GetAppServicePlans(this Azure.ResourceManager.Resources.Subscription subscription, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.AppServicePlan> GetAppServicePlansAsync(this Azure.ResourceManager.Resources.Subscription subscription, bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.AseV3NetworkingConfiguration GetAseV3NetworkingConfiguration(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProviders(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProviders(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.BasicPublishingCredentialsPolicyFtp GetBasicPublishingCredentialsPolicyFtp(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.BillingMeter> GetBillingMeters(this Azure.ResourceManager.Resources.Subscription subscription, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.BillingMeter> GetBillingMetersAsync(this Azure.ResourceManager.Resources.Subscription subscription, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -387,10 +387,10 @@ namespace Azure.ResourceManager.AppService
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.DeletedSite>> GetDeletedWebAppByLocationDeletedWebAppAsync(this Azure.ResourceManager.Resources.Subscription subscription, string location, string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.DomainOwnershipIdentifier GetDomainOwnershipIdentifier(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.FtpSiteSlotBasicPublishingCredentialsPolicy GetFtpSiteSlotBasicPublishingCredentialsPolicy(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.GeoRegion> GetGeoRegions(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.GeoRegion> GetGeoRegionsAsync(this Azure.ResourceManager.Resources.Subscription subscription, Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.HostingEnvironmentDetector GetHostingEnvironmentDetector(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -528,10 +528,10 @@ namespace Azure.ResourceManager.AppService
         public static Azure.ResourceManager.AppService.TopLevelDomainCollection GetTopLevelDomains(this Azure.ResourceManager.Resources.Subscription subscription) { throw null; }
         public static Azure.ResourceManager.AppService.User GetUser(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.User GetUser(this Azure.ResourceManager.Resources.Tenant tenant) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOsType? stackOsType = default(Azure.ResourceManager.AppService.Models.ProviderStackOsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProviders(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksForLocationProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, string location, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProviders(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProvidersAsync(this Azure.ResourceManager.Resources.Tenant tenant, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.WebSite GetWebSite(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.WebSite> GetWebSite(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSite>> GetWebSiteAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -657,10 +657,10 @@ namespace Azure.ResourceManager.AppService
     {
         public AseV3NetworkingConfigurationData() { }
         public bool? AllowNewPrivateEndpointConnections { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> ExternalInboundIpAddresses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> InternalInboundIpAddresses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> LinuxOutboundIpAddresses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> WindowsOutboundIpAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ExternalInboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> InternalInboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> LinuxOutboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> WindowsOutboundIPAddresses { get { throw null; } }
     }
     public partial class BackupItemData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.AppService
     public partial class KubeEnvironmentData : Azure.ResourceManager.AppService.Models.AppServiceResource
     {
         public KubeEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string AksResourceID { get { throw null; } set { } }
+        public string AksResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public bool? InternalLoadBalancerEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
-        public string StaticIp { get { throw null; } set { } }
+        public string StaticIP { get { throw null; } set { } }
     }
     public partial class LogsSiteConfig : Azure.ResourceManager.ArmResource
     {
@@ -1344,7 +1344,7 @@ namespace Azure.ResourceManager.AppService
     public partial class RemotePrivateEndpointConnectionARMResourceData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public RemotePrivateEndpointConnectionARMResourceData() { }
-        public System.Collections.Generic.IList<string> IpAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.AppService
     {
         public SiteConfigData() { }
         public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
-        public string AcrUserManagedIdentityID { get { throw null; } set { } }
+        public string AcrUserManagedIdentityId { get { throw null; } set { } }
         public bool? AlwaysOn { get { throw null; } set { } }
         public string ApiDefinitionUrl { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
@@ -1571,7 +1571,7 @@ namespace Azure.ResourceManager.AppService
         public string HealthCheckPath { get { throw null; } set { } }
         public bool? Http20Enabled { get { throw null; } set { } }
         public bool? HttpLoggingEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IpSecurityRestriction> IpSecurityRestrictions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
         public string JavaContainer { get { throw null; } set { } }
         public string JavaContainerVersion { get { throw null; } set { } }
         public string JavaVersion { get { throw null; } set { } }
@@ -1600,8 +1600,8 @@ namespace Azure.ResourceManager.AppService
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public bool? RequestTracingEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IpSecurityRestriction> ScmIpSecurityRestrictions { get { throw null; } set { } }
-        public bool? ScmIpSecurityRestrictionsUseMain { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
+        public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
@@ -4423,8 +4423,8 @@ namespace Azure.ResourceManager.AppService
         public string KeyVaultReferenceIdentity { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
         public int? MaxNumberOfWorkers { get { throw null; } }
-        public string OutboundIpAddresses { get { throw null; } }
-        public string PossibleOutboundIpAddresses { get { throw null; } }
+        public string OutboundIPAddresses { get { throw null; } }
+        public string PossibleOutboundIPAddresses { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.RedundancyMode? RedundancyMode { get { throw null; } set { } }
         public string RepositorySiteName { get { throw null; } }
         public bool? Reserved { get { throw null; } set { } }
@@ -4504,9 +4504,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AddressResponse : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public AddressResponse() { }
-        public string InternalIpAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OutboundIpAddresses { get { throw null; } }
-        public string ServiceIpAddress { get { throw null; } set { } }
+        public string InternalIPAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> OutboundIPAddresses { get { throw null; } }
+        public string ServiceIPAddress { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualIPMapping> VipMappings { get { throw null; } }
     }
     public partial class AllowedPrincipals
@@ -4643,7 +4643,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
         public bool? Suspended { get { throw null; } }
-        public System.Collections.Generic.IList<string> UserWhitelistedIpRanges { get { throw null; } }
+        public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.VirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
@@ -4928,7 +4928,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string FriendlyName { get { throw null; } set { } }
         public string MeterId { get { throw null; } set { } }
         public double? Multiplier { get { throw null; } set { } }
-        public string OsType { get { throw null; } set { } }
+        public string OSType { get { throw null; } set { } }
         public string ShortName { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5590,7 +5590,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class EndpointDetail
     {
         internal EndpointDetail() { }
-        public string IpAddress { get { throw null; } }
+        public string IPAddress { get { throw null; } }
         public bool? IsAccessible { get { throw null; } }
         public double? Latency { get { throw null; } }
         public int? Port { get { throw null; } }
@@ -5714,7 +5714,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DisplayText { get { throw null; } }
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.FunctionAppMajorVersion> MajorVersions { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.StackPreferredOs? PreferredOs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.StackPreferredOS? PreferredOS { get { throw null; } }
         public string Value { get { throw null; } }
     }
     public partial class FunctionSecrets
@@ -5928,36 +5928,36 @@ namespace Azure.ResourceManager.AppService.Models
         Success = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IpFilterTag : System.IEquatable<Azure.ResourceManager.AppService.Models.IpFilterTag>
+    public readonly partial struct IPFilterTag : System.IEquatable<Azure.ResourceManager.AppService.Models.IPFilterTag>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IpFilterTag(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.IpFilterTag Default { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.IpFilterTag ServiceTag { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.IpFilterTag XffProxy { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.IpFilterTag other) { throw null; }
+        public IPFilterTag(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.IPFilterTag Default { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.IPFilterTag ServiceTag { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.IPFilterTag XffProxy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.IPFilterTag other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.IpFilterTag left, Azure.ResourceManager.AppService.Models.IpFilterTag right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.IpFilterTag (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.IpFilterTag left, Azure.ResourceManager.AppService.Models.IpFilterTag right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.IPFilterTag left, Azure.ResourceManager.AppService.Models.IPFilterTag right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.IPFilterTag (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.IPFilterTag left, Azure.ResourceManager.AppService.Models.IPFilterTag right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IpSecurityRestriction
+    public partial class IPSecurityRestriction
     {
-        public IpSecurityRestriction() { }
+        public IPSecurityRestriction() { }
         public string Action { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Headers { get { throw null; } }
-        public string IpAddress { get { throw null; } set { } }
+        public string IPAddress { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
         public string SubnetMask { get { throw null; } set { } }
         public int? SubnetTrafficTag { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.IpFilterTag? Tag { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.IPFilterTag? Tag { get { throw null; } set { } }
         public string VnetSubnetResourceId { get { throw null; } set { } }
         public int? VnetTrafficTag { get { throw null; } set { } }
     }
@@ -6344,7 +6344,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
         public bool? Suspended { get { throw null; } }
-        public System.Collections.Generic.IList<string> UserWhitelistedIpRanges { get { throw null; } }
+        public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.VirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
         public bool? ZoneRedundant { get { throw null; } set { } }
     }
@@ -6402,14 +6402,14 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class PatchableKubeEnvironmentData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public PatchableKubeEnvironmentData() { }
-        public string AksResourceID { get { throw null; } set { } }
+        public string AksResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
         public bool? InternalLoadBalancerEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
-        public string StaticIp { get { throw null; } set { } }
+        public string StaticIP { get { throw null; } set { } }
     }
     public partial class PatchableStaticSiteARMResourceData : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
@@ -6530,43 +6530,43 @@ namespace Azure.ResourceManager.AppService.Models
         public string WaitReason { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProviderOsTypeSelected : System.IEquatable<Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected>
+    public readonly partial struct ProviderOSTypeSelected : System.IEquatable<Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProviderOsTypeSelected(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected All { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected Linux { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected LinuxFunctions { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected Windows { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected WindowsFunctions { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected other) { throw null; }
+        public ProviderOSTypeSelected(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected All { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected Linux { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected LinuxFunctions { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected Windows { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected WindowsFunctions { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected left, Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected left, Azure.ResourceManager.AppService.Models.ProviderOsTypeSelected right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected left, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected left, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProviderStackOsType : System.IEquatable<Azure.ResourceManager.AppService.Models.ProviderStackOsType>
+    public readonly partial struct ProviderStackOSType : System.IEquatable<Azure.ResourceManager.AppService.Models.ProviderStackOSType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProviderStackOsType(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ProviderStackOsType All { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ProviderStackOsType Linux { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.ProviderStackOsType Windows { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.ProviderStackOsType other) { throw null; }
+        public ProviderStackOSType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ProviderStackOSType All { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ProviderStackOSType Linux { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ProviderStackOSType Windows { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ProviderStackOSType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.ProviderStackOsType left, Azure.ResourceManager.AppService.Models.ProviderStackOsType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.ProviderStackOsType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.ProviderStackOsType left, Azure.ResourceManager.AppService.Models.ProviderStackOsType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ProviderStackOSType left, Azure.ResourceManager.AppService.Models.ProviderStackOSType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ProviderStackOSType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ProviderStackOSType left, Azure.ResourceManager.AppService.Models.ProviderStackOSType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum ProvisioningState
@@ -6658,7 +6658,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class RemotePrivateEndpointConnection : Azure.ResourceManager.AppService.Models.ProxyOnlyResource
     {
         public RemotePrivateEndpointConnection() { }
-        public System.Collections.Generic.IList<string> IpAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -6931,7 +6931,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public SiteConfigProperties() { }
         public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
-        public string AcrUserManagedIdentityID { get { throw null; } set { } }
+        public string AcrUserManagedIdentityId { get { throw null; } set { } }
         public bool? AlwaysOn { get { throw null; } set { } }
         public string ApiDefinitionUrl { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
@@ -6954,7 +6954,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string HealthCheckPath { get { throw null; } set { } }
         public bool? Http20Enabled { get { throw null; } set { } }
         public bool? HttpLoggingEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IpSecurityRestriction> IpSecurityRestrictions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
         public string JavaContainer { get { throw null; } set { } }
         public string JavaContainerVersion { get { throw null; } set { } }
         public string JavaVersion { get { throw null; } set { } }
@@ -6983,8 +6983,8 @@ namespace Azure.ResourceManager.AppService.Models
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public bool? RequestTracingEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IpSecurityRestriction> ScmIpSecurityRestrictions { get { throw null; } set { } }
-        public bool? ScmIpSecurityRestrictionsUseMain { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
+        public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SupportedTlsVersions? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
@@ -7069,8 +7069,8 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultReferenceIdentity { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
         public int? MaxNumberOfWorkers { get { throw null; } }
-        public string OutboundIpAddresses { get { throw null; } }
-        public string PossibleOutboundIpAddresses { get { throw null; } }
+        public string OutboundIPAddresses { get { throw null; } }
+        public string PossibleOutboundIPAddresses { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.RedundancyMode? RedundancyMode { get { throw null; } set { } }
         public string RepositorySiteName { get { throw null; } }
         public bool? Reserved { get { throw null; } set { } }
@@ -7214,7 +7214,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         Disabled = 0,
         SniEnabled = 1,
-        IpBasedEnabled = 2,
+        IPBasedEnabled = 2,
     }
     public partial class StackMajorVersion
     {
@@ -7238,7 +7238,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsRemoteDebuggingEnabled { get { throw null; } set { } }
         public string RuntimeVersion { get { throw null; } set { } }
     }
-    public enum StackPreferredOs
+    public enum StackPreferredOS
     {
         Windows = 0,
         Linux = 1,
@@ -7685,7 +7685,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DisplayText { get { throw null; } }
         public string Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.WebAppMajorVersion> MajorVersions { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.StackPreferredOs? PreferredOs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.StackPreferredOS? PreferredOS { get { throw null; } }
         public string Value { get { throw null; } }
     }
     public enum WebJobType

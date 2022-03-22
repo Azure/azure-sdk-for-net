@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
         public RemotePrivateEndpointConnectionARMResourceData()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
         }
 
         /// <summary> Gets the provisioning state. </summary>
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The state of a private link connection. </summary>
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
-        public IList<string> IpAddresses { get; }
+        public IList<string> IPAddresses { get; }
     }
 }

@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class IpAddressOrRange : IUtf8JsonSerializable
+    public partial class IPAddressOrRange : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpAddressOrRangeValue))
+            if (Optional.IsDefined(IPAddressOrRangeValue))
             {
                 writer.WritePropertyName("ipAddressOrRange");
-                writer.WriteStringValue(IpAddressOrRangeValue);
+                writer.WriteStringValue(IPAddressOrRangeValue);
             }
             writer.WriteEndObject();
         }
 
-        internal static IpAddressOrRange DeserializeIpAddressOrRange(JsonElement element)
+        internal static IPAddressOrRange DeserializeIPAddressOrRange(JsonElement element)
         {
             Optional<string> ipAddressOrRange = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new IpAddressOrRange(ipAddressOrRange.Value);
+            return new IPAddressOrRange(ipAddressOrRange.Value);
         }
     }
 }

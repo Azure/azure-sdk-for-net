@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         public PatchableAppServiceEnvironmentData()
         {
             ClusterSettings = new ChangeTrackingList<NameValuePair>();
-            UserWhitelistedIpRanges = new ChangeTrackingList<string>();
+            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PatchableAppServiceEnvironmentData. </summary>
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.AppService.Models
         ///  (most likely because NSG blocked the incoming traffic).
         /// </param>
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
-        /// <param name="userWhitelistedIpRanges"> User added ip ranges to whitelist on ASE db. </param>
+        /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="zoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
-        internal PatchableAppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIpRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
+        internal PatchableAppServiceEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipsslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? suspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             FrontEndScaleFactor = frontEndScaleFactor;
             Suspended = suspended;
             ClusterSettings = clusterSettings;
-            UserWhitelistedIpRanges = userWhitelistedIpRanges;
+            UserWhitelistedIPRanges = userWhitelistedIPRanges;
             HasLinuxWorkers = hasLinuxWorkers;
             DedicatedHostCount = dedicatedHostCount;
             ZoneRedundant = zoneRedundant;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
         public IList<NameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
-        public IList<string> UserWhitelistedIpRanges { get; }
+        public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
         public bool? HasLinuxWorkers { get; }
         /// <summary> Dedicated Host Count. </summary>

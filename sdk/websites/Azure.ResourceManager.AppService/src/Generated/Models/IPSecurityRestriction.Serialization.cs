@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class IpSecurityRestriction : IUtf8JsonSerializable
+    public partial class IPSecurityRestriction : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsDefined(SubnetMask))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteEndObject();
         }
 
-        internal static IpSecurityRestriction DeserializeIpSecurityRestriction(JsonElement element)
+        internal static IPSecurityRestriction DeserializeIPSecurityRestriction(JsonElement element)
         {
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> vnetTrafficTag = default;
             Optional<int> subnetTrafficTag = default;
             Optional<string> action = default;
-            Optional<IpFilterTag> tag = default;
+            Optional<IPFilterTag> tag = default;
             Optional<int> priority = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tag = new IpFilterTag(property.Value.GetString());
+                    tag = new IPFilterTag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new IpSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers));
+            return new IPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers));
         }
     }
 }

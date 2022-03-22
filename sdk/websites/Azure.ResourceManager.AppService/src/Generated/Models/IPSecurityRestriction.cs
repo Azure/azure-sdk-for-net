@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> IP security restriction on an app. </summary>
-    public partial class IpSecurityRestriction
+    public partial class IPSecurityRestriction
     {
-        /// <summary> Initializes a new instance of IpSecurityRestriction. </summary>
-        public IpSecurityRestriction()
+        /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
+        public IPSecurityRestriction()
         {
             Headers = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of IpSecurityRestriction. </summary>
+        /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
         /// <param name="ipAddress">
         /// IP address the security restriction is valid for.
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </param>
-        internal IpSecurityRestriction(string ipAddress, string subnetMask, string vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IpFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
+        internal IPSecurityRestriction(string ipAddress, string subnetMask, string vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             SubnetMask = subnetMask;
             VnetSubnetResourceId = vnetSubnetResourceId;
             VnetTrafficTag = vnetTrafficTag;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
         /// </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> Subnet mask for the range of IP addresses the restriction is valid for. </summary>
         public string SubnetMask { get; set; }
         /// <summary> Virtual network resource id. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Allow or Deny access for this IP range. </summary>
         public string Action { get; set; }
         /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
-        public IpFilterTag? Tag { get; set; }
+        public IPFilterTag? Tag { get; set; }
         /// <summary> Priority of IP restriction rule. </summary>
         public int? Priority { get; set; }
         /// <summary> IP restriction rule name. </summary>
