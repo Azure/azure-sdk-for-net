@@ -119,12 +119,12 @@ Console.WriteLine(deserialized.Age);
 Console.WriteLine(deserialized.Name);
 ```
 
-### Serialize and deserialize data using `BinaryContent` directly
+### Serialize and deserialize data using `MessageContent` directly
 
-It is also possible to serialize and deserialize using `BinaryContent`. Use this option if you are not integrating with any of the messaging libraries that work with `BinaryContent`.
-```C# Snippet:SchemaRegistryAvroEncodeDecodeBinaryContent
+It is also possible to serialize and deserialize using `MessageContent`. Use this option if you are not integrating with any of the messaging libraries that work with `MessageContent`.
+```C# Snippet:SchemaRegistryAvroEncodeDecodeMessageContent
 var serializer = new SchemaRegistryAvroSerializer(client, groupName, new SchemaRegistryAvroSerializerOptions { AutoRegisterSchemas = true });
-BinaryContent content = await serializer.SerializeAsync<BinaryContent, Employee>(employee);
+MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
 ```
