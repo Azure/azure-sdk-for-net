@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 using BenchmarkDotNet.Running;
-using Azure.ResourceManager.Perf;
 
-public class Program
+namespace Azure.ResourceManager.Perf
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var summary = BenchmarkRunner.Run<MgmtTelemetryPolicyBenchmark>();
+        public static void Main(string[] args)
+        {
+        }
     }
 }

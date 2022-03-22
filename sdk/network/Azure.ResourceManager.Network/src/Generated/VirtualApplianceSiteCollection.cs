@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualApplianceSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualApplianceSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualApplianceSite.ResourceType.Namespace, DiagnosticOptions);
+            _virtualApplianceSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualApplianceSite.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualApplianceSite.ResourceType, out string virtualApplianceSiteApiVersion);
-            _virtualApplianceSiteRestClient = new VirtualApplianceSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualApplianceSiteApiVersion);
+            _virtualApplianceSiteRestClient = new VirtualApplianceSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualApplianceSiteApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

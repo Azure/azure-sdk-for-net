@@ -107,7 +107,7 @@ request-path-to-resource-data:
   # tenant does not have name and type
   /: Tenant
   # provider does not have name and type
-  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: ResourceProvider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -144,15 +144,15 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
-  Providers_ListAtTenantScope: GetTenantProviders
-  Providers_GetAtTenantScope: GetTenantProvider
+  Providers_ListAtTenantScope: GetTenantResourceProviders
+  Providers_GetAtTenantScope: GetTenantResourceProvider
   Resources_MoveResources: MoveResources
   Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
-  Providers_RegisterAtManagementGroupScope: RegisterProvider
+  Providers_RegisterAtManagementGroupScope: RegisterResourceProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider;
+no-property-type-replacement: ResourceProviderData;ResourceProvider;
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -268,7 +268,11 @@ directive:
       to: TrackedResourceExtended
   - rename-model:
       from: ProviderRegistrationRequest
-      to: ProviderRegistrationOptions
+      to: ResourceProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Provider
+    transform:
+      $["x-ms-client-name"] = "ResourceProvider";
   - from: resources.json
     where: $.definitions.Alias
     transform:

@@ -134,7 +134,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         #region DeviceUpdateAccount
-        /// <summary> Gets an object representing a DeviceUpdateAccount along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceUpdateAccount" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdateAccount.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdateAccount" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceUpdateAccount" /> object. </returns>
@@ -150,7 +153,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         #endregion
 
         #region DeviceUpdateInstance
-        /// <summary> Gets an object representing a DeviceUpdateInstance along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceUpdateInstance" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdateInstance.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdateInstance" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceUpdateInstance" /> object. </returns>
@@ -166,7 +172,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         #endregion
 
         #region PrivateEndpointConnection
-        /// <summary> Gets an object representing a PrivateEndpointConnection along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnection" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnection.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnection" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnection" /> object. </returns>
@@ -182,7 +191,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         #endregion
 
         #region PrivateLink
-        /// <summary> Gets an object representing a PrivateLink along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateLink" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateLink.CreateResourceIdentifier" /> to create a <see cref="PrivateLink" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateLink" /> object. </returns>
@@ -198,7 +210,10 @@ namespace Azure.ResourceManager.DeviceUpdate
         #endregion
 
         #region PrivateEndpointConnectionProxy
-        /// <summary> Gets an object representing a PrivateEndpointConnectionProxy along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateEndpointConnectionProxy" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateEndpointConnectionProxy.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionProxy" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PrivateEndpointConnectionProxy" /> object. </returns>

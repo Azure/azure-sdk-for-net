@@ -295,7 +295,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         #region VirtualWorkspace
-        /// <summary> Gets an object representing a VirtualWorkspace along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualWorkspace" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualWorkspace.CreateResourceIdentifier" /> to create a <see cref="VirtualWorkspace" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualWorkspace" /> object. </returns>
@@ -311,7 +314,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region ScalingPlan
-        /// <summary> Gets an object representing a ScalingPlan along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="ScalingPlan" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScalingPlan.CreateResourceIdentifier" /> to create a <see cref="ScalingPlan" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ScalingPlan" /> object. </returns>
@@ -327,7 +333,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region VirtualApplicationGroup
-        /// <summary> Gets an object representing a VirtualApplicationGroup along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualApplicationGroup" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualApplicationGroup.CreateResourceIdentifier" /> to create a <see cref="VirtualApplicationGroup" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplicationGroup" /> object. </returns>
@@ -343,7 +352,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region VirtualApplication
-        /// <summary> Gets an object representing a VirtualApplication along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualApplication" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualApplication.CreateResourceIdentifier" /> to create a <see cref="VirtualApplication" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualApplication" /> object. </returns>
@@ -359,7 +371,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region VirtualDesktop
-        /// <summary> Gets an object representing a VirtualDesktop along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualDesktop" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualDesktop.CreateResourceIdentifier" /> to create a <see cref="VirtualDesktop" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VirtualDesktop" /> object. </returns>
@@ -375,7 +390,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region HostPool
-        /// <summary> Gets an object representing a HostPool along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HostPool" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostPool.CreateResourceIdentifier" /> to create a <see cref="HostPool" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HostPool" /> object. </returns>
@@ -391,7 +409,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region UserSession
-        /// <summary> Gets an object representing a UserSession along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing an <see cref="UserSession" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserSession.CreateResourceIdentifier" /> to create an <see cref="UserSession" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="UserSession" /> object. </returns>
@@ -407,7 +428,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region SessionHost
-        /// <summary> Gets an object representing a SessionHost along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="SessionHost" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SessionHost.CreateResourceIdentifier" /> to create a <see cref="SessionHost" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SessionHost" /> object. </returns>
@@ -423,7 +447,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         #endregion
 
         #region MsixPackage
-        /// <summary> Gets an object representing a MsixPackage along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="MsixPackage" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MsixPackage.CreateResourceIdentifier" /> to create a <see cref="MsixPackage" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MsixPackage" /> object. </returns>

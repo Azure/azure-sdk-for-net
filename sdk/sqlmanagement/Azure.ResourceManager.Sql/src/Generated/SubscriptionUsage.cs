@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SubscriptionUsage(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string subscriptionUsageApiVersion);
-            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
+            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUsageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

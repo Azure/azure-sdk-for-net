@@ -15,9 +15,8 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A connection to the Azure Service Bus service, enabling client communications with a specific
-    ///   Service Bus entity instance within an Service Bus namespace.  A single connection may be
-    ///   shared among multiple Service Bus entity senders and/or receivers, or may be used as a
-    ///   dedicated connection for a single sender or receiver client.
+    ///   Service Bus entity instance within a Service Bus namespace. There is a one-to-one correspondence
+    ///   between <see cref="ServiceBusClient"/> and <see cref="ServiceBusConnection"/> instances.
     /// </summary>
     internal class ServiceBusConnection : IAsyncDisposable
     {
@@ -34,7 +33,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the connection is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed => _innerClient.IsClosed;
+        public bool IsClosed => InnerClient.IsClosed;
 
         /// <summary>
         /// The entity path that the connection is bound to.
@@ -46,7 +45,7 @@ namespace Azure.Messaging.ServiceBus
         ///   This is essentially the <see cref="FullyQualifiedNamespace"/> but with
         ///   the scheme included.
         /// </summary>
-        internal Uri ServiceEndpoint => _innerClient.ServiceEndpoint;
+        internal Uri ServiceEndpoint => InnerClient.ServiceEndpoint;
 
         /// <summary>
         /// The transport type used for this connection.
@@ -58,7 +57,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual ServiceBusRetryOptions RetryOptions { get; }
 
-        private readonly TransportClient _innerClient;
+        internal TransportClient InnerClient { get; }
 
         /// <summary>
         /// Parameterless constructor to allow mocking.
@@ -77,7 +76,6 @@ namespace Azure.Messaging.ServiceBus
         ///   and can be used directly without passing the  name="entityName" />.  The name of the Service Bus entity should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
-        ///
         internal ServiceBusConnection(
             string connectionString,
             ServiceBusClientOptions options)
@@ -110,7 +108,7 @@ namespace Azure.Messaging.ServiceBus
             var sharedCredential = new SharedAccessCredential(sharedAccessSignature);
             var tokenCredential = new ServiceBusTokenCredential(sharedCredential);
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            _innerClient = CreateTransportClient(tokenCredential, options);
+            InnerClient = CreateTransportClient(tokenCredential, options);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -173,7 +171,7 @@ namespace Azure.Messaging.ServiceBus
             RetryOptions = options.RetryOptions;
 
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
-            _innerClient = CreateTransportClient(tokenCredential, options);
+            InnerClient = CreateTransportClient(tokenCredential, options);
 #pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
@@ -186,7 +184,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default) =>
-            await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
+            await InnerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -230,7 +228,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             string identifier) =>
-            _innerClient.CreateSender(entityPath, retryPolicy, identifier);
+            InnerClient.CreateSender(entityPath, retryPolicy, identifier);
 
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,
@@ -242,7 +240,7 @@ namespace Azure.Messaging.ServiceBus
             bool isSessionReceiver,
             bool isProcessor,
             CancellationToken cancellationToken) =>
-                _innerClient.CreateReceiver(
+                InnerClient.CreateReceiver(
                     entityPath,
                     retryPolicy,
                     receiveMode,
@@ -257,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
             string subscriptionPath,
             ServiceBusRetryPolicy retryPolicy,
             string identifier) =>
-            _innerClient.CreateRuleManager(subscriptionPath, retryPolicy, identifier);
+            InnerClient.CreateRuleManager(subscriptionPath, retryPolicy, identifier);
 
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the

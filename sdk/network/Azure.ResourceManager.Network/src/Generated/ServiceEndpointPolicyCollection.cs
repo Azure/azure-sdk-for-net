@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServiceEndpointPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceEndpointPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicy.ResourceType.Namespace, DiagnosticOptions);
+            _serviceEndpointPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicy.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceEndpointPolicy.ResourceType, out string serviceEndpointPolicyApiVersion);
-            _serviceEndpointPolicyRestClient = new ServiceEndpointPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serviceEndpointPolicyApiVersion);
+            _serviceEndpointPolicyRestClient = new ServiceEndpointPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

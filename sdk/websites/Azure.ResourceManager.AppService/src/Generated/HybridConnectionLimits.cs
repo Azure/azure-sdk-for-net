@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridConnectionLimits(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _hybridConnectionLimitsAppServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string hybridConnectionLimitsAppServicePlansApiVersion);
-            _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hybridConnectionLimitsAppServicePlansApiVersion);
+            _hybridConnectionLimitsAppServicePlansRestClient = new AppServicePlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectionLimitsAppServicePlansApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

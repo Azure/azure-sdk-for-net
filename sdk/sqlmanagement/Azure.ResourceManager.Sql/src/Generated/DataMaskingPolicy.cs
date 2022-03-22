@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -53,11 +52,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMaskingPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataMaskingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _dataMaskingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataMaskingPolicyApiVersion);
-            _dataMaskingPolicyRestClient = new DataMaskingPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataMaskingPolicyApiVersion);
-            _dataMaskingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _dataMaskingPolicyRestClient = new DataMaskingPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataMaskingPolicyApiVersion);
+            _dataMaskingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _dataMaskingRulesRestClient = new DataMaskingRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

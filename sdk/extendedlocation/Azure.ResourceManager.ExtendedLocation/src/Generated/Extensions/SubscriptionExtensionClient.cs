@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.ExtendedLocation
 {
@@ -35,8 +34,8 @@ namespace Azure.ResourceManager.ExtendedLocation
         {
         }
 
-        private ClientDiagnostics CustomLocationClientDiagnostics => _customLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, DiagnosticOptions);
-        private CustomLocationsRestOperations CustomLocationRestClient => _customLocationRestClient ??= new CustomLocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(CustomLocation.ResourceType));
+        private ClientDiagnostics CustomLocationClientDiagnostics => _customLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ExtendedLocation", CustomLocation.ResourceType.Namespace, Diagnostics);
+        private CustomLocationsRestOperations CustomLocationRestClient => _customLocationRestClient ??= new CustomLocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomLocation.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

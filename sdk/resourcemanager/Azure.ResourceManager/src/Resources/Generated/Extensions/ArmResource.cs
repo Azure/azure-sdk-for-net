@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     public partial class ArmResource
     {
@@ -49,6 +49,13 @@ namespace Azure.ResourceManager.Core
         public virtual Response<PolicyAssignment> GetPolicyAssignment(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             return GetPolicyAssignments().Get(policyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
+        public virtual TagResource GetTagResource()
+        {
+            return new TagResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Resources/tags/default"));
         }
 
         /// <summary> Gets a collection of PolicyExemptions in the PolicyExemption. </summary>

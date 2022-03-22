@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetFromSubscription(string resourceNamespace)
         {
-            var providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
+            var providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             var result = await providerCollection.GetAsync(resourceNamespace);
             Assert.IsNotNull(result);
 
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task GetNullException()
         {
-            ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
+            ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             Assert.ThrowsAsync<ArgumentNullException>(async () => {await providerCollection.GetAsync(null); });
         }
 
         [RecordedTest]
         public async Task GetEmptyException()
         {
-            ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
+            ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             Assert.ThrowsAsync<ArgumentException>(async () => {await providerCollection.GetAsync(""); });
         }
 
         [RecordedTest]
         public async Task List()
         {
-            var providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
+            var providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             var x = providerCollection.GetAllAsync();
             Assert.IsNotNull(x);
             await foreach (var p in x)
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
-            Provider provider = await providerCollection.GetIfExistsAsync("microsoft.insights");
+            ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
+            ResourceProvider provider = await providerCollection.GetIfExistsAsync("microsoft.insights");
             Assert.IsNotNull(provider);
 
             var response = await providerCollection.GetIfExistsAsync("DoesNotExist");
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Exists()
         {
-            ProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetProviders();
+            ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
             Assert.IsTrue(await providerCollection.ExistsAsync("microsoft.insights"));
             var response = await providerCollection.ExistsAsync("DoesNotExist");
             Assert.False(response);

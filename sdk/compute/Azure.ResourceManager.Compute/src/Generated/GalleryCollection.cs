@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -38,9 +37,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GalleryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Gallery.ResourceType.Namespace, DiagnosticOptions);
+            _galleryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Gallery.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(Gallery.ResourceType, out string galleryApiVersion);
-            _galleryRestClient = new GalleriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, galleryApiVersion);
+            _galleryRestClient = new GalleriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EncryptionScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _encryptionScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", EncryptionScope.ResourceType.Namespace, DiagnosticOptions);
+            _encryptionScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", EncryptionScope.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EncryptionScope.ResourceType, out string encryptionScopeApiVersion);
-            _encryptionScopeRestClient = new EncryptionScopesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionScopeApiVersion);
+            _encryptionScopeRestClient = new EncryptionScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, encryptionScopeApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

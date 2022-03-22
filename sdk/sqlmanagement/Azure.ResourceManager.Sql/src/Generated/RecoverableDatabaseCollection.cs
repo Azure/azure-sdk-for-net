@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RecoverableDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoverableDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecoverableDatabase.ResourceType.Namespace, DiagnosticOptions);
+            _recoverableDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecoverableDatabase.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RecoverableDatabase.ResourceType, out string recoverableDatabaseApiVersion);
-            _recoverableDatabaseRestClient = new RecoverableDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableDatabaseApiVersion);
+            _recoverableDatabaseRestClient = new RecoverableDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoverableDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
