@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeBusinessCardsFromUri
 #if SNIPPET
-            Uri businessCardUri = <businessCardUri>;
+            Uri businessCardUri = new Uri("<businessCardUri>");
 #else
             Uri businessCardUri = FormRecognizerTestEnvironment.CreateUri("businessCard.jpg");
 #endif

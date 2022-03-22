@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Locations = new ChangeTrackingList<DatabaseAccountLocation>();
-            IpRules = new ChangeTrackingList<IpAddressOrRange>();
+            IPRules = new ChangeTrackingList<IPAddressOrRange>();
             Capabilities = new ChangeTrackingList<DatabaseAccountCapability>();
             VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
             Cors = new ChangeTrackingList<CorsPolicy>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         public IList<DatabaseAccountLocation> Locations { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<IpAddressOrRange> IpRules { get; }
+        public IList<IPAddressOrRange> IPRules { get; }
         /// <summary> Flag to indicate whether to enable/disable Virtual Network ACL rules. </summary>
         public bool? IsVirtualNetworkFilterEnabled { get; set; }
         /// <summary> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </summary>

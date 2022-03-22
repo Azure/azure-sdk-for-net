@@ -9,8 +9,6 @@ using Azure.Core;
 using Azure.Data.SchemaRegistry;
 using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -29,7 +27,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private readonly SchemaRegistryAvroSerializerOptions _options;
         private const string AvroMimeType = "avro/binary";
         private const int CacheCapacity = 128;
-        private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
 
         /// <summary>
         /// Initializes new instance of <see cref="SchemaRegistryAvroSerializer"/>.
@@ -41,10 +38,6 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             _options = options;
         }
 
-        private static readonly byte[] EmptyRecordFormatIndicator = { 0, 0, 0, 0 };
-        private const int RecordFormatIndicatorLength = 4;
-        private const int SchemaIdLength = 32;
-        private const int PayloadStartPosition = RecordFormatIndicatorLength + SchemaIdLength;
         private readonly LruCache<string, Schema> _idToSchemaMap = new(CacheCapacity);
         private readonly LruCache<Schema, string> _schemaToIdMap = new(CacheCapacity);
 
@@ -125,12 +118,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             bool async,
             CancellationToken cancellationToken)
         {
+            messageType ??= typeof(BinaryContent);
+            if (messageType.GetConstructor(Type.EmptyTypes) == null)
+            {
+                throw new InvalidOperationException(
+                    $"The type {messageType} must have a public parameterless constructor in order to use it as the 'MessageContent' type to serialize to.");
+            }
+            var message = (BinaryContent)Activator.CreateInstance(messageType);
+
             (string schemaId, BinaryData bd) = async
                 ? await SerializeInternalAsync(data, dataType, true, cancellationToken).ConfigureAwait(false)
                 : SerializeInternalAsync(data, dataType, false, cancellationToken).EnsureCompleted();
 
-            messageType ??= typeof(BinaryContent);
-            var message = (BinaryContent)Activator.CreateInstance(messageType);
             message.Data = bd;
             message.ContentType = $"{AvroMimeType}+{schemaId}";
             return message;
@@ -146,23 +145,31 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             dataType ??= value?.GetType() ?? typeof(object);
 
             var supportedType = GetSupportedTypeOrThrow(dataType);
-            var writer = GetWriterAndSchema(value, supportedType, out var schema);
 
-            using Stream stream = new MemoryStream();
-            var binaryEncoder = new BinaryEncoder(stream);
-
-            writer.Write(value, binaryEncoder);
-            binaryEncoder.Flush();
-            stream.Position = 0;
-            BinaryData data = BinaryData.FromStream(stream);
-
-            if (async)
+            try
             {
-                return (await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false), data);
+                var writer = GetWriterAndSchema(value, supportedType, out var schema);
+
+                using Stream stream = new MemoryStream();
+                var binaryEncoder = new BinaryEncoder(stream);
+
+                writer.Write(value, binaryEncoder);
+                binaryEncoder.Flush();
+                stream.Position = 0;
+                BinaryData data = BinaryData.FromStream(stream);
+
+                if (async)
+                {
+                    return (await GetSchemaIdAsync(schema, true, cancellationToken).ConfigureAwait(false), data);
+                }
+                else
+                {
+                    return (GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted(), data);
+                }
             }
-            else
+            catch (AvroException ex)
             {
-                return (GetSchemaIdAsync(schema, false, cancellationToken).EnsureCompleted(), data);
+                throw new AvroSerializationException("An error occurred while attempting to serialize to Avro.", ex);
             }
         }
 
@@ -300,35 +307,18 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(contentType, nameof(contentType));
 
-            string schemaId;
-            // Back Compat for first preview
-            ReadOnlyMemory<byte> memory = data.ToMemory();
-            byte[] recordFormatIdentifier = null;
-            if (memory.Length >= RecordFormatIndicatorLength)
+            string[] contentTypeArray = contentType.ToString().Split('+');
+            if (contentTypeArray.Length != 2)
             {
-                recordFormatIdentifier = memory.Slice(0, RecordFormatIndicatorLength).ToArray();
+                throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
             }
-            if (recordFormatIdentifier != null && recordFormatIdentifier.SequenceEqual(EmptyRecordFormatIndicator))
-            {
-                byte[] schemaIdBytes = memory.Slice(RecordFormatIndicatorLength, SchemaIdLength).ToArray();
-                schemaId = Utf8Encoding.GetString(schemaIdBytes);
-                data = new BinaryData(memory.Slice(PayloadStartPosition, memory.Length - PayloadStartPosition));
-            }
-            else
-            {
-                string[] contentTypeArray = contentType.ToString().Split('+');
-                if (contentTypeArray.Length != 2)
-                {
-                    throw new FormatException("Content type was not in the expected format of MIME type + schema ID");
-                }
 
-                if (contentTypeArray[0] != AvroMimeType)
-                {
-                    throw new InvalidOperationException("An avro serializer may only be used on content that is of 'avro/binary' type");
-                }
-
-                schemaId = contentTypeArray[1];
+            if (contentTypeArray[0] != AvroMimeType)
+            {
+                throw new InvalidOperationException("An avro serializer may only be used on content that is of 'avro/binary' type");
             }
+
+            string schemaId = contentTypeArray[1];
 
             if (async)
             {
@@ -351,27 +341,63 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             SupportedType supportedType = GetSupportedTypeOrThrow(dataType);
 
             Schema writerSchema;
-            if (async)
+            try
             {
-                writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
+                if (async)
+                {
+                    writerSchema = await GetSchemaByIdAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
+                }
             }
-            else
+            catch (SchemaParseException ex)
             {
-                writerSchema = GetSchemaByIdAsync(schemaId, false, cancellationToken).EnsureCompleted();
+                throw new AvroSerializationException(
+                    $"An error occurred while attempting to parse the schema (schema ID: {schemaId}) that was used to serialize the Avro. " +
+                    $"Make sure that the schema represents valid Avro.",
+                    schemaId,
+                    ex);
             }
 
-            var binaryDecoder = new BinaryDecoder(data.ToStream());
-
-            if (supportedType == SupportedType.SpecificRecord)
+            Schema readerSchema;
+            object returnInstance = null;
+            try
             {
-                object returnInstance = Activator.CreateInstance(dataType);
-                DatumReader<object> reader = GetReader(writerSchema, ((ISpecificRecord)returnInstance).Schema, SupportedType.SpecificRecord);
+                if (supportedType == SupportedType.SpecificRecord)
+                {
+                    returnInstance = Activator.CreateInstance(dataType);
+                    readerSchema = ((ISpecificRecord)returnInstance).Schema;
+                }
+                else
+                {
+                    readerSchema = writerSchema;
+                }
+            }
+            catch (SchemaParseException ex)
+            {
+                throw new AvroSerializationException(
+                    "An error occurred while attempting to parse the schema that you are attempting to deserialize the data with. " +
+                    "Make sure that the schema represents valid Avro.",
+                    schemaId,
+                    ex);
+            }
+
+            try
+            {
+                var binaryDecoder = new BinaryDecoder(data.ToStream());
+                DatumReader<object> reader = GetReader(writerSchema, readerSchema, supportedType);
                 return reader.Read(reuse: returnInstance, binaryDecoder);
             }
-            else
+            catch (AvroException ex)
             {
-                DatumReader<object> reader = GetReader(writerSchema, writerSchema, supportedType);
-                return reader.Read(reuse: null, binaryDecoder);
+                throw new AvroSerializationException(
+                    "An error occurred while attempting to deserialize " +
+                    $"Avro that was serialized with schemaId: {schemaId}. The schema used to deserialize the data may not be compatible with the schema that was used" +
+                    $"to serialize the data. Please ensure that the schemas are compatible.",
+                    schemaId,
+                    ex);
             }
         }
 

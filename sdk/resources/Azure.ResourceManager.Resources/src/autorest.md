@@ -51,6 +51,29 @@ override-operation-name:
 
 operation-groups-to-omit:
    Providers;ProviderResourceTypes;Resources;ResourceGroups;Tags;Subscriptions;Tenants
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - from: resources.json
     where: $.definitions.DeploymentExtended
@@ -167,6 +190,38 @@ directive:
     transform: >
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentOperationProperties.properties.duration["format"] = "duration";
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: resources.json
+    where: $.definitions.AliasPath
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathAttributes";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathTokenType";
+  - from: resources.json
+    where: $.definitions.AliasPattern
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+  - from: resources.json
+    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPatternType";
+  - from: resources.json
+    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasType";
 ```
 
 ### Tag: package-track2-preview

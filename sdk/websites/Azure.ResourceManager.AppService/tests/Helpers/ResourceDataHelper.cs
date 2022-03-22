@@ -160,22 +160,22 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                     "index.php",
                     "hostingstart.html"
                 },
-                IpSecurityRestrictions =
+                IPSecurityRestrictions =
                 {
-                    new IpSecurityRestriction
+                    new IPSecurityRestriction
                     {
-                        IpAddress = "Any",
+                        IPAddress = "Any",
                         Action = "Allow",
                         Priority = 1,
                         Name =  "Allow all",
                         Description = "Allow all access"
                     }
                 },
-                ScmIpSecurityRestrictions =
+                ScmIPSecurityRestrictions =
                 {
-                    new IpSecurityRestriction
+                    new IPSecurityRestriction
                     {
-                        IpAddress = "Any",
+                        IPAddress = "Any",
                         Action = "Allow",
                         Priority = 1,
                         Name =  "Allow all",

@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the diagnostic options for this resource client.
         /// </summary>
-        protected internal DiagnosticsOptions DiagnosticOptions => Client.DiagnosticOptions;
+        protected internal DiagnosticsOptions Diagnostics => Client.Diagnostics;
 
         /// <summary>
         /// Gets the pipeline for this resource client.
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the base uri for this resource client.
         /// </summary>
-        protected internal Uri BaseUri => Client.BaseUri;
+        protected internal Uri Endpoint => Client.Endpoint;
 
         /// <summary>
         /// Gets the TagResourceOperations.
         /// </summary>
         /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagResource => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
+        protected internal TagResource TagHelper => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
 
         /// <summary>
         /// Gets the api version override if it has been set for the current client options.
@@ -88,17 +88,18 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual IEnumerable<AzureLocation> GetAvailableLocations(CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<AzureLocation>> GetAvailableLocations(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            ProviderInfo resourcePageableProvider = Client.GetTenantProvider(nameSpace, null, cancellationToken);
+            Response<ProviderInfo> resourcePageableProviderResponse = Client.GetTenantResourceProvider(nameSpace, null, cancellationToken);
+            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
-            return theResource.Locations.Select(l => new AzureLocation(l));
+            return Response.FromValue(theResource.Locations.Select(l => new AzureLocation(l)), resourcePageableProviderResponse.GetRawResponse());
         }
 
         /// <summary>
@@ -107,17 +108,18 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public virtual async Task<IEnumerable<AzureLocation>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<AzureLocation>>> GetAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
             string nameSpace = Id.ResourceType.Namespace;
             string type = Id.ResourceType.Type;
-            ProviderInfo resourcePageableProvider = await Client.GetTenantProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            Response<ProviderInfo> resourcePageableProviderResponse = await Client.GetTenantResourceProviderAsync(nameSpace, null, cancellationToken).ConfigureAwait(false);
+            ProviderInfo resourcePageableProvider = resourcePageableProviderResponse.Value;
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
             var theResource = resourcePageableProvider.ResourceTypes.FirstOrDefault(r => type.Equals(r.ResourceType, StringComparison.Ordinal));
             if (theResource is null)
                 throw new InvalidOperationException($"{type} not found for {nameSpace}");
-            return theResource.Locations.Select(l => new AzureLocation(l));
+            return Response.FromValue(theResource.Locations.Select(l => new AzureLocation(l)), resourcePageableProviderResponse.GetRawResponse());
         }
 
         /// <summary>

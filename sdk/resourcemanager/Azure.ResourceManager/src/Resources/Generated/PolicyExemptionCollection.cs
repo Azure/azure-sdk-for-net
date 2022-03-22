@@ -15,7 +15,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PolicyExemptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyExemption.ResourceType.Namespace, DiagnosticOptions);
+            _policyExemptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyExemption.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PolicyExemption.ResourceType, out string policyExemptionApiVersion);
-            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyExemptionApiVersion);
+            _policyExemptionRestClient = new PolicyExemptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyExemptionApiVersion);
         }
 
         /// <summary>

@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceIpAddress))
+            if (Optional.IsDefined(ServiceIPAddress))
             {
                 writer.WritePropertyName("serviceIpAddress");
-                writer.WriteStringValue(ServiceIpAddress);
+                writer.WriteStringValue(ServiceIPAddress);
             }
-            if (Optional.IsDefined(InternalIpAddress))
+            if (Optional.IsDefined(InternalIPAddress))
             {
                 writer.WritePropertyName("internalIpAddress");
-                writer.WriteStringValue(InternalIpAddress);
+                writer.WriteStringValue(InternalIPAddress);
             }
-            if (Optional.IsCollectionDefined(OutboundIpAddresses))
+            if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses");
                 writer.WriteStartArray();
-                foreach (var item in OutboundIpAddresses)
+                foreach (var item in OutboundIPAddresses)
                 {
                     writer.WriteStringValue(item);
                 }

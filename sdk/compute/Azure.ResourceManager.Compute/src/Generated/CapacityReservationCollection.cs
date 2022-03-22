@@ -17,7 +17,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CapacityReservationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _capacityReservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservation.ResourceType.Namespace, DiagnosticOptions);
+            _capacityReservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservation.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CapacityReservation.ResourceType, out string capacityReservationApiVersion);
-            _capacityReservationRestClient = new CapacityReservationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, capacityReservationApiVersion);
+            _capacityReservationRestClient = new CapacityReservationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

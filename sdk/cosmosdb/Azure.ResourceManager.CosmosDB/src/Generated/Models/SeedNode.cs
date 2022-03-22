@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="ipAddress"> IP address of this seed node. </param>
         internal SeedNode(string ipAddress)
         {
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
         }
 
         /// <summary> IP address of this seed node. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
     }
 }

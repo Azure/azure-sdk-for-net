@@ -36,7 +36,7 @@ To analyze a given file at a URI, use the `StartAnalyzeDocumentFromUri` method. 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult the [Choosing the prebuilt model ID][choosing-the-prebuilt-model-id] section.
 
 ```C# Snippet:FormRecognizerAnalyzeWithPrebuiltModelFromUriAsync
-string fileUri = "<fileUri>";
+Uri fileUri = new Uri("<fileUri>");
 
 AnalyzeDocumentOperation operation = await client.StartAnalyzeDocumentFromUriAsync("prebuilt-invoice", fileUri);
 

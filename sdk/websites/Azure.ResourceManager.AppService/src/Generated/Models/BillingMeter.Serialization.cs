@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("friendlyName");
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType");
-                writer.WriteStringValue(OsType);
+                writer.WriteStringValue(OSType);
             }
             if (Optional.IsDefined(Multiplier))
             {

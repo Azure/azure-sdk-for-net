@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
         /// <param name="tokens"> List of tokens this node covers. </param>
         /// <param name="size"></param>
-        /// <param name="hostID"> The network ID of the node. </param>
+        /// <param name="hostId"> The network ID of the node. </param>
         /// <param name="rack"> The rack this node is part of. </param>
         /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
         /// <param name="diskUsedKB"> The amount of disk used, in kB, of the directory /var/lib/cassandra. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        internal ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems(string address, NodeState? state, string status, string load, IReadOnlyList<string> tokens, int? size, string hostID, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        internal ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems(string address, NodeState? state, string status, string load, IReadOnlyList<string> tokens, int? size, string hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
         {
             Address = address;
             State = state;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Load = load;
             Tokens = tokens;
             Size = size;
-            HostID = hostID;
+            HostId = hostId;
             Rack = rack;
             Timestamp = timestamp;
             DiskUsedKB = diskUsedKB;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Gets the size. </summary>
         public int? Size { get; }
         /// <summary> The network ID of the node. </summary>
-        public string HostID { get; }
+        public string HostId { get; }
         /// <summary> The rack this node is part of. </summary>
         public string Rack { get; }
         /// <summary> The timestamp when these statistics were captured. </summary>

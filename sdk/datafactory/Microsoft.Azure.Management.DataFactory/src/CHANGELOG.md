@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.4.0
+###  Feature Additions
+- Added Web Activity disable cert validation
+
 ## Version 5.3.0
 ###  Feature Additions
 - Added ScriptActivity in ADF

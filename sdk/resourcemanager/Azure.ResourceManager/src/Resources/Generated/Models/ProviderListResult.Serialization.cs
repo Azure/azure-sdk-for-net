@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ProviderListResult DeserializeProviderListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ProviderData>> value = default;
+            Optional<IReadOnlyList<ResourceProviderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderData> array = new List<ProviderData>();
+                    List<ResourceProviderData> array = new List<ResourceProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderData.DeserializeProviderData(item));
+                        array.Add(ResourceProviderData.DeserializeResourceProviderData(item));
                     }
                     value = array;
                     continue;
