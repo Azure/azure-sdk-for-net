@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_Async_DefaultSubscription
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_DefaultSubscription
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string subscriptionId = "your-subscription-id";
             ArmClient client = new ArmClient(new DefaultAzureCredential());
             SubscriptionCollection subscriptions = client.GetSubscriptions();
-            Subscription subscription = await subscriptions.GetAsync(subscriptionId);
+            SubscriptionResource subscription = await subscriptions.GetAsync(subscriptionId);
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_Async_SpecificSubscription
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Hello_World_Async_SpecifyDefaultSubscription
             string defaultSubscriptionId = "your-subscription-id";
             ArmClient client = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             Console.WriteLine(subscription.Id);
             #endregion
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Tests.Samples
         public void RetrieveResourceGroupCollection()
         {
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = client.GetDefaultSubscription();
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             #region Snippet:Hello_World_Async_ResourceGroupCollection
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             #endregion Snippet:Hello_World_Async_ResourceGroupCollection

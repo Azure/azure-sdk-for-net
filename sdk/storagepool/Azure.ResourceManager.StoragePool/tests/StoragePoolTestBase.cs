@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
     {
         protected AzureLocation DefaultLocation => AzureLocation.AustraliaEast;
         protected ArmClient Client { get; private set; }
-        protected Subscription DefaultSubscription { get; private set; }
+        protected SubscriptionResource DefaultSubscription { get; private set; }
         public StoragePoolTestBase(bool isAsync) : base(isAsync)
         {
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroup> CreateResourceGroupAsync(string resourceGroupName)
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(string resourceGroupName)
         {
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,

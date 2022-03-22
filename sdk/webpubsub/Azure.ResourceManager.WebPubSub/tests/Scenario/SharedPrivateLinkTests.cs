@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 {
     public class SharedPrivateLinkTests : WebPubHubServiceClientTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private WebPubSub _webPubSub;
+        private ResourceGroupResource _resourceGroup;
+        private WebPubSubResource _webPubSub;
         private string _webPubSubName;
         private string _linkName;
         private string _vnetName;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("WebPubSubRG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             _webPubSubName = SessionRecording.GenerateAssetName("WebPubSub-");
             _linkName = SessionRecording.GenerateAssetName("link-");
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             }
         }
 
-        public async Task<WebPubSub> CreateWebPubSub()
+        public async Task<WebPubSubResource> CreateWebPubSub()
         {
             // Create WebPubSub ConfigData
             IList<LiveTraceCategory> categories = new List<LiveTraceCategory>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests
             return webPubSub.Value;
         }
 
-        public async Task<SharedPrivateLink> CreateSharedPrivateLink(string LinkName)
+        public async Task<SharedPrivateLinkResource> CreateSharedPrivateLink(string LinkName)
         {
             //1. create vnet
             var vnetData = new VirtualNetworkData()

@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
 {
     public class ConsumerGroupTests : EventHubTestBase
     {
-        private ResourceGroup _resourceGroup;
-        private EventHub _eventHub;
+        private ResourceGroupResource _resourceGroup;
+        private EventHubResource _eventHub;
         private ConsumerGroupCollection _consumerGroupCollection;
         public ConsumerGroupTests(bool isAsync) : base(isAsync)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-            EventHubNamespace eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
+            EventHubNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(DefaultLocation))).Value;
             EventHubCollection eventhubCollection = eHNamespace.GetEventHubs();
             string eventhubName = Recording.GenerateAssetName("eventhub");
             _eventHub = (await eventhubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventhubName, new EventHubData())).Value;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
             if (_resourceGroup != null)
             {
                 EventHubNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubNamespaces();
-                List<EventHubNamespace> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
-                foreach (EventHubNamespace eventHubNamespace in namespaceList)
+                List<EventHubNamespaceResource> namespaceList = await namespaceCollection.GetAllAsync().ToEnumerableAsync();
+                foreach (EventHubNamespaceResource eventHubNamespace in namespaceList)
                 {
                     await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
                 }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create consumer group
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
-            ConsumerGroup consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new ConsumerGroupData())).Value;
+            ConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new ConsumerGroupData())).Value;
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             }
 
             //validate
-            List<ConsumerGroup> list = await _consumerGroupCollection.GetAllAsync().ToEnumerableAsync();
+            List<ConsumerGroupResource> list = await _consumerGroupCollection.GetAllAsync().ToEnumerableAsync();
             // the count should be 11 because there is a default consumergroup
             Assert.AreEqual(list.Count, 11);
             list = await _consumerGroupCollection.GetAllAsync(5, 5).ToEnumerableAsync();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         {
             //create consumer group
             string consumerGroupName = Recording.GenerateAssetName("testconsumergroup");
-            ConsumerGroup consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new ConsumerGroupData())).Value;
+            ConsumerGroupResource consumerGroup = (await _consumerGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, consumerGroupName, new ConsumerGroupData())).Value;
             Assert.NotNull(consumerGroup);
             Assert.AreEqual(consumerGroup.Id.Name, consumerGroupName);
 

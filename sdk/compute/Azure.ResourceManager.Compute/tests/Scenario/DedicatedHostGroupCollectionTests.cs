@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var groupName = Recording.GenerateAssetName("testDHG-");
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName, input);
-            DedicatedHostGroup group1 = lro.Value;
-            DedicatedHostGroup group2 = await collection.GetAsync(groupName);
+            DedicatedHostGroupResource group1 = lro.Value;
+            DedicatedHostGroupResource group2 = await collection.GetAsync(groupName);
             ResourceDataHelper.AssertGroup(group1.Data, group2.Data);
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName1, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupName2, input);
 
-            DedicatedHostGroup group1 = null, group2 = null;
+            DedicatedHostGroupResource group1 = null, group2 = null;
             await foreach (var group in DefaultSubscription.GetDedicatedHostGroupsAsync())
             {
                 if (group.Data.Name == groupName1)

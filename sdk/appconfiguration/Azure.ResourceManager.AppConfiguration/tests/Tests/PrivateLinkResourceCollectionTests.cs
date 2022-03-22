@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 {
     public class PrivateLinkResourceCollectionTests : AppConfigurationClientBase
     {
-        private ResourceGroup ResGroup { get; set; }
-        private ConfigurationStore ConfigStore { get; set; }
+        private ResourceGroupResource ResGroup { get; set; }
+        private ConfigurationStoreResource ConfigStore { get; set; }
 
         public PrivateLinkResourceCollectionTests(bool isAsync)
             : base(isAsync)

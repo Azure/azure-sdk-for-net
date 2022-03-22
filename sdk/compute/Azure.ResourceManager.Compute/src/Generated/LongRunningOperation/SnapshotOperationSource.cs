@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class SnapshotOperationSource : IOperationSource<Snapshot>
+    internal class SnapshotOperationSource : IOperationSource<SnapshotResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        Snapshot IOperationSource<Snapshot>.CreateResult(Response response, CancellationToken cancellationToken)
+        SnapshotResource IOperationSource<SnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SnapshotData.DeserializeSnapshotData(document.RootElement);
-            return new Snapshot(_client, data);
+            return new SnapshotResource(_client, data);
         }
 
-        async ValueTask<Snapshot> IOperationSource<Snapshot>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SnapshotResource> IOperationSource<SnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SnapshotData.DeserializeSnapshotData(document.RootElement);
-            return new Snapshot(_client, data);
+            return new SnapshotResource(_client, data);
         }
     }
 }

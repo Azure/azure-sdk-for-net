@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualHubOperationSource : IOperationSource<VirtualHub>
+    internal class VirtualHubOperationSource : IOperationSource<VirtualHubResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualHub IOperationSource<VirtualHub>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualHubResource IOperationSource<VirtualHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
-            return new VirtualHub(_client, data);
+            return new VirtualHubResource(_client, data);
         }
 
-        async ValueTask<VirtualHub> IOperationSource<VirtualHub>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualHubResource> IOperationSource<VirtualHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualHubData.DeserializeVirtualHubData(document.RootElement);
-            return new VirtualHub(_client, data);
+            return new VirtualHubResource(_client, data);
         }
     }
 }

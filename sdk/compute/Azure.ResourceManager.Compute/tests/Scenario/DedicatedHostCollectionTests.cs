@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
         }
 
-        private async Task<DedicatedHostGroup> CreateDedicatedHostGroupAsync(string groupName)
+        private async Task<DedicatedHostGroupResource> CreateDedicatedHostGroupAsync(string groupName)
         {
             var collection = (await CreateResourceGroupAsync()).GetDedicatedHostGroups();
             var input = ResourceDataHelper.GetBasicDedicatedHostGroup(DefaultLocation, 2);
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostName = Recording.GenerateAssetName("testHost-");
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
-            DedicatedHost host1 = lro.Value;
-            DedicatedHost host2 = await collection.GetAsync(hostName);
+            DedicatedHostResource host1 = lro.Value;
+            DedicatedHostResource host2 = await collection.GetAsync(hostName);
 
             ResourceDataHelper.AssertHost(host1.Data, host2.Data);
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var hostName = Recording.GenerateAssetName("testHost-");
             var input = ResourceDataHelper.GetBasicDedicatedHost(DefaultLocation, "DSv3-Type1", 0);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, hostName, input);
-            DedicatedHost host = lro.Value;
+            DedicatedHostResource host = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(hostName));
             Assert.IsFalse(await collection.ExistsAsync(hostName + "1"));
 

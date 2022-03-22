@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
 {
-    internal class CommunicationServiceOperationSource : IOperationSource<CommunicationService>
+    internal class CommunicationServiceOperationSource : IOperationSource<CommunicationServiceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Communication
             _client = client;
         }
 
-        CommunicationService IOperationSource<CommunicationService>.CreateResult(Response response, CancellationToken cancellationToken)
+        CommunicationServiceResource IOperationSource<CommunicationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement);
-            return new CommunicationService(_client, data);
+            return new CommunicationServiceResource(_client, data);
         }
 
-        async ValueTask<CommunicationService> IOperationSource<CommunicationService>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CommunicationServiceResource> IOperationSource<CommunicationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommunicationServiceData.DeserializeCommunicationServiceData(document.RootElement);
-            return new CommunicationService(_client, data);
+            return new CommunicationServiceResource(_client, data);
         }
     }
 }

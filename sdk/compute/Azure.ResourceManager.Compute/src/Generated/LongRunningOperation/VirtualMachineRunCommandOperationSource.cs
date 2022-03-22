@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class VirtualMachineRunCommandOperationSource : IOperationSource<VirtualMachineRunCommand>
+    internal class VirtualMachineRunCommandOperationSource : IOperationSource<VirtualMachineRunCommandResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        VirtualMachineRunCommand IOperationSource<VirtualMachineRunCommand>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineRunCommandResource IOperationSource<VirtualMachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
-            return new VirtualMachineRunCommand(_client, data);
+            return new VirtualMachineRunCommandResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineRunCommand> IOperationSource<VirtualMachineRunCommand>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineRunCommandResource> IOperationSource<VirtualMachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement);
-            return new VirtualMachineRunCommand(_client, data);
+            return new VirtualMachineRunCommandResource(_client, data);
         }
     }
 }

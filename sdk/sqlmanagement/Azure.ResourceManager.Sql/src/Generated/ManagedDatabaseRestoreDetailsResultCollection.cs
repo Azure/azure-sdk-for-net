@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedDatabaseRestoreDetailsResultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseRestoreDetailsResult.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseRestoreDetailsResult.ResourceType, out string managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
+            _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseRestoreDetailsResultResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedDatabaseRestoreDetailsResultResource.ResourceType, out string managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
             _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient = new ManagedDatabaseRestoreDetailsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseRestoreDetailsResult>> GetAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseRestoreDetailsResultResource>> GetAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.Get");
             scope.Start();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseRestoreDetailsResult> Get(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseRestoreDetailsResultResource> Get(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.Get");
             scope.Start();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseRestoreDetailsResult>> GetIfExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseRestoreDetailsResultResource>> GetIfExistsAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.GetIfExists");
             scope.Start();
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedDatabaseRestoreDetailsResultResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseRestoreDetailsResult> GetIfExists(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseRestoreDetailsResultResource> GetIfExists(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics.CreateScope("ManagedDatabaseRestoreDetailsResultCollection.GetIfExists");
             scope.Start();
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restoreDetailsName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedDatabaseRestoreDetailsResult>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseRestoreDetailsResult(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedDatabaseRestoreDetailsResultResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseRestoreDetailsResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

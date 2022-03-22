@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlDatabaseOperationSource : IOperationSource<SqlDatabase>
+    internal class SqlDatabaseOperationSource : IOperationSource<SqlDatabaseResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        SqlDatabase IOperationSource<SqlDatabase>.CreateResult(Response response, CancellationToken cancellationToken)
+        SqlDatabaseResource IOperationSource<SqlDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
-            return new SqlDatabase(_client, data);
+            return new SqlDatabaseResource(_client, data);
         }
 
-        async ValueTask<SqlDatabase> IOperationSource<SqlDatabase>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SqlDatabaseResource> IOperationSource<SqlDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SqlDatabaseData.DeserializeSqlDatabaseData(document.RootElement);
-            return new SqlDatabase(_client, data);
+            return new SqlDatabaseResource(_client, data);
         }
     }
 }

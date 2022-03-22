@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountGremlinDatabaseGraphThroughputSettingOperationSource : IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSetting>
+    internal class DatabaseAccountGremlinDatabaseGraphThroughputSettingOperationSource : IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -32,26 +32,26 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        DatabaseAccountGremlinDatabaseGraphThroughputSetting IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountGremlinDatabaseGraphThroughputSettingResource IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(_client, data);
+            return new DatabaseAccountGremlinDatabaseGraphThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<DatabaseAccountGremlinDatabaseGraphThroughputSetting> IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountGremlinDatabaseGraphThroughputSettingResource> IOperationSource<DatabaseAccountGremlinDatabaseGraphThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountGremlinDatabaseGraphThroughputSetting(_client, data);
+            return new DatabaseAccountGremlinDatabaseGraphThroughputSettingResource(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountGremlinDatabaseGraphThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountGremlinDatabaseGraphThroughputSettingResource.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountGremlinDatabaseGraphThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountGremlinDatabaseGraphThroughputSettingResource.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),

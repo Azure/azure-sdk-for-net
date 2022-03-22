@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
             string probeURL = "www.withoutHttp.com";
             ValidateProbeInput validateProbeInput1 = new ValidateProbeInput(probeURL);
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             Assert.ThrowsAsync<RequestFailedException>(async () => await subscription.ValidateProbeAsync(validateProbeInput1));
             probeURL = "https://azurecdn-files.azureedge.net/dsa-test/probe-v.txt";
             ValidateProbeInput validateProbeInput2 = new ValidateProbeInput(probeURL);

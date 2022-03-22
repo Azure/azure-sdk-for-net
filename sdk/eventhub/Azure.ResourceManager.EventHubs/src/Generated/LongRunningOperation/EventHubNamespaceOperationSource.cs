@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class EventHubNamespaceOperationSource : IOperationSource<EventHubNamespace>
+    internal class EventHubNamespaceOperationSource : IOperationSource<EventHubNamespaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.EventHubs
             _client = client;
         }
 
-        EventHubNamespace IOperationSource<EventHubNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventHubNamespaceResource IOperationSource<EventHubNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement);
-            return new EventHubNamespace(_client, data);
+            return new EventHubNamespaceResource(_client, data);
         }
 
-        async ValueTask<EventHubNamespace> IOperationSource<EventHubNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventHubNamespaceResource> IOperationSource<EventHubNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventHubNamespaceData.DeserializeEventHubNamespaceData(document.RootElement);
-            return new EventHubNamespace(_client, data);
+            return new EventHubNamespaceResource(_client, data);
         }
     }
 }
