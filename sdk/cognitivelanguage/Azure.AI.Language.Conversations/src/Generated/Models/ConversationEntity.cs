@@ -37,7 +37,8 @@ namespace Azure.AI.Language.Conversations
             Offset = offset;
             Length = length;
             Confidence = confidence;
-            ListKeys = new ChangeTrackingList<string>();
+            Resolutions = new ChangeTrackingList<BaseResolution>();
+            ExtraInformation = new ChangeTrackingList<BaseExtraInformation>();
         }
 
         /// <summary> Initializes a new instance of ConversationEntity. </summary>
@@ -46,15 +47,17 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidence"> The entity confidence score. </param>
-        /// <param name="listKeys"> List of keys. </param>
-        internal ConversationEntity(string category, string text, int offset, int length, float confidence, IReadOnlyList<string> listKeys)
+        /// <param name="resolutions"> The collection of entity resolution objects. </param>
+        /// <param name="extraInformation"> The collection of entity extra information objects. </param>
+        internal ConversationEntity(string category, string text, int offset, int length, float confidence, IReadOnlyList<BaseResolution> resolutions, IReadOnlyList<BaseExtraInformation> extraInformation)
         {
             Category = category;
             Text = text;
             Offset = offset;
             Length = length;
             Confidence = confidence;
-            ListKeys = listKeys;
+            Resolutions = resolutions;
+            ExtraInformation = extraInformation;
         }
 
         /// <summary> The entity category. </summary>
@@ -67,7 +70,9 @@ namespace Azure.AI.Language.Conversations
         public int Length { get; }
         /// <summary> The entity confidence score. </summary>
         public float Confidence { get; }
-        /// <summary> List of keys. </summary>
-        public IReadOnlyList<string> ListKeys { get; }
+        /// <summary> The collection of entity resolution objects. </summary>
+        public IReadOnlyList<BaseResolution> Resolutions { get; }
+        /// <summary> The collection of entity extra information objects. </summary>
+        public IReadOnlyList<BaseExtraInformation> ExtraInformation { get; }
     }
 }

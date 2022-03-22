@@ -27,15 +27,15 @@ namespace Azure.AI.Language.Conversations
         private const string UnauthorizedValue = "Unauthorized";
         private const string ForbiddenValue = "Forbidden";
         private const string NotFoundValue = "NotFound";
-        private const string TooManyRequestsValue = "TooManyRequests";
-        private const string InternalServerErrorValue = "InternalServerError";
-        private const string ServiceUnavailableValue = "ServiceUnavailable";
         private const string ProjectNotFoundValue = "ProjectNotFound";
         private const string OperationNotFoundValue = "OperationNotFound";
         private const string AzureCognitiveSearchNotFoundValue = "AzureCognitiveSearchNotFound";
         private const string AzureCognitiveSearchIndexNotFoundValue = "AzureCognitiveSearchIndexNotFound";
+        private const string TooManyRequestsValue = "TooManyRequests";
         private const string AzureCognitiveSearchThrottlingValue = "AzureCognitiveSearchThrottling";
         private const string AzureCognitiveSearchIndexLimitReachedValue = "AzureCognitiveSearchIndexLimitReached";
+        private const string InternalServerErrorValue = "InternalServerError";
+        private const string ServiceUnavailableValue = "ServiceUnavailable";
 
         /// <summary> InvalidRequest. </summary>
         public static ErrorCode InvalidRequest { get; } = new ErrorCode(InvalidRequestValue);
@@ -47,12 +47,6 @@ namespace Azure.AI.Language.Conversations
         public static ErrorCode Forbidden { get; } = new ErrorCode(ForbiddenValue);
         /// <summary> NotFound. </summary>
         public static ErrorCode NotFound { get; } = new ErrorCode(NotFoundValue);
-        /// <summary> TooManyRequests. </summary>
-        public static ErrorCode TooManyRequests { get; } = new ErrorCode(TooManyRequestsValue);
-        /// <summary> InternalServerError. </summary>
-        public static ErrorCode InternalServerError { get; } = new ErrorCode(InternalServerErrorValue);
-        /// <summary> ServiceUnavailable. </summary>
-        public static ErrorCode ServiceUnavailable { get; } = new ErrorCode(ServiceUnavailableValue);
         /// <summary> ProjectNotFound. </summary>
         public static ErrorCode ProjectNotFound { get; } = new ErrorCode(ProjectNotFoundValue);
         /// <summary> OperationNotFound. </summary>
@@ -61,10 +55,16 @@ namespace Azure.AI.Language.Conversations
         public static ErrorCode AzureCognitiveSearchNotFound { get; } = new ErrorCode(AzureCognitiveSearchNotFoundValue);
         /// <summary> AzureCognitiveSearchIndexNotFound. </summary>
         public static ErrorCode AzureCognitiveSearchIndexNotFound { get; } = new ErrorCode(AzureCognitiveSearchIndexNotFoundValue);
+        /// <summary> TooManyRequests. </summary>
+        public static ErrorCode TooManyRequests { get; } = new ErrorCode(TooManyRequestsValue);
         /// <summary> AzureCognitiveSearchThrottling. </summary>
         public static ErrorCode AzureCognitiveSearchThrottling { get; } = new ErrorCode(AzureCognitiveSearchThrottlingValue);
         /// <summary> AzureCognitiveSearchIndexLimitReached. </summary>
         public static ErrorCode AzureCognitiveSearchIndexLimitReached { get; } = new ErrorCode(AzureCognitiveSearchIndexLimitReachedValue);
+        /// <summary> InternalServerError. </summary>
+        public static ErrorCode InternalServerError { get; } = new ErrorCode(InternalServerErrorValue);
+        /// <summary> ServiceUnavailable. </summary>
+        public static ErrorCode ServiceUnavailable { get; } = new ErrorCode(ServiceUnavailableValue);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are the same. </summary>
         public static bool operator ==(ErrorCode left, ErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are not the same. </summary>

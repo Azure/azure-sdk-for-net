@@ -28,6 +28,7 @@ namespace Azure.AI.Language.Conversations
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<Error>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of Error. </summary>
@@ -36,13 +37,15 @@ namespace Azure.AI.Language.Conversations
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innererror)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal Error(ErrorCode code, string message, string target, IReadOnlyList<Error> details, InnerErrorModel innererror, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             Innererror = innererror;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>
@@ -55,5 +58,7 @@ namespace Azure.AI.Language.Conversations
         public IReadOnlyList<Error> Details { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; }
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

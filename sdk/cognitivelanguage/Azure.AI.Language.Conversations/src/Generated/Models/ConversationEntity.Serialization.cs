@@ -20,7 +20,8 @@ namespace Azure.AI.Language.Conversations
             int offset = default;
             int length = default;
             float confidenceScore = default;
-            Optional<IReadOnlyList<string>> listKeys = default;
+            Optional<IReadOnlyList<BaseResolution>> resolutions = default;
+            Optional<IReadOnlyList<BaseExtraInformation>> extraInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"))
@@ -48,23 +49,38 @@ namespace Azure.AI.Language.Conversations
                     confidenceScore = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("listKeys"))
+                if (property.NameEquals("resolutions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<BaseResolution> array = new List<BaseResolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(BaseResolution.DeserializeBaseResolution(item));
                     }
-                    listKeys = array;
+                    resolutions = array;
+                    continue;
+                }
+                if (property.NameEquals("extraInformation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<BaseExtraInformation> array = new List<BaseExtraInformation>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BaseExtraInformation.DeserializeBaseExtraInformation(item));
+                    }
+                    extraInformation = array;
                     continue;
                 }
             }
-            return new ConversationEntity(category, text, offset, length, confidenceScore, Optional.ToList(listKeys));
+            return new ConversationEntity(category, text, offset, length, confidenceScore, Optional.ToList(resolutions), Optional.ToList(extraInformation));
         }
     }
 }
