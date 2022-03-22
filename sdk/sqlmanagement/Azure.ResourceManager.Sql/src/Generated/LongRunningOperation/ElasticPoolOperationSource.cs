@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ElasticPoolOperationSource : IOperationSource<ElasticPool>
+    internal class ElasticPoolOperationSource : IOperationSource<ElasticPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ElasticPool IOperationSource<ElasticPool>.CreateResult(Response response, CancellationToken cancellationToken)
+        ElasticPoolResource IOperationSource<ElasticPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ElasticPoolData.DeserializeElasticPoolData(document.RootElement);
-            return new ElasticPool(_client, data);
+            return new ElasticPoolResource(_client, data);
         }
 
-        async ValueTask<ElasticPool> IOperationSource<ElasticPool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ElasticPoolResource> IOperationSource<ElasticPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ElasticPoolData.DeserializeElasticPoolData(document.RootElement);
-            return new ElasticPool(_client, data);
+            return new ElasticPoolResource(_client, data);
         }
     }
 }

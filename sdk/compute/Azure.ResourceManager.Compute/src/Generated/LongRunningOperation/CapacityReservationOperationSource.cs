@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class CapacityReservationOperationSource : IOperationSource<CapacityReservation>
+    internal class CapacityReservationOperationSource : IOperationSource<CapacityReservationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        CapacityReservation IOperationSource<CapacityReservation>.CreateResult(Response response, CancellationToken cancellationToken)
+        CapacityReservationResource IOperationSource<CapacityReservationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
-            return new CapacityReservation(_client, data);
+            return new CapacityReservationResource(_client, data);
         }
 
-        async ValueTask<CapacityReservation> IOperationSource<CapacityReservation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CapacityReservationResource> IOperationSource<CapacityReservationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement);
-            return new CapacityReservation(_client, data);
+            return new CapacityReservationResource(_client, data);
         }
     }
 }

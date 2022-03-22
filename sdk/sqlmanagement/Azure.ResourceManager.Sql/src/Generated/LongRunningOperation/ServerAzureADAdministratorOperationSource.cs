@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerAzureADAdministratorOperationSource : IOperationSource<ServerAzureADAdministrator>
+    internal class ServerAzureADAdministratorOperationSource : IOperationSource<ServerAzureADAdministratorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ServerAzureADAdministrator IOperationSource<ServerAzureADAdministrator>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerAzureADAdministratorResource IOperationSource<ServerAzureADAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement);
-            return new ServerAzureADAdministrator(_client, data);
+            return new ServerAzureADAdministratorResource(_client, data);
         }
 
-        async ValueTask<ServerAzureADAdministrator> IOperationSource<ServerAzureADAdministrator>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerAzureADAdministratorResource> IOperationSource<ServerAzureADAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerAzureADAdministratorData.DeserializeServerAzureADAdministratorData(document.RootElement);
-            return new ServerAzureADAdministrator(_client, data);
+            return new ServerAzureADAdministratorResource(_client, data);
         }
     }
 }

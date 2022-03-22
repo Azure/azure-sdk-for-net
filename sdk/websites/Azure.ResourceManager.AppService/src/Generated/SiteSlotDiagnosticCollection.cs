@@ -20,7 +20,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteSlotDiagnostic and their operations over its parent. </summary>
-    public partial class SiteSlotDiagnosticCollection : ArmCollection, IEnumerable<SiteSlotDiagnostic>, IAsyncEnumerable<SiteSlotDiagnostic>
+    public partial class SiteSlotDiagnosticCollection : ArmCollection, IEnumerable<SiteSlotDiagnosticResource>, IAsyncEnumerable<SiteSlotDiagnosticResource>
     {
         private readonly ClientDiagnostics _siteSlotDiagnosticDiagnosticsClientDiagnostics;
         private readonly DiagnosticsRestOperations _siteSlotDiagnosticDiagnosticsRestClient;
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotDiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnostic.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteSlotDiagnostic.ResourceType, out string siteSlotDiagnosticDiagnosticsApiVersion);
+            _siteSlotDiagnosticDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotDiagnosticResource.ResourceType, out string siteSlotDiagnosticDiagnosticsApiVersion);
             _siteSlotDiagnosticDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotDiagnostic>> GetAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticResource>> GetAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticCategory, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnostic(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
-        public virtual Response<SiteSlotDiagnostic> Get(string diagnosticCategory, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDiagnosticResource> Get(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticCategory, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnostic(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDiagnosticCategoriesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotDiagnostic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotDiagnostic> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotDiagnosticResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotDiagnostic>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotDiagnosticResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotDiagnosticDiagnosticsRestClient.ListSiteDiagnosticCategoriesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnostic(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotDiagnostic>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotDiagnosticResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotDiagnosticDiagnosticsRestClient.ListSiteDiagnosticCategoriesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnostic(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDiagnosticCategoriesSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotDiagnostic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotDiagnostic> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotDiagnosticResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotDiagnostic> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotDiagnosticResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotDiagnosticDiagnosticsRestClient.ListSiteDiagnosticCategoriesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnostic(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotDiagnostic> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotDiagnosticResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotDiagnosticDiagnosticsRestClient.ListSiteDiagnosticCategoriesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnostic(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotDiagnostic>> GetIfExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticResource>> GetIfExistsAsync(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticCategory, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotDiagnostic>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnostic(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotDiagnosticResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticCategory"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticCategory"/> is null. </exception>
-        public virtual Response<SiteSlotDiagnostic> GetIfExists(string diagnosticCategory, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDiagnosticResource> GetIfExists(string diagnosticCategory, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticCategory, nameof(diagnosticCategory));
 
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotDiagnosticDiagnosticsRestClient.GetSiteDiagnosticCategorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diagnosticCategory, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotDiagnostic>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnostic(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotDiagnosticResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteSlotDiagnostic> IEnumerable<SiteSlotDiagnostic>.GetEnumerator()
+        IEnumerator<SiteSlotDiagnosticResource> IEnumerable<SiteSlotDiagnosticResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotDiagnostic> IAsyncEnumerable<SiteSlotDiagnostic>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotDiagnosticResource> IAsyncEnumerable<SiteSlotDiagnosticResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

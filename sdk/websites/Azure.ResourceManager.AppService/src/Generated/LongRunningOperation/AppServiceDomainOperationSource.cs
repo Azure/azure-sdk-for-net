@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class AppServiceDomainOperationSource : IOperationSource<AppServiceDomain>
+    internal class AppServiceDomainOperationSource : IOperationSource<AppServiceDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        AppServiceDomain IOperationSource<AppServiceDomain>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppServiceDomainResource IOperationSource<AppServiceDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppServiceDomainData.DeserializeAppServiceDomainData(document.RootElement);
-            return new AppServiceDomain(_client, data);
+            return new AppServiceDomainResource(_client, data);
         }
 
-        async ValueTask<AppServiceDomain> IOperationSource<AppServiceDomain>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppServiceDomainResource> IOperationSource<AppServiceDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppServiceDomainData.DeserializeAppServiceDomainData(document.RootElement);
-            return new AppServiceDomain(_client, data);
+            return new AppServiceDomainResource(_client, data);
         }
     }
 }

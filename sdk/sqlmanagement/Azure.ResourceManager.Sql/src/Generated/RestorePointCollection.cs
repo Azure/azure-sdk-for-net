@@ -20,7 +20,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RestorePoint and their operations over its parent. </summary>
-    public partial class RestorePointCollection : ArmCollection, IEnumerable<RestorePoint>, IAsyncEnumerable<RestorePoint>
+    public partial class RestorePointCollection : ArmCollection, IEnumerable<RestorePointResource>, IAsyncEnumerable<RestorePointResource>
     {
         private readonly ClientDiagnostics _restorePointClientDiagnostics;
         private readonly RestorePointsRestOperations _restorePointRestClient;
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorePoint.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RestorePoint.ResourceType, out string restorePointApiVersion);
+            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RestorePointResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RestorePointResource.ResourceType, out string restorePointApiVersion);
             _restorePointRestClient = new RestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<Response<RestorePoint>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointResource>> GetAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<RestorePoint> Get(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointResource> Get(string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: RestorePoints_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorePoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorePoint> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorePointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RestorePoint>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RestorePointResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restorePointRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<RestorePoint>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RestorePointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _restorePointRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: RestorePoints_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorePoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorePoint> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorePointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RestorePoint> FirstPageFunc(int? pageSizeHint)
+            Page<RestorePointResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restorePointRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<RestorePoint> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RestorePointResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _restorePointRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RestorePoint(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RestorePointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<Response<RestorePoint>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointResource>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<RestorePointResource>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<RestorePoint> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointResource> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<RestorePoint>(null, response.GetRawResponse());
-                return Response.FromValue(new RestorePoint(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<RestorePointResource>(null, response.GetRawResponse());
+                return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<RestorePoint> IEnumerable<RestorePoint>.GetEnumerator()
+        IEnumerator<RestorePointResource> IEnumerable<RestorePointResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RestorePoint> IAsyncEnumerable<RestorePoint>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RestorePointResource> IAsyncEnumerable<RestorePointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             Optional<StaticSiteTemplateOptions> templateProperties = default;
             Optional<string> contentDistributionEndpoint = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
+            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionApp>> userProvidedFunctionApps = default;
             Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Models.StaticSiteUserProvidedFunctionApp> array = new List<Models.StaticSiteUserProvidedFunctionApp>();
+                            List<StaticSiteUserProvidedFunctionApp> array = new List<StaticSiteUserProvidedFunctionApp>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
+                                array.Add(StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item));
                             }
                             userProvidedFunctionApps = array;
                             continue;

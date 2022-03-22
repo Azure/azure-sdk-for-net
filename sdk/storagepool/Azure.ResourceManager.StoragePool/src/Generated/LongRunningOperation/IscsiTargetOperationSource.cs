@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    internal class IscsiTargetOperationSource : IOperationSource<IscsiTarget>
+    internal class IscsiTargetOperationSource : IOperationSource<IscsiTargetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.StoragePool
             _client = client;
         }
 
-        IscsiTarget IOperationSource<IscsiTarget>.CreateResult(Response response, CancellationToken cancellationToken)
+        IscsiTargetResource IOperationSource<IscsiTargetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
-            return new IscsiTarget(_client, data);
+            return new IscsiTargetResource(_client, data);
         }
 
-        async ValueTask<IscsiTarget> IOperationSource<IscsiTarget>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IscsiTargetResource> IOperationSource<IscsiTargetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IscsiTargetData.DeserializeIscsiTargetData(document.RootElement);
-            return new IscsiTarget(_client, data);
+            return new IscsiTargetResource(_client, data);
         }
     }
 }

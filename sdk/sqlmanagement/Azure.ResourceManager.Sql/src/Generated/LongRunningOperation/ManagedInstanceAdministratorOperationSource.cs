@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstanceAdministratorOperationSource : IOperationSource<ManagedInstanceAdministrator>
+    internal class ManagedInstanceAdministratorOperationSource : IOperationSource<ManagedInstanceAdministratorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstanceAdministrator IOperationSource<ManagedInstanceAdministrator>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstanceAdministratorResource IOperationSource<ManagedInstanceAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(document.RootElement);
-            return new ManagedInstanceAdministrator(_client, data);
+            return new ManagedInstanceAdministratorResource(_client, data);
         }
 
-        async ValueTask<ManagedInstanceAdministrator> IOperationSource<ManagedInstanceAdministrator>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstanceAdministratorResource> IOperationSource<ManagedInstanceAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(document.RootElement);
-            return new ManagedInstanceAdministrator(_client, data);
+            return new ManagedInstanceAdministratorResource(_client, data);
         }
     }
 }

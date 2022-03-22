@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of StaticSiteBuildARMResourceData. </summary>
         public StaticSiteBuildARMResourceData()
         {
-            UserProvidedFunctionApps = new ChangeTrackingList<Models.StaticSiteUserProvidedFunctionApp>();
+            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
         }
 
         /// <summary> Initializes a new instance of StaticSiteBuildARMResourceData. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="lastUpdatedOn"> When this build was updated. </param>
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
-        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps) : base(id, name, resourceType, systemData, kind)
+        internal StaticSiteBuildARMResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps) : base(id, name, resourceType, systemData, kind)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The status of the static site build. </summary>
         public BuildStatus? Status { get; }
         /// <summary> User provided function apps registered with the static site build. </summary>
-        public IReadOnlyList<Models.StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; }
+        public IReadOnlyList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; }
     }
 }

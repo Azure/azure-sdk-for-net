@@ -20,7 +20,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteSlotBackup and their operations over its parent. </summary>
-    public partial class SiteSlotBackupCollection : ArmCollection, IEnumerable<SiteSlotBackup>, IAsyncEnumerable<SiteSlotBackup>
+    public partial class SiteSlotBackupCollection : ArmCollection, IEnumerable<SiteSlotBackupResource>, IAsyncEnumerable<SiteSlotBackupResource>
     {
         private readonly ClientDiagnostics _siteSlotBackupWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotBackupWebAppsRestClient;
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotBackup.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteSlotBackup.ResourceType, out string siteSlotBackupWebAppsApiVersion);
+            _siteSlotBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotBackupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotBackupResource.ResourceType, out string siteSlotBackupWebAppsApiVersion);
             _siteSlotBackupWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotBackup>> GetAsync(string backupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotBackupResource>> GetAsync(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotBackupWebAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual Response<SiteSlotBackup> Get(string backupId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotBackupResource> Get(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotBackupWebAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListBackupsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotBackup> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotBackup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotBackupWebAppsRestClient.ListBackupsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotBackup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotBackupWebAppsRestClient.ListBackupsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListBackupsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotBackup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotBackup> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotBackup> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotBackupWebAppsRestClient.ListBackupsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotBackup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotBackupWebAppsRestClient.ListBackupsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotBackupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotBackup>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotBackupResource>> GetIfExistsAsync(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotBackupWebAppsRestClient.GetBackupStatusSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotBackupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
-        public virtual Response<SiteSlotBackup> GetIfExists(string backupId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotBackupResource> GetIfExists(string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
 
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotBackupWebAppsRestClient.GetBackupStatusSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotBackup>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotBackup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotBackupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteSlotBackup> IEnumerable<SiteSlotBackup>.GetEnumerator()
+        IEnumerator<SiteSlotBackupResource> IEnumerable<SiteSlotBackupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotBackup> IAsyncEnumerable<SiteSlotBackup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotBackupResource> IAsyncEnumerable<SiteSlotBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

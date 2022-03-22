@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class JitRequestOperationSource : IOperationSource<JitRequest>
+    internal class JitRequestOperationSource : IOperationSource<JitRequestResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Resources
             _client = client;
         }
 
-        JitRequest IOperationSource<JitRequest>.CreateResult(Response response, CancellationToken cancellationToken)
+        JitRequestResource IOperationSource<JitRequestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = JitRequestData.DeserializeJitRequestData(document.RootElement);
-            return new JitRequest(_client, data);
+            return new JitRequestResource(_client, data);
         }
 
-        async ValueTask<JitRequest> IOperationSource<JitRequest>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<JitRequestResource> IOperationSource<JitRequestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = JitRequestData.DeserializeJitRequestData(document.RootElement);
-            return new JitRequest(_client, data);
+            return new JitRequestResource(_client, data);
         }
     }
 }
