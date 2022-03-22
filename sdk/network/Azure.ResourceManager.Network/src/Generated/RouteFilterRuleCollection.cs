@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RouteFilterRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilterRule.ResourceType.Namespace, DiagnosticOptions);
+            _routeFilterRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilterRule.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RouteFilterRule.ResourceType, out string routeFilterRuleApiVersion);
-            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeFilterRuleApiVersion);
+            _routeFilterRuleRestClient = new RouteFilterRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routeFilterRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

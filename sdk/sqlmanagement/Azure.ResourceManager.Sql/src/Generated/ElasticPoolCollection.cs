@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ElasticPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ElasticPool.ResourceType.Namespace, DiagnosticOptions);
+            _elasticPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ElasticPool.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ElasticPool.ResourceType, out string elasticPoolApiVersion);
-            _elasticPoolRestClient = new ElasticPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, elasticPoolApiVersion);
+            _elasticPoolRestClient = new ElasticPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

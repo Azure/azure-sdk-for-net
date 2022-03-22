@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SubnetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Subnet.ResourceType.Namespace, DiagnosticOptions);
+            _subnetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", Subnet.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(Subnet.ResourceType, out string subnetApiVersion);
-            _subnetRestClient = new SubnetsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subnetApiVersion);
+            _subnetRestClient = new SubnetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

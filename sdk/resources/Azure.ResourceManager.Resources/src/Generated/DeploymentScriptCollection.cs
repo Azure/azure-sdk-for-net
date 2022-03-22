@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeploymentScriptCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
+            _deploymentScriptClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeploymentScript.ResourceType, out string deploymentScriptApiVersion);
-            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deploymentScriptApiVersion);
+            _deploymentScriptRestClient = new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentScriptApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

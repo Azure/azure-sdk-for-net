@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlAgentConfiguration(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlAgentConfigurationSqlAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _sqlAgentConfigurationSqlAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sqlAgentConfigurationSqlAgentApiVersion);
-            _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlAgentConfigurationSqlAgentApiVersion);
+            _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlAgentConfigurationSqlAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

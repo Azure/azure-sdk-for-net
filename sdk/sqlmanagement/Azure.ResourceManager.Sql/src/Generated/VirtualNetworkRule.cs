@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualNetworkRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualNetworkRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _virtualNetworkRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string virtualNetworkRuleApiVersion);
-            _virtualNetworkRuleRestClient = new VirtualNetworkRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkRuleApiVersion);
+            _virtualNetworkRuleRestClient = new VirtualNetworkRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

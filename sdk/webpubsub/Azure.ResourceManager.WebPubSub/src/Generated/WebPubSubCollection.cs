@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal WebPubSubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSub.ResourceType.Namespace, DiagnosticOptions);
+            _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSub.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WebPubSub.ResourceType, out string webPubSubApiVersion);
-            _webPubSubRestClient = new WebPubSubRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webPubSubApiVersion);
+            _webPubSubRestClient = new WebPubSubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

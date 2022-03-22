@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PolicyAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignment.ResourceType.Namespace, DiagnosticOptions);
+            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignment.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PolicyAssignment.ResourceType, out string policyAssignmentApiVersion);
-            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
+            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyAssignmentApiVersion);
         }
 
         /// <summary>

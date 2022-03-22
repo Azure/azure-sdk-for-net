@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BastionHost(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _bastionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _bastionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string bastionHostApiVersion);
-            _bastionHostRestClient = new BastionHostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, bastionHostApiVersion);
+            _bastionHostRestClient = new BastionHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bastionHostApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

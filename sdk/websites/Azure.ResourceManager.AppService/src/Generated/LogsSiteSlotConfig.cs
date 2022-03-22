@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogsSiteSlotConfig(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _logsSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _logsSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string logsSiteSlotConfigWebAppsApiVersion);
-            _logsSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logsSiteSlotConfigWebAppsApiVersion);
+            _logsSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logsSiteSlotConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

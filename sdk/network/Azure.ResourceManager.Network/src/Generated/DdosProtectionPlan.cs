@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DdosProtectionPlan(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ddosProtectionPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _ddosProtectionPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string ddosProtectionPlanApiVersion);
-            _ddosProtectionPlanRestClient = new DdosProtectionPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, ddosProtectionPlanApiVersion);
+            _ddosProtectionPlanRestClient = new DdosProtectionPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ddosProtectionPlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

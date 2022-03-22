@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal WorkloadGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _workloadGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadGroup.ResourceType.Namespace, DiagnosticOptions);
+            _workloadGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", WorkloadGroup.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkloadGroup.ResourceType, out string workloadGroupApiVersion);
-            _workloadGroupRestClient = new WorkloadGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, workloadGroupApiVersion);
+            _workloadGroupRestClient = new WorkloadGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workloadGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

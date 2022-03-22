@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Secret(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
+            _secretClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string secretApiVersion);
-            _secretRestClient = new SecretsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, secretApiVersion);
+            _secretRestClient = new SecretsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, secretApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

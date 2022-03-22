@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualNetworkTap(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualNetworkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _virtualNetworkTapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string virtualNetworkTapApiVersion);
-            _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualNetworkTapApiVersion);
+            _virtualNetworkTapRestClient = new VirtualNetworkTapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkTapApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

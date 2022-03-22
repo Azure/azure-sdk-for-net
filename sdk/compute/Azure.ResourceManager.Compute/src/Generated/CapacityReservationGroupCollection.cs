@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CapacityReservationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _capacityReservationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroup.ResourceType.Namespace, DiagnosticOptions);
+            _capacityReservationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroup.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CapacityReservationGroup.ResourceType, out string capacityReservationGroupApiVersion);
-            _capacityReservationGroupRestClient = new CapacityReservationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, capacityReservationGroupApiVersion);
+            _capacityReservationGroupRestClient = new CapacityReservationGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArcSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, DiagnosticOptions);
+            _arcSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string arcSettingApiVersion);
-            _arcSettingRestClient = new ArcSettingsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcSettingApiVersion);
+            _arcSettingRestClient = new ArcSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, arcSettingApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

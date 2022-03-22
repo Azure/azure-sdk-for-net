@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskPool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", ResourceType.Namespace, DiagnosticOptions);
+            _diskPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StoragePool", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string diskPoolApiVersion);
-            _diskPoolRestClient = new DiskPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskPoolApiVersion);
+            _diskPoolRestClient = new DiskPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskPoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

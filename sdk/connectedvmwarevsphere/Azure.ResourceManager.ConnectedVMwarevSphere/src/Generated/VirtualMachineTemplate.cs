@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineTemplate(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            _virtualMachineTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string virtualMachineTemplateApiVersion);
-            _virtualMachineTemplateRestClient = new VirtualMachineTemplatesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineTemplateApiVersion);
+            _virtualMachineTemplateRestClient = new VirtualMachineTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineTemplateApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

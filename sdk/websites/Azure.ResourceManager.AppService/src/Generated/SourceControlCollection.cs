@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SourceControlCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SourceControl.ResourceType.Namespace, DiagnosticOptions);
+            _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SourceControl.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SourceControl.ResourceType, out string sourceControlApiVersion);
-            _sourceControlRestClient = new WebSiteManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sourceControlApiVersion);
+            _sourceControlRestClient = new WebSiteManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sourceControlApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

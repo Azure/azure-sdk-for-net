@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ApplicationGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, DiagnosticOptions);
+            _applicationGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGateway.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApplicationGateway.ResourceType, out string applicationGatewayApiVersion);
-            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationGatewayApiVersion);
+            _applicationGatewayRestClient = new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

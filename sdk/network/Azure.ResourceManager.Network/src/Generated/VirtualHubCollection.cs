@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHub.ResourceType.Namespace, DiagnosticOptions);
+            _virtualHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHub.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualHub.ResourceType, out string virtualHubApiVersion);
-            _virtualHubRestClient = new VirtualHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualHubApiVersion);
+            _virtualHubRestClient = new VirtualHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualHubApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

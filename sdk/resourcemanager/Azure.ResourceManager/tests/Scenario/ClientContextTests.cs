@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Tests
             var clientY = GetArmClient(y);
             var subX = await clientX.GetDefaultSubscriptionAsync();
             var subY = await clientY.GetDefaultSubscriptionAsync();
-            var versionX = await subX.GetProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
-            var versionY = await subY.GetProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
+            var versionX = await subX.GetResourceProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
+            var versionY = await subY.GetResourceProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
             Assert.AreEqual(versionX, versionY);
             Assert.AreNotEqual(versionY, fakeVersion);
             Assert.AreNotEqual(versionX, fakeVersion);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Tests
             x.SetApiVersion(ResourceGroup.ResourceType, fakeVersion);
             clientX = GetArmClient(x);
             subX = await clientX.GetDefaultSubscriptionAsync();
-            versionX = await subX.GetProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
-            versionY = await subY.GetProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
+            versionX = await subX.GetResourceProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
+            versionY = await subY.GetResourceProviders().GetApiVersionAsync(ResourceGroup.ResourceType);
             Assert.AreNotEqual(versionX, versionY);
         }
     }

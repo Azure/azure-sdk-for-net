@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CosmosTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosTableTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosTable.ResourceType.Namespace, DiagnosticOptions);
+            _cosmosTableTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosTable.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CosmosTable.ResourceType, out string cosmosTableTableResourcesApiVersion);
-            _cosmosTableTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosTableTableResourcesApiVersion);
+            _cosmosTableTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosTableTableResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

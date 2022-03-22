@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VMwareCluster(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vMwareClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            _vMwareClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string vMwareClusterClustersApiVersion);
-            _vMwareClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vMwareClusterClustersApiVersion);
+            _vMwareClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vMwareClusterClustersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

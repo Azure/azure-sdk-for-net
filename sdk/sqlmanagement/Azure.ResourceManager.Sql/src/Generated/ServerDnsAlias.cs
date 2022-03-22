@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerDnsAlias(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverDnsAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _serverDnsAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverDnsAliasApiVersion);
-            _serverDnsAliasRestClient = new ServerDnsAliasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDnsAliasApiVersion);
+            _serverDnsAliasRestClient = new ServerDnsAliasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDnsAliasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

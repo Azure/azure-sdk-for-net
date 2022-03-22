@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Tenant(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tenantApiVersion);
-            _tenantRestClient = new TenantsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
-            _providersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _providersRestClient = new ProvidersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _tenantRestClient = new TenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantApiVersion);
+            _providersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _providersRestClient = new ProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProviderInfo> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProviderInfo> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ProviderInfo>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantResourceProviders");
                 scope0.Start();
                 try
                 {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<ProviderInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantResourceProviders");
                 scope0.Start();
                 try
                 {
@@ -333,11 +333,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderInfo" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProviderInfo> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProviderInfo> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Page<ProviderInfo> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantResourceProviders");
                 scope0.Start();
                 try
                 {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<ProviderInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProviders");
+                using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantResourceProviders");
                 scope0.Start();
                 try
                 {
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderInfo>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantResourceProvider");
             scope0.Start();
             try
             {
@@ -406,11 +406,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
-        public virtual Response<ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderInfo> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
 
-            using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantProvider");
+            using var scope0 = _providersClientDiagnostics.CreateScope("Tenant.GetTenantResourceProvider");
             scope0.Start();
             try
             {

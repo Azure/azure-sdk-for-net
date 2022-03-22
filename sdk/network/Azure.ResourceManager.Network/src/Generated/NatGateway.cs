@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NatGateway(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _natGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _natGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string natGatewayApiVersion);
-            _natGatewayRestClient = new NatGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, natGatewayApiVersion);
+            _natGatewayRestClient = new NatGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, natGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

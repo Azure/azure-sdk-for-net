@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDetector.ResourceType.Namespace, DiagnosticOptions);
+            _siteSlotDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDetector.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteSlotDetector.ResourceType, out string siteSlotDetectorDiagnosticsApiVersion);
-            _siteSlotDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDetectorDiagnosticsApiVersion);
+            _siteSlotDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

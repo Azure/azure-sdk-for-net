@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VCenterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VCenter.ResourceType.Namespace, DiagnosticOptions);
+            _vCenterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VCenter.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VCenter.ResourceType, out string vCenterApiVersion);
-            _vCenterRestClient = new VCentersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vCenterApiVersion);
+            _vCenterRestClient = new VCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vCenterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MsixPackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _msixPackageMSIXPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", MsixPackage.ResourceType.Namespace, DiagnosticOptions);
+            _msixPackageMSIXPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", MsixPackage.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MsixPackage.ResourceType, out string msixPackageMSIXPackagesApiVersion);
-            _msixPackageMSIXPackagesRestClient = new MsixPackagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, msixPackageMSIXPackagesApiVersion);
+            _msixPackageMSIXPackagesRestClient = new MsixPackagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, msixPackageMSIXPackagesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

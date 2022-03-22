@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DatabaseAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccount.ResourceType.Namespace, DiagnosticOptions);
+            _databaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccount.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DatabaseAccount.ResourceType, out string databaseAccountApiVersion);
-            _databaseAccountRestClient = new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountApiVersion);
+            _databaseAccountRestClient = new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAccountApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

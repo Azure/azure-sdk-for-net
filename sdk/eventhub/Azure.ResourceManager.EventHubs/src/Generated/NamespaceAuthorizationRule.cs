@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NamespaceAuthorizationRule(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _namespaceAuthorizationRuleNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            _namespaceAuthorizationRuleNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string namespaceAuthorizationRuleNamespacesApiVersion);
-            _namespaceAuthorizationRuleNamespacesRestClient = new NamespacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, namespaceAuthorizationRuleNamespacesApiVersion);
+            _namespaceAuthorizationRuleNamespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, namespaceAuthorizationRuleNamespacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

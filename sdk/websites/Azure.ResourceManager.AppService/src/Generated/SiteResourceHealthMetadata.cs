@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteResourceHealthMetadata(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string siteResourceHealthMetadataResourceHealthMetadataApiVersion);
-            _siteResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteResourceHealthMetadataResourceHealthMetadataApiVersion);
+            _siteResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteResourceHealthMetadataResourceHealthMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

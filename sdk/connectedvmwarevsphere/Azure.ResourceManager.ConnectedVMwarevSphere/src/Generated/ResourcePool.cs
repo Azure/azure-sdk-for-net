@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourcePool(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourcePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, DiagnosticOptions);
+            _resourcePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string resourcePoolApiVersion);
-            _resourcePoolRestClient = new ResourcePoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourcePoolApiVersion);
+            _resourcePoolRestClient = new ResourcePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourcePoolApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

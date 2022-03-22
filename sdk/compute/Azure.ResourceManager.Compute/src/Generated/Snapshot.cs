@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal Snapshot(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
+            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string snapshotApiVersion);
-            _snapshotRestClient = new SnapshotsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, snapshotApiVersion);
+            _snapshotRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

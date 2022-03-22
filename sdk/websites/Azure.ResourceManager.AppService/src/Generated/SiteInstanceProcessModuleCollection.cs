@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteInstanceProcessModuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModule.ResourceType.Namespace, DiagnosticOptions);
+            _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModule.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteInstanceProcessModule.ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
-            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
+            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteInstanceProcessModuleWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

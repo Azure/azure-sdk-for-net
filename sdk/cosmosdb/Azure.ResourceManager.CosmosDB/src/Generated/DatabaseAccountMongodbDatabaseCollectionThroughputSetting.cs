@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseAccountMongodbDatabaseCollectionThroughputSetting(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesApiVersion);
-            _databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesApiVersion);
+            _databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAccountMongodbDatabaseCollectionThroughputSettingMongoDBResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

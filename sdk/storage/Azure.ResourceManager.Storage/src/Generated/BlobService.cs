@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BlobService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _blobServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
+            _blobServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string blobServiceApiVersion);
-            _blobServiceRestClient = new BlobServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, blobServiceApiVersion);
+            _blobServiceRestClient = new BlobServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, blobServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

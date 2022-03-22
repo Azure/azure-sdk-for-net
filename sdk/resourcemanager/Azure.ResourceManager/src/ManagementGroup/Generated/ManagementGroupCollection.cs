@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Management
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagementGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroup.ResourceType.Namespace, DiagnosticOptions);
+            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroup.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagementGroup.ResourceType, out string managementGroupApiVersion);
-            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementGroupApiVersion);
+            _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

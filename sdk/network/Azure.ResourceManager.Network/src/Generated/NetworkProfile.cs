@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkProfile(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkProfileApiVersion);
-            _networkProfileRestClient = new NetworkProfilesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkProfileApiVersion);
+            _networkProfileRestClient = new NetworkProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkProfileApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

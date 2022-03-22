@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The provider registration definition. </summary>
-    public partial class ProviderRegistrationOptions
+    public partial class ResourceProviderRegistrationOptions
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationOptions. </summary>
-        public ProviderRegistrationOptions()
+        /// <summary> Initializes a new instance of ResourceProviderRegistrationOptions. </summary>
+        public ResourceProviderRegistrationOptions()
         {
         }
 

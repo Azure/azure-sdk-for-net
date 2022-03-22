@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetworkVirtualApplianceSkuCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceSku.ResourceType.Namespace, DiagnosticOptions);
+            _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceSku.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkVirtualApplianceSku.ResourceType, out string networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
-            _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
+            _networkVirtualApplianceSkuVirtualApplianceSkusRestClient = new VirtualApplianceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceSkuVirtualApplianceSkusApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

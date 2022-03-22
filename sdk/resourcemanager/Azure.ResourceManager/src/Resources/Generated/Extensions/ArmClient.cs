@@ -26,17 +26,17 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region Provider
+        #region ResourceProvider
         /// <summary>
-        /// Gets an object representing a <see cref="Provider" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="Provider.CreateResourceIdentifier" /> to create a <see cref="Provider" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceProvider" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceProvider.CreateResourceIdentifier" /> to create a <see cref="ResourceProvider" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Provider" /> object. </returns>
-        public virtual Provider GetProvider(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceProvider" /> object. </returns>
+        public virtual ResourceProvider GetResourceProvider(ResourceIdentifier id)
         {
-            Provider.ValidateResourceId(id);
-            return new Provider(this, id);
+            ResourceProvider.ValidateResourceId(id);
+            return new ResourceProvider(this, id);
         }
         #endregion
 

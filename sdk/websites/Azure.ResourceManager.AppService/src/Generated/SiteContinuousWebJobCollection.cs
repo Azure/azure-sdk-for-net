@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteContinuousWebJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteContinuousWebJob.ResourceType.Namespace, DiagnosticOptions);
+            _siteContinuousWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteContinuousWebJob.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteContinuousWebJob.ResourceType, out string siteContinuousWebJobWebAppsApiVersion);
-            _siteContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteContinuousWebJobWebAppsApiVersion);
+            _siteContinuousWebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteContinuousWebJobWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

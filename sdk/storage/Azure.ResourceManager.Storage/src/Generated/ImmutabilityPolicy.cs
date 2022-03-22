@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImmutabilityPolicy(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _immutabilityPolicyBlobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
+            _immutabilityPolicyBlobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string immutabilityPolicyBlobContainersApiVersion);
-            _immutabilityPolicyBlobContainersRestClient = new BlobContainersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, immutabilityPolicyBlobContainersApiVersion);
+            _immutabilityPolicyBlobContainersRestClient = new BlobContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, immutabilityPolicyBlobContainersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

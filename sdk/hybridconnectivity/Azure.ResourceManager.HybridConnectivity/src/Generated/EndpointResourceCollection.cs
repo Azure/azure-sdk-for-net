@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EndpointResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", EndpointResource.ResourceType.Namespace, DiagnosticOptions);
+            _endpointResourceEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", EndpointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EndpointResource.ResourceType, out string endpointResourceEndpointsApiVersion);
-            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, endpointResourceEndpointsApiVersion);
+            _endpointResourceEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, endpointResourceEndpointsApiVersion);
         }
 
         /// <summary>

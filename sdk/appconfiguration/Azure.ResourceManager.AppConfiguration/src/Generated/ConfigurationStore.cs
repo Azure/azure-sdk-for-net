@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConfigurationStore(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, DiagnosticOptions);
+            _configurationStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string configurationStoreApiVersion);
-            _configurationStoreRestClient = new ConfigurationStoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, configurationStoreApiVersion);
+            _configurationStoreRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, configurationStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

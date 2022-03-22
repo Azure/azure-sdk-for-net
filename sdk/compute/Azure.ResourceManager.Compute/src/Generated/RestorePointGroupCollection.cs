@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RestorePointGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorePointGroupRestorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroup.ResourceType.Namespace, DiagnosticOptions);
+            _restorePointGroupRestorePointCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointGroup.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RestorePointGroup.ResourceType, out string restorePointGroupRestorePointCollectionsApiVersion);
-            _restorePointGroupRestorePointCollectionsRestClient = new RestorePointCollectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorePointGroupRestorePointCollectionsApiVersion);
+            _restorePointGroupRestorePointCollectionsRestClient = new RestorePointCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointGroupRestorePointCollectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Communication
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CommunicationService(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _communicationServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, DiagnosticOptions);
+            _communicationServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string communicationServiceApiVersion);
-            _communicationServiceRestClient = new CommunicationServiceRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, communicationServiceApiVersion);
+            _communicationServiceRestClient = new CommunicationServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communicationServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

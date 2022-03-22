@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFeatures(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFeaturesWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _networkFeaturesWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkFeaturesWebAppsApiVersion);
-            _networkFeaturesWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, networkFeaturesWebAppsApiVersion);
+            _networkFeaturesWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFeaturesWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

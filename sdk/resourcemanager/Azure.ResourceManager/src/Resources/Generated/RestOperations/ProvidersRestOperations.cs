@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderData>> UnregisterAsync(string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceProviderData>> UnregisterAsync(string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ResourceProviderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderData> Unregister(string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
+        public Response<ResourceProviderData> Unregister(string subscriptionId, string resourceProviderNamespace, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ResourceProviderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties)
+        internal HttpMessage CreateRegisterRequest(string subscriptionId, string resourceProviderNamespace, ResourceProviderRegistrationOptions properties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceProviderData>> RegisterAsync(string subscriptionId, string resourceProviderNamespace, ResourceProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ResourceProviderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderData> Register(string subscriptionId, string resourceProviderNamespace, ProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
+        public Response<ResourceProviderData> Register(string subscriptionId, string resourceProviderNamespace, ResourceProviderRegistrationOptions properties = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ResourceProviderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderData>> GetAsync(string subscriptionId, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceProviderData>> GetAsync(string subscriptionId, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -451,13 +451,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ResourceProviderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProviderData)null, message.Response);
+                    return Response.FromValue((ResourceProviderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderData> Get(string subscriptionId, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceProviderData> Get(string subscriptionId, string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -481,13 +481,13 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderData value = default;
+                        ResourceProviderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderData.DeserializeProviderData(document.RootElement);
+                        value = ResourceProviderData.DeserializeResourceProviderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ProviderData)null, message.Response);
+                    return Response.FromValue((ResourceProviderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

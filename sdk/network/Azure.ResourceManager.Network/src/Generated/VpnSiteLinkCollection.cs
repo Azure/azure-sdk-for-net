@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VpnSiteLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnSiteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLink.ResourceType.Namespace, DiagnosticOptions);
+            _vpnSiteLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLink.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VpnSiteLink.ResourceType, out string vpnSiteLinkApiVersion);
-            _vpnSiteLinkRestClient = new VpnSiteLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vpnSiteLinkApiVersion);
+            _vpnSiteLinkRestClient = new VpnSiteLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

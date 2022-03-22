@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KubeEnvironment(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _kubeEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string kubeEnvironmentApiVersion);
-            _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, kubeEnvironmentApiVersion);
+            _kubeEnvironmentRestClient = new KubeEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kubeEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

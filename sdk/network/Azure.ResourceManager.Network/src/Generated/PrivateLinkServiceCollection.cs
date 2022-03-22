@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PrivateLinkServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkService.ResourceType.Namespace, DiagnosticOptions);
+            _privateLinkServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkService.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PrivateLinkService.ResourceType, out string privateLinkServiceApiVersion);
-            _privateLinkServiceRestClient = new PrivateLinkServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkServiceApiVersion);
+            _privateLinkServiceRestClient = new PrivateLinkServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

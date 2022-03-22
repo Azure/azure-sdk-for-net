@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.BinaryData Outputs { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ParametersLink ParametersLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ProviderData> Providers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.ResourceProviderData> Providers { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string TemplateHash { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.TemplateLink TemplateLink { get { throw null; } }

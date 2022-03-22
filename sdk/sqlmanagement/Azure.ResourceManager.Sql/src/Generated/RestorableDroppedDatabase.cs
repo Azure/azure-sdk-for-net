@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RestorableDroppedDatabase(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorableDroppedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _restorableDroppedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string restorableDroppedDatabaseApiVersion);
-            _restorableDroppedDatabaseRestClient = new RestorableDroppedDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDroppedDatabaseApiVersion);
+            _restorableDroppedDatabaseRestClient = new RestorableDroppedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorableDroppedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

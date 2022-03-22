@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EncryptionProtectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _encryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", EncryptionProtector.ResourceType.Namespace, DiagnosticOptions);
+            _encryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", EncryptionProtector.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EncryptionProtector.ResourceType, out string encryptionProtectorApiVersion);
-            _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionProtectorApiVersion);
+            _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, encryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

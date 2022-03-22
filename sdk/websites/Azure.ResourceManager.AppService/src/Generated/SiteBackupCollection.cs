@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteBackup.ResourceType.Namespace, DiagnosticOptions);
+            _siteBackupWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteBackup.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteBackup.ResourceType, out string siteBackupWebAppsApiVersion);
-            _siteBackupWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteBackupWebAppsApiVersion);
+            _siteBackupWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteBackupWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

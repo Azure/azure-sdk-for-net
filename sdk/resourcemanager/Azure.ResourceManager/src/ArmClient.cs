@@ -71,15 +71,16 @@ namespace Azure.ResourceManager
             Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new ArmClientOptions();
+            ArmEnvironment environment = options.Environment.HasValue ? options.Environment.Value : ArmEnvironment.AzurePublicCloud;
 
-            Argument.AssertNotNull(options.Environment.Endpoint, nameof(options.Environment.Endpoint));
+            Argument.AssertNotNull(environment.Endpoint, nameof(environment.Endpoint));
 
-            BaseUri = options.Environment.Endpoint;
+            Endpoint = environment.Endpoint;
 
-            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, options.Environment.DefaultScope));
+            Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, environment.DefaultScope));
 
-            DiagnosticOptions = options.Diagnostics;
-            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, DiagnosticOptions);
+            Diagnostics = options.Diagnostics;
+            _subscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", Subscription.ResourceType.Namespace, Diagnostics);
 
             CopyApiVersionOverrides(options);
 
@@ -115,12 +116,12 @@ namespace Azure.ResourceManager
         /// <summary>
         /// Gets the diagnostic options used for this client.
         /// </summary>
-        internal virtual DiagnosticsOptions DiagnosticOptions { get; }
+        internal virtual DiagnosticsOptions Diagnostics { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        internal virtual Uri BaseUri { get; private set; }
+        internal virtual Uri Endpoint { get; private set; }
 
         /// <summary>
         /// Gets the HTTP pipeline.
@@ -225,14 +226,14 @@ namespace Azure.ResourceManager
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Pageable<ProviderInfo> GetTenantProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProviders(top, expand, cancellationToken);
+        public virtual Pageable<ProviderInfo> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(top, expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<ProviderInfo> GetTenantProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProvidersAsync(top, expand, cancellationToken);
+        public virtual AsyncPageable<ProviderInfo> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(top, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProviderInfo> GetTenantProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantProvider(resourceProviderNamespace, expand, cancellationToken);
+        public virtual Response<ProviderInfo> GetTenantResourceProvider(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvider(resourceProviderNamespace, expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProviderInfo>> GetTenantProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<ProviderInfo>> GetTenantResourceProviderAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default) => await _tenant.GetTenantResourceProviderAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the management group collection for this tenant.

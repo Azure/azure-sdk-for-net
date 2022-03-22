@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerAzureADAdministrator(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverAzureADAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
+            _serverAzureADAdministratorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverAzureADAdministratorApiVersion);
-            _serverAzureADAdministratorRestClient = new ServerAzureADAdministratorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverAzureADAdministratorApiVersion);
+            _serverAzureADAdministratorRestClient = new ServerAzureADAdministratorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverAzureADAdministratorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

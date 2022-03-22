@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualRouterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualRouterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouter.ResourceType.Namespace, DiagnosticOptions);
+            _virtualRouterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouter.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualRouter.ResourceType, out string virtualRouterApiVersion);
-            _virtualRouterRestClient = new VirtualRoutersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualRouterApiVersion);
+            _virtualRouterRestClient = new VirtualRoutersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualRouterApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

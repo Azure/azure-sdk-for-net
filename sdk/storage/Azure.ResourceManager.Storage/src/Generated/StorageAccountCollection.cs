@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StorageAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccount.ResourceType.Namespace, DiagnosticOptions);
+            _storageAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccount.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StorageAccount.ResourceType, out string storageAccountApiVersion);
-            _storageAccountRestClient = new StorageAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, storageAccountApiVersion);
+            _storageAccountRestClient = new StorageAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

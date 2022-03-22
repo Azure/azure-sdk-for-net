@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeletedSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
+            _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteGlobalApiVersion);
-            _deletedSiteGlobalRestClient = new GlobalRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
-            _deletedSiteDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, DiagnosticOptions);
+            _deletedSiteGlobalRestClient = new GlobalRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteGlobalApiVersion);
+            _deletedSiteDeletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSite.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DeletedSite.ResourceType, out string deletedSiteDeletedWebAppsApiVersion);
-            _deletedSiteDeletedWebAppsRestClient = new DeletedWebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteDeletedWebAppsApiVersion);
+            _deletedSiteDeletedWebAppsRestClient = new DeletedWebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteDeletedWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

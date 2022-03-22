@@ -73,31 +73,31 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseAccount(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _databaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
+            _databaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string databaseAccountApiVersion);
-            _databaseAccountRestClient = new DatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseAccountApiVersion);
-            _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _databaseRestClient = new DatabaseRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionRestClient = new CollectionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionRegionRestClient = new CollectionRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _percentileTargetRestClient = new PercentileTargetRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _percentileRestClient = new PercentileRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _collectionPartitionRestClient = new CollectionPartitionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
-            _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _databaseAccountRestClient = new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseAccountApiVersion);
+            _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _databaseRestClient = new DatabaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _collectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _collectionRestClient = new CollectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _collectionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _collectionRegionRestClient = new CollectionRegionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _databaseAccountRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _databaseAccountRegionRestClient = new DatabaseAccountRegionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _percentileSourceTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _percentileSourceTargetRestClient = new PercentileSourceTargetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _percentileTargetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _percentileTargetRestClient = new PercentileTargetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _percentileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _percentileRestClient = new PercentileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _collectionPartitionRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _collectionPartitionRegionRestClient = new CollectionPartitionRegionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _collectionPartitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _collectionPartitionRestClient = new CollectionPartitionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _partitionKeyRangeIdClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _partitionKeyRangeIdRestClient = new PartitionKeyRangeIdRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _partitionKeyRangeIdRegionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _partitionKeyRangeIdRegionRestClient = new PartitionKeyRangeIdRegionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

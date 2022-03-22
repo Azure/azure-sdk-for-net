@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRoutePort(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expressRoutePortClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, DiagnosticOptions);
+            _expressRoutePortClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string expressRoutePortApiVersion);
-            _expressRoutePortRestClient = new ExpressRoutePortsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRoutePortApiVersion);
+            _expressRoutePortRestClient = new ExpressRoutePortsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

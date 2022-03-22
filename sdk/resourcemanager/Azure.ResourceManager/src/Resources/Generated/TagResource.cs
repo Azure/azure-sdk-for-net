@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _tagResourceTagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string tagResourceTagsApiVersion);
-            _tagResourceTagsRestClient = new TagsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tagResourceTagsApiVersion);
+            _tagResourceTagsRestClient = new TagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tagResourceTagsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

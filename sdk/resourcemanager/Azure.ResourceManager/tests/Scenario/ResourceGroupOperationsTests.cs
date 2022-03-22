@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg = rgOp.Value;
             var locations = await rg.GetAvailableLocationsAsync();
             int count = 0;
-            foreach (var location in locations)
+            foreach (var location in locations.Value)
             {
                 count++;
             }

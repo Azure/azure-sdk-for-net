@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MachineExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", MachineExtension.ResourceType.Namespace, DiagnosticOptions);
+            _machineExtensionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", MachineExtension.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MachineExtension.ResourceType, out string machineExtensionApiVersion);
-            _machineExtensionRestClient = new MachineExtensionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, machineExtensionApiVersion);
+            _machineExtensionRestClient = new MachineExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineExtensionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

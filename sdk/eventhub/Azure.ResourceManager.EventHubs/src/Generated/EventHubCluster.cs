@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EventHubCluster(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            _eventHubClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventHubClusterClustersApiVersion);
-            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterClustersApiVersion);
-            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
+            _eventHubClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterClustersApiVersion);
+            _eventHubClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string eventHubClusterApiVersion);
-            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubClusterApiVersion);
-            _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _configurationRestClient = new ConfigurationRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _eventHubClusterRestClient = new EventHubClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubClusterApiVersion);
+            _configurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _configurationRestClient = new ConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

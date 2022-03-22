@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ExpressRouteGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expressRouteGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGateway.ResourceType.Namespace, DiagnosticOptions);
+            _expressRouteGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGateway.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ExpressRouteGateway.ResourceType, out string expressRouteGatewayApiVersion);
-            _expressRouteGatewayRestClient = new ExpressRouteGatewaysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, expressRouteGatewayApiVersion);
+            _expressRouteGatewayRestClient = new ExpressRouteGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceGroup(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string resourceGroupApiVersion);
-            _resourceGroupRestClient = new ResourceGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
-            _resourceGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, DiagnosticOptions);
+            _resourceGroupRestClient = new ResourceGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupApiVersion);
+            _resourceGroupResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string resourceGroupResourcesApiVersion);
-            _resourceGroupResourcesRestClient = new ResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupResourcesApiVersion);
+            _resourceGroupResourcesRestClient = new ResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
