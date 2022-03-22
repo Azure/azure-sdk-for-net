@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a Provider along with the instance operations that can be performed on it. </summary>
     [CodeGenSuppress("GetAvailableLocations", typeof(CancellationToken))]
     [CodeGenSuppress("GetAvailableLocationsAsync", typeof(CancellationToken))]
-    public partial class ResourceProvider : ArmResource
+    public partial class ResourceProviderResource : ArmResource
     {
     }
 }

@@ -12,18 +12,18 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of resource providers. </summary>
-    internal partial class ProviderListResult
+    internal partial class ResourceProviderListResult
     {
-        /// <summary> Initializes a new instance of ProviderListResult. </summary>
-        internal ProviderListResult()
+        /// <summary> Initializes a new instance of ResourceProviderListResult. </summary>
+        internal ResourceProviderListResult()
         {
             Value = new ChangeTrackingList<ResourceProviderData>();
         }
 
-        /// <summary> Initializes a new instance of ProviderListResult. </summary>
+        /// <summary> Initializes a new instance of ResourceProviderListResult. </summary>
         /// <param name="value"> An array of resource providers. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ProviderListResult(IReadOnlyList<ResourceProviderData> value, string nextLink)
+        internal ResourceProviderListResult(IReadOnlyList<ResourceProviderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

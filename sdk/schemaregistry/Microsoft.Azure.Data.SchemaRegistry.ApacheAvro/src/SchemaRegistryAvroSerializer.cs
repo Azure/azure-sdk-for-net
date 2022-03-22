@@ -29,13 +29,42 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
         private const int CacheCapacity = 128;
 
         /// <summary>
-        /// Initializes new instance of <see cref="SchemaRegistryAvroSerializer"/>.
+        /// Initializes a new instance of the <see cref="SchemaRegistryAvroSerializer"/>. This constructor can only be used to create an
+        /// instance which will be used for deserialization. In order to serialize (or both serialize and deserialize) you will need to use
+        /// one of the constructors that have a <code>groupName</code> parameter.
         /// </summary>
-        public SchemaRegistryAvroSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryAvroSerializerOptions options = null)
+        /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SchemaRegistryAvroSerializer(SchemaRegistryClient client)
+            : this(client, null, new SchemaRegistryAvroSerializerOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryAvroSerializer"/>. This constructor can be used to create an instance
+        /// that will work for both serialization and deserialization.
+        /// </summary>
+        /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
+        /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SchemaRegistryAvroSerializer(SchemaRegistryClient client, string groupName)
+            : this(client, groupName, new SchemaRegistryAvroSerializerOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SchemaRegistryAvroSerializer"/>. This constructor can be used to create an instance
+        /// that will work for both serialization and deserialization.
+        /// </summary>
+        /// <param name="client">The <see cref="SchemaRegistryClient"/> instance to use for looking up schemas.</param>
+        /// <param name="groupName">The Schema Registry group name that contains the schemas that will be used to serialize.</param>
+        /// <param name="options">The set of options to customize the <see cref="SchemaRegistryAvroSerializer"/>.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SchemaRegistryAvroSerializer(SchemaRegistryClient client, string groupName, SchemaRegistryAvroSerializerOptions options)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
-            _groupName = groupName ?? throw new ArgumentNullException(nameof(groupName));
-            _options = options;
+            _groupName = groupName;
+            _options = options?.Clone() ?? new SchemaRegistryAvroSerializerOptions();
         }
 
         private readonly LruCache<string, Schema> _idToSchemaMap = new(CacheCapacity);
@@ -118,12 +147,20 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro
             bool async,
             CancellationToken cancellationToken)
         {
+            if (_groupName == null)
+            {
+                throw new InvalidOperationException(
+                    "A group name must be specified for in the SchemaRegistryAvroSerializer constructor if you will be attempting to serialize. " +
+                    "The group name can be omitted if only deserializing.");
+            }
+
             messageType ??= typeof(BinaryContent);
             if (messageType.GetConstructor(Type.EmptyTypes) == null)
             {
                 throw new InvalidOperationException(
                     $"The type {messageType} must have a public parameterless constructor in order to use it as the 'MessageContent' type to serialize to.");
             }
+
             var message = (BinaryContent)Activator.CreateInstance(messageType);
 
             (string schemaId, BinaryData bd) = async

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-D-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            DeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             await deployment.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deployment.GetAsync());
             Assert.AreEqual(404, ex.Status);
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task WhatIfAtResourceGroup()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
-            ResourceGroup rg = lro.Value;
-            ResourceIdentifier deploymentResourceIdentifier = Deployment.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
-            Deployment deployment = Client.GetDeployment(deploymentResourceIdentifier);
+            ResourceGroupResource rg = lro.Value;
+            ResourceIdentifier deploymentResourceIdentifier = DeploymentResource.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
+            DeploymentResource deployment = Client.GetDeploymentResource(deploymentResourceIdentifier);
             DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
                 Template = CreateDeploymentPropertiesUsingString().Template,

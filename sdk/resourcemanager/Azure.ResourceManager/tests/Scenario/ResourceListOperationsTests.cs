@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Tests
         //[RecordedTest]
         //public async Task ListAtContext()
         //{
-        //    Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+        //    SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
         //    var rgOp1 = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
-        //    ResourceGroup rg = rgOp1.Value;
+        //    ResourceGroupResource rg = rgOp1.Value;
         //    _ = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-        //    ResourceGroup rgOp = Client.GetResourceGroup(rg.Id);
+        //    ResourceGroupResource rgOp = Client.GetResourceGroupResource(rg.Id);
         //    var result = 0;
         //    var pageable = ResourceListOperations.GetAtContextAsync(rgOp);
         //    await foreach (var resource in pageable)

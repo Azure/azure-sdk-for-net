@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
 {
     public class ReadMe_ManagingStorageAccounts
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
         [SetUp]
         public async Task createResourceGroup()
         {
             #region Snippet:Managing_StorageAccounts_DefaultSubscription
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             #endregion
             #region Snippet:Managing_StorageAccounts_GetResourceGroupCollection
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = operation.Value;
+            ArmOperation<ResourceGroupResource> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = operation.Value;
             #endregion
 
             this.resourceGroup = resourceGroup;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
             //now we can create a storage account with defined account name and parameters
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
             string accountName = "myAccount";
-            ArmOperation<StorageAccount> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
-            StorageAccount storageAccount = accountCreateOperation.Value;
+            ArmOperation<StorageAccountResource> accountCreateOperation = await accountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters);
+            StorageAccountResource storageAccount = accountCreateOperation.Value;
             #endregion
         }
         [Test]
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_ListStorageAccounts
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            AsyncPageable<StorageAccount> response = accountCollection.GetAllAsync();
-            await foreach (StorageAccount storageAccount in response)
+            AsyncPageable<StorageAccountResource> response = accountCollection.GetAllAsync();
+            await foreach (StorageAccountResource storageAccount in response)
             {
                 Console.WriteLine(storageAccount.Id.Name);
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_GetStorageAccount
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+            StorageAccountResource storageAccount = await accountCollection.GetAsync("myAccount");
             Console.WriteLine(storageAccount.Id.Name);
             #endregion
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_GetStorageAccountIfExists
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            StorageAccount storageAccount = await accountCollection.GetIfExistsAsync("foo");
+            StorageAccountResource storageAccount = await accountCollection.GetIfExistsAsync("foo");
             if (storageAccount != null)
             {
                 Console.WriteLine(storageAccount.Id.Name);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_DeleteStorageAccount
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+            StorageAccountResource storageAccount = await accountCollection.GetAsync("myAccount");
             await storageAccount.DeleteAsync(WaitUntil.Completed);
             #endregion
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Tests.Samples
         {
             #region Snippet:Managing_StorageAccounts_AddTagStorageAccount
             StorageAccountCollection accountCollection = resourceGroup.GetStorageAccounts();
-            StorageAccount storageAccount = await accountCollection.GetAsync("myAccount");
+            StorageAccountResource storageAccount = await accountCollection.GetAsync("myAccount");
             // add a tag on this storage account
             await storageAccount.AddTagAsync("key", "value");
             #endregion

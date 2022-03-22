@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private const string PermissionDataActionCreate = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/create";
         private const string PermissionDataActionRead = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read";
 
-        private DatabaseAccount _databaseAccount;
+        private DatabaseAccountResource _databaseAccount;
         private ResourceIdentifier _sqlDatabaseId;
-        private SqlDatabase _sqlDatabase;
+        private SqlDatabaseResource _sqlDatabase;
 
         public SqlRoleDefinitionTests(bool isAsync) : base(isAsync)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
 

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         public async Task TestListProductFamiliesMetadata()
         {
             AsyncPageable<ProductFamiliesMetadataDetails> productFamiliesMetadata =
-                Subscription.GetProductFamiliesMetadataAsync();
+                EdgeOrderExtensions.GetProductFamiliesMetadataAsync(Subscription);
             List<ProductFamiliesMetadataDetails> productFamiliesMetadataResult = await productFamiliesMetadata.ToEnumerableAsync();
 
             Assert.NotNull(productFamiliesMetadataResult);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             IDictionary<string, IList<FilterableProperty>> filterableProperties =
                 new Dictionary<string, IList<FilterableProperty>>() { { "azurestackedge", filterableProperty } };
             ProductFamiliesRequest productFamiliesRequest = new(filterableProperties);
-            AsyncPageable<ProductFamily> productFamilies = Subscription.GetProductFamiliesAsync(productFamiliesRequest);
+            AsyncPageable<ProductFamily> productFamilies = EdgeOrderExtensions.GetProductFamiliesAsync(Subscription, productFamiliesRequest);
             List<ProductFamily> productFamiliesResult = await productFamilies.ToEnumerableAsync();
 
             Assert.NotNull(productFamiliesResult);
@@ -67,7 +67,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
                 new List<string>() { "US" }));
             ConfigurationsRequest configurationsRequest = new(
                 new List<ConfigurationFilters>() { configurationFilters });
-            AsyncPageable<ProductConfiguration> configurations = Subscription.GetConfigurationsAsync(configurationsRequest);
+            AsyncPageable<ProductConfiguration> configurations = EdgeOrderExtensions.GetConfigurationsAsync(Subscription,
+                configurationsRequest);
             List<ProductConfiguration> configurationsResult = await configurations.ToEnumerableAsync();
 
             Assert.NotNull(configurationsResult);

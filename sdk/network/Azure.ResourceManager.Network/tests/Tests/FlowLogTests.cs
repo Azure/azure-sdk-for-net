@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests
             var putNsgResponseOperation = await securityGroupCollection.CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroup);
             await putNsgResponseOperation.WaitForCompletionAsync();;
             // Get NSG
-            Response<NetworkSecurityGroup> getNsgResponse = await securityGroupCollection.GetAsync(networkSecurityGroupName);
+            Response<NetworkSecurityGroupResource> getNsgResponse = await securityGroupCollection.GetAsync(networkSecurityGroupName);
 
             string networkWatcherName = Recording.GenerateAssetName("azsmnet");
             var properties = new NetworkWatcherData { Location = location };
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             //var storageParameters = new StorageAccountCreateParameters(new Sku(SkuName.StandardLRS), Kind.Storage, location);
 
-            //Operation<StorageAccount> storageAccountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroupName, storageName, storageParameters);
-            //Response<StorageAccount> storageAccount = await storageAccountOperation.WaitForCompletionAsync();;
+            //Operation<StorageAccountResource> storageAccountOperation = await StorageManagementClient.StorageAccounts.CreateAsync(resourceGroupName, storageName, storageParameters);
+            //Response<StorageAccountResource> storageAccount = await storageAccountOperation.WaitForCompletionAsync();;
 
             //create workspace
             string workspaceName = Recording.GenerateAssetName("azsmnet");

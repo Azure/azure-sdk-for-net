@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Tests.Samples
         {
             #region Snippet:Hello_World_DefaultSubscription
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = client.GetDefaultSubscription();
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             Console.WriteLine(subscription.Id);
             #endregion Snippet:Hello_World_DefaultSubscription
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Tests.Samples
             string subscriptionId = "your-subscription-id";
             ArmClient client = new ArmClient(new DefaultAzureCredential());
             SubscriptionCollection subscriptions = client.GetSubscriptions();
-            Subscription subscription = subscriptions.Get(subscriptionId);
+            SubscriptionResource subscription = subscriptions.Get(subscriptionId);
             Console.WriteLine($"Got subscription: {subscription.Data.DisplayName}");
             #endregion Snippet:Hello_World_SpecificSubscription
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Tests.Samples
             #region Snippet:Hello_World_SpecifyDefaultSubscription
             string defaultSubscriptionId = "your-subscription-id";
             ArmClient client = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
-            Subscription subscription = client.GetDefaultSubscription();
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             Console.WriteLine(subscription.Id);
             #endregion
         }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Tests.Samples
         public void RetrieveResourceGroupCollection()
         {
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = client.GetDefaultSubscription();
+            SubscriptionResource subscription = client.GetDefaultSubscription();
             #region Snippet:Hello_World_ResourceGroupCollection
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             #endregion Snippet:Hello_World_ResourceGroupCollection

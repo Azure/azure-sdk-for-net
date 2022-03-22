@@ -9,7 +9,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// The entry point for all ARM clients.
     /// </summary>
-    [CodeGenSuppress("GetTenant", typeof(ResourceIdentifier))]
+    [CodeGenSuppress("GetTenantResource", typeof(ResourceIdentifier))]
     public partial class ArmClient
     {
         /// <summary>

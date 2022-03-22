@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderListResult>> ListAsync(string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceProviderListResult>> ListAsync(string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ResourceProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderListResult> List(string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceProviderListResult> List(string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ResourceProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProviderListResult>> ListNextPageAsync(string nextLink, string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceProviderListResult>> ListNextPageAsync(string nextLink, string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -598,9 +598,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ResourceProviderListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProviderListResult> ListNextPage(string nextLink, string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
+        public Response<ResourceProviderListResult> ListNextPage(string nextLink, string subscriptionId, int? top = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -627,9 +627,9 @@ namespace Azure.ResourceManager.Resources
             {
                 case 200:
                     {
-                        ProviderListResult value = default;
+                        ResourceProviderListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProviderListResult.DeserializeProviderListResult(document.RootElement);
+                        value = ResourceProviderListResult.DeserializeResourceProviderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

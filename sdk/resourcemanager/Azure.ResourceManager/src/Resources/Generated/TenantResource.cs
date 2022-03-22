@@ -20,12 +20,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A Class representing a TenantResource along with the instance operations that can be performed on it. </summary>
     public partial class TenantResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TenantResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier()
-        {
-            var resourceId = $"/";
-            return new ResourceIdentifier(resourceId);
-        }
 
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
@@ -36,15 +30,6 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class for mocking. </summary>
         protected TenantResource()
         {
-        }
-
-        /// <summary> Initializes a new instance of the <see cref = "TenantResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantResource(ArmClient client, TenantData data) : this(client, new ResourceIdentifier(data.Id))
-        {
-            HasData = true;
-            _data = data;
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class. </summary>
@@ -294,61 +279,6 @@ namespace Azure.ResourceManager.Resources
         public virtual Response<SubscriptionResource> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
             return GetSubscriptions().Get(subscriptionId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of TenantResources in the Tenant. </summary>
-        /// <returns> An object representing collection of TenantResources and their operations over a TenantResource. </returns>
-        public virtual TenantCollection GetTenants()
-        {
-            return GetCachedClient(Client => new TenantCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets details about the default tenant.
-        /// Request Path: /
-        /// Operation Id: Tenants_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _tenantClientDiagnostics.CreateScope("TenantResource.Get");
-            scope0.Start();
-            try
-            {
-                var response = await _tenantRestClient.GetAsync(cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets details about the default tenant.
-        /// Request Path: /
-        /// Operation Id: Tenants_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _tenantClientDiagnostics.CreateScope("TenantResource.Get");
-            scope0.Start();
-            try
-            {
-                var response = _tenantRestClient.Get(cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

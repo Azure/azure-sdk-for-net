@@ -222,20 +222,6 @@ namespace Azure.ResourceManager
         }
         #endregion
 
-        #region TenantResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TenantResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TenantResource.CreateResourceIdentifier" /> to create a <see cref="TenantResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TenantResource" /> object. </returns>
-        public virtual TenantResource GetTenantResource(ResourceIdentifier id)
-        {
-            TenantResource.ValidateResourceId(id);
-            return new TenantResource(this, id);
-        }
-        #endregion
-
         #region FeatureResource
         /// <summary>
         /// Gets an object representing a <see cref="FeatureResource" /> along with the instance operations that can be performed on it but with no data.

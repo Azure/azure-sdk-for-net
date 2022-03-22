@@ -12,9 +12,9 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ProviderListResult
+    internal partial class ResourceProviderListResult
     {
-        internal static ProviderListResult DeserializeProviderListResult(JsonElement element)
+        internal static ResourceProviderListResult DeserializeResourceProviderListResult(JsonElement element)
         {
             Optional<IReadOnlyList<ResourceProviderData>> value = default;
             Optional<string> nextLink = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderListResult(Optional.ToList(value), nextLink.Value);
+            return new ResourceProviderListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

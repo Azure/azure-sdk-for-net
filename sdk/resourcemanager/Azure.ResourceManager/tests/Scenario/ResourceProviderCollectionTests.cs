@@ -6,9 +6,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
 {
-    public class ProviderCollectionTests : ResourceManagerTestBase
+    public class ResourceProviderCollectionTests : ResourceManagerTestBase
     {
-        public ProviderCollectionTests(bool isAsync)
+        public ResourceProviderCollectionTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Tests
         public async Task TryGet()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            ResourceProvider provider = await providerCollection.GetIfExistsAsync("microsoft.insights");
+            ResourceProviderResource provider = await providerCollection.GetIfExistsAsync("microsoft.insights");
             Assert.IsNotNull(provider);
 
             var response = await providerCollection.GetIfExistsAsync("DoesNotExist");
