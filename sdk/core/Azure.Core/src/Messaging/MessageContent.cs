@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Messaging
 {
     /// <summary>
-    /// Message containing a content type along with its data.
+    /// The content of a message containing a content type along with the message data.
     /// </summary>
     public class MessageContent
     {
