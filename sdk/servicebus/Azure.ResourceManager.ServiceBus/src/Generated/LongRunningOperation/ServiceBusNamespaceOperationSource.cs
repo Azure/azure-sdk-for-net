@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    internal class ServiceBusNamespaceOperationSource : IOperationSource<ServiceBusNamespace>
+    internal class ServiceBusNamespaceOperationSource : IOperationSource<ServiceBusNamespaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.ServiceBus
             _client = client;
         }
 
-        ServiceBusNamespace IOperationSource<ServiceBusNamespace>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceBusNamespaceResource IOperationSource<ServiceBusNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
-            return new ServiceBusNamespace(_client, data);
+            return new ServiceBusNamespaceResource(_client, data);
         }
 
-        async ValueTask<ServiceBusNamespace> IOperationSource<ServiceBusNamespace>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceBusNamespaceResource> IOperationSource<ServiceBusNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement);
-            return new ServiceBusNamespace(_client, data);
+            return new ServiceBusNamespaceResource(_client, data);
         }
     }
 }

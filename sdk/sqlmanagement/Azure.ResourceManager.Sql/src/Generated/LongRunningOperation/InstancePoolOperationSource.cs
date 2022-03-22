@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class InstancePoolOperationSource : IOperationSource<InstancePool>
+    internal class InstancePoolOperationSource : IOperationSource<InstancePoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        InstancePool IOperationSource<InstancePool>.CreateResult(Response response, CancellationToken cancellationToken)
+        InstancePoolResource IOperationSource<InstancePoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = InstancePoolData.DeserializeInstancePoolData(document.RootElement);
-            return new InstancePool(_client, data);
+            return new InstancePoolResource(_client, data);
         }
 
-        async ValueTask<InstancePool> IOperationSource<InstancePool>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<InstancePoolResource> IOperationSource<InstancePoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = InstancePoolData.DeserializeInstancePoolData(document.RootElement);
-            return new InstancePool(_client, data);
+            return new InstancePoolResource(_client, data);
         }
     }
 }

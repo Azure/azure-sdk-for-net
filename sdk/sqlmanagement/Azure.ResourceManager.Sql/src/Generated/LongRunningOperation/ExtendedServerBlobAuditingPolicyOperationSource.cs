@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ExtendedServerBlobAuditingPolicyOperationSource : IOperationSource<ExtendedServerBlobAuditingPolicy>
+    internal class ExtendedServerBlobAuditingPolicyOperationSource : IOperationSource<ExtendedServerBlobAuditingPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ExtendedServerBlobAuditingPolicy IOperationSource<ExtendedServerBlobAuditingPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExtendedServerBlobAuditingPolicyResource IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
-            return new ExtendedServerBlobAuditingPolicy(_client, data);
+            return new ExtendedServerBlobAuditingPolicyResource(_client, data);
         }
 
-        async ValueTask<ExtendedServerBlobAuditingPolicy> IOperationSource<ExtendedServerBlobAuditingPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExtendedServerBlobAuditingPolicyResource> IOperationSource<ExtendedServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExtendedServerBlobAuditingPolicyData.DeserializeExtendedServerBlobAuditingPolicyData(document.RootElement);
-            return new ExtendedServerBlobAuditingPolicy(_client, data);
+            return new ExtendedServerBlobAuditingPolicyResource(_client, data);
         }
     }
 }

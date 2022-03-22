@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    internal class StorageAccountOperationSource : IOperationSource<StorageAccount>
+    internal class StorageAccountOperationSource : IOperationSource<StorageAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Storage
             _client = client;
         }
 
-        StorageAccount IOperationSource<StorageAccount>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageAccountResource IOperationSource<StorageAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
-            return new StorageAccount(_client, data);
+            return new StorageAccountResource(_client, data);
         }
 
-        async ValueTask<StorageAccount> IOperationSource<StorageAccount>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageAccountResource> IOperationSource<StorageAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StorageAccountData.DeserializeStorageAccountData(document.RootElement);
-            return new StorageAccount(_client, data);
+            return new StorageAccountResource(_client, data);
         }
     }
 }

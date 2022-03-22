@@ -20,7 +20,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VpnSiteLinkConnection and their operations over its parent. </summary>
-    public partial class VpnSiteLinkConnectionCollection : ArmCollection, IEnumerable<VpnSiteLinkConnection>, IAsyncEnumerable<VpnSiteLinkConnection>
+    public partial class VpnSiteLinkConnectionCollection : ArmCollection, IEnumerable<VpnSiteLinkConnectionResource>, IAsyncEnumerable<VpnSiteLinkConnectionResource>
     {
         private readonly ClientDiagnostics _vpnSiteLinkConnectionClientDiagnostics;
         private readonly VpnSiteLinkConnectionsRestOperations _vpnSiteLinkConnectionRestClient;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VpnSiteLinkConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionApiVersion);
+            _vpnSiteLinkConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VpnSiteLinkConnectionResource.ResourceType, out string vpnSiteLinkConnectionApiVersion);
             _vpnSiteLinkConnectionRestClient = new VpnSiteLinkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkConnectionApiVersion);
-            _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnection.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VpnSiteLinkConnection.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
+            _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteLinkConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VpnSiteLinkConnectionResource.ResourceType, out string vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
             _vpnSiteLinkConnectionVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnSiteLinkConnectionVpnLinkConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VpnConnection.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnConnection.ResourceType), nameof(id));
+            if (id.ResourceType != VpnConnectionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnConnectionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
-        public virtual async Task<Response<VpnSiteLinkConnection>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSiteLinkConnectionResource>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _vpnSiteLinkConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
-        public virtual Response<VpnSiteLinkConnection> Get(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<VpnSiteLinkConnectionResource> Get(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
                 var response = _vpnSiteLinkConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VpnLinkConnections_ListByVpnConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VpnSiteLinkConnection> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VpnSiteLinkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VpnSiteLinkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VpnSiteLinkConnection>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VpnSiteLinkConnectionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<VpnSiteLinkConnection>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VpnSiteLinkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnectionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -160,17 +160,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VpnLinkConnections_ListByVpnConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VpnSiteLinkConnection" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VpnSiteLinkConnection> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VpnSiteLinkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VpnSiteLinkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VpnSiteLinkConnection> FirstPageFunc(int? pageSizeHint)
+            Page<VpnSiteLinkConnectionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<VpnSiteLinkConnection> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VpnSiteLinkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics.CreateScope("VpnSiteLinkConnectionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.ListByVpnConnectionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnection(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VpnSiteLinkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
-        public virtual async Task<Response<VpnSiteLinkConnection>> GetIfExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnSiteLinkConnectionResource>> GetIfExistsAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
@@ -269,8 +269,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _vpnSiteLinkConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VpnSiteLinkConnectionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
-        public virtual Response<VpnSiteLinkConnection> GetIfExists(string linkConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<VpnSiteLinkConnectionResource> GetIfExists(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
 
@@ -298,8 +298,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _vpnSiteLinkConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<VpnSiteLinkConnection>(null, response.GetRawResponse());
-                return Response.FromValue(new VpnSiteLinkConnection(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VpnSiteLinkConnectionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VpnSiteLinkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<VpnSiteLinkConnection> IEnumerable<VpnSiteLinkConnection>.GetEnumerator()
+        IEnumerator<VpnSiteLinkConnectionResource> IEnumerable<VpnSiteLinkConnectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VpnSiteLinkConnection> IAsyncEnumerable<VpnSiteLinkConnection>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VpnSiteLinkConnectionResource> IAsyncEnumerable<VpnSiteLinkConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

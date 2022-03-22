@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.KeyVault
 {
     /// <summary> A class representing the MhsmPrivateEndpointConnection data model. </summary>
-    public partial class MhsmPrivateEndpointConnectionData : ManagedHsmResource
+    public partial class MhsmPrivateEndpointConnectionData : Models.ManagedHsmResource
     {
         /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionData. </summary>
         /// <param name="location"> The location. </param>

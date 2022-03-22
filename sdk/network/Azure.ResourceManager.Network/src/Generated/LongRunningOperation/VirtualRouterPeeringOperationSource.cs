@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualRouterPeeringOperationSource : IOperationSource<VirtualRouterPeering>
+    internal class VirtualRouterPeeringOperationSource : IOperationSource<VirtualRouterPeeringResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualRouterPeering IOperationSource<VirtualRouterPeering>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualRouterPeeringResource IOperationSource<VirtualRouterPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement);
-            return new VirtualRouterPeering(_client, data);
+            return new VirtualRouterPeeringResource(_client, data);
         }
 
-        async ValueTask<VirtualRouterPeering> IOperationSource<VirtualRouterPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualRouterPeeringResource> IOperationSource<VirtualRouterPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualRouterPeeringData.DeserializeVirtualRouterPeeringData(document.RootElement);
-            return new VirtualRouterPeering(_client, data);
+            return new VirtualRouterPeeringResource(_client, data);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class EncryptionProtectorOperationSource : IOperationSource<EncryptionProtector>
+    internal class EncryptionProtectorOperationSource : IOperationSource<EncryptionProtectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        EncryptionProtector IOperationSource<EncryptionProtector>.CreateResult(Response response, CancellationToken cancellationToken)
+        EncryptionProtectorResource IOperationSource<EncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
-            return new EncryptionProtector(_client, data);
+            return new EncryptionProtectorResource(_client, data);
         }
 
-        async ValueTask<EncryptionProtector> IOperationSource<EncryptionProtector>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EncryptionProtectorResource> IOperationSource<EncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement);
-            return new EncryptionProtector(_client, data);
+            return new EncryptionProtectorResource(_client, data);
         }
     }
 }

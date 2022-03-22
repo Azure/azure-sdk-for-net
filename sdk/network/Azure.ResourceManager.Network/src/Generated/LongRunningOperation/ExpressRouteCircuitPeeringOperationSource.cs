@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCircuitPeeringOperationSource : IOperationSource<ExpressRouteCircuitPeering>
+    internal class ExpressRouteCircuitPeeringOperationSource : IOperationSource<ExpressRouteCircuitPeeringResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRouteCircuitPeering IOperationSource<ExpressRouteCircuitPeering>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCircuitPeeringResource IOperationSource<ExpressRouteCircuitPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(document.RootElement);
-            return new ExpressRouteCircuitPeering(_client, data);
+            return new ExpressRouteCircuitPeeringResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteCircuitPeering> IOperationSource<ExpressRouteCircuitPeering>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCircuitPeeringResource> IOperationSource<ExpressRouteCircuitPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(document.RootElement);
-            return new ExpressRouteCircuitPeering(_client, data);
+            return new ExpressRouteCircuitPeeringResource(_client, data);
         }
     }
 }

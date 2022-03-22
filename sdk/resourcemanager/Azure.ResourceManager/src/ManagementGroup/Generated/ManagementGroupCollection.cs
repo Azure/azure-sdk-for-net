@@ -22,7 +22,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Management
 {
     /// <summary> A class representing collection of ManagementGroup and their operations over its parent. </summary>
-    public partial class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroup>, IAsyncEnumerable<ManagementGroup>
+    public partial class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroupResource>, IAsyncEnumerable<ManagementGroupResource>
     {
         private readonly ClientDiagnostics _managementGroupClientDiagnostics;
         private readonly ManagementGroupsRestOperations _managementGroupRestClient;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Management
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagementGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroup.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagementGroup.ResourceType, out string managementGroupApiVersion);
+            _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Management", ManagementGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagementGroupResource.ResourceType, out string managementGroupApiVersion);
             _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Management
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Tenant.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+            if (id.ResourceType != TenantResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagementGroup>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(createManagementGroupRequest, nameof(createManagementGroupRequest));
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = await _managementGroupRestClient.CreateOrUpdateAsync(groupId, createManagementGroupRequest, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagementArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="createManagementGroupRequest"/> is null. </exception>
-        public virtual ArmOperation<ManagementGroup> CreateOrUpdate(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string groupId, CreateManagementGroupOptions createManagementGroupRequest, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNull(createManagementGroupRequest, nameof(createManagementGroupRequest));
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Management
             try
             {
                 var response = _managementGroupRestClient.CreateOrUpdate(groupId, createManagementGroupRequest, cacheControl, cancellationToken);
-                var operation = new ManagementArmOperation<ManagementGroup>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagementArmOperation<ManagementGroupResource>(new ManagementGroupOperationSource(Client), _managementGroupClientDiagnostics, Pipeline, _managementGroupRestClient.CreateCreateOrUpdateRequest(groupId, createManagementGroupRequest, cacheControl).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroup>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Management
                 var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<ManagementGroup> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Management
                 var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,17 +204,17 @@ namespace Azure.ResourceManager.Management
         /// 
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroup> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagementGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managementGroupRestClient.ListAsync(cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Management
                     throw;
                 }
             }
-            async Task<Page<ManagementGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagementGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managementGroupRestClient.ListNextPageAsync(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -253,17 +253,17 @@ namespace Azure.ResourceManager.Management
         /// 
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroup> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementGroup> FirstPageFunc(int? pageSizeHint)
+            Page<ManagementGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managementGroupRestClient.List(cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -271,14 +271,14 @@ namespace Azure.ResourceManager.Management
                     throw;
                 }
             }
-            Page<ManagementGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagementGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managementGroupRestClient.ListNextPage(nextLink, cacheControl, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroup>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -426,8 +426,8 @@ namespace Azure.ResourceManager.Management
             {
                 var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagementGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagementGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<ManagementGroup> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
@@ -459,8 +459,8 @@ namespace Azure.ResourceManager.Management
             {
                 var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagementGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagementGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Management
             }
         }
 
-        IEnumerator<ManagementGroup> IEnumerable<ManagementGroup>.GetEnumerator()
+        IEnumerator<ManagementGroupResource> IEnumerable<ManagementGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Management
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagementGroup> IAsyncEnumerable<ManagementGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagementGroupResource> IAsyncEnumerable<ManagementGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

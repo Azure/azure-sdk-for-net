@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerDevOpsAuditingSettingsOperationSource : IOperationSource<ServerDevOpsAuditingSettings>
+    internal class ServerDevOpsAuditingSettingsOperationSource : IOperationSource<ServerDevOpsAuditingSettingsResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ServerDevOpsAuditingSettings IOperationSource<ServerDevOpsAuditingSettings>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerDevOpsAuditingSettingsResource IOperationSource<ServerDevOpsAuditingSettingsResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(document.RootElement);
-            return new ServerDevOpsAuditingSettings(_client, data);
+            return new ServerDevOpsAuditingSettingsResource(_client, data);
         }
 
-        async ValueTask<ServerDevOpsAuditingSettings> IOperationSource<ServerDevOpsAuditingSettings>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerDevOpsAuditingSettingsResource> IOperationSource<ServerDevOpsAuditingSettingsResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(document.RootElement);
-            return new ServerDevOpsAuditingSettings(_client, data);
+            return new ServerDevOpsAuditingSettingsResource(_client, data);
         }
     }
 }

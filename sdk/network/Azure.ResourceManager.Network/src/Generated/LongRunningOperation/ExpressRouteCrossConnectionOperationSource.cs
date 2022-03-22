@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ExpressRouteCrossConnectionOperationSource : IOperationSource<ExpressRouteCrossConnection>
+    internal class ExpressRouteCrossConnectionOperationSource : IOperationSource<ExpressRouteCrossConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ExpressRouteCrossConnection IOperationSource<ExpressRouteCrossConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        ExpressRouteCrossConnectionResource IOperationSource<ExpressRouteCrossConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
-            return new ExpressRouteCrossConnection(_client, data);
+            return new ExpressRouteCrossConnectionResource(_client, data);
         }
 
-        async ValueTask<ExpressRouteCrossConnection> IOperationSource<ExpressRouteCrossConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ExpressRouteCrossConnectionResource> IOperationSource<ExpressRouteCrossConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(document.RootElement);
-            return new ExpressRouteCrossConnection(_client, data);
+            return new ExpressRouteCrossConnectionResource(_client, data);
         }
     }
 }

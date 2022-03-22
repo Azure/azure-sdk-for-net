@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualNetworkTapOperationSource : IOperationSource<VirtualNetworkTap>
+    internal class VirtualNetworkTapOperationSource : IOperationSource<VirtualNetworkTapResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualNetworkTap IOperationSource<VirtualNetworkTap>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkTapResource IOperationSource<VirtualNetworkTapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement);
-            return new VirtualNetworkTap(_client, data);
+            return new VirtualNetworkTapResource(_client, data);
         }
 
-        async ValueTask<VirtualNetworkTap> IOperationSource<VirtualNetworkTap>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkTapResource> IOperationSource<VirtualNetworkTapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkTapData.DeserializeVirtualNetworkTapData(document.RootElement);
-            return new VirtualNetworkTap(_client, data);
+            return new VirtualNetworkTapResource(_client, data);
         }
     }
 }
