@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Tests
         public void NoDataValidation()
         {
             ///subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/microsoft.insights
-            var resource = Client.GetResourceProvider(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/providers/microsoft.FakeNamespace"));
+            var resource = Client.GetResourceProviderResource(new ResourceIdentifier($"/subscriptions/{Guid.NewGuid()}/providers/microsoft.FakeNamespace"));
             Assert.Throws<InvalidOperationException>(() => { var data = resource.Data; });
         }
 
@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Tests
         public async Task Get()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Response<ResourceProvider> response = await providerCollection.GetAsync("microsoft.insights");
-            ResourceProvider result = response.Value;
+            Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.insights");
+            ResourceProviderResource result = response.Value;
             Assert.IsNotNull(result);
 
             ResourceIdentifier fakeId = new ResourceIdentifier(result.Data.Id.ToString() + "x");
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceProvider(new ResourceIdentifier(fakeId)).GetAsync());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await Client.GetResourceProviderResource(new ResourceIdentifier(fakeId)).GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Register()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Response<ResourceProvider> response = await providerCollection.GetAsync("microsoft.compute");
+            Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.compute");
             var result = response.Value;
             var register = await result.RegisterAsync();
             Assert.IsNotNull(register);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Tests
         public async Task Unregister()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Response<ResourceProvider> response = await providerCollection.GetAsync("microsoft.insights");
+            Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.insights");
             var result = response.Value;
             var unregister = await result.UnregisterAsync();
             Assert.IsNotNull(unregister);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Tests
         public async Task UnregisterNullException()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Response<ResourceProvider> response = await providerCollection.GetAsync("microsoft.insights");
+            Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.insights");
         }
 
         [TestCase]
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Tests
         public async Task UnregisterEmptyException()
         {
             ResourceProviderCollection providerCollection = (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceProviders();
-            Response<ResourceProvider> response = await providerCollection.GetAsync("microsoft.insights");
+            Response<ResourceProviderResource> response = await providerCollection.GetAsync("microsoft.insights");
         }
     }
 }

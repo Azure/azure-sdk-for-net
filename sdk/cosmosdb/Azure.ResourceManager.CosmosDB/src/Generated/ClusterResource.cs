@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataCenterResources in the DataCenterResource. </summary>
+        /// <summary> Gets a collection of DataCenterResources in the ClusterResource. </summary>
         /// <returns> An object representing collection of DataCenterResources and their operations over a DataCenterResource. </returns>
         public virtual DataCenterResourceCollection GetDataCenterResources()
         {

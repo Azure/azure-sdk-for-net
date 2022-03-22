@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedInstancePrivateEndpointConnectionOperationSource : IOperationSource<ManagedInstancePrivateEndpointConnection>
+    internal class ManagedInstancePrivateEndpointConnectionOperationSource : IOperationSource<ManagedInstancePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ManagedInstancePrivateEndpointConnection IOperationSource<ManagedInstancePrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedInstancePrivateEndpointConnectionResource IOperationSource<ManagedInstancePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
-            return new ManagedInstancePrivateEndpointConnection(_client, data);
+            return new ManagedInstancePrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ManagedInstancePrivateEndpointConnection> IOperationSource<ManagedInstancePrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedInstancePrivateEndpointConnectionResource> IOperationSource<ManagedInstancePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedInstancePrivateEndpointConnectionData.DeserializeManagedInstancePrivateEndpointConnectionData(document.RootElement);
-            return new ManagedInstancePrivateEndpointConnection(_client, data);
+            return new ManagedInstancePrivateEndpointConnectionResource(_client, data);
         }
     }
 }

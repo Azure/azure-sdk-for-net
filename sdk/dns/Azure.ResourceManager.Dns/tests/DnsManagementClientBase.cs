@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Dns.Tests
             ResourcesManagementClient = this.GetResourceManagementClient();
             //ResourcesOperations = ResourcesManagementClient.Resources;
             //ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
             ResourceGroupsOperations = sub.GetResourceGroups();
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Dns.Tests
             ResourcesManagementClient = this.GetResourceManagementClient();
             //ResourcesOperations = ResourcesManagementClient.Resources;
             //ResourceProvidersOperations = ResourcesManagementClient.Providers;
-            Subscription sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource sub = await ResourcesManagementClient.GetDefaultSubscriptionAsync();
             ResourceGroupsOperations = sub.GetResourceGroups();
             DnsManagementClient = this.GetDnsManagementClient();
             RecordSetsOperations = DnsManagementClient.RecordSets;

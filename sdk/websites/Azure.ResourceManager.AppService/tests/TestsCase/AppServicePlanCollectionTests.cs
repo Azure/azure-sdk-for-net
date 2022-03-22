@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var planName = Recording.GenerateAssetName("testAppServicePlan-");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, planName, input);
-            AppServicePlan plan1 = lro.Value;
-            AppServicePlan plan2 = await container.GetAsync(planName);
+            AppServicePlanResource plan1 = lro.Value;
+            AppServicePlanResource plan2 = await container.GetAsync(planName);
             ResourceDataHelper.AssertPlan(plan1.Data, plan2.Data);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var planName = Recording.GenerateAssetName("testAppService-");
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, planName, input);
-            AppServicePlan plan = lro.Value;
+            AppServicePlanResource plan = lro.Value;
             Assert.IsTrue(await container.ExistsAsync(planName));
             Assert.IsFalse(await container.ExistsAsync(planName + "1"));
 

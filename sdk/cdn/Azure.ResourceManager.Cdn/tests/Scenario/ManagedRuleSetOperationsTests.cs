@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Tests
         public async Task List()
         {
             int count = 0;
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             await foreach (var tempManagedRuleSetDefinition in subscription.GetManagedRuleSetsAsync())
             {
                 count++;

@@ -14,7 +14,7 @@ The following code shows how to get the default subscription:
 
 ```C# Snippet:Hello_World_Async_DefaultSubscription
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await client.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 Console.WriteLine(subscription.Id);
 ```
 
@@ -24,7 +24,7 @@ It's possible to get a specific subscription as follows:
 string subscriptionId = "your-subscription-id";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 SubscriptionCollection subscriptions = client.GetSubscriptions();
-Subscription subscription = await subscriptions.GetAsync(subscriptionId);
+SubscriptionResource subscription = await subscriptions.GetAsync(subscriptionId);
 Console.WriteLine(subscription.Id);
 ```
 
@@ -33,7 +33,7 @@ You can also specify the default subscription when creating the ArmClient:
 ```C# Snippet:Hello_World_Async_SpecifyDefaultSubscription
 string defaultSubscriptionId = "your-subscription-id";
 ArmClient client = new ArmClient(new DefaultAzureCredential(), defaultSubscriptionId);
-Subscription subscription = await client.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 Console.WriteLine(subscription.Id);
 ```
 

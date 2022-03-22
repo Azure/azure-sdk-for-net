@@ -20,7 +20,7 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ReplicationLink and their operations over its parent. </summary>
-    public partial class ReplicationLinkCollection : ArmCollection, IEnumerable<ReplicationLink>, IAsyncEnumerable<ReplicationLink>
+    public partial class ReplicationLinkCollection : ArmCollection, IEnumerable<ReplicationLinkResource>, IAsyncEnumerable<ReplicationLinkResource>
     {
         private readonly ClientDiagnostics _replicationLinkClientDiagnostics;
         private readonly ReplicationLinksRestOperations _replicationLinkRestClient;
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ReplicationLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
+            _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ReplicationLinkResource.ResourceType, out string replicationLinkApiVersion);
             _replicationLinkRestClient = new ReplicationLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicationLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual async Task<Response<ReplicationLink>> GetAsync(string linkId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReplicationLinkResource>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _replicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual Response<ReplicationLink> Get(string linkId, CancellationToken cancellationToken = default)
+        public virtual Response<ReplicationLinkResource> Get(string linkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _replicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ReplicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ReplicationLinks_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicationLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicationLink> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReplicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ReplicationLink>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ReplicationLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _replicationLinkRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ReplicationLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ReplicationLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _replicationLinkRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -155,17 +155,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ReplicationLinks_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicationLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicationLink> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReplicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ReplicationLink> FirstPageFunc(int? pageSizeHint)
+            Page<ReplicationLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _replicationLinkRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ReplicationLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ReplicationLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _replicationLinkClientDiagnostics.CreateScope("ReplicationLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _replicationLinkRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual async Task<Response<ReplicationLink>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReplicationLinkResource>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _replicationLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ReplicationLinkResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ReplicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
-        public virtual Response<ReplicationLink> GetIfExists(string linkId, CancellationToken cancellationToken = default)
+        public virtual Response<ReplicationLinkResource> GetIfExists(string linkId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _replicationLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ReplicationLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ReplicationLink(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ReplicationLinkResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ReplicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ReplicationLink> IEnumerable<ReplicationLink>.GetEnumerator()
+        IEnumerator<ReplicationLinkResource> IEnumerable<ReplicationLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ReplicationLink> IAsyncEnumerable<ReplicationLink>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ReplicationLinkResource> IAsyncEnumerable<ReplicationLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

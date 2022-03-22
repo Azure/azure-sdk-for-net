@@ -15,7 +15,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class DatabaseAccountTableThroughputSettingOperationSource : IOperationSource<DatabaseAccountTableThroughputSetting>
+    internal class DatabaseAccountTableThroughputSettingOperationSource : IOperationSource<DatabaseAccountTableThroughputSettingResource>
     {
         private readonly ArmClient _client;
         private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
@@ -31,26 +31,26 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        DatabaseAccountTableThroughputSetting IOperationSource<DatabaseAccountTableThroughputSetting>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatabaseAccountTableThroughputSettingResource IOperationSource<DatabaseAccountTableThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountTableThroughputSetting(_client, data);
+            return new DatabaseAccountTableThroughputSettingResource(_client, data);
         }
 
-        async ValueTask<DatabaseAccountTableThroughputSetting> IOperationSource<DatabaseAccountTableThroughputSetting>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatabaseAccountTableThroughputSettingResource> IOperationSource<DatabaseAccountTableThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ScrubId(ThroughputSettingsData.DeserializeThroughputSettingsData(document.RootElement));
-            return new DatabaseAccountTableThroughputSetting(_client, data);
+            return new DatabaseAccountTableThroughputSettingResource(_client, data);
         }
 
         private ThroughputSettingsData ScrubId(ThroughputSettingsData data)
         {
-            if (data.Id.ResourceType == DatabaseAccountTableThroughputSetting.ResourceType)
+            if (data.Id.ResourceType == DatabaseAccountTableThroughputSettingResource.ResourceType)
                 return data;
 
-            var newId = DatabaseAccountTableThroughputSetting.CreateResourceIdentifier(
+            var newId = DatabaseAccountTableThroughputSettingResource.CreateResourceIdentifier(
                 GetName("subscriptionId", data.Id),
                 GetName("resourceGroupName", data.Id),
                 GetName("accountName", data.Id),

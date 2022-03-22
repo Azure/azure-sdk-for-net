@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class DiskEncryptionSetOperationSource : IOperationSource<DiskEncryptionSet>
+    internal class DiskEncryptionSetOperationSource : IOperationSource<DiskEncryptionSetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        DiskEncryptionSet IOperationSource<DiskEncryptionSet>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiskEncryptionSetResource IOperationSource<DiskEncryptionSetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
-            return new DiskEncryptionSet(_client, data);
+            return new DiskEncryptionSetResource(_client, data);
         }
 
-        async ValueTask<DiskEncryptionSet> IOperationSource<DiskEncryptionSet>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiskEncryptionSetResource> IOperationSource<DiskEncryptionSetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement);
-            return new DiskEncryptionSet(_client, data);
+            return new DiskEncryptionSetResource(_client, data);
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnOriginGroupOperationSource : IOperationSource<CdnOriginGroup>
+    internal class CdnOriginGroupOperationSource : IOperationSource<CdnOriginGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        CdnOriginGroup IOperationSource<CdnOriginGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        CdnOriginGroupResource IOperationSource<CdnOriginGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CdnOriginGroupData.DeserializeCdnOriginGroupData(document.RootElement);
-            return new CdnOriginGroup(_client, data);
+            return new CdnOriginGroupResource(_client, data);
         }
 
-        async ValueTask<CdnOriginGroup> IOperationSource<CdnOriginGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CdnOriginGroupResource> IOperationSource<CdnOriginGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CdnOriginGroupData.DeserializeCdnOriginGroupData(document.RootElement);
-            return new CdnOriginGroup(_client, data);
+            return new CdnOriginGroupResource(_client, data);
         }
     }
 }

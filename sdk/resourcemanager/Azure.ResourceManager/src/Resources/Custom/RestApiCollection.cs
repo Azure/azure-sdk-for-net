@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         {
             _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, Diagnostics);
             _nameSpace = nameSpace;
-            _providerCollection = new ResourceProviderCollection(Client.GetSubscription(Id));
+            _providerCollection = new ResourceProviderCollection(Client.GetSubscriptionResource(Id));
         }
 
 

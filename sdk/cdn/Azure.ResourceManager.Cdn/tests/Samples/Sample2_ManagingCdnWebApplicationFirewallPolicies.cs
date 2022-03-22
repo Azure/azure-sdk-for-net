@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
 {
     public class Sample2_ManagingCdnWebApplicationFirewallPolicies
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             {
                 Name = CdnSkuName.StandardMicrosoft
             });
-            ArmOperation<CdnWebApplicationFirewallPolicy> lro = await resourceGroup.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);
-            CdnWebApplicationFirewallPolicy policy = lro.Value;
+            ArmOperation<CdnWebApplicationFirewallPolicyResource> lro = await resourceGroup.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, input);
+            CdnWebApplicationFirewallPolicyResource policy = lro.Value;
             #endregion Snippet:Managing_CdnWebApplicationFirewallPolicies_CreateAWebApplicationFirewallPolicy
         }
 
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // First we need to get the cdn web application firewall policy collection from the specific resource group
             CdnWebApplicationFirewallPolicyCollection policyCollection = resourceGroup.GetCdnWebApplicationFirewallPolicies();
             // With GetAllAsync(), we can get a list of the policy in the collection
-            AsyncPageable<CdnWebApplicationFirewallPolicy> response = policyCollection.GetAllAsync();
-            await foreach (CdnWebApplicationFirewallPolicy policy in response)
+            AsyncPageable<CdnWebApplicationFirewallPolicyResource> response = policyCollection.GetAllAsync();
+            await foreach (CdnWebApplicationFirewallPolicyResource policy in response)
             {
                 Console.WriteLine(policy.Data.Name);
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // First we need to get the cdn web application firewall policy collection from the specific resource group
             CdnWebApplicationFirewallPolicyCollection policyCollection = resourceGroup.GetCdnWebApplicationFirewallPolicies();
             // Now we can get the policy with GetAsync()
-            CdnWebApplicationFirewallPolicy policy = await policyCollection.GetAsync("myPolicy");
+            CdnWebApplicationFirewallPolicyResource policy = await policyCollection.GetAsync("myPolicy");
             // With DeleteAsync(), we can delete the policy
             await policy.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_CdnWebApplicationFirewallPolicies_DeleteAWebApplicationFirewallPolicy
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with a specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;
         }

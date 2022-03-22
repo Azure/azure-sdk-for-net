@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 {
     public class SqlStoredProcedureTests : CosmosDBManagementClientBase
     {
-        private DatabaseAccount _databaseAccount;
-        private SqlDatabase _sqlDatabase;
+        private DatabaseAccountResource _databaseAccount;
+        private SqlDatabaseResource _sqlDatabase;
         private ResourceIdentifier _sqlContainerId;
-        private SqlContainer _sqlContainer;
+        private SqlContainerResource _sqlContainer;
         private string _storedProcedureName;
 
         public SqlStoredProcedureTests(bool isAsync) : base(isAsync)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB);
 
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _sqlContainer = await ArmClient.GetSqlContainer(_sqlContainerId).GetAsync();
+            _sqlContainer = await ArmClient.GetSqlContainerResource(_sqlContainerId).GetAsync();
         }
 
         [TearDown]
         public async Task TearDown()
         {
-            SqlStoredProcedure storedProcedure = await SqlStoredProcedureCollection.GetIfExistsAsync(_storedProcedureName);
+            SqlStoredProcedureResource storedProcedure = await SqlStoredProcedureCollection.GetIfExistsAsync(_storedProcedureName);
             if (storedProcedure != null)
             {
                 await storedProcedure.DeleteAsync(WaitUntil.Completed);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             // NOT WORKING API
             //ThroughputSettingsData throughtput = await container.GetMongoDBCollectionThroughputAsync();
-            SqlStoredProcedure storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
+            SqlStoredProcedureResource storedProcedure2 = await SqlStoredProcedureCollection.GetAsync(_storedProcedureName);
             Assert.AreEqual(_storedProcedureName, storedProcedure2.Data.Resource.Id);
             //Assert.AreEqual(TestThroughput1, container2.Data.Options.Throughput);
 
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.Null(storedProcedure);
         }
 
-        internal async Task<SqlStoredProcedure> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
+        internal async Task<SqlStoredProcedureResource> CreateSqlStoredProcedure(AutoscaleSettings autoscale)
         {
             _storedProcedureName = Recording.GenerateAssetName("sql-stored-procedure-");
             SqlStoredProcedureCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlStoredProcedureCreateUpdateData(AzureLocation.WestUS,
-                new SqlStoredProcedureResource(_storedProcedureName)
+                new Models.SqlStoredProcedureResource(_storedProcedureName)
                 {
                     Body = @"function () {
     var updatetext = getContext();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return sqlContainerLro.Value;
         }
 
-        private void VerifySqlStoredProcedures(SqlStoredProcedure expectedValue, SqlStoredProcedure actualValue)
+        private void VerifySqlStoredProcedures(SqlStoredProcedureResource expectedValue, SqlStoredProcedureResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);

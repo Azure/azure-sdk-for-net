@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    internal class MigrationConfigPropertiesOperationSource : IOperationSource<MigrationConfigProperties>
+    internal class MigrationConfigPropertiesOperationSource : IOperationSource<MigrationConfigPropertiesResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.ServiceBus
             _client = client;
         }
 
-        MigrationConfigProperties IOperationSource<MigrationConfigProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        MigrationConfigPropertiesResource IOperationSource<MigrationConfigPropertiesResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(document.RootElement);
-            return new MigrationConfigProperties(_client, data);
+            return new MigrationConfigPropertiesResource(_client, data);
         }
 
-        async ValueTask<MigrationConfigProperties> IOperationSource<MigrationConfigProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MigrationConfigPropertiesResource> IOperationSource<MigrationConfigPropertiesResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MigrationConfigPropertiesData.DeserializeMigrationConfigPropertiesData(document.RootElement);
-            return new MigrationConfigProperties(_client, data);
+            return new MigrationConfigPropertiesResource(_client, data);
         }
     }
 }

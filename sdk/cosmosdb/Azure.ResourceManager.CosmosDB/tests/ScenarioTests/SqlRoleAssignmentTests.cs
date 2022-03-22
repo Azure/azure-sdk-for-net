@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private const string PrincipalId = "ed4c2395-a18c-4018-afb3-6e521e7534d2";
         private const string PrincipalId2 = "d60019b0-c5a8-4e38-beb9-fb80daa3ce90";
 
-        private DatabaseAccount _databaseAccount;
-        private SqlDatabase _sqlDatabase;
+        private DatabaseAccountResource _databaseAccount;
+        private SqlDatabaseResource _sqlDatabase;
         private ResourceIdentifier _roleDefinitionId;
         private SqlRoleDefinition _roleDefinition;
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeSetUp]
         public async Task GlobalSetup()
         {
-            _resourceGroup = await GlobalClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), DatabaseAccountKind.GlobalDocumentDB, new Capability("EnableGremlin"));
 

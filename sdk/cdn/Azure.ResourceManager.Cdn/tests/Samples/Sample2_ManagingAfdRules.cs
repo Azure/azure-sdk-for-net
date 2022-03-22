@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
 {
     public class Sample2_ManagingAfdRules
     {
-        private ResourceGroup resourceGroup;
+        private ResourceGroupResource resourceGroup;
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
             // Create a new azure front door profile
             string AfdProfileName = "myAfdProfile";
             var input1 = new ProfileData("Global", new CdnSku { Name = CdnSkuName.StandardAzureFrontDoor });
-            ArmOperation<Profile> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, AfdProfileName, input1);
-            Profile AfdProfile = lro1.Value;
-            // Get the rule set collection from the specific azure front door profile and create a rule set
+            ArmOperation<ProfileResource> lro1 = await resourceGroup.GetProfiles().CreateOrUpdateAsync(WaitUntil.Completed, AfdProfileName, input1);
+            ProfileResource AfdProfileResource = lro1.Value;
+            // Get the rule set collection from the specific azure front door ProfileResource and create a rule set
             string ruleSetName = "myAfdRuleSet";
             ArmOperation<AfdRuleSet> lro2 = await AfdProfile.GetAfdRuleSets().CreateOrUpdateAsync(WaitUntil.Completed, ruleSetName);
             AfdRuleSet ruleSet = lro2.Value;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         {
             #region Snippet:Managing_AfdRules_ListAllAzureFrontDoorRules
             // First we need to get the azure front door rule collection from the specific rule set
-            Profile AfdProfile = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
+            ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
             AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // With GetAllAsync(), we can get a list of the rule in the collection
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         {
             #region Snippet:Managing_AfdRules_UpdateAnAzureFrontDoorRule
             // First we need to get the azure front door rule collection from the specific rule set
-            Profile AfdProfile = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
+            ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
             AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // Now we can get the rule with GetAsync()
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         {
             #region Snippet:Managing_AfdRules_DeleteAnAzureFrontDoorRule
             // First we need to get the azure front door rule collection from the specific rule set
-            Profile AfdProfile = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
+            ProfileResource AfdProfileResource = await resourceGroup.GetProfiles().GetAsync("myAfdProfile");
             AfdRuleSet ruleSet = await AfdProfile.GetAfdRuleSets().GetAsync("myAfdRuleSet");
             AfdRuleCollection ruleCollection = ruleSet.GetAfdRules();
             // Now we can get the rule with GetAsync()
@@ -112,14 +112,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Samples
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
-            ResourceGroup resourceGroup = lro.Value;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;
         }

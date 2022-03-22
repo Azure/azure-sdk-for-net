@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class NetworkSecurityGroupOperationSource : IOperationSource<NetworkSecurityGroup>
+    internal class NetworkSecurityGroupOperationSource : IOperationSource<NetworkSecurityGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        NetworkSecurityGroup IOperationSource<NetworkSecurityGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkSecurityGroupResource IOperationSource<NetworkSecurityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(document.RootElement);
-            return new NetworkSecurityGroup(_client, data);
+            return new NetworkSecurityGroupResource(_client, data);
         }
 
-        async ValueTask<NetworkSecurityGroup> IOperationSource<NetworkSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkSecurityGroupResource> IOperationSource<NetworkSecurityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(document.RootElement);
-            return new NetworkSecurityGroup(_client, data);
+            return new NetworkSecurityGroupResource(_client, data);
         }
     }
 }

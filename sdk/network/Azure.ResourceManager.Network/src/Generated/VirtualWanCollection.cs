@@ -21,7 +21,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of VirtualWan and their operations over its parent. </summary>
-    public partial class VirtualWanCollection : ArmCollection, IEnumerable<VirtualWan>, IAsyncEnumerable<VirtualWan>
+    public partial class VirtualWanCollection : ArmCollection, IEnumerable<VirtualWanResource>, IAsyncEnumerable<VirtualWanResource>
     {
         private readonly ClientDiagnostics _virtualWanClientDiagnostics;
         private readonly VirtualWansRestOperations _virtualWanRestClient;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualWanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWan.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualWan.ResourceType, out string virtualWanApiVersion);
+            _virtualWanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWanResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualWanResource.ResourceType, out string virtualWanApiVersion);
             _virtualWanRestClient = new VirtualWansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualWanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="wanParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualWan>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualWanName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualWanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualWanName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
             Argument.AssertNotNull(wanParameters, nameof(wanParameters));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _virtualWanRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, wanParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VirtualWan>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, wanParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<VirtualWanResource>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, wanParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="wanParameters"/> is null. </exception>
-        public virtual ArmOperation<VirtualWan> CreateOrUpdate(WaitUntil waitUntil, string virtualWanName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualWanResource> CreateOrUpdate(WaitUntil waitUntil, string virtualWanName, VirtualWanData wanParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
             Argument.AssertNotNull(wanParameters, nameof(wanParameters));
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _virtualWanRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, wanParameters, cancellationToken);
-                var operation = new NetworkArmOperation<VirtualWan>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, wanParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<VirtualWanResource>(new VirtualWanOperationSource(Client), _virtualWanClientDiagnostics, Pipeline, _virtualWanRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, wanParameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public virtual async Task<Response<VirtualWan>> GetAsync(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> GetAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _virtualWanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public virtual Response<VirtualWan> Get(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> Get(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
                 var response = _virtualWanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +180,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualWans_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWan" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualWan> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualWan>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualWanResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualWanRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<VirtualWan>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualWanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualWanRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +222,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: VirtualWans_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWan" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualWan> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWanResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualWan> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualWanResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualWanRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +240,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<VirtualWan> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualWanResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualWanRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualWanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public virtual async Task<Response<VirtualWan>> GetIfExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> GetIfExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
@@ -331,8 +331,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _virtualWanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<VirtualWan>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualWanResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
-        public virtual Response<VirtualWan> GetIfExists(string virtualWanName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> GetIfExists(string virtualWanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
@@ -360,8 +360,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _virtualWanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualWanName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<VirtualWan>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualWan(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualWanResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualWanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<VirtualWan> IEnumerable<VirtualWan>.GetEnumerator()
+        IEnumerator<VirtualWanResource> IEnumerable<VirtualWanResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VirtualWan> IAsyncEnumerable<VirtualWan>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualWanResource> IAsyncEnumerable<VirtualWanResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

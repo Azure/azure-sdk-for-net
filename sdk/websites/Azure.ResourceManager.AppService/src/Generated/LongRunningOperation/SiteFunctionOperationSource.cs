@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class SiteFunctionOperationSource : IOperationSource<SiteFunction>
+    internal class SiteFunctionOperationSource : IOperationSource<SiteFunctionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        SiteFunction IOperationSource<SiteFunction>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteFunctionResource IOperationSource<SiteFunctionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FunctionEnvelopeData.DeserializeFunctionEnvelopeData(document.RootElement);
-            return new SiteFunction(_client, data);
+            return new SiteFunctionResource(_client, data);
         }
 
-        async ValueTask<SiteFunction> IOperationSource<SiteFunction>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteFunctionResource> IOperationSource<SiteFunctionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FunctionEnvelopeData.DeserializeFunctionEnvelopeData(document.RootElement);
-            return new SiteFunction(_client, data);
+            return new SiteFunctionResource(_client, data);
         }
     }
 }

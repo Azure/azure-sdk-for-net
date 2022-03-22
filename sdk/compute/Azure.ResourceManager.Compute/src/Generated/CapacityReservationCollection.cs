@@ -21,7 +21,7 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of CapacityReservation and their operations over its parent. </summary>
-    public partial class CapacityReservationCollection : ArmCollection, IEnumerable<CapacityReservation>, IAsyncEnumerable<CapacityReservation>
+    public partial class CapacityReservationCollection : ArmCollection, IEnumerable<CapacityReservationResource>, IAsyncEnumerable<CapacityReservationResource>
     {
         private readonly ClientDiagnostics _capacityReservationClientDiagnostics;
         private readonly CapacityReservationsRestOperations _capacityReservationRestClient;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CapacityReservationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _capacityReservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservation.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CapacityReservation.ResourceType, out string capacityReservationApiVersion);
+            _capacityReservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CapacityReservationResource.ResourceType, out string capacityReservationApiVersion);
             _capacityReservationRestClient = new CapacityReservationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Compute
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CapacityReservationGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CapacityReservationGroup.ResourceType), nameof(id));
+            if (id.ResourceType != CapacityReservationGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CapacityReservationGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<CapacityReservation>> CreateOrUpdateAsync(WaitUntil waitUntil, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CapacityReservationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _capacityReservationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CapacityReservationResource>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<CapacityReservation> CreateOrUpdate(WaitUntil waitUntil, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CapacityReservationResource> CreateOrUpdate(WaitUntil waitUntil, string capacityReservationName, CapacityReservationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _capacityReservationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters, cancellationToken);
-                var operation = new ComputeArmOperation<CapacityReservation>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new ComputeArmOperation<CapacityReservationResource>(new CapacityReservationOperationSource(Client), _capacityReservationClientDiagnostics, Pipeline, _capacityReservationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
-        public virtual async Task<Response<CapacityReservation>> GetAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationResource>> GetAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
                 var response = await _capacityReservationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapacityReservation(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapacityReservationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
-        public virtual Response<CapacityReservation> Get(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationResource> Get(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
                 var response = _capacityReservationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CapacityReservation(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CapacityReservationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,17 +182,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CapacityReservations_ListByCapacityReservationGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacityReservation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacityReservation> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CapacityReservationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CapacityReservation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CapacityReservationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _capacityReservationRestClient.ListByCapacityReservationGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,14 +200,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            async Task<Page<CapacityReservation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CapacityReservationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _capacityReservationRestClient.ListByCapacityReservationGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -224,17 +224,17 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CapacityReservations_ListByCapacityReservationGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacityReservation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacityReservation> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CapacityReservationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CapacityReservationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CapacityReservation> FirstPageFunc(int? pageSizeHint)
+            Page<CapacityReservationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _capacityReservationRestClient.ListByCapacityReservationGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,14 +242,14 @@ namespace Azure.ResourceManager.Compute
                     throw;
                 }
             }
-            Page<CapacityReservation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CapacityReservationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _capacityReservationClientDiagnostics.CreateScope("CapacityReservationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _capacityReservationRestClient.ListByCapacityReservationGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservation(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CapacityReservationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
-        public virtual async Task<Response<CapacityReservation>> GetIfExistsAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CapacityReservationResource>> GetIfExistsAsync(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -336,8 +336,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _capacityReservationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<CapacityReservation>(null, response.GetRawResponse());
-                return Response.FromValue(new CapacityReservation(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<CapacityReservationResource>(null, response.GetRawResponse());
+                return Response.FromValue(new CapacityReservationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="capacityReservationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationName"/> is null. </exception>
-        public virtual Response<CapacityReservation> GetIfExists(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<CapacityReservationResource> GetIfExists(string capacityReservationName, CapacityReservationInstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capacityReservationName, nameof(capacityReservationName));
 
@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _capacityReservationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<CapacityReservation>(null, response.GetRawResponse());
-                return Response.FromValue(new CapacityReservation(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<CapacityReservationResource>(null, response.GetRawResponse());
+                return Response.FromValue(new CapacityReservationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<CapacityReservation> IEnumerable<CapacityReservation>.GetEnumerator()
+        IEnumerator<CapacityReservationResource> IEnumerable<CapacityReservationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CapacityReservation> IAsyncEnumerable<CapacityReservation>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CapacityReservationResource> IAsyncEnumerable<CapacityReservationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

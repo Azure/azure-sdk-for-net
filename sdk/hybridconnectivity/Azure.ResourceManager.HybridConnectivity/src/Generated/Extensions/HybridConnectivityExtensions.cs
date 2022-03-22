@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             );
         }
 
-        /// <summary> Gets a collection of EndpointResources in the EndpointResource. </summary>
+        /// <summary> Gets a collection of EndpointResources in the ArmResource. </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmResource armResource)

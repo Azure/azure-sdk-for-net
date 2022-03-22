@@ -284,6 +284,12 @@ directive:
       from: Location
       to: LocationExpanded
   - rename-model:
+      from: Provider
+      to: ResourceProvider
+  - rename-model:
+      from: ProviderListResult
+      to: ResourceProviderListResult
+  - rename-model:
       from: TenantIdDescription
       to: Tenant
   - rename-model:
