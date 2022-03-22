@@ -24,7 +24,7 @@ namespace Azure.ResourceManager
 
         /// <summary>
         /// Sets the api version to use for a given resource type.
-        /// To find which API Versions are available in your environment you can use the <see cref="ResourceProvider.Get"/> method
+        /// To find which API Versions are available in your environment you can use the <see cref="ResourceProviderResource.Get"/> method
         /// for the provider namespace you are interested in.
         /// </summary>
         /// <param name="resourceType"> The resource type to set the version for. </param>
