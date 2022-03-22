@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08")
+        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-08-06")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.DataLake
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
+        internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, BlobType? blobType, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -57,6 +57,10 @@ namespace Azure.Storage.Files.DataLake
             if (continuation != null)
             {
                 uri.AppendQuery("continuation", continuation, true);
+            }
+            if (blobType != null)
+            {
+                uri.AppendQuery("blobtype", blobType.Value.ToSerialString(), true);
             }
             if (mode != null)
             {
@@ -160,6 +164,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be &quot;file&quot; or &quot;directory&quot;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
+        /// <param name="blobType"> Optional.  Indicates concurrent append mode. </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be &quot;legacy&quot; or &quot;posix&quot;, and the default value will be &quot;posix&quot;. </param>
         /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -184,9 +189,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathCreateHeaders>> CreateAsync(int? timeout = null, PathResourceType? resource = null, string continuation = null, BlobType? blobType = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
+            using var message = CreateCreateRequest(timeout, resource, continuation, blobType, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -202,6 +207,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="resource"> Required only for Create File and Create Directory. The value must be &quot;file&quot; or &quot;directory&quot;. </param>
         /// <param name="continuation"> Optional.  When deleting a directory, the number of paths that are deleted with each invocation is limited.  If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header.  When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
+        /// <param name="blobType"> Optional.  Indicates concurrent append mode. </param>
         /// <param name="mode"> Optional. Valid only when namespace is enabled. This parameter determines the behavior of the rename operation. The value must be &quot;legacy&quot; or &quot;posix&quot;, and the default value will be &quot;posix&quot;. </param>
         /// <param name="cacheControl"> Optional. Sets the blob&apos;s cache control. If specified, this property is stored with the blob and returned with a read request. </param>
         /// <param name="contentEncoding"> Optional. Sets the blob&apos;s content encoding. If specified, this property is stored with the blob and returned with a read request. </param>
@@ -226,9 +232,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is &quot;AES256&quot;. Must be provided if the x-ms-encryption-key header is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathCreateHeaders> Create(int? timeout = null, PathResourceType? resource = null, string continuation = null, BlobType? blobType = null, PathRenameMode? mode = null, string cacheControl = null, string contentEncoding = null, string contentLanguage = null, string contentDisposition = null, string contentType = null, string renameSource = null, string leaseId = null, string sourceLeaseId = null, string properties = null, string permissions = null, string umask = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, resource, continuation, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
+            using var message = CreateCreateRequest(timeout, resource, continuation, blobType, mode, cacheControl, contentEncoding, contentLanguage, contentDisposition, contentType, renameSource, leaseId, sourceLeaseId, properties, permissions, umask, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, sourceIfModifiedSince, sourceIfUnmodifiedSince, encryptionKey, encryptionKeySha256, encryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -1457,6 +1463,92 @@ namespace Azure.Storage.Files.DataLake
             switch (message.Response.Status)
             {
                 case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateConcurrentAppendRequest(Stream body, int? timeout, AppendMode? appendMode, long? contentLength, byte[] transactionalContentHash)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("action", "concurrentAppend", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (appendMode != null)
+            {
+                uri.AppendQuery("appendmode", appendMode.Value.ToSerialString(), true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/json");
+            if (contentLength != null)
+            {
+                request.Headers.Add("Content-Length", contentLength.Value);
+            }
+            if (transactionalContentHash != null)
+            {
+                request.Headers.Add("Content-MD5", transactionalContentHash, "D");
+            }
+            request.Headers.Add("Content-Type", "application/octet-stream");
+            request.Content = RequestContent.Create(body);
+            return message;
+        }
+
+        /// <summary> Appends data to the file. </summary>
+        /// <param name="body"> Initial data. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="appendMode"> Optional.  Indicates concurrent append mode. </param>
+        /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
+        /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PathConcurrentAppendHeaders>> ConcurrentAppendAsync(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new PathConcurrentAppendHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Appends data to the file. </summary>
+        /// <param name="body"> Initial data. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="appendMode"> Optional.  Indicates concurrent append mode. </param>
+        /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
+        /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<PathConcurrentAppendHeaders> ConcurrentAppend(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
+        {
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
+
+            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new PathConcurrentAppendHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);

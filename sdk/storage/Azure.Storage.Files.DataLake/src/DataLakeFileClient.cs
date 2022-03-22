@@ -4694,6 +4694,7 @@ namespace Azure.Storage.Files.DataLake
                 {
                     Response<PathInfo> createResponse = await CreateInternal(
                         resourceType: PathResourceType.File,
+                        blobType: null,
                         httpHeaders: default,
                         metadata: default,
                         permissions: default,
@@ -4733,6 +4734,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         Response<PathInfo> createResponse = await CreateInternal(
                             resourceType: PathResourceType.File,
+                            blobType: null,
                             httpHeaders: default,
                             metadata: default,
                             permissions: default,
@@ -4797,6 +4799,7 @@ namespace Azure.Storage.Files.DataLake
                 InitializeDestination = async (args, async, cancellationToken)
                     => await client.CreateInternal(
                         PathResourceType.File,
+                        blobType: null,
                         args.HttpHeaders,
                         args.Metadata,
                         args.Permissions,
