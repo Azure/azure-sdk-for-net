@@ -1021,4 +1021,13 @@ namespace Azure.Messaging
         Binary = 0,
         Json = 1,
     }
+    public partial class MessageContent
+    {
+        public MessageContent() { }
+        public virtual Azure.Core.ContentType? ContentType { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected virtual Azure.Core.ContentType? ContentTypeCore { get { throw null; } set { } }
+        public virtual System.BinaryData? Data { get { throw null; } set { } }
+        public virtual bool IsReadOnly { get { throw null; } }
+    }
 }
