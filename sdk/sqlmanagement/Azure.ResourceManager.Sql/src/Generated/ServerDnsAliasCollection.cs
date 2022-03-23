@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerDnsAlias and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerDnsAliasResource" /> and their operations.
+    /// Each <see cref="ServerDnsAliasResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerDnsAliasCollection" /> instance call the GetServerDnsAliases method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServerDnsAliasCollection : ArmCollection, IEnumerable<ServerDnsAliasResource>, IAsyncEnumerable<ServerDnsAliasResource>
     {
         private readonly ClientDiagnostics _serverDnsAliasClientDiagnostics;

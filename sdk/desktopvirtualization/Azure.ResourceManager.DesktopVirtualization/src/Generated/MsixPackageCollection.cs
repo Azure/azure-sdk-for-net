@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of MsixPackage and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="MsixPackageResource" /> and their operations.
+    /// Each <see cref="MsixPackageResource" /> in the collection will belong to the same instance of <see cref="HostPoolResource" />.
+    /// To get a <see cref="MsixPackageCollection" /> instance call the GetMsixPackages method from an instance of <see cref="HostPoolResource" />.
+    /// </summary>
     public partial class MsixPackageCollection : ArmCollection, IEnumerable<MsixPackageResource>, IAsyncEnumerable<MsixPackageResource>
     {
         private readonly ClientDiagnostics _msixPackageMSIXPackagesClientDiagnostics;

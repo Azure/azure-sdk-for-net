@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of HubRouteTable and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="HubRouteTableResource" /> and their operations.
+    /// Each <see cref="HubRouteTableResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
+    /// To get a <see cref="HubRouteTableCollection" /> instance call the GetHubRouteTables method from an instance of <see cref="VirtualHubResource" />.
+    /// </summary>
     public partial class HubRouteTableCollection : ArmCollection, IEnumerable<HubRouteTableResource>, IAsyncEnumerable<HubRouteTableResource>
     {
         private readonly ClientDiagnostics _hubRouteTableClientDiagnostics;

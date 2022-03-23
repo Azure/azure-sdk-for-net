@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerConnectionPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerConnectionPolicyResource" /> and their operations.
+    /// Each <see cref="ServerConnectionPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerConnectionPolicyCollection" /> instance call the GetServerConnectionPolicies method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServerConnectionPolicyCollection : ArmCollection, IEnumerable<ServerConnectionPolicyResource>, IAsyncEnumerable<ServerConnectionPolicyResource>
     {
         private readonly ClientDiagnostics _serverConnectionPolicyClientDiagnostics;

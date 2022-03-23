@@ -17,7 +17,12 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteFunctionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteFunction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteFunctionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteFunctionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteFunction method.
+    /// </summary>
     public partial class SiteFunctionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteFunctionResource"/> instance. </summary>

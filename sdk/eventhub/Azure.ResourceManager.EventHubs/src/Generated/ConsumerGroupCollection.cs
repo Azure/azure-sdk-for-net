@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of ConsumerGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ConsumerGroupResource" /> and their operations.
+    /// Each <see cref="ConsumerGroupResource" /> in the collection will belong to the same instance of <see cref="EventHubResource" />.
+    /// To get a <see cref="ConsumerGroupCollection" /> instance call the GetConsumerGroups method from an instance of <see cref="EventHubResource" />.
+    /// </summary>
     public partial class ConsumerGroupCollection : ArmCollection, IEnumerable<ConsumerGroupResource>, IAsyncEnumerable<ConsumerGroupResource>
     {
         private readonly ClientDiagnostics _consumerGroupClientDiagnostics;

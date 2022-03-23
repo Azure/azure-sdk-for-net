@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a RouteFilterRuleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a RouteFilterRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RouteFilterRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetRouteFilterRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RouteFilterResource" /> using the GetRouteFilterRule method.
+    /// </summary>
     public partial class RouteFilterRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RouteFilterRuleResource"/> instance. </summary>

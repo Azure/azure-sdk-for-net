@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of CdnWebApplicationFirewallPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CdnWebApplicationFirewallPolicyResource" /> and their operations.
+    /// Each <see cref="CdnWebApplicationFirewallPolicyResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CdnWebApplicationFirewallPolicyCollection" /> instance call the GetCdnWebApplicationFirewallPolicies method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class CdnWebApplicationFirewallPolicyCollection : ArmCollection, IEnumerable<CdnWebApplicationFirewallPolicyResource>, IAsyncEnumerable<CdnWebApplicationFirewallPolicyResource>
     {
         private readonly ClientDiagnostics _cdnWebApplicationFirewallPolicyPoliciesClientDiagnostics;

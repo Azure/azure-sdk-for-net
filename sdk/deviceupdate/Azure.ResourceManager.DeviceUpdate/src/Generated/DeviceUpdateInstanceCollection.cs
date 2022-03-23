@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing collection of DeviceUpdateInstance and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DeviceUpdateInstanceResource" /> and their operations.
+    /// Each <see cref="DeviceUpdateInstanceResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
+    /// To get a <see cref="DeviceUpdateInstanceCollection" /> instance call the GetDeviceUpdateInstances method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// </summary>
     public partial class DeviceUpdateInstanceCollection : ArmCollection, IEnumerable<DeviceUpdateInstanceResource>, IAsyncEnumerable<DeviceUpdateInstanceResource>
     {
         private readonly ClientDiagnostics _deviceUpdateInstanceInstancesClientDiagnostics;

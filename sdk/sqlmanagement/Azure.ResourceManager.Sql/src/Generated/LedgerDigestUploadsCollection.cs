@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of LedgerDigestUploads and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="LedgerDigestUploadsResource" /> and their operations.
+    /// Each <see cref="LedgerDigestUploadsResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="LedgerDigestUploadsCollection" /> instance call the GetLedgerDigestUploads method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class LedgerDigestUploadsCollection : ArmCollection, IEnumerable<LedgerDigestUploadsResource>, IAsyncEnumerable<LedgerDigestUploadsResource>
     {
         private readonly ClientDiagnostics _ledgerDigestUploadsLedgerDigestUploadsClientDiagnostics;

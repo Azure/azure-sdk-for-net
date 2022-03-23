@@ -17,7 +17,12 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a SubnetResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a Subnet along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubnetResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSubnetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualNetworkResource" /> using the GetSubnet method.
+    /// </summary>
     public partial class SubnetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubnetResource"/> instance. </summary>

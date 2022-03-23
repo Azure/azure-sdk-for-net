@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of NamespaceAuthorizationRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NamespaceAuthorizationRuleResource" /> and their operations.
+    /// Each <see cref="NamespaceAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="EventHubNamespaceResource" />.
+    /// To get a <see cref="NamespaceAuthorizationRuleCollection" /> instance call the GetNamespaceAuthorizationRules method from an instance of <see cref="EventHubNamespaceResource" />.
+    /// </summary>
     public partial class NamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceAuthorizationRuleResource>, IAsyncEnumerable<NamespaceAuthorizationRuleResource>
     {
         private readonly ClientDiagnostics _namespaceAuthorizationRuleNamespacesClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of InventoryItem and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="InventoryItemResource" /> and their operations.
+    /// Each <see cref="InventoryItemResource" /> in the collection will belong to the same instance of <see cref="VCenterResource" />.
+    /// To get an <see cref="InventoryItemCollection" /> instance call the GetInventoryItems method from an instance of <see cref="VCenterResource" />.
+    /// </summary>
     public partial class InventoryItemCollection : ArmCollection, IEnumerable<InventoryItemResource>, IAsyncEnumerable<InventoryItemResource>
     {
         private readonly ClientDiagnostics _inventoryItemClientDiagnostics;

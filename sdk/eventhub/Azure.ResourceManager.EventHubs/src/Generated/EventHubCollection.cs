@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of EventHub and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="EventHubResource" /> and their operations.
+    /// Each <see cref="EventHubResource" /> in the collection will belong to the same instance of <see cref="EventHubNamespaceResource" />.
+    /// To get an <see cref="EventHubCollection" /> instance call the GetEventHubs method from an instance of <see cref="EventHubNamespaceResource" />.
+    /// </summary>
     public partial class EventHubCollection : ArmCollection, IEnumerable<EventHubResource>, IAsyncEnumerable<EventHubResource>
     {
         private readonly ClientDiagnostics _eventHubClientDiagnostics;

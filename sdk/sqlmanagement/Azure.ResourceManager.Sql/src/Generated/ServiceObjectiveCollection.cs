@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServiceObjective and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServiceObjectiveResource" /> and their operations.
+    /// Each <see cref="ServiceObjectiveResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServiceObjectiveCollection" /> instance call the GetServiceObjectives method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServiceObjectiveCollection : ArmCollection, IEnumerable<ServiceObjectiveResource>, IAsyncEnumerable<ServiceObjectiveResource>
     {
         private readonly ClientDiagnostics _serviceObjectiveClientDiagnostics;

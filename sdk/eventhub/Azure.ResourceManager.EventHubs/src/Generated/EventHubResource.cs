@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A Class representing a EventHubResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an EventHub along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetEventHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubNamespaceResource" /> using the GetEventHub method.
+    /// </summary>
     public partial class EventHubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubResource"/> instance. </summary>

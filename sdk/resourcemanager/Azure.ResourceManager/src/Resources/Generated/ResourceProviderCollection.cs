@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of ResourceProvider and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ResourceProviderResource" /> and their operations.
+    /// Each <see cref="ResourceProviderResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="ResourceProviderCollection" /> instance call the GetResourceProviders method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class ResourceProviderCollection : ArmCollection, IEnumerable<ResourceProviderResource>, IAsyncEnumerable<ResourceProviderResource>
     {
         private readonly ClientDiagnostics _resourceProviderProvidersClientDiagnostics;

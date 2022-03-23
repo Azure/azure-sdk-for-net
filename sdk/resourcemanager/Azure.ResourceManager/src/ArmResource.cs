@@ -20,7 +20,6 @@ namespace Azure.ResourceManager
     /// </summary>
     public abstract partial class ArmResource
     {
-        private TagResource _tagResource;
         private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
 
         /// <summary>

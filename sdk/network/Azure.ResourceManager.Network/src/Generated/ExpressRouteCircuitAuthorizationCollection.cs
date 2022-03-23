@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRouteCircuitAuthorization and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRouteCircuitAuthorizationResource" /> and their operations.
+    /// Each <see cref="ExpressRouteCircuitAuthorizationResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitResource" />.
+    /// To get an <see cref="ExpressRouteCircuitAuthorizationCollection" /> instance call the GetExpressRouteCircuitAuthorizations method from an instance of <see cref="ExpressRouteCircuitResource" />.
+    /// </summary>
     public partial class ExpressRouteCircuitAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteCircuitAuthorizationResource>, IAsyncEnumerable<ExpressRouteCircuitAuthorizationResource>
     {
         private readonly ClientDiagnostics _expressRouteCircuitAuthorizationClientDiagnostics;

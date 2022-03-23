@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstancePrivateLink and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstancePrivateLinkResource" /> and their operations.
+    /// Each <see cref="ManagedInstancePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstancePrivateLinkCollection" /> instance call the GetManagedInstancePrivateLinks method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedInstancePrivateLinkCollection : ArmCollection, IEnumerable<ManagedInstancePrivateLinkResource>, IAsyncEnumerable<ManagedInstancePrivateLinkResource>
     {
         private readonly ClientDiagnostics _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics;

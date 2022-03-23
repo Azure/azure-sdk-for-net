@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ApplicationSecurityGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ApplicationSecurityGroupResource" /> and their operations.
+    /// Each <see cref="ApplicationSecurityGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ApplicationSecurityGroupCollection" /> instance call the GetApplicationSecurityGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ApplicationSecurityGroupCollection : ArmCollection, IEnumerable<ApplicationSecurityGroupResource>, IAsyncEnumerable<ApplicationSecurityGroupResource>
     {
         private readonly ClientDiagnostics _applicationSecurityGroupClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of CloudServiceRole and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CloudServiceRoleResource" /> and their operations.
+    /// Each <see cref="CloudServiceRoleResource" /> in the collection will belong to the same instance of <see cref="CloudServiceResource" />.
+    /// To get a <see cref="CloudServiceRoleCollection" /> instance call the GetCloudServiceRoles method from an instance of <see cref="CloudServiceResource" />.
+    /// </summary>
     public partial class CloudServiceRoleCollection : ArmCollection, IEnumerable<CloudServiceRoleResource>, IAsyncEnumerable<CloudServiceRoleResource>
     {
         private readonly ClientDiagnostics _cloudServiceRoleClientDiagnostics;

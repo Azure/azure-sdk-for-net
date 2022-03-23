@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of JitRequest and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="JitRequestResource" /> and their operations.
+    /// Each <see cref="JitRequestResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="JitRequestCollection" /> instance call the GetJitRequests method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class JitRequestCollection : ArmCollection, IEnumerable<JitRequestResource>, IAsyncEnumerable<JitRequestResource>
     {
         private readonly ClientDiagnostics _jitRequestClientDiagnostics;

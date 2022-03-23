@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of KubeEnvironment and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="KubeEnvironmentResource" /> and their operations.
+    /// Each <see cref="KubeEnvironmentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="KubeEnvironmentCollection" /> instance call the GetKubeEnvironments method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class KubeEnvironmentCollection : ArmCollection, IEnumerable<KubeEnvironmentResource>, IAsyncEnumerable<KubeEnvironmentResource>
     {
         private readonly ClientDiagnostics _kubeEnvironmentClientDiagnostics;

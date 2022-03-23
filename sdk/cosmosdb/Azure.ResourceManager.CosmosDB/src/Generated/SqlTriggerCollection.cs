@@ -20,7 +20,11 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of SqlTrigger and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SqlTriggerResource" /> and their operations.
+    /// Each <see cref="SqlTriggerResource" /> in the collection will belong to the same instance of <see cref="SqlContainerResource" />.
+    /// To get a <see cref="SqlTriggerCollection" /> instance call the GetSqlTriggers method from an instance of <see cref="SqlContainerResource" />.
+    /// </summary>
     public partial class SqlTriggerCollection : ArmCollection, IEnumerable<SqlTriggerResource>, IAsyncEnumerable<SqlTriggerResource>
     {
         private readonly ClientDiagnostics _sqlTriggerSqlResourcesClientDiagnostics;

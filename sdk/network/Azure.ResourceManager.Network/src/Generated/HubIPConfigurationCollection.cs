@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of HubIPConfiguration and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="HubIPConfigurationResource" /> and their operations.
+    /// Each <see cref="HubIPConfigurationResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
+    /// To get a <see cref="HubIPConfigurationCollection" /> instance call the GetHubIPConfigurations method from an instance of <see cref="VirtualHubResource" />.
+    /// </summary>
     public partial class HubIPConfigurationCollection : ArmCollection, IEnumerable<HubIPConfigurationResource>, IAsyncEnumerable<HubIPConfigurationResource>
     {
         private readonly ClientDiagnostics _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics;

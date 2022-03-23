@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NetworkInterfaceTapConfiguration and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NetworkInterfaceTapConfigurationResource" /> and their operations.
+    /// Each <see cref="NetworkInterfaceTapConfigurationResource" /> in the collection will belong to the same instance of <see cref="NetworkInterfaceResource" />.
+    /// To get a <see cref="NetworkInterfaceTapConfigurationCollection" /> instance call the GetNetworkInterfaceTapConfigurations method from an instance of <see cref="NetworkInterfaceResource" />.
+    /// </summary>
     public partial class NetworkInterfaceTapConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceTapConfigurationResource>, IAsyncEnumerable<NetworkInterfaceTapConfigurationResource>
     {
         private readonly ClientDiagnostics _networkInterfaceTapConfigurationClientDiagnostics;

@@ -20,7 +20,11 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of CosmosTable and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CosmosTableResource" /> and their operations.
+    /// Each <see cref="CosmosTableResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
+    /// To get a <see cref="CosmosTableCollection" /> instance call the GetCosmosTables method from an instance of <see cref="DatabaseAccountResource" />.
+    /// </summary>
     public partial class CosmosTableCollection : ArmCollection, IEnumerable<CosmosTableResource>, IAsyncEnumerable<CosmosTableResource>
     {
         private readonly ClientDiagnostics _cosmosTableTableResourcesClientDiagnostics;

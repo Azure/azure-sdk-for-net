@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a SubscriptionPolicyDefinitionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SubscriptionPolicyDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionPolicyDefinitionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionPolicyDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionPolicyDefinition method.
+    /// </summary>
     public partial class SubscriptionPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicyDefinitionResource"/> instance. </summary>

@@ -14,10 +14,16 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Management.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Management
 {
-    /// <summary> A Class representing a ManagementGroupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagementGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetManagementGroup method.
+    /// </summary>
     public partial class ManagementGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupResource"/> instance. </summary>

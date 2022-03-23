@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NetworkProfile and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NetworkProfileResource" /> and their operations.
+    /// Each <see cref="NetworkProfileResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="NetworkProfileCollection" /> instance call the GetNetworkProfiles method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class NetworkProfileCollection : ArmCollection, IEnumerable<NetworkProfileResource>, IAsyncEnumerable<NetworkProfileResource>
     {
         private readonly ClientDiagnostics _networkProfileClientDiagnostics;

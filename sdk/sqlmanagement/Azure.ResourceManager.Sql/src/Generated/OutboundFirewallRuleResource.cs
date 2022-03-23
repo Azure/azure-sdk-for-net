@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a OutboundFirewallRuleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an OutboundFirewallRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OutboundFirewallRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetOutboundFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetOutboundFirewallRule method.
+    /// </summary>
     public partial class OutboundFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OutboundFirewallRuleResource"/> instance. </summary>

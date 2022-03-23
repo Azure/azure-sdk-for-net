@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of Snapshot and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SnapshotResource" /> and their operations.
+    /// Each <see cref="SnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SnapshotCollection" /> instance call the GetSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class SnapshotCollection : ArmCollection, IEnumerable<SnapshotResource>, IAsyncEnumerable<SnapshotResource>
     {
         private readonly ClientDiagnostics _snapshotClientDiagnostics;

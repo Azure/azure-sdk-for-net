@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HostingEnvironmentDetector and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="HostingEnvironmentDetectorResource" /> and their operations.
+    /// Each <see cref="HostingEnvironmentDetectorResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
+    /// To get a <see cref="HostingEnvironmentDetectorCollection" /> instance call the GetHostingEnvironmentDetectors method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// </summary>
     public partial class HostingEnvironmentDetectorCollection : ArmCollection, IEnumerable<HostingEnvironmentDetectorResource>, IAsyncEnumerable<HostingEnvironmentDetectorResource>
     {
         private readonly ClientDiagnostics _hostingEnvironmentDetectorDiagnosticsClientDiagnostics;

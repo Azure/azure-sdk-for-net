@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ManagementGroupPolicySetDefinitionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagementGroupPolicySetDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagementGroupPolicySetDefinitionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagementGroupPolicySetDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource" /> using the GetManagementGroupPolicySetDefinition method.
+    /// </summary>
     public partial class ManagementGroupPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicySetDefinitionResource"/> instance. </summary>

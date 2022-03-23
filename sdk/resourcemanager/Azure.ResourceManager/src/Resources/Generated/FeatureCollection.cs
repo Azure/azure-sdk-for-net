@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of Feature and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="FeatureResource" /> and their operations.
+    /// Each <see cref="FeatureResource" /> in the collection will belong to the same instance of <see cref="ResourceProviderResource" />.
+    /// To get a <see cref="FeatureCollection" /> instance call the GetFeatures method from an instance of <see cref="ResourceProviderResource" />.
+    /// </summary>
     public partial class FeatureCollection : ArmCollection, IEnumerable<FeatureResource>, IAsyncEnumerable<FeatureResource>
     {
         private readonly ClientDiagnostics _featureClientDiagnostics;

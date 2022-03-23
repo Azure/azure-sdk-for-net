@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of IPGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="IPGroupResource" /> and their operations.
+    /// Each <see cref="IPGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="IPGroupCollection" /> instance call the GetIPGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class IPGroupCollection : ArmCollection, IEnumerable<IPGroupResource>, IAsyncEnumerable<IPGroupResource>
     {
         private readonly ClientDiagnostics _ipGroupIpGroupsClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of FirewallPolicyRuleCollectionGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="FirewallPolicyRuleCollectionGroupResource" /> and their operations.
+    /// Each <see cref="FirewallPolicyRuleCollectionGroupResource" /> in the collection will belong to the same instance of <see cref="FirewallPolicyResource" />.
+    /// To get a <see cref="FirewallPolicyRuleCollectionGroupCollection" /> instance call the GetFirewallPolicyRuleCollectionGroups method from an instance of <see cref="FirewallPolicyResource" />.
+    /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupCollection : ArmCollection, IEnumerable<FirewallPolicyRuleCollectionGroupResource>, IAsyncEnumerable<FirewallPolicyRuleCollectionGroupResource>
     {
         private readonly ClientDiagnostics _firewallPolicyRuleCollectionGroupClientDiagnostics;

@@ -20,7 +20,11 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSitePrivateEndpointConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StaticSitePrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="StaticSitePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="StaticSiteARMResource" />.
+    /// To get a <see cref="StaticSitePrivateEndpointConnectionCollection" /> instance call the GetStaticSitePrivateEndpointConnections method from an instance of <see cref="StaticSiteARMResource" />.
+    /// </summary>
     public partial class StaticSitePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<StaticSitePrivateEndpointConnectionResource>, IAsyncEnumerable<StaticSitePrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _staticSitePrivateEndpointConnectionStaticSitesClientDiagnostics;

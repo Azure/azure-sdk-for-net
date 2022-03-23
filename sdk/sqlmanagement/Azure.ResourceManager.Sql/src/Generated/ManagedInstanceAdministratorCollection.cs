@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceAdministrator and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceAdministratorResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceAdministratorResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstanceAdministratorCollection" /> instance call the GetManagedInstanceAdministrators method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedInstanceAdministratorCollection : ArmCollection, IEnumerable<ManagedInstanceAdministratorResource>, IAsyncEnumerable<ManagedInstanceAdministratorResource>
     {
         private readonly ClientDiagnostics _managedInstanceAdministratorClientDiagnostics;

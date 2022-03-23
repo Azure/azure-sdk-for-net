@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotHybridconnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotHybridconnectionResource" /> and their operations.
+    /// Each <see cref="SiteSlotHybridconnectionResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotHybridconnectionCollection" /> instance call the GetSiteSlotHybridconnections method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class SiteSlotHybridconnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteSlotHybridconnectionWebAppsClientDiagnostics;

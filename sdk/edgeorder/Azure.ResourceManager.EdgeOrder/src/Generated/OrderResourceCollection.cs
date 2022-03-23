@@ -17,7 +17,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing collection of OrderResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OrderResource" /> and their operations.
+    /// Each <see cref="OrderResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="OrderResourceCollection" /> instance call the GetOrderResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class OrderResourceCollection : ArmCollection
     {
         private readonly ClientDiagnostics _orderResourceClientDiagnostics;

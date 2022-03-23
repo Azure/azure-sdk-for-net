@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VpnGateway and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VpnGatewayResource" /> and their operations.
+    /// Each <see cref="VpnGatewayResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VpnGatewayCollection" /> instance call the GetVpnGateways method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VpnGatewayCollection : ArmCollection, IEnumerable<VpnGatewayResource>, IAsyncEnumerable<VpnGatewayResource>
     {
         private readonly ClientDiagnostics _vpnGatewayClientDiagnostics;

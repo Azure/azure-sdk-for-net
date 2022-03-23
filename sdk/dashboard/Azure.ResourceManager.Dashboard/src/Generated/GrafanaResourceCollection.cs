@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dashboard
 {
-    /// <summary> A class representing collection of GrafanaResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GrafanaResource" /> and their operations.
+    /// Each <see cref="GrafanaResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="GrafanaResourceCollection" /> instance call the GetGrafanaResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class GrafanaResourceCollection : ArmCollection, IEnumerable<GrafanaResource>, IAsyncEnumerable<GrafanaResource>
     {
         private readonly ClientDiagnostics _grafanaResourceGrafanaClientDiagnostics;

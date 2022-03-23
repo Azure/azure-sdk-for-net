@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of EncryptionScope and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="EncryptionScopeResource" /> and their operations.
+    /// Each <see cref="EncryptionScopeResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
+    /// To get an <see cref="EncryptionScopeCollection" /> instance call the GetEncryptionScopes method from an instance of <see cref="StorageAccountResource" />.
+    /// </summary>
     public partial class EncryptionScopeCollection : ArmCollection, IEnumerable<EncryptionScopeResource>, IAsyncEnumerable<EncryptionScopeResource>
     {
         private readonly ClientDiagnostics _encryptionScopeClientDiagnostics;

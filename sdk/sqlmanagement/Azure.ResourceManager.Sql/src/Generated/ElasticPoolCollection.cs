@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ElasticPool and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ElasticPoolResource" /> and their operations.
+    /// Each <see cref="ElasticPoolResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get an <see cref="ElasticPoolCollection" /> instance call the GetElasticPools method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ElasticPoolCollection : ArmCollection, IEnumerable<ElasticPoolResource>, IAsyncEnumerable<ElasticPoolResource>
     {
         private readonly ClientDiagnostics _elasticPoolClientDiagnostics;

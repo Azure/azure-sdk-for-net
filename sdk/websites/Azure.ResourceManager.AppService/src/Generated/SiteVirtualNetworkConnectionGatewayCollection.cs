@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteVirtualNetworkConnectionGateway and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteVirtualNetworkConnectionGatewayResource" /> and their operations.
+    /// Each <see cref="SiteVirtualNetworkConnectionGatewayResource" /> in the collection will belong to the same instance of <see cref="SiteVirtualNetworkConnectionResource" />.
+    /// To get a <see cref="SiteVirtualNetworkConnectionGatewayCollection" /> instance call the GetSiteVirtualNetworkConnectionGateways method from an instance of <see cref="SiteVirtualNetworkConnectionResource" />.
+    /// </summary>
     public partial class SiteVirtualNetworkConnectionGatewayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;

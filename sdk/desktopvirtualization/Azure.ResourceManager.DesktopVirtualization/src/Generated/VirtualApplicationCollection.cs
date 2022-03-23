@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of VirtualApplication and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualApplicationResource" /> and their operations.
+    /// Each <see cref="VirtualApplicationResource" /> in the collection will belong to the same instance of <see cref="VirtualApplicationGroupResource" />.
+    /// To get a <see cref="VirtualApplicationCollection" /> instance call the GetVirtualApplications method from an instance of <see cref="VirtualApplicationGroupResource" />.
+    /// </summary>
     public partial class VirtualApplicationCollection : ArmCollection, IEnumerable<VirtualApplicationResource>, IAsyncEnumerable<VirtualApplicationResource>
     {
         private readonly ClientDiagnostics _virtualApplicationApplicationsClientDiagnostics;

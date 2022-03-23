@@ -21,7 +21,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of SubscriptionLongTermRetentionBackup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SubscriptionLongTermRetentionBackupResource" /> and their operations.
+    /// Each <see cref="SubscriptionLongTermRetentionBackupResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get a <see cref="SubscriptionLongTermRetentionBackupCollection" /> instance call the GetSubscriptionLongTermRetentionBackups method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class SubscriptionLongTermRetentionBackupCollection : ArmCollection, IEnumerable<SubscriptionLongTermRetentionBackupResource>, IAsyncEnumerable<SubscriptionLongTermRetentionBackupResource>
     {
         private readonly ClientDiagnostics _subscriptionLongTermRetentionBackupLongTermRetentionBackupsClientDiagnostics;

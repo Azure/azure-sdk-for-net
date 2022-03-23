@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing collection of PrivateLink and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateLinkResource" /> and their operations.
+    /// Each <see cref="PrivateLinkResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
+    /// To get a <see cref="PrivateLinkCollection" /> instance call the GetPrivateLinks method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// </summary>
     public partial class PrivateLinkCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkPrivateLinkResourcesClientDiagnostics;

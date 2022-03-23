@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ServerfarmHybridConnectionNamespaceRelay and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> and their operations.
+    /// Each <see cref="ServerfarmHybridConnectionNamespaceRelayResource" /> in the collection will belong to the same instance of <see cref="AppServicePlanResource" />.
+    /// To get a <see cref="ServerfarmHybridConnectionNamespaceRelayCollection" /> instance call the GetServerfarmHybridConnectionNamespaceRelays method from an instance of <see cref="AppServicePlanResource" />.
+    /// </summary>
     public partial class ServerfarmHybridConnectionNamespaceRelayCollection : ArmCollection
     {
         private readonly ClientDiagnostics _serverfarmHybridConnectionNamespaceRelayAppServicePlansClientDiagnostics;

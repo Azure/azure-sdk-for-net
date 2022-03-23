@@ -20,7 +20,11 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing collection of IscsiTarget and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="IscsiTargetResource" /> and their operations.
+    /// Each <see cref="IscsiTargetResource" /> in the collection will belong to the same instance of <see cref="DiskPoolResource" />.
+    /// To get an <see cref="IscsiTargetCollection" /> instance call the GetIscsiTargets method from an instance of <see cref="DiskPoolResource" />.
+    /// </summary>
     public partial class IscsiTargetCollection : ArmCollection, IEnumerable<IscsiTargetResource>, IAsyncEnumerable<IscsiTargetResource>
     {
         private readonly ClientDiagnostics _iscsiTargetClientDiagnostics;

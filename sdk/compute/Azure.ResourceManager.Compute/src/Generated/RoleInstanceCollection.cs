@@ -20,7 +20,11 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of RoleInstance and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RoleInstanceResource" /> and their operations.
+    /// Each <see cref="RoleInstanceResource" /> in the collection will belong to the same instance of <see cref="CloudServiceResource" />.
+    /// To get a <see cref="RoleInstanceCollection" /> instance call the GetRoleInstances method from an instance of <see cref="CloudServiceResource" />.
+    /// </summary>
     public partial class RoleInstanceCollection : ArmCollection, IEnumerable<RoleInstanceResource>, IAsyncEnumerable<RoleInstanceResource>
     {
         private readonly ClientDiagnostics _roleInstanceCloudServiceRoleInstancesClientDiagnostics;

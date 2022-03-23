@@ -20,7 +20,11 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteCustomDomainOverviewARMResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StaticSiteCustomDomainOverviewARMResource" /> and their operations.
+    /// Each <see cref="StaticSiteCustomDomainOverviewARMResource" /> in the collection will belong to the same instance of <see cref="StaticSiteARMResource" />.
+    /// To get a <see cref="StaticSiteCustomDomainOverviewARMResourceCollection" /> instance call the GetStaticSiteCustomDomainOverviewARMResources method from an instance of <see cref="StaticSiteARMResource" />.
+    /// </summary>
     public partial class StaticSiteCustomDomainOverviewARMResourceCollection : ArmCollection, IEnumerable<StaticSiteCustomDomainOverviewARMResource>, IAsyncEnumerable<StaticSiteCustomDomainOverviewARMResource>
     {
         private readonly ClientDiagnostics _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics;

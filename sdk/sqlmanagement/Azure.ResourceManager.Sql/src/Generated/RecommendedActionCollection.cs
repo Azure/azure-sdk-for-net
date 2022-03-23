@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of RecommendedAction and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RecommendedActionResource" /> and their operations.
+    /// Each <see cref="RecommendedActionResource" /> in the collection will belong to the same instance of <see cref="ServerDatabaseAdvisorResource" />.
+    /// To get a <see cref="RecommendedActionCollection" /> instance call the GetRecommendedActions method from an instance of <see cref="ServerDatabaseAdvisorResource" />.
+    /// </summary>
     public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedActionResource>, IAsyncEnumerable<RecommendedActionResource>
     {
         private readonly ClientDiagnostics _recommendedActionDatabaseRecommendedActionsClientDiagnostics;

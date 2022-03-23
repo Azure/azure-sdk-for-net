@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of ClusterResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ClusterResource" /> and their operations.
+    /// Each <see cref="ClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ClusterResourceCollection" /> instance call the GetClusterResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ClusterResourceCollection : ArmCollection, IEnumerable<ClusterResource>, IAsyncEnumerable<ClusterResource>
     {
         private readonly ClientDiagnostics _clusterResourceCassandraClustersClientDiagnostics;

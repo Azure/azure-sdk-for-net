@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocation
 {
-    /// <summary> A class representing collection of CustomLocation and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CustomLocationResource" /> and their operations.
+    /// Each <see cref="CustomLocationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CustomLocationCollection" /> instance call the GetCustomLocations method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class CustomLocationCollection : ArmCollection, IEnumerable<CustomLocationResource>, IAsyncEnumerable<CustomLocationResource>
     {
         private readonly ClientDiagnostics _customLocationClientDiagnostics;

@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of BastionHost and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BastionHostResource" /> and their operations.
+    /// Each <see cref="BastionHostResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="BastionHostCollection" /> instance call the GetBastionHosts method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class BastionHostCollection : ArmCollection, IEnumerable<BastionHostResource>, IAsyncEnumerable<BastionHostResource>
     {
         private readonly ClientDiagnostics _bastionHostClientDiagnostics;

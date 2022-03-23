@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteInstanceProcessModule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteInstanceProcessModuleResource" /> and their operations.
+    /// Each <see cref="SiteInstanceProcessModuleResource" /> in the collection will belong to the same instance of <see cref="SiteInstanceProcessResource" />.
+    /// To get a <see cref="SiteInstanceProcessModuleCollection" /> instance call the GetSiteInstanceProcessModules method from an instance of <see cref="SiteInstanceProcessResource" />.
+    /// </summary>
     public partial class SiteInstanceProcessModuleCollection : ArmCollection, IEnumerable<SiteInstanceProcessModuleResource>, IAsyncEnumerable<SiteInstanceProcessModuleResource>
     {
         private readonly ClientDiagnostics _siteInstanceProcessModuleWebAppsClientDiagnostics;
