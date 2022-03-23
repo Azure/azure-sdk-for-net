@@ -60,7 +60,7 @@ Console.WriteLine($"Initialized client with disabled metadata fetching pointing 
 
 ### Override options
 
-If you need to override default http behavior, such as provide your own `HttpClient` instance, you can do that via constructor that takes a [ModelsRepositoryClientOptions][modelsrepository_clientoptions] parameter.
+If you need to override default HTTP behavior, such as provide your own `HttpClient` instance, you can do that via constructor that takes a [ModelsRepositoryClientOptions][modelsrepository_clientoptions] parameter.
 It provides an opportunity to override default behavior including:
 
 - Overriding [transport][azure_core_transport]
