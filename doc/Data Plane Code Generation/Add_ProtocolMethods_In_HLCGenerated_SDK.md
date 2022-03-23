@@ -1,6 +1,6 @@
 # Add Protocol Methods In HLC Generated SDK
 
-In this tutorial, we will step through the process of generating protocol methods in HLC generated SDK. Protocol methods will be generated in internal RestClient based on the `protocol-method-list` config.
+In this tutorial, we will step through the process of generating protocol methods in HLC SDK. Protocol methods will be generated in internal RestClient based on the `protocol-method-list` config.
 
 ## Prerequisites
 
@@ -8,13 +8,13 @@ You should have HLC SDK generated in `azure-sdk-for-net/sdk/<service name>/<pack
 
 ## Add protocol methods in generated RestClient
 
-In order to generate protocol methods in HLC generated RestClient, you'd have to define a `protocol-method-list` config in your `autorest.md` file. You can find `autorest.md` file path in `azure-sdk-for-net/sdk/<service name>/<package name>/src/autorest.md`. This config takes a list of full `operationId` defined in the swagger. 
+In order to generate protocol methods in HLC generated RestClient, you'd have to define a `protocol-method-list` config in your `autorest.md` file. You can find `autorest.md` file path in `azure-sdk-for-net/sdk/<service name>/<package name>/src/autorest.md`. This config takes a list of full `operationId` defined in it's swagger definition. 
 
 For this tutorial we are going to use `Azure.Data.Tables` SDK. You can find swagger definition for Table service [here](https://github.com/Azure/azure-rest-api-specs/blob/2df8b07bf9af7c96066ca4dda21b79297307d108/specification/cosmos-db/data-plane/Microsoft.Tables/preview/2019-02-02/table.json), `autorest.md` file [here](https://github.com/azure-sdk/azure-sdk-for-net/blob/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/tables/Azure.Data.Tables/src/autorest.md) and `Generated` folder [here](https://github.com/azure-sdk/azure-sdk-for-net/tree/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/tables/Azure.Data.Tables/src/Generated).
 
 * ### Generated code before:
 
-In Generated folder, you will find `TableRestClient.Delete` and `ServiceRestClient.SetProperties` methods are generated as per default HLC generated configuration.
+In Generated folder, you will find `TableRestClient.Delete` and `ServiceRestClient.SetProperties` methods are already generated as per default HLC configuration.
 
 **(Generated/TableRestClient.cs)**:
 
@@ -116,7 +116,7 @@ internal partial class ServiceRestClient
 
 * ### Add Config:
 
-Add `protocol-method-list` config in `autorest.md` and pass a list of swagger operationId for which you'd like to generate protocol methods.
+Add `protocol-method-list` config in `autorest.md` and pass a list of swagger operationId for which you'd like to generate protocol methods. For example, in order to generate protocol methods for `TableRestClient.Delete` and `ServiceRestClient.SetProperties`, you'd add a config as shown below. 
 
 **(autorest.md)**
 
