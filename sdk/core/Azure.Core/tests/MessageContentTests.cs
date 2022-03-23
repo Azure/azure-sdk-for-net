@@ -20,6 +20,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(ContentType.ApplicationJson, messageContent.ContentType);
             Assert.AreEqual("data", messageContent.Data.ToString());
+            Assert.IsFalse(messageContent.IsReadOnly);
         }
 
         [Test]
@@ -39,6 +40,8 @@ namespace Azure.Core.Tests
             // we can also use the derived type string property
             messageContent.ContentType = ContentType.ApplicationJson.ToString();
             Assert.AreEqual(ContentType.ApplicationJson, messageContent.ContentType);
+
+            Assert.IsTrue(messageContent.IsReadOnly);
         }
     }
 
@@ -53,5 +56,7 @@ namespace Azure.Core.Tests
             get => new ContentType(ContentType);
             set => ContentType = value.ToString();
         }
+
+        public override bool IsReadOnly => true;
     }
 }
