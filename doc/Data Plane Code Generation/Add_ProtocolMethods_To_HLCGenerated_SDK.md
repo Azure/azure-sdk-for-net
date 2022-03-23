@@ -14,7 +14,7 @@ For this example I'm going to use `Azure.DigitalTwins.Core` SDK. You can find sw
 
 * ### Generated code before:
 
-Generated code before adding `protocol-method-list` config - 
+In your Generated code you will find `DigitalTwinsRestClient.Delete` and `EventRoutesRestClient.GetById` methods are generated as HLC before adding `protocol-method-list` config.
 
 **(Generated/DigitalTwinsRestClient.cs)**:
 
@@ -141,7 +141,7 @@ protocol-method-list:
 
 * ### Generated code after:
 
-Re-generate code by running `dotnet build /t:GenerateCode` command.
+Re-generate code by running `dotnet build /t:GenerateCode` command will add protocol methods for `DigitalTwinsRestClient.Delete` and `EventRoutesRestClient.GetById`.
 
 **(Generated/DigitalTwinsRestClient.cs)**:
 
