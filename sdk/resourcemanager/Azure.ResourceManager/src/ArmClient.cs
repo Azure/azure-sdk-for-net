@@ -107,7 +107,7 @@ namespace Azure.ResourceManager
         /// </summary>
         /// <param name="resourceType"> The resource type to get the version for. </param>
         /// <param name="apiVersion"> The api version to variable to set. </param>
-        internal bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
+        internal virtual bool TryGetApiVersion(ResourceType resourceType, out string apiVersion)
         {
             return ApiVersionOverrides.TryGetValue(resourceType, out apiVersion);
         }
