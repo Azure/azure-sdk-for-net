@@ -10,17 +10,20 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    internal class TestOperationOfInt : Operation<int>, IOperation<int>
+#pragma warning disable SA1649 // File name should match first type name
+    internal class MockOperation<T> : Operation<T>, IOperation<T>
+#pragma warning restore SA1649 // File name should match first type name
     {
         private static ClientDiagnostics _clientDiagnostics = new(new TestClientOptions());
         private bool _exceptionOnWait;
-        private int _expectedValue = 50;
+        private T _expectedValue;
 
-        protected TestOperationOfInt()
+        protected MockOperation()
         {
         }
 
-        public TestOperationOfInt(
+        public MockOperation(
+            T expectedValue,
             UpdateResult result,
             Func<MockResponse> responseFactory,
             string operationTypeName = null,
@@ -31,6 +34,7 @@ namespace Azure.Core.Tests
             Exception customExceptionOnUpdate = null,
             RequestFailedException originalExceptionOnUpdate = null)
         {
+            _expectedValue = expectedValue;
             if (result == UpdateResult.FailureCustomException && originalExceptionOnUpdate == null)
                 throw new InvalidOperationException($"MockUpdate was asked to use {result} but no {nameof(originalExceptionOnUpdate)} was given");
 
@@ -38,7 +42,7 @@ namespace Azure.Core.Tests
                 throw new InvalidOperationException($"MockUpdate was asked to use {result} but no {nameof(customExceptionOnUpdate)} was given");
 
             _exceptionOnWait = exceptionOnWait;
-            MockOperationInternal = new MockOperationInternal<int>(_clientDiagnostics, this, responseFactory, operationTypeName, scopeAttributes, fallbackStrategy);
+            MockOperationInternal = new MockOperationInternal<T>(_clientDiagnostics, this, responseFactory, operationTypeName, scopeAttributes, fallbackStrategy);
             MockOperationInternal.CallsToComplete = callsToComplete;
 
             OnUpdateState = result switch
@@ -47,13 +51,13 @@ namespace Azure.Core.Tests
                 {
                     return MockOperationInternal.CallsToComplete.HasValue &&
                            MockOperationInternal.UpdateStatusCallCount >= MockOperationInternal.CallsToComplete.Value
-                        ? OperationState<int>.Success(responseFactory(), _expectedValue)
-                        : OperationState<int>.Pending(responseFactory());
+                        ? OperationState<T>.Success(responseFactory(), _expectedValue)
+                        : OperationState<T>.Pending(responseFactory());
                 }
                 ,
-                UpdateResult.Failure => _ => OperationState<int>.Failure(responseFactory()),
-                UpdateResult.FailureCustomException => _ => OperationState<int>.Failure(responseFactory(), originalExceptionOnUpdate),
-                UpdateResult.Success => _ => OperationState<int>.Success(responseFactory(), _expectedValue),
+                UpdateResult.Failure => _ => OperationState<T>.Failure(responseFactory()),
+                UpdateResult.FailureCustomException => _ => OperationState<T>.Failure(responseFactory(), originalExceptionOnUpdate),
+                UpdateResult.Success => _ => OperationState<T>.Success(responseFactory(), _expectedValue),
                 UpdateResult.Throw => _ => throw customExceptionOnUpdate,
                 _ => null
             };
@@ -63,13 +67,13 @@ namespace Azure.Core.Tests
 
         public override bool HasCompleted => MockOperationInternal.HasCompleted;
 
-        public override int Value => _expectedValue;
+        public override T Value => _expectedValue;
 
         public override bool HasValue => MockOperationInternal.HasValue;
 
         public override Response GetRawResponse() => MockOperationInternal.RawResponse;
 
-        public override Response<int> WaitForCompletion(CancellationToken cancellationToken = default)
+        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
@@ -77,7 +81,7 @@ namespace Azure.Core.Tests
             return MockOperationInternal.WaitForCompletion(cancellationToken);
         }
 
-        public override Response<int> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
+        public override Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
@@ -85,7 +89,7 @@ namespace Azure.Core.Tests
             return MockOperationInternal.WaitForCompletion(pollingInterval, cancellationToken);
         }
 
-        public async override ValueTask<Response<int>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
+        public async override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
@@ -93,7 +97,7 @@ namespace Azure.Core.Tests
             return await MockOperationInternal.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public async override ValueTask<Response<int>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
+        public async override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
             if (_exceptionOnWait)
                 throw new ArgumentException("FakeArg");
@@ -101,30 +105,32 @@ namespace Azure.Core.Tests
             return await MockOperationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             MockOperationInternal.UpdateStatusCallCount++;
             MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
 
-            return new ValueTask<Response>(OnUpdateState(cancellationToken).RawResponse);
+            return await MockOperationInternal.UpdateStatusAsync(cancellationToken);
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             MockOperationInternal.UpdateStatusCallCount++;
             MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
-            return OnUpdateState(cancellationToken).RawResponse;
+
+            return MockOperationInternal.UpdateStatus(cancellationToken);
         }
 
-        public ValueTask<OperationState<int>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             MockOperationInternal.UpdateStatusCallCount++;
             MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
-            return new ValueTask<OperationState<int>>(OnUpdateState(cancellationToken));
+
+            return new ValueTask<OperationState<T>>(OnUpdateState(cancellationToken));
         }
 
-        public MockOperationInternal<int> MockOperationInternal { get; }
+        public MockOperationInternal<T> MockOperationInternal { get; }
 
-        public Func<CancellationToken, OperationState<int>> OnUpdateState { get; set; }
+        public Func<CancellationToken, OperationState<T>> OnUpdateState { get; set; }
     }
 }

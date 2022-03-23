@@ -43,13 +43,13 @@ namespace Azure.Core.TestFramework
                 if (IsTaskFaulted(invocation.ReturnValue))
                     return;
                 object lro = GetResultFromTask(invocation.ReturnValue);
-                if (lro.GetType().IsSubclassOf(typeof(Operation)))
+                if (lro.GetType().BaseType.IsGenericType)
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last());
                 }
                 else
                 {
-                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last());
+                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
                 }
                 return;
             }
