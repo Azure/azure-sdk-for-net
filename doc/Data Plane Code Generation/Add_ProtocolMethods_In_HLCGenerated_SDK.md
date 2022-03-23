@@ -1,0 +1,310 @@
+# Add Protocol Methods In HLC Generated SDK
+
+In this tutorial, we will step through the process of generating protocol methods in HLC generated SDK. Protocol methods will be generated in internal RestClient based on the `protocol-method-list` config.
+
+## Prerequisites
+
+You should have HLC SDK generated in `azure-sdk-for-net/sdk/<service name>/<package name>/src/Generated` folder.
+
+## Add protocol methods in generated RestClient
+
+In order to generate protocol methods in HLC generated RestClient, you'd have to define a `protocol-method-list` config in your `autorest.md` file. You can find `autorest.md` file path in `azure-sdk-for-net/sdk/<service name>/<package name>/src/autorest.md`. This config takes a list of full `operationId` defined in the swagger. 
+
+For this tutorial we are going to use `Azure.Data.Tables` SDK. You can find swagger definition for Table service [here](https://github.com/Azure/azure-rest-api-specs/blob/2df8b07bf9af7c96066ca4dda21b79297307d108/specification/cosmos-db/data-plane/Microsoft.Tables/preview/2019-02-02/table.json), `autorest.md` file [here](https://github.com/azure-sdk/azure-sdk-for-net/blob/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/tables/Azure.Data.Tables/src/autorest.md) and `Generated` folder [here](https://github.com/azure-sdk/azure-sdk-for-net/tree/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/tables/Azure.Data.Tables/src/Generated).
+
+* ### Generated code before:
+
+In Generated folder, you will find `TableRestClient.Delete` and `ServiceRestClient.SetProperties` methods are generated as per default HLC generated configuration.
+
+**(Generated/TableRestClient.cs)**:
+
+<details>
+
+``` C#
+internal partial class TableRestClient
+{
+    public async Task<ResponseWithHeaders<TableDeleteHeaders>> DeleteAsync(string table, CancellationToken cancellationToken = default)
+    {
+        if (table == null)
+        {
+            throw new ArgumentNullException(nameof(table));
+        }
+
+        using var message = CreateDeleteRequest(table);
+        await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        var headers = new TableDeleteHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 204:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+        }
+    }
+
+    public ResponseWithHeaders<TableDeleteHeaders> Delete(string table, CancellationToken cancellationToken = default)
+    {
+        if (table == null)
+        {
+            throw new ArgumentNullException(nameof(table));
+        }
+
+        using var message = CreateDeleteRequest(table);
+        _pipeline.Send(message, cancellationToken);
+        var headers = new TableDeleteHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 204:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+        }
+    }
+}
+```
+
+</details>
+
+**(Generated/ServiceRestClient.cs)**:
+
+<details>
+
+``` C#
+internal partial class ServiceRestClient
+{
+    public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+    {
+        if (tableServiceProperties == null)
+        {
+            throw new ArgumentNullException(nameof(tableServiceProperties));
+        }
+
+        using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout);
+        await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        var headers = new ServiceSetPropertiesHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 202:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+        }
+    }
+
+    public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+    {
+        if (tableServiceProperties == null)
+        {
+            throw new ArgumentNullException(nameof(tableServiceProperties));
+        }
+
+        using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout);
+        _pipeline.Send(message, cancellationToken);
+        var headers = new ServiceSetPropertiesHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 202:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+        }
+    }
+}
+```
+
+</details>
+
+* ### Add Config:
+
+Add `protocol-method-list` config in `autorest.md` and pass a list of swagger operationId for which you'd like to generate protocol methods.
+
+**(autorest.md)**
+
+<details>
+
+```` md
+### Generate DPG methods
+```yaml
+protocol-method-list:
+  - Table_Delete
+  - Service_SetProperties
+```
+````
+
+</details>
+
+* ### Generated code after:
+
+Re-generate code by running `dotnet build /t:GenerateCode` command which will generate protocol methods for `TableRestClient.Delete` and `ServiceRestClient.SetProperties`.
+
+**(Generated/TableRestClient.cs)**:
+
+<details>
+
+``` diff
+
+internal partial class TableRestClient
+{
+    public async Task<ResponseWithHeaders<TableDeleteHeaders>> DeleteAsync(string table, CancellationToken cancellationToken = default)
+    {
+        if (table == null)
+        {
+            throw new ArgumentNullException(nameof(table));
+        }
+
+        using var message = CreateDeleteRequest(table);
+        await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        var headers = new TableDeleteHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 204:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+        }
+    }
+
+    public ResponseWithHeaders<TableDeleteHeaders> Delete(string table, CancellationToken cancellationToken = default)
+    {
+        if (table == null)
+        {
+            throw new ArgumentNullException(nameof(table));
+        }
+
+        using var message = CreateDeleteRequest(table);
+        _pipeline.Send(message, cancellationToken);
+        var headers = new TableDeleteHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 204:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+        }
+    }
++
++   public virtual async Task<Response> DeleteAsync(string table, RequestContext context = null)
++    {
++        Argument.AssertNotNullOrEmpty(table, nameof(table));
++
++        using var scope = ClientDiagnostics.CreateScope("TableClient.Delete");
++        scope.Start();
++        try
++            using HttpMessage message = CreateDeleteRequest(table, context);
++        }
++        catch (Exception e)
++        {
++            scope.Failed(e);
++            throw;
++        }
++    }
++
++    public virtual Response Delete(string table, RequestContext context = null)
++    {
++        Argument.AssertNotNullOrEmpty(table, nameof(table));
++
++        using var scope = ClientDiagnostics.CreateScope("TableClient.Delete");
++        scope.Start();
++        try
++        {
++            using HttpMessage message = CreateDeleteRequest(table, context);
++            return _pipeline.ProcessMessage(message, context);
++        }
++        catch (Exception e)
++        {
++            scope.Failed(e);
++            throw;
++        }
++    }
+}
+```
+
+</details>
+
+**(Generated/ServiceRestClient.cs)**:
+
+<details>
+
+``` diff
+internal partial class ServiceRestClient
+{
+    public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+    {
+        if (tableServiceProperties == null)
+        {
+            throw new ArgumentNullException(nameof(tableServiceProperties));
+        }
+
+        using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout);
+        await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+        var headers = new ServiceSetPropertiesHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 202:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+        }
+    }
+
+    public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(TableServiceProperties tableServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+    {
+        if (tableServiceProperties == null)
+        {
+            throw new ArgumentNullException(nameof(tableServiceProperties));
+        }
+
+        using var message = CreateSetPropertiesRequest(tableServiceProperties, timeout);
+        _pipeline.Send(message, cancellationToken);
+        var headers = new ServiceSetPropertiesHeaders(message.Response);
+        switch (message.Response.Status)
+        {
+            case 202:
+                return ResponseWithHeaders.FromValue(headers, message.Response);
+            default:
+                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+        }
+    }
++
++   public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? timeout = null, RequestContext context = null)
++   {
++        Argument.AssertNotNull(content, nameof(content));
++
++        using var scope = ClientDiagnostics.CreateScope("ServiceClient.SetProperties");
++        scope.Start();
++        try
++        {
++            using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
++            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
++        }
++        catch (Exception e)
++        {
++            scope.Failed(e);
++            throw;
++        }
++    }
++
++    public virtual Response SetProperties(RequestContent content, int? timeout = null, RequestContext context = null)
++    {
++        Argument.AssertNotNull(content, nameof(content));
++
++        using var scope = ClientDiagnostics.CreateScope("ServiceClient.SetProperties");
++        scope.Start();
++        try
++        {
++            using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
++            return _pipeline.ProcessMessage(message, context);
++        }
++        catch (Exception e)
++        {
++            scope.Failed(e);
++            throw;
++        }
++    }
+}
+```
+
+</details>
+&nbsp;
+
+**Note:** Protocol methods will be generated only in internal RestClient even if the `public-client` is set to true in the config. In order to add a public protocol method, you'd have to manually add it in public client and call the corresponding internal protocol method generated in RestClient.
