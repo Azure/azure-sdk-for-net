@@ -43,12 +43,15 @@ namespace Azure.Storage.Blobs
 
         private readonly IProgress<long> _progress;
 
+        private readonly bool? _ignoreStrongConsistencyLock;
+
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
             // TODO #27253
             //DownloadTransactionalHashingOptions hashingOptions = default,
-            IProgress<long> progress = default)
+            IProgress<long> progress = default,
+            bool? ignoreStrongConsistencyLock = default)
         {
             _client = client;
 
@@ -94,6 +97,7 @@ namespace Azure.Storage.Blobs
 
             //_hashingOptions = hashingOptions;
             _progress = progress;
+            _ignoreStrongConsistencyLock = ignoreStrongConsistencyLock;
 
             /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize
              * after first call. Instead of applying progress handling to initial download stream after-the-fact,
@@ -121,12 +125,18 @@ namespace Azure.Storage.Blobs
                 // a large blob, we'll get its full size in Content-Range and
                 // can keep downloading it in segments.
                 var initialRange = new HttpRange(0, _initialRangeSize);
+
+                BlobDownloadStreamingOptions initalStreamingOptions = new BlobDownloadStreamingOptions
+                {
+                    Range = initialRange,
+                    Conditions = conditions,
+                    ProgressHandler = _progress,
+                    IgnoreStrongConsistencyLock = _ignoreStrongConsistencyLock,
+                };
+
                 Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
                     _client.DownloadStreamingAsync(
-                        initialRange,
-                        conditions,
-                        rangeGetContentHash: default,
-                        _progress,
+                        initalStreamingOptions,
                         cancellationToken);
 
                 Response<BlobDownloadStreamingResult> initialResponse = null;
@@ -136,11 +146,15 @@ namespace Azure.Storage.Blobs
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
+                    BlobDownloadStreamingOptions errorStreamingOptions = new BlobDownloadStreamingOptions
+                    {
+                        Conditions = conditions,
+                        ProgressHandler = _progress,
+                        IgnoreStrongConsistencyLock= _ignoreStrongConsistencyLock,
+                    };
+
                     initialResponse = await _client.DownloadStreamingAsync(
-                        range: default,
-                        conditions,
-                        rangeGetContentHash: default,
-                        _progress,
+                        errorStreamingOptions,
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -190,11 +204,16 @@ namespace Azure.Storage.Blobs
                 {
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
+                    BlobDownloadStreamingOptions downloadOptions = new BlobDownloadStreamingOptions
+                    {
+                        Range = httpRange,
+                        Conditions = conditionsWithEtag,
+                        ProgressHandler = _progress,
+                        IgnoreStrongConsistencyLock = _ignoreStrongConsistencyLock
+                    };
+
                     runningTasks.Enqueue(_client.DownloadStreamingAsync(
-                        httpRange,
-                        conditionsWithEtag,
-                        rangeGetContentHash: default,
-                        _progress,
+                        downloadOptions,
                         cancellationToken));
 
                     // If we have fewer tasks than alotted workers, then just
@@ -268,22 +287,31 @@ namespace Azure.Storage.Blobs
                 var initialRange = new HttpRange(0, _initialRangeSize);
                 Response<BlobDownloadStreamingResult> initialResponse;
 
+                BlobDownloadStreamingOptions initalStreamingOptions = new BlobDownloadStreamingOptions
+                {
+                    Range = initialRange,
+                    Conditions = conditions,
+                    ProgressHandler = _progress,
+                    IgnoreStrongConsistencyLock = _ignoreStrongConsistencyLock
+                };
+
                 try
                 {
                     initialResponse = _client.DownloadStreaming(
-                        initialRange,
-                        conditions,
-                        rangeGetContentHash: default,
-                        _progress,
+                        initalStreamingOptions,
                         cancellationToken);
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
+                    BlobDownloadStreamingOptions errorStreamingOptions = new BlobDownloadStreamingOptions
+                    {
+                        Conditions = conditions,
+                        ProgressHandler = _progress,
+                        IgnoreStrongConsistencyLock = _ignoreStrongConsistencyLock
+                    };
+
                     initialResponse = _client.DownloadStreaming(
-                        range: default,
-                        conditions,
-                        rangeGetContentHash: default,
-                        _progress,
+                        errorStreamingOptions,
                         cancellationToken);
                 }
 
@@ -317,11 +345,16 @@ namespace Azure.Storage.Blobs
                     // Don't need to worry about 304s here because the ETag
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
+                    BlobDownloadStreamingOptions streamingOptions = new BlobDownloadStreamingOptions
+                    {
+                        Range = httpRange,
+                        Conditions = conditionsWithEtag,
+                        ProgressHandler = _progress,
+                        IgnoreStrongConsistencyLock = _ignoreStrongConsistencyLock
+                    };
+
                     Response<BlobDownloadStreamingResult> result = _client.DownloadStreaming(
-                        httpRange,
-                        conditionsWithEtag,
-                        rangeGetContentHash: default,
-                        _progress,
+                        streamingOptions,
                         cancellationToken);
                     CopyTo(result.Value, destination, cancellationToken);
                 }

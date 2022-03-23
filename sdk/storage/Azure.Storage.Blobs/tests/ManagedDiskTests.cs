@@ -155,7 +155,11 @@ namespace Azure.Storage.Blobs.Tests.ManagedDisk
         private async Task<byte[]> DownloadRange(PageBlobClient client, HttpRange range)
         {
             var memoryStream = new MemoryStream();
-            using BlobDownloadStreamingResult result1 = await client.DownloadStreamingAsync(range: range);
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                Range = range
+            };
+            using BlobDownloadStreamingResult result1 = await client.DownloadStreamingAsync(options);
             await result1.Content.CopyToAsync(memoryStream);
             return memoryStream.ToArray();
         }

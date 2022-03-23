@@ -900,8 +900,13 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(stream);
             }
 
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                Range = new HttpRange(offset, count)
+            };
+
             // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(range: new HttpRange(offset, count));
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(options);
 
             // Assert
             Assert.AreEqual(count, response.Value.Details.ContentLength);
@@ -962,8 +967,13 @@ namespace Azure.Storage.Blobs.Test
                 parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
+                BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(conditions: accessConditions);
+                Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(options);
 
                 // Assert
                 Assert.AreEqual(data.Length, response.Value.Details.ContentLength);
@@ -993,8 +1003,13 @@ namespace Azure.Storage.Blobs.Test
                 parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
+                BlobDownloadContentOptions options = new BlobDownloadContentOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
-                Response<BlobDownloadResult> response = await blob.DownloadContentAsync(conditions: accessConditions);
+                Response<BlobDownloadResult> response = await blob.DownloadContentAsync(options);
 
                 // Assert
                 Assert.AreEqual(data.Length, response.Value.Details.ContentLength);
@@ -1050,12 +1065,16 @@ namespace Azure.Storage.Blobs.Test
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
+                BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+                {
+                    Conditions = accessConditions,
+                };
+
                 // Act
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        var _ = (await blob.DownloadStreamingAsync(
-                            conditions: accessConditions)).Value;
+                        var _ = (await blob.DownloadStreamingAsync(options)).Value;
                     });
             }
         }
@@ -1079,12 +1098,16 @@ namespace Azure.Storage.Blobs.Test
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
 
+                BlobDownloadContentOptions options = new BlobDownloadContentOptions
+                {
+                    Conditions = accessConditions
+                };
+
                 // Act
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        var _ = (await blob.DownloadContentAsync(
-                            conditions: accessConditions)).Value;
+                        var _ = (await blob.DownloadContentAsync(options)).Value;
                     });
             }
         }
@@ -1114,8 +1137,20 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blob.DownloadAsync(conditions: conditions);
-            await blob.DownloadStreamingAsync(conditions: conditions);
-            await blob.DownloadContentAsync(conditions: conditions);
+
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                Conditions = conditions
+            };
+
+            await blob.DownloadStreamingAsync(options);
+
+            BlobDownloadContentOptions downloadContentOptions = new BlobDownloadContentOptions
+            {
+                Conditions = conditions
+            };
+
+            await blob.DownloadContentAsync(downloadContentOptions);
         }
 
         [RecordedTest]
@@ -1135,6 +1170,16 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                Conditions = conditions
+            };
+
+            BlobDownloadContentOptions downloadContentOptions = new BlobDownloadContentOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.DownloadAsync(
@@ -1142,11 +1187,11 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.DownloadStreamingAsync(
-                    conditions: conditions),
+                    options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.DownloadContentAsync(
-                    conditions: conditions),
+                    downloadContentOptions),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1190,10 +1235,14 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(stream);
             }
 
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                Range = new HttpRange(offset, count),
+                RangeGetContentHash = true
+            };
+
             // Act
-            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(
-                range: new HttpRange(offset, count),
-                rangeGetContentHash: true);
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(options);
 
             // Assert
             var expectedMD5 = MD5.Create().ComputeHash(data.Skip(offset).Take(count).ToArray());
@@ -1320,9 +1369,14 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(stream);
             }
 
+            BlobDownloadContentOptions options = new BlobDownloadContentOptions
+            {
+                Conditions = default
+            };
+
             Verify(await blob.DownloadContentAsync());
             Verify(await blob.DownloadContentAsync(CancellationToken.None));
-            Verify(await blob.DownloadContentAsync(conditions: default));
+            Verify(await blob.DownloadContentAsync(options));
 
             void Verify(Response<BlobDownloadResult> response)
             {
@@ -1546,12 +1600,16 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(stream);
             }
 
-            // Add conditions to cause a failure and ensure we don't explode
-            Response<BlobDownloadResult> result = await blob.DownloadContentAsync(
-                new BlobRequestConditions
+            BlobDownloadContentOptions options = new BlobDownloadContentOptions
+            {
+                Conditions = new BlobRequestConditions
                 {
                     IfModifiedSince = Recording.UtcNow
-                });
+                }
+            };
+
+            // Add conditions to cause a failure and ensure we don't explode
+            Response<BlobDownloadResult> result = await blob.DownloadContentAsync(options);
             Assert.AreEqual(304, result.GetRawResponse().Status);
         }
 
@@ -1568,12 +1626,16 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(stream);
             }
 
-            // Add conditions to cause a failure and ensure we don't explode
-            Response<BlobDownloadStreamingResult> result = await blob.DownloadStreamingAsync(
-                conditions: new BlobRequestConditions
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                Conditions = new BlobRequestConditions
                 {
                     IfModifiedSince = Recording.UtcNow
-                });
+                }
+            };
+
+            // Add conditions to cause a failure and ensure we don't explode
+            Response<BlobDownloadStreamingResult> result = await blob.DownloadStreamingAsync(options);
             Assert.AreEqual(304, result.GetRawResponse().Status);
         }
 
@@ -1597,6 +1659,123 @@ namespace Azure.Storage.Blobs.Test
                     IfModifiedSince = Recording.UtcNow
                 });
             Assert.AreEqual(304, result.GetRawResponse().Status);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task DownloadContentAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobDownloadContentOptions options = new BlobDownloadContentOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(options);
+            Assert.IsNotNull(response.Value.Details.ETag);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task DownloadSteamingAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(options);
+            Assert.IsNotNull(response.Value.Details.ETag);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task DownloadToAsync_Stream_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Upload a blob
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobDownloadToOptions options = new BlobDownloadToOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            using (var resultStream = new MemoryStream(data))
+            {
+                await blob.DownloadToAsync(resultStream, options);
+                Assert.AreEqual(data.Length, resultStream.Length);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task DownloadToAsync_Path_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            var path = Path.GetTempFileName();
+            try
+            {
+                BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+                await using DisposingContainer test = await GetTestContainerAsync(service);
+
+                // Upload a blob
+                var data = GetRandomBuffer(Constants.KB);
+                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                BlobDownloadToOptions options = new BlobDownloadToOptions
+                {
+                    IgnoreStrongConsistencyLock = true
+                };
+
+                // Act
+                Response reponse = await blob.DownloadToAsync(path, options);
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         [RecordedTest]

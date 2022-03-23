@@ -35,8 +35,13 @@ namespace Azure.Storage.Blobs.Tests
             var client = test.Container.GetBlobClient(BlobsClientBuilder.GetNewBlobName());
             await client.UploadAsync(BinaryData.FromBytes(data));
 
+            BlobDownloadContentOptions options = new BlobDownloadContentOptions
+            {
+                ProgressHandler = progress,
+            };
+
             // Act
-            var result = await client.DownloadContentAsync(progressHandler: progress);
+            var result = await client.DownloadContentAsync(options);
 
             // Assert
             Assert.AreNotEqual(0, progress.List.Count);
@@ -60,10 +65,14 @@ namespace Azure.Storage.Blobs.Tests
             var client = test.Container.GetBlobClient(BlobsClientBuilder.GetNewBlobName());
             await client.UploadAsync(BinaryData.FromBytes(data));
 
+            BlobDownloadContentOptions options = new BlobDownloadContentOptions
+            {
+                ProgressHandler = progress,
+                Range = new HttpRange(offset, length)
+            };
+
             // Act
-            var result = await client.DownloadContentAsync(
-                progressHandler: progress,
-                range: new HttpRange(offset, length));
+            var result = await client.DownloadContentAsync(options);
 
             // Assert
             Assert.AreNotEqual(0, progress.List.Count);
@@ -84,9 +93,13 @@ namespace Azure.Storage.Blobs.Tests
             var client = test.Container.GetBlobClient(BlobsClientBuilder.GetNewBlobName());
             await client.UploadAsync(BinaryData.FromBytes(data));
 
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                ProgressHandler = progress,
+            };
+
             // Act
-            var result = await client.DownloadStreamingAsync(
-                progressHandler: progress);
+            var result = await client.DownloadStreamingAsync(options);
             var downloadedData = new byte[result.Value.Details.ContentLength];
             using (Stream ms = new MemoryStream(downloadedData))
             {
@@ -114,10 +127,14 @@ namespace Azure.Storage.Blobs.Tests
             var client = test.Container.GetBlobClient(BlobsClientBuilder.GetNewBlobName());
             await client.UploadAsync(BinaryData.FromBytes(data));
 
+            BlobDownloadStreamingOptions options = new BlobDownloadStreamingOptions
+            {
+                ProgressHandler = progress,
+                Range = new HttpRange(offset, length)
+            };
+
             // Act
-            var result = await client.DownloadStreamingAsync(
-                progressHandler: progress,
-                range: new HttpRange(offset, length));
+            var result = await client.DownloadStreamingAsync(options);
             var downloadedData = new byte[result.Value.Details.ContentLength];
             using (Stream ms = new MemoryStream(downloadedData))
             {

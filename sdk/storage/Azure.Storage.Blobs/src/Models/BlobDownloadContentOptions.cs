@@ -2,35 +2,30 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Options for reading a blob to a destination.
+    /// Optional parameters for DownloadContent().
     /// </summary>
-    public class BlobDownloadToOptions
+    public class BlobDownloadContentOptions
     {
         /// <summary>
-        /// Request conditions for downloading.
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// downloading this blob.
         /// </summary>
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
-        /// Progress handler for tracking download progress.
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Transfer options for managing individual read requests.
+        /// Optional range of the blob to download.
         /// </summary>
-        public StorageTransferOptions TransferOptions { get; set; }
-
-        // TODO #27253
-        ///// <summary>
-        ///// Transactional hashing options for data integrity checks.
-        ///// </summary>
-        //public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        public HttpRange Range { get; set; }
 
         /// <summary>
         /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
