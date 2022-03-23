@@ -515,14 +515,11 @@ function CreateMatrixCombinationScalar([MatrixParameter[]]$permutation, [Hashtab
 
     # The maximum allowed matrix name length is 100 characters
     $name = $names -join "_"
+    if ($name -and $name[0] -match "^[0-9]") {
+        $name = "job_" + $name  # Azure Pipelines only supports job names starting with letters
+    }
     if ($name.Length -gt 100) {
         $name = $name[0..99] -join ""
-    }
-    $stripped = $name -replace "^[^A-Za-z]*", ""  # strip leading digits
-    if ($stripped -eq "") {
-        $name = "job_" + $name  # Handle names that consist entirely of numbers
-    } else {
-        $name = $stripped
     }
 
     return @{
