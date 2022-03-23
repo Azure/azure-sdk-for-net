@@ -298,7 +298,12 @@ namespace Azure.Storage.Blobs.Test
             // Ensure at least one container
             await using DisposingContainer test = await GetTestContainerAsync(service: service, containerName: containerName);
 
-            AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(prefix: prefix);
+            GetBlobContainersOptions options = new GetBlobContainersOptions
+            {
+                Prefix = prefix,
+            };
+
+            AsyncPageable<BlobContainerItem> containers = service.GetBlobContainersAsync(options);
             IList<BlobContainerItem> items = await containers.ToListAsync();
             // Assert
             Assert.AreNotEqual(0, items.Count());
@@ -318,8 +323,13 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
             await test.Container.SetMetadataAsync(metadata);
 
+            GetBlobContainersOptions options = new GetBlobContainersOptions
+            {
+                Traits = BlobContainerTraits.Metadata,
+            };
+
             // Act
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(options).ToListAsync();
 
             // Assert
             AssertDictionaryEquality(
@@ -338,8 +348,13 @@ namespace Azure.Storage.Blobs.Test
             await containerClient.CreateAsync();
             await containerClient.DeleteAsync();
 
+            GetBlobContainersOptions options = new GetBlobContainersOptions
+            {
+                States = BlobContainerStates.Deleted
+            };
+
             // Act
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(options).ToListAsync();
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // Assert
@@ -371,8 +386,13 @@ namespace Azure.Storage.Blobs.Test
 
             await service.SetPropertiesAsync(properties);
 
+            GetBlobContainersOptions options = new GetBlobContainersOptions
+            {
+                States = BlobContainerStates.System
+            };
+
             // Act
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.System).ToListAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(options).ToListAsync();
             BlobContainerItem logsBlobContainerItem = containers.Where(r => r.Name == "$web").FirstOrDefault();
 
             // Assert
@@ -395,6 +415,28 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetBlobContainersAsync().AsPages(continuationToken: "garbage").FirstAsync(),
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task ListContainersSegmentAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+
+            // Ensure at least one container
+            await using DisposingContainer test = await GetTestContainerAsync(service: service);
+
+            GetBlobContainersOptions options = new GetBlobContainersOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(options).ToListAsync();
+
+            // Assert
+            Assert.IsTrue(containers.Count() >= 1);
         }
 
         [RecordedTest]
@@ -775,7 +817,13 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync();
             await container.DeleteAsync();
-            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+
+            GetBlobContainersOptions options = new GetBlobContainersOptions
+            {
+                States = BlobContainerStates.Deleted
+            };
+
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(options).ToListAsync();
             BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
 
             // It takes some time for the Container to be deleted.

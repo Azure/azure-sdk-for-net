@@ -437,6 +437,78 @@ namespace Azure.Storage.Blobs
         /// see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
         /// List Containers</see>.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobContainerItem}"/>
+        /// describing the blob containers in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobContainerItem> GetBlobContainers(
+            GetBlobContainersOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobContainersAsyncCollection(
+                client: this,
+                traits: options?.Traits ?? BlobContainerTraits.None,
+                states: options?.States ?? BlobContainerStates.None,
+                prefix: options?.Prefix,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobContainersAsync(GetBlobContainersOptions, CancellationToken)"/>
+        /// operation returns an async sequence of blob containers in the storage account.  Enumerating the
+        /// blob containers may make multiple requests to the service while fetching
+        /// all the values.  Containers are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// containers in the storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
+            GetBlobContainersOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobContainersAsyncCollection(
+                client: this,
+                traits: options?.Traits ?? BlobContainerTraits.None,
+                states: options?.States ?? BlobContainerStates.None,
+                prefix: options?.Prefix,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
+                .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobContainers(GetBlobContainersOptions, CancellationToken)"/>
+        /// operation returns a sequence of blob containers in the storage account.  Enumerating the
+        /// blob containers may make multiple requests to the service while fetching
+        /// all the values.  Containers are ordered lexicographically by name.
+        ///
+        /// For more information,
+        /// see <see href="https://docs.microsoft.com/rest/api/storageservices/list-containers2">
+        /// List Containers</see>.
+        /// </summary>
         /// <param name="traits">
         /// Specifies trait options for shaping the blob containers.
         /// </param>
@@ -459,12 +531,21 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<BlobContainerItem> GetBlobContainers(
-            BlobContainerTraits traits = BlobContainerTraits.None,
-            BlobContainerStates states = BlobContainerStates.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, traits, states, prefix).ToSyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobContainerTraits traits,
+            BlobContainerStates states,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobContainersAsyncCollection(
+                client: this,
+                traits: traits,
+                states: states,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainers(BlobContainerTraits, string, CancellationToken)"/> operation returns an async
@@ -502,7 +583,13 @@ namespace Azure.Storage.Blobs
             BlobContainerTraits traits,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobContainersAsyncCollection(this, traits, default, prefix).ToSyncCollection(cancellationToken);
+            new GetBlobContainersAsyncCollection(
+                client: this,
+                traits: traits,
+                states: default,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersAsync(BlobContainerTraits, BlobContainerStates, string, CancellationToken)"/>
@@ -536,12 +623,21 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<BlobContainerItem> GetBlobContainersAsync(
-            BlobContainerTraits traits = BlobContainerTraits.None,
-            BlobContainerStates states = BlobContainerStates.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobContainersAsyncCollection(this, traits, states, prefix).ToAsyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobContainerTraits traits,
+            BlobContainerStates states,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobContainersAsyncCollection(
+                client: this,
+                traits: traits,
+                states: states,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersAsync(BlobContainerTraits, string, CancellationToken)"/>
@@ -579,7 +675,13 @@ namespace Azure.Storage.Blobs
             BlobContainerTraits traits,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobContainersAsyncCollection(this, traits, default, prefix).ToAsyncCollection(cancellationToken);
+            new GetBlobContainersAsyncCollection(
+                client: this,
+                traits: traits,
+                states: default,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobContainersInternal"/> operation returns a
@@ -618,6 +720,10 @@ namespace Azure.Storage.Blobs
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -641,6 +747,7 @@ namespace Azure.Storage.Blobs
 #pragma warning restore CA1801 // Review unused parameters
             string prefix,
             int? pageSizeHint,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -667,6 +774,7 @@ namespace Azure.Storage.Blobs
                             marker: continuationToken,
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -677,6 +785,7 @@ namespace Azure.Storage.Blobs
                             marker: continuationToken,
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 

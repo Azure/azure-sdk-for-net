@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-04-10")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-08-06")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListContainersSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout)
+        internal HttpMessage CreateListContainersSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -283,6 +283,10 @@ namespace Azure.Storage.Blobs
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -293,10 +297,11 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListContainersSegmentRequest(prefix, marker, maxresults, include, timeout);
+            using var message = CreateListContainersSegmentRequest(prefix, marker, maxresults, include, timeout, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceListContainersSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -322,10 +327,11 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListContainersSegmentRequest(prefix, marker, maxresults, include, timeout);
+            using var message = CreateListContainersSegmentRequest(prefix, marker, maxresults, include, timeout, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceListContainersSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -656,7 +662,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateListContainersSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout)
+        internal HttpMessage CreateListContainersSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -666,6 +672,10 @@ namespace Azure.Storage.Blobs
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -677,16 +687,17 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders>> ListContainersSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListContainersSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListContainersSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceListContainersSegmentHeaders(message.Response);
             switch (message.Response.Status)
@@ -713,16 +724,17 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
         /// <param name="include"> Include this parameter to specify that the container&apos;s metadata be returned as part of the response body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> ListContainersSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListContainersIncludeType> include = null, int? timeout = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateListContainersSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
+            using var message = CreateListContainersSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceListContainersSegmentHeaders(message.Response);
             switch (message.Response.Status)
