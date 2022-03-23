@@ -130,7 +130,7 @@ namespace Azure.Service.SubClients
     }
 }
 
-//subclient: Parameter Generated\Parameter.cs
+//subclient: Client2 Generated\Client2.cs
 namespace Azure.Service.SubClients
 {
 -   public partial class Client2Client
@@ -201,7 +201,7 @@ namespace Azure.Service.SubClients
 //Promote Parent client to service client: Client1Client Generated\Client1Client.cs
 namespace Azure.Service.SubClients
 {
-    public partial class Client1ClientOptions
+    public partial class Client1Client
     {
 -        public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, SubClientsClientOptions options = null)
 +        public Client1Client(string endpoint, string cachedParameter, AzureKeyCredential credential, Client1ClientOptions options = null)
