@@ -100,35 +100,29 @@ namespace Azure.Identity.Tests
             TestSetup();
             var _transport = new MockTransport((req) =>
             {
+                // respond to tenant discovery
                 if (req.Uri.Path.StartsWith("/common/discovery"))
                 {
                     return new MockResponse(200).SetContent(DiscoveryResponseBody);
                 }
-
+                // respond to token request
                 if (req.Uri.Path.EndsWith("/token"))
                 {
-                    if (sendCertChain)
-                    {
-                        Assert.IsTrue(RequestBodyHasUserAssertionWithHeader(req, "x5c"));
-                    }
-                    else
-                    {
-                        Assert.IsFalse(RequestBodyHasUserAssertionWithHeader(req, "x5c"));
-                    }
-
+                    Assert.That(sendCertChain, Is.EqualTo(RequestBodyHasUserAssertionWithHeader(req, "x5c")));
                     return new MockResponse(200).WithContent(
-                        $"{{\"token_type\": \"Bearer\",\"expires_in\": 3599,\"ext_expires_in\": 3599,\"access_token\": \"{expectedToken}\" }}");
+                        $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{expectedToken}\" }}");
                 }
 
                 return new MockResponse(200);
             });
-            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
-            options = new OnBehalfOfCredentialOptions();
-            ((OnBehalfOfCredentialOptions)options).SendCertificateChain = sendCertChain;
+            var _pipeline = new HttpPipeline(_transport,
+                new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
             var context = new TokenRequestContext(new[] {Scope}, tenantId: TenantId);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
-            var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
+
+            options = new OnBehalfOfCredentialOptions();
+            ((OnBehalfOfCredentialOptions)options).SendCertificateChain = sendCertChain;
             OnBehalfOfCredential client = InstrumentClient(
                 new OnBehalfOfCredential(
                     TenantId,
@@ -141,51 +135,6 @@ namespace Azure.Identity.Tests
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
-        }
-
-        private bool RequestBodyHasUserAssertionWithHeader(Request req, string headerName)
-        {
-            req.Content.TryComputeLength(out var len);
-            byte[] content = new byte[len];
-            var stream = new MemoryStream((int)len);
-            req.Content.WriteTo(stream, default);
-            var body = Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
-            var parts = body.Split('&');
-            foreach (var part in parts)
-            {
-                if (part.StartsWith("client_assertion="))
-                {
-                    var assertion = part.AsSpan();
-                    int start = assertion.IndexOf('=') + 1;
-                    assertion = assertion.Slice(start);
-                    int end = assertion.IndexOf('.');
-                    var jwt = assertion.Slice(0, end);
-                    string convertedToken = jwt.ToString().Replace('_', '/').Replace('-', '+');
-                    switch (jwt.Length % 4)
-                    {
-                        case 2:
-                            convertedToken += "==";
-                            break;
-                        case 3:
-                            convertedToken += "=";
-                            break;
-                    }
-                    Utf8JsonReader reader = new Utf8JsonReader(Convert.FromBase64String(convertedToken));
-                    while (reader.Read())
-                    {
-                        if (reader.TokenType == JsonTokenType.PropertyName)
-                        {
-                            var header = reader.GetString();
-                            if (header == headerName)
-                            {
-                                return true;
-                            }
-                            reader.Read();
-                        }
-                    }
-                }
-            }
-            return false;
         }
     }
 }
