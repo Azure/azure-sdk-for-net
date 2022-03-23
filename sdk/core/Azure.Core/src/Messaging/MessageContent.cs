@@ -5,12 +5,12 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure
+namespace Azure.Messaging
 {
     /// <summary>
-    /// Content containing a content type along with its data.
+    /// The content of a message containing a content type along with the message data.
     /// </summary>
-    public class BinaryContent
+    public class MessageContent
     {
         /// <summary>
         /// Gets or sets the data.
@@ -35,7 +35,7 @@ namespace Azure
         protected virtual ContentType? ContentTypeCore { get; set; }
 
         /// <summary>
-        /// Gets whether the content is read only or not. This
+        /// Gets whether the message is read only or not. This
         /// can be overriden by inheriting classes to specify whether or
         /// not the message can be modified.
         /// </summary>

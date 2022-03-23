@@ -1,6 +1,6 @@
 namespace Azure.Messaging.EventHubs
 {
-    public partial class EventData : Azure.BinaryContent
+    public partial class EventData : Azure.Messaging.MessageContent
     {
         public EventData() { }
         public EventData(System.BinaryData eventBody) { }
