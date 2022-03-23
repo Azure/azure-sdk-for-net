@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         CertificateClientOptions.ServiceVersion.V7_0,
         CertificateClientOptions.ServiceVersion.V7_1,
         CertificateClientOptions.ServiceVersion.V7_2,
-        CertificateClientOptions.ServiceVersion.V7_3_Preview)]
+        CertificateClientOptions.ServiceVersion.V7_3)]
     [NonParallelizable]
     public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
@@ -42,8 +42,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
-            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
-            CompareBodies = false;
         }
 
         internal CertificateClient GetClient()

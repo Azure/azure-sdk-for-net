@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
     /// </summary>
     [ClientTestFixture(
         KeyVaultAdministrationClientOptions.ServiceVersion.V7_2,
-        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3_Preview)]
+        KeyVaultAdministrationClientOptions.ServiceVersion.V7_3)]
     public abstract class AdministrationTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
