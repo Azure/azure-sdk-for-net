@@ -168,7 +168,7 @@ function Confirm-ChangeLogEntry {
   if ($ForRelease -eq $True)
   {
     LogDebug "Verifying like it's a release build because ForRelease parameter is set to true"
-    return Confirm-LikeForRelease -changeLogEntry $changeLogEntry
+    return Confirm-LikeForRelease -changeLogEntry $changeLogEntry -changeLogFileDateHistory $changeLogEntries.Values.ReleaseStatus
   }
 
   # If the release status is a valid date then verify like its about to be released
@@ -176,7 +176,7 @@ function Confirm-ChangeLogEntry {
   if ($status -as [DateTime])
   {
     LogDebug "Verifying like it's a release build because the changelog entry has a valid date."
-    return Confirm-LikeForRelease -changeLogEntry $changeLogEntry
+    return Confirm-LikeForRelease -changeLogEntry $changeLogEntry -changeLogFileDateHistory $changeLogEntries.Values.ReleaseStatus
   }
 
   return $true
@@ -326,7 +326,9 @@ function  Get-LatestReleaseDateFromChangeLog
 function Confirm-LikeForRelease {
   param (
     [Parameter(Mandatory = $true)]
-    $changeLogEntry
+    $changeLogEntry,
+    [Parameter(Mandatory = $true)]
+    $changeLogFileDateHistory
   )
 
   $isValid = $true
@@ -343,9 +345,11 @@ function Confirm-LikeForRelease {
         LogError "Date must be in the format $($CHANGELOG_DATE_FORMAT). See https://aka.ms/azsdk/guideline/changelogs for more info."
         $isValid = $false
       }
-      if (((Get-Date).AddMonths(-1) -gt $releaseDate) -or ($releaseDate -gt (Get-Date).AddMonths(1)))
+
+      $dateHistory = $changeLogFileDateHistory | ForEach-Object { $_.Trim("()") } | Sort-Object -Descending
+      if (@($dateHistory)[0] -ne $status)
       {
-        LogError "The date must be within +/- one month from today. See https://aka.ms/azsdk/guideline/changelogs for more info."
+        LogError "Invalid date [ $status ]. The date for the changelog being released must be the latest in the file."
         $isValid = $false
       }
     }
