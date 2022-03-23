@@ -4,7 +4,7 @@ The Azure IoT Models Repository Client enables builders to manage and share digi
 
 For more info about the Azure IoT Models Repository checkout the [docs][modelsrepository_msdocs].
 
->Note: The models repository is also referred as DMR (DTDL Models Repository)
+> Note: The models repository is also referred as DMR (DTDL Models Repository)
 
 ## Introduction
 
