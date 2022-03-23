@@ -27,5 +27,11 @@ namespace Azure.Storage.Blobs.Models
         /// conditions on getting page ranges for the this blob.
         /// </summary>
         public PageBlobRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </summary>
+        public bool? IgnoreStrongConsistencyLock { get; set; }
     }
 }

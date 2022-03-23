@@ -754,7 +754,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesRequest(string snapshot, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults)
+        internal HttpMessage CreateGetPageRangesRequest(string snapshot, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -808,6 +808,10 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -824,10 +828,11 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesAsync(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -859,10 +864,11 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRanges(string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -882,7 +888,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesDiffRequest(string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults)
+        internal HttpMessage CreateGetPageRangesDiffRequest(string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -944,6 +950,10 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -962,10 +972,11 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffAsync(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -999,10 +1010,11 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiff(string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -1331,7 +1343,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesNextPageRequest(string nextLink, string snapshot, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults)
+        internal HttpMessage CreateGetPageRangesNextPageRequest(string nextLink, string snapshot, int? timeout, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1369,6 +1381,10 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1386,16 +1402,17 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders>> GetPageRangesNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetPageRangesNextPageRequest(nextLink, snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesNextPageRequest(nextLink, snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1428,16 +1445,17 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRangesNextPage(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> GetPageRangesNextPage(string nextLink, string snapshot = null, int? timeout = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetPageRangesNextPageRequest(nextLink, snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesNextPageRequest(nextLink, snapshot, timeout, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesHeaders(message.Response);
             switch (message.Response.Status)
@@ -1457,7 +1475,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPageRangesDiffNextPageRequest(string nextLink, string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults)
+        internal HttpMessage CreateGetPageRangesDiffNextPageRequest(string nextLink, string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string marker, int? maxresults, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1499,6 +1517,10 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1518,16 +1540,17 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders>> GetPageRangesDiffNextPageAsync(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetPageRangesDiffNextPageRequest(nextLink, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesDiffNextPageRequest(nextLink, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)
@@ -1562,16 +1585,17 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
         /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiffNextPage(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> GetPageRangesDiffNextPage(string nextLink, string snapshot = null, int? timeout = null, string prevsnapshot = null, string prevSnapshotUrl = null, string range = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, string marker = null, int? maxresults = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetPageRangesDiffNextPageRequest(nextLink, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults);
+            using var message = CreateGetPageRangesDiffNextPageRequest(nextLink, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, marker, maxresults, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new PageBlobGetPageRangesDiffHeaders(message.Response);
             switch (message.Response.Status)

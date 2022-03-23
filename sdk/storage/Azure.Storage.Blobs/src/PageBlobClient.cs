@@ -1716,7 +1716,8 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshot: null,
                 previousSnapshotUri: null,
                 requestConditions: options?.Conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}")
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}",
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -1753,7 +1754,8 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshot: null,
                 previousSnapshotUri: null,
                 requestConditions: options?.Conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}")
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}",
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -1791,6 +1793,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on getting page ranges for the this blob.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1812,6 +1818,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange? range,
             string snapshot,
             PageBlobRequestConditions conditions,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1855,6 +1862,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1871,6 +1879,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2151,7 +2160,8 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshot: options?.PreviousSnapshot,
                 previousSnapshotUri: null,
                 requestConditions: options?.Conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}")
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2190,7 +2200,8 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshot: options?.PreviousSnapshot,
                 previousSnapshotUri: null,
                 requestConditions: options?.Conditions,
-                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}")
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2245,6 +2256,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="PageBlobRequestConditions"/> to add
         /// conditions on getting page ranges for the this blob.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2271,6 +2286,7 @@ namespace Azure.Storage.Blobs.Specialized
             string previousSnapshot,
             Uri previousSnapshotUri,
             PageBlobRequestConditions conditions,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             string operationName,
             CancellationToken cancellationToken)
@@ -2320,6 +2336,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2338,6 +2355,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             marker: marker,
                             maxresults: pageSizeHint,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 

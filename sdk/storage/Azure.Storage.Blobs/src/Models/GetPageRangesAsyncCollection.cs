@@ -21,6 +21,7 @@ namespace Azure.Storage.Blobs.Models
         private readonly Uri _previousSnapshotUri;
         private readonly PageBlobRequestConditions _requestConditions;
         private readonly string _operationName;
+        private readonly bool? _ignoreStrongConsistencyLock;
 
         public GetPageRangesAsyncCollection(
             bool diff,
@@ -30,7 +31,8 @@ namespace Azure.Storage.Blobs.Models
             string previousSnapshot,
             Uri previousSnapshotUri,
             PageBlobRequestConditions requestConditions,
-            string operationName)
+            string operationName,
+            bool? ignoreStrongConsistencyLock)
         {
             _diff = diff;
             _client = client;
@@ -40,6 +42,7 @@ namespace Azure.Storage.Blobs.Models
             _previousSnapshotUri = previousSnapshotUri;
             _requestConditions = requestConditions;
             _operationName = operationName;
+            _ignoreStrongConsistencyLock = ignoreStrongConsistencyLock;
         }
 
         public override async ValueTask<Page<PageBlobRange>> GetNextPageAsync(
@@ -62,6 +65,7 @@ namespace Azure.Storage.Blobs.Models
                         previousSnapshot: _previousSnapshot,
                         previousSnapshotUri: _previousSnapshotUri,
                         conditions: _requestConditions,
+                        ignoreStrongConsistencyLock: _ignoreStrongConsistencyLock,
                         async: true,
                         operationName: _operationName,
                         cancellationToken: cancellationToken)
@@ -77,6 +81,7 @@ namespace Azure.Storage.Blobs.Models
                         previousSnapshot: _previousSnapshot,
                         previousSnapshotUri: _previousSnapshotUri,
                         conditions: _requestConditions,
+                        ignoreStrongConsistencyLock: _ignoreStrongConsistencyLock,
                         async: false,
                         operationName: _operationName,
                         cancellationToken: cancellationToken)
@@ -101,6 +106,7 @@ namespace Azure.Storage.Blobs.Models
                         range: _range,
                         snapshot: _snapshot,
                         conditions: _requestConditions,
+                        ignoreStrongConsistencyLock: _ignoreStrongConsistencyLock,
                         async: true,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -113,6 +119,7 @@ namespace Azure.Storage.Blobs.Models
                         range: _range,
                         snapshot: _snapshot,
                         conditions: _requestConditions,
+                        ignoreStrongConsistencyLock: _ignoreStrongConsistencyLock,
                         async: false,
                         cancellationToken: cancellationToken)
                         .EnsureCompleted();

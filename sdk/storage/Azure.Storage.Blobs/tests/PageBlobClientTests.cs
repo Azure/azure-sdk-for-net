@@ -1685,6 +1685,39 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task GetPageRangesPageableAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            PageBlobClient pageBlob = await CreatePageBlobWithRangesAsync(test.Container);
+
+            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
+            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync(options))
+            {
+                pageBlobRanges.Add(pageBlobRange);
+            }
+
+            // Assert
+            Assert.AreEqual(2, pageBlobRanges.Count);
+
+            Assert.IsFalse(pageBlobRanges[0].IsClear);
+            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
+            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+
+            Assert.IsFalse(pageBlobRanges[1].IsClear);
+            Assert.AreEqual(2048, pageBlobRanges[1].Range.Offset);
+            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+        }
+
+        [RecordedTest]
         public async Task GetPageRangesDiffAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2353,6 +2386,52 @@ namespace Azure.Storage.Blobs.Test
                     Assert.AreEqual("The range specified is invalid for the current size of the resource.",
                         e.Message.Split('\n')[0]);
                 });
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task GetPageRangesDiffPageableAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            Tuple<PageBlobClient, string, string> setup = await CreatePageBlobForPageRangeDiff(test.Container);
+            PageBlobClient pageBlob = setup.Item1;
+            string prevSnapshot = setup.Item2;
+            string snapshot = setup.Item3;
+
+            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            {
+                PreviousSnapshot = prevSnapshot,
+                Snapshot = snapshot,
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
+            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesDiffAsync(options))
+            {
+                pageBlobRanges.Add(pageBlobRange);
+            }
+
+            // Assert
+            Assert.AreEqual(4, pageBlobRanges.Count);
+
+            Assert.IsFalse(pageBlobRanges[0].IsClear);
+            Assert.AreEqual(0, pageBlobRanges[0].Range.Offset);
+            Assert.AreEqual(1024, pageBlobRanges[0].Range.Length);
+
+            Assert.IsTrue(pageBlobRanges[1].IsClear);
+            Assert.AreEqual(1024, pageBlobRanges[1].Range.Offset);
+            Assert.AreEqual(1024, pageBlobRanges[1].Range.Length);
+
+            Assert.IsFalse(pageBlobRanges[2].IsClear);
+            Assert.AreEqual(2048, pageBlobRanges[2].Range.Offset);
+            Assert.AreEqual(1024, pageBlobRanges[2].Range.Length);
+
+            Assert.IsTrue(pageBlobRanges[3].IsClear);
+            Assert.AreEqual(3072, pageBlobRanges[3].Range.Offset);
+            Assert.AreEqual(1024, pageBlobRanges[3].Range.Length);
         }
 
         [RecordedTest]
