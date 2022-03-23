@@ -10,11 +10,11 @@ You should have HLC SDK generated in `azure-sdk-for-net/sdk/<service name>/<pack
 
 In order to generate protocol methods in RestClient, you would have to define `protocol-method-list` config in your `autorest.md` file. You can find `autorest.md` file path in `azure-sdk-for-net/sdk/<service name>/<package name>/src/autorest.md`. This config takes a list of full operationIds defined in the swagger. 
 
-For this example I'm going to use `Azure.DigitalTwins.Core` SDK. You can find swagger definition for DigitalTwins service [here](https://github.com/Azure/azure-rest-api-specs/blob/14fb40342c19f8b483e132038f8424ee62b745d9/specification/digitaltwins/data-plane/Microsoft.DigitalTwins/stable/2020-10-31/digitaltwins.json) and autorest.md path [here](https://github.com/azure-sdk/azure-sdk-for-net/blob/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/digitaltwins/Azure.DigitalTwins.Core/src/autorest.md).
+For this tutorial we are going to use `Azure.DigitalTwins.Core` SDK. You can find swagger definition for DigitalTwins service [here](https://github.com/Azure/azure-rest-api-specs/blob/14fb40342c19f8b483e132038f8424ee62b745d9/specification/digitaltwins/data-plane/Microsoft.DigitalTwins/stable/2020-10-31/digitaltwins.json), autorest.md path [here](https://github.com/azure-sdk/azure-sdk-for-net/blob/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/digitaltwins/Azure.DigitalTwins.Core/src/autorest.md) and Generated code [here](https://github.com/azure-sdk/azure-sdk-for-net/tree/17debdffe16df01ae196579c91ea22e77eddc96a/sdk/digitaltwins/Azure.DigitalTwins.Core/src/Generated).
 
 * ### Generated code before:
 
-In your Generated code you will find `DigitalTwinsRestClient.Delete` and `EventRoutesRestClient.GetById` methods are generated as HLC before adding `protocol-method-list` config.
+In Generated code you will find `DigitalTwinsRestClient.Delete` and `EventRoutesRestClient.GetById` methods are generated as HLC before adding `protocol-method-list` config.
 
 **(Generated/DigitalTwinsRestClient.cs)**:
 
