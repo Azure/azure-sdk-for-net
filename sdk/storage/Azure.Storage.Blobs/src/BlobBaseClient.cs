@@ -3396,6 +3396,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ShouldSealDestination,
                 options?.DestinationImmutabilityPolicy,
                 options?.LegalHold,
+                options?.IgnoreStrongConsistencyLock,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3484,6 +3485,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sealBlob: default,
                 destinationImmutabilityPolicy: default,
                 legalHold: default,
+                ignoreStrongConsistencyLock: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3551,6 +3553,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ShouldSealDestination,
                 options?.DestinationImmutabilityPolicy,
                 options?.LegalHold,
+                options?.IgnoreStrongConsistencyLock,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3639,6 +3642,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sealBlob: default,
                 destinationImmutabilityPolicy: default,
                 legalHold: default,
+                ignoreStrongConsistencyLock: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3711,6 +3715,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -3737,6 +3745,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool? sealBlob,
             BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3792,6 +3801,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3818,6 +3828,7 @@ namespace Azure.Storage.Blobs.Specialized
                             immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiresOn,
                             immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 
@@ -4063,6 +4074,7 @@ namespace Azure.Storage.Blobs.Specialized
                 legalHold: options?.LegalHold,
                 sourceAuthentication: options?.SourceAuthentication,
                 copySourceTags: options?.CopySourceTagsMode,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
                 async: false,
                 cancellationToken: cancellationToken)
             .EnsureCompleted();
@@ -4117,6 +4129,7 @@ namespace Azure.Storage.Blobs.Specialized
                 legalHold: options?.LegalHold,
                 sourceAuthentication: options?.SourceAuthentication,
                 copySourceTags: options?.CopySourceTagsMode,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
                 async: true,
                 cancellationToken: cancellationToken)
             .ConfigureAwait(false);
@@ -4177,6 +4190,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// or replaced on the destination blob with the tags specified by <see cref="Tags"/>.
         /// Default is to replace.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -4203,6 +4220,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool? legalHold,
             HttpAuthorization sourceAuthentication,
             BlobCopySourceTagsMode? copySourceTags,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4258,6 +4276,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             copySourceTags: copySourceTags,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4284,6 +4303,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             copySourceTags: copySourceTags,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 
