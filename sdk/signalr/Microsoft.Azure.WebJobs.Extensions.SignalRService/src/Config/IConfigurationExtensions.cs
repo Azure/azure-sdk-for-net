@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 {
                     HubProtocol.NewtonsoftJson => new NewtonsoftJsonObjectSerializer(),
                     HubProtocol.SystemTextJson => new JsonObjectSerializer(),
-                    _ => throw new NotSupportedException($"The {Constants.AzureSignalRHubProtocol} setting value '{hubProtocolConfig}' is not supported."),
+                    _ => throw new InvalidOperationException($"The {Constants.AzureSignalRHubProtocol} setting value '{hubProtocolConfig}' is not supported."),
                 };
                 return true;
             }

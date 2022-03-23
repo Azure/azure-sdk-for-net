@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     /// <summary>
     /// An attribute class indicating a reference type which can replace a type in target RPs.

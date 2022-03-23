@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of SessionHostData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="objectId"> ObjectId of SessionHost. (internal use). </param>
         /// <param name="lastHeartBeat"> Last heart beat from SessionHost. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="lastUpdateTime"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateTime, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, type, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeat, int? sessions, string agentVersion, bool? allowNewSession, string virtualMachineId, string resourceId, string assignedUser, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxSStackVersion, UpdateState? updateState, DateTimeOffset? lastUpdateTime, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             LastHeartBeat = lastHeartBeat;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of BackupRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="backupName"> Name of the backup. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="storageAccountUrl"> SAS URL to the container. </param>
         /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
         /// <param name="databases"> Databases included in the backup. </param>
-        internal BackupRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string backupName, bool? enabled, string storageAccountUrl, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases) : base(id, name, type, systemData, kind)
+        internal BackupRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string backupName, bool? enabled, string storageAccountUrl, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases) : base(id, name, resourceType, systemData, kind)
         {
             BackupName = backupName;
             Enabled = enabled;

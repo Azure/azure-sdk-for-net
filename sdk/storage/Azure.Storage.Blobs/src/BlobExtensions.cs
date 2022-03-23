@@ -1390,6 +1390,90 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
+        #region ToPageBlobRanges
+        internal static PageBlobRange[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
+        }
+
+        internal static PageBlobRange[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
+        }
+
+        internal static PageBlobRange[] ToPageBlobRanges(
+            IReadOnlyList<PageRange> pageRanges,
+            IReadOnlyList<ClearRange> clearRanges)
+        {
+            List<PageBlobRange> pageBlobRangeList = new List<PageBlobRange>();
+
+            int pageRangeIndex = 0;
+            int clearRangeIndex = 0;
+
+            while (pageRangeIndex < pageRanges.Count
+                || clearRangeIndex < clearRanges.Count)
+            {
+                // Haven't ran out of page ranges or clear ranges yet.
+                if (pageRangeIndex < pageRanges.Count
+                    && clearRangeIndex < clearRanges.Count)
+                {
+                    // Next page range starts before next clear range.
+                    if (pageRanges[pageRangeIndex].Start <= clearRanges[clearRangeIndex].Start)
+                    {
+                        pageBlobRangeList.Add(new PageBlobRange
+                        {
+                            IsClear = false,
+                            Range = pageRanges[pageRangeIndex].ToHttpRange()
+                        });
+                        pageRangeIndex++;
+                    }
+                    // Next clear range starts before next page range.
+                    else
+                    {
+                        pageBlobRangeList.Add(new PageBlobRange
+                        {
+                            IsClear = true,
+                            Range = clearRanges[clearRangeIndex].ToHttpRange()
+                        });
+                        clearRangeIndex++;
+                    }
+                }
+                // We ran out of clear ranges.
+                else if (pageRangeIndex < pageRanges.Count)
+                {
+                    pageBlobRangeList.Add(new PageBlobRange
+                    {
+                        IsClear = false,
+                        Range = pageRanges[pageRangeIndex].ToHttpRange()
+                    });
+                    pageRangeIndex++;
+                }
+                // we ran out of filled ranges.
+                else
+                {
+                    pageBlobRangeList.Add(new PageBlobRange
+                    {
+                        IsClear = true,
+                        Range = clearRanges[clearRangeIndex].ToHttpRange()
+                    });
+                    clearRangeIndex++;
+                }
+            }
+
+            return pageBlobRangeList.ToArray();
+        }
+        #endregion ToPageBlobRanges
+
         #region ValidateConditionsNotPresent
         internal static void ValidateConditionsNotPresent(
             this RequestConditions requestConditions,

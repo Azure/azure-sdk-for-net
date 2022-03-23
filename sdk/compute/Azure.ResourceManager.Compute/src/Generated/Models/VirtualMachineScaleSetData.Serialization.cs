@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineScaleSetData DeserializeVirtualMachineScaleSetData(JsonElement element)
         {
-            Optional<Models.Sku> sku = default;
-            Optional<Models.Plan> plan = default;
+            Optional<ComputeSku> sku = default;
+            Optional<ComputePlan> plan = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<Models.ExtendedLocation> extendedLocation = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = Models.Plan.DeserializePlan(property.Value);
+                    plan = ComputePlan.DeserializeComputePlan(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

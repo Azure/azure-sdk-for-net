@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary> A class representing collection of SessionHost and their operations over its parent. </summary>
-    public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHost>, IAsyncEnumerable<SessionHost>
+    public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHostResource>, IAsyncEnumerable<SessionHostResource>
     {
         private readonly ClientDiagnostics _sessionHostClientDiagnostics;
         private readonly SessionHostsRestOperations _sessionHostRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SessionHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", SessionHost.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SessionHost.ResourceType, out string sessionHostApiVersion);
-            _sessionHostRestClient = new SessionHostsRestOperations(_sessionHostClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sessionHostApiVersion);
+            _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", SessionHostResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SessionHostResource.ResourceType, out string sessionHostApiVersion);
+            _sessionHostRestClient = new SessionHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sessionHostApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HostPool.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HostPool.ResourceType), nameof(id));
+            if (id.ResourceType != HostPoolResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HostPoolResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public async virtual Task<Response<SessionHost>> GetAsync(string sessionHostName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostResource>> GetAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
@@ -69,8 +68,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sessionHostClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public virtual Response<SessionHost> Get(string sessionHostName, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostResource> Get(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
@@ -98,8 +97,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken);
                 if (response.Value == null)
-                    throw _sessionHostClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: SessionHosts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SessionHost" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SessionHost> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SessionHostResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SessionHost>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SessionHostResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sessionHostRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SessionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SessionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<SessionHost>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SessionHostResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sessionHostRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SessionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SessionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: SessionHosts_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SessionHost" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SessionHost> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SessionHostResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SessionHost> FirstPageFunc(int? pageSizeHint)
+            Page<SessionHostResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sessionHostRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SessionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SessionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +173,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<SessionHost> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SessionHostResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sessionHostRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SessionHost(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SessionHostResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public async virtual Task<Response<SessionHost>> GetIfExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostResource>> GetIfExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
@@ -265,8 +264,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SessionHost>(null, response.GetRawResponse());
-                return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SessionHostResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        public virtual Response<SessionHost> GetIfExists(string sessionHostName, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostResource> GetIfExists(string sessionHostName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
 
@@ -294,8 +293,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SessionHost>(null, response.GetRawResponse());
-                return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SessionHostResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        IEnumerator<SessionHost> IEnumerable<SessionHost>.GetEnumerator()
+        IEnumerator<SessionHostResource> IEnumerable<SessionHostResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SessionHost> IAsyncEnumerable<SessionHost>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SessionHostResource> IAsyncEnumerable<SessionHostResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

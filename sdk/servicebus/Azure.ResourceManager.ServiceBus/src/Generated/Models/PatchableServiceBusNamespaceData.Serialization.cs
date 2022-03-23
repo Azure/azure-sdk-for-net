@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static PatchableServiceBusNamespaceData DeserializePatchableServiceBusNamespaceData(JsonElement element)
         {
-            Optional<Sku> sku = default;
+            Optional<ServiceBusSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = Sku.DeserializeSku(property.Value);
+                    sku = ServiceBusSku.DeserializeServiceBusSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))

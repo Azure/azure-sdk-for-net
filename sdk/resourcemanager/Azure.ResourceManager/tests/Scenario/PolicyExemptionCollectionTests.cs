@@ -23,73 +23,73 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtMgmtGroup()
         {
             //This test uses a pre-created management group.
-            ManagementGroup mgmtGroup = await GetCreatedManagementGroup();
+            ManagementGroupResource mgmtGroup = await GetCreatedManagementGroup();
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(mgmtGroup, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(mgmtGroup, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
-            PolicyExemption policyExemption = await CreatePolicyExemption(mgmtGroup, policyAssignment, policyExemptionName);
+            PolicyExemptionResource policyExemption = await CreatePolicyExemption(mgmtGroup, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdateAtResourceGroup()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
-            PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
+            PolicyExemptionResource policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdateAtSubscription()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(subscription, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
-            PolicyExemption policyExemption = await CreatePolicyExemption(subscription, policyAssignment, policyExemptionName);
+            PolicyExemptionResource policyExemption = await CreatePolicyExemption(subscription, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task CreateOrUpdateAtResource()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string vnName = Recording.GenerateAssetName("testVn-");
             GenericResource vn = await CreateGenericVirtualNetwork(subscription, rg, vnName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(vn, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(vn, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
-            PolicyExemption policyExemption = await CreatePolicyExemption(vn, policyAssignment, policyExemptionName);
+            PolicyExemptionResource policyExemption = await CreatePolicyExemption(vn, policyAssignment, policyExemptionName);
             Assert.AreEqual(policyExemptionName, policyExemption.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, null, policyExemption.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(true, policyExemptionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyExemption.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await vn.GetPolicyExemptions().CreateOrUpdateAsync(WaitUntil.Completed, policyExemptionName, null));
         }
 
         [TestCase]
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             string policyExemptionName1 = Recording.GenerateAssetName("polExemp-");
             string policyExemptionName2 = Recording.GenerateAssetName("polExemp-");
             _ = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName1);
@@ -107,23 +107,23 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
-            PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
-            PolicyExemption getPolicyExemption = await rg.GetPolicyExemptions().GetAsync(policyExemptionName);
+            PolicyExemptionResource policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
+            PolicyExemptionResource getPolicyExemption = await rg.GetPolicyExemptions().GetAsync(policyExemptionName);
             AssertValidPolicyExemption(policyExemption, getPolicyExemption);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetPolicyExemptions().GetAsync(null));
         }
 
-        private void AssertValidPolicyExemption(PolicyExemption model, PolicyExemption getResult)
+        private void AssertValidPolicyExemption(PolicyExemptionResource model, PolicyExemptionResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             if(model.Data.SystemData != null || getResult.Data.SystemData != null)
             {
                 Assert.NotNull(model.Data.SystemData);

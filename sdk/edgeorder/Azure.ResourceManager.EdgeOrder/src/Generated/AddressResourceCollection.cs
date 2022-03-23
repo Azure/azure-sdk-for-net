@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AddressResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _addressResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", AddressResource.ResourceType.Namespace, DiagnosticOptions);
+            _addressResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", AddressResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AddressResource.ResourceType, out string addressResourceApiVersion);
-            _addressResourceRestClient = new EdgeOrderManagementRestOperations(_addressResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, addressResourceApiVersion);
+            _addressResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, addressResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.EdgeOrder
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// Operation Id: CreateAddress
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public async virtual Task<ArmOperation<AddressResource>> CreateOrUpdateAsync(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AddressResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             Argument.AssertNotNull(addressResource, nameof(addressResource));
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = await _addressResourceRestClient.CreateAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
                 var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +88,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
         /// Operation Id: CreateAddress
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public virtual ArmOperation<AddressResource> CreateOrUpdate(bool waitForCompletion, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AddressResource> CreateOrUpdate(WaitUntil waitUntil, string addressName, AddressResourceData addressResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
             Argument.AssertNotNull(addressResource, nameof(addressResource));
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = _addressResourceRestClient.CreateAddress(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource, cancellationToken);
                 var operation = new EdgeOrderArmOperation<AddressResource>(new AddressResourceOperationSource(Client), _addressResourceClientDiagnostics, Pipeline, _addressResourceRestClient.CreateCreateAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, addressName, addressResource).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public async virtual Task<Response<AddressResource>> GetAsync(string addressName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddressResource>> GetAsync(string addressName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = await _addressResourceRestClient.GetAddressByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _addressResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 var response = _addressResourceRestClient.GetAddressByName(Id.SubscriptionId, Id.ResourceGroupName, addressName, cancellationToken);
                 if (response.Value == null)
-                    throw _addressResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string addressName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string addressName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 
@@ -326,7 +325,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
-        public async virtual Task<Response<AddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AddressResource>> GetIfExistsAsync(string addressName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
 

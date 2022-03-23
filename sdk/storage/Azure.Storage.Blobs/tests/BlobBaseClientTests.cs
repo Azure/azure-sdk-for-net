@@ -2981,6 +2981,62 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [PlaybackOnly("TODO https://github.com/Azure/azure-sdk-for-net/issues/27493")]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        [TestCase(null)]
+        [TestCase(BlobCopySourceTagsMode.Replace)]
+        [TestCase(BlobCopySourceTagsMode.Copy)]
+        public async Task SyncCopyFromUriAsync_CopyTags(BlobCopySourceTagsMode? copySourceTags)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            Dictionary<string, string> sourceTags = new Dictionary<string, string>
+            {
+                { "source", "tag" }
+            };
+
+            await srcBlob.SetTagsAsync(sourceTags);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                CopySourceTagsMode = copySourceTags
+            };
+
+            Dictionary<string, string> destTags = new Dictionary<string, string>
+            {
+                { "dest", "tag" }
+            };
+
+            if (copySourceTags != BlobCopySourceTagsMode.Copy)
+            {
+                options.Tags = destTags;
+            }
+
+            Uri sourceUri = srcBlob.GenerateSasUri(BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(
+                source: sourceUri,
+                options: options);
+
+            // Assert
+            Response<GetBlobTagResult> getTagsResponse = await destBlob.GetTagsAsync();
+
+            if (copySourceTags == BlobCopySourceTagsMode.Copy)
+            {
+                AssertDictionaryEquality(sourceTags, getTagsResponse.Value.Tags);
+            }
+            else
+            {
+                AssertDictionaryEquality(destTags, getTagsResponse.Value.Tags);
+            }
+        }
+
+        [RecordedTest]
         public async Task DeleteAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

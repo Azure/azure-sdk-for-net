@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SHA256Value = "SHA256";
+        private const string Sha256Value = "SHA256";
 
         /// <summary> SHA256. </summary>
-        public static UrlSigningAlgorithm SHA256 { get; } = new UrlSigningAlgorithm(SHA256Value);
+        public static UrlSigningAlgorithm Sha256 { get; } = new UrlSigningAlgorithm(Sha256Value);
         /// <summary> Determines if two <see cref="UrlSigningAlgorithm"/> values are the same. </summary>
         public static bool operator ==(UrlSigningAlgorithm left, UrlSigningAlgorithm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UrlSigningAlgorithm"/> values are not the same. </summary>

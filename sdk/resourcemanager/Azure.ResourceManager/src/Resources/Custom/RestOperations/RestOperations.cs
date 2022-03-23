@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
         private string _nameSpace;
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of RestOperations. </summary>
         /// <param name="nameSpace"> The namespace to get the operations for. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
             _nameSpace = nameSpace;
-            _userAgent = HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateListRequest()
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("UserAgentOverride", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 

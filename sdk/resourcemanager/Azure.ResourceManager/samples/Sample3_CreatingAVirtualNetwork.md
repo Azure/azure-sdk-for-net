@@ -19,13 +19,13 @@ Start by creating a new resource group, like we did above:
 
 ```C# Snippet:Creating_A_Virtual_Network_CreateResourceGroup
 ArmClient client = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await client.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
 ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 
 string resourceGroupName = "myResourceGroup";
 ResourceGroupData resourceGroupData = new ResourceGroupData(AzureLocation.WestUS2);
-ArmOperation<ResourceGroup> operation = await resourceGroups.CreateOrUpdateAsync(true, resourceGroupName, resourceGroupData);
-ResourceGroup resourceGroup = operation.Value;
+ArmOperation<ResourceGroupResource> operation = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Completed, resourceGroupName, resourceGroupData);
+ResourceGroupResource resourceGroup = operation.Value;
 ```
 ## Create a Virtual Network
 Now that we have a resource group, we'll create our virtual network. To do this, we will create a `VirtualNetworkData` object for the parameters that we want our Virtual Network to have, then we will get the Virtual Network collection and from there we call `CreateOrUpdateAsync()`.

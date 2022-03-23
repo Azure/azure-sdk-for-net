@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Managed instance sku. </summary>
-        public Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Managed instance identity. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>

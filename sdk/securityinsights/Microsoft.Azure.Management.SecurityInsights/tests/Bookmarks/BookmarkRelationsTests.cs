@@ -3,12 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.SecurityInsights;
 using Microsoft.Azure.Management.SecurityInsights.Models;
 using Microsoft.Azure.Management.SecurityInsights.Tests.Helpers;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -54,12 +48,12 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
                 
                 var BookmarkReltationName = Guid.NewGuid().ToString();
-                //var BookmarkRelation = SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
-                
-                //var BookmarkRelations = SecurityInsightsClient.BookmarkRelations.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
-                //ValidateBookmarkRelations(BookmarkRelations);
+                var BookmarkRelation = SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
 
-                //SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
+                var BookmarkRelations = SecurityInsightsClient.BookmarkRelations.List(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
+                ValidateBookmarkRelations(BookmarkRelations);
+
+                SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
                 SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
@@ -94,10 +88,10 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
                 var BookmarkReltationName = Guid.NewGuid().ToString();
-                //var BookmarkRelation = SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
-                //ValidateBookmarkRelation(BookmarkRelation);
+                var BookmarkRelation = SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
+                ValidateBookmarkRelation(BookmarkRelation);
 
-                //SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
+                SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
                 SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }
@@ -131,11 +125,11 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 var Bookmark = SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
                 var BookmarkReltationName = Guid.NewGuid().ToString();
-                //SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
-                //var BookmarkRelation = SecurityInsightsClient.BookmarkRelations.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
-                //ValidateBookmarkRelation(BookmarkRelation);
+                SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
+                var BookmarkRelation = SecurityInsightsClient.BookmarkRelations.Get(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
+                ValidateBookmarkRelation(BookmarkRelation);
 
-                //SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
+                SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
                 SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
 
@@ -169,9 +163,9 @@ namespace Microsoft.Azure.Management.SecurityInsights.Tests
                 };
                 SecurityInsightsClient.Bookmarks.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkBody);
 
-                //var BookmarkReltationName = Guid.NewGuid().ToString();
-                //SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
-                //SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
+                var BookmarkReltationName = Guid.NewGuid().ToString();
+                SecurityInsightsClient.BookmarkRelations.CreateOrUpdate(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName, Incident.Id);
+                SecurityInsightsClient.BookmarkRelations.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId, BookmarkReltationName);
                 SecurityInsightsClient.Bookmarks.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, BookmarkId);
                 SecurityInsightsClient.Incidents.Delete(TestHelper.ResourceGroup, TestHelper.WorkspaceName, IncidentId);
             }

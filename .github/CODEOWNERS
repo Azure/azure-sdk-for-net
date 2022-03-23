@@ -573,7 +573,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/sdk/schemaregistry/            @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
-/sdk/signalr/Microsoft.Azure.Management.SignalR/            @sffamily @chenkennt
+/sdk/signalr/            @sffamily @chenkennt @Y-Sindo     
 
 # ServiceLabel: %SQL %Service Attention
 #/<NotInRepo>/            @azureSQLGitHub

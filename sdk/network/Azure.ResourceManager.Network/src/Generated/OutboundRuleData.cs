@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within the set of outbound rules used by the load balancer. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="allocatedOutboundPorts"> The number of outbound ports to be used for NAT. </param>
         /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
         /// <param name="backendAddressPool"> A reference to a pool of DIPs. Outbound traffic is randomly load balanced across IPs in the backend IPs. </param>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
-        internal OutboundRuleData(string id, string name, string etag, string type, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, ProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id)
+        internal OutboundRuleData(string id, string name, string etag, string resourceType, int? allocatedOutboundPorts, IList<WritableSubResource> frontendIPConfigurations, WritableSubResource backendAddressPool, ProvisioningState? provisioningState, LoadBalancerOutboundRuleProtocol? protocol, bool? enableTcpReset, int? idleTimeoutInMinutes) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             AllocatedOutboundPorts = allocatedOutboundPorts;
             FrontendIPConfigurations = frontendIPConfigurations;
             BackendAddressPool = backendAddressPool;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The number of outbound ports to be used for NAT. </summary>
         public int? AllocatedOutboundPorts { get; set; }
         /// <summary> The Frontend IP addresses of the load balancer. </summary>

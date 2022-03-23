@@ -29,12 +29,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="host"> Breeze endpoint: https://dc.services.visualstudio.com. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="host"/> is null. </exception>
         public ApplicationInsightsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "https://dc.services.visualstudio.com")
         {
+            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _host = host ?? throw new ArgumentNullException(nameof(host));
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
         }
 
         /// <summary> This operation sends a sequence of telemetry events that will be monitored by Azure Monitor. </summary>

@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of Certificate and their operations over its parent. </summary>
-    public partial class CertificateCollection : ArmCollection, IEnumerable<Certificate>, IAsyncEnumerable<Certificate>
+    public partial class CertificateCollection : ArmCollection, IEnumerable<CertificateResource>, IAsyncEnumerable<CertificateResource>
     {
         private readonly ClientDiagnostics _certificateClientDiagnostics;
         private readonly CertificatesRestOperations _certificateRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _certificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", Certificate.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(Certificate.ResourceType, out string certificateApiVersion);
-            _certificateRestClient = new CertificatesRestOperations(_certificateClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, certificateApiVersion);
+            _certificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", CertificateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CertificateResource.ResourceType, out string certificateApiVersion);
+            _certificateRestClient = new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, certificateApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateEnvelope"/> is null. </exception>
-        public async virtual Task<ArmOperation<Certificate>> CreateOrUpdateAsync(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
@@ -72,8 +71,8 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _certificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, certificateEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<Certificate>(Response.FromValue(new Certificate(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var operation = new AppServiceArmOperation<CertificateResource>(Response.FromValue(new CertificateResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +88,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}
         /// Operation Id: Certificates_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual ArmOperation<Certificate> CreateOrUpdate(bool waitForCompletion, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CertificateResource> CreateOrUpdate(WaitUntil waitUntil, string name, CertificateData certificateEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
@@ -105,8 +104,8 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _certificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, certificateEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<Certificate>(Response.FromValue(new Certificate(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                var operation = new AppServiceArmOperation<CertificateResource>(Response.FromValue(new CertificateResource(Client, response), response.GetRawResponse()));
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<Certificate>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -136,8 +135,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _certificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _certificateClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new Certificate(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<Certificate> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -165,8 +164,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _certificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
-                    throw _certificateClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new Certificate(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +180,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Certificates_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Certificate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Certificate> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<Certificate>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CertificateResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _certificateClientDiagnostics.CreateScope("CertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _certificateRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Certificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +198,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<Certificate>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CertificateResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _certificateClientDiagnostics.CreateScope("CertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _certificateRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new Certificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +222,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Certificates_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Certificate" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Certificate> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<Certificate> FirstPageFunc(int? pageSizeHint)
+            Page<CertificateResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _certificateClientDiagnostics.CreateScope("CertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _certificateRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Certificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +240,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<Certificate> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CertificateResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _certificateClientDiagnostics.CreateScope("CertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _certificateRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new Certificate(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<Certificate>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -332,8 +331,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _certificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<Certificate>(null, response.GetRawResponse());
-                return Response.FromValue(new Certificate(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<CertificateResource>(null, response.GetRawResponse());
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<Certificate> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -361,8 +360,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _certificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<Certificate>(null, response.GetRawResponse());
-                return Response.FromValue(new Certificate(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<CertificateResource>(null, response.GetRawResponse());
+                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<Certificate> IEnumerable<Certificate>.GetEnumerator()
+        IEnumerator<CertificateResource> IEnumerable<CertificateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<Certificate> IAsyncEnumerable<Certificate>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CertificateResource> IAsyncEnumerable<CertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

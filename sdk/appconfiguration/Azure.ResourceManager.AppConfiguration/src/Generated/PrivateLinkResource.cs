@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -50,9 +49,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, DiagnosticOptions);
+            _privateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string privateLinkResourceApiVersion);
-            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(_privateLinkResourceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateLinkResourceApiVersion);
+            _privateLinkResourceRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Operation Id: PrivateLinkResources_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _privateLinkResourceClientDiagnostics.CreateScope("PrivateLinkResource.Get");
             scope.Start();
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = await _privateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _privateLinkResourceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.AppConfiguration
             {
                 var response = _privateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _privateLinkResourceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

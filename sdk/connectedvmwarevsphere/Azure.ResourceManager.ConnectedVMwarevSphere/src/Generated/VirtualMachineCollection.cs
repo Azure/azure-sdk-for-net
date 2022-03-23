@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of VirtualMachine and their operations over its parent. </summary>
-    public partial class VirtualMachineCollection : ArmCollection, IEnumerable<VirtualMachine>, IAsyncEnumerable<VirtualMachine>
+    public partial class VirtualMachineCollection : ArmCollection, IEnumerable<VirtualMachineResource>, IAsyncEnumerable<VirtualMachineResource>
     {
         private readonly ClientDiagnostics _virtualMachineClientDiagnostics;
         private readonly VirtualMachinesRestOperations _virtualMachineRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualMachine.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(VirtualMachine.ResourceType, out string virtualMachineApiVersion);
-            _virtualMachineRestClient = new VirtualMachinesRestOperations(_virtualMachineClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, virtualMachineApiVersion);
+            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualMachineResource.ResourceType, out string virtualMachineApiVersion);
+            _virtualMachineRestClient = new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public async virtual Task<ArmOperation<VirtualMachine>> CreateOrUpdateAsync(bool waitForCompletion, string virtualMachineName, VirtualMachineData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, VirtualMachineData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -71,8 +70,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _virtualMachineRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachine>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +87,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{virtualMachineName}
         /// Operation Id: VirtualMachines_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualMachineName"> Name of the virtual machine resource. </param>
         /// <param name="body"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachine> CreateOrUpdate(bool waitForCompletion, string virtualMachineName, VirtualMachineData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, VirtualMachineData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -103,8 +102,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _virtualMachineRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachine>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                var operation = new ConnectedVMwarevSphereArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public async virtual Task<Response<VirtualMachine>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineResource>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -134,8 +133,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _virtualMachineClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public virtual Response<VirtualMachine> Get(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineResource> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -163,8 +162,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, cancellationToken);
                 if (response.Value == null)
-                    throw _virtualMachineClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,17 +178,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: VirtualMachines_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachine> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VirtualMachine>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualMachineRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -197,14 +196,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            async Task<Page<VirtualMachine>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _virtualMachineRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -221,17 +220,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: VirtualMachines_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachine" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachine> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VirtualMachine> FirstPageFunc(int? pageSizeHint)
+            Page<VirtualMachineResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualMachineRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,14 +238,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            Page<VirtualMachine> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _virtualMachineRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachine(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -266,7 +265,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public async virtual Task<Response<VirtualMachine>> GetIfExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineResource>> GetIfExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -330,8 +329,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<VirtualMachine>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualMachineResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
-        public virtual Response<VirtualMachine> GetIfExists(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineResource> GetIfExists(string virtualMachineName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
@@ -359,8 +358,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<VirtualMachine>(null, response.GetRawResponse());
-                return Response.FromValue(new VirtualMachine(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VirtualMachineResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        IEnumerator<VirtualMachine> IEnumerable<VirtualMachine>.GetEnumerator()
+        IEnumerator<VirtualMachineResource> IEnumerable<VirtualMachineResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VirtualMachine> IAsyncEnumerable<VirtualMachine>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VirtualMachineResource> IAsyncEnumerable<VirtualMachineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

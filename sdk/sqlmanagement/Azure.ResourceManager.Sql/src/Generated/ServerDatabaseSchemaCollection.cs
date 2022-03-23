@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ServerDatabaseSchema and their operations over its parent. </summary>
-    public partial class ServerDatabaseSchemaCollection : ArmCollection, IEnumerable<ServerDatabaseSchema>, IAsyncEnumerable<ServerDatabaseSchema>
+    public partial class ServerDatabaseSchemaCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaResource>, IAsyncEnumerable<ServerDatabaseSchemaResource>
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaDatabaseSchemasClientDiagnostics;
         private readonly DatabaseSchemasRestOperations _serverDatabaseSchemaDatabaseSchemasRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServerDatabaseSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serverDatabaseSchemaDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchema.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ServerDatabaseSchema.ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
-            _serverDatabaseSchemaDatabaseSchemasRestClient = new DatabaseSchemasRestOperations(_serverDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverDatabaseSchemaDatabaseSchemasApiVersion);
+            _serverDatabaseSchemaDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerDatabaseSchemaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerDatabaseSchemaResource.ResourceType, out string serverDatabaseSchemaDatabaseSchemasApiVersion);
+            _serverDatabaseSchemaDatabaseSchemasRestClient = new DatabaseSchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverDatabaseSchemaDatabaseSchemasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseSchema>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseSchemaResource>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
@@ -69,8 +68,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ServerDatabaseSchema(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public virtual Response<ServerDatabaseSchema> Get(string schemaName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerDatabaseSchemaResource> Get(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
@@ -98,8 +97,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchema(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -115,17 +114,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerDatabaseSchema" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerDatabaseSchema> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServerDatabaseSchemaResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServerDatabaseSchemaResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerDatabaseSchema>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -133,14 +132,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ServerDatabaseSchema>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServerDatabaseSchemaResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,17 +157,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerDatabaseSchema" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerDatabaseSchema> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServerDatabaseSchemaResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServerDatabaseSchemaResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ServerDatabaseSchema> FirstPageFunc(int? pageSizeHint)
+            Page<ServerDatabaseSchemaResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -176,14 +175,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ServerDatabaseSchema> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServerDatabaseSchemaResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _serverDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("ServerDatabaseSchemaCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _serverDatabaseSchemaDatabaseSchemasRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchema(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ServerDatabaseSchemaResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -203,7 +202,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public async virtual Task<Response<ServerDatabaseSchema>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerDatabaseSchemaResource>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
@@ -267,8 +266,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverDatabaseSchemaDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchema(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerDatabaseSchemaResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
-        public virtual Response<ServerDatabaseSchema> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
+        public virtual Response<ServerDatabaseSchemaResource> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
@@ -296,8 +295,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ServerDatabaseSchema>(null, response.GetRawResponse());
-                return Response.FromValue(new ServerDatabaseSchema(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ServerDatabaseSchemaResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ServerDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,7 +305,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ServerDatabaseSchema> IEnumerable<ServerDatabaseSchema>.GetEnumerator()
+        IEnumerator<ServerDatabaseSchemaResource> IEnumerable<ServerDatabaseSchemaResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServerDatabaseSchema> IAsyncEnumerable<ServerDatabaseSchema>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServerDatabaseSchemaResource> IAsyncEnumerable<ServerDatabaseSchemaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

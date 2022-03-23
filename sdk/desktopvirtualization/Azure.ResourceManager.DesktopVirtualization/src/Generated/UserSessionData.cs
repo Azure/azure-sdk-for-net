@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of UserSessionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="objectId"> ObjectId of user session. (internal use). </param>
         /// <param name="userPrincipalName"> The user principal name. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionState"> State of user session. </param>
         /// <param name="activeDirectoryUserName"> The active directory user name. </param>
         /// <param name="createTime"> The timestamp of the user session create. </param>
-        internal UserSessionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string objectId, string userPrincipalName, ApplicationType? applicationType, SessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createTime) : base(id, name, type, systemData)
+        internal UserSessionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string userPrincipalName, ApplicationType? applicationType, SessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createTime) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;

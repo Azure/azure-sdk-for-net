@@ -291,7 +291,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(
                 _blobUri,
@@ -300,6 +301,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -478,7 +481,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
 
@@ -491,6 +495,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -529,7 +535,8 @@ namespace Azure.Storage.Files.DataLake
                 pipeline: pipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
                 clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                version: options.Version,
+                customerProvidedKey: options.CustomerProvidedKey);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
 
@@ -542,6 +549,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -580,6 +589,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         internal DataLakePathClient(
@@ -609,6 +620,8 @@ namespace Azure.Storage.Files.DataLake
             (PathRestClient dfsPathRestClient, PathRestClient blobPathRestClient) = BuildPathRestClients(_dfsUri, _blobUri);
             _pathRestClient = dfsPathRestClient;
             _blobPathRestClient = blobPathRestClient;
+
+            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri dfsUri, Uri blobUri)
@@ -642,12 +655,33 @@ namespace Azure.Storage.Files.DataLake
                     uri,
                     new BlobClientOptions(clientConfiguration.Version.AsBlobsVersion())
                     {
-                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled }
+                        Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
+                        CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey()
                     },
                     clientConfiguration.Pipeline);
             }
         }
         #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="DataLakePathClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="DataLakePathClient"/>.
+        /// </remarks>
+        public DataLakePathClient WithCustomerProvidedKey(Models.DataLakeCustomerProvidedKey? customerProvidedKey)
+        {
+            DataLakeClientConfiguration newClientConfiguration = DataLakeClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new DataLakePathClient(
+                pathUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
 
         /// <summary>
         /// Converts metadata in DFS metadata string
@@ -922,6 +956,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -942,6 +979,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 

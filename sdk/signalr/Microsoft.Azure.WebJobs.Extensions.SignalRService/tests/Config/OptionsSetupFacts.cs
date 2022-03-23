@@ -6,7 +6,6 @@ using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace SignalRServiceExtension.Tests.Config
@@ -20,7 +19,7 @@ namespace SignalRServiceExtension.Tests.Config
             var sectionKey = "connection";
             var serviceUri = "http://localhost.signalr.com";
             configuration[$"{sectionKey}:serviceUri"] = serviceUri;
-            var optionsSetup = new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, sectionKey);
+            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, sectionKey);
             var options = new ServiceManagerOptions();
             optionsSetup.Configure(options);
 
@@ -37,7 +36,7 @@ namespace SignalRServiceExtension.Tests.Config
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration[$"Azure:SignalR:Endpoints:{endpointNames[0]}:serviceUri"] = serviceUris[0];
             configuration[$"Azure:SignalR:Endpoints:{endpointNames[1]}:serviceUri"] = serviceUris[1];
-            var optionsSetup = new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, "does_not_matter");
+            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "does_not_matter");
             var options = new ServiceManagerOptions();
             optionsSetup.Configure(options);
 
@@ -59,7 +58,7 @@ namespace SignalRServiceExtension.Tests.Config
             configuration[$"Azure:SignalR:Endpoints:{endpointName}:serviceUri"] = serviceUris[0];
             configuration[$"{namelessEndpointKey}:serviceUri"] = serviceUris[1];
 
-            var optionsSetup = new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, namelessEndpointKey);
+            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, namelessEndpointKey);
             var options = new ServiceManagerOptions();
             optionsSetup.Configure(options);
 
@@ -80,7 +79,7 @@ namespace SignalRServiceExtension.Tests.Config
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration[configKey] = configValue;
             var options = new ServiceManagerOptions();
-            var setup = new OptionsSetup(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, "key");
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key");
             setup.Configure(options);
             Assert.Equal(objectSerializerType, options.ObjectSerializer?.GetType());
         }

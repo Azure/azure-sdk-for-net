@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstancePrivateLink and their operations over its parent. </summary>
-    public partial class ManagedInstancePrivateLinkCollection : ArmCollection, IEnumerable<ManagedInstancePrivateLink>, IAsyncEnumerable<ManagedInstancePrivateLink>
+    public partial class ManagedInstancePrivateLinkCollection : ArmCollection, IEnumerable<ManagedInstancePrivateLinkResource>, IAsyncEnumerable<ManagedInstancePrivateLinkResource>
     {
         private readonly ClientDiagnostics _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics;
         private readonly ManagedInstancePrivateLinkResourcesRestOperations _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedInstancePrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstancePrivateLink.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ManagedInstancePrivateLink.ResourceType, out string managedInstancePrivateLinkManagedInstancePrivateLinkResourcesApiVersion);
-            _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient = new ManagedInstancePrivateLinkResourcesRestOperations(_managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstancePrivateLinkManagedInstancePrivateLinkResourcesApiVersion);
+            _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstancePrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedInstancePrivateLinkResource.ResourceType, out string managedInstancePrivateLinkManagedInstancePrivateLinkResourcesApiVersion);
+            _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient = new ManagedInstancePrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstancePrivateLinkManagedInstancePrivateLinkResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstance.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedInstanceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<ManagedInstancePrivateLink>> GetAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstancePrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -69,8 +68,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new ManagedInstancePrivateLink(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual Response<ManagedInstancePrivateLink> Get(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstancePrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -98,8 +97,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken);
                 if (response.Value == null)
-                    throw _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstancePrivateLink(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedInstancePrivateLinkResources_ListByManagedInstance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstancePrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstancePrivateLink> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstancePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstancePrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstancePrivateLink>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstancePrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.ListByManagedInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstancePrivateLink>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstancePrivateLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.ListByManagedInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedInstancePrivateLinkResources_ListByManagedInstance
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstancePrivateLink" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstancePrivateLink> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstancePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstancePrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstancePrivateLink> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstancePrivateLinkResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.ListByManagedInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +173,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstancePrivateLink> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstancePrivateLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.ListByManagedInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLink(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstancePrivateLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public async virtual Task<Response<ManagedInstancePrivateLink>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstancePrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -265,8 +264,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedInstancePrivateLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstancePrivateLink(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedInstancePrivateLinkResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        public virtual Response<ManagedInstancePrivateLink> GetIfExists(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstancePrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
@@ -294,8 +293,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedInstancePrivateLink>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstancePrivateLink(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedInstancePrivateLinkResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstancePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ManagedInstancePrivateLink> IEnumerable<ManagedInstancePrivateLink>.GetEnumerator()
+        IEnumerator<ManagedInstancePrivateLinkResource> IEnumerable<ManagedInstancePrivateLinkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedInstancePrivateLink> IAsyncEnumerable<ManagedInstancePrivateLink>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedInstancePrivateLinkResource> IAsyncEnumerable<ManagedInstancePrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

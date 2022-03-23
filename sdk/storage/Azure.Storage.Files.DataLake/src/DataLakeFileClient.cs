@@ -321,6 +321,26 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion ctors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="customerProvidedKey"/>.
+        ///
+        /// </summary>
+        /// <param name="customerProvidedKey">The customer provided key.</param>
+        /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null to remove the customer provide key in the returned <see cref="DataLakeFileClient"/>.
+        /// </remarks>
+        public new DataLakeFileClient WithCustomerProvidedKey(Models.DataLakeCustomerProvidedKey? customerProvidedKey)
+        {
+            DataLakeClientConfiguration newClientConfiguration = DataLakeClientConfiguration.DeepCopy(ClientConfiguration);
+            newClientConfiguration.CustomerProvidedKey = customerProvidedKey;
+            return new DataLakeFileClient(
+                fileUri: Uri,
+                clientConfiguration: newClientConfiguration);
+        }
+
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a file.
@@ -2034,6 +2054,9 @@ namespace Azure.Storage.Files.DataLake
                             // TODO #27253
                             transactionalContentHash: rangeContentMD5, // hashResult?.MD5,
                             //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2047,6 +2070,9 @@ namespace Azure.Storage.Files.DataLake
                             // TODO #27253
                             transactionalContentHash: rangeContentMD5, // hashResult?.MD5,
                             //transactionalContentCrc64: hashResult?.StorageCrc64,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             leaseId: leaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -2292,6 +2318,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2313,6 +2342,9 @@ namespace Azure.Storage.Files.DataLake
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 

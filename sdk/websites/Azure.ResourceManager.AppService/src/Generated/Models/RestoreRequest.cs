@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RestoreRequest. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="storageAccountUrl"> SAS URL to the container. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="operationType"> Operation type. </param>
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
-        internal RestoreRequest(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string storageAccountUrl, string blobName, bool? overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment) : base(id, name, type, systemData, kind)
+        internal RestoreRequest(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string storageAccountUrl, string blobName, bool? overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment) : base(id, name, resourceType, systemData, kind)
         {
             StorageAccountUrl = storageAccountUrl;
             BlobName = blobName;

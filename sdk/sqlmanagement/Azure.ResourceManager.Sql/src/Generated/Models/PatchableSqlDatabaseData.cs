@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name and tier of the SKU. </summary>
-        public Sku Sku { get; set; }
+        public SqlSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The secondary type of the database if it is a secondary.  Valid values are Geo and Named. </summary>
         public SecondaryType? SecondaryType { get; set; }
         /// <summary> The name and tier of the SKU. </summary>
-        public Sku CurrentSku { get; }
+        public SqlSku CurrentSku { get; }
         /// <summary> Time in minutes after which database is automatically paused. A value of -1 means that automatic pause is disabled. </summary>
         public int? AutoPauseDelay { get; set; }
         /// <summary> The storage account type used to store backups for this database. </summary>

@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-4-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
-            ResourceGroup rg = lro.Value;
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-D-");
             DeploymentInput deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            Deployment deployment = (await rg.GetDeployments().CreateOrUpdateAsync(true, deployName, deploymentData)).Value;
-            await deployment.DeleteAsync(true);
+            DeploymentResource deployment = (await rg.GetDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            await deployment.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deployment.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.Resources.Tests
         [RecordedTest]
         public async Task WhatIfAtResourceGroup()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-5-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
-            ResourceGroup rg = lro.Value;
-            ResourceIdentifier deploymentResourceIdentifier = Deployment.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
-            Deployment deployment = Client.GetDeployment(deploymentResourceIdentifier);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
+            ResourceGroupResource rg = lro.Value;
+            ResourceIdentifier deploymentResourceIdentifier = DeploymentResource.CreateResourceIdentifier(rg.Id, "testDeploymentWhatIf");
+            DeploymentResource deployment = Client.GetDeploymentResource(deploymentResourceIdentifier);
             DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
                 Template = CreateDeploymentPropertiesUsingString().Template,
                 Parameters = CreateDeploymentPropertiesUsingJsonElement().Parameters
             });
-            WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(true, deploymentWhatIf)).Value;
+            WhatIfOperationResult whatIfOperationResult = (await deployment.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf)).Value;
             Assert.AreEqual(whatIfOperationResult.Status, "Succeeded");
             Assert.AreEqual(whatIfOperationResult.Changes.Count, 1);
             Assert.AreEqual(whatIfOperationResult.Changes[0].ChangeType, ChangeType.Create);

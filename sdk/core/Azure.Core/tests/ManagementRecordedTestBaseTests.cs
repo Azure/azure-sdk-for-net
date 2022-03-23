@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -48,7 +49,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var sub = client.DefaultSubscription;
-            var operation = (await sub.GetLroAsync(true)).Value;
+            var operation = (await sub.GetLroAsync(WaitUntil.Completed)).Value;
             var result = operation.Method();
 
             Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
@@ -60,7 +61,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             var sub = client.DefaultSubscription;
-            var response = (await sub.GetLroAsync(true)).Value;
+            var response = (await sub.GetLroAsync(WaitUntil.Completed)).Value;
             var result = response.Method();
 
             Assert.AreEqual("TestResourceProxy", response.GetType().Name);
@@ -118,7 +119,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync(true);
+            var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Completed);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
@@ -137,7 +138,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetLroExceptionAsync(true));
+            Assert.ThrowsAsync(typeof(ArgumentException), async () => await rgOp.GetLroExceptionAsync(WaitUntil.Completed));
         }
 
         [Test]
@@ -145,7 +146,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.GetLroAsync(true, true);
+            var testResourceOp = await rgOp.GetLroAsync(WaitUntil.Completed, true);
             Assert.ThrowsAsync(typeof(ArgumentException), async () => await testResourceOp.WaitForCompletionAsync());
         }
 
@@ -154,7 +155,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.StartLroWrapperAsync(true);
+            var testResourceOp = await rgOp.StartLroWrapperAsync(WaitUntil.Completed);
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
@@ -165,7 +166,7 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResource rgOp = client.GetTestResource();
-            var testResourceOp = await rgOp.StartLroWrapperAsync(true);
+            var testResourceOp = await rgOp.StartLroWrapperAsync(WaitUntil.Completed);
             Stopwatch timer = Stopwatch.StartNew();
             TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             timer.Stop();

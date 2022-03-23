@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="extensionId"> Site extension ID. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="installedDateTime"> Installed timestamp. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="comment"> Site Extension comment. </param>
-        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, string extensionUrl, string projectUrl, string iconUrl, string licenseUrl, string feedUrl, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedDateTime, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedDateTime, string provisioningState, string comment) : base(id, name, type, systemData, kind)
+        internal SiteExtensionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string extensionId, string title, SiteExtensionType? extensionType, string summary, string description, string version, string extensionUrl, string projectUrl, string iconUrl, string licenseUrl, string feedUrl, IList<string> authors, string installerCommandLineParams, DateTimeOffset? publishedDateTime, int? downloadCount, bool? localIsLatestVersion, string localPath, DateTimeOffset? installedDateTime, string provisioningState, string comment) : base(id, name, resourceType, systemData, kind)
         {
             ExtensionId = extensionId;
             Title = title;

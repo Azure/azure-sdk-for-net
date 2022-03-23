@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PatchableAppServicePlanData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        internal PatchableAppServicePlanData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationTime, DateTimeOffset? freeOfferExpirationTime, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, type, systemData, kind)
+        internal PatchableAppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationTime, DateTimeOffset? freeOfferExpirationTime, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant) : base(id, name, resourceType, systemData, kind)
         {
             WorkerTierName = workerTierName;
             Status = status;

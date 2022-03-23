@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary> A class representing collection of DeviceUpdateAccount and their operations over its parent. </summary>
-    public partial class DeviceUpdateAccountCollection : ArmCollection, IEnumerable<DeviceUpdateAccount>, IAsyncEnumerable<DeviceUpdateAccount>
+    public partial class DeviceUpdateAccountCollection : ArmCollection, IEnumerable<DeviceUpdateAccountResource>, IAsyncEnumerable<DeviceUpdateAccountResource>
     {
         private readonly ClientDiagnostics _deviceUpdateAccountAccountsClientDiagnostics;
         private readonly AccountsRestOperations _deviceUpdateAccountAccountsRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceUpdateAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceUpdateAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccount.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(DeviceUpdateAccount.ResourceType, out string deviceUpdateAccountAccountsApiVersion);
-            _deviceUpdateAccountAccountsRestClient = new AccountsRestOperations(_deviceUpdateAccountAccountsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deviceUpdateAccountAccountsApiVersion);
+            _deviceUpdateAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceUpdate", DeviceUpdateAccountResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeviceUpdateAccountResource.ResourceType, out string deviceUpdateAccountAccountsApiVersion);
+            _deviceUpdateAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceUpdateAccountAccountsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
         /// Operation Id: Accounts_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="account"> Account details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="account"/> is null. </exception>
-        public async virtual Task<ArmOperation<DeviceUpdateAccount>> CreateOrUpdateAsync(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeviceUpdateAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(account, nameof(account));
@@ -72,8 +71,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = await _deviceUpdateAccountAccountsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, account, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccountResource>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +88,13 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceUpdate/accounts/{accountName}
         /// Operation Id: Accounts_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="account"> Account details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="account"/> is null. </exception>
-        public virtual ArmOperation<DeviceUpdateAccount> CreateOrUpdate(bool waitForCompletion, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeviceUpdateAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, DeviceUpdateAccountData account, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(account, nameof(account));
@@ -105,8 +104,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             try
             {
                 var response = _deviceUpdateAccountAccountsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, accountName, account, cancellationToken);
-                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccount>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                var operation = new DeviceUpdateArmOperation<DeviceUpdateAccountResource>(new DeviceUpdateAccountOperationSource(Client), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, _deviceUpdateAccountAccountsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, accountName, account).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateAccount>> GetAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdateAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
@@ -136,8 +135,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = await _deviceUpdateAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deviceUpdateAccountAccountsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new DeviceUpdateAccount(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public virtual Response<DeviceUpdateAccount> Get(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdateAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
@@ -165,8 +164,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = _deviceUpdateAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
-                    throw _deviceUpdateAccountAccountsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeviceUpdateAccount(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +180,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Operation Id: Accounts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeviceUpdateAccount> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeviceUpdateAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceUpdateAccount>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DeviceUpdateAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _deviceUpdateAccountAccountsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +198,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                     throw;
                 }
             }
-            async Task<Page<DeviceUpdateAccount>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DeviceUpdateAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _deviceUpdateAccountAccountsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +222,17 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// Operation Id: Accounts_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceUpdateAccount" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeviceUpdateAccount> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DeviceUpdateAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeviceUpdateAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeviceUpdateAccount> FirstPageFunc(int? pageSizeHint)
+            Page<DeviceUpdateAccountResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _deviceUpdateAccountAccountsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +240,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                     throw;
                 }
             }
-            Page<DeviceUpdateAccount> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DeviceUpdateAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _deviceUpdateAccountAccountsClientDiagnostics.CreateScope("DeviceUpdateAccountCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _deviceUpdateAccountAccountsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccount(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new DeviceUpdateAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public async virtual Task<Response<DeviceUpdateAccount>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceUpdateAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
@@ -332,8 +331,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = await _deviceUpdateAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<DeviceUpdateAccount>(null, response.GetRawResponse());
-                return Response.FromValue(new DeviceUpdateAccount(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DeviceUpdateAccountResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        public virtual Response<DeviceUpdateAccount> GetIfExists(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceUpdateAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
@@ -361,8 +360,8 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 var response = _deviceUpdateAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<DeviceUpdateAccount>(null, response.GetRawResponse());
-                return Response.FromValue(new DeviceUpdateAccount(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<DeviceUpdateAccountResource>(null, response.GetRawResponse());
+                return Response.FromValue(new DeviceUpdateAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        IEnumerator<DeviceUpdateAccount> IEnumerable<DeviceUpdateAccount>.GetEnumerator()
+        IEnumerator<DeviceUpdateAccountResource> IEnumerable<DeviceUpdateAccountResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<DeviceUpdateAccount> IAsyncEnumerable<DeviceUpdateAccount>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DeviceUpdateAccountResource> IAsyncEnumerable<DeviceUpdateAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

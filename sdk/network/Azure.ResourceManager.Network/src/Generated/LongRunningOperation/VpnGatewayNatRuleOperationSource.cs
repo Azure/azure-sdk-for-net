@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnGatewayNatRuleOperationSource : IOperationSource<VpnGatewayNatRule>
+    internal class VpnGatewayNatRuleOperationSource : IOperationSource<VpnGatewayNatRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VpnGatewayNatRule IOperationSource<VpnGatewayNatRule>.CreateResult(Response response, CancellationToken cancellationToken)
+        VpnGatewayNatRuleResource IOperationSource<VpnGatewayNatRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
-            return new VpnGatewayNatRule(_client, data);
+            return new VpnGatewayNatRuleResource(_client, data);
         }
 
-        async ValueTask<VpnGatewayNatRule> IOperationSource<VpnGatewayNatRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VpnGatewayNatRuleResource> IOperationSource<VpnGatewayNatRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VpnGatewayNatRuleData.DeserializeVpnGatewayNatRuleData(document.RootElement);
-            return new VpnGatewayNatRule(_client, data);
+            return new VpnGatewayNatRuleResource(_client, data);
         }
     }
 }

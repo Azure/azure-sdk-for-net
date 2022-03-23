@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Threading;
 using Castle.DynamicProxy;
 
@@ -18,16 +17,16 @@ namespace Azure.Core.TestFramework
 
         internal static readonly string PollerWaitForCompletionAsyncName = nameof(OperationPoller.WaitForCompletionAsync);
 
-        private readonly bool _noWait;
+        private readonly RecordedTestMode _mode;
 
-        public OperationInterceptor(bool noWait)
+        public OperationInterceptor(RecordedTestMode mode)
         {
-            _noWait = noWait;
+            _mode = mode;
         }
 
         public void Intercept(IInvocation invocation)
         {
-            if (_noWait)
+            if (_mode == RecordedTestMode.Playback)
             {
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {

@@ -12,35 +12,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     internal partial class NetworkWatchersRestOperations
     {
-        private readonly string _userAgent;
+        private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Initializes a new instance of NetworkWatchersRestOperations. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public NetworkWatchersRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public NetworkWatchersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-02-01";
-            ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _userAgent = Core.HttpMessageUtilities.GetUserAgentName(this, applicationId);
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string networkWatcherName, NetworkWatcherData parameters)
@@ -63,7 +57,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -74,24 +68,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the network watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkWatcherData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -106,7 +89,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -117,24 +100,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the network watcher resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkWatcherData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, NetworkWatcherData parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -149,7 +121,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -169,7 +141,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -179,20 +151,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkWatcherData>> GetAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkWatcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -208,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((NetworkWatcherData)null, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -218,20 +182,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkWatcherData> Get(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkWatcherName);
             _pipeline.Send(message, cancellationToken);
@@ -247,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 case 404:
                     return Response.FromValue((NetworkWatcherData)null, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -267,7 +223,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -277,20 +233,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkWatcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -300,7 +248,7 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -310,20 +258,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkWatcherName);
             _pipeline.Send(message, cancellationToken);
@@ -333,7 +273,7 @@ namespace Azure.ResourceManager.Network
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -357,7 +297,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -368,24 +308,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update network watcher tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkWatcherData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,7 +328,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -410,24 +339,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters supplied to update network watcher tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkWatcherData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, TagsObject parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -441,7 +359,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -460,7 +378,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -469,16 +387,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkWatcherListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -492,7 +405,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -501,16 +414,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkWatcherListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -524,7 +432,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -541,7 +449,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -549,12 +457,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkWatcherListResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAllRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -568,7 +474,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -576,12 +482,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkWatcherListResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAllRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -595,7 +499,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -620,7 +524,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -631,24 +535,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<Topology>> GetTopologyAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, TopologyParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetTopologyRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -662,7 +555,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -673,24 +566,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the representation of topology. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<Topology> GetTopology(string subscriptionId, string resourceGroupName, string networkWatcherName, TopologyParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetTopologyRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -704,7 +586,7 @@ namespace Azure.ResourceManager.Network
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -729,7 +611,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -740,24 +622,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the IP flow to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> VerifyIPFlowAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateVerifyIPFlowRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -767,7 +638,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -778,24 +649,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the IP flow to be verified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response VerifyIPFlow(string subscriptionId, string resourceGroupName, string networkWatcherName, VerificationIPFlowParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateVerifyIPFlowRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -805,7 +665,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -830,7 +690,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -841,24 +701,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the source and destination endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetNextHopAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, NextHopParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetNextHopRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -868,7 +717,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -879,24 +728,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the source and destination endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetNextHop(string subscriptionId, string resourceGroupName, string networkWatcherName, NextHopParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetNextHopRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -906,7 +744,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -931,7 +769,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -942,24 +780,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetVmSecurityRulesAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetVmSecurityRulesRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -969,7 +796,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -980,24 +807,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the VM to check security groups for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetVmSecurityRules(string subscriptionId, string resourceGroupName, string networkWatcherName, SecurityGroupViewParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetVmSecurityRulesRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1007,7 +823,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1032,7 +848,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1043,24 +859,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to troubleshoot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetTroubleshootingAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetTroubleshootingRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1070,7 +875,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1081,24 +886,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to troubleshoot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetTroubleshooting(string subscriptionId, string resourceGroupName, string networkWatcherName, TroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetTroubleshootingRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1108,7 +902,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1133,7 +927,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1144,24 +938,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetTroubleshootingResultAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetTroubleshootingResultRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1171,7 +954,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1182,24 +965,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the resource to query the troubleshooting result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetTroubleshootingResult(string subscriptionId, string resourceGroupName, string networkWatcherName, QueryTroubleshootingParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetTroubleshootingResultRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1209,7 +981,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1234,7 +1006,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1245,24 +1017,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the configuration of flow log. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> SetFlowLogConfigurationAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, FlowLogInformation parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateSetFlowLogConfigurationRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1272,7 +1033,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1283,24 +1044,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define the configuration of flow log. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response SetFlowLogConfiguration(string subscriptionId, string resourceGroupName, string networkWatcherName, FlowLogInformation parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateSetFlowLogConfigurationRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1310,7 +1060,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1335,7 +1085,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1346,24 +1096,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetFlowLogStatusAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetFlowLogStatusRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1373,7 +1112,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1384,24 +1123,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that define a resource to query flow log and traffic analytics (optional) status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetFlowLogStatus(string subscriptionId, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetFlowLogStatusRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1411,7 +1139,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1436,7 +1164,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1447,24 +1175,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine how the connectivity check will be performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CheckConnectivityAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateCheckConnectivityRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1474,7 +1191,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1485,24 +1202,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine how the connectivity check will be performed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CheckConnectivity(string subscriptionId, string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateCheckConnectivityRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1512,7 +1218,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1537,7 +1243,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1548,24 +1254,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine Azure reachability report configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetAzureReachabilityReportAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetAzureReachabilityReportRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1575,7 +1270,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1586,24 +1281,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that determine Azure reachability report configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetAzureReachabilityReport(string subscriptionId, string resourceGroupName, string networkWatcherName, AzureReachabilityReportParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetAzureReachabilityReportRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1613,7 +1297,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1638,7 +1322,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1649,24 +1333,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ListAvailableProvidersAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateListAvailableProvidersRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1676,7 +1349,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1687,24 +1360,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters that scope the list of available providers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ListAvailableProviders(string subscriptionId, string resourceGroupName, string networkWatcherName, AvailableProvidersListParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateListAvailableProvidersRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1714,7 +1376,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1739,7 +1401,7 @@ namespace Azure.ResourceManager.Network
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
-            message.SetProperty("SDKUserAgent", _userAgent);
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -1750,24 +1412,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters to get network configuration diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GetNetworkConfigurationDiagnosticAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetNetworkConfigurationDiagnosticRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1777,7 +1428,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -1788,24 +1439,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="parameters"> Parameters to get network configuration diagnostic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GetNetworkConfigurationDiagnostic(string subscriptionId, string resourceGroupName, string networkWatcherName, NetworkConfigurationDiagnosticParameters parameters, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             using var message = CreateGetNetworkConfigurationDiagnosticRequest(subscriptionId, resourceGroupName, networkWatcherName, parameters);
             _pipeline.Send(message, cancellationToken);
@@ -1815,7 +1455,7 @@ namespace Azure.ResourceManager.Network
                 case 202:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

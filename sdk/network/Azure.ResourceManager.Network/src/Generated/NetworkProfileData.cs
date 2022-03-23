@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing the NetworkProfile data model. </summary>
-    public partial class NetworkProfileData : Resource
+    public partial class NetworkProfileData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>
         public NetworkProfileData()
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkProfileData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfileData(string id, string name, string type, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, type, location, tags)
+        internal NetworkProfileData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             Etag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;

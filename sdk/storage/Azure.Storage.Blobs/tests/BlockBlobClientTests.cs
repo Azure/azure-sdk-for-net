@@ -3297,6 +3297,70 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
+        [PlaybackOnly("TODO https://github.com/Azure/azure-sdk-for-net/issues/27493")]
+        [TestCase(null)]
+        [TestCase(BlobCopySourceTagsMode.Replace)]
+        [TestCase(BlobCopySourceTagsMode.Copy)]
+        public async Task SyncUploadFromUriAsync_CopySourceTags(BlobCopySourceTagsMode? copySourceTags)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            Dictionary<string, string> sourceTags = new Dictionary<string, string>
+            {
+                { "source", "tag" }
+            };
+
+            BlobUploadOptions uploadOptions = new BlobUploadOptions
+            {
+                Tags = sourceTags
+            };
+
+            await sourceBlob.UploadAsync(stream, uploadOptions);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                CopySourceTagsMode = copySourceTags
+            };
+
+            Dictionary<string, string> destTags = new Dictionary<string, string>
+            {
+                { "dest", "tag" }
+            };
+
+            if (copySourceTags != BlobCopySourceTagsMode.Copy)
+            {
+                options.Tags = destTags;
+            }
+
+            Uri sourceUri = sourceBlob.GenerateSasUri(BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
+
+            // Act
+            Response<BlobContentInfo> uploadResponse = await destBlob.SyncUploadFromUriAsync(
+                copySource: sourceUri,
+                options: options);
+
+            // Assert
+            Response<GetBlobTagResult> getTagsResponse = await destBlob.GetTagsAsync();
+
+            if (copySourceTags == BlobCopySourceTagsMode.Copy)
+            {
+                AssertDictionaryEquality(sourceTags, getTagsResponse.Value.Tags);
+            }
+            else
+            {
+                AssertDictionaryEquality(destTags, getTagsResponse.Value.Tags);
+            }
+        }
+
+        [RecordedTest]
         public async Task WithCustomerProvidedKey()
         {
             // Arrange

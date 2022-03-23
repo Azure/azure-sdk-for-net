@@ -15,22 +15,22 @@ namespace Azure.AI.FormRecognizer.Samples
         [Test]
         public async Task CopyModel()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-
             #region Snippet:FormRecognizerSampleCreateCopySourceClientV3
 #if SNIPPET
-            string endpoint = "<source_endpoint>";
-            string apiKey = "<source_apiKey>";
+            string sourceEndpoint = "<source_endpoint>";
+            string sourceApiKey = "<source_apiKey>";
+#else
+            string sourceEndpoint = TestEnvironment.Endpoint;
+            string sourceApiKey = TestEnvironment.ApiKey;
 #endif
-            var sourcecredential = new AzureKeyCredential(apiKey);
-            var sourceClient = new FormTrainingClient(new Uri(endpoint), sourcecredential);
+            var sourcecredential = new AzureKeyCredential(sourceApiKey);
+            var sourceClient = new FormTrainingClient(new Uri(sourceEndpoint), sourcecredential);
             #endregion
 
             // For the purpose of this sample, we are going to create a trained model to copy. Please note that
             // if you already have a model, this is not necessary.
 #if SNIPPET
-            Uri trainingFileUri = <trainingFileUri>;
+            Uri trainingFileUri = new Uri("<trainingFileUri>");
 #else
             Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrlV2);
 #endif
@@ -40,11 +40,14 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleCreateCopyTargetClientV3
 #if SNIPPET
-            string endpoint = "<target_endpoint>";
-            string apiKey = "<target_apiKey>";
+            string targetEndpoint = "<target_endpoint>";
+            string targetApiKey = "<target_apiKey>";
+#else
+            string targetEndpoint = TestEnvironment.Endpoint;
+            string targetApiKey = TestEnvironment.ApiKey;
 #endif
-            var targetCredential = new AzureKeyCredential(apiKey);
-            var targetClient = new FormTrainingClient(new Uri(endpoint), targetCredential);
+            var targetCredential = new AzureKeyCredential(targetApiKey);
+            var targetClient = new FormTrainingClient(new Uri(targetEndpoint), targetCredential);
             #endregion
 
             #region Snippet:FormRecognizerSampleGetCopyAuthorizationV3

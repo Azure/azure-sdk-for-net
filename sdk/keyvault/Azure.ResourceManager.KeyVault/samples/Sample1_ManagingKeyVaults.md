@@ -19,7 +19,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(true, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroupResource resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Completed, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the Key vault inside this resource group.
@@ -51,7 +51,7 @@ AccessPermissions permissions = new AccessPermissions
 };
 AccessPolicyEntry AccessPolicy = new AccessPolicyEntry(tenantIdGuid, objectId, permissions);
 
-VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new Models.Sku(SkuFamily.A, SkuName.Standard));
+VaultProperties VaultProperties = new VaultProperties(tenantIdGuid, new KeyVaultSku(KeyVaultSkuFamily.A, KeyVaultSkuName.Standard));
 VaultProperties.EnabledForDeployment = true;
 VaultProperties.EnabledForDiskEncryption = true;
 VaultProperties.EnabledForTemplateDeployment = true;
@@ -71,8 +71,8 @@ VaultProperties.AccessPolicies.Add(AccessPolicy);
 
 VaultCreateOrUpdateParameters parameters = new VaultCreateOrUpdateParameters(AzureLocation.WestUS, VaultProperties);
 
-var rawVault = await vaultCollection.CreateOrUpdateAsync(false, vaultName, parameters).ConfigureAwait(false);
-Vault vault = await rawVault.WaitForCompletionAsync();
+var rawVault = await vaultCollection.CreateOrUpdateAsync(WaitUntil.Started, vaultName, parameters).ConfigureAwait(false);
+VaultResource vault = await rawVault.WaitForCompletionAsync();
 ```
 
 ***List all vaults***
@@ -80,8 +80,8 @@ Vault vault = await rawVault.WaitForCompletionAsync();
 ```C# Snippet:Managing_KeyVaults_ListAllVaults
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-AsyncPageable<Vault> response = vaultCollection.GetAllAsync();
-await foreach (Vault vault in response)
+AsyncPageable<VaultResource> response = vaultCollection.GetAllAsync();
+await foreach (VaultResource vault in response)
 {
     Console.WriteLine(vault.Data.Name);
 }
@@ -92,7 +92,7 @@ await foreach (Vault vault in response)
 ```C# Snippet:Managing_KeyVaults_GetAVault
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-Vault vault = await vaultCollection.GetAsync("myVault");
+VaultResource vault = await vaultCollection.GetAsync("myVault");
 Console.WriteLine(vault.Data.Name);
 ```
 
@@ -101,7 +101,7 @@ Console.WriteLine(vault.Data.Name);
 ```C# Snippet:Managing_KeyVaults_GetAVaultIfExists
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-Vault vault = await vaultCollection.GetIfExistsAsync("foo");
+VaultResource vault = await vaultCollection.GetIfExistsAsync("foo");
 if (vault != null)
 {
     Console.WriteLine(vault.Data.Name);
@@ -118,6 +118,6 @@ if (await vaultCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_KeyVaults_DeleteAVault
 VaultCollection vaultCollection = resourceGroup.GetVaults();
 
-Vault vault = await vaultCollection.GetAsync("myVault");
-await vault.DeleteAsync(true);
+VaultResource vault = await vaultCollection.GetAsync("myVault");
+await vault.DeleteAsync(WaitUntil.Completed);
 ```

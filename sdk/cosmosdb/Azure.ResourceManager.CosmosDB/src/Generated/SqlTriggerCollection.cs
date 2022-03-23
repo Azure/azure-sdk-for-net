@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary> A class representing collection of SqlTrigger and their operations over its parent. </summary>
-    public partial class SqlTriggerCollection : ArmCollection, IEnumerable<SqlTrigger>, IAsyncEnumerable<SqlTrigger>
+    public partial class SqlTriggerCollection : ArmCollection, IEnumerable<SqlTriggerResource>, IAsyncEnumerable<SqlTriggerResource>
     {
         private readonly ClientDiagnostics _sqlTriggerSqlResourcesClientDiagnostics;
         private readonly SqlResourcesRestOperations _sqlTriggerSqlResourcesRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SqlTriggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlTriggerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlTrigger.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SqlTrigger.ResourceType, out string sqlTriggerSqlResourcesApiVersion);
-            _sqlTriggerSqlResourcesRestClient = new SqlResourcesRestOperations(_sqlTriggerSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlTriggerSqlResourcesApiVersion);
+            _sqlTriggerSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", SqlTriggerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SqlTriggerResource.ResourceType, out string sqlTriggerSqlResourcesApiVersion);
+            _sqlTriggerSqlResourcesRestClient = new SqlResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlTriggerSqlResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlContainer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlContainer.ResourceType), nameof(id));
+            if (id.ResourceType != SqlContainerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlContainerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -56,13 +55,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
         /// Operation Id: SqlResources_CreateUpdateSqlTrigger
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlTrigger>> CreateOrUpdateAsync(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlTriggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             Argument.AssertNotNull(createUpdateSqlTriggerParameters, nameof(createUpdateSqlTriggerParameters));
@@ -72,8 +71,8 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _sqlTriggerSqlResourcesRestClient.CreateUpdateSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<SqlTrigger>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var operation = new CosmosDBArmOperation<SqlTriggerResource>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +88,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/triggers/{triggerName}
         /// Operation Id: SqlResources_CreateUpdateSqlTrigger
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="triggerName"> Cosmos DB trigger name. </param>
         /// <param name="createUpdateSqlTriggerParameters"> The parameters to provide for the current SQL trigger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="createUpdateSqlTriggerParameters"/> is null. </exception>
-        public virtual ArmOperation<SqlTrigger> CreateOrUpdate(bool waitForCompletion, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlTriggerResource> CreateOrUpdate(WaitUntil waitUntil, string triggerName, SqlTriggerCreateUpdateData createUpdateSqlTriggerParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             Argument.AssertNotNull(createUpdateSqlTriggerParameters, nameof(createUpdateSqlTriggerParameters));
@@ -105,8 +104,8 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _sqlTriggerSqlResourcesRestClient.CreateUpdateSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<SqlTrigger>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var operation = new CosmosDBArmOperation<SqlTriggerResource>(new SqlTriggerOperationSource(Client), _sqlTriggerSqlResourcesClientDiagnostics, Pipeline, _sqlTriggerSqlResourcesRestClient.CreateCreateUpdateSqlTriggerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, createUpdateSqlTriggerParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public async virtual Task<Response<SqlTrigger>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlTriggerResource>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
@@ -136,8 +135,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlTriggerSqlResourcesRestClient.GetSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlTriggerSqlResourcesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SqlTrigger(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual Response<SqlTrigger> Get(string triggerName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlTriggerResource> Get(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
@@ -165,8 +164,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlTriggerSqlResourcesRestClient.GetSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlTriggerSqlResourcesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlTrigger(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SqlTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +180,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: SqlResources_ListSqlTriggers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlTrigger" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlTrigger> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlTrigger>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlTriggerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlTriggerSqlResourcesClientDiagnostics.CreateScope("SqlTriggerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _sqlTriggerSqlResourcesRestClient.ListSqlTriggersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTrigger(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlTriggerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,17 +207,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: SqlResources_ListSqlTriggers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlTrigger" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlTrigger> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlTrigger> FirstPageFunc(int? pageSizeHint)
+            Page<SqlTriggerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _sqlTriggerSqlResourcesClientDiagnostics.CreateScope("SqlTriggerCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _sqlTriggerSqlResourcesRestClient.ListSqlTriggers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlTrigger(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SqlTriggerResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public async virtual Task<Response<SqlTrigger>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
@@ -302,8 +301,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _sqlTriggerSqlResourcesRestClient.GetSqlTriggerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SqlTrigger>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlTrigger(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SqlTriggerResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        public virtual Response<SqlTrigger> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
@@ -331,8 +330,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _sqlTriggerSqlResourcesRestClient.GetSqlTrigger(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SqlTrigger>(null, response.GetRawResponse());
-                return Response.FromValue(new SqlTrigger(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SqlTriggerResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SqlTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        IEnumerator<SqlTrigger> IEnumerable<SqlTrigger>.GetEnumerator()
+        IEnumerator<SqlTriggerResource> IEnumerable<SqlTriggerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SqlTrigger> IAsyncEnumerable<SqlTrigger>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SqlTriggerResource> IAsyncEnumerable<SqlTriggerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

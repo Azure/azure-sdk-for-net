@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class MhsmPrivateEndpointConnectionOperationSource : IOperationSource<MhsmPrivateEndpointConnection>
+    internal class MhsmPrivateEndpointConnectionOperationSource : IOperationSource<MhsmPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.KeyVault
             _client = client;
         }
 
-        MhsmPrivateEndpointConnection IOperationSource<MhsmPrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
+        MhsmPrivateEndpointConnectionResource IOperationSource<MhsmPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MhsmPrivateEndpointConnectionData.DeserializeMhsmPrivateEndpointConnectionData(document.RootElement);
-            return new MhsmPrivateEndpointConnection(_client, data);
+            return new MhsmPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<MhsmPrivateEndpointConnection> IOperationSource<MhsmPrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MhsmPrivateEndpointConnectionResource> IOperationSource<MhsmPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MhsmPrivateEndpointConnectionData.DeserializeMhsmPrivateEndpointConnectionData(document.RootElement);
-            return new MhsmPrivateEndpointConnection(_client, data);
+            return new MhsmPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

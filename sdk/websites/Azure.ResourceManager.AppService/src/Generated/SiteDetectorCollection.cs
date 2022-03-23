@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteDetector and their operations over its parent. </summary>
-    public partial class SiteDetectorCollection : ArmCollection, IEnumerable<SiteDetector>, IAsyncEnumerable<SiteDetector>
+    public partial class SiteDetectorCollection : ArmCollection, IEnumerable<SiteDetectorResource>, IAsyncEnumerable<SiteDetectorResource>
     {
         private readonly ClientDiagnostics _siteDetectorDiagnosticsClientDiagnostics;
         private readonly DiagnosticsRestOperations _siteDetectorDiagnosticsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDetector.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteDetector.ResourceType, out string siteDetectorDiagnosticsApiVersion);
-            _siteDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteDetectorDiagnosticsApiVersion);
+            _siteDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteDetectorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteDetectorResource.ResourceType, out string siteDetectorDiagnosticsApiVersion);
+            _siteDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<SiteDetector>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDetectorResource>> GetAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -72,8 +71,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteDetectorDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteDetector(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteDetector> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDetectorResource> Get(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -104,8 +103,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken);
                 if (response.Value == null)
-                    throw _siteDetectorDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDetector(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -120,17 +119,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDetectorResponses
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteDetector> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteDetector>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteDetectorResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponsesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -138,14 +137,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteDetector>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponsesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -162,17 +161,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDetectorResponses
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteDetector> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteDetector> FirstPageFunc(int? pageSizeHint)
+            Page<SiteDetectorResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponses(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -180,14 +179,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteDetector> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteDetectorDiagnosticsRestClient.ListSiteDetectorResponsesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public async virtual Task<Response<SiteDetector>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDetectorResource>> GetIfExistsAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -280,8 +279,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteDetector(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteDetectorResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteDetector> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDetectorResource> GetIfExists(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -312,8 +311,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteDetectorDiagnosticsRestClient.GetSiteDetectorResponse(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, startTime, endTime, timeGrain, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteDetector(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteDetectorResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteDetector> IEnumerable<SiteDetector>.GetEnumerator()
+        IEnumerator<SiteDetectorResource> IEnumerable<SiteDetectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteDetector> IAsyncEnumerable<SiteDetector>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteDetectorResource> IAsyncEnumerable<SiteDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

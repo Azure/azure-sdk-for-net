@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteInstance and their operations over its parent. </summary>
-    public partial class SiteInstanceCollection : ArmCollection, IEnumerable<SiteInstance>, IAsyncEnumerable<SiteInstance>
+    public partial class SiteInstanceCollection : ArmCollection, IEnumerable<SiteInstanceResource>, IAsyncEnumerable<SiteInstanceResource>
     {
         private readonly ClientDiagnostics _siteInstanceWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteInstanceWebAppsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstance.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteInstance.ResourceType, out string siteInstanceWebAppsApiVersion);
-            _siteInstanceWebAppsRestClient = new WebAppsRestOperations(_siteInstanceWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceWebAppsApiVersion);
+            _siteInstanceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteInstanceResource.ResourceType, out string siteInstanceWebAppsApiVersion);
+            _siteInstanceWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteInstanceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSite.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSite.ResourceType), nameof(id));
+            if (id.ResourceType != WebSiteResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public async virtual Task<Response<SiteInstance>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceResource>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -69,8 +68,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceWebAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteInstanceWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new SiteInstance(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<SiteInstance> Get(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteInstanceResource> Get(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -98,8 +97,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceWebAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken);
                 if (response.Value == null)
-                    throw _siteInstanceWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstance(Client, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListInstanceIdentifiers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteInstance> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteInstance>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteInstanceResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteInstanceWebAppsRestClient.ListInstanceIdentifiersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteInstance>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteInstanceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteInstanceWebAppsRestClient.ListInstanceIdentifiersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListInstanceIdentifiers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteInstance" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteInstance> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteInstance> FirstPageFunc(int? pageSizeHint)
+            Page<SiteInstanceResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteInstanceWebAppsRestClient.ListInstanceIdentifiers(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +173,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteInstance> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteInstanceResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteInstanceWebAppsClientDiagnostics.CreateScope("SiteInstanceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteInstanceWebAppsRestClient.ListInstanceIdentifiersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstance(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public async virtual Task<Response<SiteInstance>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceResource>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -265,8 +264,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceWebAppsRestClient.GetInstanceInfoAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteInstance>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteInstance(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteInstanceResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public virtual Response<SiteInstance> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteInstanceResource> GetIfExists(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -294,8 +293,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceWebAppsRestClient.GetInstanceInfo(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteInstance>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteInstance(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteInstanceResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteInstance> IEnumerable<SiteInstance>.GetEnumerator()
+        IEnumerator<SiteInstanceResource> IEnumerable<SiteInstanceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteInstance> IAsyncEnumerable<SiteInstance>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteInstanceResource> IAsyncEnumerable<SiteInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
