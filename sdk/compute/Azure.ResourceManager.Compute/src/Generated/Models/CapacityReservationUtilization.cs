@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Represents the capacity reservation utilization in terms of resources allocated. </summary>
-    public partial class CapacityReservationUtilization
+    internal partial class CapacityReservationUtilization
     {
         /// <summary> Initializes a new instance of CapacityReservationUtilization. </summary>
         internal CapacityReservationUtilization()

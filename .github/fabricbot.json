@@ -1871,13 +1871,10 @@
             "Digital Twins"
           ],
           "mentionees": [
-            "drwill-ms",
-            "timtay-microsoft",
-            "abhipsaMisra",
-            "vinagesh",
-            "azabbasi",
-            "barustum",
-            "jamdavi"
+            "johngallardo",
+            "efriesner",
+            "abhinav-gha",
+            "Aashish93-stack"
           ]
         },
         {
@@ -1895,7 +1892,8 @@
             "Event Hubs"
           ],
           "mentionees": [
-            "kasun04"
+            "kasun04",
+            "saglodha"
           ]
         },
         {
@@ -1956,6 +1954,49 @@
           ],
           "mentionees": [
             "madhurinms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoTHub"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "brycewang-microsoft",
+            "aandykwong-ms"
+          ]
+        },
+        {
+          "labels": [
+            "Service Attention",
+            "IoT Models Repository"
+          ],
+          "mentionees": [
+            "drwill-ms",
+            "timtay-microsoft",
+            "abhipsaMisra",
+            "azabbasi",
+            "digimaun",
+            "brycewang-microsoft",
+            "aandykwong-ms"
           ]
         },
         {
@@ -2478,7 +2519,9 @@
           ],
           "mentionees": [
             "shankarsama",
-            "DorothySun216"
+            "DorothySun216",
+            "EldertGrootenboer",
+            "saglodha"
           ]
         },
         {
@@ -2509,7 +2552,8 @@
           ],
           "mentionees": [
             "sffamily",
-            "chenkennt"
+            "chenkennt",
+            "Y-Sindo"
           ]
         },
         {
@@ -3465,7 +3509,7 @@
         {
           "name": "addReply",
           "parameters": {
-            "comment": "Hi @${issueAuthor}.  Thank you, for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
+            "comment": "Hi @${issueAuthor}.  Thank you for your interest in helping to improve the Azure SDK experience and for your contribution.  We've noticed that there hasn't been recent engagement on this pull request.  If this is still an active work stream, please let us know by pushing some changes or leaving a comment.  Otherwise, we'll close this out in 7 days."
           }
         }
       ]

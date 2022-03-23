@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Preferences related to the shipment logistics of the sku. </summary>
-    public partial class TransportPreferences
+    internal partial class TransportPreferences
     {
         /// <summary> Initializes a new instance of TransportPreferences. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>

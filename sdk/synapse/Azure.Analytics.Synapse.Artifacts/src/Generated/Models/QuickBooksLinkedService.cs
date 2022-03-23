@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="consumerSecret"> The consumer secret for OAuth 1.0 authentication. </param>
         /// <param name="accessToken"> The access token for OAuth 1.0 authentication. </param>
         /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="companyId"/>, <paramref name="consumerKey"/>, <paramref name="consumerSecret"/>, <paramref name="accessToken"/>, or <paramref name="accessTokenSecret"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="companyId"/>, <paramref name="consumerKey"/>, <paramref name="consumerSecret"/>, <paramref name="accessToken"/> or <paramref name="accessTokenSecret"/> is null. </exception>
         public QuickBooksLinkedService(object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret)
         {
             if (endpoint == null)

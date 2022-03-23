@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ManagementLockListResult. </summary>
         internal ManagementLockListResult()
         {
-            Value = new ChangeTrackingList<ManagementLockObjectData>();
+            Value = new ChangeTrackingList<ManagementLockData>();
         }
 
         /// <summary> Initializes a new instance of ManagementLockListResult. </summary>
         /// <param name="value"> The list of locks. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ManagementLockListResult(IReadOnlyList<ManagementLockObjectData> value, string nextLink)
+        internal ManagementLockListResult(IReadOnlyList<ManagementLockData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of locks. </summary>
-        public IReadOnlyList<ManagementLockObjectData> Value { get; }
+        public IReadOnlyList<ManagementLockData> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

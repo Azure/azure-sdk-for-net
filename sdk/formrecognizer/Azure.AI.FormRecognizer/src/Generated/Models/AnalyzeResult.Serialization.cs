@@ -24,6 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyList<DocumentKeyValuePair>> keyValuePairs = default;
             Optional<IReadOnlyList<DocumentEntity>> entities = default;
             Optional<IReadOnlyList<DocumentStyle>> styles = default;
+            Optional<IReadOnlyList<DocumentLanguage>> languages = default;
             Optional<IReadOnlyList<AnalyzedDocument>> documents = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -117,6 +118,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     styles = array;
                     continue;
                 }
+                if (property.NameEquals("languages"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<DocumentLanguage> array = new List<DocumentLanguage>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                    }
+                    languages = array;
+                    continue;
+                }
                 if (property.NameEquals("documents"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -133,7 +149,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Optional.ToList(tables), Optional.ToList(keyValuePairs), Optional.ToList(entities), Optional.ToList(styles), Optional.ToList(documents));
+            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, Optional.ToList(tables), Optional.ToList(keyValuePairs), Optional.ToList(entities), Optional.ToList(styles), Optional.ToList(languages), Optional.ToList(documents));
         }
     }
 }

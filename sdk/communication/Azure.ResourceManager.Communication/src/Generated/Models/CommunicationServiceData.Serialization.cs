@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Communication
 
         internal static CommunicationServiceData DeserializeCommunicationServiceData(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             Optional<string> location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> hostName = default;
             Optional<string> dataLocation = default;
@@ -61,16 +61,6 @@ namespace Azure.ResourceManager.Communication
             Optional<string> immutableResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("location"))
                 {
                     location = property.Value.GetString();
@@ -104,6 +94,11 @@ namespace Azure.ResourceManager.Communication
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))

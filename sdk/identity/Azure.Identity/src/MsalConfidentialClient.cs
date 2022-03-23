@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Azure.Identity
         internal readonly bool _includeX5CClaimHeader;
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _assertionCallback;
+        private readonly Func<CancellationToken, Task<string>> _asyncAssertionCallback;
 
         internal string RedirectUrl { get; }
 
@@ -24,26 +26,33 @@ namespace Azure.Identity
         protected MsalConfidentialClient()
         { }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, string clientSecret, string redirectUrl, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _clientSecret = clientSecret;
             RedirectUrl = redirectUrl;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
             RegionalAuthority = regionalAuthority;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, ITokenCacheOptions cacheOptions, RegionalAuthority? regionalAuthority, bool isPiiLoggingEnabled)
-            : base(pipeline, tenantId, clientId, isPiiLoggingEnabled, cacheOptions)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
         {
             _assertionCallback = assertionCallback;
+            RegionalAuthority = regionalAuthority;
+        }
+
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<CancellationToken, Task<string>> assertionCallback, TokenCredentialOptions options, RegionalAuthority? regionalAuthority = null)
+            : base(pipeline, tenantId, clientId, options)
+        {
+            _asyncAssertionCallback = assertionCallback;
             RegionalAuthority = regionalAuthority;
         }
 
@@ -64,6 +73,11 @@ namespace Azure.Identity
             if (_assertionCallback != null)
             {
                 confClientBuilder.WithClientAssertion(_assertionCallback);
+            }
+
+            if (_asyncAssertionCallback != null)
+            {
+                confClientBuilder.WithClientAssertion(_asyncAssertionCallback);
             }
 
             if (_certificateProvider != null)

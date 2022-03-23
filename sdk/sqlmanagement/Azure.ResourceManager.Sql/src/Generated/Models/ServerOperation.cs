@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A server operation. </summary>
-    public partial class ServerOperation : Resource
+    public partial class ServerOperation : ResourceData
     {
         /// <summary> Initializes a new instance of ServerOperation. </summary>
         public ServerOperation()
@@ -22,7 +22,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ServerOperation. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="operation"> The name of operation. </param>
         /// <param name="operationFriendlyName"> The friendly name of operation. </param>
         /// <param name="percentComplete"> The percentage of the operation completed. </param>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompletionTime"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ServerOperation(ResourceIdentifier id, string name, ResourceType type, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, type)
+        internal ServerOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
         {
             Operation = operation;
             OperationFriendlyName = operationFriendlyName;

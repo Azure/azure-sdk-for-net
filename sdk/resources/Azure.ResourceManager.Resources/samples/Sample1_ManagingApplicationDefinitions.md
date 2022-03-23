@@ -16,7 +16,7 @@ When you first create your ARM client, choose the subscription you're going to w
 
 ```C# Snippet:Readme_DefaultSubscription
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ```
 
 This is a scoped operations object, and any operations you perform will be done under that subscription. From this object, you have access to all children via collection objects. Or you can access individual children by ID.
@@ -26,8 +26,8 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroupCreateOrUpdateOperation lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
-ResourceGroup resourceGroup = lro.Value;
+ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+ResourceGroupResource resourceGroup = lro.Value;
 ```
 
 Now that we have the resource group created, we can manage the application definitions inside this resource group.
@@ -43,10 +43,10 @@ var input = new ApplicationDefinitionData(resourceGroup.Data.Location, Applicati
 {
     DisplayName = applicationDefinitionName,
     Description = $"{applicationDefinitionName} description",
-    PackageFileUri = "https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip"
+    PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
 };
-ApplicationDefinitionCreateOrUpdateOperation lro = await applicationDefinitionCollection.CreateOrUpdateAsync(true, applicationDefinitionName, input);
-ApplicationDefinition applicationDefinition = lro.Value;
+ArmOperation<ApplicationDefinitionResource> lro = await applicationDefinitionCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, input);
+ApplicationDefinitionResource applicationDefinition = lro.Value;
 ```
 
 ***List all application definitions***
@@ -55,8 +55,8 @@ ApplicationDefinition applicationDefinition = lro.Value;
 // First we need to get the application definition collection from the resource group
 ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
 // With GetAllAsync(), we can get a list of the application definitions in the collection
-AsyncPageable<ApplicationDefinition> response = applicationDefinitionCollection.GetAllAsync();
-await foreach (ApplicationDefinition applicationDefinition in response)
+AsyncPageable<ApplicationDefinitionResource> response = applicationDefinitionCollection.GetAllAsync();
+await foreach (ApplicationDefinitionResource applicationDefinition in response)
 {
     Console.WriteLine(applicationDefinition.Data.Name);
 }
@@ -68,9 +68,9 @@ await foreach (ApplicationDefinition applicationDefinition in response)
 // First we need to get the application definition collection from the resource group
 ApplicationDefinitionCollection applicationDefinitionCollection = resourceGroup.GetApplicationDefinitions();
 // Now we can get the application definition with GetAsync()
-ApplicationDefinition applicationDefinition = await applicationDefinitionCollection.GetAsync("myApplicationDefinition");
+ApplicationDefinitionResource applicationDefinition = await applicationDefinitionCollection.GetAsync("myApplicationDefinition");
 // With DeleteAsync(), we can delete the application definition
-await applicationDefinition.DeleteAsync(true);
+await applicationDefinition.DeleteAsync(WaitUntil.Completed);
 ```
 
 

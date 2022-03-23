@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("tags");
             writer.WriteStartObject();
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         internal static VirtualMachineData DeserializeVirtualMachineData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<SystemData> systemData = default;
             Optional<string> kind = default;
-            Optional<VMwareIdentity> identity = default;
+            Optional<SystemAssignedServiceIdentity> identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> resourcePoolId = default;
             Optional<string> templateId = default;
             Optional<string> vCenterId = default;
@@ -159,16 +159,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("kind"))
                 {
                     kind = property.Value.GetString();
@@ -181,7 +171,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = VMwareIdentity.DeserializeVMwareIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -212,6 +202,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -382,7 +377,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new VirtualMachineData(id, name, type, tags, location, extendedLocation.Value, systemData, kind.Value, identity.Value, resourcePoolId.Value, templateId.Value, vCenterId.Value, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, guestAgentProfile.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), powerState.Value, customResourceName.Value, uuid.Value, Optional.ToList(statuses), provisioningState.Value, vmId.Value);
+            return new VirtualMachineData(id, name, type, systemData, tags, location, extendedLocation.Value, kind.Value, identity, resourcePoolId.Value, templateId.Value, vCenterId.Value, placementProfile.Value, osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, guestAgentProfile.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), powerState.Value, customResourceName.Value, uuid.Value, Optional.ToList(statuses), provisioningState.Value, vmId.Value);
         }
     }
 }

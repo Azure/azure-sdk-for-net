@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing the SyncAgent data model. </summary>
-    public partial class SyncAgentData : Resource
+    public partial class SyncAgentData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncAgentData. </summary>
         public SyncAgentData()
@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SyncAgentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="namePropertiesName"> Name of the sync agent. </param>
         /// <param name="syncDatabaseId"> ARM resource id of the sync database in the sync agent. </param>
         /// <param name="lastAliveTime"> Last alive time of the sync agent. </param>
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isUpToDate"> If the sync agent version is up to date. </param>
         /// <param name="expiryTime"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
-        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType type, string namePropertiesName, string syncDatabaseId, DateTimeOffset? lastAliveTime, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expiryTime, string version) : base(id, name, type)
+        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string syncDatabaseId, DateTimeOffset? lastAliveTime, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expiryTime, string version) : base(id, name, resourceType, systemData)
         {
             NamePropertiesName = namePropertiesName;
             SyncDatabaseId = syncDatabaseId;

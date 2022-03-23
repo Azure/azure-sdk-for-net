@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-");
-            ResourceGroup rg = await CreateResourceGroup(subscription, rgName);
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, rgName);
             string policyAssignmentName = Recording.GenerateAssetName("polAssign-");
-            PolicyAssignment policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = await CreatePolicyAssignment(rg, policyAssignmentName);
             string policyExemptionName = Recording.GenerateAssetName("polExemp-");
-            PolicyExemption policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
-            await policyExemption.DeleteAsync(true);
+            PolicyExemptionResource policyExemption = await CreatePolicyExemption(rg, policyAssignment, policyExemptionName);
+            await policyExemption.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policyExemption.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

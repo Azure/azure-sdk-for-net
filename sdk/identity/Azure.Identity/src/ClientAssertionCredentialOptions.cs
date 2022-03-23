@@ -3,7 +3,10 @@
 
 namespace Azure.Identity
 {
-    internal class ClientAssertionCredentialOptions : TokenCredentialOptions
+    /// <summary>
+    /// Options used to configure the <see cref="ClientAssertionCredential"/>.
+    /// </summary>
+    public class ClientAssertionCredentialOptions : TokenCredentialOptions
     {
         internal CredentialPipeline Pipeline { get; set; }
 

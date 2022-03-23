@@ -93,13 +93,14 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "38",
+        "Content-Length": "48",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-ResourceManager.DeviceUpdate/1.0.0-alpha.20211115.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "48ad0f41ed0f983f297d5b1e16268e2b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus2",
         "properties": {}
       },
@@ -968,7 +969,7 @@
         "x-ms-request-id": "08355683-c35b-4664-8fe8-afe6a7e695a1",
         "x-ms-routing-request-id": "SOUTHEASTASIA:20211115T061828Z:b7167981-2dbf-4da5-9855-460ce39f41e7"
       },
-      "ResponseBody": null
+      "ResponseBody": "null"
     },
     {
       "RequestUri": "https://management.azure.com/providers/Microsoft.DeviceUpdate/locations/WESTUS2/operationStatuses/08355683-c35b-4664-8fe8-afe6a7e695a1*58092C7F24818F67CBD7408A6006FE5DD75DEF9A275A3779B32AAE4A2AFB7574?api-version=2020-03-01-preview",

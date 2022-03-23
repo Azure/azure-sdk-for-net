@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -23,7 +24,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WorkerPoolResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="workerSize"> VM size of the worker pool instances. </param>
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
-        internal WorkerPoolResourceData(ResourceIdentifier id, string name, ResourceType type, string kind, SkuDescription sku, int? workerSizeId, ComputeModeOptions? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames) : base(id, name, type, kind)
+        internal WorkerPoolResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SkuDescription sku, int? workerSizeId, ComputeModeOptions? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames) : base(id, name, resourceType, systemData, kind)
         {
             Sku = sku;
             WorkerSizeId = workerSizeId;

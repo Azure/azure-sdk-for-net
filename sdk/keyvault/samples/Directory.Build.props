@@ -16,7 +16,7 @@
   <Import Project="..\Directory.Build.props" />
 
   <PropertyGroup>
-    <DefineConstants>STRONGNAME_SIGNED</DefineConstants>
+    <DefineConstants>$(DefineConstants);STRONGNAME_SIGNED</DefineConstants>
     <InheritDocEnabled>false</InheritDocEnabled>
     <IsShippingLibrary>false</IsShippingLibrary>
   </PropertyGroup>

@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "c89927cb-a4b4-ddb6-1af4-d2b268c5b856",
         "x-ms-date": "Wed, 01 Dec 2021 23:58:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -24,7 +24,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "c89927cb-a4b4-ddb6-1af4-d2b268c5b856",
         "x-ms-request-id": "a90ea4e7-a01e-0070-3b0f-e76335000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -42,9 +42,9 @@
         "x-ms-client-request-id": "5364b204-add3-fcff-7e1a-681e7c0b0712",
         "x-ms-date": "Wed, 01 Dec 2021 23:58:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
-      "RequestBody": [],
+      "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
@@ -57,7 +57,7 @@
         "x-ms-content-crc64": "AAAAAAAAAAA=",
         "x-ms-request-id": "a90ea502-a01e-0070-500f-e76335000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:58:19.6574552Z"
       },
       "ResponseBody": []
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "29b342ec-2d98-13b1-aaba-4e2a62186165",
         "x-ms-date": "Wed, 01 Dec 2021 23:58:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": "zrwUEBOscwOJJtsYxbc4xx0v66zzypjJP9EXMIxlsmSNZr6rEAJVHrSVPo7InRhiuwqVONkLYgMjS9FClUJ3JHN3il74jLYa2sz4XowKAKG4tXWBz3qKggS7iMUwEolxHRoaUBK5aS5Ue14NEgR2GEowid/N9lX47QhaPQTx6cdCh0By76\u002BO/0tGLFQcfHD/RW96AImppCfFIWMKXywqY5GXy4vEBCmboYqUhskA3HGXWveUduk9mOMYrc5MhJ8fHMnDhLHlO0BG317\u002BFR1exETycgU0leynWTKnq1dbTh3qdWn/PVe/sh63TpeKP4PFuuiJWhGa6ofcGyt/PZDp65BBE6CzXobsMsDmfUZVHRmv4vBu0fQMUIriIiIsQHWNzWMGSSziEVtinCdQs21Bh/4Rz1qfexmcNMMV0TtkwPJKWK/jT9PtzNCUCzXMu5wdoZskGnAa7lJJaRRozEAg/ts1BVq9XTcqIwOJCm/j0Hkm\u002BDCfQKWBMGpcmeW/hACQdA1ZlrVBX0Nk\u002BfdtkePjZZmbQtMPgL42s9XwYMRRa58C\u002BJZhijnD5ZnsO0auFJ\u002BHeTNMJEIsgPNPI\u002BPgUf5/Eo5XaphNgttf1106I0V3iJ42aeeQBUZc1neiEWZW45OabSi3VqoHOfdX7Ezk8V2u2JtEqecW7g1H\u002B5Mgq3B0CfPJoLUcvzH0Ly/wOBj5d\u002BUZ9DnLEjmrg38bb1sX5o6G4\u002BNYG1GokRhpUHq4JrX0TYOuBrc3qfe6HRw1AU/W3EihaVU1oVyTcWIgYcG/813KJiLXaeDXTjnsnv01cpDIknMxFrxfv6wmGpVUFkc1\u002Biq/a9ot/nNoyhocSQJfXv7SWM9Ojdygamd1sU5LgjjytqPTdQe1mpT/yUyhQ3Wqx7uWgr545m1NHgByuE0kHUfiKZJei\u002Bj3HL06TsSQ/ifxy\u002BmTtAB6ec82hlcGQ\u002BJG2qsEvxnjSzvTnmUAPZiovCDZgO1kkWhHaLDCJwWR8dnb9HMYiz8NDn\u002BtwBaaeTw3jck2LML14klCvVZpICM2Qa2MJUkkjzHhy3JtttFSrO5zi5o8WsUW5hEq1c3opO1bd35pDlTzEv2YVWBQhyx38BFo9ZSJ\u002BubndT43\u002Brpj\u002BCeEEj5T6Z2ZgHicowVkxl7lsuW8f65Z0X2XgZkVuxhDNFw5y3XtJAdzz3Qc7Vbhg67gUkfUp3l4K0DBu2gEg8VgWG\u002BoK/rp947eSLA5POQmtv3qNWnRb4zjwKA0K2mfbkuvvJTmOFe09lq49l7IPu5cmgRqGU5bjunixWpZtcslP9lkioBPQH2lNj4PGHguGoKy2JFkNFX9VC2rA3PtWkGOk7eEY7RtDFqGxOMPTHZwtKvopw==",
       "StatusCode": 201,
@@ -86,7 +86,7 @@
         "x-ms-content-crc64": "ZOX7eeLZxl8=",
         "x-ms-request-id": "a90ea517-a01e-0070-630f-e76335000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     },
@@ -103,7 +103,7 @@
         "x-ms-client-request-id": "3932ff7e-dd57-9d7a-3f9b-5f3acb38afec",
         "x-ms-date": "Wed, 01 Dec 2021 23:58:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": "\uFEFF\u003CBlockList\u003E\u003CLatest\u003EAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\u003C/Latest\u003E\u003C/BlockList\u003E",
       "StatusCode": 201,
@@ -117,7 +117,7 @@
         "x-ms-content-crc64": "17m5j6ScWgM=",
         "x-ms-request-id": "a90ea551-a01e-0070-130f-e76335000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:58:19.9552856Z"
       },
       "ResponseBody": []
@@ -133,7 +133,7 @@
         "x-ms-client-request-id": "62abfd37-27e5-8c0d-619f-86efe6981e17",
         "x-ms-date": "Wed, 01 Dec 2021 23:58:19 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -157,7 +157,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "a90ea595-a01e-0070-440f-e76335000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:58:19.9552856Z"
       },
       "ResponseBody": []
@@ -174,7 +174,7 @@
         "x-ms-date": "Wed, 01 Dec 2021 23:58:20 GMT",
         "x-ms-range": "bytes=0-4194303",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 206,
@@ -197,7 +197,7 @@
         "x-ms-lease-status": "unlocked",
         "x-ms-request-id": "a90ea5c3-a01e-0070-6b0f-e76335000000",
         "x-ms-server-encrypted": "true",
-        "x-ms-version": "2021-04-10",
+        "x-ms-version": "2021-06-08",
         "x-ms-version-id": "2021-12-01T23:58:19.9552856Z"
       },
       "ResponseBody": "zrwUEBOscwOJJtsYxbc4xx0v66zzypjJP9EXMIxlsmSNZr6rEAJVHrSVPo7InRhiuwqVONkLYgMjS9FClUJ3JHN3il74jLYa2sz4XowKAKG4tXWBz3qKggS7iMUwEolxHRoaUBK5aS5Ue14NEgR2GEowid/N9lX47QhaPQTx6cdCh0By76\u002BO/0tGLFQcfHD/RW96AImppCfFIWMKXywqY5GXy4vEBCmboYqUhskA3HGXWveUduk9mOMYrc5MhJ8fHMnDhLHlO0BG317\u002BFR1exETycgU0leynWTKnq1dbTh3qdWn/PVe/sh63TpeKP4PFuuiJWhGa6ofcGyt/PZDp65BBE6CzXobsMsDmfUZVHRmv4vBu0fQMUIriIiIsQHWNzWMGSSziEVtinCdQs21Bh/4Rz1qfexmcNMMV0TtkwPJKWK/jT9PtzNCUCzXMu5wdoZskGnAa7lJJaRRozEAg/ts1BVq9XTcqIwOJCm/j0Hkm\u002BDCfQKWBMGpcmeW/hACQdA1ZlrVBX0Nk\u002BfdtkePjZZmbQtMPgL42s9XwYMRRa58C\u002BJZhijnD5ZnsO0auFJ\u002BHeTNMJEIsgPNPI\u002BPgUf5/Eo5XaphNgttf1106I0V3iJ42aeeQBUZc1neiEWZW45OabSi3VqoHOfdX7Ezk8V2u2JtEqecW7g1H\u002B5Mgq3B0CfPJoLUcvzH0Ly/wOBj5d\u002BUZ9DnLEjmrg38bb1sX5o6G4\u002BNYG1GokRhpUHq4JrX0TYOuBrc3qfe6HRw1AU/W3EihaVU1oVyTcWIgYcG/813KJiLXaeDXTjnsnv01cpDIknMxFrxfv6wmGpVUFkc1\u002Biq/a9ot/nNoyhocSQJfXv7SWM9Ojdygamd1sU5LgjjytqPTdQe1mpT/yUyhQ3Wqx7uWgr545m1NHgByuE0kHUfiKZJei\u002Bj3HL06TsSQ/ifxy\u002BmTtAB6ec82hlcGQ\u002BJG2qsEvxnjSzvTnmUAPZiovCDZgO1kkWhHaLDCJwWR8dnb9HMYiz8NDn\u002BtwBaaeTw3jck2LML14klCvVZpICM2Qa2MJUkkjzHhy3JtttFSrO5zi5o8WsUW5hEq1c3opO1bd35pDlTzEv2YVWBQhyx38BFo9ZSJ\u002BubndT43\u002Brpj\u002BCeEEj5T6Z2ZgHicowVkxl7lsuW8f65Z0X2XgZkVuxhDNFw5y3XtJAdzz3Qc7Vbhg67gUkfUp3l4K0DBu2gEg8VgWG\u002BoK/rp947eSLA5POQmtv3qNWnRb4zjwKA0K2mfbkuvvJTmOFe09lq49l7IPu5cmgRqGU5bjunixWpZtcslP9lkioBPQH2lNj4PGHguGoKy2JFkNFX9VC2rA3PtWkGOk7eEY7RtDFqGxOMPTHZwtKvopw=="
@@ -213,7 +213,7 @@
         "x-ms-client-request-id": "455308df-5095-568b-5d13-b726a9105932",
         "x-ms-date": "Wed, 01 Dec 2021 23:58:20 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -223,7 +223,7 @@
         "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
         "x-ms-client-request-id": "455308df-5095-568b-5d13-b726a9105932",
         "x-ms-request-id": "a90ea5f0-a01e-0070-0f0f-e76335000000",
-        "x-ms-version": "2021-04-10"
+        "x-ms-version": "2021-06-08"
       },
       "ResponseBody": []
     }

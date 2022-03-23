@@ -377,7 +377,7 @@ namespace Azure.Messaging.ServiceBus
         {
             add
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != default)
                 {
@@ -389,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
 
             remove
             {
-                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+                Argument.AssertNotNull(value, nameof(ProcessSessionMessageAsync));
 
                 if (_processSessionMessageAsync != value)
                 {
@@ -745,9 +745,13 @@ namespace Azure.Messaging.ServiceBus
                     {
                         // Nothing to do here.  These exceptions are expected.
                     }
-
-                    ActiveReceiveTask.Dispose();
-                    ActiveReceiveTask = null;
+                    finally
+                    {
+                        // If an unexpected exception occurred while awaiting the receive task, we still want to dispose and set to null
+                        // as the task is complete and there is no use in awaiting it again if StopProcessingAsync is called again.
+                        ActiveReceiveTask.Dispose();
+                        ActiveReceiveTask = null;
+                    }
                 }
             }
             catch (Exception exception)
@@ -812,7 +816,9 @@ namespace Azure.Messaging.ServiceBus
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
-                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                        // Instead of using the array overload which allocates an array, we use the overload that has two parameters
+                        // and pass in CancellationToken.None. This should be safe since CanBeCanceled will return false.
+                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
                         TaskTuples.Add(
                             (

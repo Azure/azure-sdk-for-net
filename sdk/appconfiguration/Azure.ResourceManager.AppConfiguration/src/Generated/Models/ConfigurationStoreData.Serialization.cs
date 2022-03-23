@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -54,17 +54,18 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static ConfigurationStoreData DeserializeConfigurationStoreData(JsonElement element)
         {
-            Optional<ResourceIdentity> identity = default;
-            Models.Sku sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            AppConfigurationSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> endpoint = default;
-            Optional<EncryptionProperties> encryption = default;
+            Optional<Models.EncryptionProperties> encryption = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionReference>> privateEndpointConnections = default;
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
@@ -76,12 +77,12 @@ namespace Azure.ResourceManager.AppConfiguration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ResourceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = AppConfigurationSku.DeserializeAppConfigurationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -112,6 +113,11 @@ namespace Azure.ResourceManager.AppConfiguration
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryption = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -187,7 +193,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationStoreData(id, name, type, tags, location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new ConfigurationStoreData(id, name, type, systemData, tags, location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

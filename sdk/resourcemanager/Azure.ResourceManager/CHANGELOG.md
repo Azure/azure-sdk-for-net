@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.8 (2022-01-29)
+
+### Features Added
+
+- ManagementGroup: Added GetAvailableLocations methods.
+- GenericResourceData: Added a new property ExtendedLocation.
+- Support using different api versions for a service.
+
+### Breaking Changes
+
+- waitForCompletion is now a required parameter and moved to the first parameter in LRO operations.
+- GenericResourceCollection: Parent changes from Subscription to Tenant.
+- GenericResourceCollection: GetAll method replaced by GetGenericResources in Subscription, GetByResourceGroup method replaced by GetGenericResources in ResourceGroup.
+- GenericResourceData: Now inherits from TrackedResourceExtended which also has ExtendedLocation and inherits from TrackedResource.
+- PredefinedTag: Changed from a resource to a non-resource, i.e. removed PredefinedTagCollection, PredefinedTag, renamed PredefinedTagData to PredefinedTag, the methods are moved to its Parent Subscription.
+- ResourceLinkCollection: body parameter is unflattened in CreateOrUpdate.
+- ManagementLockObject renamed to ManagementLock.
+- Removed GenericResourceFilter classes.
+- Removed GetAllAsGenericResources in [Resource]Collections.
+- Added ArmResource constructor to use ArmClient for ClientContext information and removed previous constructors with parameters.
+- Moved ResourceIdentifier and Location into Azure.Core.
+- Removed GetGenericResources overload methods that are used to construct GenericResources.
+- Removed CheckNameAvailabilityRequest, CheckNameAvailabilityResponse and CheckNameAvailabilityReason in common type.
 
 ## 1.0.0-beta.7 (2021-12-23)
 

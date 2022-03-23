@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -14,6 +15,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <summary>
         /// Sent telemetry and return the number of items Accepted.
         /// </summary>
-        ValueTask<int> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken);
+        ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken);
+        ValueTask TransmitFromStorage(long maxFileToTransmit, bool aysnc, CancellationToken cancellationToken);
+        string InstrumentationKey { get; }
     }
 }

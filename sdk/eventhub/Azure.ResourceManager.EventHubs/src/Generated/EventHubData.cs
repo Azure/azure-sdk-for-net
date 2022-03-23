@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
         /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
         /// <param name="createdAt"> Exact time the Event Hub was created. </param>
         /// <param name="updatedAt"> The exact time the message was updated. </param>
@@ -35,9 +35,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType type, string location, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, type, location)
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyList<string> partitionIds, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, resourceType, systemData, location)
         {
-            SystemData = systemData;
             PartitionIds = partitionIds;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -47,8 +46,6 @@ namespace Azure.ResourceManager.EventHubs
             CaptureDescription = captureDescription;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Current number of shards on the Event Hub. </summary>
         public IReadOnlyList<string> PartitionIds { get; }
         /// <summary> Exact time the Event Hub was created. </summary>

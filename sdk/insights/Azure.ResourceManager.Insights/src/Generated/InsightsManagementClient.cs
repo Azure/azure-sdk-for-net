@@ -32,26 +32,6 @@ namespace Azure.ResourceManager.Insights
         public InsightsManagementClient(string subscriptionId, TokenCredential tokenCredential, InsightsManagementClientOptions options = null) : this(subscriptionId, null, tokenCredential, options)
         {
         }
-        /// <summary> Initializes a new instance of InsightsManagementClient. </summary>
-        /// <param name="subscriptionId"> The Azure subscription Id. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="tokenCredential"> The OAuth token for making client requests. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public InsightsManagementClient(string subscriptionId, Uri endpoint, TokenCredential tokenCredential, InsightsManagementClientOptions options = null)
-        {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            endpoint ??= new Uri("https://management.azure.com");
-
-            options ??= new InsightsManagementClientOptions();
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = ManagementPipelineBuilder.Build(tokenCredential, endpoint, options);
-            _subscriptionId = subscriptionId;
-            _endpoint = endpoint;
-        }
 
         /// <summary> Returns an instance of AutoscaleSettingsOperations. </summary>
         public virtual AutoscaleSettingsOperations AutoscaleSettings => new AutoscaleSettingsOperations(_clientDiagnostics, _pipeline, _subscriptionId, _endpoint);

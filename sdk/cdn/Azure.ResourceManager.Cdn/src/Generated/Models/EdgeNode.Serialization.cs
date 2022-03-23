@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -18,11 +19,11 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpAddressGroups))
+            if (Optional.IsCollectionDefined(IPAddressGroups))
             {
                 writer.WritePropertyName("ipAddressGroups");
                 writer.WriteStartArray();
-                foreach (var item in IpAddressGroups)
+                foreach (var item in IPAddressGroups)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -34,23 +35,13 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static EdgeNode DeserializeEdgeNode(JsonElement element)
         {
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<IList<IpAddressGroup>> ipAddressGroups = default;
+            SystemData systemData = default;
+            Optional<IList<IPAddressGroup>> ipAddressGroups = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = SystemData.DeserializeSystemData(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -64,6 +55,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -82,10 +78,10 @@ namespace Azure.ResourceManager.Cdn.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpAddressGroup> array = new List<IpAddressGroup>();
+                            List<IPAddressGroup> array = new List<IPAddressGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpAddressGroup.DeserializeIpAddressGroup(item));
+                                array.Add(IPAddressGroup.DeserializeIPAddressGroup(item));
                             }
                             ipAddressGroups = array;
                             continue;
@@ -94,7 +90,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new EdgeNode(id, name, type, systemData.Value, Optional.ToList(ipAddressGroups));
+            return new EdgeNode(id, name, type, systemData, Optional.ToList(ipAddressGroups));
         }
     }
 }

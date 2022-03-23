@@ -118,7 +118,15 @@ namespace Compute.Tests
             {
                 // By default in supported API versions, a value is provided in the VM model even if one is
                 // not specified by the user. 
-                Assert.Equal("AutomaticByOS", osProfile.WindowsConfiguration.PatchSettings.PatchMode);
+                if (osProfile.WindowsConfiguration.EnableAutomaticUpdates == false)
+                {
+                    Assert.Equal("Manual", osProfile.WindowsConfiguration.PatchSettings.PatchMode);
+                }
+                else
+                {
+                    Assert.Equal("AutomaticByOS", osProfile.WindowsConfiguration.PatchSettings.PatchMode);
+                }
+                
             }
 
             if (patchSetting.AssessmentMode != null)

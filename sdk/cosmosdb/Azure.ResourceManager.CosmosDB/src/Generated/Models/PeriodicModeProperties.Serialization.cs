@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("backupRetentionIntervalInHours");
                 writer.WriteNumberValue(BackupRetentionIntervalInHours.Value);
             }
+            if (Optional.IsDefined(BackupStorageRedundancy))
+            {
+                writer.WritePropertyName("backupStorageRedundancy");
+                writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             Optional<int> backupIntervalInMinutes = default;
             Optional<int> backupRetentionIntervalInHours = default;
+            Optional<BackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupIntervalInMinutes"))
@@ -54,8 +60,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupRetentionIntervalInHours = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("backupStorageRedundancy"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    backupStorageRedundancy = new BackupStorageRedundancy(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours));
+            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy));
         }
     }
 }

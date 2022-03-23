@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class InstancePoolTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public InstancePoolTests(bool isAsync)
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             //var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().GetAsync("Sql-RG-1000");
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup rg = rgLro.Value;
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            ResourceGroupResource rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
-                await item.DeleteAsync(true);
+                await item.DeleteAsync(WaitUntil.Completed);
             }
         }
 
-        private async Task<InstancePool> CreateInstancePool(string instancePoolName)
+        private async Task<InstancePoolResource> CreateInstancePool(string instancePoolName)
         {
             //Prerequisites: 1. create NetworkSecurityGroup
             string networkSecurityGroupName = SessionRecording.GenerateAssetName("networkSecurityGroup-");
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await _resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             string routeTableName = SessionRecording.GenerateAssetName("routeTable-");
@@ -66,17 +66,13 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
             {
                 Location = AzureLocation.WestUS2,
             };
-            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
+            var routeTable = await _resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
 
             //3. create Virtual network
             string vnetName = SessionRecording.GenerateAssetName("vnet-");
             var vnetData = new VirtualNetworkData()
             {
                 Location = "westus2",
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
@@ -86,24 +82,25 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
                     }
                 },
             };
-            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
+            var vnet = await _resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id.ToString()}/subnets/ManagedInstance";
             InstancePoolData data = new InstancePoolData(AzureLocation.WestUS2)
             {
-                Sku = new Models.Sku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),
+                Sku = new SqlSku("GP_Gen5", "GeneralPurpose", null, "Gen5", null),
                 LicenseType = InstancePoolLicenseType.LicenseIncluded,
                 Location = AzureLocation.WestUS2,
                 SubnetId = subnetId,
                 VCores = 8,
             };
-            var instancePoolLro = await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(true, instancePoolName, data);
+            var instancePoolLro = await _resourceGroup.GetInstancePools().CreateOrUpdateAsync(WaitUntil.Completed, instancePoolName, data);
             return instancePoolLro.Value;
         }
 
@@ -146,11 +143,11 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         {
             string instancePoolName = Recording.GenerateAssetName("instance-pool-");
             var collection = _resourceGroup.GetInstancePools();
-            InstancePool instancePool = await CreateInstancePool(instancePoolName);
+            InstancePoolResource instancePool = await CreateInstancePool(instancePoolName);
             var list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);
 
-            await instancePool.DeleteAsync(true);
+            await instancePool.DeleteAsync(WaitUntil.Completed);
             list = await _resourceGroup.GetInstancePools().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(0, list.Count);
         }

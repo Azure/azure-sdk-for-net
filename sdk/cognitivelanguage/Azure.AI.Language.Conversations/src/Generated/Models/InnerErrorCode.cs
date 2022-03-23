@@ -28,6 +28,14 @@ namespace Azure.AI.Language.Conversations
         private const string AzureCognitiveSearchNotFoundValue = "AzureCognitiveSearchNotFound";
         private const string AzureCognitiveSearchThrottlingValue = "AzureCognitiveSearchThrottling";
         private const string ExtractionFailureValue = "ExtractionFailure";
+        private const string InvalidRequestBodyFormatValue = "InvalidRequestBodyFormat";
+        private const string EmptyRequestValue = "EmptyRequest";
+        private const string MissingInputDocumentsValue = "MissingInputDocuments";
+        private const string InvalidDocumentValue = "InvalidDocument";
+        private const string ModelVersionIncorrectValue = "ModelVersionIncorrect";
+        private const string InvalidDocumentBatchValue = "InvalidDocumentBatch";
+        private const string UnsupportedLanguageCodeValue = "UnsupportedLanguageCode";
+        private const string InvalidCountryHintValue = "InvalidCountryHint";
 
         /// <summary> InvalidRequest. </summary>
         public static InnerErrorCode InvalidRequest { get; } = new InnerErrorCode(InvalidRequestValue);
@@ -41,6 +49,22 @@ namespace Azure.AI.Language.Conversations
         public static InnerErrorCode AzureCognitiveSearchThrottling { get; } = new InnerErrorCode(AzureCognitiveSearchThrottlingValue);
         /// <summary> ExtractionFailure. </summary>
         public static InnerErrorCode ExtractionFailure { get; } = new InnerErrorCode(ExtractionFailureValue);
+        /// <summary> InvalidRequestBodyFormat. </summary>
+        public static InnerErrorCode InvalidRequestBodyFormat { get; } = new InnerErrorCode(InvalidRequestBodyFormatValue);
+        /// <summary> EmptyRequest. </summary>
+        public static InnerErrorCode EmptyRequest { get; } = new InnerErrorCode(EmptyRequestValue);
+        /// <summary> MissingInputDocuments. </summary>
+        public static InnerErrorCode MissingInputDocuments { get; } = new InnerErrorCode(MissingInputDocumentsValue);
+        /// <summary> InvalidDocument. </summary>
+        public static InnerErrorCode InvalidDocument { get; } = new InnerErrorCode(InvalidDocumentValue);
+        /// <summary> ModelVersionIncorrect. </summary>
+        public static InnerErrorCode ModelVersionIncorrect { get; } = new InnerErrorCode(ModelVersionIncorrectValue);
+        /// <summary> InvalidDocumentBatch. </summary>
+        public static InnerErrorCode InvalidDocumentBatch { get; } = new InnerErrorCode(InvalidDocumentBatchValue);
+        /// <summary> UnsupportedLanguageCode. </summary>
+        public static InnerErrorCode UnsupportedLanguageCode { get; } = new InnerErrorCode(UnsupportedLanguageCodeValue);
+        /// <summary> InvalidCountryHint. </summary>
+        public static InnerErrorCode InvalidCountryHint { get; } = new InnerErrorCode(InvalidCountryHintValue);
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are the same. </summary>
         public static bool operator ==(InnerErrorCode left, InnerErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InnerErrorCode"/> values are not the same. </summary>

@@ -111,8 +111,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
 VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
 // Create VNet
@@ -127,8 +127,8 @@ vnet.Subnets.Add(new SubnetData
     AddressPrefix = "10.0.0.0/24",
 });
 
-VirtualNetworkCreateOrUpdateOperation vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(true, "_vent", vnet);
-VirtualNetwork virtualNetwork = vnetOperation.Value;
+ArmOperation<VirtualNetworkResource> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
+VirtualNetworkResource virtualNetwork = vnetOperation.Value;
 ```
 
 #### Object Model Changes
@@ -154,11 +154,11 @@ var policy = new IpsecPolicy()
 After upgrade:
 
 ```C# Snippet:Changelog_CreateModel
-IpsecPolicy policy = new IpsecPolicy(
+IPsecPolicy policy = new IPsecPolicy(
    300,
    1024,
-   IpsecEncryption.AES128,
-   IpsecIntegrity.SHA256,
+   IPsecEncryption.AES128,
+   IPsecIntegrity.SHA256,
    IkeEncryption.AES192,
    IkeIntegrity.SHA1,
    DhGroup.DHGroup2,

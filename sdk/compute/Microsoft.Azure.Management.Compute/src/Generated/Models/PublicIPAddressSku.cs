@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the public IP Sku
+    /// Describes the public IP Sku. It can only be set with OrchestrationMode
+    /// as Flexible.
     /// </summary>
     public partial class PublicIPAddressSku
     {

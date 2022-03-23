@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <param name="nameAvailable"> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider&apos;s naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, Reason? reason, string message)
+        internal CheckNameAvailabilityResult(bool? nameAvailable, NameUnavailableReason? reason, string message)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </summary>
         public bool? NameAvailable { get; }
         /// <summary> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider&apos;s naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </summary>
-        public Reason? Reason { get; }
+        public NameUnavailableReason? Reason { get; }
         /// <summary> Required if nameAvailable == false. Localized. If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that is already in use, and direct them to select a different name. </summary>
         public string Message { get; }
     }

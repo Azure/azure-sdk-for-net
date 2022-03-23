@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -45,6 +46,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the managed disk details. </summary>
         public ManagedDiskParameters ManagedDisk { get; }
         /// <summary> Gets the disk restore point Id. </summary>
-        public WritableSubResource DiskRestorePoint { get; }
+        internal WritableSubResource DiskRestorePoint { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DiskRestorePointId
+        {
+            get => DiskRestorePoint.Id;
+            set => DiskRestorePoint.Id = value;
+        }
     }
 }

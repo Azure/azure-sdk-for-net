@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -23,7 +25,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> Initializes a new instance of KeyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Azure location of the key vault resource. </param>
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="attributes"> The attributes of the key. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="curveName"> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </param>
         /// <param name="keyUri"> The URI to retrieve the current version of the key. </param>
         /// <param name="keyUriWithVersion"> The URI to retrieve the specific version of the key. </param>
-        internal KeyData(ResourceIdentifier id, string name, ResourceType type, string location, IReadOnlyDictionary<string, string> tags, KeyAttributes attributes, JsonWebKeyType? kty, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, string keyUri, string keyUriWithVersion) : base(id, name, type, location, tags)
+        internal KeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyDictionary<string, string> tags, KeyAttributes attributes, JsonWebKeyType? kty, IList<JsonWebKeyOperation> keyOps, int? keySize, JsonWebKeyCurveName? curveName, Uri keyUri, string keyUriWithVersion) : base(id, name, resourceType, systemData, location, tags)
         {
             Attributes = attributes;
             Kty = kty;
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <summary> The elliptic curve name. For valid values, see JsonWebKeyCurveName. </summary>
         public JsonWebKeyCurveName? CurveName { get; set; }
         /// <summary> The URI to retrieve the current version of the key. </summary>
-        public string KeyUri { get; }
+        public Uri KeyUri { get; }
         /// <summary> The URI to retrieve the specific version of the key. </summary>
         public string KeyUriWithVersion { get; }
     }

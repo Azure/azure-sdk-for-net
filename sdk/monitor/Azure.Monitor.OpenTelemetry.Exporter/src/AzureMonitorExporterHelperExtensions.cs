@@ -4,12 +4,11 @@
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using System;
-using System.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
-    /// test
+    /// Extension methods to simplify registering of Azure Monitor Trace Exporter.
     /// </summary>
     public static class AzureMonitorExporterHelperExtensions
     {

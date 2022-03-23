@@ -6,6 +6,7 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -20,14 +21,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteUserInvitationRequestResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="domain"> The domain name for the static site custom domain. </param>
         /// <param name="provider"> The identity provider for the static site user. </param>
         /// <param name="userDetails"> The user id for the static site user. </param>
         /// <param name="roles"> The roles for the static site user, in free-form string format. </param>
         /// <param name="numHoursToExpiration"> The number of hours the sas token stays valid. </param>
-        internal StaticSiteUserInvitationRequestResource(ResourceIdentifier id, string name, ResourceType type, string kind, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration) : base(id, name, type, kind)
+        internal StaticSiteUserInvitationRequestResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string domain, string provider, string userDetails, string roles, int? numHoursToExpiration) : base(id, name, resourceType, systemData, kind)
         {
             Domain = domain;
             Provider = provider;

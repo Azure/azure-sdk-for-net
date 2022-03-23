@@ -5,16 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class HttpMessage
+    internal partial class HttpMessage
     {
         internal static HttpMessage DeserializeHttpMessage(JsonElement element)
         {
-            Optional<object> content = default;
+            Optional<BinaryData> content = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"))
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    content = property.Value.GetObject();
+                    content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

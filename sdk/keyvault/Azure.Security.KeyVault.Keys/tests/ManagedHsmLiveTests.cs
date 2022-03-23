@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -84,6 +86,34 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             byte[] rand = await Client.GetRandomBytesAsync(count);
             Assert.AreEqual(count, rand.Length);
+        }
+
+        [Test]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3_Preview)]
+        public async Task ReleaseImportedKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            JsonWebKey jwk = KeyUtilities.CreateRsaKey(includePrivateParameters: true);
+            ImportKeyOptions options = new(keyName, jwk)
+            {
+                Properties =
+                {
+                    Exportable = true,
+                    ReleasePolicy = GetReleasePolicy(),
+                },
+            };
+
+            KeyVaultKey key = await Client.ImportKeyAsync(options);
+            RegisterForCleanup(key.Name);
+
+            JwtSecurityToken jws = await ReleaseKeyAsync(keyName);
+            Assert.IsTrue(jws.Payload.TryGetValue("response", out object response));
+
+            JsonDocument doc = JsonDocument.Parse(response.ToString());
+            JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
+            Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
+            Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
         }
     }
 }

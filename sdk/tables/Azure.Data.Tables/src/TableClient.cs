@@ -326,8 +326,15 @@ namespace Azure.Data.Tables
             TableSharedKeyCredential credential)
         {
             _endpoint = TableUriBuilder.GetEndpointWithoutTableName(endpoint, table);
-            _tableOperations = tableOperations;
-            _tableOperations.endpoint = _endpoint.AbsoluteUri;
+            if (endpoint.AbsoluteUri != _endpoint.AbsoluteUri)
+            {
+                // GetEndpointWithoutTableName produced a different Uri, so construct a new TableRestClient with it.
+                _tableOperations = new TableRestClient(diagnostics, pipeline, _endpoint.AbsoluteUri, version);
+            }
+            else
+            {
+                _tableOperations = tableOperations;
+            }
             _version = version;
             Name = table;
             _accountName = accountName;

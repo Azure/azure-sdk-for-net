@@ -110,7 +110,8 @@ namespace Azure.Storage.Sas
         /// class.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>
@@ -130,7 +131,8 @@ namespace Azure.Storage.Sas
         /// class.
         /// </summary>
         /// <param name="permissions">
-        /// The time at which the shared access signature becomes invalid.
+        /// The permissions associated with the shared access signature.
+        /// The user is restricted to operations allowed by the permissions.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </param>

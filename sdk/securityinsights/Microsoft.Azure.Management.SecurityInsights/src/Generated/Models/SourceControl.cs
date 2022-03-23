@@ -52,17 +52,26 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="sourceControlId">The id (a Guid) of the source
         /// control</param>
+        /// <param name="version">The version number associated with the source
+        /// control. Possible values include: 'V1', 'V2'</param>
         /// <param name="description">A description of the source
         /// control</param>
-        public SourceControl(string displayName, string repoType, IList<string> contentTypes, Repository repository, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string sourceControlId = default(string), string description = default(string))
+        /// <param name="repositoryResourceInfo">Information regarding the
+        /// resources created in user's repository.</param>
+        /// <param name="lastDeploymentInfo">Information regarding the latest
+        /// deployment for the source control.</param>
+        public SourceControl(string displayName, string repoType, IList<string> contentTypes, Repository repository, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), string sourceControlId = default(string), string version = default(string), string description = default(string), RepositoryResourceInfo repositoryResourceInfo = default(RepositoryResourceInfo), DeploymentInfo lastDeploymentInfo = default(DeploymentInfo))
             : base(id, name, type, systemData, etag)
         {
             SourceControlId = sourceControlId;
+            Version = version;
             DisplayName = displayName;
             Description = description;
             RepoType = repoType;
             ContentTypes = contentTypes;
             Repository = repository;
+            RepositoryResourceInfo = repositoryResourceInfo;
+            LastDeploymentInfo = lastDeploymentInfo;
             CustomInit();
         }
 
@@ -76,6 +85,13 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.id")]
         public string SourceControlId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version number associated with the source control.
+        /// Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.version")]
+        public string Version { get; set; }
 
         /// <summary>
         /// Gets or sets the display name of the source control
@@ -107,6 +123,20 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.repository")]
         public Repository Repository { get; set; }
+
+        /// <summary>
+        /// Gets or sets information regarding the resources created in user's
+        /// repository.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.repositoryResourceInfo")]
+        public RepositoryResourceInfo RepositoryResourceInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets information regarding the latest deployment for the
+        /// source control.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastDeploymentInfo")]
+        public DeploymentInfo LastDeploymentInfo { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -16,17 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> A class representing collection of OSVersion and their operations over its parent. </summary>
-    public partial class OSVersionCollection : ArmCollection, IEnumerable<OSVersion>, IAsyncEnumerable<OSVersion>
+    public partial class OSVersionCollection : ArmCollection, IEnumerable<OSVersionResource>, IAsyncEnumerable<OSVersionResource>
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly CloudServiceOperatingSystemsRestOperations _cloudServiceOperatingSystemsRestClient;
+        private readonly ClientDiagnostics _osVersionCloudServiceOperatingSystemsClientDiagnostics;
+        private readonly CloudServiceOperatingSystemsRestOperations _osVersionCloudServiceOperatingSystemsRestClient;
         private readonly string _location;
 
         /// <summary> Initializes a new instance of the <see cref="OSVersionCollection"/> class for mocking. </summary>
@@ -35,15 +33,17 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of the <see cref="OSVersionCollection"/> class. </summary>
-        /// <param name="parent"> The resource representing the parent resource. </param>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        internal OSVersionCollection(ArmResource parent, string location) : base(parent)
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        internal OSVersionCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(OSVersion.ResourceType, out string apiVersion);
-            _cloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
             _location = location;
+            _osVersionCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", OSVersionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OSVersionResource.ResourceType, out string osVersionCloudServiceOperatingSystemsApiVersion);
+            _osVersionCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, osVersionCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -51,29 +51,31 @@ namespace Azure.ResourceManager.Compute
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Subscription.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
-        // Collection level operations.
-
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public virtual Response<OSVersion> Get(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSVersionResource>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Get");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken);
+                var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw _clientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OSVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -82,23 +84,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service. </summary>
+        /// <summary>
+        /// Gets properties of a guest operating system version that can be specified in the XML service configuration (.cscfg) for a cloud service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetAsync(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<OSVersionResource> Get(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Get");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken).ConfigureAwait(false);
+                var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken);
                 if (response.Value == null)
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
-                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new OSVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,89 +113,104 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <summary>
+        /// Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions
+        /// Operation Id: CloudServiceOperatingSystems_ListOSVersions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public virtual Response<OSVersion> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OSVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OSVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
-
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
-            scope.Start();
-            try
+            async Task<Page<OSVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _cloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
-                if (response.Value == null)
-                    return Response.FromValue<OSVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            async Task<Page<OSVersionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <summary>
+        /// Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions
+        /// Operation Id: CloudServiceOperatingSystems_ListOSVersions
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<OSVersion>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OSVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OSVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
-
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
-            scope.Start();
-            try
+            Page<OSVersionResource> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _cloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    return Response.FromValue<OSVersion>(null, response.GetRawResponse());
-                return Response.FromValue(new OSVersion(this, response.Value), response.GetRawResponse());
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersions(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
+            Page<OSVersionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                scope.Failed(e);
-                throw;
+                using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _osVersionCloudServiceOperatingSystemsRestClient.ListOSVersionsNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OSVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
         /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string osVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
-            scope.Start();
-            try
-            {
-                var response = GetIfExists(osVersionName, cancellationToken: cancellationToken);
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Tries to get details for this resource from the service. </summary>
-        /// <param name="osVersionName"> Name of the OS version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
-
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.Exists");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -203,97 +224,25 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions. </summary>
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
+        /// <param name="osVersionName"> Name of the OS version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OSVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OSVersion> GetAll(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
+        public virtual Response<bool> Exists(string osVersionName, CancellationToken cancellationToken = default)
         {
-            Page<OSVersion> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceOperatingSystemsRestClient.ListOSVersions(Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OSVersion> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceOperatingSystemsRestClient.ListOSVersionsNextPage(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
 
-        /// <summary> Gets a list of all guest operating system versions available to be specified in the XML service configuration (.cscfg) for a cloud service. Use nextLink property in the response to get the next page of OS versions. Do this till nextLink is null to fetch all the OS versions. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OSVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OSVersion> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<OSVersion>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceOperatingSystemsRestClient.ListOSVersionsAsync(Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OSVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceOperatingSystemsRestClient.ListOSVersionsNextPageAsync(nextLink, Id.SubscriptionId, _location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new OSVersion(this, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary> Filters the list of <see cref="OSVersion" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetAllAsGenericResources(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAllAsGenericResources");
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.Exists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(OSVersion.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContext(Parent as Subscription, filters, expand, top, cancellationToken);
+                var response = GetIfExists(osVersionName, cancellationToken: cancellationToken);
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -302,21 +251,27 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary> Filters the list of <see cref="OSVersion" /> for this subscription represented as generic resources. </summary>
-        /// <param name="nameFilter"> The filter used in this operation. </param>
-        /// <param name="expand"> Comma-separated list of additional properties to be included in the response. Valid values include `createdTime`, `changedTime` and `provisioningState`. </param>
-        /// <param name="top"> The number of results to return. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetAllAsGenericResourcesAsync(string nameFilter, string expand = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
+        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
+        public virtual async Task<Response<OSVersionResource>> GetIfExistsAsync(string osVersionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("OSVersionCollection.GetAllAsGenericResources");
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
+
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var filters = new ResourceFilterCollection(OSVersion.ResourceType);
-                filters.SubstringFilter = nameFilter;
-                return ResourceListOperations.GetAtContextAsync(Parent as Subscription, filters, expand, top, cancellationToken);
+                var response = await _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersionAsync(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return Response.FromValue<OSVersionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OSVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +280,36 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        IEnumerator<OSVersion> IEnumerable<OSVersion>.GetEnumerator()
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/cloudServiceOsVersions/{osVersionName}
+        /// Operation Id: CloudServiceOperatingSystems_GetOSVersion
+        /// </summary>
+        /// <param name="osVersionName"> Name of the OS version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="osVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="osVersionName"/> is null. </exception>
+        public virtual Response<OSVersionResource> GetIfExists(string osVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(osVersionName, nameof(osVersionName));
+
+            using var scope = _osVersionCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _osVersionCloudServiceOperatingSystemsRestClient.GetOSVersion(Id.SubscriptionId, _location, osVersionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return Response.FromValue<OSVersionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new OSVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        IEnumerator<OSVersionResource> IEnumerable<OSVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -335,12 +319,9 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<OSVersion> IAsyncEnumerable<OSVersion>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<OSVersionResource> IAsyncEnumerable<OSVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
-
-        // Builders.
-        // public ArmBuilder<Azure.Core.ResourceIdentifier, OSVersion, OSVersionData> Construct() { }
     }
 }

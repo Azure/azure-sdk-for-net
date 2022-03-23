@@ -10,27 +10,20 @@ using Azure.ResourceManager.Core;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing collection of Tenant and their operations over their parent.
+    /// A class representing collection of TenantResource and their operations over their parent.
     /// </summary>
-    [CodeGenSuppress("TenantCollection", typeof(ArmResource))]
     [CodeGenSuppress("Get", typeof(CancellationToken))]
     [CodeGenSuppress("GetAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetIfExists", typeof(CancellationToken))]
     [CodeGenSuppress("GetIfExistsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("Exists", typeof(CancellationToken))]
     [CodeGenSuppress("ExistsAsync", typeof(CancellationToken))]
-    public partial class TenantCollection : ArmCollection, IEnumerable<Tenant>, IAsyncEnumerable<Tenant>
+    public partial class TenantCollection : ArmCollection, IEnumerable<TenantResource>, IAsyncEnumerable<TenantResource>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TenantCollection"/> class.
-        /// </summary>
-        /// <param name="clientContext"></param>
-        internal TenantCollection(ClientContext clientContext)
-            : base(clientContext)
+        /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class. </summary>
+        /// <param name="client"> The resource representing the parent resource. </param>
+        internal TenantCollection(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
-            _clientDiagnostics = new ClientDiagnostics(ClientOptions);
-            ClientOptions.TryGetApiVersion(Tenant.ResourceType, out var apiVersion);
-            _tenantsRestClient = new TenantsRestOperations(_clientDiagnostics, Pipeline, ClientOptions, BaseUri, apiVersion);
         }
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,16 +15,23 @@ namespace Azure.Identity
         private Lazy<ManagedIdentitySource> _identitySource;
 
         protected ManagedIdentityClient()
-        {
-        }
+        { }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, string clientId = null)
-            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId})
-        {
-        }
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId })
+        { }
+
+        public ManagedIdentityClient(CredentialPipeline pipeline, ResourceIdentifier resourceId)
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = resourceId })
+        { }
 
         public ManagedIdentityClient(ManagedIdentityClientOptions options)
         {
+            if (options.ClientId != null && options.ResourceIdentifier != null)
+            {
+                throw new ArgumentException(
+                    $"{nameof(ManagedIdentityClientOptions)} cannot specify both {nameof(options.ResourceIdentifier)} and {nameof(options.ClientId)}.");
+            }
             ClientId = options.ClientId;
             Pipeline = options.Pipeline;
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options));
@@ -42,12 +48,12 @@ namespace Azure.Identity
 
         private static ManagedIdentitySource SelectManagedIdentitySource(ManagedIdentityClientOptions options)
         {
-             return AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
-                    CloudShellManagedIdentitySource.TryCreate(options) ??
-                    AzureArcManagedIdentitySource.TryCreate(options) ??
-                    ServiceFabricManagedIdentitySource.TryCreate(options) ??
-					TokenExchangeManagedIdentitySource.TryCreate(options) ??
-                    new ImdsManagedIdentitySource(options);
+            return AppServiceV2017ManagedIdentitySource.TryCreate(options) ??
+                   CloudShellManagedIdentitySource.TryCreate(options) ??
+                   AzureArcManagedIdentitySource.TryCreate(options) ??
+                   ServiceFabricManagedIdentitySource.TryCreate(options) ??
+                   TokenExchangeManagedIdentitySource.TryCreate(options) ??
+                   new ImdsManagedIdentitySource(options);
         }
     }
 }

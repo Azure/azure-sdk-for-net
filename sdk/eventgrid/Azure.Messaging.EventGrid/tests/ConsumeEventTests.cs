@@ -587,6 +587,28 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.True((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset);
             MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
             Assert.AreEqual("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
+
+            Assert.AreEqual(MediaJobErrorCategory.Service, outputAsset.Error.Category);
+            Assert.AreEqual(MediaJobErrorCode.ServiceError, outputAsset.Error.Code);
+        }
+
+        [Test]
+        public void ConsumeMediaJobOutputStateChangeEvent_UnknownError()
+        {
+            string requestContent = "[{  \"topic\": \"/subscriptions/{subscription id}/resourceGroups/{resource group}/providers/Microsoft.Media/mediaservices/{account name}\",  \"subject\": \"transforms/VideoAnalyzerTransform/jobs/job-2ac2fe75-6557-4de5-ab25-5713b74a6901\",  \"eventType\": \"Microsoft.Media.JobOutputStateChange\",  \"eventTime\": \"2018-10-12T15:14:17.8962704\",  \"id\": \"8d0305c0-28c0-4cc9-b613-776e4dd31e9a\",  \"data\": {    \"previousState\": \"Scheduled\",    \"output\": {      \"@odata.type\": \"#Microsoft.Media.JobOutputAsset\",      \"assetName\": \"output-2ac2fe75-6557-4de5-ab25-5713b74a6901\",      \"error\": {\"code\":\"SomeNewCode\", \"message\":\"error message\", \"category\":\"SomeNewCategory\", \"retry\":\"DoNotRetry\", \"details\":[{\"code\":\"code\", \"message\":\"Service Error Message\"}]},      \"label\": \"VideoAnalyzerPreset_0\",      \"progress\": 0,      \"state\": \"Processing\"    },    \"jobCorrelationData\": {}  },  \"dataVersion\": \"1.0\",  \"metadataVersion\": \"1\"}]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual(MediaJobState.Scheduled, (eventData as MediaJobOutputStateChangeEventData).PreviousState);
+            Assert.AreEqual(MediaJobState.Processing, (eventData as MediaJobOutputStateChangeEventData).Output.State);
+            Assert.True((eventData as MediaJobOutputStateChangeEventData).Output is MediaJobOutputAsset);
+            MediaJobOutputAsset outputAsset = (MediaJobOutputAsset)(eventData as MediaJobOutputStateChangeEventData).Output;
+            Assert.AreEqual("output-2ac2fe75-6557-4de5-ab25-5713b74a6901", outputAsset.AssetName);
+
+            Assert.AreEqual((MediaJobErrorCategory)int.MaxValue, outputAsset.Error.Category);
+            Assert.AreEqual((MediaJobErrorCode)int.MaxValue, outputAsset.Error.Code);
         }
 
         [Test]
@@ -1287,13 +1309,27 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ConsumeStorageDirectoryDeletedEvent()
         {
-            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",  \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\", \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": {    \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
 
             EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
 
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryDeletedEventData).Url);
+            Assert.IsNull((eventData as StorageDirectoryDeletedEventData).Recursive);
+        }
+
+        [Test]
+        public void ConsumeStorageDirectoryDeletedEvent_Recursive()
+        {
+            string requestContent = "[{   \"topic\": \"/subscriptions/id/resourceGroups/Storage/providers/Microsoft.Storage/storageAccounts/xstoretestaccount\",   \"subject\": \"/blobServices/default/containers/testcontainer/blobs/testDir\",  \"eventType\": \"Microsoft.Storage.DirectoryDeleted\",  \"eventTime\": \"2017-11-07T20:09:22.5674003Z\",  \"id\": \"4c2359fe-001e-00ba-0e04-58586806d298\",  \"data\": { \"recursive\":\"true\",   \"api\": \"DeleteDirectory\",    \"requestId\": \"4c2359fe-001e-00ba-0e04-585868000000\",    \"url\": \"https://example.blob.core.windows.net/testcontainer/testDir\",    \"sequencer\": \"0000000000000281000000000002F5CA\",    \"storageDiagnostics\": {      \"batchId\": \"b68529f3-68cd-4744-baa4-3c0498ec19f0\"    }  },  \"dataVersion\": \"1\",  \"metadataVersion\": \"1\"}]";
+
+            EventGridEvent[] events = EventGridEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            Assert.AreEqual("https://example.blob.core.windows.net/testcontainer/testDir", (eventData as StorageDirectoryDeletedEventData).Url);
+            Assert.IsTrue((eventData as StorageDirectoryDeletedEventData).Recursive);
         }
 
         [Test]
@@ -1964,6 +2000,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.NotNull(events);
             Assert.True(events[0].TryGetSystemEventData(out object eventData));
             Assert.AreEqual("AzureBlockBlob", (eventData as EventHubCaptureFileCreatedEventData).FileType);
+            Assert.AreEqual("https://tf0831datamigrate.blob.core.windows.net/windturbinecapture/tfdatamigratens/hubdatamigration/1/2017/08/31/19/11/45.avro", (eventData as EventHubCaptureFileCreatedEventData).Fileurl);
         }
         #endregion
 

@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="linkProperties"> The link provider properties. </param>
         /// <param name="ipAddress"> The ip-address for the vpn-site-link. </param>
         /// <param name="fqdn"> FQDN of vpn-site-link. </param>
         /// <param name="bgpProperties"> The set of bgp properties. </param>
         /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(string id, string etag, string name, string type, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
+        internal VpnSiteLinkData(string id, string etag, string name, string resourceType, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, ProvisioningState? provisioningState) : base(id)
         {
             Etag = etag;
             Name = name;
-            Type = type;
+            ResourceType = resourceType;
             LinkProperties = linkProperties;
-            IpAddress = ipAddress;
+            IPAddress = ipAddress;
             Fqdn = fqdn;
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         public string Name { get; set; }
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The link provider properties. </summary>
         public VpnLinkProviderProperties LinkProperties { get; set; }
         /// <summary> The ip-address for the vpn-site-link. </summary>
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
         /// <summary> FQDN of vpn-site-link. </summary>
         public string Fqdn { get; set; }
         /// <summary> The set of bgp properties. </summary>

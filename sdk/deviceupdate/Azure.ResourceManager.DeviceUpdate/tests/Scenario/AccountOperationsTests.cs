@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.DeviceUpdate.Tests.Helper;
 using Azure.Core;
@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
-            await account.DeleteAsync(true);
+            DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
+            await account.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await account.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
-            DeviceUpdateAccount account = await CreateAccount(rg, accountName);
-            DeviceUpdateAccountUpdateOptions updateOptions = new DeviceUpdateAccountUpdateOptions()
+            DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
+            PatchableDeviceUpdateAccountData updateOptions = new PatchableDeviceUpdateAccountData()
             {
                 Location = AzureLocation.WestUS2,
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+                Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)
             };
-            var lro = await account.UpdateAsync(true, updateOptions);
-            DeviceUpdateAccount updatedAccount = lro.Value;
+            var lro = await account.UpdateAsync(WaitUntil.Completed, updateOptions);
+            DeviceUpdateAccountResource updatedAccount = lro.Value;
             ResourceDataHelper.AssertAccountUpdate(updatedAccount, updateOptions);
         }
     }

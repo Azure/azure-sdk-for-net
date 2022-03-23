@@ -9,12 +9,33 @@ namespace: Azure.ResourceManager.ServiceBus
 require: https://github.com/Azure/azure-rest-api-specs/blob/a5f8ef67c8170e4081527e400473c6deddcfabfd/specification/servicebus/resource-manager/readme.md
 clear-output-folder: true
 skip-csproj: true
-modelerfour:
-    lenient-model-deduplication: true
-
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}: NamespaceDisasterRecoveryAuthorizationRule
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckServiceBusNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 directive:
     - rename-model:
@@ -37,7 +58,7 @@ directive:
         to: ServiceBusAuthorizationRule
     - rename-model:
         from: NWRuleSetIpRules
-        to: NetworkRuleSetIpRules
+        to: NetworkRuleSetIPRules
     - rename-model:
         from: NWRuleSetVirtualNetworkRules
         to: NetworkRuleSetVirtualNetworkRules
@@ -58,7 +79,7 @@ directive:
         to: ServiceBusQueueListResult
     - rename-model:
         from: SBSku
-        to: ServiceBusSku
+        to: Sku
     - rename-model:
         from: SBSubscriptionListResult
         to: ServiceBusSubscriptionListResult
@@ -124,13 +145,13 @@ directive:
       transform: return "TopicAuthorizationRules_RegenerateKeys"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules'].get.operationId
-      transform: return "DisasterRecoveryConfigAuthorizationRules_List"
+      transform: return "DisasterRecoveryAuthorizationRules_List"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}'].get.operationId
-      transform: return "DisasterRecoveryConfigAuthorizationRules_Get"
+      transform: return "DisasterRecoveryAuthorizationRules_Get"
     - from: swagger-document
       where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys'].post.operationId
-      transform: return "DisasterRecoveryConfigAuthorizationRules_ListKeys"
+      transform: return "DisasterRecoveryAuthorizationRules_ListKeys"
     - rename-model:
         from: ArmDisasterRecovery
         to: DisasterRecovery
@@ -165,5 +186,17 @@ directive:
     - rename-model:
         from: ServiceBusNamespaceUpdateParameters
         to: ServiceBusNamespaceUpdateOptions
-
+    - from: swagger-document
+      where: $.definitions.NetworkRuleSet.properties.properties.properties.ipRules
+      transform: $['x-ms-client-name'] = 'iPRules'
+    - from: swagger-document
+      where: $.definitions.NetworkRuleSetIPRules.properties.ipMask
+      transform: $['x-ms-client-name'] = 'iPMask'
+    - from: swagger-document
+      where: $.definitions.DisasterRecovery.properties.properties.properties.provisioningState
+      transform: >
+        $['x-ms-enum'] = {
+          "name": "ProvisioningStateDisasterRecovery",
+          "modelAsString": false
+        }
 ```

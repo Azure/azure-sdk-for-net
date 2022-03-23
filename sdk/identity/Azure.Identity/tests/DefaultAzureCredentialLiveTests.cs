@@ -174,6 +174,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27020")]
         public async Task DefaultAzureCredential_UseAzureCliCredential_ParallelCalls()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions

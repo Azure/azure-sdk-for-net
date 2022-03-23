@@ -6,12 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>5.0.0-preview.5</Version>
+		<Version>7.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Add Location property to ExportPipeline and ImportPipeline
+			1) Add support of preview features such as ExportPipelines, ImportPipelines, PipelineRuns, ConnectedRegistries, ScopeMaps and Tokens
+			5) Add virtualNetworkRules property in NetworkRuleSet model
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

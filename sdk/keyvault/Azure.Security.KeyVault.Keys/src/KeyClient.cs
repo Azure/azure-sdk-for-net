@@ -329,12 +329,11 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="properties">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="properties"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<KeyVaultKey> UpdateKeyProperties(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
@@ -366,12 +365,11 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="properties">The <see cref="KeyProperties"/> object with updated properties.</param>
         /// <param name="keyOperations">Optional list of supported <see cref="KeyOperation"/>. If null, no changes will be made to existing key operations.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <paramref name="keyOperations"/> is null, or <see cref="KeyProperties.Version"/> of <paramref name="properties"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="properties"/> or <paramref name="keyOperations"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<KeyVaultKey>> UpdateKeyPropertiesAsync(KeyProperties properties, IEnumerable<KeyOperation> keyOperations = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 

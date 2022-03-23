@@ -15,30 +15,31 @@ namespace Azure.ResourceManager.Tests
         {
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task ListAtContext()
-        {
-            var rgOp1 = await (await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
-            ResourceGroup rg = rgOp1.Value;
-            _ = await CreateGenericAvailabilitySetAsync(rg.Id);
+        //[TestCase]
+        //[RecordedTest]
+        //public async Task ListAtContext()
+        //{
+        //    SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+        //    var rgOp1 = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, Recording.GenerateAssetName("testrg"), new ResourceGroupData(AzureLocation.WestUS2));
+        //    ResourceGroupResource rg = rgOp1.Value;
+        //    _ = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            ResourceGroup rgOp = Client.GetResourceGroup(rg.Id);
-            var result = 0;
-            var pageable = ResourceListOperations.GetAtContextAsync(rgOp);
-            await foreach (var resource in pageable)
-            {
-                result++;
-            }
-            Assert.AreEqual(1, result);
+        //    ResourceGroupResource rgOp = Client.GetResourceGroupResource(rg.Id);
+        //    var result = 0;
+        //    var pageable = ResourceListOperations.GetAtContextAsync(rgOp);
+        //    await foreach (var resource in pageable)
+        //    {
+        //        result++;
+        //    }
+        //    Assert.AreEqual(1, result);
 
-            result = 0;
-            pageable = ResourceListOperations.GetAtContextAsync(await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false));
-            await foreach (var resource in pageable)
-            {
-                result++;
-            }
-            Assert.GreaterOrEqual(result, 1);
-        }
+        //    result = 0;
+        //    pageable = ResourceListOperations.GetAtContextAsync(await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false));
+        //    await foreach (var resource in pageable)
+        //    {
+        //        result++;
+        //    }
+        //    Assert.GreaterOrEqual(result, 1);
+        //}
     }
 }

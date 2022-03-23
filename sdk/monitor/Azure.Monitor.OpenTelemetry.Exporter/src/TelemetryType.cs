@@ -8,6 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         Request,
         Dependency,
         Message,
-        Event
+        Event,
+        Metric
     }
 }

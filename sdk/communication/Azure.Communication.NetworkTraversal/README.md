@@ -10,7 +10,7 @@ Azure Communication Network Traversal enables high bandwidth, low latency connec
 Install the Azure Communication Network Traversal client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.NetworkTraversal --version 1.0.0-beta.3
+dotnet add package Azure.Communication.NetworkTraversal --version 1.1.0-beta.1
 ```
 
 ### Prerequisites
@@ -70,7 +70,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 ```C# Snippet:GetRelayConfigurationAsync
 Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync();
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
 {
@@ -87,9 +87,9 @@ foreach (CommunicationIceServer iceServer in iceServers)
 ## Getting a Relay Configuration for a user with a specified routeType
 
 ```C# Snippet:GetRelayConfigurationAsyncWithNearestRouteType
-Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(new GetRelayConfigurationOptions { CommunicationUser = user, RouteType = RouteType.Nearest });
+Response<CommunicationRelayConfiguration> relayConfiguration = await client.GetRelayConfigurationAsync(user,RouteType.Nearest);
 DateTimeOffset turnTokenExpiresOn = relayConfiguration.Value.ExpiresOn;
-IReadOnlyList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
+IList<CommunicationIceServer> iceServers = relayConfiguration.Value.IceServers;
 Console.WriteLine($"Expires On: {turnTokenExpiresOn}");
 foreach (CommunicationIceServer iceServer in iceServers)
 {

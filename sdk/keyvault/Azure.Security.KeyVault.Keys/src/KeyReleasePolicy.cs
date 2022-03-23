@@ -14,9 +14,11 @@ namespace Azure.Security.KeyVault.Keys
     {
         private const string ContentTypePropertyName = "contentType";
         private const string DataPropertyName = "data";
+        private const string ImmutablePropertyName = "immutable";
 
         private static readonly JsonEncodedText s_contentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
         private static readonly JsonEncodedText s_dataPropertyNameBytes = JsonEncodedText.Encode(DataPropertyName);
+        private static readonly JsonEncodedText s_immutablePropertyName = JsonEncodedText.Encode(ImmutablePropertyName);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyReleasePolicy"/> class.
@@ -65,6 +67,11 @@ namespace Azure.Security.KeyVault.Keys
         /// </example>
         public BinaryData EncodedPolicy { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the mutability state of the policy. Once marked immutable, this flag cannot be reset and the policy cannot be changed under any circumstances.
+        /// </summary>
+        public bool? Immutable { get; set; }
+
         internal void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -79,6 +86,10 @@ namespace Azure.Security.KeyVault.Keys
                         byte[] data = Base64Url.Decode(prop.Value.GetString());
                         EncodedPolicy = new BinaryData(data);
                         break;
+
+                    case ImmutablePropertyName:
+                        Immutable = prop.Value.GetBoolean();
+                        break;
                 }
             }
         }
@@ -91,6 +102,11 @@ namespace Azure.Security.KeyVault.Keys
             }
 
             json.WriteString(s_dataPropertyNameBytes, Base64Url.Encode(EncodedPolicy.ToArray()));
+
+            if (Immutable.HasValue)
+            {
+                json.WriteBoolean(s_immutablePropertyName, Immutable.Value);
+            }
         }
 
         void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);

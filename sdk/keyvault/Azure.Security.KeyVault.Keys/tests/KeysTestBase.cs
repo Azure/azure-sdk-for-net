@@ -39,6 +39,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             : base(isAsync, mode /* RecordedTestMode.Record */)
         {
             _serviceVersion = serviceVersion;
+            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
+            CompareBodies = false;
         }
 
         [SetUp]
@@ -67,29 +69,23 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         internal KeyClient GetClient()
         {
+            KeyClientOptions options = InstrumentClientOptions(new KeyClientOptions(_serviceVersion)
+            {
+                Diagnostics =
+                {
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
+                },
+            });
+
             // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
             // we need to delay creation of keys due to aggressive service limits on key creation:
             // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
             IInterceptor[] interceptors = new[] { new DelayCreateKeyInterceptor(Mode) };
 
-            return InstrumentClient(
-                new KeyClient(
-                    Uri,
-                    TestEnvironment.Credential,
-                    InstrumentClientOptions(
-                        new KeyClientOptions(_serviceVersion)
-                        {
-                            Diagnostics =
-                            {
-                                LoggedHeaderNames =
-                                {
-                                    "x-ms-request-id",
-                                },
-                                // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/18800 is resolved.
-                                IsLoggingContentEnabled = Mode != RecordedTestMode.Playback,
-                            },
-                        })),
-                interceptors);
+            return InstrumentClient(new KeyClient(Uri, TestEnvironment.Credential, options), interceptors);
         }
 
         public override async Task StartTestRecordingAsync()

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -47,6 +48,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The name of the Load balancer. </summary>
         public string Name { get; set; }
         /// <summary> Properties of the load balancer configuration. </summary>
-        public LoadBalancerConfigurationProperties Properties { get; set; }
+        internal LoadBalancerConfigurationProperties Properties { get; set; }
+        /// <summary> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </summary>
+        public IList<LoadBalancerFrontendIPConfiguration> LoadBalancerFrontendIPConfigurations
+        {
+            get => Properties is null ? default : Properties.FrontendIPConfigurations;
+            set => Properties = new LoadBalancerConfigurationProperties(value);
+        }
     }
 }

@@ -87,16 +87,25 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Can be used for mocking.
+        /// Gets the metrics associated with this <see cref="ServiceBusClient"/> instance. The metrics returned represent a snapshot and will not be updated.
+        /// To get updated metrics, this method should be called again.
+        /// In order to use this property, <see cref="ServiceBusClientOptions.EnableTransportMetrics"/> must be set to <value>true</value>.
         /// </summary>
-        protected ServiceBusClient()
-        {
-        }
+        public virtual ServiceBusTransportMetrics GetTransportMetrics()
+            => Connection.InnerClient.TransportMetrics?.Clone() ??
+               throw new InvalidOperationException("Transport metrics are not enabled. To enable transport metrics, set the EnableTransportMetrics property on the ServiceBusClientOptions.");
 
         /// <summary>
         /// The connection that is used for the client.
         /// </summary>
         internal ServiceBusConnection Connection { get; }
+
+        /// <summary>
+        /// Can be used for mocking.
+        /// </summary>
+        protected ServiceBusClient()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
@@ -677,17 +686,61 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
+        /// </summary>
+        ///
+        /// <param name="topicName">The topic to create a <see cref="ServiceBusRuleManager"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to create
+        /// a <see cref="ServiceBusRuleManager"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusRuleManager"/> scoped to the specified subscription and topic.</returns>
+        public virtual ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusRuleManager(
+                connection: Connection,
+                subscriptionPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
+        }
+
+        /// <summary>
         /// Validates that the specified entity name matches the entity path in the Connection,
         /// if an entity path is specified in the connection.
         /// </summary>
         ///
         /// <param name="entityName">Entity name to validate.</param>
-        private void ValidateEntityName(string entityName)
+        internal void ValidateEntityName(string entityName)
         {
-            // If the entity name is specified in both the connection string and as a stand-alone parameter,
-            // validate that they are the same.
+            // No entity path specified so the entity name is valid
 
-            if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            if (string.IsNullOrEmpty(Connection.EntityPath))
+            {
+                return;
+            }
+
+            // If the entity name is specified in the connection string,
+            // validate that it is the same as the passed in entity name.
+
+            if (string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            // If the user is preformatting the subscription path into the queueName method, extract the topic name and use that
+            // for comparison because subscription paths are not supported in SAS connection strings.
+            // This is important for the Service Bus Functions extension which does pre-formatting of the entity path.
+            // If this is the case the entity name will be in the format of {topic}/Subscriptions/{subscription}
+            const string SubscriptionSlug = "/Subscriptions/";
+
+            int subscriptionStart = entityName.IndexOf(SubscriptionSlug, StringComparison.InvariantCultureIgnoreCase);
+            bool match = subscriptionStart switch
+            {
+                > 0 => subscriptionStart + SubscriptionSlug.Length < entityName.Length // ensure subscription is not empty as that would make it an invalid entity path
+                       && string.Equals(entityName.Substring(0, subscriptionStart), Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase),
+                _ => false
+            };
+
+            if (!match)
             {
                 throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }

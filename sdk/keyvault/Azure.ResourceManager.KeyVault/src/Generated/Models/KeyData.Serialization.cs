@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
@@ -60,12 +62,13 @@ namespace Azure.ResourceManager.KeyVault
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<KeyAttributes> attributes = default;
             Optional<JsonWebKeyType> kty = default;
             Optional<IList<JsonWebKeyOperation>> keyOps = default;
             Optional<int> keySize = default;
             Optional<JsonWebKeyCurveName> curveName = default;
-            Optional<string> keyUri = default;
+            Optional<Uri> keyUri = default;
             Optional<string> keyUriWithVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,6 +105,11 @@ namespace Azure.ResourceManager.KeyVault
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -170,7 +178,12 @@ namespace Azure.ResourceManager.KeyVault
                         }
                         if (property0.NameEquals("keyUri"))
                         {
-                            keyUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            keyUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("keyUriWithVersion"))
@@ -182,7 +195,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new KeyData(id, name, type, location.Value, Optional.ToDictionary(tags), attributes.Value, Optional.ToNullable(kty), Optional.ToList(keyOps), Optional.ToNullable(keySize), Optional.ToNullable(curveName), keyUri.Value, keyUriWithVersion.Value);
+            return new KeyData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), attributes.Value, Optional.ToNullable(kty), Optional.ToList(keyOps), Optional.ToNullable(keySize), Optional.ToNullable(curveName), keyUri.Value, keyUriWithVersion.Value);
         }
     }
 }

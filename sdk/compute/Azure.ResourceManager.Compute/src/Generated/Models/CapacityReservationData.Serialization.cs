@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -49,13 +50,14 @@ namespace Azure.ResourceManager.Compute
 
         internal static CapacityReservationData DeserializeCapacityReservationData(JsonElement element)
         {
-            Models.Sku sku = default;
+            ComputeSku sku = default;
             Optional<IList<string>> zones = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> reservationId = default;
             Optional<IReadOnlyList<Resources.Models.SubResource>> virtualMachinesAssociated = default;
             Optional<DateTimeOffset> provisioningTime = default;
@@ -65,7 +67,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = Models.Sku.DeserializeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("zones"))
@@ -111,6 +113,11 @@ namespace Azure.ResourceManager.Compute
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new CapacityReservationData(id, name, type, tags, location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value);
+            return new CapacityReservationData(id, name, type, systemData, tags, location, sku, Optional.ToList(zones), reservationId.Value, Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value);
         }
     }
 }

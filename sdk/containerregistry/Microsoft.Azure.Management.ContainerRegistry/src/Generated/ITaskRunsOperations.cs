@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The run request name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The name of task run.
+        /// The name of the task run.
         /// </param>
         /// <param name='taskRun'>
         /// The parameters of a run that needs to scheduled.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='updateParameters'>
         /// The parameters for updating a task run.
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The run request name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The name of task run.
+        /// The name of the task run.
         /// </param>
         /// <param name='taskRun'>
         /// The parameters of a run that needs to scheduled.
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// The name of the container registry.
         /// </param>
         /// <param name='taskRunName'>
-        /// The task run name.
+        /// The name of the task run.
         /// </param>
         /// <param name='updateParameters'>
         /// The parameters for updating a task run.

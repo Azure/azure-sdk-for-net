@@ -14,7 +14,7 @@
     * [include/exclude](#includeexclude)
     * [displayNames](#displaynames-1)
     * [Filters](#filters)
-    * [Replace](#replace-values)
+    * [Replace/Modify/Append](#replacemodifyappend-values)
     * [NonSparseParameters](#nonsparseparameters)
     * [Under the hood](#under-the-hood)
 * [Testing](#testing)
@@ -56,7 +56,12 @@ jobs:
         Cloud: Public
       MatrixFilters: []
       MatrixReplace: []
+      PreGenerationSteps: []
 ```
+
+### A note regarding PreGenerationSteps
+
+The generation template laid out above runs as its own job. A limitation of this method is that it disallows any runtime matrix customization due to the fact that an individual job clones the targeted build SHA. The stepList `PreGenerationSteps` allows users to update matrix json however they like prior to actually invoking the matrix generation. Injected steps are run after the repository checkout, but before any matrix generation is invoked.
 
 ## Matrix config file syntax
 
@@ -169,7 +174,7 @@ To import a matrix, add a parameter with the key `$IMPORT`:
 
 Importing can be useful, for example, in cases where there is a shared base matrix, but there is a need to run it
 once for each instance of a language version. Importing does not support overriding duplicate parameters. To achieve
-this, use the [Replace](#replace-values) argument instead.
+this, use the [Replace](#replacemodifyappend-values) argument instead.
 
 The `Selection` and `NonSparseParameters` parameters are respected when generating an imported matrix.
 
@@ -399,7 +404,7 @@ named "ExcludedKey", a framework variable containing either "461" or "5.0", and 
   -Filters @("ExcludedKey=^$", "framework=(461|5\.0)", "SupportedClouds=^$|.*Public.*")
 ```
 
-#### Replace values
+#### Replace/Modify/Append Values
 
 Replacements for values can be passed to the matrix as an array of strings, each matching the format of `<keyRegex>=<valueRegex>/<replacementValue>`.
 The replace argument will find any permutations where the key fully matches the key regex and the value fully matches the value regex, and replace the value with

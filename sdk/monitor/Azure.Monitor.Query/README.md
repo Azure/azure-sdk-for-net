@@ -3,7 +3,7 @@
 The Azure Monitor Query client library is used to execute read-only queries against [Azure Monitor][azure_monitor_overview]'s two data platforms:
 
 - [Logs](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs) - Collects and organizes log and performance data from monitored resources. Data from different sources such as platform logs from Azure services, log and performance data from virtual machines agents, and usage and performance data from apps can be consolidated into a single [Azure Log Analytics workspace](https://docs.microsoft.com/azure/azure-monitor/logs/data-platform-logs#log-analytics-and-workspaces). The various data types can be analyzed together using the [Kusto Query Language][kusto_query_language].
-- [Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics are lightweight and capable of supporting near real-time scenarios, making them particularly useful for alerting and fast detection of issues.
+- [Metrics](https://docs.microsoft.com/azure/azure-monitor/essentials/data-platform-metrics) - Collects numeric data from monitored resources into a time series database. Metrics are numerical values that are collected at regular intervals and describe some aspect of a system at a particular time. Metrics are lightweight and capable of supporting near real-time scenarios, making them useful for alerting and fast detection of issues.
 
 **Resources:**
 
@@ -12,7 +12,8 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 - [API reference documentation][msdocs_apiref]
 - [Service documentation][azure_monitor_overview]
 - [Change log][changelog]
-- [Migration guide][migration_guide]
+- [Migration guide from Application Insights][migration_guide_app_insights]
+- [Migration guide from Operational Insights][migration_guide_opp_insights]
 
 ## Getting started
 
@@ -92,6 +93,8 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Advanced logs query scenarios](#advanced-logs-query-scenarios)
   - [Set logs query timeout](#set-logs-query-timeout)
   - [Query multiple workspaces](#query-multiple-workspaces)
+  - [Include statistics](#include-statistics)
+  - [Include visualization](#include-visualization)
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
 
@@ -303,6 +306,103 @@ foreach (var resourceGroup in response.Value)
 }
 ```
 
+#### Include statistics
+
+To get logs query execution statistics, such as CPU and memory consumption:
+
+1. Set the `LogsQueryOptions.IncludeStatistics` property to `true`.
+2. Invoke the `GetStatistics` method on the `LogsQueryResult` object.
+
+The following example prints the query execution time:
+
+```C# Snippet:QueryLogsWithStatistics
+string workspaceId = "<workspace_id>";
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+    workspaceId,
+    "AzureActivity | top 10 by TimeGenerated",
+    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryOptions
+    {
+        IncludeStatistics = true,
+    });
+
+BinaryData stats = response.Value.GetStatistics();
+using var statsDoc = JsonDocument.Parse(stats);
+var queryStats = statsDoc.RootElement.GetProperty("query");
+Console.WriteLine(queryStats.GetProperty("executionTime").GetDouble());
+```
+
+Because the structure of the statistics payload varies by query, a `BinaryData` return type is used. It contains the raw JSON response. The statistics are found within the `query` property of the JSON. For example:
+
+```json
+{
+  "query": {
+    "executionTime": 0.0156478,
+    "resourceUsage": {...},
+    "inputDatasetStatistics": {...},
+    "datasetStatistics": [{...}]
+  }
+}
+```
+
+#### Include visualization
+
+To get visualization data for logs queries using the [render operator](https://docs.microsoft.com/azure/data-explorer/kusto/query/renderoperator?pivots=azuremonitor):
+
+1. Set the `LogsQueryOptions.IncludeVisualization` property to `true`.
+2. Invoke the `GetVisualization` method on the `LogsQueryResult` object.
+
+For example:
+
+```C# Snippet:QueryLogsWithVisualization
+string workspaceId = "<workspace_id>";
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+    workspaceId,
+    @"StormEvents
+        | summarize event_count = count() by State
+        | where event_count > 10
+        | project State, event_count
+        | render columnchart",
+    new QueryTimeRange(TimeSpan.FromDays(1)),
+    new LogsQueryOptions
+    {
+        IncludeVisualization = true,
+    });
+
+BinaryData viz = response.Value.GetVisualization();
+using var vizDoc = JsonDocument.Parse(viz);
+var queryViz = vizDoc.RootElement.GetProperty("visualization");
+Console.WriteLine(queryViz.GetString());
+```
+
+Because the structure of the visualization payload varies by query, a `BinaryData` return type is used. It contains the raw JSON response. For example:
+
+```json
+{
+  "visualization": "columnchart",
+  "title": null,
+  "accumulate": false,
+  "isQuerySorted": false,
+  "kind": null,
+  "legend": null,
+  "series": null,
+  "yMin": "",
+  "yMax": "",
+  "xAxis": null,
+  "xColumn": null,
+  "xTitle": null,
+  "yAxis": null,
+  "yColumns": null,
+  "ySplit": null,
+  "yTitle": null,
+  "anomalyColumns": null
+}
+```
+
 ### Metrics query
 
 You can query metrics using the `MetricsQueryClient.QueryResourceAsync` method. For every requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
@@ -418,7 +518,7 @@ To learn more about Azure Monitor, see the [Azure Monitor service documentation]
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
-This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For more information, see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 [azure_monitor_create_using_portal]: https://docs.microsoft.com/azure/azure-monitor/logs/quick-create-workspace
 [azure_monitor_overview]: https://docs.microsoft.com/azure/azure-monitor/overview
@@ -426,7 +526,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md
 [kusto_query_language]: https://docs.microsoft.com/azure/data-explorer/kusto/query/
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/MigrationGuide.md
+[migration_guide_app_insights]: https://aka.ms/azsdk/net/migrate/ai-monitor-query
+[migration_guide_opp_insights]: https://aka.ms/azsdk/net/migrate/monitor-query
 [monitor_rest_api]: https://docs.microsoft.com/rest/api/monitor/
 [msdocs_apiref]: https://docs.microsoft.com/dotnet/api/overview/azure/monitor/query?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query

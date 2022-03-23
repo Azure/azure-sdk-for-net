@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ManagementLockListResult DeserializeManagementLockListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagementLockObjectData>> value = default;
+            Optional<IReadOnlyList<ManagementLockData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagementLockObjectData> array = new List<ManagementLockObjectData>();
+                    List<ManagementLockData> array = new List<ManagementLockData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementLockObjectData.DeserializeManagementLockObjectData(item));
+                        array.Add(ManagementLockData.DeserializeManagementLockData(item));
                     }
                     value = array;
                     continue;

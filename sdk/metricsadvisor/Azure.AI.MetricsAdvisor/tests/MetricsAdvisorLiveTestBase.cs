@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Tests
@@ -17,14 +18,19 @@ namespace Azure.AI.MetricsAdvisor.Tests
         protected const string TempDataFeedDimensionNameA = "dimensionA";
         protected const string TempDataFeedDimensionNameB = "dimensionB";
 
-        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public MetricsAdvisorLiveTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
-            Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
-        }
-
-        public MetricsAdvisorLiveTestBase(bool isAsync) : base(isAsync)
-        {
-            Sanitizer = new MetricsAdvisorRecordedTestSanitizer();
+            SanitizedHeaders.Add(Constants.SubscriptionAuthorizationHeader);
+            SanitizedHeaders.Add(Constants.ApiAuthorizationHeader);
+            JsonPathSanitizers.Add("$..password");
+            JsonPathSanitizers.Add("$..certificatePassword");
+            JsonPathSanitizers.Add("$..clientSecret");
+            JsonPathSanitizers.Add("$..keyVaultClientSecret");
+            JsonPathSanitizers.Add("$..apiKey");
+            JsonPathSanitizers.Add("$..accountKey");
+            JsonPathSanitizers.Add("$..authHeader");
+            JsonPathSanitizers.Add("$..httpHeader");
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"\w+@microsoft.com", "foo@contoso.com"));
         }
 
         internal const string DetectionConfigurationId = "efaee305-f049-43ec-9f9b-76026d55c14a";

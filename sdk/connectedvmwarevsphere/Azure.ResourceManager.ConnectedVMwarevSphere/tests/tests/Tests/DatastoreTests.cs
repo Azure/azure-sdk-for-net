@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
             datastoreBody.VCenterId = VcenterId;
             datastoreBody.ExtendedLocation = _extendedLocation;
             // create datastore
-            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(true, datastoreName, datastoreBody)).Value;
+            VMwareDatastoreResource datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(WaitUntil.Completed, datastoreName, datastoreBody)).Value;
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
         }
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
             datastoreBody.VCenterId = VcenterId;
             datastoreBody.ExtendedLocation = _extendedLocation;
             // create datastore
-            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(true, datastoreName, datastoreBody)).Value;
+            VMwareDatastoreResource datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(WaitUntil.Completed, datastoreName, datastoreBody)).Value;
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
             // get datastore
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
             datastoreBody.VCenterId = VcenterId;
             datastoreBody.ExtendedLocation = _extendedLocation;
             // create datastore
-            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(true, datastoreName, datastoreBody)).Value;
+            VMwareDatastoreResource datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(WaitUntil.Completed, datastoreName, datastoreBody)).Value;
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
             // check for exists datastore
@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
             datastoreBody.VCenterId = VcenterId;
             datastoreBody.ExtendedLocation = _extendedLocation;
             // create datastore
-            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(true, datastoreName, datastoreBody)).Value;
+            VMwareDatastoreResource datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(WaitUntil.Completed, datastoreName, datastoreBody)).Value;
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
             int count = 0;
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
             var _extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
-                Type = EXTENDED_LOCATION_TYPE
+                ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
             var datastoreBody = new VMwareDatastoreData(DefaultLocation);
             datastoreBody.MoRefId = "datastore-11";
             datastoreBody.VCenterId = VcenterId;
             datastoreBody.ExtendedLocation = _extendedLocation;
             // create datastore
-            VMwareDatastore datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(true, datastoreName, datastoreBody)).Value;
+            VMwareDatastoreResource datastore1 = (await _datastoreCollection.CreateOrUpdateAsync(WaitUntil.Completed, datastoreName, datastoreBody)).Value;
             Assert.IsNotNull(datastore1);
             Assert.AreEqual(datastore1.Id.Name, datastoreName);
             datastore1 = null;

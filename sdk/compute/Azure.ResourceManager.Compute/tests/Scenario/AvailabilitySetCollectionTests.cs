@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(true, setName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
             var availabilitySet = lro.Value;
             Assert.AreEqual(setName, availabilitySet.Data.Name);
         }
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(true, setName, input);
-            AvailabilitySet set1 = lro.Value;
-            AvailabilitySet set2 = await collection.GetAsync(setName);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
+            AvailabilitySetResource set1 = lro.Value;
+            AvailabilitySetResource set2 = await collection.GetAsync(setName);
 
             ResourceDataHelper.AssertAvailabilitySet(set1.Data, set2.Data);
         }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            var lro = await collection.CreateOrUpdateAsync(true, setName, input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName, input);
             var availabilitySet = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(setName));
             Assert.IsFalse(await collection.ExistsAsync(setName + "1"));
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAS-"), input);
-            _ = await collection.CreateOrUpdateAsync(true, Recording.GenerateAssetName("testAs-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAS-"), input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testAs-"), input);
             int count = 0;
             await foreach (var availabilitySet in collection.GetAllAsync())
             {
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             });
-            _ = await collection.CreateOrUpdateAsync(true, setName1, input);
-            _ = await collection.CreateOrUpdateAsync(true, setName2, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName1, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, setName2, input);
 
-            AvailabilitySet set1 = null, set2 = null;
+            AvailabilitySetResource set1 = null, set2 = null;
             await foreach (var availabilitySet in DefaultSubscription.GetAvailabilitySetsAsync())
             {
                 if (availabilitySet.Data.Name == setName1)

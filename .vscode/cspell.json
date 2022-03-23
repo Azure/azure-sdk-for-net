@@ -98,6 +98,14 @@
       "words": ["warnaserror"]
     },
     {
+      "filename": "**/sdk/azurestackhci/**/*.cs",
+      "words": [
+        "cref",
+        "imds",
+        "IMDS"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",
@@ -143,6 +151,16 @@
         "VCenter",
         "VMware",
         "vSphere"
+      ]
+    },
+	{
+      "filename": "**/sdk/desktopvirtualization/**/*.cs",
+      "words": [
+        "adfs",
+        "fslogix",
+        "msix",
+        "sso",
+        "unhide"
       ]
     },
     {

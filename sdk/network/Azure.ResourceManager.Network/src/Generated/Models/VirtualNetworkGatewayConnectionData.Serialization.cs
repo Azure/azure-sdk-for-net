@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableBgp");
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsDefined(UseLocalAzureIpAddress))
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress");
-                writer.WriteBooleanValue(UseLocalAzureIpAddress.Value);
+                writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
             if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors");
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Optional.IsCollectionDefined(IpsecPolicies))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies");
                 writer.WriteStartArray();
-                foreach (var item in IpsecPolicies)
+                foreach (var item in IPsecPolicies)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableBgp = default;
             Optional<bool> useLocalAzureIpAddress = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IpsecPolicy>> ipsecPolicies = default;
+            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
             Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
             Optional<string> resourceGuid = default;
             Optional<ProvisioningState> provisioningState = default;
@@ -440,10 +440,10 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpsecPolicy> array = new List<IpsecPolicy>();
+                            List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpsecPolicy.DeserializeIpsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
                             }
                             ipsecPolicies = array;
                             continue;

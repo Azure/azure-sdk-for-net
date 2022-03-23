@@ -173,6 +173,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public void EncryptDecrypt()
         {
+#if SNIPPET
+            KeyVaultKey key = null;
+#endif
+
             #region Snippet:EncryptDecrypt
 #if SNIPPET
             // Create a new cryptography client using the same Key Vault or Managed HSM endpoint, service version,
@@ -272,6 +276,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Ignore("Used only for the migration guide")]
         private async Task MigrationGuide()
         {
+            {
             #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
             KeyClient client = new KeyClient(
                 new Uri("https://myvault.vault.azure.net"),
@@ -281,6 +286,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
                 new Uri("https://myvault.vault.azure.net"),
                 new DefaultAzureCredential());
             #endregion Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_Create
+            }
 
             #region Snippet:Azure_Security_KeyVault_Keys_Snippets_MigrationGuide_CreateWithOptions
             using (HttpClient httpClient = new HttpClient())
@@ -293,7 +299,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 #if SNIPPET
                 KeyClient client = new KeyClient(
 #else
-                client = new KeyClient(
+                KeyClient client = new KeyClient(
 #endif
                     new Uri("https://myvault.vault.azure.net"),
                     new DefaultAzureCredential(),

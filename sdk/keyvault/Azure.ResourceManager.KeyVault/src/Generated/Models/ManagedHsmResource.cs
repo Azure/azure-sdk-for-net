@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Managed HSM resource. </summary>
-    public partial class ManagedHsmResource : TrackedResource
+    public partial class ManagedHsmResource : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ManagedHsmResource. </summary>
         /// <param name="location"> The location. </param>
@@ -23,20 +23,17 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ManagedHsmResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU details. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the key vault resource. </param>
-        internal ManagedHsmResource(ResourceIdentifier id, string name, ResourceType type, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku, SystemData systemData) : base(id, name, type, tags, location)
+        internal ManagedHsmResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
-            SystemData = systemData;
         }
 
         /// <summary> SKU details. </summary>
         public ManagedHsmSku Sku { get; set; }
-        /// <summary> Metadata pertaining to creation and last modification of the key vault resource. </summary>
-        public SystemData SystemData { get; }
     }
 }

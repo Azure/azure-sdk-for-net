@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.CosmosDB
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The ID of the target subscription.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -134,6 +134,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         IPartitionKeyRangeIdRegionOperations PartitionKeyRangeIdRegion { get; }
 
         /// <summary>
+        /// Gets the IGraphResourcesOperations.
+        /// </summary>
+        IGraphResourcesOperations GraphResources { get; }
+
+        /// <summary>
         /// Gets the ISqlResourcesOperations.
         /// </summary>
         ISqlResourcesOperations SqlResources { get; }
@@ -162,6 +167,21 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
+
+        /// <summary>
+        /// Gets the IDataTransferJobsOperations.
+        /// </summary>
+        IDataTransferJobsOperations DataTransferJobs { get; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        ICassandraClustersOperations CassandraClusters { get; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        ICassandraDataCentersOperations CassandraDataCenters { get; }
 
         /// <summary>
         /// Gets the INotebookWorkspacesOperations.
@@ -214,14 +234,34 @@ namespace Microsoft.Azure.Management.CosmosDB
         IRestorableMongodbResourcesOperations RestorableMongodbResources { get; }
 
         /// <summary>
-        /// Gets the ICassandraClustersOperations.
+        /// Gets the IRestorableGremlinDatabasesOperations.
         /// </summary>
-        ICassandraClustersOperations CassandraClusters { get; }
+        IRestorableGremlinDatabasesOperations RestorableGremlinDatabases { get; }
 
         /// <summary>
-        /// Gets the ICassandraDataCentersOperations.
+        /// Gets the IRestorableGremlinGraphsOperations.
         /// </summary>
-        ICassandraDataCentersOperations CassandraDataCenters { get; }
+        IRestorableGremlinGraphsOperations RestorableGremlinGraphs { get; }
+
+        /// <summary>
+        /// Gets the IRestorableGremlinResourcesOperations.
+        /// </summary>
+        IRestorableGremlinResourcesOperations RestorableGremlinResources { get; }
+
+        /// <summary>
+        /// Gets the IRestorableTablesOperations.
+        /// </summary>
+        IRestorableTablesOperations RestorableTables { get; }
+
+        /// <summary>
+        /// Gets the IRestorableTableResourcesOperations.
+        /// </summary>
+        IRestorableTableResourcesOperations RestorableTableResources { get; }
+
+        /// <summary>
+        /// Gets the IServiceOperations.
+        /// </summary>
+        IServiceOperations Service { get; }
 
     }
 }

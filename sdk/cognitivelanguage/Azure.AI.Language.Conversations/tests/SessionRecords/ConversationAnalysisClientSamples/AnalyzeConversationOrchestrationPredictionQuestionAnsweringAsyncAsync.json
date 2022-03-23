@@ -8,9 +8,9 @@
         "Content-Length": "46",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7d0d1157fe02be458062e0047a17e635-4d39f7d0f326f44b-00",
-        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20211028.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
-        "x-ms-client-request-id": "66add9ffb8d99a96c3d4e216dc2c7e4f",
+        "traceparent": "00-7a0d2275711c554998bd6186e0f50ced-d1036b333325834e-00",
+        "User-Agent": "azsdk-net-AI.Language.Conversations/1.0.0-alpha.20220314.1 (.NET Framework 4.8.4420.0; Microsoft Windows 10.0.19044 )",
+        "x-ms-client-request-id": "b18b46116752a6c14e5f6fc9be5227ec",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -18,22 +18,16 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4d6ba296-d10e-424f-afdb-940d463cef83",
-        "Cache-Control": [
-          "no-store",
-          "proxy-revalidate",
-          "no-cache",
-          "max-age=0",
-          "private"
-        ],
+        "apim-request-id": "9584b4ee-7ac8-463c-b30c-05d2d5a9dda9",
+        "Cache-Control": "no-store, proxy-revalidate, no-cache, max-age=0, private",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 28 Oct 2021 16:05:48 GMT",
-        "pragma": "no-cache",
-        "request-id": "4d6ba296-d10e-424f-afdb-940d463cef83",
+        "Date": "Mon, 14 Mar 2022 15:35:17 GMT",
+        "Pragma": "no-cache",
+        "request-id": "9584b4ee-7ac8-463c-b30c-05d2d5a9dda9",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "1412"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "621"
       },
       "ResponseBody": {
         "query": "Where are the calories per recipe?",
@@ -42,7 +36,7 @@
           "projectKind": "workflow",
           "intents": {
             "SushiMaking": {
-              "confidenceScore": 0.76692706,
+              "confidenceScore": 0.73258805,
               "targetKind": "question_answering",
               "result": {
                 "answers": [
@@ -197,7 +191,7 @@
               }
             },
             "SushiOrder": {
-              "confidenceScore": 0.6770833,
+              "confidenceScore": 0.31617695,
               "targetKind": "conversation"
             },
             "None": {
@@ -212,6 +206,6 @@
   "Variables": {
     "CONVERSATIONS_KEY": "Sanitized",
     "CONVERSATIONS_URI": "https://antischsdktest.cognitiveservices.azure.com",
-    "RandomSeed": "1730280126"
+    "RandomSeed": "963941857"
   }
 }

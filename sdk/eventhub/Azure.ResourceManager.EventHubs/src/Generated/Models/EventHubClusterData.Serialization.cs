@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EventHubs
         internal static EventHubClusterData DeserializeEventHubClusterData(JsonElement element)
         {
             Optional<ClusterSku> sku = default;
-            Optional<SystemData> systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<string> createdAt = default;
             Optional<string> updatedAt = default;
             Optional<string> metricId = default;
@@ -62,16 +62,6 @@ namespace Azure.ResourceManager.EventHubs
                         continue;
                     }
                     sku = ClusterSku.DeserializeClusterSku(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -102,6 +92,11 @@ namespace Azure.ResourceManager.EventHubs
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -137,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubClusterData(id, name, type, tags, location, sku.Value, systemData, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
+            return new EventHubClusterData(id, name, type, systemData, tags, location, sku.Value, createdAt.Value, updatedAt.Value, metricId.Value, status.Value);
         }
     }
 }

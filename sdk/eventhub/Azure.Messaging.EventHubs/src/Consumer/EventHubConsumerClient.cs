@@ -487,7 +487,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 try
                 {
                     transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, Identifier, startingPosition, RetryPolicy, readOptions.TrackLastEnqueuedEventProperties, InvalidateConsumerWhenPartitionIsStolen, readOptions.OwnerLevel, (uint)readOptions.PrefetchCount);
-                    partitionContext = new PartitionContext(partitionId, transportConsumer);
+                    partitionContext = new PartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, transportConsumer);
                     emptyPartitionEvent = new PartitionEvent(partitionContext, null);
                 }
                 catch (Exception ex)
@@ -696,7 +696,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             var options = readOptions?.Clone() ?? new ReadEventOptions();
             var startingPosition = startReadingAtEarliestEvent ? EventPosition.Earliest : EventPosition.Latest;
 
-            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            using var cancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, CancellationToken.None);
 
             try
             {
@@ -987,7 +987,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 (
                     transportConsumer,
                     channel,
-                    new PartitionContext(partitionId, transportConsumer),
+                    new PartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, transportConsumer),
                     receiveBatchSize,
                     exceptionCallback,
                     publishingCancellationSource.Token

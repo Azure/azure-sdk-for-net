@@ -87,7 +87,7 @@ namespace LabServices.Tests
                         },
                         Sku = new Sku
                         {
-                            Name = "Basic",
+                            Name = "Standard_Fsv2_2_4GB_64_S_SSD",
                             Capacity = 0
                         },
                         UsageQuota = TimeSpan.FromHours(2),

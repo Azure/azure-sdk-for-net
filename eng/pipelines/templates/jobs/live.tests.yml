@@ -114,6 +114,8 @@ jobs:
           }
         displayName: Set Test Mode
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          Container: ${{ parameters.UsePlatformContainer }}
       - pwsh: >
           dotnet test eng/service.proj
           --framework $(TestTargetFramework)

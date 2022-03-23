@@ -12,7 +12,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The ListTableServices. </summary>
-    public partial class ListTableServices
+    internal partial class ListTableServices
     {
         /// <summary> Initializes a new instance of ListTableServices. </summary>
         internal ListTableServices()

@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -21,7 +22,35 @@ namespace Azure.Core.TestFramework
 
         public void Intercept(IInvocation invocation)
         {
+            bool modifiedAskToWait = false;
+
+            if (IsLro(invocation.Method.ReturnType))
+            {
+                WaitUntil current = (WaitUntil)invocation.Arguments[0];
+                if (current == WaitUntil.Completed)
+                {
+                    modifiedAskToWait = true;
+                    invocation.Arguments[0] = WaitUntil.Started;
+                }
+            }
+
             invocation.Proceed();
+
+            if (modifiedAskToWait)
+            {
+                if (IsTaskFaulted(invocation.ReturnValue))
+                    return;
+                object lro = GetResultFromTask(invocation.ReturnValue);
+                if (lro.GetType().IsSubclassOf(typeof(Operation)))
+                {
+                    _ = OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, (CancellationToken)invocation.Arguments.Last());
+                }
+                else
+                {
+                    _ = OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), (CancellationToken)invocation.Arguments.Last());
+                }
+                return;
+            }
 
             var result = invocation.ReturnValue;
             if (result == null)
@@ -30,35 +59,19 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.StartsWith("ValueTask") ||
-                type.Name.StartsWith("Task") ||
-                type.Name.StartsWith("AsyncStateMachineBox")) //in .net 5 the type is not task here
+            if (IsTaskType(type))
             {
-                if ((bool)type.GetProperty("IsFaulted").GetValue(result))
+                if (IsTaskFaulted(result))
                     return;
 
                 var taskResultType = type.GetGenericArguments()[0];
-                if (taskResultType.Name.StartsWith("Response"))
+                if (taskResultType.Name.StartsWith("Response") || InheritsFromArmResource(taskResultType))
                 {
-                    try
-                    {
-                        var taskResult = result.GetType().GetProperty("Result").GetValue(result);
-                        var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
-                        invocation.ReturnValue = type.Name.StartsWith("ValueTask")
-                            ? GetValueFromValueTask(taskResultType, instrumentedResult)
-                            : GetValueFromOther(taskResultType, instrumentedResult);
-                    }
-                    catch (TargetInvocationException e)
-                    {
-                        if (e.InnerException is AggregateException aggException)
-                        {
-                            throw aggException.InnerExceptions.First();
-                        }
-                        else
-                        {
-                            throw e.InnerException;
-                        }
-                    }
+                    var taskResult = GetResultFromTask(result);
+                    var instrumentedResult = _testBase.InstrumentClient(taskResultType, taskResult, new IInterceptor[] { new ManagementInterceptor(_testBase) });
+                    invocation.ReturnValue = type.Name.StartsWith("ValueTask")
+                        ? GetValueFromValueTask(taskResultType, instrumentedResult)
+                        : GetValueFromOther(taskResultType, instrumentedResult);
                 }
             }
             else if (invocation.Method.Name.EndsWith("Value") && InheritsFromArmResource(type))
@@ -81,6 +94,52 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        private static bool IsTaskFaulted(object taskObj)
+        {
+            return (bool)taskObj.GetType().GetProperty("IsFaulted").GetValue(taskObj);
+        }
+
+        private static object GetResultFromTask(object returnValue)
+        {
+            try
+            {
+                object lro = null;
+                Type returnType = returnValue.GetType();
+                return IsTaskType(returnType)
+                    ? lro = returnType.GetProperty("Result").GetValue(returnValue)
+                    : lro = returnValue;
+            }
+            catch (TargetInvocationException e)
+            {
+                if (e.InnerException is AggregateException aggException)
+                {
+                    throw aggException.InnerExceptions.First();
+                }
+                else
+                {
+                    throw e.InnerException;
+                }
+            }
+        }
+
+        private static bool IsTaskType(Type type)
+        {
+            string name = type.Name;
+            return name.StartsWith("ValueTask", StringComparison.Ordinal) ||
+                name.StartsWith("Task", StringComparison.Ordinal) ||
+                name.StartsWith("AsyncStateMachineBox", StringComparison.Ordinal); //in .net 5 the type is not task here
+        }
+
+        private static bool IsLro(Type returnType)
+        {
+            if (returnType.Name.StartsWith("Task"))
+            {
+                returnType = returnType.GetGenericArguments()[0];
+            }
+
+            return returnType.IsSubclassOf(typeof(Operation));
+        }
+
         internal static bool InheritsFromArmResource(Type elementType)
         {
             if (elementType.BaseType == null)
@@ -89,7 +148,7 @@ namespace Azure.Core.TestFramework
             if (elementType.BaseType == typeof(object))
                 return false;
 
-            if (elementType.BaseType.Name == "ArmResource")
+            if (elementType.BaseType.Name.Equals("ArmResource", StringComparison.Ordinal) || elementType.BaseType.Name.Equals("ArmCollection", StringComparison.Ordinal))
                 return true;
 
             return InheritsFromArmResource(elementType.BaseType);

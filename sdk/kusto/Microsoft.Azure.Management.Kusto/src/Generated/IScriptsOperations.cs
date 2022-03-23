@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Script>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Script,ScriptsUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Kusto principalAssignment.
         /// </summary>
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Script>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Script,ScriptsUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string scriptName, Script parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Kusto principalAssignment.
         /// </summary>

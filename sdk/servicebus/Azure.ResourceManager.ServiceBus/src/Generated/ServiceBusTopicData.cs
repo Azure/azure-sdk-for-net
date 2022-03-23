@@ -13,7 +13,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary> A class representing the ServiceBusTopic data model. </summary>
-    public partial class ServiceBusTopicData : Resource
+    public partial class ServiceBusTopicData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusTopicData. </summary>
         public ServiceBusTopicData()
@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusTopicData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="systemData"> The system meta data relating to this resource. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="sizeInBytes"> Size of the topic, in bytes. </param>
         /// <param name="createdAt"> Exact time the message was created. </param>
         /// <param name="updatedAt"> The exact time the message was updated. </param>
@@ -42,9 +42,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="autoDeleteOnIdle"> ISO 8601 timespan idle interval after which the topic is automatically deleted. The minimum duration is 5 minutes. </param>
         /// <param name="enablePartitioning"> Value that indicates whether the topic to be partitioned across multiple message brokers is enabled. </param>
         /// <param name="enableExpress"> Value that indicates whether Express Entities are enabled. An express topic holds a message in memory temporarily before writing it to persistent storage. </param>
-        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, long? sizeInBytes, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, DateTimeOffset? accessedAt, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, EntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress) : base(id, name, type)
+        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInBytes, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, DateTimeOffset? accessedAt, int? subscriptionCount, MessageCountDetails countDetails, TimeSpan? defaultMessageTimeToLive, int? maxSizeInMegabytes, long? maxMessageSizeInKilobytes, bool? requiresDuplicateDetection, TimeSpan? duplicateDetectionHistoryTimeWindow, bool? enableBatchedOperations, EntityStatus? status, bool? supportOrdering, TimeSpan? autoDeleteOnIdle, bool? enablePartitioning, bool? enableExpress) : base(id, name, resourceType, systemData)
         {
-            SystemData = systemData;
             SizeInBytes = sizeInBytes;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -64,8 +63,6 @@ namespace Azure.ResourceManager.ServiceBus
             EnableExpress = enableExpress;
         }
 
-        /// <summary> The system meta data relating to this resource. </summary>
-        public SystemData SystemData { get; }
         /// <summary> Size of the topic, in bytes. </summary>
         public long? SizeInBytes { get; }
         /// <summary> Exact time the message was created. </summary>

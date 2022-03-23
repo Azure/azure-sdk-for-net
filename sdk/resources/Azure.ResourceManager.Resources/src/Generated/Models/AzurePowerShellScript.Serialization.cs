@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(PrimaryScriptUri))
             {
                 writer.WritePropertyName("primaryScriptUri");
-                writer.WriteStringValue(PrimaryScriptUri);
+                writer.WriteStringValue(PrimaryScriptUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SupportingScriptUris))
             {
@@ -110,21 +110,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzurePowerShellScript DeserializeAzurePowerShellScript(JsonElement element)
         {
-            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DeploymentScriptManagedIdentity> identity = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
-            Optional<SystemData> systemData = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
+            SystemData systemData = default;
             Optional<ContainerConfiguration> containerSettings = default;
             Optional<StorageAccountConfiguration> storageAccountSettings = default;
             Optional<CleanupOptions> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
-            Optional<IReadOnlyDictionary<string, object>> outputs = default;
-            Optional<string> primaryScriptUri = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> outputs = default;
+            Optional<Uri> primaryScriptUri = default;
             Optional<IList<string>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
             Optional<string> arguments = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(property.Value);
+                    identity = DeploymentScriptManagedIdentity.DeserializeDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -170,16 +170,6 @@ namespace Azure.ResourceManager.Resources.Models
                     kind = new ScriptType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -193,6 +183,11 @@ namespace Azure.ResourceManager.Resources.Models
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"))
+                {
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -261,17 +256,22 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             outputs = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("primaryScriptUri"))
                         {
-                            primaryScriptUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            primaryScriptUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("supportingScriptUris"))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new AzurePowerShellScript(id, name, type, identity.Value, location, Optional.ToDictionary(tags), kind, systemData, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
+            return new AzurePowerShellScript(id, name, type, systemData, identity.Value, location, Optional.ToDictionary(tags), kind, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, Optional.ToDictionary(outputs), primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azPowerShellVersion);
         }
     }
 }

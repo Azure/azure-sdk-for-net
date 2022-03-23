@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Remote private link service connection state. </summary>
         public PrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState { get; set; }
         /// <summary> Remote private endpoint connection details. </summary>
-        public SubResource RemotePrivateEndpointConnection { get; set; }
+        internal SubResource RemotePrivateEndpointConnection { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier RemotePrivateEndpointConnectionId
+        {
+            get => RemotePrivateEndpointConnection is null ? default : RemotePrivateEndpointConnection.Id;
+        }
+
         /// <summary> Group connectivity information. </summary>
         public IList<GroupConnectivityInformation> GroupConnectivityInformation { get; }
     }

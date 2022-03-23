@@ -181,7 +181,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "73",
+        "Content-Length": "83",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20211201.1",
@@ -194,6 +194,7 @@
         "sku": {
           "name": "Standard_Microsoft"
         },
+        "tags": {},
         "location": "westus",
         "properties": {}
       },
@@ -1804,7 +1805,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "246",
+        "Content-Length": "256",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20211201.1",
@@ -1814,6 +1815,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus",
         "properties": {
           "isHttpAllowed": true,

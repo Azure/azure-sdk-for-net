@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// 'Free', 'Standard', 'Premium', 'PerNode', 'PerGB2018',
         /// 'Standalone', 'CapacityReservation', 'LACluster'</param>
         /// <param name="capacityReservationLevel">The capacity reservation
-        /// level for this workspace, when CapacityReservation sku is
+        /// level in GB for this workspace, when CapacityReservation sku is
         /// selected.</param>
         /// <param name="lastSkuUpdate">The last time when the sku was
         /// updated.</param>
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the capacity reservation level for this workspace,
-        /// when CapacityReservation sku is selected.
+        /// Gets or sets the capacity reservation level in GB for this
+        /// workspace, when CapacityReservation sku is selected.
         /// </summary>
         [JsonProperty(PropertyName = "capacityReservationLevel")]
         public int? CapacityReservationLevel { get; set; }

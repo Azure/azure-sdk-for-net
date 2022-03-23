@@ -19,26 +19,27 @@ namespace Microsoft.Azure.Management.IotHub
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Devices", "Certificates", "2021-07-01"),
-                new Tuple<string, string, string>("Devices", "IotHub", "2021-07-01"),
-                new Tuple<string, string, string>("Devices", "IotHubResource", "2021-07-01"),
-                new Tuple<string, string, string>("Devices", "Operations", "2021-07-01"),
-                new Tuple<string, string, string>("Devices", "PrivateEndpointConnections", "2021-07-01"),
-                new Tuple<string, string, string>("Devices", "PrivateLinkResources", "2021-07-01"),
-                new Tuple<string, string, string>("Devices", "ResourceProviderCommon", "2021-07-01"),
+                new Tuple<string, string, string>("Devices", "Certificates", "2021-07-02"),
+                new Tuple<string, string, string>("Devices", "IotHub", "2021-07-02"),
+                new Tuple<string, string, string>("Devices", "IotHubResource", "2021-07-02"),
+                new Tuple<string, string, string>("Devices", "Operations", "2021-07-02"),
+                new Tuple<string, string, string>("Devices", "PrivateEndpointConnections", "2021-07-02"),
+                new Tuple<string, string, string>("Devices", "PrivateLinkResources", "2021-07-02"),
+                new Tuple<string, string, string>("Devices", "ResourceProviderCommon", "2021-07-02"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/iothub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\iot\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/iothub/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\code\\azure\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "cde7f150e8d3bf3af2418cc347cae0fb2baed6a7";
-      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "e1a447932856cf8fb8522322d46d0daaba6fd8b8";
+        public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
+
 

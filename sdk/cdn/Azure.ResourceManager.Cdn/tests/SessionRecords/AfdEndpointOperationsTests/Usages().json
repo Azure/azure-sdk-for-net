@@ -95,7 +95,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "78",
+        "Content-Length": "88",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210926.1",
@@ -108,6 +108,7 @@
         "sku": {
           "name": "Standard_AzureFrontDoor"
         },
+        "tags": {},
         "location": "Global",
         "properties": {}
       },
@@ -1188,7 +1189,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "70",
+        "Content-Length": "80",
         "Content-Type": "application/json",
         "User-Agent": [
           "azsdk-net-ResourceManager.Cdn/1.0.0-alpha.20210926.1",
@@ -1198,6 +1199,7 @@
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
+        "tags": {},
         "location": "westus",
         "properties": {
           "originResponseTimeoutSeconds": 60

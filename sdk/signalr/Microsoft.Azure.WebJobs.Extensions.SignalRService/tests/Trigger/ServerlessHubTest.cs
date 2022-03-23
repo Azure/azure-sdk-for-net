@@ -13,10 +13,13 @@ using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.SignalR.Tests.Common;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
-namespace SignalRServiceExtension.Tests.Trigger
+namespace SignalRServiceExtension.Tests
 {
     public class ServerlessHubTest
     {
@@ -49,6 +52,16 @@ namespace SignalRServiceExtension.Tests.Trigger
         }
 
         [Fact]
+        public void GetHubNameTest()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration["AzureSignalRConnectionString:serviceUri"] = "https://abc.com";
+            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
+            var myHub = new MyHub(serviceManagerStore);
+            Assert.Equal("MyHub", myHub.HubName);
+        }
+
+        [Fact]
         public async Task ServerlessHubSyncNegotiate()
         {
             var hubContext = await new ServiceManagerBuilder().WithOptions(o => o.ConnectionString = FakeEndpointUtils.GetFakeConnectionString(1).Single()).BuildServiceManager().CreateHubContextAsync("hub", default);
@@ -57,10 +70,49 @@ namespace SignalRServiceExtension.Tests.Trigger
             var connectionInfo = myHub.Negotiate("user");
         }
 
+        [Fact]
+        public void TestCustomSignalRConnectionAttribute()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
+
+            Assert.Throws<InvalidOperationException>(() => new CustomConnectionHub(serviceManagerStore));
+
+            configuration["SignalRConnection:serviceUri"] = "https://abc.com";
+            var myHub = new CustomConnectionHub(serviceManagerStore);
+            Assert.NotNull(serviceManagerStore.GetByConfigurationKey("SignalRConnection"));
+        }
+
+        [Fact]
+        public void TestWithoutSignalRConnectionAttribute()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            using var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
+
+            Assert.Throws<InvalidOperationException>(() => new MyHub(serviceManagerStore));
+
+            configuration["AzureSignalRConnectionString:serviceUri"] = "https://abc.com";
+            var myHub = new MyHub(serviceManagerStore);
+            Assert.NotNull(serviceManagerStore.GetByConfigurationKey("AzureSignalRConnectionString"));
+        }
+
+        [SignalRConnection("SignalRConnection")]
+        public class CustomConnectionHub : ServerlessHub
+        {
+            public CustomConnectionHub(ServiceHubContext serviceHubContext) : base(serviceHubContext) { }
+
+            internal CustomConnectionHub(IServiceManagerStore serviceManagerStore) : base(serviceManagerStore) { }
+        }
+
         private class MyHub : ServerlessHub
         {
             // Use default value = null to reconcile testing and production purpose.
-            public MyHub(IServiceHubContext serviceHubContext = null, IServiceManager serviceManager = null) : base(serviceHubContext, serviceManager)
+            public MyHub(IServiceHubContext hubContext = null, IServiceManager serviceManager = null) : base(hubContext, serviceManager)
+            {
+            }
+
+            // Use default value = null to reconcile testing and production purpose.
+            public MyHub(IServiceManagerStore serviceManagerStore) : base(serviceManagerStore)
             {
             }
 

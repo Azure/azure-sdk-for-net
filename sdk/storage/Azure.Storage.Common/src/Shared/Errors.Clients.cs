@@ -16,9 +16,6 @@ namespace Azure.Storage
         public static ArgumentException CannotBothBeNotNull(string param0, string param1)
             => new ArgumentException($"{param0} and {param1} cannot both be set");
 
-        public static ArgumentException InvalidArgument(string paramName)
-            => new ArgumentException($"{paramName} is invalid");
-
         public static ArgumentOutOfRangeException MustBeGreaterThanOrEqualTo(string paramName, long value)
             => new ArgumentOutOfRangeException(paramName, $"Value must be greater than or equal to {value}");
 
@@ -111,9 +108,6 @@ namespace Azure.Storage
                 new ResponseError(
                     response.GetErrorCode(null),
                     $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'."));
-
-        public static ArgumentException CannotDeferTransactionalHashVerification()
-            => new ArgumentException("Cannot defer transactional hash verification. Returned hash is unavailable to caller.");
 
         public static ArgumentException TransactionalHashingNotSupportedWithClientSideEncryption()
             => new ArgumentException("Client-side encryption and transactional hashing are not supported at the same time.");

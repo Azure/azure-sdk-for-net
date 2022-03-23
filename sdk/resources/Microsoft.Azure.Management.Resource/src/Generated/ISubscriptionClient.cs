@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.ResourceManager
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// All resource groups and resources exist within subscriptions. These
@@ -76,6 +80,24 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets the ITenantsOperations.
         /// </summary>
         ITenantsOperations Tenants { get; }
+
+        /// <summary>
+        /// Checks resource name validity
+        /// </summary>
+        /// <remarks>
+        /// A resource name is valid if it is not a reserved word, does not
+        /// contains a reserved word and does not start with a reserved word
+        /// </remarks>
+        /// <param name='resourceNameDefinition'>
+        /// Resource object with values for resource name and resource type
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<CheckResourceNameResult>> CheckResourceNameWithHttpMessagesAsync(ResourceName resourceNameDefinition = default(ResourceName), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

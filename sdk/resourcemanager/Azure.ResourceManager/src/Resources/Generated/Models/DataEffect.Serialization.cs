@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         internal static DataEffect DeserializeDataEffect(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<object> detailsSchema = default;
+            Optional<BinaryData> detailsSchema = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detailsSchema = property.Value.GetObject();
+                    detailsSchema = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

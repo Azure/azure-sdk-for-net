@@ -1,6 +1,7 @@
 # Azure.Security.KeyVault.Administration
 
 ## AutoRest Configuration
+
 > See https://aka.ms/autorest
 
 Run `dotnet build /t:GenerateCode` in src directory to re-generate.
@@ -8,8 +9,8 @@ Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 ``` yaml
 title: Azure.Security.KeyVault.Administration
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7a42f16c75e5005c59b75fe7f0888c1103294d43/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.3-preview/rbac.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7a42f16c75e5005c59b75fe7f0888c1103294d43/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.3-preview/backuprestore.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b7d6b00a7f388f048772ea249114a63773312538/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.3-preview/rbac.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b7d6b00a7f388f048772ea249114a63773312538/specification/keyvault/data-plane/Microsoft.KeyVault/preview/7.3-preview/backuprestore.json
 namespace: Azure.Security.KeyVault.Administration
 include-csproj: disable
 ```
