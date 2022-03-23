@@ -5,7 +5,7 @@ steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - pwsh: |
-        # Find the default branch of the repo
+        # Find the default branch of the repo. The variable value sets in build step.
         Write-Host "Default Branch: $(DefaultBranch)"
         $targetBranch = "$(System.PullRequest.TargetBranch)" -replace "refs/heads/"
 

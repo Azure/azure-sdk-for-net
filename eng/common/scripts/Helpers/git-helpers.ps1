@@ -2,6 +2,7 @@
 # cSpell:ignore PULLREQUEST
 # cSpell:ignore TARGETBRANCH
 # cSpell:ignore SOURCEVERSION
+# cSpell:ignore SOURCECOMMITID
 function Get-ChangedFiles {
   param (
     [string]$SourceCommittish= "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
