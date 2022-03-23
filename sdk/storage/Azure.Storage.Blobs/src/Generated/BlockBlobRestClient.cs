@@ -990,7 +990,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetBlockListRequest(BlockListType listType, string snapshot, int? timeout, string leaseId, string ifTags)
+        internal HttpMessage CreateGetBlockListRequest(BlockListType listType, string snapshot, int? timeout, string leaseId, string ifTags, bool? ignoreStrongConsistencyLock)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1017,6 +1017,10 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("x-ms-if-tags", ifTags);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (ignoreStrongConsistencyLock != null)
+            {
+                request.Headers.Add("x-ms-ignore-strong-consistency-lock", ignoreStrongConsistencyLock.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1027,10 +1031,11 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders>> GetBlockListAsync(BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders>> GetBlockListAsync(BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBlockListRequest(listType, snapshot, timeout, leaseId, ifTags);
+            using var message = CreateGetBlockListRequest(listType, snapshot, timeout, leaseId, ifTags, ignoreStrongConsistencyLock);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlockBlobGetBlockListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1056,10 +1061,11 @@ namespace Azure.Storage.Blobs
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource&apos;s lease is active and matches this ID. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ignoreStrongConsistencyLock"> Geo-redundant storage (GRS) and Geo-zone-redundant storage (GZRS) accounts only.  Allows client to ignore replication lock o primary and read current state anyway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> GetBlockList(BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> GetBlockList(BlockListType listType, string snapshot = null, int? timeout = null, string leaseId = null, string ifTags = null, bool? ignoreStrongConsistencyLock = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetBlockListRequest(listType, snapshot, timeout, leaseId, ifTags);
+            using var message = CreateGetBlockListRequest(listType, snapshot, timeout, leaseId, ifTags, ignoreStrongConsistencyLock);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlockBlobGetBlockListHeaders(message.Response);
             switch (message.Response.Status)

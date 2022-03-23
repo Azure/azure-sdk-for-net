@@ -9,7 +9,7 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// A block blob's <see cref="BlockList"/> returned from
-    /// <see cref="BlockBlobClient.GetBlockListAsync"/>.
+    /// <see cref="BlockBlobClient.GetBlockListAsync(GetBlockListOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public partial class BlockList
     {
@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// The media type of the body of the response. For the
-        /// <see cref=" Specialized.BlockBlobClient.GetBlockListAsync"/>
+        /// <see cref=" Specialized.BlockBlobClient.GetBlockList(GetBlockListOptions, System.Threading.CancellationToken)"/>
         /// operation this is 'application/xml'.
         /// </summary>
         public string ContentType { get; internal set; }

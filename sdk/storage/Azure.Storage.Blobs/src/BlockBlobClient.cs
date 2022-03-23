@@ -2275,7 +2275,83 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetBlockList
         /// <summary>
-        /// The <see cref="GetBlockList"/> operation operation retrieves
+        /// The <see cref="GetBlockList(GetBlockListOptions, CancellationToken)"/> operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlock(string, Stream,  byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlockList> GetBlockList(
+            GetBlockListOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            GetBlockListInternal(
+                blockListTypes: options?.BlockListTypes ?? BlockListTypes.All,
+                snapshot: options?.Snapshot,
+                conditions: options?.Conditions,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetBlockListAsync(GetBlockListOptions, CancellationToken)"/> operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlockAsync(string, Stream,  byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlockList>> GetBlockListAsync(
+            GetBlockListOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await GetBlockListInternal(
+                blockListTypes: options?.BlockListTypes ?? BlockListTypes.All,
+                snapshot: options?.Snapshot,
+                conditions: options?.Conditions,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetBlockList(BlockListTypes, string, BlobRequestConditions, CancellationToken)"/> operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -2312,21 +2388,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<BlockList> GetBlockList(
-            BlockListTypes blockListTypes = BlockListTypes.All,
-            string snapshot = default,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlockListTypes blockListTypes,
+            string snapshot,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             GetBlockListInternal(
-                blockListTypes,
-                snapshot,
-                conditions,
-                false, // async
-                cancellationToken)
+                blockListTypes: blockListTypes,
+                snapshot: snapshot,
+                conditions: conditions,
+                ignoreStrongConsistencyLock: null,
+                async: false,
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetBlockListAsync"/> operation operation retrieves
+        /// The <see cref="GetBlockListAsync(BlockListTypes, string, BlobRequestConditions, CancellationToken)"/> operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -2363,17 +2443,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
-            BlockListTypes blockListTypes = BlockListTypes.All,
-            string snapshot = default,
-            BlobRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlockListTypes blockListTypes,
+            string snapshot,
+            BlobRequestConditions conditions,
+            CancellationToken cancellationToken) =>
             await GetBlockListInternal(
-                blockListTypes,
-                snapshot,
-                conditions,
-                true, // async
-                cancellationToken)
+                blockListTypes: blockListTypes,
+                snapshot: snapshot,
+                conditions: conditions,
+                ignoreStrongConsistencyLock: null,
+                async: true,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
@@ -2402,6 +2486,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on retrieving the block list.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2421,6 +2509,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlockListTypes blockListTypes,
             string snapshot,
             BlobRequestConditions conditions,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2457,6 +2546,7 @@ namespace Azure.Storage.Blobs.Specialized
                             snapshot: snapshot,
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2467,6 +2557,7 @@ namespace Azure.Storage.Blobs.Specialized
                             snapshot: snapshot,
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 

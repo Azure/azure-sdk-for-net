@@ -454,8 +454,13 @@ namespace Azure.Storage.Blobs.Test
                 Assert.GreaterOrEqual(data.LongLength, progressBag.Max(), "Final progress has unexpected value");
             }
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                BlockListTypes = BlockListTypes.All
+            };
+
             // Assert
-            Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
+            Response<BlockList> blobList = await blob.GetBlockListAsync(options);
             Assert.AreEqual(0, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(1, blobList.Value.UncommittedBlocks.Count());
             Assert.AreEqual(ToBase64(blockName), blobList.Value.UncommittedBlocks.First().Name);
@@ -727,6 +732,11 @@ namespace Azure.Storage.Blobs.Test
                 SourceRange = new HttpRange(256, 256)
             };
 
+            GetBlockListOptions getBlockListOptions = new GetBlockListOptions
+            {
+                BlockListTypes = BlockListTypes.All
+            };
+
             // Act
             await RetryAsync(
                 async () => await destBlob.StageBlockFromUriAsync(
@@ -734,7 +744,7 @@ namespace Azure.Storage.Blobs.Test
                     base64BlockId: ToBase64(GetNewBlockName()),
                     options: options),
                 _retryStageBlockFromUri);
-            Response<BlockList> getBlockListResult = await destBlob.GetBlockListAsync(BlockListTypes.All);
+            Response<BlockList> getBlockListResult = await destBlob.GetBlockListAsync(getBlockListOptions);
 
             // Assert
             Assert.AreEqual(256, getBlockListResult.Value.UncommittedBlocks.First().Size);
@@ -1099,10 +1109,15 @@ namespace Azure.Storage.Blobs.Test
                 await blob.StageBlockAsync(ToBase64(thirdBlockName), stream);
             }
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                BlockListTypes = BlockListTypes.All
+            };
+
             // Assert
             // Ensure that we grab the whole ETag value from the service without removing the quotes
             Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
-            Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
+            Response<BlockList> blobList = await blob.GetBlockListAsync(options);
             Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
             Assert.AreEqual(ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
@@ -1194,8 +1209,12 @@ namespace Azure.Storage.Blobs.Test
             };
             await blob.CommitBlockListAsync(commitList);
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                BlockListTypes = BlockListTypes.All
+            };
             // Assert
-            Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
+            Response<BlockList> blobList = await blob.GetBlockListAsync(options);
             Assert.AreEqual(3, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
             Assert.AreEqual(ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
@@ -1614,8 +1633,13 @@ namespace Azure.Storage.Blobs.Test
                 await blob.StageBlockAsync(ToBase64(thirdBlockName), stream);
             }
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                BlockListTypes = BlockListTypes.All
+            };
+
             // Assert
-            Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
+            Response<BlockList> blobList = await blob.GetBlockListAsync(options);
             Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
             Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
             Assert.AreEqual(ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
@@ -1757,10 +1781,14 @@ namespace Azure.Storage.Blobs.Test
                     break;
             }
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                blockBlobClient.GetBlockListAsync(
-                    conditions: conditions),
+                blockBlobClient.GetBlockListAsync(options),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"GetBlockList does not support the {invalidCondition} condition(s)."));
@@ -1807,8 +1835,13 @@ namespace Azure.Storage.Blobs.Test
                     await blob.StageBlockAsync(blockId1, stream);
                 }
 
+                GetBlockListOptions options = new GetBlockListOptions
+                {
+                    BlockListTypes = parameters.BlockListTypes
+                };
+
                 // Act
-                Response<BlockList> response = await blob.GetBlockListAsync(parameters.BlockListTypes);
+                Response<BlockList> response = await blob.GetBlockListAsync(options);
 
                 // Assert
                 // CommitedBlocks and UncommittedBlocks are null if empty
@@ -1835,12 +1868,16 @@ namespace Azure.Storage.Blobs.Test
 
             var leaseId = await SetupBlobLeaseCondition(blob, ReceivedLeaseId, garbageLeaseId);
 
-            // Act
-            Response<BlockList> response = await blob.GetBlockListAsync(
-                conditions: new BlobRequestConditions
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                Conditions = new BlobRequestConditions
                 {
-                    LeaseId = leaseId
-                });
+                    LeaseId = leaseId,
+                }
+            };
+
+            // Act
+            Response<BlockList> response = await blob.GetBlockListAsync(options);
         }
 
         [RecordedTest]
@@ -1859,13 +1896,17 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadAsync(stream);
             }
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                Conditions = new BlobRequestConditions
+                {
+                    LeaseId = garbageLeaseId
+                }
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetBlockListAsync(
-                    conditions: new BlobRequestConditions
-                    {
-                        LeaseId = garbageLeaseId
-                    }),
+                blob.GetBlockListAsync(options),
                 e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
         }
 
@@ -1909,8 +1950,13 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
-            await blob.GetBlockListAsync(conditions: conditions);
+            await blob.GetBlockListAsync(options);
         }
 
         [RecordedTest]
@@ -1934,9 +1980,14 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                Conditions = conditions
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetBlockListAsync(conditions: conditions),
+                blob.GetBlockListAsync(options),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1949,15 +2000,69 @@ namespace Azure.Storage.Blobs.Test
             var blockBlobName = GetNewBlobName();
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
 
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                BlockListTypes = BlockListTypes.All,
+                Snapshot = "invalidSnapshot"
+            };
+
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.GetBlockListAsync(BlockListTypes.All, "invalidSnapshot"),
+                blob.GetBlockListAsync(options),
                 e =>
                 {
                     Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode);
                     Assert.AreEqual("Value for one of the query parameters specified in the request URI is invalid.", e.Message.Split('\n')[0]);
                 }
             );
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task GetBlockListAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+
+            // Upload to blockBlobUri, so it exists
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var blockId0 = ToBase64(GetNewBlockName());
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(blockId0, stream);
+            }
+            await blob.CommitBlockListAsync(new string[] { blockId0 });
+
+            var blockId1 = ToBase64(GetNewBlobName());
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(blockId1, stream);
+            }
+
+            GetBlockListOptions options = new GetBlockListOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            Response<BlockList> response = await blob.GetBlockListAsync(options);
+
+            // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.AreEqual(1, response.Value.CommittedBlocks.Count());
+            Assert.AreEqual(blockId0, response.Value.CommittedBlocks.First().Name);
+            Assert.AreEqual(1, response.Value.UncommittedBlocks.Count());
+            Assert.AreEqual(blockId1, response.Value.UncommittedBlocks.First().Name);
         }
 
         [RecordedTest]
