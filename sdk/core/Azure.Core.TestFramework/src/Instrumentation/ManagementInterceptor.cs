@@ -13,18 +13,20 @@ namespace Azure.Core.TestFramework
     public class ManagementInterceptor : IInterceptor
     {
         private readonly ClientTestBase _testBase;
+        private readonly RecordedTestMode _testMode;
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
 
         public ManagementInterceptor(ClientTestBase testBase)
         {
             _testBase = testBase;
+            _testMode = testBase is RecordedTestBase recordedTestBase ? recordedTestBase.Mode : RecordedTestMode.Playback;
         }
 
         public void Intercept(IInvocation invocation)
         {
             bool modifiedAskToWait = false;
 
-            if (IsLro(invocation.Method.ReturnType))
+            if (_testMode == RecordedTestMode.Playback && IsLro(invocation.Method.ReturnType))
             {
                 WaitUntil current = (WaitUntil)invocation.Arguments[0];
                 if (current == WaitUntil.Completed)

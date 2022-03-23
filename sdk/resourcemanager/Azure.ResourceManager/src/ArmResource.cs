@@ -70,12 +70,6 @@ namespace Azure.ResourceManager
         protected internal Uri Endpoint => Client.Endpoint;
 
         /// <summary>
-        /// Gets the TagResourceOperations.
-        /// </summary>
-        /// <returns> A TagResourceOperations. </returns>
-        protected internal TagResource TagHelper => _tagResource ??= new TagResource(Client, Id.AppendProviderResource("Microsoft.Resources", "tags", "default"));
-
-        /// <summary>
         /// Gets the api version override if it has been set for the current client options.
         /// </summary>
         /// <param name="resourceType"> The resource type to get the version for. </param>
