@@ -1,4 +1,5 @@
 # cSpell:ignore PULLREQUEST
+# cSpell:ignore TARGETBRANCH
 [CmdletBinding()]
 Param (
   [Parameter(Mandatory=$True)]

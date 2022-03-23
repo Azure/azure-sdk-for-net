@@ -1,3 +1,6 @@
+# cSpell:ignore LASTEXITCODE
+# cSpell:ignore errrrrorrrrr
+# cSpell:ignore sepleing
 <#
 .SYNOPSIS
 Uses cspell (from NPM) to check spelling of recently changed files
@@ -76,9 +79,6 @@ Param (
 
 Set-StrictMode -Version 3.0
 
-# cSpell:ignore LASTEXITCODE
-# cSpell:ignore errrrrorrrrr
-# cSpell:ignore sepleing
 function TestSpellChecker() {
     Test-Exit0WhenAllFilesExcluded
     ResetTest

@@ -3,7 +3,7 @@
 # cSpell:ignore committish
 # cSpell:ignore PULLREQUEST
 # cSpell:ignore TARGETBRANCH
-# cSpell:ignore SOURCEVERSION
+# cSpell:ignore SOURCECOMMITID
 # cSpell:ignore elete
 # cSpell:ignore ename
 <#
@@ -25,7 +25,7 @@
 #>
 [CmdletBinding()]
 param (
-  [string] $SourceCommittish = "${env:BUILD_SOURCEVERSION}",
+  [string] $SourceCommittish = "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
   [string] $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
   [string] $DiffPath = "",
   [string] $DiffFilterType = 'd'
