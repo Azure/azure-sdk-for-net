@@ -25,8 +25,7 @@ namespace Azure.Identity
             endpointUri = null;
             // if BOTH the env vars endpoint and secret values are null, this MSI provider is unavailable.
             // Also validate that IdentityServerThumbprint is null or empty to differentiate from Service Fabric.
-            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(secret) ||
-                !string.IsNullOrEmpty(EnvironmentVariables.IdentityServerThumbprint))
+            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(secret))
             {
                 return false;
             }
