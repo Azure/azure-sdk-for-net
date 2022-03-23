@@ -1,5 +1,14 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 5.4.0
+###  Feature Additions
+- Added Web Activity disable cert validation
+
+## Version 5.3.0
+###  Feature Additions
+- Added ScriptActivity in ADF
+- Added TeamDesk, Quickbase, Smartsheet, Zendesk connectors in ADF
+
 ## Version 5.2.0
 ###  Feature Additions
 - Added FailActivity in ADF

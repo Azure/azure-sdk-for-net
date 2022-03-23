@@ -52,30 +52,26 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="location"></param>
         /// <param name="resourceGroup"></param>
         /// <returns></returns>
-        protected async Task<ManagedInstance> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , AzureLocation location, ResourceGroup resourceGroup)
+        protected async Task<ManagedInstanceResource> CreateDefaultManagedInstance(string managedInstanceName,string networkSecurityGroupName, string routeTableName , string vnetName , AzureLocation location, ResourceGroupResource resourceGroup)
         {
             //1. create NetworkSecurityGroup
             NetworkSecurityGroupData networkSecurityGroupData = new NetworkSecurityGroupData()
             {
                 Location = location,
             };
-            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(true, networkSecurityGroupName, networkSecurityGroupData);
+            var networkSecurityGroup = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, networkSecurityGroupData);
 
             //2. create Route table
             RouteTableData routeTableData = new RouteTableData()
             {
                 Location = location,
             };
-            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(true, routeTableName, routeTableData);
+            var routeTable = await resourceGroup.GetRouteTables().CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, routeTableData);
 
             //3. create vnet(subnet bind NetworkSecurityGroup and RouteTable)
             var vnetData = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace()
-                {
-                    AddressPrefixes = { "10.10.0.0/16", }
-                },
                 Subnets =
                 {
                     new SubnetData() { Name = "subnet01", AddressPrefix = "10.10.1.0/24", },
@@ -85,14 +81,15 @@ namespace Azure.ResourceManager.Sql.Tests
                         AddressPrefix = "10.10.2.0/24",
                         Delegations =
                         {
-                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,Type="Microsoft.Sql"}
+                            new Delegation() { ServiceName  = "Microsoft.Sql/managedInstances",Name="Microsoft.Sql/managedInstances" ,ResourceType="Microsoft.Sql"}
                         },
                         RouteTable = new RouteTableData(){ Id = routeTable.Value.Data.Id.ToString() },
                         NetworkSecurityGroup = new NetworkSecurityGroupData(){ Id = networkSecurityGroup.Value.Data.Id.ToString() },
                     }
                 },
             };
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, vnetName, vnetData);
+            vnetData.AddressPrefixes.Add("10.10.0.0/16");
+            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
             string subnetId = $"{vnet.Value.Data.Id}/subnets/ManagedInstance";
 
             //4. create ManagedInstance
@@ -108,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 StorageAccountType = new StorageAccountType("GRS"),
                 ZoneRedundant = false,
             };
-            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(true, managedInstanceName, data);
+            var managedInstanceLro = await resourceGroup.GetManagedInstances().CreateOrUpdateAsync(WaitUntil.Completed, managedInstanceName, data);
             var managedInstance = managedInstanceLro.Value;
             return managedInstance;
         }
@@ -122,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Tests
         /// <param name="resourceGroup"></param>
         /// <param name=""></param>
         /// <returns></returns>
-        protected async Task<PrivateEndpoint> CreateDefaultPrivateEndpoint(ManagedInstance managedInstance,VirtualNetwork vnet, AzureLocation location, ResourceGroup resourceGroup)
+        protected async Task<PrivateEndpointResource> CreateDefaultPrivateEndpoint(ManagedInstanceResource managedInstance,VirtualNetworkResource vnet, AzureLocation location, ResourceGroupResource resourceGroup)
         {
             // Add new subnet
             SubnetData subnetData = new SubnetData()
@@ -130,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Tests
                 AddressPrefix = "10.10.5.0/24",
                 PrivateEndpointNetworkPolicies = "Disabled"
             };
-            var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(true, $"private-endpoint-subnet", subnetData);
+            var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, $"private-endpoint-subnet", subnetData);
 
             // Create private endpoint
             string privateEndpointName = $"{managedInstance.Data.Name}-private-endpoint";
@@ -149,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Tests
                     }
                 },
             };
-            var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(true, privateEndpointName, data);
+            var privateEndpoint = await resourceGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointName, data);
             return privateEndpoint.Value;
         }
     }

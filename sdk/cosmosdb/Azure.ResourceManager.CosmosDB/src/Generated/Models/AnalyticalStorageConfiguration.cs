@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Analytical storage specific properties. </summary>
-    public partial class AnalyticalStorageConfiguration
+    internal partial class AnalyticalStorageConfiguration
     {
         /// <summary> Initializes a new instance of AnalyticalStorageConfiguration. </summary>
         public AnalyticalStorageConfiguration()

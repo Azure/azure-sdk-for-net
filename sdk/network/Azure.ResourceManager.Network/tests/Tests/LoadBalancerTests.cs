@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class LoadBalancerTests : NetworkServiceClientTestBase
     {
-        private Subscription _subscription;
+        private SubscriptionResource _subscription;
         public LoadBalancerTests(bool isAsync) : base(isAsync)
         {
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Tests
         [Ignore("11/26/2021 Ignored since this test now cannot pass record, need fix")]
         public async Task LoadBalancerApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(
+            PublicIPAddressResource lbPublicIp = await CreateDefaultPublicIpAddress(
                 lbPublicIpName,
                 lbDomaingNameLabel,
                 location,
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Create the loadBalancer
-            var putLoadBalancerOperation = await resourceGroup.GetLoadBalancers().CreateOrUpdateAsync(true, lbName, loadBalancer);
+            var putLoadBalancerOperation = await resourceGroup.GetLoadBalancers().CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
-            Response<LoadBalancer> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
+            Response<LoadBalancerResource> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
@@ -184,15 +184,15 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(getLoadBalancer.Value.Data.ResourceGuid);
 
             // Verify List LoadBalancer
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = resourceGroup.GetLoadBalancers().GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = resourceGroup.GetLoadBalancers().GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancer);
             Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
-            // Verify List LoadBalancer subscription
-            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
-            List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
+            // Verify List LoadBalancerResource subscription
+            AsyncPageable<LoadBalancerResource> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
+            List<LoadBalancerResource> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
             Assert.AreEqual(lbName, listLoadBalancerSubscription[0].Data.Name);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
@@ -200,57 +200,57 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify List BackendAddressPools in LoadBalancer
             var backendAddressPoolCollection = resourceGroup.GetLoadBalancers().Get(lbName).Value.GetBackendAddressPools();
-            AsyncPageable<BackendAddressPool> listLoadBalancerBackendAddressPoolsAP = backendAddressPoolCollection.GetAllAsync();
-            List<BackendAddressPool> listLoadBalancerBackendAddressPools = await listLoadBalancerBackendAddressPoolsAP.ToEnumerableAsync();
+            AsyncPageable<BackendAddressPoolResource> listLoadBalancerBackendAddressPoolsAP = backendAddressPoolCollection.GetAllAsync();
+            List<BackendAddressPoolResource> listLoadBalancerBackendAddressPools = await listLoadBalancerBackendAddressPoolsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerBackendAddressPools);
             Assert.AreEqual(backEndAddressPoolName, listLoadBalancerBackendAddressPools.First().Data.Name);
             Assert.NotNull(listLoadBalancerBackendAddressPools.First().Data.Etag);
 
-            // Verify Get BackendAddressPool in LoadBalancer
-            Response<BackendAddressPool> getLoadBalancerBackendAddressPool = await backendAddressPoolCollection.GetAsync(backEndAddressPoolName);
+            // Verify Get BackendAddressPoolResource in LoadBalancer
+            Response<BackendAddressPoolResource> getLoadBalancerBackendAddressPool = await backendAddressPoolCollection.GetAsync(backEndAddressPoolName);
             Assert.AreEqual(backEndAddressPoolName, getLoadBalancerBackendAddressPool.Value.Data.Name);
             Assert.NotNull(getLoadBalancerBackendAddressPool.Value.Data.Etag);
 
             // Verify List FrontendIPConfigurations in LoadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
             var loadBalancerOperations = loadBalancerCollection.Get(lbName).Value;
-            AsyncPageable<FrontendIPConfiguration> listLoadBalancerFrontendIPConfigurationsAP = loadBalancerOperations.GetFrontendIPConfigurations().GetAllAsync();
-            List<FrontendIPConfiguration> listLoadBalancerFrontendIPConfigurations = await listLoadBalancerFrontendIPConfigurationsAP.ToEnumerableAsync();
+            AsyncPageable<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurationsAP = loadBalancerOperations.GetFrontendIPConfigurations().GetAllAsync();
+            List<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurations = await listLoadBalancerFrontendIPConfigurationsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerFrontendIPConfigurations);
             Assert.AreEqual(frontendIpConfigName, listLoadBalancerFrontendIPConfigurations.First().Data.Name);
             Assert.NotNull(listLoadBalancerFrontendIPConfigurations.First().Data.Etag);
 
-            // Verify Get FrontendIPConfiguration in LoadBalancer
+            // Verify Get FrontendIPConfigurationResource in LoadBalancer
             // TODO: ADO 5975
-            //Response<FrontendIPConfiguration> getLoadBalancerFrontendIPConfiguration = await loadBalancerOperations.GetLoadBalancerFrontendIPConfigurationAsync();
+            //Response<FrontendIPConfigurationResource> getLoadBalancerFrontendIPConfiguration = await loadBalancerOperations.GetLoadBalancerFrontendIPConfigurationAsync();
             //Assert.AreEqual(frontendIpConfigName, getLoadBalancerFrontendIPConfiguration.Value.Name);
             //Assert.NotNull(getLoadBalancerFrontendIPConfiguration.Value.Etag);
 
             // Verify List LoadBalancingRules in LoadBalancer
-            AsyncPageable<LoadBalancingRule> listLoadBalancerLoadBalancingRulesAP = loadBalancerOperations.GetLoadBalancingRules().GetAllAsync();
-            List<LoadBalancingRule> listLoadBalancerLoadBalancingRules = await listLoadBalancerLoadBalancingRulesAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancingRuleResource> listLoadBalancerLoadBalancingRulesAP = loadBalancerOperations.GetLoadBalancingRules().GetAllAsync();
+            List<LoadBalancingRuleResource> listLoadBalancerLoadBalancingRules = await listLoadBalancerLoadBalancingRulesAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerLoadBalancingRules);
             Assert.AreEqual(loadBalancingRuleName, listLoadBalancerLoadBalancingRules.First().Data.Name);
             Assert.NotNull(listLoadBalancerLoadBalancingRules.First().Data.Etag);
 
-            // Verify Get LoadBalancingRule in LoadBalancer
+            // Verify Get LoadBalancingRuleResource in LoadBalancer
             // TODO: ADO 5975
-            //Response<LoadBalancingRule> getLoadBalancerLoadBalancingRule = await loadBalancerOperations.GetLoadBalancerLoadBalancingRuleAsync();
+            //Response<LoadBalancingRuleResource> getLoadBalancerLoadBalancingRule = await loadBalancerOperations.GetLoadBalancerLoadBalancingRuleAsync();
             // Verify List NetworkInterfaces in LoadBalancer
-            AsyncPageable<NetworkInterface> listLoadBalancerNetworkInterfacesAP = loadBalancerOperations.GetLoadBalancerNetworkInterfacesAsync();
-            List<NetworkInterface> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = loadBalancerOperations.GetLoadBalancerNetworkInterfacesAsync();
+            List<NetworkInterfaceResource> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancerNetworkInterfaces);
 
             // Verify List Probes in LoadBalancer
-            AsyncPageable<Probe> listLoadBalancerProbesAP = loadBalancerOperations.GetProbes().GetAllAsync();
-            List<Probe> listLoadBalancerProbes = await listLoadBalancerProbesAP.ToEnumerableAsync();
+            AsyncPageable<ProbeResource> listLoadBalancerProbesAP = loadBalancerOperations.GetProbes().GetAllAsync();
+            List<ProbeResource> listLoadBalancerProbes = await listLoadBalancerProbesAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerProbes);
             Assert.AreEqual(probeName, listLoadBalancerProbes.First().Data.Name);
             Assert.NotNull(listLoadBalancerProbes.First().Data.Etag);
 
-            // Verify Get Probe in LoadBalancer
+            // Verify Get ProbeResource in LoadBalancer
             // TODO: ADO 5975
-            //Response<Probe> getLoadBalancerProbe = await loadBalancerOperations.GetLoadBalancerProbeAsync();
+            //Response<ProbeResource> getLoadBalancerProbe = await loadBalancerOperations.GetLoadBalancerProbeAsync();
             //Assert.AreEqual(probeName, getLoadBalancerProbe.Value.Name);
             //Assert.NotNull(getLoadBalancerProbe.Value.Etag);
 
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.Network.Tests
                 EnableFloatingIP = false,
             };
 
-            // Verify Put InboundNatRule in LoadBalancer
+            // Verify Put InboundNatRuleResource in LoadBalancer
             var inboundNatRuleCollection = loadBalancerOperations.GetInboundNatRules();
-            var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(true, inboundNatRule3Name, inboundNatRule3Params);
-            Response<InboundNatRule> putInboundNatRule = await putInboundNatRuleOperation.WaitForCompletionAsync();
+            var putInboundNatRuleOperation = await inboundNatRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRule3Name, inboundNatRule3Params);
+            Response<InboundNatRuleResource> putInboundNatRule = await putInboundNatRuleOperation.WaitForCompletionAsync();
             ;
             Assert.AreEqual(inboundNatRule3Name, putInboundNatRule.Value.Data.Name);
             Assert.AreEqual(TransportProtocol.Tcp, putInboundNatRule.Value.Data.Protocol);
@@ -281,8 +281,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(15, putInboundNatRule.Value.Data.IdleTimeoutInMinutes);
             Assert.False(putInboundNatRule.Value.Data.EnableFloatingIP);
 
-            // Verify Get InboundNatRule in LoadBalancer
-            Response<InboundNatRule> getInboundNatRule = await inboundNatRuleCollection.GetAsync(inboundNatRule3Name);
+            // Verify Get InboundNatRuleResource in LoadBalancer
+            Response<InboundNatRuleResource> getInboundNatRule = await inboundNatRuleCollection.GetAsync(inboundNatRule3Name);
             Assert.AreEqual(inboundNatRule3Name, getInboundNatRule.Value.Data.Name);
             Assert.AreEqual(TransportProtocol.Tcp, getInboundNatRule.Value.Data.Protocol);
             Assert.AreEqual(3391, getInboundNatRule.Value.Data.FrontendPort);
@@ -291,18 +291,18 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getInboundNatRule.Value.Data.EnableFloatingIP);
 
             // Verify List InboundNatRules in LoadBalancer
-            AsyncPageable<InboundNatRule> listInboundNatRulesAP = inboundNatRuleCollection.GetAllAsync();
-            List<InboundNatRule> listInboundNatRules = await listInboundNatRulesAP.ToEnumerableAsync();
+            AsyncPageable<InboundNatRuleResource> listInboundNatRulesAP = inboundNatRuleCollection.GetAllAsync();
+            List<InboundNatRuleResource> listInboundNatRules = await listInboundNatRulesAP.ToEnumerableAsync();
             Assert.AreEqual(3, listInboundNatRules.Count());
             Assert.AreEqual(inboundNatRule1Name, listInboundNatRules[0].Data.Name);
             Assert.AreEqual(inboundNatRule2Name, listInboundNatRules[1].Data.Name);
             Assert.AreEqual(inboundNatRule3Name, listInboundNatRules[2].Data.Name);
 
-            // Delete InboundNatRule in LoadBalancer
-            await getInboundNatRule.Value.DeleteAsync(true);
+            // Delete InboundNatRuleResource in LoadBalancer
+            await getInboundNatRule.Value.DeleteAsync(WaitUntil.Completed);
 
             // Delete LoadBalancer
-            var deleteOperation1 = await loadBalancerOperations.DeleteAsync(true);
+            var deleteOperation1 = await loadBalancerOperations.DeleteAsync(WaitUntil.Completed);
             await deleteOperation1.WaitForCompletionResponseAsync();
             ;
 
@@ -312,14 +312,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
         [RecordedTest]
         public async Task LoadBalancerApiTestWithDynamicIp()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Network.Tests
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -429,10 +429,10 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = GetLoadBalancerCollection(resourceGroup);
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
-            Response<LoadBalancer> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
+            Response<LoadBalancerResource> getLoadBalancer = await resourceGroup.GetLoadBalancers().GetAsync(lbName);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
@@ -459,21 +459,21 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(3390, getLoadBalancer.Value.Data.InboundNatRules[1].FrontendPort);
 
             // Verify List LoadBalancer
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancer);
             Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
-            // Verify List LoadBalancer subscription
-            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
-            List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
+            // Verify List LoadBalancerResource subscription
+            AsyncPageable<LoadBalancerResource> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
+            List<LoadBalancerResource> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Etag);
 
             // Delete LoadBalancer
-            await getLoadBalancer.Value.DeleteAsync(true);
+            await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
@@ -481,14 +481,14 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
         [RecordedTest]
         public async Task LoadBalancerApiTestWithStaticIp()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("csmrg");
 
             string location = TestEnvironment.Location;
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Network.Tests
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -596,10 +596,10 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = GetLoadBalancerCollection(resourceGroup);
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
+            Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
@@ -630,21 +630,21 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(4, getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes);
 
             // Verify List LoadBalancer
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancer);
             Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
-            // Verify List LoadBalancer subscription
-            AsyncPageable<LoadBalancer> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
-            List<LoadBalancer> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
+            // Verify List LoadBalancerResource subscription
+            AsyncPageable<LoadBalancerResource> listLoadBalancerSubscriptionAP = subscription.GetLoadBalancersAsync();
+            List<LoadBalancerResource> listLoadBalancerSubscription = await listLoadBalancerSubscriptionAP.ToEnumerableAsync();
             Assert.IsNotEmpty(listLoadBalancerSubscription);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Name);
             Assert.NotNull(listLoadBalancerSubscription.First().Data.Etag);
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(true);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Network.Tests
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -768,9 +768,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
 
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
+            Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
@@ -801,26 +801,26 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(4, getLoadBalancer.Value.Data.InboundNatRules[1].IdleTimeoutInMinutes);
 
             // Verify List LoadBalancer
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Assert.AreEqual(lbName, listLoadBalancer.First().Data.Name);
             Assert.AreEqual(getLoadBalancer.Value.Data.Etag, listLoadBalancer.First().Data.Etag);
 
             // Do another put after changing the distribution policy
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIP;
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             Assert.AreEqual(LoadDistribution.SourceIP, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
 
             loadbalancerparamater.LoadBalancingRules[0].LoadDistribution = LoadDistribution.SourceIPProtocol;
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadbalancerparamater);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadbalancerparamater);
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             Assert.AreEqual(LoadDistribution.SourceIPProtocol, getLoadBalancer.Value.Data.LoadBalancingRules[0].LoadDistribution);
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(true)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
 
             // Verify Delete
             listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -848,10 +848,10 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbname, loadbalancerparamater);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
+            Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbname, getLoadBalancer.Value.Data.Name);
@@ -863,12 +863,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(true)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancer);
         }
 
@@ -885,9 +885,9 @@ namespace Azure.ResourceManager.Network.Tests
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
 
-            // Create the LoadBalancer with an lb rule and no probe
+            // Create the LoadBalancerResource with an lb rule and no probe
             string lbname = Recording.GenerateAssetName("azsmnet");
             string frontendIpConfigName = Recording.GenerateAssetName("azsmnet");
             string backEndAddressPoolName = Recording.GenerateAssetName("azsmnet");
@@ -937,8 +937,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbname, loadbalancerparamater);
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, loadbalancerparamater);
+            Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbname, getLoadBalancer.Value.Data.Name);
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.Probes.Any());
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
-            // Add a Probe to the lb rule
+            // Add a ProbeResource to the lb rule
             getLoadBalancer.Value.Data.Probes.Add(
                 new ProbeData()
                 {
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // update load balancer
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbname, getLoadBalancer.Value.Data);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbname, getLoadBalancer.Value.Data);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbname);
@@ -984,16 +984,16 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(getLoadBalancer.Value.Data.InboundNatRules.Any());
 
             // Delete LoadBalancer
-            await (await getLoadBalancer.Value.DeleteAsync(true)).WaitForCompletionResponseAsync();
+            await (await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed)).WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete VirtualNetwork
-            await vnet.DeleteAsync(true);
+            await vnet.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -1010,22 +1010,22 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIPAddressResource lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
 
             // Create Vnet
             string vnetName = Recording.GenerateAssetName("azsmnet");
             string subnetName = Recording.GenerateAssetName("azsmnet");
 
-            VirtualNetwork vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
 
             // Create Nics
             string nic1name = Recording.GenerateAssetName("azsmnet");
             string nic2name = Recording.GenerateAssetName("azsmnet");
             string nic3name = Recording.GenerateAssetName("azsmnet");
 
-            NetworkInterface nic1 = await CreateNetworkInterface(nic1name, null, vnet.Data.Subnets[0].Id, location, "ipconfig", resourceGroup.GetNetworkInterfaces());
-            NetworkInterface nic2 = await CreateNetworkInterface(nic2name, null, vnet.Data.Subnets[0].Id, location, "ipconfig", resourceGroup.GetNetworkInterfaces());
-            NetworkInterface nic3 = await CreateNetworkInterface(nic3name, null, vnet.Data.Subnets[0].Id, location, "ipconfig", resourceGroup.GetNetworkInterfaces());
+            NetworkInterfaceResource nic1 = await CreateNetworkInterface(nic1name, null, vnet.Data.Subnets[0].Id, location, "ipconfig", resourceGroup.GetNetworkInterfaces());
+            NetworkInterfaceResource nic2 = await CreateNetworkInterface(nic2name, null, vnet.Data.Subnets[0].Id, location, "ipconfig", resourceGroup.GetNetworkInterfaces());
+            NetworkInterfaceResource nic3 = await CreateNetworkInterface(nic3name, null, vnet.Data.Subnets[0].Id, location, "ipconfig", resourceGroup.GetNetworkInterfaces());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -1127,26 +1127,26 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadBalancer);
+            var putLoadBalancerOperation = await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
             await putLoadBalancerOperation.WaitForCompletionAsync();
             ;
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
+            Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Associate the nic with LB
-            nic1.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic1.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
-            nic2.Data.IpConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
+            nic1.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic1.Data.IPConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules.First());
+            nic2.Data.IPConfigurations.First().LoadBalancerBackendAddressPools.Add(getLoadBalancer.Value.Data.BackendAddressPools.First());
+            nic2.Data.IPConfigurations.First().LoadBalancerInboundNatRules.Add(getLoadBalancer.Value.Data.InboundNatRules[1]);
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var nic1Operation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic1name, nic1.Data);
+            var nic1Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data);
             await nic1Operation.WaitForCompletionAsync();
 
-            var nic2Operation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic2name, nic2.Data);
+            var nic2Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data);
             await nic2Operation.WaitForCompletionAsync();
 
-            var nic3Operation = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic3name, nic3.Data);
+            var nic3Operation = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data);
             await nic3Operation.WaitForCompletionAsync();
 
             // Get Nics
@@ -1157,31 +1157,31 @@ namespace Azure.ResourceManager.Network.Tests
             // Verify the associations
             getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
             Assert.AreEqual(2, getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations.Count);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IpConfigurations[0].Id);
-            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IpConfigurations[0].Id);
-            Assert.AreEqual(nic1.Data.IpConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
+            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[0].Id, nic1.Data.IPConfigurations[0].Id);
+            Assert.AreEqual(getLoadBalancer.Value.Data.BackendAddressPools.First().BackendIPConfigurations[1].Id, nic2.Data.IPConfigurations[0].Id);
+            Assert.AreEqual(nic1.Data.IPConfigurations[0].Id, getLoadBalancer.Value.Data.InboundNatRules.First().BackendIPConfiguration.Id);
 
             // Verify List NetworkInterfaces in LoadBalancer// Verify List NetworkInterfaces in LoadBalancer
-            AsyncPageable<NetworkInterface> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
-            List<NetworkInterface> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
+            AsyncPageable<NetworkInterfaceResource> listLoadBalancerNetworkInterfacesAP = getLoadBalancer.Value.GetLoadBalancerNetworkInterfacesAsync();
+            List<NetworkInterfaceResource> listLoadBalancerNetworkInterfaces = await listLoadBalancerNetworkInterfacesAP.ToEnumerableAsync();
             Assert.AreEqual(2, listLoadBalancerNetworkInterfaces.Count());
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(true);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all NetworkInterfaces
-            await nic1.DeleteAsync(true);
-            await nic2.DeleteAsync(true);
-            await nic2.DeleteAsync(true);
+            await nic1.DeleteAsync(WaitUntil.Completed);
+            await nic2.DeleteAsync(WaitUntil.Completed);
+            await nic2.DeleteAsync(WaitUntil.Completed);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.Network.Tests
             string lbPublicIpName = Recording.GenerateAssetName("azsmnet");
             string lbDomaingNameLabel = Recording.GenerateAssetName("azsmnet");
 
-            PublicIPAddress lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
+            PublicIPAddressResource lbPublicIp = await CreateDefaultPublicIpAddress(lbPublicIpName, lbDomaingNameLabel, location, resourceGroup.GetPublicIPAddresses());
 
             // Create the LoadBalancer
             string lbName = Recording.GenerateAssetName("azsmnet");
@@ -1237,8 +1237,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadBalancer);
-            Response<LoadBalancer> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancer);
+            Response<LoadBalancerResource> getLoadBalancer = await loadBalancerCollection.GetAsync(lbName);
 
             // Verify the GET LoadBalancer
             Assert.AreEqual(lbName, getLoadBalancer.Value.Data.Name);
@@ -1267,23 +1267,23 @@ namespace Azure.ResourceManager.Network.Tests
                 Protocol = TransportProtocol.Tcp
             };
             getLoadBalancer.Value.Data.InboundNatPools.Add(natpool2);
-            await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, getLoadBalancer.Value.Data);
+            await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, getLoadBalancer.Value.Data);
 
             // Verify the nat pool
             Assert.AreEqual(2, getLoadBalancer.Value.Data.InboundNatPools.Count);
 
             // Delete LoadBalancer
-            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(true);
+            var deleteOperation = await getLoadBalancer.Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
             ;
 
             // Verify Delete
-            AsyncPageable<LoadBalancer> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
-            List<LoadBalancer> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
+            AsyncPageable<LoadBalancerResource> listLoadBalancerAP = loadBalancerCollection.GetAllAsync();
+            List<LoadBalancerResource> listLoadBalancer = await listLoadBalancerAP.ToEnumerableAsync();
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all PublicIPAddresses
-            await lbPublicIp.DeleteAsync(true);
+            await lbPublicIp.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

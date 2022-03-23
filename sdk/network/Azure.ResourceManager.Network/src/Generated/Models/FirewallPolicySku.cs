@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SKU of Firewall policy. </summary>
-    public partial class FirewallPolicySku
+    internal partial class FirewallPolicySku
     {
         /// <summary> Initializes a new instance of FirewallPolicySku. </summary>
         public FirewallPolicySku()

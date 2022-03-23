@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of Encryption. </summary>
         /// <param name="diskEncryptionSetId"> ResourceId of the disk encryption set to use for enabling encryption at rest. </param>
-        /// <param name="type"> The type of key used to encrypt the data of the disk. </param>
-        internal Encryption(string diskEncryptionSetId, EncryptionType? type)
+        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
+        internal Encryption(string diskEncryptionSetId, EncryptionType? encryptionType)
         {
             DiskEncryptionSetId = diskEncryptionSetId;
-            Type = type;
+            EncryptionType = encryptionType;
         }
 
         /// <summary> ResourceId of the disk encryption set to use for enabling encryption at rest. </summary>
         public string DiskEncryptionSetId { get; set; }
         /// <summary> The type of key used to encrypt the data of the disk. </summary>
-        public EncryptionType? Type { get; set; }
+        public EncryptionType? EncryptionType { get; set; }
     }
 }

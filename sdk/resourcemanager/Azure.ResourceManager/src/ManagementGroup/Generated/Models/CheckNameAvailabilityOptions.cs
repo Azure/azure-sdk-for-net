@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> Initializes a new instance of CheckNameAvailabilityOptions. </summary>
         public CheckNameAvailabilityOptions()
         {
-            Type = "Microsoft.Management/managementGroups";
+            ResourceType = "Microsoft.Management/managementGroups";
         }
 
         /// <summary> the name to check for availability. </summary>
         public string Name { get; set; }
         /// <summary> fully qualified resource type which includes provider namespace. </summary>
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
     }
 }

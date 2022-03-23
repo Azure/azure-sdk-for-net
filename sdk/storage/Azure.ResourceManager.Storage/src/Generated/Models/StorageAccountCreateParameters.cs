@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location)
+        public StorageAccountCreateParameters(StorageSku sku, StorageKind kind, string location)
         {
             if (sku == null)
             {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Required. Gets or sets the SKU name. </summary>
-        public Sku Sku { get; }
+        public StorageSku Sku { get; }
         /// <summary> Required. Indicates the type of storage account. </summary>
-        public Kind Kind { get; }
+        public StorageKind Kind { get; }
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
         public string Location { get; }
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> SasPolicy assigned to the storage account. </summary>
         public SasPolicy SasPolicy { get; set; }
         /// <summary> KeyPolicy assigned to the storage account. </summary>
-        public KeyPolicy KeyPolicy { get; set; }
+        internal KeyPolicy KeyPolicy { get; set; }
+        /// <summary> The key expiration period in days. </summary>
+        public int KeyExpirationPeriodInDays
+        {
+            get => KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
+            set => KeyPolicy = new KeyPolicy(value);
+        }
+
         /// <summary> User domain assigned to the storage account. Name is the CNAME source. Only one custom domain is supported per storage account at this time. To clear the existing custom domain, use an empty string for the custom domain name property. </summary>
         public CustomDomain CustomDomain { get; set; }
         /// <summary> Encryption settings to be used for server-side encryption for the storage account. </summary>

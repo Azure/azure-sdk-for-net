@@ -12,11 +12,31 @@ public-clients: false
 head-as-boolean: false
 clear-output-folder: true
 modelerfour:
-  lenient-model-deduplication: true
-  seal-single-value-enum-by-default: true
+  seal-single-value-enum-by-default: true # this needs to be removed.
 skip-csproj: true
-mgmt-debug:
-  show-request-path: true
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
@@ -114,4 +134,13 @@ directive:
       where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
       transform: >
           $['name'] = "SqlDayOfWeek"
+    - from: swagger-document #DatabaseRecommendedActions.json, DatabaseAdvisors.json, ServerAdvisors.json
+      where: $.definitions.RecommendedActionProperties.properties
+      transform: >
+          $.executeActionDuration.format = "duration";
+          $.revertActionDuration.format = "duration";
+    - from: swagger-document #MaintenanceWindows.json, MaintenanceWindowOptions.json
+      where: $.definitions.MaintenanceWindowTimeRange.properties.duration
+      transform: >
+          $.format = "duration";
 ```

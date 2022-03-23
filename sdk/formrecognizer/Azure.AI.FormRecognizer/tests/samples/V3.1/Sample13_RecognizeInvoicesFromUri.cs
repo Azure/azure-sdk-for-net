@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             #region Snippet:FormRecognizerSampleRecognizeInvoicesUri
 #if SNIPPET
-            Uri invoiceUri = <invoiceUri>;
+            Uri invoiceUri = new Uri("<invoiceUri>");
 #else
             Uri invoiceUri = FormRecognizerTestEnvironment.CreateUri("recommended_invoice.jpg");
 #endif

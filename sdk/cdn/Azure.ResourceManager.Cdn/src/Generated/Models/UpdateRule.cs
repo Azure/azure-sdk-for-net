@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
-    public readonly partial struct UpdateRule : IEquatable<UpdateRule>
+    internal readonly partial struct UpdateRule : IEquatable<UpdateRule>
     {
         private readonly string _value;
 

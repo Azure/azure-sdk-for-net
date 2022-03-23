@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The visibility list of the private link service. </summary>
-    public partial class PrivateLinkServicePropertiesVisibility : ResourceSet
+    internal partial class PrivateLinkServicePropertiesVisibility : ResourceSet
     {
         /// <summary> Initializes a new instance of PrivateLinkServicePropertiesVisibility. </summary>
         public PrivateLinkServicePropertiesVisibility()

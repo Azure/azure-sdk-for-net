@@ -34,11 +34,6 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("entityConnectionString");
                 writer.WriteStringValue(EntityConnectionString);
             }
-            if (Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("resourceType");
-                writer.WriteStringValue(ResourceType);
-            }
             if (Optional.IsDefined(ResourceConnectionString))
             {
                 writer.WritePropertyName("resourceConnectionString");
@@ -72,7 +67,6 @@ namespace Azure.ResourceManager.AppService
             SystemData systemData = default;
             Optional<string> entityName = default;
             Optional<string> entityConnectionString = default;
-            Optional<string> resourceType = default;
             Optional<string> resourceConnectionString = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
@@ -123,11 +117,6 @@ namespace Azure.ResourceManager.AppService
                             entityConnectionString = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceType"))
-                        {
-                            resourceType = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("resourceConnectionString"))
                         {
                             resourceConnectionString = property0.Value.GetString();
@@ -162,7 +151,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new RelayServiceConnectionEntityData(id, name, type, systemData, kind.Value, entityName.Value, entityConnectionString.Value, resourceType.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
+            return new RelayServiceConnectionEntityData(id, name, type, systemData, kind.Value, entityName.Value, entityConnectionString.Value, resourceConnectionString.Value, hostname.Value, Optional.ToNullable(port), biztalkUri.Value);
         }
     }
 }

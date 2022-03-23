@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationArtifact. </summary>
         /// <param name="name"> The managed application artifact name. </param>
         /// <param name="uri"> The managed application artifact blob uri. </param>
-        /// <param name="type"> The managed application artifact type. </param>
+        /// <param name="applicationArtifactType"> The managed application artifact type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        internal ApplicationArtifact(ApplicationArtifactName name, Uri uri, ApplicationArtifactType type)
+        internal ApplicationArtifact(ApplicationArtifactName name, Uri uri, ApplicationArtifactType applicationArtifactType)
         {
             if (uri == null)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             Name = name;
             Uri = uri;
-            Type = type;
+            ApplicationArtifactType = applicationArtifactType;
         }
 
         /// <summary> The managed application artifact name. </summary>
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application artifact blob uri. </summary>
         public Uri Uri { get; }
         /// <summary> The managed application artifact type. </summary>
-        public ApplicationArtifactType Type { get; }
+        public ApplicationArtifactType ApplicationArtifactType { get; }
     }
 }

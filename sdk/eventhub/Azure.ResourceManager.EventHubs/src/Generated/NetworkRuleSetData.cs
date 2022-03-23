@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.EventHubs
         public NetworkRuleSetData()
         {
             VirtualNetworkRules = new ChangeTrackingList<NetworkRuleSetVirtualNetworkRules>();
-            IpRules = new ChangeTrackingList<NetworkRuleSetIpRules>();
+            IPRules = new ChangeTrackingList<NetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="trustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIpRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, type, systemData, location)
+        internal NetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, bool? trustedServiceAccessEnabled, DefaultAction? defaultAction, IList<NetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IList<NetworkRuleSetIPRules> ipRules, PublicNetworkAccessFlag? publicNetworkAccess) : base(id, name, resourceType, systemData, location)
         {
             TrustedServiceAccessEnabled = trustedServiceAccessEnabled;
             DefaultAction = defaultAction;
             VirtualNetworkRules = virtualNetworkRules;
-            IpRules = ipRules;
+            IPRules = ipRules;
             PublicNetworkAccess = publicNetworkAccess;
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> List VirtualNetwork Rules. </summary>
         public IList<NetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get; }
         /// <summary> List of IpRules. </summary>
-        public IList<NetworkRuleSetIpRules> IpRules { get; }
+        public IList<NetworkRuleSetIPRules> IPRules { get; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
         public PublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
     }

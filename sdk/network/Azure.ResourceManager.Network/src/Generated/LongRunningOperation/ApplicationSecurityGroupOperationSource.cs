@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ApplicationSecurityGroupOperationSource : IOperationSource<ApplicationSecurityGroup>
+    internal class ApplicationSecurityGroupOperationSource : IOperationSource<ApplicationSecurityGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ApplicationSecurityGroup IOperationSource<ApplicationSecurityGroup>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApplicationSecurityGroupResource IOperationSource<ApplicationSecurityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement);
-            return new ApplicationSecurityGroup(_client, data);
+            return new ApplicationSecurityGroupResource(_client, data);
         }
 
-        async ValueTask<ApplicationSecurityGroup> IOperationSource<ApplicationSecurityGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApplicationSecurityGroupResource> IOperationSource<ApplicationSecurityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(document.RootElement);
-            return new ApplicationSecurityGroup(_client, data);
+            return new ApplicationSecurityGroupResource(_client, data);
         }
     }
 }

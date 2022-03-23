@@ -20,7 +20,7 @@ namespace Azure.Identity
         {
         }
 
-        protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, bool isPiiLoggingEnabled, ITokenCacheOptions cacheOptions)
+        protected MsalClientBase(CredentialPipeline pipeline, string tenantId, string clientId, TokenCredentialOptions options)
         {
             // This validation is performed as a backstop. Validation in TokenCredentialOptions.AuthorityHost prevents users from explicitly
             // setting AuthorityHost to a non TLS endpoint. However, the AuthorityHost can also be set by the AZURE_AUTHORITY_HOST environment
@@ -28,8 +28,8 @@ namespace Azure.Identity
             // CredentialPipeline as this is also used by the ManagedIdentityCredential which allows non TLS endpoints. For this reason
             // we validate here as all other credentials will create an MSAL client.
             Validations.ValidateAuthorityHost(pipeline.AuthorityHost);
-
-            IsPiiLoggingEnabled = isPiiLoggingEnabled;
+            ITokenCacheOptions cacheOptions = options as ITokenCacheOptions;
+            IsPiiLoggingEnabled = options?.IsLoggingPIIEnabled ?? false;
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;

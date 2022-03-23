@@ -31,7 +31,7 @@ namespace Azure.Communication.Tests
 
         public string LiveTestStaticAccessKey => Core.ConnectionString.Parse(LiveTestStaticConnectionString).GetRequired("accesskey");
 
-        public string CommunicationTestPhoneNumber => GetPhoneNumberByTestAgent() ?? GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret("+14255550123"));
+        public string DefaultTestPhoneNumber => GetRecordedVariable(AzurePhoneNumber, options => options.IsSecret("+14255550123"));
 
         public string SkipSmsTest => GetOptionalVariable(SkipIntSmsTestEnvironmentVariableName) ?? "False";
 
@@ -41,14 +41,8 @@ namespace Azure.Communication.Tests
 
         public bool ShouldIgnorePhoneNumbersTests => bool.Parse(SkipPhoneNumbersTest);
 
-        public string AzureTestAgent => GetOptionalVariable(AzureTestAgentVariableName);
+        public string TestAgentPhoneNumber => GetRecordedVariable($"{AzurePhoneNumber}_{AzureTestAgent}", options => options.IsSecret("+14255550123"));
 
-        private string? GetPhoneNumberByTestAgent()
-        {
-            if (AzureTestAgent == null)
-                return null;
-
-            return GetRecordedOptionalVariable($"{AzurePhoneNumber}_{AzureTestAgent}", options => options.IsSecret("+14255550123"));
-        }
+        private string AzureTestAgent => GetVariable(AzureTestAgentVariableName);
     }
 }

@@ -28,7 +28,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             DependsOn = new ChangeTrackingList<ActivityDependency>();
             UserProperties = new ChangeTrackingList<UserProperty>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "Activity";
         }
 
         /// <summary> Initializes a new instance of Activity. </summary>
@@ -41,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal Activity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties)
         {
             Name = name;
-            Type = type ?? "Activity";
+            Type = type;
             Description = description;
             DependsOn = dependsOn;
             UserProperties = userProperties;

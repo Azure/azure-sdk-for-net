@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -30,8 +31,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Criterion for classifying a healthy probe response. </summary>
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
         /// <summary> Reference to backend pool of application gateway to which probe request will be sent. </summary>
-        public WritableSubResource BackendAddressPool { get; set; }
+        internal WritableSubResource BackendAddressPool { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            set
+            {
+                if (BackendAddressPool is null)
+                    BackendAddressPool = new WritableSubResource();
+                BackendAddressPool.Id = value;
+            }
+        }
+
         /// <summary> Reference to backend http setting of application gateway to be used for test probe. </summary>
-        public WritableSubResource BackendHttpSettings { get; set; }
+        internal WritableSubResource BackendHttpSettings { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier BackendHttpSettingsId
+        {
+            get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
+            set
+            {
+                if (BackendHttpSettings is null)
+                    BackendHttpSettings = new WritableSubResource();
+                BackendHttpSettings.Id = value;
+            }
+        }
     }
 }

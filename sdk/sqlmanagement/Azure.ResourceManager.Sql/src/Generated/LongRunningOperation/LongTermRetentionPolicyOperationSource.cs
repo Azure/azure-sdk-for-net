@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class LongTermRetentionPolicyOperationSource : IOperationSource<LongTermRetentionPolicy>
+    internal class LongTermRetentionPolicyOperationSource : IOperationSource<LongTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        LongTermRetentionPolicy IOperationSource<LongTermRetentionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        LongTermRetentionPolicyResource IOperationSource<LongTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement);
-            return new LongTermRetentionPolicy(_client, data);
+            return new LongTermRetentionPolicyResource(_client, data);
         }
 
-        async ValueTask<LongTermRetentionPolicy> IOperationSource<LongTermRetentionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LongTermRetentionPolicyResource> IOperationSource<LongTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LongTermRetentionPolicyData.DeserializeLongTermRetentionPolicyData(document.RootElement);
-            return new LongTermRetentionPolicy(_client, data);
+            return new LongTermRetentionPolicyResource(_client, data);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of ElasticPoolDatabaseActivity. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="databaseName"> The database name. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> The name of the server the elastic pool is in. </param>
         /// <param name="startTime"> The time the operation started (ISO8601 format). </param>
         /// <param name="state"> The current state of the operation. </param>
-        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, string databaseName, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startTime, string state) : base(id, name, type, systemData)
+        internal ElasticPoolDatabaseActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, string databaseName, DateTimeOffset? endTime, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, string requestedElasticPoolName, string currentElasticPoolName, string currentServiceObjective, string requestedServiceObjective, string serverName, DateTimeOffset? startTime, string state) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DatabaseName = databaseName;

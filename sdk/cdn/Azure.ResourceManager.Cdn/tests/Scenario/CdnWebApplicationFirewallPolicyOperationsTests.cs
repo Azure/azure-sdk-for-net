@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
-            CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
-            await policy.DeleteAsync(true);
+            CdnWebApplicationFirewallPolicyResource policy = await CreatePolicy(rg, policyName);
+            await policy.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await policy.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Update()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
-            CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
+            CdnWebApplicationFirewallPolicyResource policy = await CreatePolicy(rg, policyName);
             var lro = await policy.AddTagAsync("newTag", "newValue");
-            CdnWebApplicationFirewallPolicy updatedPolicy = lro.Value;
+            CdnWebApplicationFirewallPolicyResource updatedPolicy = lro.Value;
             ResourceDataHelper.AssertPolicyUpdate(updatedPolicy, "newTag", "newValue");
         }
     }

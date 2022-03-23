@@ -258,6 +258,7 @@ namespace Azure.Storage
             public const string FileAttributesNone = "None";
             public const string FileTimeNow = "Now";
             public const string Preserve = "Preserve";
+            public const string Source = "Source";
             public const string FilePermissionInherit = "Inherit";
             public const int MaxFilePermissionHeaderSize = 8 * KB;
             public const int MaxFileUpdateRange = 4 * MB;
@@ -425,6 +426,9 @@ namespace Azure.Storage
                 public const string ContentType = "contentType";
                 public const string ContentLength = "contentLength";
                 public const string BlobType = "blobType";
+                public const string BlobVersionLower = "blobVersion";
+                public const string ContainerVersion = "containerVersion";
+                public const string BlobTier = "blobTier";
                 public const string BlockBlob = "BlockBlob";
                 public const string PageBlob = "pageBlob";
                 public const string AppendBlob = "AppendBlob";
@@ -434,6 +438,25 @@ namespace Azure.Storage
                 public const string Url = "url";
                 public const string Recursive = "recursive";
                 public const string Sequencer = "sequencer";
+                public const string PreviousInfo = "previousInfo";
+                public const string Snapshot = "snapshot";
+                public const string BlobPropertiesUpdated = "blobPropertiesUpdated";
+                public const string AsyncOperationInfo = "asyncOperationInfo";
+
+                public const string Current = "current";
+                public const string Previous = "previous";
+
+                public const string DestinationTier = "DestinationTier";
+                public const string WasAsyncOperation = "WasAsyncOperation";
+                public const string CopyId = "CopyId";
+
+                public const string SoftDeletedSnapshot = "SoftDeleteSnapshot";
+                public const string WasBlobSoftDeleted = "WasBlobSoftDeleted";
+                public const string BlobVersion = "BlobVersion";
+                public const string LastVersion = "LastVersion";
+                public const string PreviousTier = "PreviousTier";
+
+                public const string BlobTagsUpdated = "blobTagsUpdated";
             }
         }
 

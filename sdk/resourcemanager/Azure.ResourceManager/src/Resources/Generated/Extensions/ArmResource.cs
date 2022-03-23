@@ -5,32 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Core
+namespace Azure.ResourceManager
 {
     public partial class ArmResource
     {
-        /// <summary> Gets a collection of PolicyAssignments in the PolicyAssignment. </summary>
-        /// <returns> An object representing collection of PolicyAssignments and their operations over a PolicyAssignment. </returns>
+        /// <summary> Gets a collection of PolicyAssignmentResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of PolicyAssignmentResources and their operations over a PolicyAssignmentResource. </returns>
         public virtual PolicyAssignmentCollection GetPolicyAssignments()
         {
-            return new PolicyAssignmentCollection(Client, this.Id);
+            return GetCachedClient(Client => new PolicyAssignmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PolicyExemptions in the PolicyExemption. </summary>
-        /// <returns> An object representing collection of PolicyExemptions and their operations over a PolicyExemption. </returns>
+        /// <summary>
+        /// This operation retrieves a single policy assignment, given its name and the scope it was created at.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
+        /// Operation Id: PolicyAssignments_Get
+        /// </summary>
+        /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return await GetPolicyAssignments().GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves a single policy assignment, given its name and the scope it was created at.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
+        /// Operation Id: PolicyAssignments_Get
+        /// </summary>
+        /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            return GetPolicyAssignments().Get(policyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a TagResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
+        public virtual TagResource GetTagResource()
+        {
+            return new TagResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Resources/tags/default"));
+        }
+
+        /// <summary> Gets a collection of PolicyExemptionResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of PolicyExemptionResources and their operations over a PolicyExemptionResource. </returns>
         public virtual PolicyExemptionCollection GetPolicyExemptions()
         {
-            return new PolicyExemptionCollection(Client, this.Id);
+            return GetCachedClient(Client => new PolicyExemptionCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ManagementLocks in the ManagementLock. </summary>
-        /// <returns> An object representing collection of ManagementLocks and their operations over a ManagementLock. </returns>
+        /// <summary>
+        /// This operation retrieves a single policy exemption, given its name and the scope it was created at.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
+        /// Operation Id: PolicyExemptions_Get
+        /// </summary>
+        /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
+        public virtual async Task<Response<PolicyExemptionResource>> GetPolicyExemptionAsync(string policyExemptionName, CancellationToken cancellationToken = default)
+        {
+            return await GetPolicyExemptions().GetAsync(policyExemptionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation retrieves a single policy exemption, given its name and the scope it was created at.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/policyExemptions/{policyExemptionName}
+        /// Operation Id: PolicyExemptions_Get
+        /// </summary>
+        /// <param name="policyExemptionName"> The name of the policy exemption to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="policyExemptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyExemptionName"/> is null. </exception>
+        public virtual Response<PolicyExemptionResource> GetPolicyExemption(string policyExemptionName, CancellationToken cancellationToken = default)
+        {
+            return GetPolicyExemptions().Get(policyExemptionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagementLockResources in the ArmResource. </summary>
+        /// <returns> An object representing collection of ManagementLockResources and their operations over a ManagementLockResource. </returns>
         public virtual ManagementLockCollection GetManagementLocks()
         {
-            return new ManagementLockCollection(Client, this.Id);
+            return GetCachedClient(Client => new ManagementLockCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
+        /// <param name="lockName"> The name of lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        public virtual async Task<Response<ManagementLockResource>> GetManagementLockAsync(string lockName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagementLocks().GetAsync(lockName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a management lock by scope.
+        /// Request Path: /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+        /// Operation Id: ManagementLocks_GetByScope
+        /// </summary>
+        /// <param name="lockName"> The name of lock. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        public virtual Response<ManagementLockResource> GetManagementLock(string lockName, CancellationToken cancellationToken = default)
+        {
+            return GetManagementLocks().Get(lockName, cancellationToken);
         }
     }
 }

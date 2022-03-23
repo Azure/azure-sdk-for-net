@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment What-if operation parameters. </summary>
-    internal partial class DeploymentWhatIf
+    public partial class DeploymentWhatIf
     {
         /// <summary> Initializes a new instance of DeploymentWhatIf. </summary>
         /// <param name="properties"> The deployment properties. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
             Properties = properties;
         }
 
-        /// <summary> The location to store the deployment data. </summary>
+        /// <summary> The location to store the deployment data, only required at the tenant and management group scope. </summary>
         public string Location { get; set; }
         /// <summary> The deployment properties. </summary>
         public DeploymentWhatIfProperties Properties { get; }

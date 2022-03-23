@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         /// <summary>
-        /// Converts a System.Diagnostics.StackFrame to a Microsoft.ApplicationInsights.Extensibility.Implementation.TelemetryTypes.StackFrame.
+        /// Converts a System.Diagnostics.StackFrame to a Azure.Monitor.OpenTelemetry.Exporter.Models.StackFrame.
         /// </summary>
         internal static StackFrame GetStackFrame(System.Diagnostics.StackFrame stackFrame, int frameId)
         {

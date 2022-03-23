@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application deployment policy. </summary>
-    public partial class ApplicationDeploymentPolicy
+    internal partial class ApplicationDeploymentPolicy
     {
         /// <summary> Initializes a new instance of ApplicationDeploymentPolicy. </summary>
         /// <param name="deploymentMode"> The managed application deployment mode. </param>

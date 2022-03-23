@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticAnalysis. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="startTime"> Start time of the period. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="abnormalTimePeriods"> List of time periods. </param>
         /// <param name="payload"> Data by each detector. </param>
         /// <param name="nonCorrelatedDetectors"> Data by each detector for detectors that did not corelate. </param>
-        internal DiagnosticAnalysis(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, DateTimeOffset? startTime, DateTimeOffset? endTime, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisData> payload, IList<DetectorDefinition> nonCorrelatedDetectors) : base(id, name, type, systemData, kind)
+        internal DiagnosticAnalysis(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? startTime, DateTimeOffset? endTime, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisData> payload, IList<DetectorDefinition> nonCorrelatedDetectors) : base(id, name, resourceType, systemData, kind)
         {
             StartTime = startTime;
             EndTime = endTime;

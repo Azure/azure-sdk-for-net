@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailsResultData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> Restore status. </param>
         /// <param name="currentRestoringFileName"> Current restoring file name. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="lastUploadedFileName"> Last uploaded file name. </param>
         /// <param name="lastUploadedFileTime"> Last uploaded file time. </param>
         /// <param name="blockReason"> The reason why restore is in Blocked state. </param>
-        internal ManagedDatabaseRestoreDetailsResultData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string status, string currentRestoringFileName, string lastRestoredFileName, DateTimeOffset? lastRestoredFileTime, double? percentCompleted, IReadOnlyList<string> unrestorableFiles, long? numberOfFilesDetected, string lastUploadedFileName, DateTimeOffset? lastUploadedFileTime, string blockReason) : base(id, name, type, systemData)
+        internal ManagedDatabaseRestoreDetailsResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, string currentRestoringFileName, string lastRestoredFileName, DateTimeOffset? lastRestoredFileTime, double? percentCompleted, IReadOnlyList<string> unrestorableFiles, long? numberOfFilesDetected, string lastUploadedFileName, DateTimeOffset? lastUploadedFileTime, string blockReason) : base(id, name, resourceType, systemData)
         {
             Status = status;
             CurrentRestoringFileName = currentRestoringFileName;

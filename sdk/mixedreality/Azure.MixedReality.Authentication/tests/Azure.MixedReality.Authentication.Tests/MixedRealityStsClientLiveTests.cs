@@ -11,10 +11,12 @@ namespace Azure.MixedReality.Authentication.Tests
 {
     public class MixedRealityStsClientLiveTests : RecordedTestBase<MixedRealityTestEnvironment>
     {
+        private const string ClientCorrelationVectorHeaderName = "X-MRC-CV";
+
         public MixedRealityStsClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-            Matcher = new MixedRealityRecordMatcher();
+            IgnoredHeaders.Add(ClientCorrelationVectorHeaderName);
         }
 
         private MixedRealityStsClient CreateClient()

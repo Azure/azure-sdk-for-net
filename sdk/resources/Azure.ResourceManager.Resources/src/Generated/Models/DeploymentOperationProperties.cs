@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="targetResource"> The target resource. </param>
         /// <param name="request"> The HTTP request message. </param>
         /// <param name="response"> The HTTP response message. </param>
-        internal DeploymentOperationProperties(ProvisioningOperation? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, string duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response)
+        internal DeploymentOperationProperties(ProvisioningOperation? provisioningOperation, string provisioningState, DateTimeOffset? timestamp, TimeSpan? duration, string serviceRequestId, string statusCode, StatusMessage statusMessage, TargetResource targetResource, HttpMessage request, HttpMessage response)
         {
             ProvisioningOperation = provisioningOperation;
             ProvisioningState = provisioningState;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The date and time of the operation. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The duration of the operation. </summary>
-        public string Duration { get; }
+        public TimeSpan? Duration { get; }
         /// <summary> Deployment operation service request id. </summary>
         public string ServiceRequestId { get; }
         /// <summary> Operation status code from the resource provider. This property may not be set if a response has not yet been received. </summary>
@@ -59,8 +59,19 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The target resource. </summary>
         public TargetResource TargetResource { get; }
         /// <summary> The HTTP request message. </summary>
-        public HttpMessage Request { get; }
+        internal HttpMessage Request { get; }
+        /// <summary> HTTP message content. </summary>
+        public BinaryData RequestContent
+        {
+            get => Request.Content;
+        }
+
         /// <summary> The HTTP response message. </summary>
-        public HttpMessage Response { get; }
+        internal HttpMessage Response { get; }
+        /// <summary> HTTP message content. </summary>
+        public BinaryData ResponseContent
+        {
+            get => Response.Content;
+        }
     }
 }

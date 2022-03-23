@@ -66,8 +66,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="privateLinkScopedResources">List of linked private
         /// link scope resources.</param>
         /// <param name="features">Workspace features.</param>
+        /// <param name="defaultDataCollectionRuleResourceId">The resource ID
+        /// of the default Data Collection Rule to use for this workspace.
+        /// Expected format is -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}.</param>
         /// <param name="tags">Resource tags. Optional.</param>
-        public WorkspacePatch(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), WorkspaceCapping workspaceCapping = default(WorkspaceCapping), string createdDate = default(string), string modifiedDate = default(string), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), bool? forceCmkForQuery = default(bool?), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), WorkspaceFeatures features = default(WorkspaceFeatures), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public WorkspacePatch(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), WorkspaceCapping workspaceCapping = default(WorkspaceCapping), string createdDate = default(string), string modifiedDate = default(string), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), bool? forceCmkForQuery = default(bool?), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), WorkspaceFeatures features = default(WorkspaceFeatures), string defaultDataCollectionRuleResourceId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(id, name, type, etag)
         {
             ProvisioningState = provisioningState;
@@ -82,6 +86,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             ForceCmkForQuery = forceCmkForQuery;
             PrivateLinkScopedResources = privateLinkScopedResources;
             Features = features;
+            DefaultDataCollectionRuleResourceId = defaultDataCollectionRuleResourceId;
             Tags = tags;
             CustomInit();
         }
@@ -92,12 +97,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provisioning state of the workspace. Possible
-        /// values include: 'Creating', 'Succeeded', 'Failed', 'Canceled',
-        /// 'Deleting', 'ProvisioningAccount', 'Updating'
+        /// Gets the provisioning state of the workspace. Possible values
+        /// include: 'Creating', 'Succeeded', 'Failed', 'Canceled', 'Deleting',
+        /// 'ProvisioningAccount', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets this is a read-only property. Represents the ID associated
@@ -169,6 +174,14 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.features")]
         public WorkspaceFeatures Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of the default Data Collection Rule to
+        /// use for this workspace. Expected format is -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultDataCollectionRuleResourceId")]
+        public string DefaultDataCollectionRuleResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags. Optional.

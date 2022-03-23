@@ -28,6 +28,29 @@ namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - remove-model: "AzureEntityResource"
   - remove-model: "ProxyResource"
@@ -39,6 +62,7 @@ directive:
   - remove-model: "locationData"
   - remove-model: "CheckNameAvailabilityRequest"
   - remove-model: "CheckNameAvailabilityResponse"
+  - remove-model: "ErrorResponse"
   - from: types.json
     where: $.definitions['Resource']
     transform: >
@@ -73,6 +97,9 @@ directive:
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+  - from: managedidentity.json
+    where: $.definitions.SystemAssignedServiceIdentity.properties.type
+    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
 ```
 
 ### Tag: package-resources
@@ -98,14 +125,12 @@ list-exception:
   - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
-  # model of ResourceLink has id, type and name, but its type has the type of `object` instead of `string`
-  /{linkId}: ResourceLink
   # subscription does not have name and type
   /subscriptions/{subscriptionId}: Subscription
   # tenant does not have name and type
   /: Tenant
   # provider does not have name and type
-  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: Provider
+  /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}: ResourceProvider
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
@@ -142,15 +167,39 @@ override-operation-name:
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
   Tags_CreateOrUpdate: CreateOrUpdatePredefinedTag
   Tags_Delete: DeletePredefinedTag
-  Providers_ListAtTenantScope: GetTenantProviders
-  Providers_GetAtTenantScope: GetTenantProvider
+  Providers_ListAtTenantScope: GetTenantResourceProviders
+  Providers_GetAtTenantScope: GetTenantResourceProvider
   Resources_MoveResources: MoveResources
   Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
-  Providers_RegisterAtManagementGroupScope: RegisterProvider
+  Providers_RegisterAtManagementGroupScope: RegisterResourceProvider
   ResourceLinks_ListAtSubscription: GetResourceLinks
-no-property-type-replacement: ProviderData;Provider
+
+no-property-type-replacement: ResourceProviderData;ResourceProvider;
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
   - remove-operation: PolicyAssignments_DeleteById
@@ -235,6 +284,12 @@ directive:
       from: Location
       to: LocationExpanded
   - rename-model:
+      from: Provider
+      to: ResourceProvider
+  - rename-model:
+      from: ProviderListResult
+      to: ResourceProviderListResult
+  - rename-model:
       from: TenantIdDescription
       to: Tenant
   - rename-model:
@@ -266,7 +321,51 @@ directive:
       to: TrackedResourceExtended
   - rename-model:
       from: ProviderRegistrationRequest
-      to: ProviderRegistrationOptions
+      to: ResourceProviderRegistrationOptions
+  - from: resources.json
+    where: $.definitions.Provider
+    transform:
+      $["x-ms-client-name"] = "ResourceProvider";
+  - from: resources.json
+    where: $.definitions.Alias
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAlias";
+  - from: resources.json
+    where: $.definitions.AliasPath
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPath";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.attributes["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathAttributes";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPathMetadata";
+  - from: resources.json
+    where: $.definitions.AliasPathMetadata.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPathTokenType";
+  - from: resources.json
+    where: $.definitions.AliasPattern
+    transform:
+      $["x-ms-client-name"] = "ResourceTypeAliasPattern";
+  - from: resources.json
+    where: $.definitions.AliasPattern.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasPatternType";
+  - from: resources.json
+    where: $.definitions.Alias.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ResourceTypeAliasType";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameter";
+  - from: policyAssignments.json
+    where: $.definitions.ParameterValuesValue
+    transform:
+      $["x-ms-client-name"] = "ArmPolicyParameterValue";
   - remove-model: DeploymentExtendedFilter
   - remove-model: ResourceProviderOperationDisplayProperties
   - from: subscriptions.json
@@ -396,6 +495,11 @@ directive:
   - from: locks.json
     where: $.definitions.ManagementLockObject
     transform: $["x-ms-client-name"] = "ManagementLock"
+  - from: links.json
+    where: $.definitions.ResourceLink.properties.type
+    transform: >
+      $["x-ms-client-name"] = "ResourceType";
+      $["type"] = "string";
 ```
 
 ### Tag: package-management
@@ -419,6 +523,29 @@ operation-groups-to-omit:
   - Entities
   - TenantBackfill
 no-property-type-replacement: CheckNameAvailabilityOptions;DescendantParentGroupInfo
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
+
 directive:
   - rename-model:
       from: PatchManagementGroupRequest
@@ -432,6 +559,10 @@ directive:
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityRequest.properties.type
+    transform: >
+      $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
       to: CheckNameAvailabilityOptions

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The deployment export result. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of DeploymentExportResult. </summary>
         /// <param name="template"> The template content. </param>
-        internal DeploymentExportResult(object template)
+        internal DeploymentExportResult(BinaryData template)
         {
             Template = template;
         }
 
         /// <summary> The template content. </summary>
-        public object Template { get; }
+        public BinaryData Template { get; }
     }
 }

@@ -7,7 +7,7 @@ using System.Reflection;
 
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class AzureMonitorTraceExporterTests
     {

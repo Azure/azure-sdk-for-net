@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity.BrokeredAuthentication Component</AssemblyTitle>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <!-- <ApiCompatVersion>1.0.0</ApiCompatVersion> -->
     <PackageTags>Microsoft Azure Identity Broker;$(PackageCommonTags)</PackageTags>
@@ -12,9 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <!--<PackageReference Include="Azure.Identity" />-->
-    <!-- This should be changed back to a package reference once the required changes in Azure.Identity have shipped in the next GA -->
-    <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj" />
+    <PackageReference Include="Azure.Identity" VersionOverride="1.6.0-beta.1" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />

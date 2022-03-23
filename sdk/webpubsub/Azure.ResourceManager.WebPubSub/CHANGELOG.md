@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- The models that are not directly referenced by public API now are internal.
+
 ### Bugs Fixed
 
 ### Other Changes

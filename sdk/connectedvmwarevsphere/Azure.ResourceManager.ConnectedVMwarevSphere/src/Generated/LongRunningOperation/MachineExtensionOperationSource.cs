@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class MachineExtensionOperationSource : IOperationSource<MachineExtension>
+    internal class MachineExtensionOperationSource : IOperationSource<MachineExtensionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        MachineExtension IOperationSource<MachineExtension>.CreateResult(Response response, CancellationToken cancellationToken)
+        MachineExtensionResource IOperationSource<MachineExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MachineExtensionData.DeserializeMachineExtensionData(document.RootElement);
-            return new MachineExtension(_client, data);
+            return new MachineExtensionResource(_client, data);
         }
 
-        async ValueTask<MachineExtension> IOperationSource<MachineExtension>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MachineExtensionResource> IOperationSource<MachineExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MachineExtensionData.DeserializeMachineExtensionData(document.RootElement);
-            return new MachineExtension(_client, data);
+            return new MachineExtensionResource(_client, data);
         }
     }
 }

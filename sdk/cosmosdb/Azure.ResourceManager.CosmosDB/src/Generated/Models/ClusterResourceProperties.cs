@@ -77,7 +77,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initial password for clients connecting as admin to the cluster. Should be changed after cluster creation. Returns null on GET. This field only applies when the authenticationMethod field is &apos;Cassandra&apos;. </summary>
         public string InitialCassandraAdminPassword { get; set; }
         /// <summary> Hostname or IP address where the Prometheus endpoint containing data about the managed Cassandra nodes can be reached. </summary>
-        public SeedNode PrometheusEndpoint { get; set; }
+        internal SeedNode PrometheusEndpoint { get; set; }
+        /// <summary> IP address of this seed node. </summary>
+        public string PrometheusEndpointIPAddress
+        {
+            get => PrometheusEndpoint is null ? default : PrometheusEndpoint.IPAddress;
+            set
+            {
+                if (PrometheusEndpoint is null)
+                    PrometheusEndpoint = new SeedNode();
+                PrometheusEndpoint.IPAddress = value;
+            }
+        }
+
         /// <summary> Should automatic repairs run on this cluster? If omitted, this is true, and should stay true unless you are running a hybrid cluster where you are already doing your own repairs. </summary>
         public bool? RepairEnabled { get; set; }
         /// <summary> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </summary>

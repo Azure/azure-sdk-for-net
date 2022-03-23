@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ApplicationManagedIdentity. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="type"> The identity type. </param>
+        /// <param name="applicationManagedIdentityType"> The identity type. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
-        internal ApplicationManagedIdentity(string principalId, string tenantId, ApplicationManagedIdentityType? type, IDictionary<string, UserAssignedResourceIdentity> userAssignedIdentities)
+        internal ApplicationManagedIdentity(string principalId, string tenantId, ApplicationManagedIdentityType? applicationManagedIdentityType, IDictionary<string, UserAssignedResourceIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
-            Type = type;
+            ApplicationManagedIdentityType = applicationManagedIdentityType;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The tenant ID of resource. </summary>
         public string TenantId { get; }
         /// <summary> The identity type. </summary>
-        public ApplicationManagedIdentityType? Type { get; set; }
+        public ApplicationManagedIdentityType? ApplicationManagedIdentityType { get; set; }
         /// <summary> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
         public IDictionary<string, UserAssignedResourceIdentity> UserAssignedIdentities { get; }
     }

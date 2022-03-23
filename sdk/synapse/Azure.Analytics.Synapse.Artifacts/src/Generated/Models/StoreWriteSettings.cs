@@ -17,7 +17,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public StoreWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
-            Type = "StoreWriteSettings";
         }
 
         /// <summary> Initializes a new instance of StoreWriteSettings. </summary>
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal StoreWriteSettings(string type, object maxConcurrentConnections, object copyBehavior, IDictionary<string, object> additionalProperties)
         {
-            Type = type ?? "StoreWriteSettings";
+            Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
             CopyBehavior = copyBehavior;
             AdditionalProperties = additionalProperties;

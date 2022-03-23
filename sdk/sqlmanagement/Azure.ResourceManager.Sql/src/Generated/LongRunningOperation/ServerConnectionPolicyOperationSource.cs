@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerConnectionPolicyOperationSource : IOperationSource<ServerConnectionPolicy>
+    internal class ServerConnectionPolicyOperationSource : IOperationSource<ServerConnectionPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ServerConnectionPolicy IOperationSource<ServerConnectionPolicy>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerConnectionPolicyResource IOperationSource<ServerConnectionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement);
-            return new ServerConnectionPolicy(_client, data);
+            return new ServerConnectionPolicyResource(_client, data);
         }
 
-        async ValueTask<ServerConnectionPolicy> IOperationSource<ServerConnectionPolicy>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerConnectionPolicyResource> IOperationSource<ServerConnectionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerConnectionPolicyData.DeserializeServerConnectionPolicyData(document.RootElement);
-            return new ServerConnectionPolicy(_client, data);
+            return new ServerConnectionPolicyResource(_client, data);
         }
     }
 }

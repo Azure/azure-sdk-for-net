@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the parameters for using CDN managed certificate for securing custom domain. </summary>
-    public partial class CdnCertificateSourceParameters
+    internal partial class CdnCertificateSourceParameters
     {
         /// <summary> Initializes a new instance of CdnCertificateSourceParameters. </summary>
         /// <param name="odataType"></param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,14 +20,14 @@ namespace Azure.ResourceManager.Resources
         public PolicyAssignmentData()
         {
             NotScopes = new ChangeTrackingList<string>();
-            Parameters = new ChangeTrackingDictionary<string, ParameterValuesValue>();
+            Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameterValue>();
             NonComplianceMessages = new ChangeTrackingList<NonComplianceMessage>();
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
         /// <param name="identity"> The managed identity associated with the policy assignment. </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </param>
         /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string location, SystemAssignedServiceIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ParameterValuesValue> parameters, string description, object metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, type, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, SystemAssignedServiceIdentity identity, string displayName, string policyDefinitionId, string scope, IList<string> notScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Identity = identity;
@@ -67,11 +68,11 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The policy&apos;s excluded scopes. </summary>
         public IList<string> NotScopes { get; }
         /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
-        public IDictionary<string, ParameterValuesValue> Parameters { get; }
+        public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }
         /// <summary> This message will be part of response in case of policy violation. </summary>
         public string Description { get; set; }
         /// <summary> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
         /// <summary> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </summary>
         public EnforcementMode? EnforcementMode { get; set; }
         /// <summary> The messages that describe why a resource is non-compliant with the policy. </summary>

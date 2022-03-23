@@ -16,6 +16,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
     {
         public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
 
+        public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
+
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
             foreach (var telemetryItem in telemetryItems)
@@ -24,6 +26,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
             }
 
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
+        }
+
+        public ValueTask TransmitFromStorage(long maxFileToTransmit, bool aysnc, CancellationToken cancellationToken)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
