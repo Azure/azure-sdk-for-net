@@ -2693,7 +2693,86 @@ namespace Azure.Storage.Blobs
 
         #region GetBlobsByHierarchy
         /// <summary>
-        /// The <see cref="GetBlobsByHierarchy"/> operation returns
+        /// The <see cref="GetBlobsByHierarchy(GetBlobsByHierarchyOptions, CancellationToken)"/> operation returns
+        /// an async collection of blobs in this container.  Enumerating the
+        /// blobs may make multiple requests to the service while fetching all
+        /// the values.  Blobs are ordered lexicographically by name.   A
+        /// GetBlobsByHierarchyOptions.Delimiter can be used to traverse a virtual
+        /// hierarchy of blobs as though it were a file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameter.s
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobHierarchyItem"/>
+        /// describing the blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
+            GetBlobsByHierarchyOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobsByHierarchyAsyncCollection(
+                client: this,
+                delimiter: options?.Delimiter,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/> operation returns
+        /// an async collection of blobs in this container.  Enumerating the
+        /// blobs may make multiple requests to the service while fetching all
+        /// the values.  Blobs are ordered lexicographically by name.   A
+        /// GetBlobsByHierarchyOptions.Delimiter can be used to traverse a virtual
+        /// hierarchy of blobs as though it were a file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameter.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
+            GetBlobsByHierarchyOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobsByHierarchyAsyncCollection(
+                client: this,
+                delimiter: options?.Delimiter,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
+                .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobsByHierarchy(BlobTraits, BlobStates, string, string, CancellationToken)"/>
+        /// operation returns
         /// an async collection of blobs in this container.  Enumerating the
         /// blobs may make multiple requests to the service while fetching all
         /// the values.  Blobs are ordered lexicographically by name.   A
@@ -2743,16 +2822,27 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called
         public virtual Pageable<BlobHierarchyItem> GetBlobsByHierarchy(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string delimiter = default,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix).ToSyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called
+            BlobTraits traits,
+            BlobStates states,
+            string delimiter,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobsByHierarchyAsyncCollection(
+                client: this,
+                delimiter: delimiter,
+                traits: traits,
+                states: states,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobsByHierarchyAsync"/> operation returns
+        /// The <see cref="GetBlobsByHierarchyAsync(BlobTraits, BlobStates, string, string, CancellationToken)"/>
+        /// operation returns
         /// an async collection of blobs in this container.  Enumerating the
         /// blobs may make multiple requests to the service while fetching all
         /// the values.  Blobs are ordered lexicographically by name.   A
@@ -2802,13 +2892,23 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called
         public virtual AsyncPageable<BlobHierarchyItem> GetBlobsByHierarchyAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string delimiter = default,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, delimiter, traits, states, prefix).ToAsyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called
+            BlobTraits traits,
+            BlobStates states,
+            string delimiter,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobsByHierarchyAsyncCollection(
+                client: this,
+                delimiter: delimiter,
+                traits: traits,
+                states: states,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
@@ -2816,7 +2916,7 @@ namespace Azure.Storage.Blobs
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
         /// and the <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetBlobsByHierarchyAsync"/>
+        /// empty to make subsequent calls to <see cref="GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.   A <paramref name="delimiter"/>
         /// can be used to traverse a virtual hierarchy of blobs as though
@@ -2866,6 +2966,10 @@ namespace Azure.Storage.Blobs
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2888,6 +2992,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             int? pageSizeHint,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2917,6 +3022,7 @@ namespace Azure.Storage.Blobs
                             marker: marker,
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2928,6 +3034,7 @@ namespace Azure.Storage.Blobs
                             marker: marker,
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 

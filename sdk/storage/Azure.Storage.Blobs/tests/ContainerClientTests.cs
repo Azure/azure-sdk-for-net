@@ -2609,7 +2609,12 @@ namespace Azure.Storage.Blobs.Test
             var prefixes = new List<string>();
             var delimiter = "/";
 
-            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(delimiter: delimiter).AsPages())
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = delimiter,
+            };
+
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options).AsPages())
             {
                 blobs.AddRange(page.Values.Where(item => item.IsBlob).Select(item => item.Blob));
                 prefixes.AddRange(page.Values.Where(item => item.IsPrefix).Select(item => item.Prefix));
@@ -2653,8 +2658,13 @@ namespace Azure.Storage.Blobs.Test
             };
             await appendBlob.CreateAsync(options);
 
+            GetBlobsByHierarchyOptions getBlobsOptions = new GetBlobsByHierarchyOptions
+            {
+                Traits = BlobTraits.Tags
+            };
+
             // Act
-            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(BlobTraits.Tags).ToListAsync();
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(getBlobsOptions).ToListAsync();
 
             // Assert
             AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
@@ -2704,8 +2714,13 @@ namespace Azure.Storage.Blobs.Test
             await SetUpContainerForListing(test.Container);
             var delimiter = "/";
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Delimiter = delimiter,
+            };
+
             // Act
-            Page<BlobHierarchyItem> page = await test.Container.GetBlobsByHierarchyAsync(delimiter: delimiter)
+            Page<BlobHierarchyItem> page = await test.Container.GetBlobsByHierarchyAsync(options)
                 .AsPages(pageSizeHint: 2)
                 .FirstAsync();
 
@@ -2723,8 +2738,13 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
             await blob.CreateIfNotExistsAsync(metadata: metadata);
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Traits = BlobTraits.Metadata
+            };
+
             // Act
-            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options).FirstAsync();
 
             // Assert
             AssertDictionaryEquality(metadata, item.Blob.Metadata);
@@ -2739,8 +2759,13 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await blob.CreateAsync();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Traits = BlobTraits.Metadata
+            };
+
             // Act
-            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options).FirstAsync();
 
             // Assert
             Assert.IsNotNull(item.Blob.Metadata);
@@ -2776,8 +2801,13 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateAsync();
             await blob.DeleteAsync();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                States = BlobStates.Deleted
+            };
+
             // Act
-            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(blobName, blobs[0].Blob.Name);
@@ -2802,8 +2832,13 @@ namespace Azure.Storage.Blobs.Test
                     content: stream);
             }
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                States = BlobStates.Uncommitted
+            };
+
             // Act
-            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Uncommitted).ToListAsync();
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(1, blobs.Count);
@@ -2820,8 +2855,13 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateIfNotExistsAsync();
             Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                States = BlobStates.Snapshots
+            };
+
             // Act
-            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Snapshots).ToListAsync();
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(2, blobs.Count);
@@ -2840,9 +2880,14 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                States = BlobStates.Version
+            };
+
             // Act
             var blobs = new List<BlobHierarchyItem>();
-            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Version).AsPages())
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(options).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
@@ -2863,8 +2908,13 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await SetUpContainerForListing(test.Container);
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                Prefix = "foo"
+            };
+
             // Act
-            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(prefix: "foo").ToListAsync();
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(3, blobs.Count);
@@ -2937,9 +2987,14 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
             await blob.DeleteAsync();
 
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+            {
+                States = BlobStates.DeletedWithVersions
+            };
+
             // Act
             List<BlobHierarchyItem> blobHierarchyItems = new List<BlobHierarchyItem>();
-            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(states: BlobStates.DeletedWithVersions))
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(options))
             {
                 blobHierarchyItems.Add(blobItem);
             }
@@ -2974,13 +3029,39 @@ namespace Azure.Storage.Blobs.Test
             }
             else
             {
-                item = await test.Container.GetBlobsByHierarchyAsync(
-                    delimiter: ".b").FirstAsync();
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Delimiter = ".b"
+                };
+
+                item = await test.Container.GetBlobsByHierarchyAsync(options).FirstAsync();
 
                 // Assert
                 Assert.IsTrue(item.IsPrefix);
                 Assert.AreEqual("dir1/dir2/file\uffff.b", item.Prefix);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task ListBlobsHierarchySegmentAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await appendBlob.CreateAsync();
+
+            GetBlobsByHierarchyOptions getBlobsOptions = new GetBlobsByHierarchyOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(getBlobsOptions).ToListAsync();
+
+            // Assert
+            Assert.IsTrue(blobHierachyItems.Count >= 1);
         }
 
         [RecordedTest]
