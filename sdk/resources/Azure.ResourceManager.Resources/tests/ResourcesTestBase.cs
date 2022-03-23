@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,
-            Parameters = new JsonObject()
+            Parameters = BinaryData.FromObjectAsJson(new JsonObject()
             {
                 {"storageAccountNamePrefix", new JsonObject()
                     {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Tests
                         {"value", "Standard_LRS" }
                     }
                 }
-            }
+            })
         };
 
         protected static DeploymentProperties CreateDeploymentProperties()
@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.Resources.Tests
             //The user assigned identities was created firstly in Portal due to the unexpected behavior of using generic resource to create the user assigned identities.
             string rgName4Identities = "rg-for-DeployScript";
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            Subscription sub = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource sub = await Client.GetDefaultSubscriptionAsync();
             var lro = await sub.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName4Identities, rgData);
-            ResourceGroup rg4Identities = lro.Value;
+            ResourceGroupResource rg4Identities = lro.Value;
             GenericResourceData userAssignedIdentitiesData = ConstructGenericUserAssignedIdentities();
             ResourceIdentifier userAssignedIdentitiesId = rg4Identities.Id.AppendProviderResource("Microsoft.ManagedIdentity", "userAssignedIdentities", "test-user-assigned-msi");
             var lro2 = await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, userAssignedIdentitiesId, userAssignedIdentitiesData);
@@ -161,11 +161,11 @@ namespace Azure.ResourceManager.Resources.Tests
         protected static TemplateSpecVersionData CreateTemplateSpecVersionData() => new TemplateSpecVersionData(AzureLocation.WestUS2)
         {
             Description = "My first version",
-            MainTemplate = JsonDocument.Parse(File.ReadAllText(Path.Combine(
+            MainTemplate = BinaryData.FromString(File.ReadAllText(Path.Combine(
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
             "Scenario",
             "DeploymentTemplates",
-            $"simple-storage-account.json"))).RootElement.GetObject()
+            $"simple-storage-account.json")))
         };
     }
 }

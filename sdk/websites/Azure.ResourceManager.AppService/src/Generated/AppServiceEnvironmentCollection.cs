@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of AppServiceEnvironment and their operations over its parent. </summary>
-    public partial class AppServiceEnvironmentCollection : ArmCollection, IEnumerable<AppServiceEnvironment>, IAsyncEnumerable<AppServiceEnvironment>
+    public partial class AppServiceEnvironmentCollection : ArmCollection, IEnumerable<AppServiceEnvironmentResource>, IAsyncEnumerable<AppServiceEnvironmentResource>
     {
         private readonly ClientDiagnostics _appServiceEnvironmentClientDiagnostics;
         private readonly AppServiceEnvironmentsRestOperations _appServiceEnvironmentRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AppServiceEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _appServiceEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironment.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(AppServiceEnvironment.ResourceType, out string appServiceEnvironmentApiVersion);
-            _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, appServiceEnvironmentApiVersion);
+            _appServiceEnvironmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppServiceEnvironmentResource.ResourceType, out string appServiceEnvironmentApiVersion);
+            _appServiceEnvironmentRestClient = new AppServiceEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceEnvironmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppServiceEnvironment>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(hostingEnvironmentEnvelope, nameof(hostingEnvironmentEnvelope));
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _appServiceEnvironmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AppServiceEnvironment>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="hostingEnvironmentEnvelope"/> is null. </exception>
-        public virtual ArmOperation<AppServiceEnvironment> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceEnvironmentData hostingEnvironmentEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(hostingEnvironmentEnvelope, nameof(hostingEnvironmentEnvelope));
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _appServiceEnvironmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<AppServiceEnvironment>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(new AppServiceEnvironmentOperationSource(Client), _appServiceEnvironmentClientDiagnostics, Pipeline, _appServiceEnvironmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, hostingEnvironmentEnvelope).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AppServiceEnvironment>> GetAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceEnvironmentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AppServiceEnvironment> Get(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceEnvironmentResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +180,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceEnvironment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceEnvironment> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AppServiceEnvironment>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceEnvironmentResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +198,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<AppServiceEnvironment>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceEnvironmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _appServiceEnvironmentRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +222,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceEnvironment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceEnvironment> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AppServiceEnvironment> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceEnvironmentResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +240,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<AppServiceEnvironment> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceEnvironmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _appServiceEnvironmentRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AppServiceEnvironmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AppServiceEnvironment>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceEnvironmentResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -332,8 +331,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _appServiceEnvironmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<AppServiceEnvironment>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AppServiceEnvironmentResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AppServiceEnvironment> GetIfExists(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceEnvironmentResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -361,8 +360,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServiceEnvironmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AppServiceEnvironment>(null, response.GetRawResponse());
-                return Response.FromValue(new AppServiceEnvironment(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AppServiceEnvironmentResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AppServiceEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<AppServiceEnvironment> IEnumerable<AppServiceEnvironment>.GetEnumerator()
+        IEnumerator<AppServiceEnvironmentResource> IEnumerable<AppServiceEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AppServiceEnvironment> IAsyncEnumerable<AppServiceEnvironment>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppServiceEnvironmentResource> IAsyncEnumerable<AppServiceEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

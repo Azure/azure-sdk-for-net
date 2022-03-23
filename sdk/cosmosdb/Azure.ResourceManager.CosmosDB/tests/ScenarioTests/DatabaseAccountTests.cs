@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [SetUp]
         public async Task TestSetup()
         {
-            _resourceGroup = await ArmClient.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
         [TearDown]
         public async Task TestTearDown()
         {
-            DatabaseAccount account = await DatabaseAccountCollection.GetIfExistsAsync(_databaseAccountName);
+            DatabaseAccountResource account = await DatabaseAccountCollection.GetIfExistsAsync(_databaseAccountName);
             if (account != null)
             {
                 await account.DeleteAsync(WaitUntil.Completed);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             bool ifExists = await DatabaseAccountCollection.ExistsAsync(_databaseAccountName);
             Assert.AreEqual(true, ifExists);
 
-            DatabaseAccount account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
+            DatabaseAccountResource account2 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account, account2);
 
             var updateOptions = new PatchableDatabaseAccountData()
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             FailoverPolicies failoverPolicies = new FailoverPolicies(failoverPolicyList);
             await account2.FailoverPriorityChangeAsync(WaitUntil.Completed, new FailoverPolicies(failoverPolicyList));
 
-            DatabaseAccount account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
+            DatabaseAccountResource account3 = await DatabaseAccountCollection.GetAsync(_databaseAccountName);
             VerifyCosmosDBAccount(account3, updateOptions);
             VerifyFailoverPolicies(failoverPolicyList, account3.Data.FailoverPolicies);
         }
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             await account.DeleteAsync(WaitUntil.Completed);
 
-            List<DatabaseAccount> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
+            List<DatabaseAccountResource> accounts = await DatabaseAccountCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(accounts);
             Assert.False(accounts.Any(a => a.Id == account.Id));
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccount expectedValue, DatabaseAccount actualValue)
+        private void VerifyCosmosDBAccount(DatabaseAccountResource expectedValue, DatabaseAccountResource actualValue)
         {
             var expectedData = expectedValue.Data;
             var actualData = actualValue.Data;
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.ProvisioningState, actualData.ProvisioningState);
             Assert.AreEqual(expectedData.DocumentEndpoint, actualData.DocumentEndpoint);
             Assert.AreEqual(expectedData.DatabaseAccountOfferType, actualData.DatabaseAccountOfferType);
-            Assert.AreEqual(expectedData.IpRules.Count, actualData.IpRules.Count);
-            Assert.AreEqual(expectedData.IpRules[0].IpAddressOrRangeValue, actualData.IpRules[0].IpAddressOrRangeValue);
+            Assert.AreEqual(expectedData.IPRules.Count, actualData.IPRules.Count);
+            Assert.AreEqual(expectedData.IPRules[0].IPAddressOrRangeValue, actualData.IPRules[0].IPAddressOrRangeValue);
             Assert.AreEqual(expectedData.IsVirtualNetworkFilterEnabled, actualData.IsVirtualNetworkFilterEnabled);
             Assert.AreEqual(expectedData.EnableAutomaticFailover, actualData.EnableAutomaticFailover);
             VerifyConsistencyPolicy(expectedData.ConsistencyPolicy, actualData.ConsistencyPolicy);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.Cors.Count, actualData.Cors.Count);
         }
 
-        private void VerifyCosmosDBAccount(DatabaseAccount databaseAccount, PatchableDatabaseAccountData parameters)
+        private void VerifyCosmosDBAccount(DatabaseAccountResource databaseAccount, PatchableDatabaseAccountData parameters)
         {
             Assert.True(databaseAccount.Data.Tags.SequenceEqual(parameters.Tags));
             Assert.AreEqual(databaseAccount.Data.IsVirtualNetworkFilterEnabled, parameters.IsVirtualNetworkFilterEnabled);

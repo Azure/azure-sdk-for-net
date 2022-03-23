@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of AzureWebCategory and their operations over its parent. </summary>
-    public partial class AzureWebCategoryCollection : ArmCollection, IEnumerable<AzureWebCategory>, IAsyncEnumerable<AzureWebCategory>
+    public partial class AzureWebCategoryCollection : ArmCollection, IEnumerable<AzureWebCategoryResource>, IAsyncEnumerable<AzureWebCategoryResource>
     {
         private readonly ClientDiagnostics _azureWebCategoryWebCategoriesClientDiagnostics;
         private readonly WebCategoriesRestOperations _azureWebCategoryWebCategoriesRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AzureWebCategoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategory.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(AzureWebCategory.ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
-            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureWebCategoryWebCategoriesApiVersion);
+            _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategoryResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AzureWebCategoryResource.ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
+            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureWebCategoryWebCategoriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Subscription.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AzureWebCategory>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureWebCategoryResource>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _azureWebCategoryWebCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AzureWebCategory> Get(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<AzureWebCategoryResource> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Network
                 var response = _azureWebCategoryWebCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,17 +116,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: WebCategories_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureWebCategory" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureWebCategory> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AzureWebCategoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AzureWebCategoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureWebCategory>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AzureWebCategoryResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _azureWebCategoryWebCategoriesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -135,14 +134,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<AzureWebCategory>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AzureWebCategoryResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _azureWebCategoryWebCategoriesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -159,17 +158,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: WebCategories_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureWebCategory" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureWebCategory> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AzureWebCategoryResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AzureWebCategoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AzureWebCategory> FirstPageFunc(int? pageSizeHint)
+            Page<AzureWebCategoryResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _azureWebCategoryWebCategoriesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -177,14 +176,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<AzureWebCategory> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AzureWebCategoryResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _azureWebCategoryWebCategoriesClientDiagnostics.CreateScope("AzureWebCategoryCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _azureWebCategoryWebCategoriesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategory(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new AzureWebCategoryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<AzureWebCategory>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureWebCategoryResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -271,8 +270,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _azureWebCategoryWebCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AzureWebCategoryResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<AzureWebCategory> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<AzureWebCategoryResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -301,8 +300,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _azureWebCategoryWebCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<AzureWebCategory>(null, response.GetRawResponse());
-                return Response.FromValue(new AzureWebCategory(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<AzureWebCategoryResource>(null, response.GetRawResponse());
+                return Response.FromValue(new AzureWebCategoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<AzureWebCategory> IEnumerable<AzureWebCategory>.GetEnumerator()
+        IEnumerator<AzureWebCategoryResource> IEnumerable<AzureWebCategoryResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AzureWebCategory> IAsyncEnumerable<AzureWebCategory>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AzureWebCategoryResource> IAsyncEnumerable<AzureWebCategoryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

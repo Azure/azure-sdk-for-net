@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Tests
 {
     public class ManagementGroupCollectionTests : ResourceManagerTestBase
     {
-        private ManagementGroup _mgmtGroup;
+        private ManagementGroupResource _mgmtGroup;
         private string _mgmtGroupName;
 
         public ManagementGroupCollectionTests(bool isAsync)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Tests
         public async Task List()
         {
             var mgmtGroupCollection = Client.GetManagementGroups();
-            ManagementGroup mgmtGroup = null;
+            ManagementGroupResource mgmtGroup = null;
             await foreach(var item in mgmtGroupCollection.GetAllAsync("no-cache"))
             {
                 mgmtGroup = item;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
+            ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetAsync(_mgmtGroupName, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task TryGet()
         {
-            ManagementGroup mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
+            ManagementGroupResource mgmtGroup = await Client.GetManagementGroups().GetIfExistsAsync(_mgmtGroup.Data.Name, cacheControl: "no-cache");
             CompareMgmtGroups(_mgmtGroup, mgmtGroup);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => _ = await Client.GetManagementGroups().GetAsync("NotThere", cacheControl: "no-cache"));
             Assert.AreEqual(403, ex.Status);
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.Tests
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
             var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(WaitUntil.Started, mgmtGroupName, new CreateManagementGroupOptions());
-            ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
+            ManagementGroupResource mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.ResourceType);
+            Assert.AreEqual(ManagementGroupResource.ResourceType, mgmtGroup.Data.ResourceType);
         }
 
         [RecordedTest]
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Tests
         {
             string mgmtGroupName = Recording.GenerateAssetName("mgmt-group-");
             var mgmtGroupOp = await Client.GetManagementGroups().CreateOrUpdateAsync(WaitUntil.Started, mgmtGroupName, new CreateManagementGroupOptions());
-            ManagementGroup mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
+            ManagementGroupResource mgmtGroup = await mgmtGroupOp.WaitForCompletionAsync();
             Assert.AreEqual($"/providers/Microsoft.Management/managementGroups/{mgmtGroupName}", mgmtGroup.Data.Id.ToString());
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.Name);
             Assert.AreEqual(mgmtGroupName, mgmtGroup.Data.DisplayName);
-            Assert.AreEqual(ManagementGroup.ResourceType, mgmtGroup.Data.ResourceType);
+            Assert.AreEqual(ManagementGroupResource.ResourceType, mgmtGroup.Data.ResourceType);
         }
 
         [RecordedTest]

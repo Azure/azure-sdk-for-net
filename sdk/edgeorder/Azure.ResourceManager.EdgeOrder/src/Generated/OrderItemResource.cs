@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -52,9 +51,9 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OrderItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _orderItemResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, DiagnosticOptions);
+            _orderItemResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string orderItemResourceApiVersion);
-            _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, orderItemResourceApiVersion);
+            _orderItemResourceRestClient = new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, orderItemResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -378,9 +377,9 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _orderItemResourceRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -409,9 +408,9 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _orderItemResourceRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new OrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -438,10 +437,10 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                await TagHelper.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _orderItemResourceRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -468,10 +467,10 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = TagResource.Get(cancellationToken);
+                TagHelper.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _orderItemResourceRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new OrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -498,9 +497,9 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
+                var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _orderItemResourceRestClient.GetOrderItemByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new OrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -527,9 +526,9 @@ namespace Azure.ResourceManager.EdgeOrder
             scope.Start();
             try
             {
-                var originalTags = TagResource.Get(cancellationToken);
+                var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _orderItemResourceRestClient.GetOrderItemByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new OrderItemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

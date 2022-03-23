@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> Template Spec display name. </param>
         /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </param>
-        internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IDictionary<string, string> tags, string description, string displayName, object metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions) : base(id, name, resourceType, systemData)
+        internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IDictionary<string, string> tags, string description, string displayName, BinaryData metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Template Spec display name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </summary>
-        public object Metadata { get; set; }
+        public BinaryData Metadata { get; set; }
         /// <summary> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </summary>
         public IReadOnlyDictionary<string, TemplateSpecVersionInfo> Versions { get; }
     }

@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteSlotDiagnosticDetector and their operations over its parent. </summary>
-    public partial class SiteSlotDiagnosticDetectorCollection : ArmCollection, IEnumerable<SiteSlotDiagnosticDetector>, IAsyncEnumerable<SiteSlotDiagnosticDetector>
+    public partial class SiteSlotDiagnosticDetectorCollection : ArmCollection, IEnumerable<SiteSlotDiagnosticDetectorResource>, IAsyncEnumerable<SiteSlotDiagnosticDetectorResource>
     {
         private readonly ClientDiagnostics _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics;
         private readonly DiagnosticsRestOperations _siteSlotDiagnosticDetectorDiagnosticsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotDiagnosticDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticDetector.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteSlotDiagnosticDetector.ResourceType, out string siteSlotDiagnosticDetectorDiagnosticsApiVersion);
-            _siteSlotDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticDetectorDiagnosticsApiVersion);
+            _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticDetectorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotDiagnosticDetectorResource.ResourceType, out string siteSlotDiagnosticDetectorDiagnosticsApiVersion);
+            _siteSlotDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlotDiagnostic.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotDiagnostic.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotDiagnosticResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotDiagnosticResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotDiagnosticDetector>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticDetectorResource>> GetAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, detectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticDetector(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteSlotDiagnosticDetector> Get(string detectorName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDiagnosticDetectorResource> Get(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, detectorName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticDetector(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDetectorsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotDiagnosticDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteSlotDiagnosticDetector> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteSlotDiagnosticDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteSlotDiagnosticDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotDiagnosticDetector>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteSlotDiagnosticDetectorResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteSlotDiagnosticDetector>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteSlotDiagnosticDetectorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteSlotDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_ListSiteDetectorsSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotDiagnosticDetector" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteSlotDiagnosticDetector> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteSlotDiagnosticDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteSlotDiagnosticDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotDiagnosticDetector> FirstPageFunc(int? pageSizeHint)
+            Page<SiteSlotDiagnosticDetectorResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +173,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteSlotDiagnosticDetector> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteSlotDiagnosticDetectorResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteSlotDiagnosticDetectorDiagnosticsRestClient.ListSiteDetectorsSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetector(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotDiagnosticDetectorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotDiagnosticDetector>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticDetectorResource>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -265,8 +264,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, detectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotDiagnosticDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticDetector(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotDiagnosticDetectorResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
-        public virtual Response<SiteSlotDiagnosticDetector> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotDiagnosticDetectorResource> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
@@ -294,8 +293,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, detectorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotDiagnosticDetector>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticDetector(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotDiagnosticDetectorResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteSlotDiagnosticDetector> IEnumerable<SiteSlotDiagnosticDetector>.GetEnumerator()
+        IEnumerator<SiteSlotDiagnosticDetectorResource> IEnumerable<SiteSlotDiagnosticDetectorResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteSlotDiagnosticDetector> IAsyncEnumerable<SiteSlotDiagnosticDetector>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteSlotDiagnosticDetectorResource> IAsyncEnumerable<SiteSlotDiagnosticDetectorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

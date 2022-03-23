@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -33,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotHybridConnectionNamespaceRelayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotHybridConnectionNamespaceRelayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridConnectionNamespaceRelay.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteSlotHybridConnectionNamespaceRelay.ResourceType, out string siteSlotHybridConnectionNamespaceRelayWebAppsApiVersion);
-            _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotHybridConnectionNamespaceRelayWebAppsApiVersion);
+            _siteSlotHybridConnectionNamespaceRelayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotHybridConnectionNamespaceRelayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotHybridConnectionNamespaceRelayResource.ResourceType, out string siteSlotHybridConnectionNamespaceRelayWebAppsApiVersion);
+            _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotHybridConnectionNamespaceRelayWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,8 +42,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteSlotHybridConnectionNamespaceRelay>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, connectionEnvelope, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelay>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="relayName"/> or <paramref name="connectionEnvelope"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotHybridConnectionNamespaceRelay> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotHybridConnectionNamespaceRelayResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, string relayName, HybridConnectionData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, connectionEnvelope, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelay>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelay>> GetAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelayResource>> GetAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual Response<SiteSlotHybridConnectionNamespaceRelay> Get(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotHybridConnectionNamespaceRelayResource> Get(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelay>> GetIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotHybridConnectionNamespaceRelayResource>> GetIfExistsAsync(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -258,8 +257,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotHybridConnectionNamespaceRelayResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
-        public virtual Response<SiteSlotHybridConnectionNamespaceRelay> GetIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotHybridConnectionNamespaceRelayResource> GetIfExists(string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
             Argument.AssertNotNullOrEmpty(relayName, nameof(relayName));
@@ -289,8 +288,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.GetHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotHybridConnectionNamespaceRelay>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelay(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotHybridConnectionNamespaceRelayResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

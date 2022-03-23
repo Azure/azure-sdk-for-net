@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Name = CdnSkuName.StandardMicrosoft
         });
 
-        public static void AssertValidProfile(Profile model, Profile getResult)
+        public static void AssertValidProfile(ProfileResource model, ProfileResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.FrontdoorId, getResult.Data.FrontdoorId);
         }
 
-        public static void AssertProfileUpdate(Profile updatedProfile, string key, string value)
+        public static void AssertProfileUpdate(ProfileResource updatedProfile, string key, string value)
         {
             Assert.GreaterOrEqual(updatedProfile.Data.Tags.Count, 1);
             Assert.IsTrue(updatedProfile.Data.Tags.ContainsKey(key));
             Assert.AreEqual(updatedProfile.Data.Tags[key], value);
         }
 
-        public static void AssertValidEndpoint(CdnEndpoint model, CdnEndpoint getResult)
+        public static void AssertValidEndpoint(CdnEndpointResource model, CdnEndpointResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ContentTypesToCompress, GeoFilters, DefaultOriginGroup, UrlSigningKeys, DeliveryPolicy, WebApplicationFirewallPolicyLink, Origins, OriginGroups
         }
 
-        public static void AssertEndpointUpdate(CdnEndpoint updatedEndpoint, PatchableCdnEndpointData updateOptions)
+        public static void AssertEndpointUpdate(CdnEndpointResource updatedEndpoint, PatchableCdnEndpointData updateOptions)
         {
             Assert.AreEqual(updatedEndpoint.Data.IsHttpAllowed, updateOptions.IsHttpAllowed);
             Assert.AreEqual(updatedEndpoint.Data.OriginPath, updateOptions.OriginPath);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         //    }
         //}
 
-        public static void AssertValidOrigin(CdnOrigin model, CdnOrigin getResult)
+        public static void AssertValidOrigin(CdnOriginResource model, CdnOriginResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.PrivateEndpointStatus, getResult.Data.PrivateEndpointStatus);
         }
 
-        public static void AssertOriginUpdate(CdnOrigin updatedOrigin, PatchableCdnOriginData updateOptions)
+        public static void AssertOriginUpdate(CdnOriginResource updatedOrigin, PatchableCdnOriginData updateOptions)
         {
             Assert.AreEqual(updatedOrigin.Data.HttpPort, updateOptions.HttpPort);
             Assert.AreEqual(updatedOrigin.Data.HttpsPort, updateOptions.HttpsPort);
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         //    Assert.AreEqual(updatedAfdOrigin.Data.Weight, updateOptions.Weight);
         //}
 
-        public static void AssertValidOriginGroup(CdnOriginGroup model, CdnOriginGroup getResult)
+        public static void AssertValidOriginGroup(CdnOriginGroupResource model, CdnOriginGroupResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: ResponseBasedOriginErrorDetectionSettings
         }
 
-        public static void AssertOriginGroupUpdate(CdnOriginGroup updatedOriginGroup, PatchableCdnOriginGroupData updateOptions)
+        public static void AssertOriginGroupUpdate(CdnOriginGroupResource updatedOriginGroup, PatchableCdnOriginGroupData updateOptions)
         {
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbePath, updateOptions.HealthProbeSettings.ProbePath);
             Assert.AreEqual(updatedOriginGroup.Data.HealthProbeSettings.ProbeRequestType, updateOptions.HealthProbeSettings.ProbeRequestType);
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         //    Assert.AreEqual(updatedAfdOriginGroup.Data.LoadBalancingSettings.AdditionalLatencyInMilliseconds, updateOptions.LoadBalancingSettings.AdditionalLatencyInMilliseconds);
         //}
 
-        public static void AssertValidCustomDomain(CdnCustomDomain model, CdnCustomDomain getResult)
+        public static void AssertValidCustomDomain(CdnCustomDomainResource model, CdnCustomDomainResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         //    Assert.AreEqual(((SecurityPolicyWebApplicationFirewallParameters)updatedSecurityPolicy.Data.Parameters).Associations[0].Domains.Count, 2);
         //}
 
-        public static void AssertValidPolicy(CdnWebApplicationFirewallPolicy model, CdnWebApplicationFirewallPolicy getResult)
+        public static void AssertValidPolicy(CdnWebApplicationFirewallPolicyResource model, CdnWebApplicationFirewallPolicyResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             //Todo: PolicySettings, RateLimitRules, CustomRules, ManagedRules, EndpointLinks
         }
 
-        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicy updatedPolicy, string key, string value)
+        public static void AssertPolicyUpdate(CdnWebApplicationFirewallPolicyResource updatedPolicy, string key, string value)
         {
             Assert.GreaterOrEqual(updatedPolicy.Data.Tags.Count, 1);
             Assert.IsTrue(updatedPolicy.Data.Tags.ContainsKey(key));

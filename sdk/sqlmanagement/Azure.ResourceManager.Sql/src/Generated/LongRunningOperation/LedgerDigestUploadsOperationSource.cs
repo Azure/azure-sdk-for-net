@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class LedgerDigestUploadsOperationSource : IOperationSource<LedgerDigestUploads>
+    internal class LedgerDigestUploadsOperationSource : IOperationSource<LedgerDigestUploadsResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        LedgerDigestUploads IOperationSource<LedgerDigestUploads>.CreateResult(Response response, CancellationToken cancellationToken)
+        LedgerDigestUploadsResource IOperationSource<LedgerDigestUploadsResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(document.RootElement);
-            return new LedgerDigestUploads(_client, data);
+            return new LedgerDigestUploadsResource(_client, data);
         }
 
-        async ValueTask<LedgerDigestUploads> IOperationSource<LedgerDigestUploads>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LedgerDigestUploadsResource> IOperationSource<LedgerDigestUploadsResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LedgerDigestUploadsData.DeserializeLedgerDigestUploadsData(document.RootElement);
-            return new LedgerDigestUploads(_client, data);
+            return new LedgerDigestUploadsResource(_client, data);
         }
     }
 }

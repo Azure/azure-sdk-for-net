@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     /// <summary> A class representing collection of VMwareDatastore and their operations over its parent. </summary>
-    public partial class VMwareDatastoreCollection : ArmCollection, IEnumerable<VMwareDatastore>, IAsyncEnumerable<VMwareDatastore>
+    public partial class VMwareDatastoreCollection : ArmCollection, IEnumerable<VMwareDatastoreResource>, IAsyncEnumerable<VMwareDatastoreResource>
     {
         private readonly ClientDiagnostics _vMwareDatastoreDatastoresClientDiagnostics;
         private readonly DatastoresRestOperations _vMwareDatastoreDatastoresRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VMwareDatastoreCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vMwareDatastoreDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareDatastore.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(VMwareDatastore.ResourceType, out string vMwareDatastoreDatastoresApiVersion);
-            _vMwareDatastoreDatastoresRestClient = new DatastoresRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vMwareDatastoreDatastoresApiVersion);
+            _vMwareDatastoreDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedVMwarevSphere", VMwareDatastoreResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VMwareDatastoreResource.ResourceType, out string vMwareDatastoreDatastoresApiVersion);
+            _vMwareDatastoreDatastoresRestClient = new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vMwareDatastoreDatastoresApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual async Task<ArmOperation<VMwareDatastore>> CreateOrUpdateAsync(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VMwareDatastoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
 
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vMwareDatastoreDatastoresRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastore>(new VMwareDatastoreOperationSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastoreResource>(new VMwareDatastoreOperationSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual ArmOperation<VMwareDatastore> CreateOrUpdate(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VMwareDatastoreResource> CreateOrUpdate(WaitUntil waitUntil, string datastoreName, VMwareDatastoreData body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
 
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vMwareDatastoreDatastoresRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastore>(new VMwareDatastoreOperationSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ConnectedVMwarevSphereArmOperation<VMwareDatastoreResource>(new VMwareDatastoreOperationSource(Client), _vMwareDatastoreDatastoresClientDiagnostics, Pipeline, _vMwareDatastoreDatastoresRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, body).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual async Task<Response<VMwareDatastore>> GetAsync(string datastoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VMwareDatastoreResource>> GetAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
 
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = await _vMwareDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareDatastore(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual Response<VMwareDatastore> Get(string datastoreName, CancellationToken cancellationToken = default)
+        public virtual Response<VMwareDatastoreResource> Get(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
 
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 var response = _vMwareDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VMwareDatastore(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,17 +178,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: Datastores_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VMwareDatastore> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VMwareDatastoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<VMwareDatastore>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<VMwareDatastoreResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vMwareDatastoreDatastoresRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -197,14 +196,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            async Task<Page<VMwareDatastore>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<VMwareDatastoreResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _vMwareDatastoreDatastoresRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -221,17 +220,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// Operation Id: Datastores_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VMwareDatastore" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VMwareDatastore> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VMwareDatastoreResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<VMwareDatastore> FirstPageFunc(int? pageSizeHint)
+            Page<VMwareDatastoreResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vMwareDatastoreDatastoresRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -239,14 +238,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     throw;
                 }
             }
-            Page<VMwareDatastore> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<VMwareDatastoreResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _vMwareDatastoreDatastoresRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastore(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new VMwareDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual async Task<Response<VMwareDatastore>> GetIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VMwareDatastoreResource>> GetIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
 
@@ -330,8 +329,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = await _vMwareDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<VMwareDatastore>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareDatastore(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VMwareDatastoreResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
-        public virtual Response<VMwareDatastore> GetIfExists(string datastoreName, CancellationToken cancellationToken = default)
+        public virtual Response<VMwareDatastoreResource> GetIfExists(string datastoreName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
 
@@ -359,8 +358,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 var response = _vMwareDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, datastoreName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<VMwareDatastore>(null, response.GetRawResponse());
-                return Response.FromValue(new VMwareDatastore(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<VMwareDatastoreResource>(null, response.GetRawResponse());
+                return Response.FromValue(new VMwareDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
-        IEnumerator<VMwareDatastore> IEnumerable<VMwareDatastore>.GetEnumerator()
+        IEnumerator<VMwareDatastoreResource> IEnumerable<VMwareDatastoreResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VMwareDatastore> IAsyncEnumerable<VMwareDatastore>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<VMwareDatastoreResource> IAsyncEnumerable<VMwareDatastoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// Alert rule. 
+    /// Alert rule.
     /// </summary>
     public partial class AlertRule : ResourceWithEtag
     {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ApplicationDefinition data model. </summary>
-    public partial class ApplicationDefinitionData : ApplicationResource
+    public partial class ApplicationDefinitionData : Models.ApplicationResource
     {
         /// <summary> Initializes a new instance of ApplicationDefinitionData. </summary>
         /// <param name="location"> The location. </param>
@@ -50,7 +50,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
+<<<<<<< HEAD
         internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, object mainTemplate, object createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicy lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+=======
+        internal ApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ApplicationAuthorization> authorizations, IList<ApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ApplicationNotificationPolicy notificationPolicy, ApplicationPackageLockingPolicyDefinition lockingPolicy, ApplicationDeploymentPolicy deploymentPolicy, ApplicationManagementPolicy managementPolicy, IList<ApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+>>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -83,9 +87,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application definition package file Uri. Use this element. </summary>
         public Uri PackageFileUri { get; set; }
         /// <summary> The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string. </summary>
-        public object MainTemplate { get; set; }
+        public BinaryData MainTemplate { get; set; }
         /// <summary> The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string. </summary>
-        public object CreateUiDefinition { get; set; }
+        public BinaryData CreateUiDefinition { get; set; }
         /// <summary> The managed application notification policy. </summary>
         internal ApplicationNotificationPolicy NotificationPolicy { get; set; }
         /// <summary> The managed application notification endpoint. </summary>

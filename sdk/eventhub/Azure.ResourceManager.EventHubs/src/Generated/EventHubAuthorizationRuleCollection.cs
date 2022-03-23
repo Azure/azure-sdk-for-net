@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A class representing collection of EventHubAuthorizationRule and their operations over its parent. </summary>
-    public partial class EventHubAuthorizationRuleCollection : ArmCollection, IEnumerable<EventHubAuthorizationRule>, IAsyncEnumerable<EventHubAuthorizationRule>
+    public partial class EventHubAuthorizationRuleCollection : ArmCollection, IEnumerable<EventHubAuthorizationRuleResource>, IAsyncEnumerable<EventHubAuthorizationRuleResource>
     {
         private readonly ClientDiagnostics _eventHubAuthorizationRuleEventHubsClientDiagnostics;
         private readonly EventHubsRestOperations _eventHubAuthorizationRuleEventHubsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EventHubAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventHubAuthorizationRuleEventHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubAuthorizationRule.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(EventHubAuthorizationRule.ResourceType, out string eventHubAuthorizationRuleEventHubsApiVersion);
-            _eventHubAuthorizationRuleEventHubsRestClient = new EventHubsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, eventHubAuthorizationRuleEventHubsApiVersion);
+            _eventHubAuthorizationRuleEventHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EventHubAuthorizationRuleResource.ResourceType, out string eventHubAuthorizationRuleEventHubsApiVersion);
+            _eventHubAuthorizationRuleEventHubsRestClient = new EventHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubAuthorizationRuleEventHubsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != EventHub.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHub.ResourceType), nameof(id));
+            if (id.ResourceType != EventHubResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHubResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<EventHubAuthorizationRule>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubAuthorizationRuleEventHubsRestClient.CreateOrUpdateAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubAuthorizationRule>(Response.FromValue(new EventHubAuthorizationRule(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubAuthorizationRuleResource>(Response.FromValue(new EventHubAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<EventHubAuthorizationRule> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, AuthorizationRuleData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubAuthorizationRuleEventHubsRestClient.CreateOrUpdateAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, parameters, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubAuthorizationRule>(Response.FromValue(new EventHubAuthorizationRule(Client, response), response.GetRawResponse()));
+                var operation = new EventHubsArmOperation<EventHubAuthorizationRuleResource>(Response.FromValue(new EventHubAuthorizationRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual async Task<Response<EventHubAuthorizationRule>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = await _eventHubAuthorizationRuleEventHubsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<EventHubAuthorizationRule> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
                 var response = _eventHubAuthorizationRuleEventHubsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new EventHubAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +179,17 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: EventHubs_ListAuthorizationRules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventHubAuthorizationRule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventHubAuthorizationRule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventHubAuthorizationRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _eventHubAuthorizationRuleEventHubsClientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _eventHubAuthorizationRuleEventHubsRestClient.ListAuthorizationRulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +197,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            async Task<Page<EventHubAuthorizationRule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<EventHubAuthorizationRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _eventHubAuthorizationRuleEventHubsClientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _eventHubAuthorizationRuleEventHubsRestClient.ListAuthorizationRulesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +221,17 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: EventHubs_ListAuthorizationRules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubAuthorizationRule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventHubAuthorizationRule> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<EventHubAuthorizationRule> FirstPageFunc(int? pageSizeHint)
+            Page<EventHubAuthorizationRuleResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _eventHubAuthorizationRuleEventHubsClientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _eventHubAuthorizationRuleEventHubsRestClient.ListAuthorizationRules(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +239,14 @@ namespace Azure.ResourceManager.EventHubs
                     throw;
                 }
             }
-            Page<EventHubAuthorizationRule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<EventHubAuthorizationRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _eventHubAuthorizationRuleEventHubsClientDiagnostics.CreateScope("EventHubAuthorizationRuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _eventHubAuthorizationRuleEventHubsRestClient.ListAuthorizationRulesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new EventHubAuthorizationRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual async Task<Response<EventHubAuthorizationRule>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -331,8 +330,8 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _eventHubAuthorizationRuleEventHubsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<EventHubAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new EventHubAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<EventHubAuthorizationRuleResource>(null, response.GetRawResponse());
+                return Response.FromValue(new EventHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
-        public virtual Response<EventHubAuthorizationRule> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
@@ -360,8 +359,8 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _eventHubAuthorizationRuleEventHubsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<EventHubAuthorizationRule>(null, response.GetRawResponse());
-                return Response.FromValue(new EventHubAuthorizationRule(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<EventHubAuthorizationRuleResource>(null, response.GetRawResponse());
+                return Response.FromValue(new EventHubAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        IEnumerator<EventHubAuthorizationRule> IEnumerable<EventHubAuthorizationRule>.GetEnumerator()
+        IEnumerator<EventHubAuthorizationRuleResource> IEnumerable<EventHubAuthorizationRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<EventHubAuthorizationRule> IAsyncEnumerable<EventHubAuthorizationRule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<EventHubAuthorizationRuleResource> IAsyncEnumerable<EventHubAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

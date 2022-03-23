@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of TenantPolicyDefinition and their operations over its parent. </summary>
-    public partial class TenantPolicyDefinitionCollection : ArmCollection, IEnumerable<TenantPolicyDefinition>, IAsyncEnumerable<TenantPolicyDefinition>
+    public partial class TenantPolicyDefinitionCollection : ArmCollection, IEnumerable<TenantPolicyDefinitionResource>, IAsyncEnumerable<TenantPolicyDefinitionResource>
     {
         private readonly ClientDiagnostics _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics;
         private readonly PolicyDefinitionsRestOperations _tenantPolicyDefinitionPolicyDefinitionsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal TenantPolicyDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantPolicyDefinition.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(TenantPolicyDefinition.ResourceType, out string tenantPolicyDefinitionPolicyDefinitionsApiVersion);
-            _tenantPolicyDefinitionPolicyDefinitionsRestClient = new PolicyDefinitionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantPolicyDefinitionPolicyDefinitionsApiVersion);
+            _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantPolicyDefinitionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(TenantPolicyDefinitionResource.ResourceType, out string tenantPolicyDefinitionPolicyDefinitionsApiVersion);
+            _tenantPolicyDefinitionPolicyDefinitionsRestClient = new PolicyDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantPolicyDefinitionPolicyDefinitionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Tenant.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Tenant.ResourceType), nameof(id));
+            if (id.ResourceType != TenantResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<TenantPolicyDefinition>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicyDefinitionResource>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltInAsync(policyDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<TenantPolicyDefinition> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicyDefinitionResource> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltIn(policyDefinitionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,17 +115,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TenantPolicyDefinition> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TenantPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TenantPolicyDefinitionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TenantPolicyDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TenantPolicyDefinitionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.ListBuiltInAsync(filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -134,14 +133,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<TenantPolicyDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TenantPolicyDefinitionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.ListBuiltInNextPageAsync(nextLink, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -160,17 +159,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atExactScope()&apos;, &apos;policyType -eq {value}&apos; or &apos;category eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atExactScope() is provided, the returned list only includes all policy definitions that at the given scope. If $filter=&apos;policyType -eq {value}&apos; is provided, the returned list only includes all policy definitions whose type match the {value}. Possible policyType values are NotSpecified, BuiltIn, Custom, and Static. If $filter=&apos;category -eq {value}&apos; is provided, the returned list only includes all policy definitions whose category match the {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantPolicyDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TenantPolicyDefinition> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TenantPolicyDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TenantPolicyDefinitionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<TenantPolicyDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<TenantPolicyDefinitionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.ListBuiltIn(filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -178,14 +177,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<TenantPolicyDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TenantPolicyDefinitionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.ListBuiltInNextPage(nextLink, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinition(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TenantPolicyDefinitionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual async Task<Response<TenantPolicyDefinition>> GetIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantPolicyDefinitionResource>> GetIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -269,8 +268,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltInAsync(policyDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<TenantPolicyDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<TenantPolicyDefinitionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        public virtual Response<TenantPolicyDefinition> GetIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantPolicyDefinitionResource> GetIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
@@ -298,8 +297,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _tenantPolicyDefinitionPolicyDefinitionsRestClient.GetBuiltIn(policyDefinitionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<TenantPolicyDefinition>(null, response.GetRawResponse());
-                return Response.FromValue(new TenantPolicyDefinition(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<TenantPolicyDefinitionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new TenantPolicyDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,7 +307,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<TenantPolicyDefinition> IEnumerable<TenantPolicyDefinition>.GetEnumerator()
+        IEnumerator<TenantPolicyDefinitionResource> IEnumerable<TenantPolicyDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<TenantPolicyDefinition> IAsyncEnumerable<TenantPolicyDefinition>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<TenantPolicyDefinitionResource> IAsyncEnumerable<TenantPolicyDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
