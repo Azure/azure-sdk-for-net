@@ -4,6 +4,8 @@ The Azure IoT Models Repository Client enables builders to manage and share digi
 
 For more info about the Azure IoT Models Repository checkout the [docs][modelsrepository_msdocs].
 
+>Note: The models repository is also referred as DMR (DTDL Models Repository)
+
 ## Introduction
 
 You can explore the models repository APIs with the client library using the samples project.
@@ -38,7 +40,7 @@ Console.WriteLine($"Initialized client pointing to a local path: {client.Reposit
 
 ### Repository metadata
 
-Models repositories that implement Device Model Repository conventions can **optionally** include a `metadata.json` file at the root of the repository.
+Models repositories that implement [DMR conventions](https://github.com/Azure/iot-plugandplay-models-tools/wiki/Resolution-Convention) can **optionally** include a `metadata.json` file at the root of the repository.
 The `metadata.json` file provides key attributes of a repository including the features that it provides.
 A client can use the repository metadata to make decisions around how to optimally handle an operation.
 
@@ -89,7 +91,7 @@ ModelResult result = await client.GetModelAsync(dtmi);
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
-GitHub pull-request workflows are a core aspect of the Device Models Repository service. To submit models, the user is expected to fork and clone the global [models repository project][modelsrepository_github_repo] then iterate against the local copy. Changes would then be pushed to the fork (ideally in a new branch) and a PR created against the global repository.
+GitHub pull-request workflows are a core aspect of the DMR service. To submit models, the user is expected to fork and clone the global [models repository project][modelsrepository_github_repo] then iterate against the local copy. Changes would then be pushed to the fork (ideally in a new branch) and a PR created against the global repository.
 
 To support this workflow and similar use cases, the client supports initialization with a local file-system URI. You can use this for example, to test and ensure newly added models to the locally cloned models repository are in their proper locations.
 
@@ -132,7 +134,7 @@ Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 
 The samples provide two different patterns to integrate with the DTDL Parser.
 
-The following snippet shows first fetching model definitions from the Device Models Repository then parsing them.
+The following snippet shows first fetching model definitions from the DMR then parsing them.
 
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
 var client = new ModelsRepositoryClient();
@@ -161,7 +163,7 @@ Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {p
 
 ## DtmiConventions utility functions
 
-The Device Models Repository applies a set of conventions for organizing DTDL models. This package exposes a class
+The DMR applies a set of conventions for organizing DTDL models. This package exposes a class
 called `DtmiConventions` which exposes utility functions supporting these conventions. These same functions are used throughout the client.
 
 ```C# Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
