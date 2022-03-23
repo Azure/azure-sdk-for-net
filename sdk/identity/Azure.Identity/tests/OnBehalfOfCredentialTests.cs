@@ -98,26 +98,8 @@ namespace Azure.Identity.Tests
         public async Task SendCertificateChain([Values(true, false)] bool sendCertChain)
         {
             TestSetup();
-            var _transport = new MockTransport((req) =>
-            {
-                // respond to tenant discovery
-                if (req.Uri.Path.StartsWith("/common/discovery"))
-                {
-                    return new MockResponse(200).SetContent(DiscoveryResponseBody);
-                }
-                // respond to token request
-                if (req.Uri.Path.EndsWith("/token"))
-                {
-                    Assert.That(sendCertChain, Is.EqualTo(RequestBodyHasUserAssertionWithHeader(req, "x5c")));
-                    return new MockResponse(200).WithContent(
-                        $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{expectedToken}\" }}");
-                }
-
-                return new MockResponse(200);
-            });
-            var _pipeline = new HttpPipeline(_transport,
-                new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
-            var context = new TokenRequestContext(new[] {Scope}, tenantId: TenantId);
+            var _transport = Createx5cValidatingTransport(sendCertChain);
+            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 

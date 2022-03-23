@@ -212,10 +212,9 @@ namespace Azure.Identity.Tests
         /// </summary>
         internal static readonly char[] s_base64Table =
         {
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-            'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-            'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            base64UrlCharacter62, base64UrlCharacter63
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+            'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+            'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', base64UrlCharacter62, base64UrlCharacter63
         };
 
         /// <summary>
@@ -378,5 +377,23 @@ namespace Azure.Identity.Tests
 
             return false;
         }
+
+        protected MockTransport Createx5cValidatingTransport(bool sendCertChain) => new MockTransport((req) =>
+        {
+            // respond to tenant discovery
+            if (req.Uri.Path.StartsWith("/common/discovery"))
+            {
+                return new MockResponse(200).SetContent(DiscoveryResponseBody);
+            }
+
+            // respond to token request
+            if (req.Uri.Path.EndsWith("/token"))
+            {
+                Assert.That(sendCertChain, Is.EqualTo(RequestBodyHasUserAssertionWithHeader(req, "x5c")));
+                return new MockResponse(200).WithContent(
+                        $"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{expectedToken}\" }}");
+            }
+            return new MockResponse(200);
+        });
     }
 }
