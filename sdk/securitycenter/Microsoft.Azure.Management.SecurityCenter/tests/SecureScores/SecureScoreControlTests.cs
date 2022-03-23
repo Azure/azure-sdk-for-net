@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.SecurityCenter.Tests.SecureScores
     public class SecureScoreControlTests : TestBase
     {
         #region Test setup
-        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
 
@@ -28,8 +27,6 @@ namespace Microsoft.Azure.Management.SecurityCenter.Tests.SecureScores
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

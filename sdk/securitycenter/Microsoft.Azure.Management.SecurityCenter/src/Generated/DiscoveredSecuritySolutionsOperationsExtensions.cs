@@ -56,9 +56,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<DiscoveredSecuritySolution> ListByHomeRegion(this IDiscoveredSecuritySolutionsOperations operations)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static IPage<DiscoveredSecuritySolution> ListByHomeRegion(this IDiscoveredSecuritySolutionsOperations operations, string ascLocation)
             {
-                return operations.ListByHomeRegionAsync().GetAwaiter().GetResult();
+                return operations.ListByHomeRegionAsync(ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -68,12 +72,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DiscoveredSecuritySolution>> ListByHomeRegionAsync(this IDiscoveredSecuritySolutionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DiscoveredSecuritySolution>> ListByHomeRegionAsync(this IDiscoveredSecuritySolutionsOperations operations, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -89,12 +97,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='discoveredSecuritySolutionName'>
             /// Name of a discovered security solution.
             /// </param>
-            public static DiscoveredSecuritySolution Get(this IDiscoveredSecuritySolutionsOperations operations, string resourceGroupName, string discoveredSecuritySolutionName)
+            public static DiscoveredSecuritySolution Get(this IDiscoveredSecuritySolutionsOperations operations, string resourceGroupName, string ascLocation, string discoveredSecuritySolutionName)
             {
-                return operations.GetAsync(resourceGroupName, discoveredSecuritySolutionName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, ascLocation, discoveredSecuritySolutionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,15 +119,19 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='discoveredSecuritySolutionName'>
             /// Name of a discovered security solution.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DiscoveredSecuritySolution> GetAsync(this IDiscoveredSecuritySolutionsOperations operations, string resourceGroupName, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DiscoveredSecuritySolution> GetAsync(this IDiscoveredSecuritySolutionsOperations operations, string resourceGroupName, string ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, discoveredSecuritySolutionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, ascLocation, discoveredSecuritySolutionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

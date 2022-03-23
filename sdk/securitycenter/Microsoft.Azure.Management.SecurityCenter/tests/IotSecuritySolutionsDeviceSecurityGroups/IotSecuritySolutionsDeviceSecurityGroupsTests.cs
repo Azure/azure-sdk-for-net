@@ -19,7 +19,6 @@ namespace SecurityCenter.Tests
         private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
         private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
         private static readonly string IotHubName = "SDK-IotHub-CUS";
-        private static readonly string AscLocation = "centralus";
         private static readonly string IotHubResourceId =
                 $"/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Devices/IotHubs/{IotHubName}";
         private static readonly string DeviceSecurityGroupName = "TestDeviceSecurityGroupName";
@@ -37,8 +36,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

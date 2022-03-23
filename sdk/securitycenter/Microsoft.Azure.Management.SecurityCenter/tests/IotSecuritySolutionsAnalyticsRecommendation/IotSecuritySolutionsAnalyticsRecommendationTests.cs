@@ -21,7 +21,6 @@ namespace SecurityCenter.Tests
         private static readonly string AggregatedRecommendationName = "IoT_OpenPorts";
         private static readonly string ResourceGroupName = "ResourceGroup-CUS";
         private static readonly string SolutionName = "IotHub-CUS";
-        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
 
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
@@ -37,8 +36,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

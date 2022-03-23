@@ -252,6 +252,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Gets an application control VM/server group.
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='groupName'>
         /// Name of an application control machine group
         /// </param>
@@ -276,7 +280,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> GetWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> GetWithHttpMessagesAsync(string ascLocation, string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -289,9 +293,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (groupName == null)
             {
@@ -305,6 +309,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -314,7 +319,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -449,6 +454,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Update an application control machine group
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='groupName'>
         /// Name of an application control machine group
         /// </param>
@@ -475,7 +484,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> PutWithHttpMessagesAsync(string groupName, AdaptiveApplicationControlGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AdaptiveApplicationControlGroup>> PutWithHttpMessagesAsync(string ascLocation, string groupName, AdaptiveApplicationControlGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -488,9 +497,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (groupName == null)
             {
@@ -508,6 +517,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("body", body);
@@ -518,7 +528,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -659,6 +669,10 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Delete an application control machine group
         /// </summary>
+        /// <param name='ascLocation'>
+        /// The location where ASC stores the data of the subscription. can be
+        /// retrieved from Get locations
+        /// </param>
         /// <param name='groupName'>
         /// Name of an application control machine group
         /// </param>
@@ -680,7 +694,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string ascLocation, string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -693,9 +707,9 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            if (Client.AscLocation == null)
+            if (ascLocation == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
+                throw new ValidationException(ValidationRules.CannotBeNull, "ascLocation");
             }
             if (groupName == null)
             {
@@ -709,6 +723,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("ascLocation", ascLocation);
                 tracingParameters.Add("groupName", groupName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -718,7 +733,7 @@ namespace Microsoft.Azure.Management.Security
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(Client.AscLocation));
+            _url = _url.Replace("{ascLocation}", System.Uri.EscapeDataString(ascLocation));
             _url = _url.Replace("{groupName}", System.Uri.EscapeDataString(groupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)

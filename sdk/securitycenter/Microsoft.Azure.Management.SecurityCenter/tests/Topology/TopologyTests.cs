@@ -15,6 +15,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        private const string _ascLocation = "westcentralus";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -27,8 +29,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = "westcentralus";
 
             return securityCenterClient;
         }
@@ -53,7 +53,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var topologyResource = securityCenterClient.Topology.Get("MyResourceGroup", "virtualNetworks");
+                var topologyResource = securityCenterClient.Topology.Get("MyResourceGroup", _ascLocation, "virtualNetworks");
                 ValidateTopologyResource(topologyResource);
             }
         }

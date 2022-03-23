@@ -19,6 +19,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        private const string _ascLocation = "centralus";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -31,8 +33,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = "centralus";
 
             return securityCenterClient;
         }
@@ -58,7 +58,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendation = securityCenterClient.Tasks.GetResourceGroupLevelTask("myService1", "dcfb6365-799e-5ed4-f344-d86a0a4c2992");
+                var recommendation = securityCenterClient.Tasks.GetResourceGroupLevelTask("myService1", _ascLocation, "dcfb6365-799e-5ed4-f344-d86a0a4c2992");
                 ValidateTask(recommendation);
             }
         }
@@ -69,7 +69,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendation = securityCenterClient.Tasks.GetSubscriptionLevelTask("08357a1e-c534-756f-cbb9-7b45e73f3137");
+                var recommendation = securityCenterClient.Tasks.GetSubscriptionLevelTask(_ascLocation, "08357a1e-c534-756f-cbb9-7b45e73f3137");
                 ValidateTask(recommendation);
             }
         }
@@ -80,7 +80,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendations = securityCenterClient.Tasks.ListByHomeRegion();
+                var recommendations = securityCenterClient.Tasks.ListByHomeRegion(_ascLocation);
                 ValidateTasks(recommendations);
             }
         }
@@ -91,7 +91,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendations = securityCenterClient.Tasks.ListByResourceGroup("myService1");
+                var recommendations = securityCenterClient.Tasks.ListByResourceGroup("myService1", _ascLocation);
                 ValidateTasks(recommendations);
             }
         }
@@ -102,7 +102,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.Tasks.UpdateResourceGroupLevelTaskState("myService1", "dcfb6365-799e-5ed4-f344-d86a0a4c2992", "Dismiss");
+                securityCenterClient.Tasks.UpdateResourceGroupLevelTaskState("myService1", _ascLocation, "dcfb6365-799e-5ed4-f344-d86a0a4c2992", "Dismiss");
             }
         }
 
@@ -112,7 +112,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.Tasks.UpdateSubscriptionLevelTaskState("08357a1e-c534-756f-cbb9-7b45e73f3137", "Dismiss");
+                securityCenterClient.Tasks.UpdateSubscriptionLevelTaskState(_ascLocation, "08357a1e-c534-756f-cbb9-7b45e73f3137", "Dismiss");
             }
         }
 

@@ -20,7 +20,6 @@ namespace SecurityCenter.Tests
         private static readonly string ResourceGroupName = "subAssessments_sdk_tests";
         // A maximum of 3 owners should be designated for your subscription
         private static readonly string AssessmentName = "6f90a6d6-d4d6-0794-0ec1-98fa77878c2e";
-        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
 
@@ -36,8 +35,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }
@@ -120,7 +117,7 @@ namespace SecurityCenter.Tests
                     }
                 };
 
-                var assessmentMetadata = new SecurityAssessmentMetadata()
+                var assessmentMetadata = new SecurityAssessmentMetadataResponse()
                 {
                     DisplayName = "Customer managed metadata",
                     Description = "Customer managed description",
@@ -139,7 +136,7 @@ namespace SecurityCenter.Tests
         #endregion
 
         #region Validations
-        private static void Validate(IPage<SecurityAssessment> ret)
+        private static void Validate(IPage<SecurityAssessmentResponse> ret)
         {
             Assert.True(ret.IsAny(), "Got empty list");
             foreach (var item in ret)
@@ -153,7 +150,7 @@ namespace SecurityCenter.Tests
         /// assignable means not null: serialization \ deserialization was successful
         /// </summary>
         /// <param name="ret"></param>
-        private static void ValidateResourceDetails(IPage<SecurityAssessment> ret)
+        private static void ValidateResourceDetails(IPage<SecurityAssessmentResponse> ret)
         {
             foreach (var item in ret)
             {
@@ -166,7 +163,7 @@ namespace SecurityCenter.Tests
         /// assignable means not null: serialization \ deserialization was successful
         /// </summary>
         /// <param name="item"></param>
-        private static void ValidateResourceDetails(SecurityAssessment item)
+        private static void ValidateResourceDetails(SecurityAssessmentResponse item)
         {
             Assert.NotNull(item);
             ValidateResourceDetails(item.ResourceDetails);

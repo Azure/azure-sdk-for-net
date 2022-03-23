@@ -23,7 +23,6 @@ namespace SecurityCenter.Tests
         private static readonly string AssessmentName = "dbd0cb49-b563-45e7-9724-889e799fa648";
         // auto-generated
         private static readonly string SubAssessmentName = "d1164a35-41e9-43aa-bbc7-bfb3ae093cea";
-        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
 
@@ -39,8 +38,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

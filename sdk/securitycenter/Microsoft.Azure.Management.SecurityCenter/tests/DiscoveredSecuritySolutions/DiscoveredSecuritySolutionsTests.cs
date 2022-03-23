@@ -19,6 +19,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        private const string _ascLocation = "centralus";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -32,7 +34,6 @@ namespace SecurityCenter.Tests
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
-            securityCenterClient.AscLocation = "centralus";
 
             return securityCenterClient;
         }
@@ -58,7 +59,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var discoveredSecuritySolution = securityCenterClient.DiscoveredSecuritySolutions.Get("myService1", "ContosoWAF2");
+                var discoveredSecuritySolution = securityCenterClient.DiscoveredSecuritySolutions.Get("myService1", _ascLocation, "ContosoWAF2");
                 ValidateDiscoveredSecuritySolution(discoveredSecuritySolution);
             }
         }
@@ -69,7 +70,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var discoveredSecuritySolutions = securityCenterClient.DiscoveredSecuritySolutions.ListByHomeRegion();
+                var discoveredSecuritySolutions = securityCenterClient.DiscoveredSecuritySolutions.ListByHomeRegion(_ascLocation);
                 ValidateDiscoveredSecuritySolutions(discoveredSecuritySolutions);
             }
         }

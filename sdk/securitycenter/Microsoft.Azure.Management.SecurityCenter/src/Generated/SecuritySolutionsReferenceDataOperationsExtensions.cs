@@ -56,9 +56,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static SecuritySolutionsReferenceDataList ListByHomeRegion(this ISecuritySolutionsReferenceDataOperations operations)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static SecuritySolutionsReferenceDataList ListByHomeRegion(this ISecuritySolutionsReferenceDataOperations operations, string ascLocation)
             {
-                return operations.ListByHomeRegionAsync().GetAwaiter().GetResult();
+                return operations.ListByHomeRegionAsync(ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -68,12 +72,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SecuritySolutionsReferenceDataList> ListByHomeRegionAsync(this ISecuritySolutionsReferenceDataOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SecuritySolutionsReferenceDataList> ListByHomeRegionAsync(this ISecuritySolutionsReferenceDataOperations operations, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByHomeRegionWithHttpMessagesAsync(ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -19,6 +19,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        private const string _ascLocation = "centralus";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -31,8 +33,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = "centralus";
 
             return securityCenterClient;
         }
@@ -58,7 +58,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var location = securityCenterClient.Locations.Get();
+                var location = securityCenterClient.Locations.Get(_ascLocation);
                 ValidateLocation(location);
             }
         }

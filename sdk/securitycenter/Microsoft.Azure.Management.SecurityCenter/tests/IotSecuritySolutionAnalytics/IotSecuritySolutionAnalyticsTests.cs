@@ -19,7 +19,6 @@ namespace SecurityCenter.Tests
 
         private static readonly string ResourceGroupName = "IOT-ResourceGroup-CUS";
         private static readonly string SolutionName = "securitySolution";
-        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
 
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
@@ -34,8 +33,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

@@ -20,6 +20,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        private const string _ascLocation = "northeurope";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -32,8 +34,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = "northeurope";
 
             return securityCenterClient;
         }
@@ -59,7 +59,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.JitNetworkAccessPolicies.Delete("mainWS", "default");
+                securityCenterClient.JitNetworkAccessPolicies.Delete("mainWS", _ascLocation, "default");
             }
         }
 
@@ -69,7 +69,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.Get("myService1", "default");
+                var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.Get("myService1", _ascLocation, "default");
                 ValidateJitNetworkAccessPolicy(jitNetworkAccessPolicy);
             }
         }
@@ -88,7 +88,7 @@ namespace SecurityCenter.Tests
                     }
                 };
                 var virtualMachines = new List<JitNetworkAccessPolicyInitiateVirtualMachine>() { vm };
-                securityCenterClient.JitNetworkAccessPolicies.Initiate("myService1", "default", virtualMachines);
+                securityCenterClient.JitNetworkAccessPolicies.Initiate("myService1", _ascLocation, "default", virtualMachines);
             }
         }
 
@@ -98,7 +98,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.ListByRegion();
+                var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.ListByRegion(_ascLocation);
             }
         }
 
@@ -115,7 +115,7 @@ namespace SecurityCenter.Tests
                     VirtualMachines = vm
                 };
 
-                var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.CreateOrUpdate("mainWS", "default", policy);
+                var jitNetworkAccessPolicy = securityCenterClient.JitNetworkAccessPolicies.CreateOrUpdate("mainWS", _ascLocation, "default", policy);
                 ValidateJitNetworkAccessPolicy(jitNetworkAccessPolicy);
             }
         }
@@ -137,7 +137,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var jitNetworkAccessPolicies = securityCenterClient.JitNetworkAccessPolicies.ListByResourceGroupAndRegion("myService1");
+                var jitNetworkAccessPolicies = securityCenterClient.JitNetworkAccessPolicies.ListByResourceGroupAndRegion("myService1", _ascLocation);
                 ValidateJitNetworkAccessPolicies(jitNetworkAccessPolicies);
             }
         }

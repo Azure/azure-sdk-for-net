@@ -14,6 +14,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        public const string _ascLocation = "centralus";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -26,8 +28,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = "centralus";
 
             return securityCenterClient;
         }
@@ -58,9 +58,9 @@ namespace SecurityCenter.Tests
                     configurationStatus: "NoStatus",
                     sourceSystem: "Azure_AppLocker");
 
-                var createdGroup = securityCenterClient.AdaptiveApplicationControls.Put("TestGroup", adaptiveApplicationControlGroup);
+                var createdGroup = securityCenterClient.AdaptiveApplicationControls.Put(_ascLocation,  "TestGroup", adaptiveApplicationControlGroup);
 
-                ValidateCreatedAdaptiveApplicationControlGroup(createdGroup, securityCenterClient.AscLocation, "TestGroup");
+                ValidateCreatedAdaptiveApplicationControlGroup(createdGroup, _ascLocation, "TestGroup");
             }
         }
 
@@ -70,7 +70,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var group = securityCenterClient.AdaptiveApplicationControls.Get("TestGroup");
+                var group = securityCenterClient.AdaptiveApplicationControls.Get(_ascLocation, "TestGroup");
 
                 ValidateAdaptiveApplicationControlGroup(group);
             }

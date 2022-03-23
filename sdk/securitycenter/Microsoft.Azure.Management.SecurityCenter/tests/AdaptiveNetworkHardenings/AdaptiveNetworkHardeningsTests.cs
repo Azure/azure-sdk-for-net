@@ -15,7 +15,7 @@ namespace SecurityCenter.Tests
         #region Test setup
 
         public static TestEnvironment TestEnvironment { get; private set; }
-
+        
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -28,8 +28,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = "westcentralus";
 
             return securityCenterClient;
         }

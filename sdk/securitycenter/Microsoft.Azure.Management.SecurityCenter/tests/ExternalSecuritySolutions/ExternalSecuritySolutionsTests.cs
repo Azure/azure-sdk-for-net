@@ -19,6 +19,8 @@ namespace SecurityCenter.Tests
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
+        private const string _ascLocation = "centralus";
+
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
         {
             if (TestEnvironment == null && HttpMockServer.Mode == HttpRecorderMode.Record)
@@ -32,7 +34,6 @@ namespace SecurityCenter.Tests
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
-            securityCenterClient.AscLocation = "centralus";
 
             return securityCenterClient;
         }
@@ -67,7 +68,9 @@ namespace SecurityCenter.Tests
                 Assert.Throws<KeyNotFoundException>(() =>
                 {
                     var externalSecuritySolution = securityCenterClient.ExternalSecuritySolutions.Get(
-                        "defaultresourcegroup-eus", "aad_defaultworkspace-487bb485-b5b0-471e-9c0d-10717612f869-eus");
+                        "defaultresourcegroup-eus", 
+                        _ascLocation,
+                        "aad_defaultworkspace-487bb485-b5b0-471e-9c0d-10717612f869-eus");
                     ValidateExternalSecuritySolution(externalSecuritySolution);
                 });
 
@@ -83,7 +86,7 @@ namespace SecurityCenter.Tests
                 Assert.Throws<KeyNotFoundException>(() =>
                 {
                     var securityCenterClient = GetSecurityCenterClient(context);
-                    var externalSecuritySolutions = securityCenterClient.ExternalSecuritySolutions.ListByHomeRegion();
+                    var externalSecuritySolutions = securityCenterClient.ExternalSecuritySolutions.ListByHomeRegion(_ascLocation);
                     ValidateExternalSecuritySolutions(externalSecuritySolutions);
                 });
             }

@@ -20,7 +20,6 @@ namespace SecurityCenter.Tests
         private static readonly string AggregatedAlertName = "IoT_AgentDroppedEvents/2019-05-26";
         private static readonly string ResourceGroupName = "nir-test";
         private static readonly string SolutionName = "singahub";
-        private static readonly string AscLocation = "southeastasia";
         private static TestEnvironment TestEnvironment { get; set; }
 
         private static SecurityCenterClient GetSecurityCenterClient(MockContext context)
@@ -35,8 +34,6 @@ namespace SecurityCenter.Tests
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

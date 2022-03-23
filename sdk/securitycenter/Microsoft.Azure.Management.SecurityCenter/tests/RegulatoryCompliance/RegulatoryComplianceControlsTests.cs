@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Management.SecurityCenter.Tests.RegulatoryCompliance
         #region Test setup
         private static readonly string regulatoryComplianceStandardName = "PCI-DSS-3.2.1";
         private static readonly string regulatoryComplianceControlName = "1.2.1";
-        private static readonly string AscLocation = "centralus";
         private static TestEnvironment TestEnvironment { get; set; }
         #endregion
 
@@ -32,8 +31,6 @@ namespace Microsoft.Azure.Management.SecurityCenter.Tests.RegulatoryCompliance
             var securityCenterClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<SecurityCenterClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
-
-            securityCenterClient.AscLocation = AscLocation;
 
             return securityCenterClient;
         }

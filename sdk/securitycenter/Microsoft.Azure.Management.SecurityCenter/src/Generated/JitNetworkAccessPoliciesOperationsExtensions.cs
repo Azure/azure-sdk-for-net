@@ -58,9 +58,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<JitNetworkAccessPolicy> ListByRegion(this IJitNetworkAccessPoliciesOperations operations)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static IPage<JitNetworkAccessPolicy> ListByRegion(this IJitNetworkAccessPoliciesOperations operations, string ascLocation)
             {
-                return operations.ListByRegionAsync().GetAwaiter().GetResult();
+                return operations.ListByRegionAsync(ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -70,12 +74,16 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JitNetworkAccessPolicy>> ListByRegionAsync(this IJitNetworkAccessPoliciesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JitNetworkAccessPolicy>> ListByRegionAsync(this IJitNetworkAccessPoliciesOperations operations, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByRegionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByRegionWithHttpMessagesAsync(ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -130,9 +138,13 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
-            public static IPage<JitNetworkAccessPolicy> ListByResourceGroupAndRegion(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName)
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
+            public static IPage<JitNetworkAccessPolicy> ListByResourceGroupAndRegion(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation)
             {
-                return operations.ListByResourceGroupAndRegionAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAndRegionAsync(resourceGroupName, ascLocation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,12 +158,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JitNetworkAccessPolicy>> ListByResourceGroupAndRegionAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JitNetworkAccessPolicy>> ListByResourceGroupAndRegionAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupAndRegionWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupAndRegionWithHttpMessagesAsync(resourceGroupName, ascLocation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -168,12 +184,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
-            public static JitNetworkAccessPolicy Get(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName)
+            public static JitNetworkAccessPolicy Get(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName)
             {
-                return operations.GetAsync(resourceGroupName, jitNetworkAccessPolicyName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -187,15 +207,19 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JitNetworkAccessPolicy> GetAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JitNetworkAccessPolicy> GetAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, jitNetworkAccessPolicyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -211,14 +235,18 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static JitNetworkAccessPolicy CreateOrUpdate(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, JitNetworkAccessPolicy body)
+            public static JitNetworkAccessPolicy CreateOrUpdate(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicy body)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, jitNetworkAccessPolicyName, body).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -231,6 +259,10 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
@@ -239,9 +271,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JitNetworkAccessPolicy> CreateOrUpdateAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, JitNetworkAccessPolicy body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JitNetworkAccessPolicy> CreateOrUpdateAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, JitNetworkAccessPolicy body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, jitNetworkAccessPolicyName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -257,12 +289,16 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
-            public static void Delete(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName)
+            public static void Delete(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName)
             {
-                operations.DeleteAsync(resourceGroupName, jitNetworkAccessPolicyName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -275,15 +311,19 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, jitNetworkAccessPolicyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -296,6 +336,10 @@ namespace Microsoft.Azure.Management.Security
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
             /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
+            /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
             /// </param>
@@ -305,9 +349,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='justification'>
             /// The justification for making the initiate request
             /// </param>
-            public static JitNetworkAccessRequest Initiate(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string))
+            public static JitNetworkAccessRequest Initiate(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string))
             {
-                return operations.InitiateAsync(resourceGroupName, jitNetworkAccessPolicyName, virtualMachines, justification).GetAwaiter().GetResult();
+                return operations.InitiateAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName, virtualMachines, justification).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -319,6 +363,10 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription. The name is
             /// case insensitive.
+            /// </param>
+            /// <param name='ascLocation'>
+            /// The location where ASC stores the data of the subscription. can be
+            /// retrieved from Get locations
             /// </param>
             /// <param name='jitNetworkAccessPolicyName'>
             /// Name of a Just-in-Time access configuration policy.
@@ -332,9 +380,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JitNetworkAccessRequest> InitiateAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JitNetworkAccessRequest> InitiateAsync(this IJitNetworkAccessPoliciesOperations operations, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.InitiateWithHttpMessagesAsync(resourceGroupName, jitNetworkAccessPolicyName, virtualMachines, justification, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.InitiateWithHttpMessagesAsync(resourceGroupName, ascLocation, jitNetworkAccessPolicyName, virtualMachines, justification, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

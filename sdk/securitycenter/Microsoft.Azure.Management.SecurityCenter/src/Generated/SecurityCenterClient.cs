@@ -53,12 +53,6 @@ namespace Microsoft.Azure.Management.Security
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The location where ASC stores the data of the subscription. can be
-        /// retrieved from Get locations
-        /// </summary>
-        public string AscLocation { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -75,6 +69,21 @@ namespace Microsoft.Azure.Management.Security
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IMdeOnboardingsOperations.
+        /// </summary>
+        public virtual IMdeOnboardingsOperations MdeOnboardings { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomAssessmentAutomationsOperations.
+        /// </summary>
+        public virtual ICustomAssessmentAutomationsOperations CustomAssessmentAutomations { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomEntityStoreAssignmentsOperations.
+        /// </summary>
+        public virtual ICustomEntityStoreAssignmentsOperations CustomEntityStoreAssignments { get; private set; }
 
         /// <summary>
         /// Gets the IComplianceResultsOperations.
@@ -300,6 +309,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ISoftwareInventoriesOperations.
         /// </summary>
         public virtual ISoftwareInventoriesOperations SoftwareInventories { get; private set; }
+
+        /// <summary>
+        /// Gets the ISecurityConnectorsOperations.
+        /// </summary>
+        public virtual ISecurityConnectorsOperations SecurityConnectors { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -542,6 +556,9 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         private void Initialize()
         {
+            MdeOnboardings = new MdeOnboardingsOperations(this);
+            CustomAssessmentAutomations = new CustomAssessmentAutomationsOperations(this);
+            CustomEntityStoreAssignments = new CustomEntityStoreAssignmentsOperations(this);
             ComplianceResults = new ComplianceResultsOperations(this);
             Pricings = new PricingsOperations(this);
             AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
@@ -587,6 +604,7 @@ namespace Microsoft.Azure.Management.Security
             Settings = new SettingsOperations(this);
             IngestionSettings = new IngestionSettingsOperations(this);
             SoftwareInventories = new SoftwareInventoriesOperations(this);
+            SecurityConnectors = new SecurityConnectorsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -635,6 +653,8 @@ namespace Microsoft.Azure.Management.Security
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AlertSimulatorRequestProperties>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Setting>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Setting>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CloudOffering>("offeringType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CloudOffering>("offeringType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
