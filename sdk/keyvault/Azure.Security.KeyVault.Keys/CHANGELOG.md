@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Changed `KeyRotationLifetimeAction.Action` to read-only and added constructor to set the `KeyRotationPolicyAction`.
+- Renamed `name` parameter in `GetKeyRotationPolicy` and `GetKeyRotationPolicyAsync` to `keyName`.
+- Renamed `name` parameter in `UpdateKeyRotationPolicy` and `UpdateKeyRotationPolicyAsync` to `keyName`.
+
 ### Bugs Fixed
 
 ### Other Changes
