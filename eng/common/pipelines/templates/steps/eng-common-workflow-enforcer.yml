@@ -3,11 +3,8 @@
 
 steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-    parameters:
-      DefaultBranchVariableName: DefaultBranch
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - pwsh: |
-        Set-PsDebug -Trace 1
         # Find the default branch of the repo
         Write-Host "Default Branch: $(DefaultBranch)"
         $targetBranch = "$(System.PullRequest.TargetBranch)" -replace "refs/heads/"

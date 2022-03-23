@@ -1,11 +1,10 @@
 # cSpell:ignore Committish
-# cSpell:ignore committish
 # cSpell:ignore PULLREQUEST
 # cSpell:ignore TARGETBRANCH
 # cSpell:ignore SOURCEVERSION
 function Get-ChangedFiles {
   param (
-    [string]$SourceCommittish= "${env:BUILD_SOURCEVERSION}",
+    [string]$SourceCommittish= "${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}",
     [string]$TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
     [string]$DiffPath,
     [string]$DiffFilterType = "d"
