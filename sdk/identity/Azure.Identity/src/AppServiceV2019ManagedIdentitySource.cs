@@ -2,28 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
     internal class AppServiceV2019ManagedIdentitySource : AppServiceManagedIdentitySource
     {
         protected override string AppServiceMsiApiVersion => "2019-08-01";
+        protected override string SecretHeaderName => "X-IDENTITY-HEADER";
+        protected override string ClientIdHeaderName => "client_id";
 
         public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
-            (Uri endpointUri, string msiSecret) = AppServiceManagedIdentitySource.ValidateEnvVars();
-            if (endpointUri == null || msiSecret == null)
-            {
-                return null;
-            }
-            return new AppServiceV2019ManagedIdentitySource(options.Pipeline, endpointUri, msiSecret, options.ClientId);
+            var msiSecret = EnvironmentVariables.IdentityHeader;
+            return TryValidateEnvVars(EnvironmentVariables.IdentityEndpoint, msiSecret, out Uri endpointUri)
+                ? new AppServiceV2019ManagedIdentitySource(options.Pipeline, endpointUri, msiSecret, options.ClientId)
+                : null;
         }
 
-        protected AppServiceV2019ManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret,
+        private AppServiceV2019ManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret,
             string clientId) : base(pipeline, endpoint, secret, clientId)
         { }
     }

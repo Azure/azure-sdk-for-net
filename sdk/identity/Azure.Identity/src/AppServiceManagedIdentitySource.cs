@@ -2,36 +2,33 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
-    internal  class AppServiceManagedIdentitySource : ManagedIdentitySource
+    internal class AppServiceManagedIdentitySource : ManagedIdentitySource
     {
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/azure/app-service/overview-managed-identity
-        protected virtual string AppServiceMsiApiVersion { get; }
+        protected virtual string AppServiceMsiApiVersion { get { throw new NotImplementedException(); } }
+        protected virtual string SecretHeaderName { get { throw new NotImplementedException(); } }
+        protected virtual string ClientIdHeaderName { get { throw new NotImplementedException(); } }
+
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
-        protected readonly Uri _endpoint;
-        protected readonly string _secret;
-        protected readonly string _clientId;
+        private readonly Uri _endpoint;
+        private readonly string _secret;
+        private readonly string _clientId;
 
-        protected static (Uri MsiEndpoint, string MsiSecret) ValidateEnvVars()
+        protected static bool TryValidateEnvVars(string msiEndpoint, string secret, out Uri endpointUri)
         {
-            string msiEndpoint = EnvironmentVariables.MsiEndpoint;
-            string msiSecret = EnvironmentVariables.MsiSecret;
-
-            // if BOTH the env vars MSI_ENDPOINT and MSI_SECRET are set the MsiType is AppService
-            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(msiSecret))
+            endpointUri = null;
+            // if BOTH the env vars endpoint and secret values are null, this MSI provider is unavailable.
+            // Also validate that IdentityServerThumbprint is null or empty to differentiate from Service Fabric.
+            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(secret) || !string.IsNullOrEmpty(EnvironmentVariables.IdentityServerThumbprint))
             {
-                return default;
+                return false;
             }
 
-            Uri endpointUri;
             try
             {
                 endpointUri = new Uri(msiEndpoint);
@@ -41,10 +38,11 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return (endpointUri, msiSecret);
+            return true;
         }
 
-        protected AppServiceManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret, string clientId) : base(pipeline)
+        protected AppServiceManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret,
+            string clientId) : base(pipeline)
         {
             _endpoint = endpoint;
             _secret = secret;
@@ -59,14 +57,14 @@ namespace Azure.Identity
             Request request = Pipeline.HttpPipeline.CreateRequest();
 
             request.Method = RequestMethod.Get;
-            request.Headers.Add("secret", _secret);
+            request.Headers.Add(SecretHeaderName, _secret);
             request.Uri.Reset(_endpoint);
             request.Uri.AppendQuery("api-version", AppServiceMsiApiVersion);
             request.Uri.AppendQuery("resource", resource);
 
             if (!string.IsNullOrEmpty(_clientId))
             {
-                request.Uri.AppendQuery("clientid", _clientId);
+                request.Uri.AppendQuery(ClientIdHeaderName, _clientId);
             }
 
             return request;
