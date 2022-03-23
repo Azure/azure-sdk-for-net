@@ -355,6 +355,10 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$n
         return $matrix, @()
     }
 
+    if (!(Test-Path $importPath)) {
+        Write-Error "`$IMPORT path '$importPath' does not exist."
+        exit 1
+    }
     $importedMatrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
     $importedMatrix = GenerateMatrix `
                         -config $importedMatrixConfig `
