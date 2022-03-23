@@ -120,7 +120,7 @@ internal partial class EventRoutesRestClient
 
 </details>
 
-* ### Add Config
+* ### Add Config:
 
 Add `protocol-method-list` config in autorest.md and pass a list of full swagger operationId for the methods that would like to generate as protocol methods.
 
