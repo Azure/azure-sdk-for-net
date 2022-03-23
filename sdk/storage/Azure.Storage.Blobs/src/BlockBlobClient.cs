@@ -3110,6 +3110,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             copySourceTags: options?.CopySourceTagsMode,
+                            ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3147,6 +3148,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             copySourceTags: options?.CopySourceTagsMode,
+                            ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 

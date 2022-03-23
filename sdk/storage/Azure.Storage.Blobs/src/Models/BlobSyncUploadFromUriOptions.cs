@@ -76,5 +76,11 @@ namespace Azure.Storage.Blobs.Models
         /// Default is to replace.
         /// </summary>
         public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }
+
+        /// <summary>
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </summary>
+        public bool? IgnoreStrongConsistencyLock { get; set; }
     }
 }

@@ -3361,6 +3361,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task SyncUploadFromUriAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            Response<BlobContentInfo> uploadResponse = await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+        }
+
+        [RecordedTest]
         public async Task WithCustomerProvidedKey()
         {
             // Arrange
