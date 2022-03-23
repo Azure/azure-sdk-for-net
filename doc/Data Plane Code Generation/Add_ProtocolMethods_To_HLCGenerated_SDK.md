@@ -119,7 +119,6 @@ internal partial class EventRoutesRestClient
 ```
 
 </details>
-&nbsp;
 
 * ### Add Config
 
@@ -139,7 +138,6 @@ protocol-method-list:
 ````
 
 </details>
-&nbsp;
 
 * ### Generated code after:
 
