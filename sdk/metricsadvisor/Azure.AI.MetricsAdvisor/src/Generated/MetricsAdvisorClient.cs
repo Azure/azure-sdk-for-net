@@ -2245,15 +2245,15 @@ namespace Azure.AI.MetricsAdvisor
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetMetricFeedbacksNextsAsync(string nextLink, RequestContent content, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetMetricFeedbacksNextAsync(string nextLink, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacksNexts");
+            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacksNext");
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
             {
-                using var message = CreateGetMetricFeedbacksNextsRequest(nextLink, content, context);
+                using var message = CreateGetMetricFeedbacksNextRequest(nextLink, content, context);
                 var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", null, cancellationToken).ConfigureAwait(false);
                 yield return page;
             }
@@ -2301,15 +2301,15 @@ namespace Azure.AI.MetricsAdvisor
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetMetricFeedbacksNexts(string nextLink, RequestContent content, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetMetricFeedbacksNext(string nextLink, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(content, nameof(content));
 
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacksNexts");
+            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, "MetricsAdvisorClient.GetMetricFeedbacksNext");
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
             {
-                using var message = CreateGetMetricFeedbacksNextsRequest(nextLink, content, context);
+                using var message = CreateGetMetricFeedbacksNextRequest(nextLink, content, context);
                 var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", null);
                 yield return page;
             }
@@ -3089,7 +3089,7 @@ namespace Azure.AI.MetricsAdvisor
             return message;
         }
 
-        internal HttpMessage CreateGetMetricFeedbacksNextsRequest(string nextLink, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetMetricFeedbacksNextRequest(string nextLink, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

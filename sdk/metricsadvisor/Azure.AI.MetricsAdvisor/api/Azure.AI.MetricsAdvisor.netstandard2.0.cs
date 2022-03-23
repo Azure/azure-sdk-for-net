@@ -208,8 +208,8 @@ namespace Azure.AI.MetricsAdvisor
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricFeedbackAsync(System.Guid feedbackId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetMetricFeedbacks(Azure.Core.RequestContent content, int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetricFeedbacksAsync(Azure.Core.RequestContent content, int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMetricFeedbacksNexts(string nextLink, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricFeedbacksNextsAsync(string nextLink, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetricFeedbacksNext(string nextLink, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricFeedbacksNextAsync(string nextLink, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetMetricSeries(System.Guid metricId, Azure.Core.RequestContent content, int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetMetricSeriesAsync(System.Guid metricId, Azure.Core.RequestContent content, int? skip = default(int?), int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetMetricSeriesNext(string nextLink, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
