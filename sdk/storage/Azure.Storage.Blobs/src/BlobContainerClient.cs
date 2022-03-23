@@ -2379,7 +2379,82 @@ namespace Azure.Storage.Blobs
 
         #region GetBlobs
         /// <summary>
-        /// The <see cref="GetBlobs"/> operation returns an async sequence
+        /// The <see cref="GetBlobs(GetBlobsOptions, CancellationToken)"/>
+        /// operation returns an async sequence
+        /// of blobs in this container.  Enumerating the blobs may make
+        /// multiple requests to the service while fetching all the values.
+        /// Blobs are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// describing the blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<BlobItem> GetBlobs(
+            GetBlobsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobsAsyncCollection(
+                client: this,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>
+        /// operation returns an async
+        /// sequence of blobs in this container.  Enumerating the blobs may
+        /// make multiple requests to the service while fetching all the
+        /// values.  Blobs are ordered lexicographically by name.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
+        /// List Blobs</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameter.s
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the
+        /// blobs in the container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<BlobItem> GetBlobsAsync(
+            GetBlobsOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            new GetBlobsAsyncCollection(
+                client: this,
+                traits: options?.Traits ?? BlobTraits.None,
+                states: options?.States ?? BlobStates.None,
+                prefix: options?.Prefix,
+                ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock)
+                .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetBlobs(BlobTraits, BlobStates, string, CancellationToken)"/>
+        /// operation returns an async sequence
         /// of blobs in this container.  Enumerating the blobs may make
         /// multiple requests to the service while fetching all the values.
         /// Blobs are ordered lexicographically by name.
@@ -2410,15 +2485,25 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Pageable<BlobItem> GetBlobs(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix).ToSyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobTraits traits,
+            BlobStates states,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobsAsyncCollection(
+                client: this,
+                traits: traits,
+                states: states,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null)
+                .ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The <see cref="GetBlobsAsync"/> operation returns an async
+        /// The <see cref="GetBlobsAsync(BlobTraits, BlobStates, string, CancellationToken)"/>
+        /// operation returns an async
         /// sequence of blobs in this container.  Enumerating the blobs may
         /// make multiple requests to the service while fetching all the
         /// values.  Blobs are ordered lexicographically by name.
@@ -2449,12 +2534,20 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual AsyncPageable<BlobItem> GetBlobsAsync(
-            BlobTraits traits = BlobTraits.None,
-            BlobStates states = BlobStates.None,
-            string prefix = default,
-            CancellationToken cancellationToken = default) =>
-            new GetBlobsAsyncCollection(this, traits, states, prefix).ToAsyncCollection(cancellationToken);
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            BlobTraits traits,
+            BlobStates states,
+            string prefix,
+            CancellationToken cancellationToken) =>
+            new GetBlobsAsyncCollection(
+                client: this,
+                traits: traits,
+                states: states,
+                prefix: prefix,
+                ignoreStrongConsistencyLock: null).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -2462,7 +2555,7 @@ namespace Azure.Storage.Blobs
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
         /// and the <see cref="ListBlobsFlatSegmentResponse.NextMarker"/> if it's not
-        /// empty to make subsequent calls to <see cref="GetBlobsAsync"/>
+        /// empty to make subsequent calls to <see cref="GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.
         ///
@@ -2493,6 +2586,10 @@ namespace Azure.Storage.Blobs
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="ignoreStrongConsistencyLock">
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2514,6 +2611,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             int? pageSizeHint,
+            bool? ignoreStrongConsistencyLock,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2541,6 +2639,7 @@ namespace Azure.Storage.Blobs
                             marker: marker,
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -2551,6 +2650,7 @@ namespace Azure.Storage.Blobs
                             marker: marker,
                             maxresults: pageSizeHint,
                             include: BlobExtensions.AsIncludeItems(traits, states),
+                            ignoreStrongConsistencyLock: ignoreStrongConsistencyLock,
                             cancellationToken: cancellationToken);
                     }
 

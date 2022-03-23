@@ -18,17 +18,20 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _prefix;
+        private readonly bool? _ignoreStrongConsistencyLock;
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
             BlobTraits traits,
             BlobStates states,
-            string prefix)
+            string prefix,
+            bool? ignoreStrongConsistencyLock)
         {
             _client = client;
             _traits = traits;
             _states = states;
             _prefix = prefix;
+            _ignoreStrongConsistencyLock = ignoreStrongConsistencyLock;
         }
 
         public override async ValueTask<Page<BlobItem>> GetNextPageAsync(
@@ -47,6 +50,7 @@ namespace Azure.Storage.Blobs.Models
                     states: _states,
                     prefix: _prefix,
                     pageSizeHint: pageSizeHint,
+                    ignoreStrongConsistencyLock: _ignoreStrongConsistencyLock,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -59,6 +63,7 @@ namespace Azure.Storage.Blobs.Models
                     states: _states,
                     prefix: _prefix,
                     pageSizeHint: pageSizeHint,
+                    ignoreStrongConsistencyLock: _ignoreStrongConsistencyLock,
                     async: async,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();

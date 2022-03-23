@@ -2213,8 +2213,13 @@ namespace Azure.Storage.Blobs.Test
             };
             await appendBlob.CreateAsync(options);
 
+            GetBlobsOptions getBlobsOptions = new GetBlobsOptions
+            {
+                Traits = BlobTraits.Tags
+            };
+
             // Act
-            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(BlobTraits.Tags).ToListAsync();
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(getBlobsOptions).ToListAsync();
 
             // Assert
             AssertDictionaryEquality(tags, blobItems[0].Tags);
@@ -2280,8 +2285,13 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
             await blob.CreateIfNotExistsAsync(metadata: metadata);
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Traits = BlobTraits.Metadata
+            };
+
             // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             AssertDictionaryEquality(metadata, blobs.First().Metadata);
@@ -2317,8 +2327,13 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateIfNotExistsAsync();
             await blob.DeleteIfExistsAsync();
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                States = BlobStates.Deleted,
+            };
+
             // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(blobName, blobs[0].Name);
@@ -2343,8 +2358,13 @@ namespace Azure.Storage.Blobs.Test
                     content: stream);
             }
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                States = BlobStates.Uncommitted
+            };
+
             // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Uncommitted).ToListAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(1, blobs.Count);
@@ -2361,8 +2381,13 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateIfNotExistsAsync();
             Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                States = BlobStates.Snapshots
+            };
+
             // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Snapshots).ToListAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(2, blobs.Count);
@@ -2377,8 +2402,13 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await SetUpContainerForListing(test.Container);
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                Prefix = "foo"
+            };
+
             // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(prefix: "foo").ToListAsync();
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(3, blobs.Count);
@@ -2427,9 +2457,14 @@ namespace Azure.Storage.Blobs.Test
             IDictionary<string, string> metadata = BuildMetadata();
             Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                States = BlobStates.Version
+            };
+
             // Act
             var blobs = new List<BlobItem>();
-            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(states: BlobStates.Version).AsPages())
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
@@ -2496,9 +2531,14 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
             await blob.DeleteAsync();
 
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                States = BlobStates.DeletedWithVersions
+            };
+
             // Act
             List<BlobItem> blobItems = new List<BlobItem>();
-            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync(states: BlobStates.DeletedWithVersions))
+            await foreach (BlobItem blobItem in test.Container.GetBlobsAsync(options))
             {
                 blobItems.Add(blobItem);
             }
@@ -2524,6 +2564,36 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(blobName, blobItem.Name);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        public async Task ListBlobsFlatSegmentAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            await SetUpContainerForListing(test.Container);
+
+            GetBlobsOptions options = new GetBlobsOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            // Act
+            var blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(BlobNames.Length, blobs.Count);
+
+            var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+
+            Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
         }
 
         [RecordedTest]
