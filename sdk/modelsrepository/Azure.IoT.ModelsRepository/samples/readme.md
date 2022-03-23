@@ -130,7 +130,7 @@ ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
-## DTDL Parser Integration
+## DTDL parser integration
 
 The samples provide two different patterns to integrate with the DTDL Parser.
 
