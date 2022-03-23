@@ -34,9 +34,9 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Readme_AuthClient
+using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.Core;
 
 // Code omitted for brevity
 
@@ -239,6 +239,6 @@ whether you need to provide a CLA and decorate the PR appropriately
 bot. You will only need to do this once across all repositories using
 our CLA.
 
-This project has adopted the Microsoft Open Source Code of Conduct. For
-more information see the Code of Conduct FAQ or contact
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For
+more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact
 <opencode@microsoft.com> with any additional questions or comments.
