@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Deployment data model. </summary>
-    public partial class DeploymentData : ResourceData
+    /// <summary> A class representing the ArmDeployment data model. </summary>
+    public partial class ArmDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeploymentData. </summary>
-        internal DeploymentData()
+        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
+        internal ArmDeploymentData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentData. </summary>
+        /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal DeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;

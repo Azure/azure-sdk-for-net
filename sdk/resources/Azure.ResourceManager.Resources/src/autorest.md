@@ -77,7 +77,7 @@ rename-rules:
 directive:
   - from: resources.json
     where: $.definitions.DeploymentExtended
-    transform: $['x-ms-client-name'] = 'Deployment'
+    transform: $['x-ms-client-name'] = 'ArmDeployment'
   - from: resources.json
     where: $.definitions.Deployment
     transform: $['x-ms-client-name'] = 'DeploymentInput'

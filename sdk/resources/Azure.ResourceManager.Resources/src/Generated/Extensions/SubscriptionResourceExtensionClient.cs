@@ -41,25 +41,14 @@ namespace Azure.ResourceManager.Resources
         {
         }
 
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionExtensionClient.cs
-        private ClientDiagnostics ArmApplicationApplicationsClientDiagnostics => _armApplicationApplicationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmApplication.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ArmApplication.ResourceType));
-        private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequest.ResourceType.Namespace, DiagnosticOptions);
-        private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(JitRequest.ResourceType));
-        private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScript.ResourceType.Namespace, DiagnosticOptions);
-        private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(DeploymentScript.ResourceType));
-        private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpec.ResourceType.Namespace, DiagnosticOptions);
-        private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(TemplateSpec.ResourceType));
-=======
-        private ClientDiagnostics ApplicationClientDiagnostics => _applicationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ApplicationResource.ResourceType.Namespace, Diagnostics);
-        private ApplicationsRestOperations ApplicationRestClient => _applicationRestClient ??= new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationResource.ResourceType));
+        private ClientDiagnostics ArmApplicationApplicationsClientDiagnostics => _armApplicationApplicationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmApplicationResource.ResourceType.Namespace, Diagnostics);
+        private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmApplicationResource.ResourceType));
         private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestResource.ResourceType.Namespace, Diagnostics);
         private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitRequestResource.ResourceType));
         private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, Diagnostics);
         private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeploymentScriptResource.ResourceType));
         private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, Diagnostics);
         private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TemplateSpecResource.ResourceType));
->>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionResourceExtensionClient.cs
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -67,11 +56,11 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
-        public virtual DeploymentCollection GetDeployments()
+        /// <summary> Gets a collection of ArmDeploymentResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments()
         {
-            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
+            return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
         }
 
         /// <summary>
@@ -80,31 +69,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Applications_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionExtensionClient.cs
-        /// <returns> An async collection of <see cref="ArmApplication" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArmApplication> GetArmApplicationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmApplicationResource> GetArmApplicationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArmApplication>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArmApplicationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetArmApplications");
+                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
                 scope.Start();
                 try
                 {
                     var response = await ArmApplicationApplicationsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
-=======
-        /// <returns> An async collection of <see cref="ApplicationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationResource> GetApplicationsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApplicationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplications");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
->>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionResourceExtensionClient.cs
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -112,25 +87,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionExtensionClient.cs
-            async Task<Page<ArmApplication>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArmApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetArmApplications");
+                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
                 scope.Start();
                 try
                 {
                     var response = await ArmApplicationApplicationsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
-=======
-            async Task<Page<ApplicationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApplicationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplications");
-                scope.Start();
-                try
-                {
-                    var response = await ApplicationRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
->>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionResourceExtensionClient.cs
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -147,31 +111,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Applications_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionExtensionClient.cs
-        /// <returns> A collection of <see cref="ArmApplication" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArmApplication> GetArmApplications(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmApplicationResource> GetArmApplications(CancellationToken cancellationToken = default)
         {
-            Page<ArmApplication> FirstPageFunc(int? pageSizeHint)
+            Page<ArmApplicationResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetArmApplications");
+                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
                 scope.Start();
                 try
                 {
                     var response = ArmApplicationApplicationsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
-=======
-        /// <returns> A collection of <see cref="ApplicationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationResource> GetApplications(CancellationToken cancellationToken = default)
-        {
-            Page<ApplicationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ApplicationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplications");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
->>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionResourceExtensionClient.cs
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -179,25 +129,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionExtensionClient.cs
-            Page<ArmApplication> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArmApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionExtensionClient.GetArmApplications");
+                using var scope = ArmApplicationApplicationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmApplications");
                 scope.Start();
                 try
                 {
                     var response = ArmApplicationApplicationsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplication(Client, value)), response.Value.NextLink, response.GetRawResponse());
-=======
-            Page<ApplicationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ApplicationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetApplications");
-                scope.Start();
-                try
-                {
-                    var response = ApplicationRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
->>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/SubscriptionResourceExtensionClient.cs
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmApplicationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

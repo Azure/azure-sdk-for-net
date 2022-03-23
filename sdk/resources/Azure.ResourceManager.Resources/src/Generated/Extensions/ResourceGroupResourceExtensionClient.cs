@@ -31,22 +31,16 @@ namespace Azure.ResourceManager.Resources
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DeploymentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeploymentResources and their operations over a DeploymentResource. </returns>
-        public virtual DeploymentCollection GetDeployments()
+        /// <summary> Gets a collection of ArmDeploymentResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments()
         {
-            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
+            return GetCachedClient(Client => new ArmDeploymentCollection(Client, Id));
         }
 
-<<<<<<< HEAD:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/ResourceGroupExtensionClient.cs
-        /// <summary> Gets a collection of ArmApplications in the ArmApplication. </summary>
-        /// <returns> An object representing collection of ArmApplications and their operations over a ArmApplication. </returns>
+        /// <summary> Gets a collection of ArmApplicationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmApplicationResources and their operations over a ArmApplicationResource. </returns>
         public virtual ArmApplicationCollection GetArmApplications()
-=======
-        /// <summary> Gets a collection of ApplicationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationResources and their operations over a ApplicationResource. </returns>
-        public virtual ApplicationCollection GetApplications()
->>>>>>> ac26fe3cdb1f0f614cbd1bd9ba2a7ae2cdffe46b:sdk/resources/Azure.ResourceManager.Resources/src/Generated/Extensions/ResourceGroupResourceExtensionClient.cs
         {
             return GetCachedClient(Client => new ArmApplicationCollection(Client, Id));
         }

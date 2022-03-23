@@ -19,44 +19,44 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a DeploymentResource along with the instance operations that can be performed on it. </summary>
-    public partial class DeploymentResource : ArmResource
+    /// <summary> A Class representing a ArmDeploymentResource along with the instance operations that can be performed on it. </summary>
+    public partial class ArmDeploymentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeploymentResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ArmDeploymentResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Resources/deployments/{deploymentName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _deploymentClientDiagnostics;
-        private readonly DeploymentsRestOperations _deploymentRestClient;
+        private readonly ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
+        private readonly DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
         private readonly ClientDiagnostics _deploymentOperationsClientDiagnostics;
         private readonly DeploymentRestOperations _deploymentOperationsRestClient;
-        private readonly DeploymentData _data;
+        private readonly ArmDeploymentData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentResource"/> class for mocking. </summary>
-        protected DeploymentResource()
+        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class for mocking. </summary>
+        protected ArmDeploymentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ArmDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeploymentResource(ArmClient client, DeploymentData data) : this(client, data.Id)
+        internal ArmDeploymentResource(ArmClient client, ArmDeploymentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ArmDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deploymentApiVersion);
-            _deploymentRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentApiVersion);
+            _armDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string armDeploymentDeploymentsApiVersion);
+            _armDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentDeploymentsApiVersion);
             _deploymentOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _deploymentOperationsRestClient = new DeploymentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DeploymentData Data
+        public virtual ArmDeploymentData Data
         {
             get
             {
@@ -94,16 +94,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Deployments_GetAtScope
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Get");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Get");
             scope.Start();
             try
             {
-                var response = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: Deployments_GetAtScope
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Get");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Get");
             scope.Start();
             try
             {
-                var response = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                var response = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArmDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Delete");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _deploymentRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _armDeploymentDeploymentsRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Delete");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Delete");
             scope.Start();
             try
             {
-                var response = _deploymentRestClient.DeleteAtScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ResourcesArmOperation(_deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _armDeploymentDeploymentsRestClient.DeleteAtScope(Id.Parent, Id.Name, cancellationToken);
+                var operation = new ResourcesArmOperation(_armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Cancel");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
             scope.Start();
             try
             {
-                var response = await _deploymentRestClient.CancelAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentDeploymentsRestClient.CancelAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -218,11 +218,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Cancel(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Cancel");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Cancel");
             scope.Start();
             try
             {
-                var response = _deploymentRestClient.CancelAtScope(Id.Parent, Id.Name, cancellationToken);
+                var response = _armDeploymentDeploymentsRestClient.CancelAtScope(Id.Parent, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Validate");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
-                var response = await _deploymentRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<DeploymentValidateResult>(new DeploymentValidateResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _armDeploymentDeploymentsRestClient.ValidateAtScopeAsync(Id.Parent, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<DeploymentValidateResult>(new DeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -275,12 +275,12 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.Validate");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.Validate");
             scope.Start();
             try
             {
-                var response = _deploymentRestClient.ValidateAtScope(Id.Parent, Id.Name, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<DeploymentValidateResult>(new DeploymentValidateResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                var response = _armDeploymentDeploymentsRestClient.ValidateAtScope(Id.Parent, Id.Name, parameters, cancellationToken);
+                var operation = new ResourcesArmOperation<DeploymentValidateResult>(new DeploymentValidateResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateValidateAtScopeRequest(Id.Parent, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeploymentExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.ExportTemplate");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
             scope.Start();
             try
             {
-                var response = await _deploymentRestClient.ExportTemplateAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentDeploymentsRestClient.ExportTemplateAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -322,11 +322,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentExportResult> ExportTemplate(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.ExportTemplate");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.ExportTemplate");
             scope.Start();
             try
             {
-                var response = _deploymentRestClient.ExportTemplateAtScope(Id.Parent, Id.Name, cancellationToken);
+                var response = _armDeploymentDeploymentsRestClient.ExportTemplateAtScope(Id.Parent, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -355,38 +355,38 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.WhatIf");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.WhatIf");
             scope.Start();
             try
             {
                 if (Id.Parent.ResourceType == TenantResource.ResourceType)
                 {
-                    var response = await _deploymentRestClient.WhatIfAtTenantScopeAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtTenantScopeAsync(Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
                 {
-                    var response = await _deploymentRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScopeAsync(Id.Parent.Name, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
                 {
-                    var response = await _deploymentRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScopeAsync(Id.SubscriptionId, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
-                    var response = await _deploymentRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = await _armDeploymentDeploymentsRestClient.WhatIfAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                     return operation;
@@ -422,38 +422,38 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.WhatIf");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.WhatIf");
             scope.Start();
             try
             {
                 if (Id.Parent.ResourceType == TenantResource.ResourceType)
                 {
-                    var response = _deploymentRestClient.WhatIfAtTenantScope(Id.Name, parameters, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtTenantScope(Id.Name, parameters, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtTenantScopeRequest(Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ManagementGroupResource.ResourceType)
                 {
-                    var response = _deploymentRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, parameters, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtManagementGroupScope(Id.Parent.Name, Id.Name, parameters, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtManagementGroupScopeRequest(Id.Parent.Name, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == SubscriptionResource.ResourceType)
                 {
-                    var response = _deploymentRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, parameters, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIfAtSubscriptionScope(Id.SubscriptionId, Id.Name, parameters, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfAtSubscriptionScopeRequest(Id.SubscriptionId, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
                 }
                 else if (Id.Parent.ResourceType == ResourceGroupResource.ResourceType)
                 {
-                    var response = _deploymentRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
-                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _deploymentClientDiagnostics, Pipeline, _deploymentRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
+                    var response = _armDeploymentDeploymentsRestClient.WhatIf(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
+                    var operation = new ResourcesArmOperation<WhatIfOperationResult>(new WhatIfOperationResultOperationSource(), _armDeploymentDeploymentsClientDiagnostics, Pipeline, _armDeploymentDeploymentsRestClient.CreateWhatIfRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
                     if (waitUntil == WaitUntil.Completed)
                         operation.WaitForCompletion(cancellationToken);
                     return operation;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetDeploymentOperation");
+            using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
             scope.Start();
             try
             {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetDeploymentOperation");
+            using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperation");
             scope.Start();
             try
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Resources
         {
             async Task<Page<DeploymentOperation>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetDeploymentOperations");
+                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Resources
             }
             async Task<Page<DeploymentOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetDeploymentOperations");
+                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Resources
         {
             Page<DeploymentOperation> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetDeploymentOperations");
+                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Resources
             }
             Page<DeploymentOperation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("DeploymentResource.GetDeploymentOperations");
+                using var scope = _deploymentOperationsClientDiagnostics.CreateScope("ArmDeploymentResource.GetDeploymentOperations");
                 scope.Start();
                 try
                 {
@@ -618,11 +618,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CheckExistenceAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.CheckExistence");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.CheckExistence");
             scope.Start();
             try
             {
-                var response = await _deploymentRestClient.CheckExistenceAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _armDeploymentDeploymentsRestClient.CheckExistenceAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -640,11 +640,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CheckExistence(CancellationToken cancellationToken = default)
         {
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.CheckExistence");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.CheckExistence");
             scope.Start();
             try
             {
-                var response = _deploymentRestClient.CheckExistenceAtScope(Id.Parent, Id.Name, cancellationToken);
+                var response = _armDeploymentDeploymentsRestClient.CheckExistenceAtScope(Id.Parent, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -663,20 +663,20 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DeploymentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.AddTag");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
                 await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -694,20 +694,20 @@ namespace Azure.ResourceManager.Resources
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DeploymentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.AddTag");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.AddTag");
             scope.Start();
             try
             {
                 var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
                 TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
-                return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -724,11 +724,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DeploymentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.SetTags");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
             scope.Start();
             try
             {
@@ -736,8 +736,8 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -754,11 +754,11 @@ namespace Azure.ResourceManager.Resources
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DeploymentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.SetTags");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.SetTags");
             scope.Start();
             try
             {
@@ -766,8 +766,8 @@ namespace Azure.ResourceManager.Resources
                 var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
-                return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -784,19 +784,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DeploymentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArmDeploymentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.RemoveTag");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = await TagHelper.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
                 await TagHelper.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _deploymentRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = await _armDeploymentDeploymentsRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -813,19 +813,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DeploymentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<ArmDeploymentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _deploymentClientDiagnostics.CreateScope("DeploymentResource.RemoveTag");
+            using var scope = _armDeploymentDeploymentsClientDiagnostics.CreateScope("ArmDeploymentResource.RemoveTag");
             scope.Start();
             try
             {
                 var originalTags = TagHelper.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
                 TagHelper.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _deploymentRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
-                return Response.FromValue(new DeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                var originalResponse = _armDeploymentDeploymentsRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                return Response.FromValue(new ArmDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
             catch (Exception e)
             {
