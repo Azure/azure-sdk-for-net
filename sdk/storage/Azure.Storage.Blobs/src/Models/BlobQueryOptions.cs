@@ -63,5 +63,11 @@ namespace Azure.Storage.Blobs.Models
         /// Optional progress handler.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Geo-redundant (GRS) and Geo-zone-redundant (GZRS) storage accounts only.
+        /// Allows client to override replication lock for read operations.
+        /// </summary>
+        public bool? IgnoreStrongConsistencyLock { get; set; }
     }
 }

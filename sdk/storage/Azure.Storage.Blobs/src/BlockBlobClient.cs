@@ -2725,6 +2725,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: options?.Conditions?.IfMatch?.ToString(),
                             ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
                             ifTags: options?.Conditions?.TagConditions,
+                            ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
                             queryRequest: queryRequest,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2741,6 +2742,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: options?.Conditions?.IfMatch?.ToString(),
                             ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
                             ifTags: options?.Conditions?.TagConditions,
+                            ignoreStrongConsistencyLock: options?.IgnoreStrongConsistencyLock,
                             queryRequest: queryRequest,
                             cancellationToken: cancellationToken);
                     }

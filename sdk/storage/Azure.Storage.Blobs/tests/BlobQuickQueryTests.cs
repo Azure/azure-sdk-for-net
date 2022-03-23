@@ -602,6 +602,38 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual($"{nameof(BlobQueryArrowOptions)} can only be used for output serialization.", e.Message));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_08_06)]
+        [RetryOnException(TestConstants.QuickQueryRetryCount, typeof(IOException))]
+        public async Task QueryAsync_IgnoreStrongConsistencyLock()
+        {
+            // Arrange
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_SecondaryAccount_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            Stream stream = CreateDataStream(Constants.KB);
+            await blockBlobClient.UploadAsync(stream);
+
+            // Act
+            string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
+
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                IgnoreStrongConsistencyLock = true
+            };
+
+            Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(query, options);
+
+            using StreamReader streamReader = new StreamReader(response.Value.Content);
+            string s = await streamReader.ReadToEndAsync();
+
+            // Assert
+            Assert.AreEqual("400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n400\n", s);
+
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.Details.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag.ToString()}\"");
+        }
+
         private Stream CreateDataStream(long size)
         {
             MemoryStream stream = new MemoryStream();
