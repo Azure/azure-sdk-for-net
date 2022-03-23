@@ -1,6 +1,6 @@
-# IoT Models Repository Samples
+# IoT Models Repository Client Samples
 
-The Azure IoT Models Repository enables builders to manage and share digital twin models for global consumption. The models are [JSON-LD][json_ld_reference] documents defined using the Digital Twins Definition Language ([DTDL][dtdlv2_reference]).
+The Azure IoT Models Repository Client enables builders to manage and share digital twin models for global consumption. The models are [JSON-LD][json_ld_reference] documents defined using the Digital Twins Definition Language ([DTDL][dtdlv2_reference]).
 
 For more info about the Azure IoT Models Repository checkout the [docs][modelsrepository_msdocs].
 
@@ -12,7 +12,7 @@ The samples project demonstrates the following:
 
 - Instantiating the client
 - Get models and their dependencies from either a remote endpoint or local repository.
-- Integration with the Digital Twins Model Parser
+- Integration with the DTDL Parser
 
 ## Initializing the models repository client
 
@@ -38,7 +38,7 @@ Console.WriteLine($"Initialized client pointing to a local path: {client.Reposit
 
 ### Repository metadata
 
-Models repositories that implement Azure IoT conventions can **optionally** include a `metadata.json` file at the root of the repository.
+Models repositories that implement Device Model Repository conventions can **optionally** include a `metadata.json` file at the root of the repository.
 The `metadata.json` file provides key attributes of a repository including the features that it provides.
 A client can use the repository metadata to make decisions around how to optimally handle an operation.
 
@@ -58,7 +58,7 @@ Console.WriteLine($"Initialized client with disabled metadata fetching pointing 
 
 ### Override options
 
-If you need to override pipeline behavior, such as provide your own `HttpClient` instance, you can do that via constructor that takes a [ModelsRepositoryClientOptions][modelsrepository_clientoptions] parameter.
+If you need to override default http behavior, such as provide your own `HttpClient` instance, you can do that via constructor that takes a [ModelsRepositoryClientOptions][modelsrepository_clientoptions] parameter.
 It provides an opportunity to override default behavior including:
 
 - Overriding [transport][azure_core_transport]
@@ -71,7 +71,7 @@ Publishing models to the models repository requires [exercising][modelsrepositor
 
 ## Get Models
 
-After publishing, your model(s) will be available for consumption from the global repository endpoint. The following snippet shows how to retrieve the corresponding JSON-LD content.
+After publishing, your model(s) will be available for consumption from the global repository endpoint. The following snippet shows how to retrieve the corresponding JSON content.
 
 ```C# Snippet:ModelsRepositorySamplesGetModelsFromGlobalRepoAsync
 // Global endpoint client
@@ -82,14 +82,14 @@ var client = new ModelsRepositoryClient();
 // If model dependency resolution is enabled (the default), then models in which the
 // target dtmi depends on will also be included.
 var dtmi = "dtmi:com:example:TemperatureController;1";
-ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi);
 
 // In this case the above dtmi has 2 model dependencies.
 // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
-GitHub pull-request workflows are a core aspect of the IoT Models Repository service. To submit models, the user is expected to fork and clone the global [models repository project][modelsrepository_github_repo] then iterate against the local copy. Changes would then be pushed to the fork (ideally in a new branch) and a PR created against the global repository.
+GitHub pull-request workflows are a core aspect of the Device Models Repository service. To submit models, the user is expected to fork and clone the global [models repository project][modelsrepository_github_repo] then iterate against the local copy. Changes would then be pushed to the fork (ideally in a new branch) and a PR created against the global repository.
 
 To support this workflow and similar use cases, the client supports initialization with a local file-system URI. You can use this for example, to test and ensure newly added models to the locally cloned models repository are in their proper locations.
 
@@ -101,7 +101,7 @@ var client = new ModelsRepositoryClient(new Uri(ClientSamplesLocalModelsReposito
 // If the model dependency resolution configuration is not disabled, then models in which the
 // target dtmi depends on will also be included in the returned ModelResult.Content dictionary.
 var dtmi = "dtmi:com:example:TemperatureController;1";
-ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi);
 
 // In this case the above dtmi has 2 model dependencies.
 // dtmi:com:example:Thermostat;1 and dtmi:azure:DeviceManagement:DeviceInformation;1
@@ -121,23 +121,23 @@ var client = new ModelsRepositoryClient();
 // When model dependency resolution is disabled, only the input dtmi(s) will be processed and
 // model dependencies (if any) will be ignored.
 var dtmi = "dtmi:com:example:TemperatureController;1";
-ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled);
 
 // In this case the above dtmi has 2 model dependencies but are not returned
 // due to disabling model dependency resolution.
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces.");
 ```
 
-## Digital Twins Model Parser Integration
+## DTDL Parser Integration
 
-The samples provide two different patterns to integrate with the Digital Twins Model Parser.
+The samples provide two different patterns to integrate with the DTDL Parser.
 
-The following snippet shows first fetching model definitions from the Azure IoT Models Repository then parsing them.
+The following snippet shows first fetching model definitions from the Device Models Repository then parsing them.
 
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationGetModelsAndParseAsync
 var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
-ModelResult result = await client.GetModelAsync(dtmi).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi);
 var parser = new ModelParser();
 IReadOnlyDictionary<Dtmi, DTEntityInfo> parseResult = await parser.ParseAsync(result.Content.Values);
 Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {parseResult.Count} entities.");
@@ -149,7 +149,7 @@ This is achieved by configuring the `ModelParser` to use the sample [ParserDtmiR
 ```C# Snippet:ModelsRepositorySamplesParserIntegrationParseAndGetModelsAsync
 var client = new ModelsRepositoryClient();
 var dtmi = "dtmi:com:example:TemperatureController;1";
-ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled).ConfigureAwait(false);
+ModelResult result = await client.GetModelAsync(dtmi, ModelDependencyResolution.Disabled);
 var parser = new ModelParser
 {
     // Usage of the ModelsRepositoryClientExtensions.ParserDtmiResolver extension.
@@ -161,7 +161,7 @@ Console.WriteLine($"{dtmi} resolved in {result.Content.Count} interfaces with {p
 
 ## DtmiConventions utility functions
 
-The IoT Models Repository applies a set of conventions for organizing digital twin models. This package exposes a class
+The Device Models Repository applies a set of conventions for organizing DTDL models. This package exposes a class
 called `DtmiConventions` which exposes utility functions supporting these conventions. These same functions are used throughout the client.
 
 ```C# Snippet:ModelsRepositorySamplesDtmiConventionsIsValidDtmi
