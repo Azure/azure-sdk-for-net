@@ -47,8 +47,8 @@ Example: Create an Event Hub:
 
 Before upgrade:
 ```csharp
-using Microsoft.Azure.Management.EventHub;
-using Microsoft.Azure.Management.EventHub.Models;
+// using Microsoft.Azure.Management.EventHub;
+// using Microsoft.Azure.Management.EventHub.Models;
 
 var tokenCredentials = new TokenCredentials("YOUR ACCESS TOKEN");
 var eventHubManagementClient = new EventHubManagementClient(tokenCredentials);
@@ -101,10 +101,10 @@ var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpd
 
 After upgrade:
 ```C# Snippet:ChangeLog_Sample
-using Azure.Identity;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.EventHubs.Models;
-using Azure.Core;
+// using Azure.Identity;
+// using Azure.ResourceManager.Resources;
+// using Azure.ResourceManager.EventHubs.Models;
+// using Azure.Core;
 
 string namespaceName = "myNamespace";
 string eventhubName = "myEventhub";

@@ -629,7 +629,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             #endregion
 
+#if !SNIPPET
             Assert.That(batchEventCount, Is.EqualTo(sentEventCount));
+#endif
         }
 
         /// <summary>
