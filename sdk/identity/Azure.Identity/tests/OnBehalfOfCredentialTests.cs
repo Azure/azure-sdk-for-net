@@ -109,11 +109,11 @@ namespace Azure.Identity.Tests
                 {
                     if (sendCertChain)
                     {
-                        Assert.IsTrue(AssertionHasHeaderValue(req, "x5c"));
+                        Assert.IsTrue(RequestBodyHasUserAssertionWithHeader(req, "x5c"));
                     }
                     else
                     {
-                        Assert.IsFalse(AssertionHasHeaderValue(req, "x5c"));
+                        Assert.IsFalse(RequestBodyHasUserAssertionWithHeader(req, "x5c"));
                     }
 
                     return new MockResponse(200).WithContent(
@@ -143,7 +143,7 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
         }
 
-        private bool AssertionHasHeaderValue(Request req, string headerName)
+        private bool RequestBodyHasUserAssertionWithHeader(Request req, string headerName)
         {
             req.Content.TryComputeLength(out var len);
             byte[] content = new byte[len];
