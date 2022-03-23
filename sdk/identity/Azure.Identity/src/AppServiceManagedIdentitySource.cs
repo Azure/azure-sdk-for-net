@@ -18,13 +18,15 @@ namespace Azure.Identity
         private readonly Uri _endpoint;
         private readonly string _secret;
         private readonly string _clientId;
+        private readonly string _resourceId;
 
         protected static bool TryValidateEnvVars(string msiEndpoint, string secret, out Uri endpointUri)
         {
             endpointUri = null;
             // if BOTH the env vars endpoint and secret values are null, this MSI provider is unavailable.
             // Also validate that IdentityServerThumbprint is null or empty to differentiate from Service Fabric.
-            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(secret) || !string.IsNullOrEmpty(EnvironmentVariables.IdentityServerThumbprint))
+            if (string.IsNullOrEmpty(msiEndpoint) || string.IsNullOrEmpty(secret) ||
+                !string.IsNullOrEmpty(EnvironmentVariables.IdentityServerThumbprint))
             {
                 return false;
             }
@@ -42,11 +44,12 @@ namespace Azure.Identity
         }
 
         protected AppServiceManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string secret,
-            string clientId) : base(pipeline)
+            ManagedIdentityClientOptions options) : base(pipeline)
         {
             _endpoint = endpoint;
             _secret = secret;
-            _clientId = clientId;
+            _clientId = options.ClientId;
+            _resourceId = options.ResourceIdentifier?.ToString();
         }
 
         protected override Request CreateRequest(string[] scopes)
@@ -65,6 +68,11 @@ namespace Azure.Identity
             if (!string.IsNullOrEmpty(_clientId))
             {
                 request.Uri.AppendQuery(ClientIdHeaderName, _clientId);
+            }
+
+            if (!string.IsNullOrEmpty(_resourceId))
+            {
+                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
             }
 
             return request;
