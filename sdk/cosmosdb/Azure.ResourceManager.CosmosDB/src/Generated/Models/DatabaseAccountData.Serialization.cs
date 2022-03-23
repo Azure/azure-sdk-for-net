@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<string> provisioningState = default;
             Optional<string> documentEndpoint = default;
             Optional<string> databaseAccountOfferType = default;
-            Optional<IList<IpAddressOrRange>> ipRules = default;
+            Optional<IList<IPAddressOrRange>> ipRules = default;
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
             Optional<ConsistencyPolicy> consistencyPolicy = default;
@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpAddressOrRange> array = new List<IpAddressOrRange>();
+                            List<IPAddressOrRange> array = new List<IPAddressOrRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpAddressOrRange.DeserializeIpAddressOrRange(item));
+                                array.Add(IPAddressOrRange.DeserializeIPAddressOrRange(item));
                             }
                             ipRules = array;
                             continue;

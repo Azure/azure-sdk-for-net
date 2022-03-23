@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of RouteTable and their operations over its parent. </summary>
-    public partial class RouteTableCollection : ArmCollection, IEnumerable<RouteTable>, IAsyncEnumerable<RouteTable>
+    public partial class RouteTableCollection : ArmCollection, IEnumerable<RouteTableResource>, IAsyncEnumerable<RouteTableResource>
     {
         private readonly ClientDiagnostics _routeTableClientDiagnostics;
         private readonly RouteTablesRestOperations _routeTableRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RouteTableCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _routeTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteTable.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(RouteTable.ResourceType, out string routeTableApiVersion);
-            _routeTableRestClient = new RouteTablesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, routeTableApiVersion);
+            _routeTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteTableResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RouteTableResource.ResourceType, out string routeTableApiVersion);
+            _routeTableRestClient = new RouteTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, routeTableApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<RouteTable>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RouteTableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _routeTableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<RouteTable>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<RouteTableResource>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<RouteTable> CreateOrUpdate(WaitUntil waitUntil, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RouteTableResource> CreateOrUpdate(WaitUntil waitUntil, string routeTableName, RouteTableData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _routeTableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<RouteTable>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<RouteTableResource>(new RouteTableOperationSource(Client), _routeTableClientDiagnostics, Pipeline, _routeTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual async Task<Response<RouteTable>> GetAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteTableResource>> GetAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _routeTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<RouteTable> Get(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RouteTableResource> Get(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.Network
                 var response = _routeTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +182,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: RouteTables_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteTable" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RouteTable> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RouteTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RouteTable>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RouteTableResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _routeTableRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +200,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<RouteTable>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RouteTableResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _routeTableRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +224,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: RouteTables_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RouteTable" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RouteTable> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RouteTableResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RouteTableResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RouteTable> FirstPageFunc(int? pageSizeHint)
+            Page<RouteTableResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _routeTableRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +242,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<RouteTable> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RouteTableResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _routeTableClientDiagnostics.CreateScope("RouteTableCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _routeTableRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RouteTable(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new RouteTableResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual async Task<Response<RouteTable>> GetIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouteTableResource>> GetIfExistsAsync(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -337,8 +336,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _routeTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<RouteTable>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<RouteTableResource>(null, response.GetRawResponse());
+                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        public virtual Response<RouteTable> GetIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<RouteTableResource> GetIfExists(string routeTableName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
 
@@ -367,8 +366,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _routeTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, routeTableName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<RouteTable>(null, response.GetRawResponse());
-                return Response.FromValue(new RouteTable(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<RouteTableResource>(null, response.GetRawResponse());
+                return Response.FromValue(new RouteTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -377,7 +376,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<RouteTable> IEnumerable<RouteTable>.GetEnumerator()
+        IEnumerator<RouteTableResource> IEnumerable<RouteTableResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -387,7 +386,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RouteTable> IAsyncEnumerable<RouteTable>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RouteTableResource> IAsyncEnumerable<RouteTableResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

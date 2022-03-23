@@ -212,7 +212,7 @@
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
-    <ProjectReference Include="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     
     <!-- TODO: Review these file references-->

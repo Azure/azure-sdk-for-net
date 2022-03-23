@@ -13,6 +13,8 @@ namespace: Azure.ResourceManager.WebPubSub
 no-property-type-replacement: PrivateEndpoint
 
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -20,6 +22,7 @@ rename-rules:
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
@@ -27,6 +30,9 @@ rename-rules:
   WAN: Wan
   Ipv4: IPv4
   Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
   ACL: Acl
   ACLs: Acls
 

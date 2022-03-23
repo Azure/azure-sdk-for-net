@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdTime"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedTime"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, object properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdTime, DateTimeOffset? changedTime, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
         {
             Plan = plan;
             Properties = properties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The plan of the resource. </summary>
         public ArmPlan Plan { get; set; }
         /// <summary> The resource properties. </summary>
-        public object Properties { get; set; }
+        public BinaryData Properties { get; set; }
         /// <summary> The kind of the resource. </summary>
         public string Kind { get; set; }
         /// <summary> ID of the resource that manages this resource. </summary>

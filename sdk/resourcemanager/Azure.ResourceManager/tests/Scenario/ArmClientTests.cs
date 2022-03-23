@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Tests
         public async Task LocalOneTimeSetup()
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
-            Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await GlobalClient.GetDefaultSubscriptionAsync();
             ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
             var op = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, _rgName, new ResourceGroupData(_location));
             await StopSessionRecordingAsync();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroupVersionTracker tracker2 = new ResourceGroupVersionTracker();
             ArmClientOptions options1 = new ArmClientOptions();
             string versionOverride = "2021-01-01";
-            options1.SetApiVersion(ResourceGroup.ResourceType, versionOverride);
+            options1.SetApiVersion(ResourceGroupResource.ResourceType, versionOverride);
             ArmClientOptions options2 = new ArmClientOptions();
             options1.AddPolicy(tracker1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(tracker2, HttpPipelinePosition.PerCall);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Tests
             options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();
-            var providerCollection = subscription.GetProviders();
+            var providerCollection = subscription.GetResourceProviders();
             var version = await providerCollection.GetApiVersionAsync(new ResourceType("Microsoft.Compute/virtualMachines"));
             Assert.NotNull(version);
             Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Tests
 
             var client = GetArmClient(options);
             var subscription = await client.GetDefaultSubscriptionAsync();
-            var version = await subscription.GetProviders().GetApiVersionAsync(computeResourceType);
+            var version = await subscription.GetResourceProviders().GetApiVersionAsync(computeResourceType);
             Assert.AreEqual(expectedVersion, version);
             Assert.AreEqual(0, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Tests
 
             client = GetArmClient(options);
             subscription = await client.GetDefaultSubscriptionAsync();
-            version = await subscription.GetProviders().GetApiVersionAsync(computeResourceType);
+            version = await subscription.GetResourceProviders().GetApiVersionAsync(computeResourceType);
             Assert.AreNotEqual(expectedVersion, version);
             Assert.AreEqual(1, policy.GetCount("Microsoft.Compute"));
             Assert.AreEqual(0, policy.GetCount("Microsoft.Network"));
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
                 var subscription = await Client.GetDefaultSubscriptionAsync();
-                await subscription.GetProviders().GetApiVersionAsync(new ResourceType("Microsoft.Compute/fakeStuff"));
+                await subscription.GetResourceProviders().GetApiVersionAsync(new ResourceType("Microsoft.Compute/fakeStuff"));
             });
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 var subscription = await Client.GetDefaultSubscriptionAsync();
-                await subscription.GetProviders().GetApiVersionAsync(new ResourceType("Microsoft.Fake/fakeStuff"));
+                await subscription.GetResourceProviders().GetApiVersionAsync(new ResourceType("Microsoft.Fake/fakeStuff"));
             });
         }
 
@@ -292,39 +292,6 @@ namespace Azure.ResourceManager.Tests
         {
             ResourceIdentifier x = null;
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        public void ValidateMgmtTelemetry()
-        {
-            var options = new ArmClientOptions();
-            options.Diagnostics.IsTelemetryEnabled = true;
-            var client = GetArmClient(options);
-            Assert.IsNotNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-
-            options.Diagnostics.IsTelemetryEnabled = false;
-            client = GetArmClient(options);
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), nameof(MgmtTelemetryPolicy)));
-            Assert.IsNull(GetPolicyFromPipeline(GetPipelineFromClient(client), "TelemetryPolicy"));
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        public void ValidateMgmtTelemetryComesAfterTelemetry()
-        {
-            var client = GetArmClient();
-            var pipeline = GetPipelineFromClient(client);
-            bool foundTelemetry = false;
-            foreach (var policy in GetPoliciesFromPipeline(pipeline).ToArray())
-            {
-                foundTelemetry |= policy.GetType().Name == "TelemetryPolicy";
-                if (policy.GetType() == typeof(MgmtTelemetryPolicy))
-                {
-                    Assert.IsTrue(foundTelemetry);
-                    break;
-                }
-            }
         }
 
         private static HttpPipeline GetPipelineFromClient(ArmClient client)

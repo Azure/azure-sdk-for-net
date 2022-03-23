@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault.Tests
             return true;
         }
 
-        public static bool IsEqual(this DeletedVault deletedVault, VaultData createdVault)
+        public static bool IsEqual(this DeletedVaultResource deletedVault, VaultData createdVault)
         {
             Assert.AreEqual(createdVault.Location, deletedVault.Data.Properties.Location);
             Assert.AreEqual(createdVault.Name, deletedVault.Data.Name);

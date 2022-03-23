@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<CleanupOptions> cleanupPreference = default;
             Optional<ScriptProvisioningState> provisioningState = default;
             Optional<ScriptStatus> status = default;
-            Optional<IReadOnlyDictionary<string, object>> outputs = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> outputs = default;
             Optional<Uri> primaryScriptUri = default;
             Optional<IList<string>> supportingScriptUris = default;
             Optional<string> scriptContent = default;
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
                             }
                             outputs = dictionary;
                             continue;

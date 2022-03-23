@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
-            VirtualMachineScaleSet vmss = lro.Value;
+            VirtualMachineScaleSetResource vmss = lro.Value;
             Assert.AreEqual(vmssName, vmss.Data.Name);
         }
 
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
-            VirtualMachineScaleSet vmss1 = lro.Value;
-            VirtualMachineScaleSet vmss2 = await collection.GetAsync(vmssName);
+            VirtualMachineScaleSetResource vmss1 = lro.Value;
+            VirtualMachineScaleSetResource vmss2 = await collection.GetAsync(vmssName);
 
             ResourceDataHelper.AssertVirtualMachineScaleSet(vmss1.Data, vmss2.Data);
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vnet = await CreateBasicDependenciesOfVirtualMachineScaleSetAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineScaleSetData(DefaultLocation, vmssName, GetSubnetId(vnet));
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName, input);
-            VirtualMachineScaleSet vmss = lro.Value;
+            VirtualMachineScaleSetResource vmss = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(vmssName));
             Assert.IsFalse(await collection.ExistsAsync(vmssName + "1"));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName1, input1);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmssName2, input2);
 
-            VirtualMachineScaleSet vmss1 = null, vmss2 = null;
+            VirtualMachineScaleSetResource vmss1 = null, vmss2 = null;
             await foreach (var vmss in DefaultSubscription.GetVirtualMachineScaleSetsAsync())
             {
                 if (vmss.Data.Name == vmssName1)

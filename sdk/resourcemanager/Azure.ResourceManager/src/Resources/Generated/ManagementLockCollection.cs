@@ -15,12 +15,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ManagementLock and their operations over its parent. </summary>
-    public partial class ManagementLockCollection : ArmCollection, IEnumerable<ManagementLock>, IAsyncEnumerable<ManagementLock>
+    public partial class ManagementLockCollection : ArmCollection, IEnumerable<ManagementLockResource>, IAsyncEnumerable<ManagementLockResource>
     {
         private readonly ClientDiagnostics _managementLockClientDiagnostics;
         private readonly ManagementLocksRestOperations _managementLockRestClient;
@@ -35,9 +34,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagementLockCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementLock.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ManagementLock.ResourceType, out string managementLockApiVersion);
-            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managementLockApiVersion);
+            _managementLockClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ManagementLockResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagementLockResource.ResourceType, out string managementLockApiVersion);
+            _managementLockRestClient = new ManagementLocksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementLockApiVersion);
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagementLock>> CreateOrUpdateAsync(WaitUntil waitUntil, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementLockResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _managementLockRestClient.CreateOrUpdateByScopeAsync(Id, lockName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ManagementLock>(Response.FromValue(new ManagementLock(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagementLock> CreateOrUpdate(WaitUntil waitUntil, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementLockResource> CreateOrUpdate(WaitUntil waitUntil, string lockName, ManagementLockData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _managementLockRestClient.CreateOrUpdateByScope(Id, lockName, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<ManagementLock>(Response.FromValue(new ManagementLock(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<ManagementLockResource>(Response.FromValue(new ManagementLockResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual async Task<Response<ManagementLock>> GetAsync(string lockName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementLockResource>> GetAsync(string lockName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _managementLockRestClient.GetByScopeAsync(Id, lockName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementLockResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual Response<ManagementLock> Get(string lockName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementLockResource> Get(string lockName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementLockResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,17 +170,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementLock" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementLock> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagementLockResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementLockResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagementLock>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagementLockResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managementLockRestClient.ListByScopeAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -189,14 +188,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ManagementLock>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagementLockResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managementLockRestClient.ListByScopeNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,17 +213,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementLock" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementLock> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementLockResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementLockResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagementLock> FirstPageFunc(int? pageSizeHint)
+            Page<ManagementLockResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managementLockRestClient.ListByScope(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -232,14 +231,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ManagementLock> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagementLockResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managementLockClientDiagnostics.CreateScope("ManagementLockCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managementLockRestClient.ListByScopeNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLock(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagementLockResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -313,7 +312,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual async Task<Response<ManagementLock>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementLockResource>> GetIfExistsAsync(string lockName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
@@ -323,8 +322,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _managementLockRestClient.GetByScopeAsync(Id, lockName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagementLock>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagementLockResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementLockResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -342,7 +341,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
-        public virtual Response<ManagementLock> GetIfExists(string lockName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementLockResource> GetIfExists(string lockName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(lockName, nameof(lockName));
 
@@ -352,8 +351,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _managementLockRestClient.GetByScope(Id, lockName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagementLock>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagementLock(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagementLockResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagementLockResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -362,7 +361,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<ManagementLock> IEnumerable<ManagementLock>.GetEnumerator()
+        IEnumerator<ManagementLockResource> IEnumerable<ManagementLockResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagementLock> IAsyncEnumerable<ManagementLock>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagementLockResource> IAsyncEnumerable<ManagementLockResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

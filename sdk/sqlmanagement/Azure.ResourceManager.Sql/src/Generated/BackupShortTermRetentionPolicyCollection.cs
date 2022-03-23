@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of BackupShortTermRetentionPolicy and their operations over its parent. </summary>
-    public partial class BackupShortTermRetentionPolicyCollection : ArmCollection, IEnumerable<BackupShortTermRetentionPolicy>, IAsyncEnumerable<BackupShortTermRetentionPolicy>
+    public partial class BackupShortTermRetentionPolicyCollection : ArmCollection, IEnumerable<BackupShortTermRetentionPolicyResource>, IAsyncEnumerable<BackupShortTermRetentionPolicyResource>
     {
         private readonly ClientDiagnostics _backupShortTermRetentionPolicyClientDiagnostics;
         private readonly BackupShortTermRetentionPoliciesRestOperations _backupShortTermRetentionPolicyRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BackupShortTermRetentionPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _backupShortTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", BackupShortTermRetentionPolicy.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(BackupShortTermRetentionPolicy.ResourceType, out string backupShortTermRetentionPolicyApiVersion);
-            _backupShortTermRetentionPolicyRestClient = new BackupShortTermRetentionPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backupShortTermRetentionPolicyApiVersion);
+            _backupShortTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", BackupShortTermRetentionPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BackupShortTermRetentionPolicyResource.ResourceType, out string backupShortTermRetentionPolicyApiVersion);
+            _backupShortTermRetentionPolicyRestClient = new BackupShortTermRetentionPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupShortTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SqlDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != SqlDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<BackupShortTermRetentionPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupShortTermRetentionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _backupShortTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<BackupShortTermRetentionPolicy>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<BackupShortTermRetentionPolicyResource>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<BackupShortTermRetentionPolicy> CreateOrUpdate(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupShortTermRetentionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _backupShortTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<BackupShortTermRetentionPolicy>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<BackupShortTermRetentionPolicyResource>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupShortTermRetentionPolicy>> GetAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupShortTermRetentionPolicyResource>> GetAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.Get");
             scope.Start();
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _backupShortTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupShortTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupShortTermRetentionPolicy> Get(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual Response<BackupShortTermRetentionPolicyResource> Get(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.Get");
             scope.Start();
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _backupShortTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new BackupShortTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,17 +168,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: BackupShortTermRetentionPolicies_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BackupShortTermRetentionPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BackupShortTermRetentionPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BackupShortTermRetentionPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BackupShortTermRetentionPolicy>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BackupShortTermRetentionPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _backupShortTermRetentionPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<BackupShortTermRetentionPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BackupShortTermRetentionPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _backupShortTermRetentionPolicyRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +210,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: BackupShortTermRetentionPolicies_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BackupShortTermRetentionPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BackupShortTermRetentionPolicy> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BackupShortTermRetentionPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BackupShortTermRetentionPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<BackupShortTermRetentionPolicy> FirstPageFunc(int? pageSizeHint)
+            Page<BackupShortTermRetentionPolicyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _backupShortTermRetentionPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +228,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<BackupShortTermRetentionPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BackupShortTermRetentionPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _backupShortTermRetentionPolicyRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new BackupShortTermRetentionPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupShortTermRetentionPolicy>> GetIfExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupShortTermRetentionPolicyResource>> GetIfExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetIfExists");
             scope.Start();
@@ -308,8 +307,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _backupShortTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<BackupShortTermRetentionPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new BackupShortTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<BackupShortTermRetentionPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new BackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupShortTermRetentionPolicy> GetIfExists(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual Response<BackupShortTermRetentionPolicyResource> GetIfExists(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetIfExists");
             scope.Start();
@@ -333,8 +332,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _backupShortTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<BackupShortTermRetentionPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new BackupShortTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<BackupShortTermRetentionPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new BackupShortTermRetentionPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<BackupShortTermRetentionPolicy> IEnumerable<BackupShortTermRetentionPolicy>.GetEnumerator()
+        IEnumerator<BackupShortTermRetentionPolicyResource> IEnumerable<BackupShortTermRetentionPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -353,7 +352,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<BackupShortTermRetentionPolicy> IAsyncEnumerable<BackupShortTermRetentionPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BackupShortTermRetentionPolicyResource> IAsyncEnumerable<BackupShortTermRetentionPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

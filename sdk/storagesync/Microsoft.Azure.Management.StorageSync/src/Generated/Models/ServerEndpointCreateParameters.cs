@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="serverLocalPath">Server Local path.</param>
         /// <param name="cloudTiering">Cloud Tiering. Possible values include:
         /// 'on', 'off'</param>
@@ -64,8 +66,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="initialUploadPolicy">Policy for how the initial upload
         /// sync session is performed. Possible values include:
         /// 'ServerAuthoritative', 'Merge'</param>
-        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string initialDownloadPolicy = default(string), string localCacheMode = default(string), string initialUploadPolicy = default(string))
-            : base(id, name, type)
+        public ServerEndpointCreateParameters(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string serverLocalPath = default(string), string cloudTiering = default(string), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = default(string), string serverResourceId = default(string), string offlineDataTransfer = default(string), string offlineDataTransferShareName = default(string), string initialDownloadPolicy = default(string), string localCacheMode = default(string), string initialUploadPolicy = default(string))
+            : base(id, name, type, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;

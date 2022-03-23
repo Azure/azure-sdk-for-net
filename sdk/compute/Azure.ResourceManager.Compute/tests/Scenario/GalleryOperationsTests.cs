@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class GalleryOperationsTests : ComputeTestBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
 
         public GalleryOperationsTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<Gallery> CreateGalleryAsync(string name)
+        private async Task<GalleryResource> CreateGalleryAsync(string name)
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var collection = _resourceGroup.GetGalleries();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
-            Gallery gallery2 = await gallery.GetAsync();
+            GalleryResource gallery2 = await gallery.GetAsync();
 
             ResourceDataHelper.AssertGallery(gallery.Data, gallery2.Data);
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Description = description
             };
             var lro = await gallery.UpdateAsync(WaitUntil.Completed, update);
-            Gallery updatedGallery = lro.Value;
+            GalleryResource updatedGallery = lro.Value;
 
             Assert.AreEqual(description, updatedGallery.Data.Description);
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests
             {
                 { "key", "value" }
             };
-            Gallery updatedGallery = await gallery.SetTagsAsync(tags);
+            GalleryResource updatedGallery = await gallery.SetTagsAsync(tags);
 
             Assert.AreEqual(tags, updatedGallery.Data.Tags);
         }

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
-            CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
+            CdnWebApplicationFirewallPolicyResource policy = await CreatePolicy(rg, policyName);
             Assert.AreEqual(policyName, policy.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, null, policy.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().CreateOrUpdateAsync(WaitUntil.Completed, policyName, null));
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
             _ = await CreatePolicy(rg, policyName);
             int count = 0;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Cdn.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroup rg = await CreateResourceGroup(subscription, "testRg-");
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");
-            CdnWebApplicationFirewallPolicy policy = await CreatePolicy(rg, policyName);
-            CdnWebApplicationFirewallPolicy getPolicy = await rg.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName);
+            CdnWebApplicationFirewallPolicyResource policy = await CreatePolicy(rg, policyName);
+            CdnWebApplicationFirewallPolicyResource getPolicy = await rg.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName);
             ResourceDataHelper.AssertValidPolicy(policy, getPolicy);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetCdnWebApplicationFirewallPolicies().GetAsync(null));
         }
