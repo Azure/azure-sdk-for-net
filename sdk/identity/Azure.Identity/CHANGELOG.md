@@ -3,6 +3,7 @@
 ## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
+- `ManagedIdentityCredential` now attempts to use the newest "2019-08-01" api version for App Service Managed Identity sources. The newer API version will be used if the `IDENTITY_ENDPOINT` and `IDENTITY_HEADER` environment variables are set.
 
 ### Breaking Changes
 
