@@ -328,7 +328,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                     VerifyLockState("WebJobs.Internal.Blobs.Listener", LeaseState.Available, LeaseStatus.Unlocked).Wait();
 
-                    await foreach (var testContainer in BlobServiceClient.GetBlobContainersAsync(prefix: TestArtifactPrefix))
+                    GetBlobContainersOptions options = new GetBlobContainersOptions
+                    {
+                        Prefix = TestArtifactPrefix
+                    };
+
+                    await foreach (var testContainer in BlobServiceClient.GetBlobContainersAsync(options))
                     {
                         await BlobServiceClient.GetBlobContainerClient(testContainer.Name).DeleteAsync();
                     }

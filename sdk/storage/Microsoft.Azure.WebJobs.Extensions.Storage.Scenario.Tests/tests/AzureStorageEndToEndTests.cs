@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -575,7 +576,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
             public void Dispose()
             {
-                foreach (var testContainer in BlobServiceClient.GetBlobContainers(prefix: TestArtifactsPrefix))
+                GetBlobContainersOptions options = new GetBlobContainersOptions
+                {
+                    Prefix = TestArtifactsPrefix
+                };
+                foreach (var testContainer in BlobServiceClient.GetBlobContainers(options))
                 {
                     this.BlobServiceClient.GetBlobContainerClient(testContainer.Name).Delete();
                 }
