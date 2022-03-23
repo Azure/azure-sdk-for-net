@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added the `MessageContent` type which represents a message containing a content type and data.
+
 ### Breaking Changes
 
 ### Bugs Fixed

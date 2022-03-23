@@ -21,8 +21,7 @@
         <PackageReference Include="Azure.Core" />
     -->
     <!-- END TEMP -->
-    <PackageReference Include="Azure.Core.Experimental" />
-
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
