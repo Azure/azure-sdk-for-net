@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DeploymentPropertiesExtended DeserializeDeploymentPropertiesExtended(JsonElement element)
         {
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<string> correlationId = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new ResourcesProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("correlationId"))

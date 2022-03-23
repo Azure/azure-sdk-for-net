@@ -192,9 +192,12 @@ directive:
       $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ApplicationBillingDetails';
       $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
+      $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
+      $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
   - from: resources.json
     where: $.definitions
     transform: >
+      $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
       $.DeploymentOperationProperties.properties.duration["format"] = "duration";
       $.Dependency["x-ms-client-name"] = "ArmDependency";

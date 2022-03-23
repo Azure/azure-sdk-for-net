@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, TemplateLink templateLink, BinaryData parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
+        internal DeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, TemplateLink templateLink, BinaryData parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Denotes the state of provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The correlation ID of the deployment. </summary>
         public string CorrelationId { get; }
         /// <summary> The timestamp of the template deployment. </summary>

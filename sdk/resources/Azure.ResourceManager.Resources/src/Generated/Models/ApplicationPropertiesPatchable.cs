@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Name and value pairs that define the managed application outputs. </summary>
         public BinaryData Outputs { get; }
         /// <summary> The managed application provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ResourcesProvisioningState? ProvisioningState { get; }
     }
 }

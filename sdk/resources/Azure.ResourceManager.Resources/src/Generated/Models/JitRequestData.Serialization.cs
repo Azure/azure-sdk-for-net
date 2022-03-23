@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> publisherTenantId = default;
             Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
             Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<JitRequestState> jitRequestState = default;
             Optional<ApplicationClientDetails> createdBy = default;
             Optional<ApplicationClientDetails> updatedBy = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("jitRequestState"))

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> applicationDefinitionId = default;
             Optional<BinaryData> parameters = default;
             Optional<BinaryData> outputs = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<ApplicationBillingDetails> billingDetails = default;
             Optional<ApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<string> publisherTenantId = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("billingDetails"))
