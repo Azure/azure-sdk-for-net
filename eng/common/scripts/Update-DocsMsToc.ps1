@@ -108,7 +108,7 @@ foreach($metadataEntry in $fullMetadata) {
   if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
     $pkgKey = GetPackageKey $metadataEntry
     if($onboardedPackages.ContainsKey($pkgKey)) {
-      $metadata = @($metadataEntry)
+      $metadata += $metadataEntry
     }
   }
 }
