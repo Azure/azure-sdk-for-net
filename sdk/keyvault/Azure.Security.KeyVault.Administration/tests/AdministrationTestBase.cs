@@ -47,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         /// <summary>
-        /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (2s).
+        /// Gets a polling interval based on whether we're playing back recorded tests (0s) or not (<see cref="KeyVaultTestEnvironment.DefaultPollingInterval"/>).
         /// </summary>
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
             ? TimeSpan.Zero
