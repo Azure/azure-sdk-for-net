@@ -185,7 +185,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value = update.Value.ContentLength;
             }
-            // Check if the operation succeeded
+            // Check if the operation aborted or failed
             if (Id == update.Value.CopyId &&
                 (update.Value.CopyStatus == CopyStatus.Aborted ||
                 update.Value.CopyStatus == CopyStatus.Failed))
