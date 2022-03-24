@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <param name="path"> The path from the root to the current group. </param>
         /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
         /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
-        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
+        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentManagementGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
         {
             Version = version;
             UpdatedTime = updatedTime;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> The identity of the principal or process that updated the object. </summary>
         public string UpdatedBy { get; }
         /// <summary> (Optional) The ID of the parent management group. </summary>
-        public ParentGroupInfo Parent { get; }
+        public ParentManagementGroupInfo Parent { get; }
         /// <summary> The path from the root to the current group. </summary>
         public IReadOnlyList<ManagementGroupPathElement> Path { get; }
         /// <summary> The ancestors of the management group. </summary>

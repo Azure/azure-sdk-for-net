@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Management.Models
             Optional<int> version = default;
             Optional<DateTimeOffset> updatedTime = default;
             Optional<string> updatedBy = default;
-            Optional<ParentGroupInfo> parent = default;
+            Optional<ParentManagementGroupInfo> parent = default;
             Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
             Optional<IReadOnlyList<string>> managementGroupAncestors = default;
             Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Management.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parent = ParentGroupInfo.DeserializeParentGroupInfo(property.Value);
+                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"))

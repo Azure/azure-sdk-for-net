@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class ParentGroupInfo
+    public partial class ParentManagementGroupInfo
     {
-        internal static ParentGroupInfo DeserializeParentGroupInfo(JsonElement element)
+        internal static ParentManagementGroupInfo DeserializeParentManagementGroupInfo(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Management.Models
                     continue;
                 }
             }
-            return new ParentGroupInfo(id.Value, name.Value, displayName.Value);
+            return new ParentManagementGroupInfo(id.Value, name.Value, displayName.Value);
         }
     }
 }

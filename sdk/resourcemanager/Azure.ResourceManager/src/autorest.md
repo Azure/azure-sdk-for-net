@@ -643,4 +643,8 @@ directive:
     where: $.definitions.ManagementGroupDetails
     transform: >
       $["x-ms-client-name"] = "ManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ParentGroupInfo
+    transform: >
+      $["x-ms-client-name"] = "ParentManagementGroupInfo"
 ```
