@@ -61,11 +61,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -73,10 +73,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetYearsPathFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default)).Returns(asyncPageable);
             }
             else
@@ -85,10 +82,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetYearPathFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default)).Returns(pageable);
             }
 
@@ -97,10 +91,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYearFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == null && o.Prefix != null),
                     default)).Returns(asyncPageable);
             }
             else
@@ -109,10 +100,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetSegmentsInYearFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == null && o.Prefix != null),
                     default)).Returns(pageable);
             }
 
@@ -191,48 +179,36 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2020/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2020/"),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2020/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2020/"),
                     default));
             }
 
@@ -298,11 +274,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -310,10 +286,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetYearsPathShortFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default)).Returns(asyncPageable);
             }
             else
@@ -322,10 +295,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetYearsPathShortFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default)).Returns(pageable);
             }
 
@@ -335,10 +305,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable2 = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYear2020FuncAsync);
 
                 containerClient.SetupSequence(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == null && o.Prefix != null),
                     default))
                     .Returns(asyncPageable)
                     .Returns(asyncPageable2);
@@ -352,10 +319,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetSegmentsInYear2020Func);
 
                 containerClient.SetupSequence(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == null && o.Prefix != null),
                     default))
                     .Returns(pageable)
                     .Returns(pageable2);
@@ -508,62 +472,44 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2019/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2019/"),
                     default));
 
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2020/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2020/"),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2019/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2019/"),
                     default));
 
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2020/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2020/"),
                     default));
             }
 
@@ -636,11 +582,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -648,10 +594,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetYearsPathFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(asyncPageable);
             }
             else
@@ -660,10 +603,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetYearPathFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(pageable);
             }
 
@@ -696,29 +636,23 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
         }
@@ -765,11 +699,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -777,10 +711,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetYearsPathShortFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default)).Returns(asyncPageable);
             }
             else
@@ -789,10 +720,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetYearsPathShortFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default)).Returns(pageable);
             }
 
@@ -802,10 +730,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable2 = PageResponseEnumerator.CreateAsyncEnumerable(GetSegmentsInYear2020FuncAsync);
 
                 containerClient.SetupSequence(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == null && o.Prefix != null),
                     default))
                     .Returns(asyncPageable)
                     .Returns(asyncPageable2);
@@ -819,10 +744,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     PageResponseEnumerator.CreateEnumerable(GetSegmentsInYear2020Func);
 
                 containerClient.SetupSequence(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == null && o.Prefix != null),
                     default))
                     .Returns(pageable)
                     .Returns(pageable2);
@@ -904,62 +826,44 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    "/",
-                    Constants.ChangeFeed.SegmentPrefix,
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Delimiter == "/" && o.Prefix == Constants.ChangeFeed.SegmentPrefix),
                     default));
             }
 
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2019/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2019/"),
                     default));
 
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2020/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2020/"),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2019/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2019/"),
                     default));
 
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    "idx/segments/2020/",
+                    It.Is<GetBlobsByHierarchyOptions>(o => o.Prefix == "idx/segments/2020/"),
                     default));
             }
 
