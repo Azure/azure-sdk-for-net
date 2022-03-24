@@ -209,20 +209,30 @@ namespace Azure.Core.Tests.Management
         [TestCase(RecordedTestMode.Live)]
         public async Task ValidateWaitOverride(RecordedTestMode mode)
         {
+            // keep the curent test mode and restore it back when finished, otherwise it will invoke unnecessary clean-up
+            var currentMode = Mode;
+
             Mode = mode;
-            ManagementTestClient testClient = InstrumentClient(new ManagementTestClient());
-            TestResource testResource = testClient.GetTestResource();
-            Stopwatch sw = Stopwatch.StartNew();
-            testResource = (await testResource.GetLroAsync(WaitUntil.Completed)).Value;
-            sw.Stop();
-            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
-            if (mode == RecordedTestMode.Playback)
+            try
             {
-                Assert.Less(sw.ElapsedMilliseconds, 1000);
+                ManagementTestClient testClient = InstrumentClient(new ManagementTestClient());
+                TestResource testResource = testClient.GetTestResource();
+                Stopwatch sw = Stopwatch.StartNew();
+                testResource = (await testResource.GetLroAsync(WaitUntil.Completed)).Value;
+                sw.Stop();
+                Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+                if (mode == RecordedTestMode.Playback)
+                {
+                    Assert.Less(sw.ElapsedMilliseconds, 1000);
+                }
+                else
+                {
+                    Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 1000);
+                }
             }
-            else
+            finally
             {
-                Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 1000);
+                Mode = currentMode;
             }
         }
     }
