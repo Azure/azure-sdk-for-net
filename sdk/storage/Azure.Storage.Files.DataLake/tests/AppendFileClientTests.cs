@@ -273,8 +273,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        // Possible test recording framework bug
-        [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task AppendAsync_ContentHash()
         {
