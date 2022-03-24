@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected PluggableCheckpointStoreEventProcessor(CheckpointStore checkpointStore,
                                                          int eventBatchMaximumCount,
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <exception cref="ArgumentOutOfRangeException">Occurs when the requested <paramref name="eventBatchMaximumCount"/> is less than 1.</exception>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
+        /// <seealso href="https://docs.microsoft.com/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected PluggableCheckpointStoreEventProcessor(CheckpointStore checkpointStore,
                                                          int eventBatchMaximumCount,
@@ -201,9 +201,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   starting location set.
         /// </remarks>
         ///
-        protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId,
-                                                                                   CancellationToken cancellationToken) =>
-            await _checkpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
+        protected override Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId,
+                                                                             CancellationToken cancellationToken) =>
+            _checkpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -215,11 +215,11 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        protected override async Task UpdateCheckpointAsync(string partitionId,
-                                                            long offset,
-                                                            long? sequenceNumber,
-                                                            CancellationToken cancellationToken) =>
-            await _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken).ConfigureAwait(false);
+        protected override Task UpdateCheckpointAsync(string partitionId,
+                                                      long offset,
+                                                      long? sequenceNumber,
+                                                      CancellationToken cancellationToken) =>
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
 
         /// <summary>
         ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor
@@ -232,8 +232,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of ownership data to take into account when making load balancing decisions.</returns>
         ///
-        protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
-            await _checkpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
+        protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) =>
+            _checkpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken);
 
         /// <summary>
         ///   Attempts to claim ownership of the specified partitions for processing.  This operation is used by
@@ -246,8 +246,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The set of ownership records for the partitions that were successfully claimed; this is expected to be the <paramref name="desiredOwnership"/> or a subset of those partitions.</returns>
         ///
-        protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership,
-                                                                                                         CancellationToken cancellationToken) =>
-            await _checkpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken).ConfigureAwait(false);
+        protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership,
+                                                                                                   CancellationToken cancellationToken) =>
+            _checkpointStore.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
     }
 }
