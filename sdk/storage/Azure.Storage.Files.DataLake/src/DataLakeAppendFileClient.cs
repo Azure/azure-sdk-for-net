@@ -670,6 +670,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="fastPathSessionData">
+        /// Fast path session data.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -687,12 +690,14 @@ namespace Azure.Storage.Files.DataLake
             bool createIfNotExists = default,
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
+            string fastPathSessionData = default,
             CancellationToken cancellationToken = default)
             => AppendInternal(
                     content,
                     createIfNotExists,
                     contentHash,
                     progressHandler,
+                    fastPathSessionData,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
@@ -720,6 +725,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="fastPathSessionData">
+        /// Fast path session data.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -737,12 +745,14 @@ namespace Azure.Storage.Files.DataLake
             bool createIfNotExists = default,
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
+            string fastPathSessionData = default,
             CancellationToken cancellationToken = default)
             => await AppendInternal(
                     content,
                     createIfNotExists,
                     contentHash,
                     progressHandler,
+                    fastPathSessionData,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -771,6 +781,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="fastPathSessionData">
+        /// Fast path session data.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -791,6 +804,7 @@ namespace Azure.Storage.Files.DataLake
             bool createIfNotExists,
             byte[] contentHash,
             IProgress<long> progressHandler,
+            string fastPathSessionData,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -817,6 +831,7 @@ namespace Azure.Storage.Files.DataLake
                             timeout: null,
                             contentLength: content?.Length - content?.Position ?? 0,
                             transactionalContentHash: contentHash,
+                            fastPathSessionData: fastPathSessionData,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -828,6 +843,7 @@ namespace Azure.Storage.Files.DataLake
                             timeout: null,
                             contentLength: content?.Length - content?.Position ?? 0,
                             transactionalContentHash: contentHash,
+                            fastPathSessionData: fastPathSessionData,
                             cancellationToken: cancellationToken);
                     }
 
