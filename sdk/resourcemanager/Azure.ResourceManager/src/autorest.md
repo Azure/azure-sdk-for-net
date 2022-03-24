@@ -504,6 +504,10 @@ directive:
     where: $.definitions.DataEffect
     transform: >
       $["x-ms-client-name"] = "DataPolicyManifestEffect";
+  - from: locks.json
+    where: $.definitions.ManagementLockProperties.properties.level["x-ms-enum"]
+    transform: >
+      $["name"] = "ManagementLockLevel"
 ```
 
 ### Tag: package-management
