@@ -631,4 +631,8 @@ directive:
     where: $.definitions.DescendantInfo
     transform: >
       $['x-ms-client-name'] = "DescendantData"
+  - from: management.json
+    where: $.definitions.DescendantParentGroupInfo.properties.id
+    transform: >
+      $["x-ms-format"] = "arm-id"
 ```
