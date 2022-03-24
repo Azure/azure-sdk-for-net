@@ -577,6 +577,10 @@ directive:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
   - from: management.json
+    where: $.parameters.CheckNameAvailabilityParameter
+    transform: >
+      $['name'] = "checkNameAvailabilityOptions"
+  - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
       $['x-ms-enum'] = {

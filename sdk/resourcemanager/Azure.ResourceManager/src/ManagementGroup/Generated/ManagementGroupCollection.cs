@@ -298,18 +298,18 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/checkNameAvailability
         /// Operation Id: ManagementGroups_CheckNameAvailability
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="checkNameAvailabilityOptions"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckManagementGroupNameAvailabilityAsync(ManagementGroupNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityOptions"/> is null. </exception>
+        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckManagementGroupNameAvailabilityAsync(ManagementGroupNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(checkNameAvailabilityOptions, nameof(checkNameAvailabilityOptions));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckManagementGroupNameAvailability");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.CheckNameAvailabilityAsync(checkNameAvailabilityOptions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -324,18 +324,18 @@ namespace Azure.ResourceManager.Management
         /// Request Path: /providers/Microsoft.Management/checkNameAvailability
         /// Operation Id: ManagementGroups_CheckNameAvailability
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
+        /// <param name="checkNameAvailabilityOptions"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public virtual Response<ManagementGroupNameAvailabilityResult> CheckManagementGroupNameAvailability(ManagementGroupNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityOptions"/> is null. </exception>
+        public virtual Response<ManagementGroupNameAvailabilityResult> CheckManagementGroupNameAvailability(ManagementGroupNameAvailabilityOptions checkNameAvailabilityOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
+            Argument.AssertNotNull(checkNameAvailabilityOptions, nameof(checkNameAvailabilityOptions));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckManagementGroupNameAvailability");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.CheckNameAvailability(checkNameAvailabilityRequest, cancellationToken);
+                var response = _managementGroupRestClient.CheckNameAvailability(checkNameAvailabilityOptions, cancellationToken);
                 return response;
             }
             catch (Exception e)

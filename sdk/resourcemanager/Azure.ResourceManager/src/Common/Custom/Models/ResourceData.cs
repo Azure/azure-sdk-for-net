@@ -5,7 +5,7 @@
 
 using Azure.Core;
 
-[assembly: CodeGenSuppressType("Resource")]
+[assembly: CodeGenSuppressType("ArmResourceData")]
 namespace Azure.ResourceManager.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
