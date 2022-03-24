@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources
         internal static ArmDeploymentData DeserializeArmDeploymentData(JsonElement element)
         {
             Optional<string> location = default;
-            Optional<DeploymentPropertiesExtended> properties = default;
+            Optional<ArmDeploymentPropertiesExtended> properties = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = DeploymentPropertiesExtended.DeserializeDeploymentPropertiesExtended(property.Value);
+                    properties = ArmDeploymentPropertiesExtended.DeserializeArmDeploymentPropertiesExtended(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))

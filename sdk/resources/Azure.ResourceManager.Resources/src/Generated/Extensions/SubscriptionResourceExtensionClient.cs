@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Resources
         private ApplicationsRestOperations _armApplicationApplicationsRestClient;
         private ClientDiagnostics _jitRequestClientDiagnostics;
         private JitRequestsRestOperations _jitRequestRestClient;
-        private ClientDiagnostics _deploymentScriptClientDiagnostics;
-        private DeploymentScriptsRestOperations _deploymentScriptRestClient;
+        private ClientDiagnostics _armDeploymentScriptDeploymentScriptsClientDiagnostics;
+        private DeploymentScriptsRestOperations _armDeploymentScriptDeploymentScriptsRestClient;
         private ClientDiagnostics _templateSpecClientDiagnostics;
         private TemplateSpecsRestOperations _templateSpecRestClient;
 
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Resources
         private ApplicationsRestOperations ArmApplicationApplicationsRestClient => _armApplicationApplicationsRestClient ??= new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmApplicationResource.ResourceType));
         private ClientDiagnostics JitRequestClientDiagnostics => _jitRequestClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", JitRequestResource.ResourceType.Namespace, Diagnostics);
         private JitRequestsRestOperations JitRequestRestClient => _jitRequestRestClient ??= new JitRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JitRequestResource.ResourceType));
-        private ClientDiagnostics DeploymentScriptClientDiagnostics => _deploymentScriptClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", DeploymentScriptResource.ResourceType.Namespace, Diagnostics);
-        private DeploymentScriptsRestOperations DeploymentScriptRestClient => _deploymentScriptRestClient ??= new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeploymentScriptResource.ResourceType));
+        private ClientDiagnostics ArmDeploymentScriptDeploymentScriptsClientDiagnostics => _armDeploymentScriptDeploymentScriptsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentScriptResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentScriptsRestOperations ArmDeploymentScriptDeploymentScriptsRestClient => _armDeploymentScriptDeploymentScriptsRestClient ??= new DeploymentScriptsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentScriptResource.ResourceType));
         private ClientDiagnostics TemplateSpecClientDiagnostics => _templateSpecClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, Diagnostics);
         private TemplateSpecsRestOperations TemplateSpecRestClient => _templateSpecRestClient ??= new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TemplateSpecResource.ResourceType));
 
@@ -207,17 +207,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DeploymentScripts_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeploymentScriptResource> GetDeploymentScriptsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeploymentScriptResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArmDeploymentScriptResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DeploymentScriptClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeploymentScripts");
+                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
                 scope.Start();
                 try
                 {
-                    var response = await DeploymentScriptRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<DeploymentScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArmDeploymentScriptResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DeploymentScriptClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeploymentScripts");
+                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
                 scope.Start();
                 try
                 {
-                    var response = await DeploymentScriptRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -249,17 +249,17 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: DeploymentScripts_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeploymentScriptResource> GetDeploymentScripts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(CancellationToken cancellationToken = default)
         {
-            Page<DeploymentScriptResource> FirstPageFunc(int? pageSizeHint)
+            Page<ArmDeploymentScriptResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DeploymentScriptClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeploymentScripts");
+                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
                 scope.Start();
                 try
                 {
-                    var response = DeploymentScriptRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -267,14 +267,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<DeploymentScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArmDeploymentScriptResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = DeploymentScriptClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeploymentScripts");
+                using var scope = ArmDeploymentScriptDeploymentScriptsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetArmDeploymentScripts");
                 scope.Start();
                 try
                 {
-                    var response = DeploymentScriptRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ArmDeploymentScriptDeploymentScriptsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ArmDeploymentScriptResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

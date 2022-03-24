@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     {
         /// <summary> Initializes a new instance of ApplicationDeploymentPolicy. </summary>
         /// <param name="deploymentMode"> The managed application deployment mode. </param>
-        public ApplicationDeploymentPolicy(DeploymentMode deploymentMode)
+        public ApplicationDeploymentPolicy(ApplicationDeploymentMode deploymentMode)
         {
             DeploymentMode = deploymentMode;
         }
 
         /// <summary> The managed application deployment mode. </summary>
-        public DeploymentMode DeploymentMode { get; set; }
+        public ApplicationDeploymentMode DeploymentMode { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="tags"> Deployment tags. </param>
-        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ArmDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, ArmDeploymentPropertiesExtended properties, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> the location of the deployment. </summary>
         public string Location { get; }
         /// <summary> Deployment properties. </summary>
-        public DeploymentPropertiesExtended Properties { get; }
+        public ArmDeploymentPropertiesExtended Properties { get; }
         /// <summary> Deployment tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArmDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArmDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, ArmDeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ArmDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, DeploymentInput parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArmDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, ArmDeploymentInput parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(parameters, nameof(parameters));

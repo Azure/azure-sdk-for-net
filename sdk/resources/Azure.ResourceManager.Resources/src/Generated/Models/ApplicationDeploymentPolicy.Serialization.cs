@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ApplicationDeploymentPolicy DeserializeApplicationDeploymentPolicy(JsonElement element)
         {
-            DeploymentMode deploymentMode = default;
+            ApplicationDeploymentMode deploymentMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentMode"))
                 {
-                    deploymentMode = new DeploymentMode(property.Value.GetString());
+                    deploymentMode = new ApplicationDeploymentMode(property.Value.GetString());
                     continue;
                 }
             }

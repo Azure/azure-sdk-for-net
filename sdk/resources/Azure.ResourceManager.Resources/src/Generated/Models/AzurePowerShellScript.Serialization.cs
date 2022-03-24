@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzurePowerShellScript DeserializeAzurePowerShellScript(JsonElement element)
         {
-            Optional<DeploymentScriptManagedIdentity> identity = default;
+            Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             string location = default;
             Optional<IDictionary<string, string>> tags = default;
             ScriptType kind = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = DeploymentScriptManagedIdentity.DeserializeDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("location"))

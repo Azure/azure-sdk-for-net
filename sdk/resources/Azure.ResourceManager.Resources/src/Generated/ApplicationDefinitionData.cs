@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application deployment policy. </summary>
         internal ApplicationDeploymentPolicy DeploymentPolicy { get; set; }
         /// <summary> The managed application deployment mode. </summary>
-        public DeploymentMode DeploymentMode
+        public ApplicationDeploymentMode DeploymentMode
         {
             get => DeploymentPolicy is null ? default : DeploymentPolicy.DeploymentMode;
             set => DeploymentPolicy = new ApplicationDeploymentPolicy(value);

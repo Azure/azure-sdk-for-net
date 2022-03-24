@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Properties of the Azure CLI script object. </summary>
-    internal partial class AzureCliScriptProperties : DeploymentScriptPropertiesBase
+    internal partial class AzureCliScriptProperties : ArmDeploymentScriptPropertiesBase
     {
         /// <summary> Initializes a new instance of AzureCliScriptProperties. </summary>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>

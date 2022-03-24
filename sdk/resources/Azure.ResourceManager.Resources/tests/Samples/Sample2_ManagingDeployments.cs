@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
-            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 TemplateLink = new TemplateLink()
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);
             var parameters = JsonDocument.Parse(parametersString).RootElement;
-            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 TemplateLink = new TemplateLink()
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
             // Passing string to template and parameters
-            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 Template = File.ReadAllText("storage-template.json"),
                 Parameters = File.ReadAllText("storage-parameters.json")

@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Resources
             return GetCachedClient(Client => new JitRequestCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DeploymentScriptResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeploymentScriptResources and their operations over a DeploymentScriptResource. </returns>
-        public virtual DeploymentScriptCollection GetDeploymentScripts()
+        /// <summary> Gets a collection of ArmDeploymentScriptResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
+        public virtual ArmDeploymentScriptCollection GetArmDeploymentScripts()
         {
-            return GetCachedClient(Client => new DeploymentScriptCollection(Client, Id));
+            return GetCachedClient(Client => new ArmDeploymentScriptCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of TemplateSpecResources in the ResourceGroupResource. </summary>

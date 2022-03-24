@@ -75,13 +75,6 @@ rename-rules:
   URI: Uri
 
 directive:
-  - from: resources.json
-    where: $.definitions.DeploymentExtended
-    transform: $['x-ms-client-name'] = 'ArmDeployment'
-  - from: resources.json
-    where: $.definitions.Deployment
-    transform: $['x-ms-client-name'] = 'DeploymentInput'
-
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations
   # Keep the get method at each scope so that generator can know the possible values of container's parent
@@ -146,12 +139,16 @@ directive:
   - from: deploymentScripts.json
     where: $.definitions.ManagedServiceIdentity.properties.type["x-ms-enum"]
     transform: >
-      $.name = "DeploymentScriptManagedIdentityType"
+      $.name = "ArmDeploymentScriptManagedIdentityType"
   - from: deploymentScripts.json
     where: $.definitions
     transform: >
-      $["ManagedServiceIdentity"]["x-ms-client-name"] = "DeploymentScriptManagedIdentity";
-      $["AzureResourceBase"]["x-ms-client-name"] = "DeploymentScriptResourceBase";
+      $["ManagedServiceIdentity"]["x-ms-client-name"] = "ArmDeploymentScriptManagedIdentity";
+      $["AzureResourceBase"]["x-ms-client-name"] = "ArmDeploymentScriptResourceBase";
+      $["DeploymentScriptPropertiesBase"]["x-ms-client-name"] = "ArmDeploymentScriptPropertiesBase";
+      $["DeploymentScriptsError"]["x-ms-client-name"] = "ArmDeploymentScriptsError";
+      $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
+      $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
   - from: managedapplications.json
     where: $.definitions.Identity
     transform: >
@@ -175,6 +172,31 @@ directive:
       $["ApplicationPackageLockingPolicyDefinition"]["x-ms-client-name"] = "ApplicationPackageLockingPolicy";
       $["ApplicationBillingDetailsDefinition"]["x-ms-client-name"] = "ApplicationBillingDetails";
       $["JitApproverDefinition"]["x-ms-client-name"] = "JitApprover";
+      $["DeploymentMode"]["x-ms-enum"]["name"] = "ApplicationDeploymentMode";
+  - from: resources.json
+    where: $.definitions
+    transform: >
+      $.DeploymentProperties.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
+      $.DeploymentPropertiesExtended.properties.mode['x-ms-enum'].name = 'ArmDeploymentMode';
+      $.DeploymentExtended['x-ms-client-name'] = 'ArmDeployment';
+      $.Deployment['x-ms-client-name'] = 'ArmDeploymentInput';
+      $.DeploymentExportResult['x-ms-client-name'] = 'ArmDeploymentExportResult';
+      $.DeploymentExtendedFilter['x-ms-client-name'] = 'ArmDeploymentExtendedFilter';
+      $.DeploymentListResult['x-ms-client-name'] = 'ArmDeploymentListResult';
+      $.DeploymentOperation['x-ms-client-name'] = 'ArmDeploymentOperation';
+      $.DeploymentOperationProperties['x-ms-client-name'] = 'ArmDeploymentOperationProperties';
+      $.DeploymentOperationsListResult['x-ms-client-name'] = 'ArmDeploymentOperationsListResult';
+      $.DeploymentValidateResult['x-ms-client-name'] = 'ArmDeploymentValidateResult';
+      $.DeploymentWhatIf['x-ms-client-name'] = 'ArmDeploymentWhatIf';
+      $.DeploymentWhatIfSettings['x-ms-client-name'] = 'ArmDeploymentWhatIfSettings';
+      $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
+      $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
+      $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
+
+      $.Dependency["x-ms-client-name"] = "ArmDependency";
+      $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
+      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
+      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
   - from: resources.json
     where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post.parameters[1].schema
     transform: $['$ref'] = '#/definitions/DeploymentWhatIf'
@@ -194,13 +216,6 @@ directive:
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
       $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
-  - from: resources.json
-    where: $.definitions
-    transform: >
-      $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
-      $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
-      $.DeploymentOperationProperties.properties.duration["format"] = "duration";
-      $.Dependency["x-ms-client-name"] = "ArmDependency";
   - from: resources.json
     where: $.definitions.Alias
     transform:
