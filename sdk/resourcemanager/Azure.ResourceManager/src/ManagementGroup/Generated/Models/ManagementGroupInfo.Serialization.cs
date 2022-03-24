@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class ManagementGroupDetails
+    public partial class ManagementGroupInfo
     {
-        internal static ManagementGroupDetails DeserializeManagementGroupDetails(JsonElement element)
+        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
         {
             Optional<int> version = default;
             Optional<DateTimeOffset> updatedTime = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Management.Models
                     continue;
                 }
             }
-            return new ManagementGroupDetails(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
+            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
         }
     }
 }

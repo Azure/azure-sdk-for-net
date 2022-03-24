@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> The details of a management group. </summary>
-    public partial class ManagementGroupDetails
+    public partial class ManagementGroupInfo
     {
-        /// <summary> Initializes a new instance of ManagementGroupDetails. </summary>
-        internal ManagementGroupDetails()
+        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
+        internal ManagementGroupInfo()
         {
             Path = new ChangeTrackingList<ManagementGroupPathElement>();
             ManagementGroupAncestors = new ChangeTrackingList<string>();
             ManagementGroupAncestorChain = new ChangeTrackingList<ManagementGroupPathElement>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupDetails. </summary>
+        /// <summary> Initializes a new instance of ManagementGroupInfo. </summary>
         /// <param name="version"> The version number of the object. </param>
         /// <param name="updatedTime"> The date and time when this object was last updated. </param>
         /// <param name="updatedBy"> The identity of the principal or process that updated the object. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Management.Models
         /// <param name="path"> The path from the root to the current group. </param>
         /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
         /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
-        internal ManagementGroupDetails(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
+        internal ManagementGroupInfo(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
         {
             Version = version;
             UpdatedTime = updatedTime;

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Management
             SystemData systemData = default;
             Optional<string> tenantId = default;
             Optional<string> displayName = default;
-            Optional<ManagementGroupDetails> details = default;
+            Optional<ManagementGroupInfo> details = default;
             Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Management
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            details = ManagementGroupDetails.DeserializeManagementGroupDetails(property0.Value);
+                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("children"))

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Management
         /// <param name="displayName"> The friendly name of the management group. </param>
         /// <param name="details"> The details of a management group. </param>
         /// <param name="children"> The list of children. </param>
-        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tenantId, string displayName, ManagementGroupDetails details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, resourceType, systemData)
+        internal ManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tenantId, string displayName, ManagementGroupInfo details, IReadOnlyList<ManagementGroupChildInfo> children) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Management
         /// <summary> The friendly name of the management group. </summary>
         public string DisplayName { get; }
         /// <summary> The details of a management group. </summary>
-        public ManagementGroupDetails Details { get; }
+        public ManagementGroupInfo Details { get; }
         /// <summary> The list of children. </summary>
         public IReadOnlyList<ManagementGroupChildInfo> Children { get; }
     }

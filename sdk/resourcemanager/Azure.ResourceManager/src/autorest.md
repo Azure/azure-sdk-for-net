@@ -639,4 +639,8 @@ directive:
     where: $.definitions.ManagementGroupDetails.properties.managementGroupAncestorsChain
     transform: >
       $["x-ms-client-name"] = "managementGroupAncestorChain"
+  - from: management.json
+    where: $.definitions.ManagementGroupDetails
+    transform: >
+      $["x-ms-client-name"] = "ManagementGroupInfo"
 ```
