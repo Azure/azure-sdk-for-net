@@ -218,7 +218,7 @@ namespace Azure.Core.Tests.Management
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             if (mode == RecordedTestMode.Playback)
             {
-                Assert.LessOrEqual(sw.ElapsedMilliseconds, 1000);
+                Assert.Less(sw.ElapsedMilliseconds, 1000);
             }
             else
             {
