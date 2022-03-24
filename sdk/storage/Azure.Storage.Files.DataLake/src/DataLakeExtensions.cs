@@ -905,7 +905,9 @@ namespace Azure.Storage.Files.DataLake
 
             return new ConcurrentAppendResult
             {
-                CommittedBlockCount = response.Headers.CommittedBlockCount.GetValueOrDefault()
+                CommittedBlockCount = response.Headers.CommittedBlockCount.GetValueOrDefault(),
+                FastPathSessionData = response.Headers.FastPathSessionData,
+                FastPathSessionDataExpiresOn = response.Headers.FastPathSessionDataExpiry
             };
         }
 
