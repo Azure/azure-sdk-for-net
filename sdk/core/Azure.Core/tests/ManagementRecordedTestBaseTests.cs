@@ -227,7 +227,7 @@ namespace Azure.Core.Tests.Management
                 }
                 else
                 {
-                    Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 1000);
+                    Assert.That(sw.ElapsedMilliseconds, Is.GreaterThanOrEqualTo(1000).Within(25));
                 }
             }
             finally
