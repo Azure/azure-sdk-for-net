@@ -627,4 +627,8 @@ directive:
     where: $.definitions.CreateManagementGroupProperties.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: management.json
+    where: $.definitions.DescendantInfo
+    transform: >
+      $['x-ms-client-name'] = "DescendantData"
 ```

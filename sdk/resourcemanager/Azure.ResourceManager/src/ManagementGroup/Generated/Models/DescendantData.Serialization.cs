@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class DescendantInfo
+    public partial class DescendantData
     {
-        internal static DescendantInfo DeserializeDescendantInfo(JsonElement element)
+        internal static DescendantData DeserializeDescendantData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Management.Models
                     continue;
                 }
             }
-            return new DescendantInfo(id, name, type, systemData, displayName.Value, parent.Value);
+            return new DescendantData(id, name, type, systemData, displayName.Value, parent.Value);
         }
     }
 }
