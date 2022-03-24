@@ -31,7 +31,7 @@ var batchInput = new List<string>
 };
 
 // Set project and deployment names of the target model
-// To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities            
+// To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 

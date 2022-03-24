@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerKeyOperationSource : IOperationSource<ServerKey>
+    internal class ServerKeyOperationSource : IOperationSource<ServerKeyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        ServerKey IOperationSource<ServerKey>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServerKeyResource IOperationSource<ServerKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServerKeyData.DeserializeServerKeyData(document.RootElement);
-            return new ServerKey(_client, data);
+            return new ServerKeyResource(_client, data);
         }
 
-        async ValueTask<ServerKey> IOperationSource<ServerKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServerKeyResource> IOperationSource<ServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServerKeyData.DeserializeServerKeyData(document.RootElement);
-            return new ServerKey(_client, data);
+            return new ServerKeyResource(_client, data);
         }
     }
 }

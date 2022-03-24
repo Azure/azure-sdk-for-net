@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary> A class representing collection of ScalingPlan and their operations over its parent. </summary>
-    public partial class ScalingPlanCollection : ArmCollection, IEnumerable<ScalingPlan>, IAsyncEnumerable<ScalingPlan>
+    public partial class ScalingPlanCollection : ArmCollection, IEnumerable<ScalingPlanResource>, IAsyncEnumerable<ScalingPlanResource>
     {
         private readonly ClientDiagnostics _scalingPlanClientDiagnostics;
         private readonly ScalingPlansRestOperations _scalingPlanRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ScalingPlanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _scalingPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlan.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ScalingPlan.ResourceType, out string scalingPlanApiVersion);
-            _scalingPlanRestClient = new ScalingPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, scalingPlanApiVersion);
+            _scalingPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ScalingPlanResource.ResourceType, out string scalingPlanApiVersion);
+            _scalingPlanRestClient = new ScalingPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public virtual async Task<ArmOperation<ScalingPlan>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ScalingPlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
             Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _scalingPlanRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, scalingPlan, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<ScalingPlan>(Response.FromValue(new ScalingPlan(Client, response), response.GetRawResponse()));
+                var operation = new DesktopVirtualizationArmOperation<ScalingPlanResource>(Response.FromValue(new ScalingPlanResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> or <paramref name="scalingPlan"/> is null. </exception>
-        public virtual ArmOperation<ScalingPlan> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ScalingPlanResource> CreateOrUpdate(WaitUntil waitUntil, string scalingPlanName, ScalingPlanData scalingPlan, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
             Argument.AssertNotNull(scalingPlan, nameof(scalingPlan));
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _scalingPlanRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, scalingPlan, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<ScalingPlan>(Response.FromValue(new ScalingPlan(Client, response), response.GetRawResponse()));
+                var operation = new DesktopVirtualizationArmOperation<ScalingPlanResource>(Response.FromValue(new ScalingPlanResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public virtual async Task<Response<ScalingPlan>> GetAsync(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScalingPlanResource>> GetAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = await _scalingPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public virtual Response<ScalingPlan> Get(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual Response<ScalingPlanResource> Get(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 var response = _scalingPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +180,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: ScalingPlans_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScalingPlan" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScalingPlan> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScalingPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScalingPlan>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ScalingPlanResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _scalingPlanRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +198,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            async Task<Page<ScalingPlan>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ScalingPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _scalingPlanRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +222,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: ScalingPlans_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScalingPlan" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScalingPlan> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScalingPlanResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ScalingPlan> FirstPageFunc(int? pageSizeHint)
+            Page<ScalingPlanResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _scalingPlanRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +240,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     throw;
                 }
             }
-            Page<ScalingPlan> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ScalingPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _scalingPlanClientDiagnostics.CreateScope("ScalingPlanCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _scalingPlanRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlan(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ScalingPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public virtual async Task<Response<ScalingPlan>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScalingPlanResource>> GetIfExistsAsync(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
@@ -332,8 +331,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _scalingPlanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ScalingPlan>(null, response.GetRawResponse());
-                return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ScalingPlanResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scalingPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanName"/> is null. </exception>
-        public virtual Response<ScalingPlan> GetIfExists(string scalingPlanName, CancellationToken cancellationToken = default)
+        public virtual Response<ScalingPlanResource> GetIfExists(string scalingPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scalingPlanName, nameof(scalingPlanName));
 
@@ -361,8 +360,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _scalingPlanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scalingPlanName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ScalingPlan>(null, response.GetRawResponse());
-                return Response.FromValue(new ScalingPlan(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ScalingPlanResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ScalingPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +370,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        IEnumerator<ScalingPlan> IEnumerable<ScalingPlan>.GetEnumerator()
+        IEnumerator<ScalingPlanResource> IEnumerable<ScalingPlanResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ScalingPlan> IAsyncEnumerable<ScalingPlan>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ScalingPlanResource> IAsyncEnumerable<ScalingPlanResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

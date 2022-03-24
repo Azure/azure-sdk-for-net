@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 {
     public class InstanceFailoverGroupTests : SqlManagementClientBase
     {
-        private ResourceGroup _resourceGroup;
+        private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
 
         public InstanceFailoverGroupTests(bool isAsync)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task GlobalSetUp()
         {
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
-            ResourceGroup resourceGroup = rgLro.Value;
+            ResourceGroupResource resourceGroup = rgLro.Value;
             _resourceGroupIdentifier = resourceGroup.Id;
             await StopSessionRecordingAsync();
         }
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             var client = GetArmClient();
-            _resourceGroup = await client.GetResourceGroup(_resourceGroupIdentifier).GetAsync();
+            _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
 
-        private async Task<InstanceFailoverGroup> CreateInstanceFailoverGroup(string locationName, string instanceFailoverGroupName)
+        private async Task<InstanceFailoverGroupResource> CreateInstanceFailoverGroup(string locationName, string instanceFailoverGroupName)
         {
             // create PrimaryManagedInstance(WestUS2) and PartnerManagedInstance(NorthEurope)
             string primaryManagedInstanceName = Recording.GenerateAssetName("managed-instance-primary-");

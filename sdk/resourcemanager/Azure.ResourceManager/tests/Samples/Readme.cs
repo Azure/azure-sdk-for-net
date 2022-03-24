@@ -32,7 +32,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             #region Snippet:Readme_CastToSpecificType
             ResourceIdentifier id = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet");
             Console.WriteLine($"Subscription: {id.SubscriptionId}");
-            Console.WriteLine($"ResourceGroup: {id.ResourceGroupName}");
+            Console.WriteLine($"ResourceGroupResource: {id.ResourceGroupName}");
             Console.WriteLine($"Vnet: {id.Parent.Name}");
             Console.WriteLine($"Subnet: {id.Name}");
             #endregion Snippet:Readme_CastToSpecificType
@@ -44,7 +44,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_ExistsRG
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             string resourceGroupName = "myRgName";
 
@@ -56,7 +56,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 
                 // We can get the resource group now that we know it exists.
                 // This does introduce a small race condition where resource group could have been deleted between the check and the get.
-                ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
+                ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
             }
             else
             {
@@ -71,11 +71,11 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_TryGetRG
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             string resourceGroupName = "myRgName";
 
-            ResourceGroup resourceGroup = await resourceGroups.GetIfExistsAsync(resourceGroupName);
+            ResourceGroupResource resourceGroup = await resourceGroups.GetIfExistsAsync(resourceGroupName);
 
             if (resourceGroup == null)
             {
@@ -94,13 +94,13 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
         {
             #region Snippet:Readme_OldExistsRG
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             string resourceGroupName = "myRgName";
 
             try
             {
-                ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
+                ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
                 // At this point, we are sure that myRG is a not null Resource Group, so we can use this object to perform any operations we want.
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -117,10 +117,10 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             #region Snippet:Readme_LoopVms
             ArmClient client = new ArmClient(new DefaultAzureCredential());
             string resourceGroupName = "myResourceGroup";
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
-            ResourceGroup resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
-            await foreach (VirtualMachine virtualMachine in resourceGroup.GetVirtualMachines())
+            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(resourceGroupName);
+            await foreach (VirtualMachineResource virtualMachine in resourceGroup.GetVirtualMachines())
             {
                 //previously we would have to take the resourceGroupName and the vmName from the vm object
                 //and pass those into the powerOff method as well as we would need to execute that on a separate compute client
@@ -138,10 +138,10 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // Next we get a resource group object
-            // ResourceGroup is a [Resource] object from above
-            Subscription subscription = await client.GetDefaultSubscriptionAsync();
+            // ResourceGroupResource is a [Resource] object from above
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
-            ResourceGroup resourceGroup = await resourceGroups.GetAsync("myRgName");
+            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync("myRgName");
 
             // Next we get the collection for the virtual machines
             // vmCollection is a [Resource]Collection object from above
@@ -149,7 +149,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // Next we loop over all vms in the collection
             // Each vm is a [Resource] object from above
-            await foreach (VirtualMachine virtualMachine in virtualMachines)
+            await foreach (VirtualMachineResource virtualMachine in virtualMachines)
             {
                 // We access the [Resource]Data properties from vm.Data
                 if (!virtualMachine.Data.Tags.ContainsKey("owner"))
@@ -172,16 +172,16 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             // Next we get the collection of subscriptions
             SubscriptionCollection subscriptions = client.GetSubscriptions();
             // Next we get the specific subscription this resource belongs to
-            Subscription subscription = await subscriptions.GetAsync(id.SubscriptionId);
+            SubscriptionResource subscription = await subscriptions.GetAsync(id.SubscriptionId);
             // Next we get the collection of resource groups that belong to that subscription
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             // Next we get the specific resource group this resource belongs to
-            ResourceGroup resourceGroup = await resourceGroups.GetAsync(id.ResourceGroupName);
+            ResourceGroupResource resourceGroup = await resourceGroups.GetAsync(id.ResourceGroupName);
             // Next we get the collection of availability sets that belong to that resource group
             AvailabilitySetCollection availabilitySets = resourceGroup.GetAvailabilitySets();
             // Finally we get the resource itself
             // Note: for this last step in this example, Azure.ResourceManager.Compute is needed
-            AvailabilitySet availabilitySet = await availabilitySets.GetAsync(id.Name);
+            AvailabilitySetResource availabilitySet = await availabilitySets.GetAsync(id.Name);
             #endregion Snippet:Readme_ManageAvailabilitySetOld
         }
 
@@ -193,9 +193,9 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             ResourceIdentifier resourceId = new ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/resourceGroups/workshop2021-rg/providers/Microsoft.Compute/availabilitySets/ws2021availSet");
             // We construct a new client to work with
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            // Next we get the AvailabilitySet resource client from the client
+            // Next we get the AvailabilitySetResource resource client from the client
             // The method takes in a ResourceIdentifier but we can use the implicit cast from string
-            AvailabilitySet availabilitySet = client.GetAvailabilitySet(resourceId);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(resourceId);
             // At this point availabilitySet.Data will be null and trying to access it will throw
             // If we want to retrieve the objects data we can simply call get
             availabilitySet = await availabilitySet.GetAsync();
@@ -212,12 +212,12 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "workshop2021-rg";
             string availabilitySetName = "ws2021availSet";
-            ResourceIdentifier resourceId = AvailabilitySet.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            ResourceIdentifier resourceId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
             // We construct a new client to work with
             ArmClient client = new ArmClient(new DefaultAzureCredential());
-            // Next we get the AvailabilitySet resource client from the client
+            // Next we get the AvailabilitySetResource resource client from the client
             // The method takes in a ResourceIdentifier but we can use the implicit cast from string
-            AvailabilitySet availabilitySet = client.GetAvailabilitySet(resourceId);
+            AvailabilitySetResource availabilitySet = client.GetAvailabilitySetResource(resourceId);
             // At this point availabilitySet.Data will be null and trying to access it will throw
             // If we want to retrieve the objects data we can simply call get
             availabilitySet = await availabilitySet.GetAsync();
