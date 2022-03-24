@@ -28,9 +28,11 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 
 To authenticate to Azure and create an `ArmClient`, do the following:
 
-```C# Snippet:Managing_ServiceBus_AuthClient
-// using Azure.Identity
+```C# Snippet:Managing_ServiceBus_AuthClient_Usings
+using Azure.Identity;
+```
 
+```C# Snippet:Managing_ServiceBus_AuthClient
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
