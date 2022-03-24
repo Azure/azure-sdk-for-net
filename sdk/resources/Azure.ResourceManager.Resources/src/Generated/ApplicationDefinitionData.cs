@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the ApplicationDefinition data model. </summary>
-    public partial class ApplicationDefinitionData : ApplicationResource
+    public partial class ApplicationDefinitionData : Models.ApplicationResource
     {
         /// <summary> Initializes a new instance of ApplicationDefinitionData. </summary>
         /// <param name="location"> The location. </param>

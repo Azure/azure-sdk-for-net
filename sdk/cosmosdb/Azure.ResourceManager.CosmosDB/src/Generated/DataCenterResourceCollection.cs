@@ -16,11 +16,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of DataCenterResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DataCenterResource" /> and their operations.
+    /// Each <see cref="DataCenterResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
+    /// To get a <see cref="DataCenterResourceCollection" /> instance call the GetDataCenterResources method from an instance of <see cref="ClusterResource" />.
+    /// </summary>
     public partial class DataCenterResourceCollection : ArmCollection, IEnumerable<DataCenterResource>, IAsyncEnumerable<DataCenterResource>
     {
         private readonly ClientDiagnostics _dataCenterResourceCassandraDataCentersClientDiagnostics;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataCenterResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DataCenterResource.ResourceType.Namespace, DiagnosticOptions);
+            _dataCenterResourceCassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DataCenterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DataCenterResource.ResourceType, out string dataCenterResourceCassandraDataCentersApiVersion);
-            _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, dataCenterResourceCassandraDataCentersApiVersion);
+            _dataCenterResourceCassandraDataCentersRestClient = new CassandraDataCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCenterResourceCassandraDataCentersApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

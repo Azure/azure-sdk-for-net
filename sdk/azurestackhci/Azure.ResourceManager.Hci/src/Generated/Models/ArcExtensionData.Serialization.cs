@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    settings = BinaryData.FromString(property.Value.GetRawText());
+                                    settings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
                                 if (property1.NameEquals("protectedSettings"))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Hci
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    protectedSettings = BinaryData.FromString(property.Value.GetRawText());
+                                    protectedSettings = BinaryData.FromString(property1.Value.GetRawText());
                                     continue;
                                 }
                             }

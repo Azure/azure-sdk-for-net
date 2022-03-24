@@ -322,7 +322,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guids"> An array of GUIDs of entities to create. </param>
+        /// <param name="guids"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
         /// <param name="excludeRelationshipTypes"> An array of the relationship types need to be excluded from the response. </param>
@@ -3546,7 +3546,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
-                uri.AppendQuery("guids", param, true);
+                uri.AppendQuery("guid", param, true);
             }
             if (minExtInfo != null)
             {
@@ -3595,7 +3595,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendPath("/atlas/v2/entity/bulk", false);
             foreach (var param in guids)
             {
-                uri.AppendQuery("guids", param, true);
+                uri.AppendQuery("guid", param, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task CreateOrUpdateAtSubscription()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Tests
         public async Task CreateOrUpdateAtMgmtGroup()
         {
             //This test uses a pre-created management group.
-            ManagementGroup mgmtGroup = await GetCreatedManagementGroup();
+            ManagementGroupResource mgmtGroup = await GetCreatedManagementGroup();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            ManagementGroupPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
+            ManagementGroupPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task List()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             int count = 0;
             await foreach (var tempPolicyDefinition in subscription.GetSubscriptionPolicyDefinitions().GetAllAsync())
             {
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Tests
         [RecordedTest]
         public async Task Get()
         {
-            Subscription subscription = await Client.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
-            SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
-            SubscriptionPolicyDefinition getPolicyDefinition = await subscription.GetSubscriptionPolicyDefinitions().GetAsync(policyDefinitionName);
+            SubscriptionPolicyDefinitionResource policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
+            SubscriptionPolicyDefinitionResource getPolicyDefinition = await subscription.GetSubscriptionPolicyDefinitions().GetAsync(policyDefinitionName);
             AssertValidPolicyDefinition(policyDefinition, getPolicyDefinition);
         }
 
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Tests
         {
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
-                TenantPolicyDefinition getBuiltInPolicyDefinition = await tenant.GetTenantPolicyDefinitions().GetAsync("04d53d87-841c-4f23-8a5b-21564380b55e");
+                TenantPolicyDefinitionResource getBuiltInPolicyDefinition = await tenant.GetTenantPolicyDefinitions().GetAsync("04d53d87-841c-4f23-8a5b-21564380b55e");
                 Assert.AreEqual(getBuiltInPolicyDefinition.Data.DisplayName, "Deploy Diagnostic Settings for Service Bus to Log Analytics workspace");
             }
         }
 
-        private static void AssertValidPolicyDefinition(SubscriptionPolicyDefinition model, SubscriptionPolicyDefinition getResult)
+        private static void AssertValidPolicyDefinition(SubscriptionPolicyDefinitionResource model, SubscriptionPolicyDefinitionResource getResult)
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.Tests
                 Assert.NotNull(model.Data.Parameters);
                 Assert.NotNull(getResult.Data.Parameters);
                 Assert.AreEqual(model.Data.Parameters.Count, getResult.Data.Parameters.Count);
-                foreach (KeyValuePair<string, ParameterDefinitionsValue> kvp in model.Data.Parameters)
+                foreach (KeyValuePair<string, ArmPolicyParameter> kvp in model.Data.Parameters)
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
-                    ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
+                    ArmPolicyParameter getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
                     Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {

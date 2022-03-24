@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dashboard
 {
-    /// <summary> A class representing collection of GrafanaResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GrafanaResource" /> and their operations.
+    /// Each <see cref="GrafanaResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="GrafanaResourceCollection" /> instance call the GetGrafanaResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class GrafanaResourceCollection : ArmCollection, IEnumerable<GrafanaResource>, IAsyncEnumerable<GrafanaResource>
     {
         private readonly ClientDiagnostics _grafanaResourceGrafanaClientDiagnostics;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Dashboard
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GrafanaResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, DiagnosticOptions);
+            _grafanaResourceGrafanaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dashboard", GrafanaResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GrafanaResource.ResourceType, out string grafanaResourceGrafanaApiVersion);
-            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, grafanaResourceGrafanaApiVersion);
+            _grafanaResourceGrafanaRestClient = new GrafanaRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaResourceGrafanaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Dashboard
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

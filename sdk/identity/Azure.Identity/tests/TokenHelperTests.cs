@@ -4,6 +4,8 @@
 using System;
 using Azure.Identitiy;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using System.Diagnostics.Tracing;
 
 namespace Azure.Identity.Tests
 {
@@ -35,7 +37,13 @@ namespace Azure.Identity.Tests
         [Test]
         public void ParseAccountInfoFromToken_ThrowsOnInvalidToken()
         {
-            Assert.Throws<InvalidOperationException>(() => TokenHelper.ParseAccountInfoFromToken("header.token.signature"));
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, EventLevel.Verbose);
+
+            var loggedEvents = _listener.EventsById(AzureIdentityEventSource.UnableToParseAccountDetailsFromTokenEvent);
+            TokenHelper.ParseAccountInfoFromToken("header.token.signature");
+
+            CollectionAssert.IsNotEmpty(loggedEvents);
         }
 
         [Test]

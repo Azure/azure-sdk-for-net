@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(property.Value.GetRawText()));
+                        array.Add(BinaryData.FromString(item.GetRawText()));
                     }
                     resources = array;
                     continue;

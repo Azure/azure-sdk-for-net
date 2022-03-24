@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of CassandraKeyspace and their operations over its parent. </summary>
-    public partial class CassandraKeyspaceCollection : ArmCollection, IEnumerable<CassandraKeyspace>, IAsyncEnumerable<CassandraKeyspace>
+    /// <summary>
+    /// A class representing a collection of <see cref="CassandraKeyspaceResource" /> and their operations.
+    /// Each <see cref="CassandraKeyspaceResource" /> in the collection will belong to the same instance of <see cref="DatabaseAccountResource" />.
+    /// To get a <see cref="CassandraKeyspaceCollection" /> instance call the GetCassandraKeyspaces method from an instance of <see cref="DatabaseAccountResource" />.
+    /// </summary>
+    public partial class CassandraKeyspaceCollection : ArmCollection, IEnumerable<CassandraKeyspaceResource>, IAsyncEnumerable<CassandraKeyspaceResource>
     {
         private readonly ClientDiagnostics _cassandraKeyspaceCassandraResourcesClientDiagnostics;
         private readonly CassandraResourcesRestOperations _cassandraKeyspaceCassandraResourcesRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CassandraKeyspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cassandraKeyspaceCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraKeyspace.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(CassandraKeyspace.ResourceType, out string cassandraKeyspaceCassandraResourcesApiVersion);
-            _cassandraKeyspaceCassandraResourcesRestClient = new CassandraResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cassandraKeyspaceCassandraResourcesApiVersion);
+            _cassandraKeyspaceCassandraResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraKeyspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CassandraKeyspaceResource.ResourceType, out string cassandraKeyspaceCassandraResourcesApiVersion);
+            _cassandraKeyspaceCassandraResourcesRestClient = new CassandraResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraKeyspaceCassandraResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DatabaseAccount.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccount.ResourceType), nameof(id));
+            if (id.ResourceType != DatabaseAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<CassandraKeyspace>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CassandraKeyspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             Argument.AssertNotNull(createUpdateCassandraKeyspaceParameters, nameof(createUpdateCassandraKeyspaceParameters));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, createUpdateCassandraKeyspaceParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CassandraKeyspace>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, createUpdateCassandraKeyspaceParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, createUpdateCassandraKeyspaceParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> or <paramref name="createUpdateCassandraKeyspaceParameters"/> is null. </exception>
-        public virtual ArmOperation<CassandraKeyspace> CreateOrUpdate(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CassandraKeyspaceResource> CreateOrUpdate(WaitUntil waitUntil, string keyspaceName, CassandraKeyspaceCreateUpdateData createUpdateCassandraKeyspaceParameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
             Argument.AssertNotNull(createUpdateCassandraKeyspaceParameters, nameof(createUpdateCassandraKeyspaceParameters));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.CreateUpdateCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, createUpdateCassandraKeyspaceParameters, cancellationToken);
-                var operation = new CosmosDBArmOperation<CassandraKeyspace>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, createUpdateCassandraKeyspaceParameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<CassandraKeyspaceResource>(new CassandraKeyspaceOperationSource(Client), _cassandraKeyspaceCassandraResourcesClientDiagnostics, Pipeline, _cassandraKeyspaceCassandraResourcesRestClient.CreateCreateUpdateCassandraKeyspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, createUpdateCassandraKeyspaceParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual async Task<Response<CassandraKeyspace>> GetAsync(string keyspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraKeyspaceResource>> GetAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = await _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspace(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual Response<CassandraKeyspace> Get(string keyspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraKeyspaceResource> Get(string keyspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspace(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: CassandraResources_ListCassandraKeyspaces
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraKeyspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CassandraKeyspace> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CassandraKeyspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CassandraKeyspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CassandraKeyspace>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CassandraKeyspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _cassandraKeyspaceCassandraResourcesRestClient.ListCassandraKeyspacesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CassandraKeyspace(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CassandraKeyspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,17 +211,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: CassandraResources_ListCassandraKeyspaces
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraKeyspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CassandraKeyspace> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CassandraKeyspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CassandraKeyspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CassandraKeyspace> FirstPageFunc(int? pageSizeHint)
+            Page<CassandraKeyspaceResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _cassandraKeyspaceCassandraResourcesClientDiagnostics.CreateScope("CassandraKeyspaceCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _cassandraKeyspaceCassandraResourcesRestClient.ListCassandraKeyspaces(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CassandraKeyspace(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new CassandraKeyspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -292,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual async Task<Response<CassandraKeyspace>> GetIfExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CassandraKeyspaceResource>> GetIfExistsAsync(string keyspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
@@ -302,8 +305,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<CassandraKeyspace>(null, response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspace(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<CassandraKeyspaceResource>(null, response.GetRawResponse());
+                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -321,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
-        public virtual Response<CassandraKeyspace> GetIfExists(string keyspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<CassandraKeyspaceResource> GetIfExists(string keyspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyspaceName, nameof(keyspaceName));
 
@@ -331,8 +334,8 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cassandraKeyspaceCassandraResourcesRestClient.GetCassandraKeyspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyspaceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<CassandraKeyspace>(null, response.GetRawResponse());
-                return Response.FromValue(new CassandraKeyspace(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<CassandraKeyspaceResource>(null, response.GetRawResponse());
+                return Response.FromValue(new CassandraKeyspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -341,7 +344,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        IEnumerator<CassandraKeyspace> IEnumerable<CassandraKeyspace>.GetEnumerator()
+        IEnumerator<CassandraKeyspaceResource> IEnumerable<CassandraKeyspaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -351,7 +354,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CassandraKeyspace> IAsyncEnumerable<CassandraKeyspace>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CassandraKeyspaceResource> IAsyncEnumerable<CassandraKeyspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

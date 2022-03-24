@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mainTemplate = BinaryData.FromString(property.Value.GetRawText());
+                            mainTemplate = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("createUiDefinition"))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createUiDefinition = BinaryData.FromString(property.Value.GetRawText());
+                            createUiDefinition = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("notificationPolicy"))

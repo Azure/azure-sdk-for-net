@@ -19,6 +19,8 @@ override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckDisasterRecoveryNameAvailability
 rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
   Os: OS
   Ip: IP
   Ips: IPs
@@ -32,6 +34,11 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
+  Ipv4: IPv4
+  Ipv6: IPv6
+  Ipsec: IPsec
+  SSO: Sso
+  URI: Uri
 
 directive:
     - rename-model:

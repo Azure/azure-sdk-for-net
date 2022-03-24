@@ -90,17 +90,6 @@ function GetPackageLookup($packageList) {
         Write-Host "Found more than one package entry for $($pkg.Package) selecting the first non-hidden one."
       }
     }
-
-    if ($pkg.PSObject.Members.Name -contains "GroupId" -and ($pkg.New -eq "true") -and $pkg.Package) {
-      $pkgKey = $pkg.Package
-      if (!$packageLookup.ContainsKey($pkgKey)) {
-        $packageLookup[$pkgKey] = $pkg
-      }
-      else {
-        $packageValue = $packageLookup[$pkgKey]
-        Write-Host "Found more than one package entry for $($packageValue.Package) selecting the first one with groupId $($packageValue.GroupId), skipping $($pkg.GroupId)"
-      }
-    }
   }
 
   return $packageLookup
@@ -113,11 +102,16 @@ $onboardedPackages = &$GetOnboardedDocsMsPackagesFn `
 # because we need to generate ToCs for packages which are not necessarily "New"
 # in the metadata AND onboard legacy packages (which `Update-DocsMsPackages.ps1`
 # does not do)
-$metadata = (Get-CSVMetadata).Where({
-    $_.Package `
-      -and $onboardedPackages.ContainsKey($_.Package) `
-      -and $_.Hide -ne 'true'
-  })
+$fullMetadata = Get-CSVMetadata
+$metadata = @()
+foreach($metadataEntry in $fullMetadata) {
+  if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
+    $pkgKey = GetPackageKey $metadataEntry
+    if($onboardedPackages.ContainsKey($pkgKey)) {
+      $metadata += $metadataEntry
+    }
+  }
+}
 
 $fileMetadata = @()
 foreach ($metadataFile in Get-ChildItem "$DocRepoLocation/metadata/*/*.json" -Recurse) {
@@ -177,7 +171,6 @@ foreach ($package in $packagesForToc.Values) {
 }
 $serviceNameList = $services.Keys | Sort-Object
 
-
 $toc = @()
 foreach ($service in $serviceNameList) {
   Write-Host "Building service: $service"
@@ -186,13 +179,10 @@ foreach ($service in $serviceNameList) {
 
   # Client packages get individual entries
   $clientPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('client' -eq $_.Type) })
-  $clientPackages = $clientPackages | Sort-Object 'Package', 'GroupId' | Get-Unique
-  if ($clientPackages) {
-    foreach ($clientPackage in $clientPackages) {
-      $packageItems += GetClientPackageNode -clientPackage $clientPackage
-    }
+  $clientPackages = $clientPackages | Sort-Object -Property Package
+  foreach ($clientPackage in $clientPackages) {
+    $packageItems += GetClientPackageNode -clientPackage $clientPackage
   }
-
 
   # All management packages go under a single `Management` header in the ToC
   $mgmtPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and ('mgmt' -eq $_.Type) })
@@ -207,7 +197,7 @@ foreach ($service in $serviceNameList) {
       # There could be multiple packages, ensure this is treated as an array
       # even if it is a single package
       children = @($children)
-    };
+    }
   }
 
   $uncategorizedPackages = $packagesForToc.Values.Where({ $_.ServiceName -eq $service -and !(@('client', 'mgmt') -contains $_.Type) })
@@ -217,14 +207,13 @@ foreach ($service in $serviceNameList) {
     }
   }
 
-  $serviceReadmeBaseName = $service.ToLower().Replace(' ', '-')
+  $serviceReadmeBaseName = $service.ToLower().Replace(' ', '-').Replace('/', '-')
   $serviceTocEntry = [PSCustomObject]@{
     name            = $service;
     href            = "~/docs-ref-services/{moniker}/$serviceReadmeBaseName.md"
     landingPageType = 'Service'
     items           = @($packageItems)
   }
-
   $toc += $serviceTocEntry
 }
 
@@ -286,7 +275,6 @@ if ($otherPackages) {
     }
   }
 }
-
 $toc += [PSCustomObject]@{
   name            = 'Other';
   landingPageType = 'Service';

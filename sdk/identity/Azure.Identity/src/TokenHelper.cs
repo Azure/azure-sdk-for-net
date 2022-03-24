@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Identity;
 
 namespace Azure.Identitiy
 {
@@ -68,7 +68,7 @@ namespace Azure.Identitiy
             }
             catch
             {
-                throw new InvalidOperationException("Failed to parse token.");
+                AzureIdentityEventSource.Singleton.UnableToParseAccountDetailsFromToken();
             }
 
             return result;

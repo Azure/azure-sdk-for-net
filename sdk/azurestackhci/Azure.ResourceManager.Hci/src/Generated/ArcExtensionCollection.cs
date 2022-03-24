@@ -16,12 +16,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> A class representing collection of ArcExtension and their operations over its parent. </summary>
-    public partial class ArcExtensionCollection : ArmCollection, IEnumerable<ArcExtension>, IAsyncEnumerable<ArcExtension>
+    /// <summary>
+    /// A class representing a collection of <see cref="ArcExtensionResource" /> and their operations.
+    /// Each <see cref="ArcExtensionResource" /> in the collection will belong to the same instance of <see cref="ArcSettingResource" />.
+    /// To get an <see cref="ArcExtensionCollection" /> instance call the GetArcExtensions method from an instance of <see cref="ArcSettingResource" />.
+    /// </summary>
+    public partial class ArcExtensionCollection : ArmCollection, IEnumerable<ArcExtensionResource>, IAsyncEnumerable<ArcExtensionResource>
     {
         private readonly ClientDiagnostics _arcExtensionExtensionsClientDiagnostics;
         private readonly ExtensionsRestOperations _arcExtensionExtensionsRestClient;
@@ -36,9 +39,9 @@ namespace Azure.ResourceManager.Hci
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ArcExtensionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ArcExtension.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ArcExtension.ResourceType, out string arcExtensionExtensionsApiVersion);
-            _arcExtensionExtensionsRestClient = new ExtensionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, arcExtensionExtensionsApiVersion);
+            _arcExtensionExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ArcExtensionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ArcExtensionResource.ResourceType, out string arcExtensionExtensionsApiVersion);
+            _arcExtensionExtensionsRestClient = new ExtensionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, arcExtensionExtensionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +49,8 @@ namespace Azure.ResourceManager.Hci
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ArcSetting.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ArcSetting.ResourceType), nameof(id));
+            if (id.ResourceType != ArcSettingResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ArcSettingResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extension"/> is null. </exception>
-        public virtual async Task<ArmOperation<ArcExtension>> CreateOrUpdateAsync(WaitUntil waitUntil, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ArcExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             Argument.AssertNotNull(extension, nameof(extension));
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _arcExtensionExtensionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation<ArcExtensionResource>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="extension"/> is null. </exception>
-        public virtual ArmOperation<ArcExtension> CreateOrUpdate(WaitUntil waitUntil, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ArcExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string extensionName, ArcExtensionData extension, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
             Argument.AssertNotNull(extension, nameof(extension));
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _arcExtensionExtensionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension, cancellationToken);
-                var operation = new HciArmOperation<ArcExtension>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HciArmOperation<ArcExtensionResource>(new ArcExtensionOperationSource(Client), _arcExtensionExtensionsClientDiagnostics, Pipeline, _arcExtensionExtensionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, extension).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual async Task<Response<ArcExtension>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcExtensionResource>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
@@ -136,7 +139,7 @@ namespace Azure.ResourceManager.Hci
                 var response = await _arcExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArcExtension(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<ArcExtension> Get(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtensionResource> Get(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
@@ -165,7 +168,7 @@ namespace Azure.ResourceManager.Hci
                 var response = _arcExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ArcExtension(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ArcExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -180,17 +183,17 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Extensions_ListByArcSetting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArcExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ArcExtension> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ArcExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ArcExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ArcExtension>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ArcExtensionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _arcExtensionExtensionsRestClient.ListByArcSettingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -198,14 +201,14 @@ namespace Azure.ResourceManager.Hci
                     throw;
                 }
             }
-            async Task<Page<ArcExtension>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ArcExtensionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _arcExtensionExtensionsRestClient.ListByArcSettingNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -222,17 +225,17 @@ namespace Azure.ResourceManager.Hci
         /// Operation Id: Extensions_ListByArcSetting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ArcExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ArcExtension> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ArcExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ArcExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ArcExtension> FirstPageFunc(int? pageSizeHint)
+            Page<ArcExtensionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _arcExtensionExtensionsRestClient.ListByArcSetting(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,14 +243,14 @@ namespace Azure.ResourceManager.Hci
                     throw;
                 }
             }
-            Page<ArcExtension> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ArcExtensionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _arcExtensionExtensionsClientDiagnostics.CreateScope("ArcExtensionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _arcExtensionExtensionsRestClient.ListByArcSettingNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtension(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ArcExtensionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,7 +324,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual async Task<Response<ArcExtension>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ArcExtensionResource>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
@@ -331,8 +334,8 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = await _arcExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ArcExtension>(null, response.GetRawResponse());
-                return Response.FromValue(new ArcExtension(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ArcExtensionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ArcExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -350,7 +353,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        public virtual Response<ArcExtension> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
+        public virtual Response<ArcExtensionResource> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
@@ -360,8 +363,8 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = _arcExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ArcExtension>(null, response.GetRawResponse());
-                return Response.FromValue(new ArcExtension(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ArcExtensionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ArcExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -370,7 +373,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        IEnumerator<ArcExtension> IEnumerable<ArcExtension>.GetEnumerator()
+        IEnumerator<ArcExtensionResource> IEnumerable<ArcExtensionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -380,7 +383,7 @@ namespace Azure.ResourceManager.Hci
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ArcExtension> IAsyncEnumerable<ArcExtension>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ArcExtensionResource> IAsyncEnumerable<ArcExtensionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

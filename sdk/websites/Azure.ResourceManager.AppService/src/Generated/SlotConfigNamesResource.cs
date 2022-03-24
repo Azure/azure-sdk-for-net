@@ -13,11 +13,15 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SlotConfigNamesResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SlotConfigNamesResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SlotConfigNamesResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSlotConfigNamesResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSlotConfigNamesResource method.
+    /// </summary>
     public partial class SlotConfigNamesResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SlotConfigNamesResource"/> instance. </summary>
@@ -50,9 +54,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SlotConfigNamesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _slotConfigNamesResourceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _slotConfigNamesResourceWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string slotConfigNamesResourceWebAppsApiVersion);
-            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, slotConfigNamesResourceWebAppsApiVersion);
+            _slotConfigNamesResourceWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, slotConfigNamesResourceWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

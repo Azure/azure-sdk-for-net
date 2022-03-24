@@ -14,11 +14,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a StaticSiteCustomDomainOverviewARMResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a StaticSiteCustomDomainOverviewARMResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteCustomDomainOverviewARMResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteCustomDomainOverviewARMResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteARMResource" /> using the GetStaticSiteCustomDomainOverviewARMResource method.
+    /// </summary>
     public partial class StaticSiteCustomDomainOverviewARMResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteCustomDomainOverviewARMResource"/> instance. </summary>
@@ -51,9 +55,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteCustomDomainOverviewARMResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
+            _staticSiteCustomDomainOverviewARMResourceStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
-            _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
+            _staticSiteCustomDomainOverviewARMResourceStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteCustomDomainOverviewARMResourceStaticSitesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

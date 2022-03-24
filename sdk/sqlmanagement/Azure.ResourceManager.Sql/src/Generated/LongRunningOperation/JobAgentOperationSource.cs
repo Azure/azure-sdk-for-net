@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class JobAgentOperationSource : IOperationSource<JobAgent>
+    internal class JobAgentOperationSource : IOperationSource<JobAgentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Sql
             _client = client;
         }
 
-        JobAgent IOperationSource<JobAgent>.CreateResult(Response response, CancellationToken cancellationToken)
+        JobAgentResource IOperationSource<JobAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = JobAgentData.DeserializeJobAgentData(document.RootElement);
-            return new JobAgent(_client, data);
+            return new JobAgentResource(_client, data);
         }
 
-        async ValueTask<JobAgent> IOperationSource<JobAgent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<JobAgentResource> IOperationSource<JobAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = JobAgentData.DeserializeJobAgentData(document.RootElement);
-            return new JobAgent(_client, data);
+            return new JobAgentResource(_client, data);
         }
     }
 }

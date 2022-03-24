@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class VMwareHostOperationSource : IOperationSource<VMwareHost>
+    internal class VMwareHostOperationSource : IOperationSource<VMwareHostResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        VMwareHost IOperationSource<VMwareHost>.CreateResult(Response response, CancellationToken cancellationToken)
+        VMwareHostResource IOperationSource<VMwareHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
-            return new VMwareHost(_client, data);
+            return new VMwareHostResource(_client, data);
         }
 
-        async ValueTask<VMwareHost> IOperationSource<VMwareHost>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VMwareHostResource> IOperationSource<VMwareHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VMwareHostData.DeserializeVMwareHostData(document.RootElement);
-            return new VMwareHost(_client, data);
+            return new VMwareHostResource(_client, data);
         }
     }
 }

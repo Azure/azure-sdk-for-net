@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            settings = BinaryData.FromString(property.Value.GetRawText());
+                            settings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protectedSettings"))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettings = BinaryData.FromString(property.Value.GetRawText());
+                            protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

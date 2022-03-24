@@ -8,12 +8,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.Resources
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _nameSpace;
-        private readonly ProviderCollection _providerCollection;
+        private readonly ResourceProviderCollection _providerCollection;
 
         /// <summary> Represents the REST operations. </summary>
         private RestOperations _restClient;
@@ -41,9 +39,9 @@ namespace Azure.ResourceManager.Resources
         internal RestApiCollection(ArmResource operation, string nameSpace)
             : base(operation.Client, operation.Id)
         {
-            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, DiagnosticOptions);
+            _clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", nameSpace, Diagnostics);
             _nameSpace = nameSpace;
-            _providerCollection = new ProviderCollection(Client.GetSubscription(Id));
+            _providerCollection = new ResourceProviderCollection(Client.GetSubscriptionResource(Id));
         }
 
 
@@ -54,8 +52,8 @@ namespace Azure.ResourceManager.Resources
                 _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
                 _clientDiagnostics,
                 Pipeline,
-                DiagnosticOptions.ApplicationId,
-                BaseUri);
+                Diagnostics.ApplicationId,
+                Endpoint);
         }
 
         private async Task<RestOperations> GetRestClientAsync(CancellationToken cancellationToken = default)
@@ -65,8 +63,8 @@ namespace Azure.ResourceManager.Resources
                 await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
                 _clientDiagnostics,
                 Pipeline,
-                DiagnosticOptions.ApplicationId,
-                BaseUri);
+                Diagnostics.ApplicationId,
+                Endpoint);
         }
 
         /// <summary> Gets a list of operations. </summary>

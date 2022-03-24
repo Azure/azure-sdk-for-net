@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserWhitelistedIpRanges))
+            if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
                 writer.WritePropertyName("userWhitelistedIpRanges");
                 writer.WriteStartArray();
-                foreach (var item in UserWhitelistedIpRanges)
+                foreach (var item in UserWhitelistedIPRanges)
                 {
                     writer.WriteStringValue(item);
                 }

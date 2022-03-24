@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task RouteFilterApiTest()
         {
-            Subscription subscription = await ArmClient.GetDefaultSubscriptionAsync();
+            SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             var filterCollection = await GetCollection();
 
             // Create route filter
             string filterName = Recording.GenerateAssetName("filter");
             string ruleName = Recording.GenerateAssetName("rule");
 
-            RouteFilter filter = await CreateDefaultRouteFilter(filterCollection,
+            RouteFilterResource filter = await CreateDefaultRouteFilter(filterCollection,
                 filterName);
             Assert.AreEqual("Succeeded", filter.Data.ProvisioningState.ToString());
             Assert.AreEqual(filterName, filter.Data.Name);
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.True(allFilters.Any(f => filterName == f.Data.Name && f.Data.Rules.Count == 0));
 
             // Crete route filter rule
-            RouteFilterRule filterRule = await CreateDefaultRouteFilterRule(filter, ruleName);
+            RouteFilterRuleResource filterRule = await CreateDefaultRouteFilterRule(filter, ruleName);
             Assert.AreEqual("Succeeded", filterRule.Data.ProvisioningState.ToString());
             Assert.AreEqual(ruleName, filterRule.Data.Name);
 
-            Response<RouteFilter> getFilterResponse = await filterCollection.GetAsync(filterName);
+            Response<RouteFilterResource> getFilterResponse = await filterCollection.GetAsync(filterName);
             Assert.AreEqual(filterName, getFilterResponse.Value.Data.Name);
 
             filter = await filterCollection.GetAsync(filterName);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
 
-        private async Task<RouteFilter> CreateDefaultRouteFilter(RouteFilterCollection filterCollection, string filterName,
+        private async Task<RouteFilterResource> CreateDefaultRouteFilter(RouteFilterCollection filterCollection, string filterName,
             bool containsRule = false)
         {
             var filter = new RouteFilterData()
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Put route filter
-            Operation<RouteFilter> filterOperation = InstrumentOperation(await filterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filter));
+            Operation<RouteFilterResource> filterOperation = InstrumentOperation(await filterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filter));
             return await filterOperation.WaitForCompletionAsync();
         }
 
-        private async Task<RouteFilterRule> CreateDefaultRouteFilterRule(RouteFilter filter,  string ruleName)
+        private async Task<RouteFilterRuleResource> CreateDefaultRouteFilterRule(RouteFilterResource filter,  string ruleName)
         {
             var rule = new RouteFilterRuleData()
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put route filter rule
-            Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, rule);
-            Response<RouteFilterRule> ruleResponse = await ruleOperation.WaitForCompletionAsync();
+            Operation<RouteFilterRuleResource> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, rule);
+            Response<RouteFilterRuleResource> ruleResponse = await ruleOperation.WaitForCompletionAsync();
             return ruleResponse;
         }
     }

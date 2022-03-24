@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- The `BlobCheckpointStore` implementation used internally by the processor has been made public and now conforms to the `CheckpointStore` contract, allowing it to be used with custom processor implementations.
+
 ### Breaking Changes
 
 ### Bugs Fixed

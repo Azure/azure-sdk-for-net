@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of TemplateSpec and their operations over its parent. </summary>
-    public partial class TemplateSpecCollection : ArmCollection, IEnumerable<TemplateSpec>, IAsyncEnumerable<TemplateSpec>
+    /// <summary>
+    /// A class representing a collection of <see cref="TemplateSpecResource" /> and their operations.
+    /// Each <see cref="TemplateSpecResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="TemplateSpecCollection" /> instance call the GetTemplateSpecs method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class TemplateSpecCollection : ArmCollection, IEnumerable<TemplateSpecResource>, IAsyncEnumerable<TemplateSpecResource>
     {
         private readonly ClientDiagnostics _templateSpecClientDiagnostics;
         private readonly TemplateSpecsRestOperations _templateSpecRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal TemplateSpecCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpec.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(TemplateSpec.ResourceType, out string templateSpecApiVersion);
-            _templateSpecRestClient = new TemplateSpecsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, templateSpecApiVersion);
+            _templateSpecClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TemplateSpecResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(TemplateSpecResource.ResourceType, out string templateSpecApiVersion);
+            _templateSpecRestClient = new TemplateSpecsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, templateSpecApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
-        public virtual async Task<ArmOperation<TemplateSpec>> CreateOrUpdateAsync(WaitUntil waitUntil, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TemplateSpecResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
             Argument.AssertNotNull(templateSpec, nameof(templateSpec));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _templateSpecRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<TemplateSpec>(Response.FromValue(new TemplateSpec(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<TemplateSpecResource>(Response.FromValue(new TemplateSpecResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> or <paramref name="templateSpec"/> is null. </exception>
-        public virtual ArmOperation<TemplateSpec> CreateOrUpdate(WaitUntil waitUntil, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TemplateSpecResource> CreateOrUpdate(WaitUntil waitUntil, string templateSpecName, TemplateSpecData templateSpec, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
             Argument.AssertNotNull(templateSpec, nameof(templateSpec));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _templateSpecRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, templateSpec, cancellationToken);
-                var operation = new ResourcesArmOperation<TemplateSpec>(Response.FromValue(new TemplateSpec(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<TemplateSpecResource>(Response.FromValue(new TemplateSpecResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,7 +130,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        public virtual async Task<Response<TemplateSpec>> GetAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateSpecResource>> GetAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
@@ -138,7 +141,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,7 +160,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        public virtual Response<TemplateSpec> Get(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<TemplateSpecResource> Get(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
@@ -168,7 +171,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -184,17 +187,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TemplateSpec" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TemplateSpec> GetAllAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TemplateSpecResource> GetAllAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<TemplateSpec>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TemplateSpecResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _templateSpecRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -202,14 +205,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<TemplateSpec>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TemplateSpecResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _templateSpecRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -227,17 +230,17 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateSpec" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TemplateSpec> GetAll(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TemplateSpecResource> GetAll(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            Page<TemplateSpec> FirstPageFunc(int? pageSizeHint)
+            Page<TemplateSpecResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _templateSpecRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -245,14 +248,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<TemplateSpec> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TemplateSpecResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _templateSpecClientDiagnostics.CreateScope("TemplateSpecCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _templateSpecRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpec(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new TemplateSpecResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -329,7 +332,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        public virtual async Task<Response<TemplateSpec>> GetIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateSpecResource>> GetIfExistsAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
@@ -339,8 +342,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _templateSpecRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<TemplateSpec>(null, response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<TemplateSpecResource>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -359,7 +362,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        public virtual Response<TemplateSpec> GetIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<TemplateSpecResource> GetIfExists(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(templateSpecName, nameof(templateSpecName));
 
@@ -369,8 +372,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _templateSpecRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, templateSpecName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<TemplateSpec>(null, response.GetRawResponse());
-                return Response.FromValue(new TemplateSpec(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<TemplateSpecResource>(null, response.GetRawResponse());
+                return Response.FromValue(new TemplateSpecResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -379,7 +382,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<TemplateSpec> IEnumerable<TemplateSpec>.GetEnumerator()
+        IEnumerator<TemplateSpecResource> IEnumerable<TemplateSpecResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -389,7 +392,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<TemplateSpec> IAsyncEnumerable<TemplateSpec>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<TemplateSpecResource> IAsyncEnumerable<TemplateSpecResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

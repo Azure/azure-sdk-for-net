@@ -282,7 +282,7 @@ namespace Microsoft.Azure.OperationalInsights
         /// </summary>
         /// <remarks>
         /// Executes an Analytics query for data.
-        /// [Here](/documentation/2-Using-the-API/Query) is an example for using POST
+        /// Please refer to<see href="https://docs.microsoft.com/azure/azure-monitor/logs/api/overview">this example</see> for using POST.
         /// with an Analytics query.
         /// </remarks>
         /// <param name='query'>

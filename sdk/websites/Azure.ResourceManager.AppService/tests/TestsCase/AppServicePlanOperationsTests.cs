@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Tests.Helpers;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<AppServicePlan> CreateAppServicePlanAsync(string appServicePlanName)
+        private async Task<AppServicePlanResource> CreateAppServicePlanAsync(string appServicePlanName)
         {
             var container = (await CreateResourceGroupAsync()).GetAppServicePlans();
             var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
             var planName = Recording.GenerateAssetName("testDisk-");
             var plan1 = await CreateAppServicePlanAsync(planName);
-            AppServicePlan plan2 = await plan1.GetAsync();
+            AppServicePlanResource plan2 = await plan1.GetAsync();
 
             ResourceDataHelper.AssertPlan(plan1.Data, plan2.Data);
         }
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var planName = Recording.GenerateAssetName("testDisk-");
             var plan = await CreateAppServicePlanAsync(planName);
             var skus = await plan.GetServerFarmSkusAsync();
-            var dict = skus.Value.ToDictionaryFromJson();
+            var dict = skus.Value.ToObjectFromJson() as Dictionary<string, object>;
         }
     }
 }

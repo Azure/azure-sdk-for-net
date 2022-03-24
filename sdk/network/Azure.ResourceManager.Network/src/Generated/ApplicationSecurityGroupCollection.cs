@@ -16,13 +16,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ApplicationSecurityGroup and their operations over its parent. </summary>
-    public partial class ApplicationSecurityGroupCollection : ArmCollection, IEnumerable<ApplicationSecurityGroup>, IAsyncEnumerable<ApplicationSecurityGroup>
+    /// <summary>
+    /// A class representing a collection of <see cref="ApplicationSecurityGroupResource" /> and their operations.
+    /// Each <see cref="ApplicationSecurityGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ApplicationSecurityGroupCollection" /> instance call the GetApplicationSecurityGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
+    public partial class ApplicationSecurityGroupCollection : ArmCollection, IEnumerable<ApplicationSecurityGroupResource>, IAsyncEnumerable<ApplicationSecurityGroupResource>
     {
         private readonly ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
         private readonly ApplicationSecurityGroupsRestOperations _applicationSecurityGroupRestClient;
@@ -37,9 +40,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ApplicationSecurityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroup.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ApplicationSecurityGroup.ResourceType, out string applicationSecurityGroupApiVersion);
-            _applicationSecurityGroupRestClient = new ApplicationSecurityGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, applicationSecurityGroupApiVersion);
+            _applicationSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApplicationSecurityGroupResource.ResourceType, out string applicationSecurityGroupApiVersion);
+            _applicationSecurityGroupRestClient = new ApplicationSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationSecurityGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +50,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroup.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroup.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApplicationSecurityGroup>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApplicationSecurityGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _applicationSecurityGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ApplicationSecurityGroup>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<ApplicationSecurityGroupResource>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,7 +98,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ApplicationSecurityGroup> CreateOrUpdate(WaitUntil waitUntil, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApplicationSecurityGroupResource> CreateOrUpdate(WaitUntil waitUntil, string applicationSecurityGroupName, ApplicationSecurityGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +108,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _applicationSecurityGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters, cancellationToken);
-                var operation = new NetworkArmOperation<ApplicationSecurityGroup>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<ApplicationSecurityGroupResource>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -126,7 +129,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public virtual async Task<Response<ApplicationSecurityGroup>> GetAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationSecurityGroupResource>> GetAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
@@ -137,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _applicationSecurityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationSecurityGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public virtual Response<ApplicationSecurityGroup> Get(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationSecurityGroupResource> Get(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
@@ -166,7 +169,7 @@ namespace Azure.ResourceManager.Network
                 var response = _applicationSecurityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationSecurityGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +184,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ApplicationSecurityGroups_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationSecurityGroup> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApplicationSecurityGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApplicationSecurityGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ApplicationSecurityGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _applicationSecurityGroupRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +202,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<ApplicationSecurityGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ApplicationSecurityGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _applicationSecurityGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -223,17 +226,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: ApplicationSecurityGroups_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationSecurityGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationSecurityGroup> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApplicationSecurityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationSecurityGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ApplicationSecurityGroup> FirstPageFunc(int? pageSizeHint)
+            Page<ApplicationSecurityGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _applicationSecurityGroupRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -241,14 +244,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<ApplicationSecurityGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ApplicationSecurityGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _applicationSecurityGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ApplicationSecurityGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -322,7 +325,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public virtual async Task<Response<ApplicationSecurityGroup>> GetIfExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationSecurityGroupResource>> GetIfExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
@@ -332,8 +335,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _applicationSecurityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ApplicationSecurityGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationSecurityGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ApplicationSecurityGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -351,7 +354,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
-        public virtual Response<ApplicationSecurityGroup> GetIfExists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationSecurityGroupResource> GetIfExists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
@@ -361,8 +364,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _applicationSecurityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ApplicationSecurityGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ApplicationSecurityGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ApplicationSecurityGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -371,7 +374,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<ApplicationSecurityGroup> IEnumerable<ApplicationSecurityGroup>.GetEnumerator()
+        IEnumerator<ApplicationSecurityGroupResource> IEnumerable<ApplicationSecurityGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -381,7 +384,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ApplicationSecurityGroup> IAsyncEnumerable<ApplicationSecurityGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApplicationSecurityGroupResource> IAsyncEnumerable<ApplicationSecurityGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
