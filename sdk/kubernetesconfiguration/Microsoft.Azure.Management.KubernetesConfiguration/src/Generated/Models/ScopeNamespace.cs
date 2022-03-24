@@ -14,30 +14,27 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response
+    /// Specifies that the scope of the extension is Namespace
     /// </summary>
-    /// <remarks>
-    /// Common error response for all Azure Resource Manager APIs to return
-    /// error details for failed operations. (This also follows the OData error
-    /// response format.).
-    /// </remarks>
-    public partial class ErrorResponse
+    public partial class ScopeNamespace
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ScopeNamespace class.
         /// </summary>
-        public ErrorResponse()
+        public ScopeNamespace()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the ScopeNamespace class.
         /// </summary>
-        /// <param name="error">The error object.</param>
-        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
+        /// <param name="targetNamespace">Namespace where the extension will be
+        /// created for an Namespace scoped extension.  If this namespace does
+        /// not exist, it will be created</param>
+        public ScopeNamespace(string targetNamespace = default(string))
         {
-            Error = error;
+            TargetNamespace = targetNamespace;
             CustomInit();
         }
 
@@ -47,10 +44,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error object.
+        /// Gets or sets namespace where the extension will be created for an
+        /// Namespace scoped extension.  If this namespace does not exist, it
+        /// will be created
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
-        public ErrorDetail Error { get; set; }
+        [JsonProperty(PropertyName = "targetNamespace")]
+        public string TargetNamespace { get; set; }
 
     }
 }

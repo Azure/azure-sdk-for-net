@@ -14,25 +14,27 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Sample result definition
+    /// Specifies that the scope of the extension is Cluster
     /// </summary>
-    public partial class Result
+    public partial class ScopeCluster
     {
         /// <summary>
-        /// Initializes a new instance of the Result class.
+        /// Initializes a new instance of the ScopeCluster class.
         /// </summary>
-        public Result()
+        public ScopeCluster()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Result class.
+        /// Initializes a new instance of the ScopeCluster class.
         /// </summary>
-        /// <param name="sampleProperty">Sample property of type string</param>
-        public Result(string sampleProperty = default(string))
+        /// <param name="releaseNamespace">Namespace where the extension
+        /// Release must be placed, for a Cluster scoped extension.  If this
+        /// namespace does not exist, it will be created</param>
+        public ScopeCluster(string releaseNamespace = default(string))
         {
-            SampleProperty = sampleProperty;
+            ReleaseNamespace = releaseNamespace;
             CustomInit();
         }
 
@@ -42,10 +44,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sample property of type string
+        /// Gets or sets namespace where the extension Release must be placed,
+        /// for a Cluster scoped extension.  If this namespace does not exist,
+        /// it will be created
         /// </summary>
-        [JsonProperty(PropertyName = "sampleProperty")]
-        public string SampleProperty { get; set; }
+        [JsonProperty(PropertyName = "releaseNamespace")]
+        public string ReleaseNamespace { get; set; }
 
     }
 }

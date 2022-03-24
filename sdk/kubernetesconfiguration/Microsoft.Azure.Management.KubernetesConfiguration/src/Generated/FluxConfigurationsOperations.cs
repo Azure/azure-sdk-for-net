@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SourceControlConfigurationsOperations operations.
+    /// FluxConfigurationsOperations operations.
     /// </summary>
-    internal partial class SourceControlConfigurationsOperations : IServiceOperations<SourceControlConfigurationClient>, ISourceControlConfigurationsOperations
+    internal partial class FluxConfigurationsOperations : IServiceOperations<SourceControlConfigurationClient>, IFluxConfigurationsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SourceControlConfigurationsOperations class.
+        /// Initializes a new instance of the FluxConfigurationsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SourceControlConfigurationsOperations(SourceControlConfigurationClient client)
+        internal FluxConfigurationsOperations(SourceControlConfigurationClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         public SourceControlConfigurationClient Client { get; private set; }
 
         /// <summary>
-        /// Gets details of the Source Control Configuration.
+        /// Gets details of the Flux Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='sourceControlConfigurationName'>
-        /// Name of the Source Control Configuration.
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceControlConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FluxConfiguration>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            if (sourceControlConfigurationName == null)
+            if (fluxConfigurationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "fluxConfigurationName");
             }
             if (Client.ApiVersion == null)
             {
@@ -132,19 +132,19 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
+                tracingParameters.Add("fluxConfigurationName", fluxConfigurationName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
+            _url = _url.Replace("{fluxConfigurationName}", System.Uri.EscapeDataString(fluxConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SourceControlConfiguration>();
+            var _result = new AzureOperationResponse<FluxConfiguration>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlConfiguration>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FluxConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         }
 
         /// <summary>
-        /// Create a new Kubernetes Source Control Configuration.
+        /// Create a new Kubernetes Flux Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -287,11 +287,115 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='sourceControlConfigurationName'>
-        /// Name of the Source Control Configuration.
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
         /// </param>
-        /// <param name='sourceControlConfiguration'>
-        /// Properties necessary to Create KubernetesConfiguration.
+        /// <param name='fluxConfiguration'>
+        /// Properties necessary to Create a FluxConfiguration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<FluxConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, FluxConfiguration fluxConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<FluxConfiguration> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName, fluxConfiguration, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Update an existing Kubernetes Flux Configuration.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
+        /// </param>
+        /// <param name='fluxConfigurationPatch'>
+        /// Properties to Patch in an existing Flux Configuration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<FluxConfiguration>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, FluxConfigurationPatch fluxConfigurationPatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<FluxConfiguration> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName, fluxConfigurationPatch, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This will delete the YAML file used to set up the Flux Configuration, thus
+        /// stopping future sync from the source repo.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
+        /// </param>
+        /// <param name='forceDelete'>
+        /// Delete the extension resource in Azure - not the normal asynchronous
+        /// delete.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, fluxConfigurationName, forceDelete, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all Flux Configurations.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -314,7 +418,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SourceControlConfiguration>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfiguration sourceControlConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FluxConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -336,17 +440,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            if (sourceControlConfigurationName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            if (sourceControlConfiguration == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfiguration");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -359,20 +455,245 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
-                tracingParameters.Add("sourceControlConfiguration", sourceControlConfiguration);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<IPage<FluxConfiguration>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FluxConfiguration>>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Create a new Kubernetes Flux Configuration.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='clusterRp'>
+        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
+        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
+        /// </param>
+        /// <param name='clusterResourceName'>
+        /// The Kubernetes cluster resource name - i.e. managedClusters,
+        /// connectedClusters, provisionedClusters.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the kubernetes cluster.
+        /// </param>
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
+        /// </param>
+        /// <param name='fluxConfiguration'>
+        /// Properties necessary to Create a FluxConfiguration.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<FluxConfiguration>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, FluxConfiguration fluxConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (clusterRp == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterRp");
+            }
+            if (clusterResourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterResourceName");
+            }
+            if (clusterName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
+            }
+            if (fluxConfigurationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "fluxConfigurationName");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (fluxConfiguration == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "fluxConfiguration");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterRp", clusterRp);
+                tracingParameters.Add("clusterResourceName", clusterResourceName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("fluxConfigurationName", fluxConfigurationName);
+                tracingParameters.Add("fluxConfiguration", fluxConfiguration);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}").ToString();
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
+            _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
+            _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
+            _url = _url.Replace("{fluxConfigurationName}", System.Uri.EscapeDataString(fluxConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -416,9 +737,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
 
             // Serialize Request
             string _requestContent = null;
-            if(sourceControlConfiguration != null)
+            if(fluxConfiguration != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(sourceControlConfiguration, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(fluxConfiguration, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -472,7 +793,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SourceControlConfiguration>();
+            var _result = new AzureOperationResponse<FluxConfiguration>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -485,7 +806,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlConfiguration>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FluxConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -503,7 +824,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SourceControlConfiguration>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FluxConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -523,8 +844,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         }
 
         /// <summary>
-        /// This will delete the YAML file used to set up the Source control
-        /// configuration, thus stopping future sync from the source repo.
+        /// Update an existing Kubernetes Flux Configuration.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -540,38 +860,11 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='sourceControlConfigurationName'>
-        /// Name of the Source Control Configuration.
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// List all Source Control Configurations.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='clusterRp'>
-        /// The Kubernetes cluster RP - i.e. Microsoft.ContainerService,
-        /// Microsoft.Kubernetes, Microsoft.HybridContainerService.
-        /// </param>
-        /// <param name='clusterResourceName'>
-        /// The Kubernetes cluster resource name - i.e. managedClusters,
-        /// connectedClusters, provisionedClusters.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the kubernetes cluster.
+        /// <param name='fluxConfigurationPatch'>
+        /// Properties to Patch in an existing Flux Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -594,7 +887,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FluxConfiguration>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, FluxConfigurationPatch fluxConfigurationPatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -616,9 +909,17 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
+            if (fluxConfigurationName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "fluxConfigurationName");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (fluxConfigurationPatch == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "fluxConfigurationPatch");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -631,17 +932,20 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("fluxConfigurationName", fluxConfigurationName);
+                tracingParameters.Add("fluxConfigurationPatch", fluxConfigurationPatch);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
+            _url = _url.Replace("{fluxConfigurationName}", System.Uri.EscapeDataString(fluxConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -654,7 +958,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -685,6 +989,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
 
             // Serialize Request
             string _requestContent = null;
+            if(fluxConfigurationPatch != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(fluxConfigurationPatch, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -705,7 +1015,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -735,7 +1045,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SourceControlConfiguration>>();
+            var _result = new AzureOperationResponse<FluxConfiguration>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -743,12 +1053,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 200)
+            if ((int)_statusCode == 202)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SourceControlConfiguration>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FluxConfiguration>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -768,8 +1078,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         }
 
         /// <summary>
-        /// This will delete the YAML file used to set up the Source control
-        /// configuration, thus stopping future sync from the source repo.
+        /// This will delete the YAML file used to set up the Flux Configuration, thus
+        /// stopping future sync from the source repo.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -785,8 +1095,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <param name='clusterName'>
         /// The name of the kubernetes cluster.
         /// </param>
-        /// <param name='sourceControlConfigurationName'>
-        /// Name of the Source Control Configuration.
+        /// <param name='fluxConfigurationName'>
+        /// Name of the Flux Configuration.
+        /// </param>
+        /// <param name='forceDelete'>
+        /// Delete the extension resource in Azure - not the normal asynchronous
+        /// delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -806,7 +1120,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, bool? forceDelete = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -828,9 +1142,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            if (sourceControlConfigurationName == null)
+            if (fluxConfigurationName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlConfigurationName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "fluxConfigurationName");
             }
             if (Client.ApiVersion == null)
             {
@@ -847,23 +1161,28 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 tracingParameters.Add("clusterRp", clusterRp);
                 tracingParameters.Add("clusterResourceName", clusterResourceName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("sourceControlConfigurationName", sourceControlConfigurationName);
+                tracingParameters.Add("fluxConfigurationName", fluxConfigurationName);
+                tracingParameters.Add("forceDelete", forceDelete);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/sourceControlConfigurations/{sourceControlConfigurationName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterRp}", System.Uri.EscapeDataString(clusterRp));
             _url = _url.Replace("{clusterResourceName}", System.Uri.EscapeDataString(clusterResourceName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
-            _url = _url.Replace("{sourceControlConfigurationName}", System.Uri.EscapeDataString(sourceControlConfigurationName));
+            _url = _url.Replace("{fluxConfigurationName}", System.Uri.EscapeDataString(fluxConfigurationName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (forceDelete != null)
+            {
+                _queryParameters.Add(string.Format("forceDelete={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(forceDelete, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -923,7 +1242,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -968,7 +1287,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         }
 
         /// <summary>
-        /// List all Source Control Configurations.
+        /// List all Flux Configurations.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -994,7 +1313,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SourceControlConfiguration>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FluxConfiguration>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1103,7 +1422,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SourceControlConfiguration>>();
+            var _result = new AzureOperationResponse<IPage<FluxConfiguration>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1116,7 +1435,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SourceControlConfiguration>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FluxConfiguration>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
