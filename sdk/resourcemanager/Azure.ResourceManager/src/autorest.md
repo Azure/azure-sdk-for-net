@@ -362,6 +362,10 @@ directive:
     where: $.definitions.ParameterDefinitionsValue
     transform:
       $["x-ms-client-name"] = "ArmPolicyParameter";
+  - from: policyDefinitions.json
+    where: $.definitions.ParameterDefinitionsValue.properties.type["x-ms-enum"]
+    transform:
+      $["name"] = "ArmPolicyParameterType";
   - from: policyAssignments.json
     where: $.definitions.ParameterValuesValue
     transform:
