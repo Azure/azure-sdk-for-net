@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#region Snippet:ChangeLog_Sample_Usings
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.Core;
+#endregion
+
 using NUnit.Framework;
 using System.Threading.Tasks;
 
@@ -17,12 +20,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
         public async Task ChangelogSample()
         {
             #region Snippet:ChangeLog_Sample
-
-            // using Azure.Identity;
-            // using Azure.ResourceManager.Resources;
-            // using Azure.ResourceManager.EventHubs.Models;
-            // using Azure.Core;
-
             string namespaceName = "myNamespace";
             string eventhubName = "myEventhub";
             string resourceGroupName = "myResourceGroup";
