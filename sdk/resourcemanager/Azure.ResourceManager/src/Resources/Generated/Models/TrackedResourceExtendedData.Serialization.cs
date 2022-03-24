@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TrackedResourceExtended : IUtf8JsonSerializable
+    public partial class TrackedResourceExtendedData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static TrackedResourceExtended DeserializeTrackedResourceExtended(JsonElement element)
+        internal static TrackedResourceExtendedData DeserializeTrackedResourceExtendedData(JsonElement element)
         {
             Optional<ExtendedLocation> extendedLocation = default;
             IDictionary<string, string> tags = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new TrackedResourceExtended(id, name, type, systemData, tags, location, extendedLocation.Value);
+            return new TrackedResourceExtendedData(id, name, type, systemData, tags, location, extendedLocation.Value);
         }
     }
 }

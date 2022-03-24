@@ -318,7 +318,7 @@ directive:
       to: Feature
   - rename-model:
       from: Resource
-      to: TrackedResourceExtended
+      to: TrackedResourceExtendedData
   - rename-model:
       from: ProviderRegistrationRequest
       to: ResourceProviderRegistrationOptions
