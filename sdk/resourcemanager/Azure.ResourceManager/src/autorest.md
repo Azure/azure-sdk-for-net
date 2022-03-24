@@ -522,7 +522,7 @@ operation-groups-to-omit:
   - ManagementGroupSubscriptions
   - Entities
   - TenantBackfill
-no-property-type-replacement: CheckNameAvailabilityOptions;DescendantParentGroupInfo
+no-property-type-replacement: DescendantParentGroupInfo
 
 rename-rules:
   CPU: Cpu
@@ -545,7 +545,8 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-
+override-operation-name:
+  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
   - rename-model:
       from: PatchManagementGroupRequest
@@ -565,7 +566,7 @@ directive:
       $['x-ms-client-name'] = "ResourceType"
   - rename-model:
       from: CheckNameAvailabilityRequest
-      to: CheckNameAvailabilityOptions
+      to: ManagementGroupNameAvailabilityOptions
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -594,8 +595,12 @@ directive:
     where: $.definitions.CheckNameAvailabilityResult.properties.reason
     transform: >
       $['x-ms-enum'] = {
-        name: "NameUnavailableReason"
+        name: "ManagementGroupNameUnavailableReason"
       }
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityResult
+    transform: >
+      $['x-ms-client-name'] = "ManagementGroupNameAvailabilityResult"
   - from: management.json
     where: $.parameters.SearchParameter
     transform: >

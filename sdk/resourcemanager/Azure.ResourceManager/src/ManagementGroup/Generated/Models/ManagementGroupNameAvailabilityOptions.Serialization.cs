@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class CheckNameAvailabilityOptions : IUtf8JsonSerializable
+    public partial class ManagementGroupNameAvailabilityOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

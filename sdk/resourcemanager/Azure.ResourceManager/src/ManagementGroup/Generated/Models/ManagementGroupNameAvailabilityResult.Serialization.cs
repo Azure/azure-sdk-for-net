@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class CheckNameAvailabilityResult
+    public partial class ManagementGroupNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element)
+        internal static ManagementGroupNameAvailabilityResult DeserializeManagementGroupNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<NameUnavailableReason> reason = default;
+            Optional<ManagementGroupNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Management.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = property.Value.GetString().ToNameUnavailableReason();
+                    reason = property.Value.GetString().ToManagementGroupNameUnavailableReason();
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Management.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
+            return new ManagementGroupNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }
