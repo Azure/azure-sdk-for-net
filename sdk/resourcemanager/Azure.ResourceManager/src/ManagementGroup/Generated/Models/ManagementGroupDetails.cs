@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Management.Models
         {
             Path = new ChangeTrackingList<ManagementGroupPathElement>();
             ManagementGroupAncestors = new ChangeTrackingList<string>();
-            ManagementGroupAncestorsChain = new ChangeTrackingList<ManagementGroupPathElement>();
+            ManagementGroupAncestorChain = new ChangeTrackingList<ManagementGroupPathElement>();
         }
 
         /// <summary> Initializes a new instance of ManagementGroupDetails. </summary>
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Management.Models
         /// <param name="parent"> (Optional) The ID of the parent management group. </param>
         /// <param name="path"> The path from the root to the current group. </param>
         /// <param name="managementGroupAncestors"> The ancestors of the management group. </param>
-        /// <param name="managementGroupAncestorsChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
-        internal ManagementGroupDetails(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorsChain)
+        /// <param name="managementGroupAncestorChain"> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </param>
+        internal ManagementGroupDetails(int? version, DateTimeOffset? updatedTime, string updatedBy, ParentGroupInfo parent, IReadOnlyList<ManagementGroupPathElement> path, IReadOnlyList<string> managementGroupAncestors, IReadOnlyList<ManagementGroupPathElement> managementGroupAncestorChain)
         {
             Version = version;
             UpdatedTime = updatedTime;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Management.Models
             Parent = parent;
             Path = path;
             ManagementGroupAncestors = managementGroupAncestors;
-            ManagementGroupAncestorsChain = managementGroupAncestorsChain;
+            ManagementGroupAncestorChain = managementGroupAncestorChain;
         }
 
         /// <summary> The version number of the object. </summary>
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.Management.Models
         /// <summary> The ancestors of the management group. </summary>
         public IReadOnlyList<string> ManagementGroupAncestors { get; }
         /// <summary> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </summary>
-        public IReadOnlyList<ManagementGroupPathElement> ManagementGroupAncestorsChain { get; }
+        public IReadOnlyList<ManagementGroupPathElement> ManagementGroupAncestorChain { get; }
     }
 }
