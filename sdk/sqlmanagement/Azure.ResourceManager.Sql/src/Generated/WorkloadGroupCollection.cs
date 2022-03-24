@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of WorkloadGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="WorkloadGroupResource" /> and their operations.
+    /// Each <see cref="WorkloadGroupResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="WorkloadGroupCollection" /> instance call the GetWorkloadGroups method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class WorkloadGroupCollection : ArmCollection, IEnumerable<WorkloadGroupResource>, IAsyncEnumerable<WorkloadGroupResource>
     {
         private readonly ClientDiagnostics _workloadGroupClientDiagnostics;

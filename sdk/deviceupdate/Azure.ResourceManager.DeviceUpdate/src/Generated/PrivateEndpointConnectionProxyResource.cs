@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A Class representing a PrivateEndpointConnectionProxyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a PrivateEndpointConnectionProxy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateEndpointConnectionProxyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateEndpointConnectionProxyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceUpdateAccountResource" /> using the GetPrivateEndpointConnectionProxy method.
+    /// </summary>
     public partial class PrivateEndpointConnectionProxyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointConnectionProxyResource"/> instance. </summary>

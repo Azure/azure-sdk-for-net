@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstanceDatabaseSchemaTableColumnSensitivityLabel along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceDatabaseSchemaTableColumnResource" /> using the GetManagedInstanceDatabaseSchemaTableColumnSensitivityLabel method.
+    /// </summary>
     public partial class ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseSchemaTableColumnSensitivityLabelResource"/> instance. </summary>

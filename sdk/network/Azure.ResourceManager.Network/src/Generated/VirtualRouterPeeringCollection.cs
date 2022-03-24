@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualRouterPeering and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualRouterPeeringResource" /> and their operations.
+    /// Each <see cref="VirtualRouterPeeringResource" /> in the collection will belong to the same instance of <see cref="VirtualRouterResource" />.
+    /// To get a <see cref="VirtualRouterPeeringCollection" /> instance call the GetVirtualRouterPeerings method from an instance of <see cref="VirtualRouterResource" />.
+    /// </summary>
     public partial class VirtualRouterPeeringCollection : ArmCollection, IEnumerable<VirtualRouterPeeringResource>, IAsyncEnumerable<VirtualRouterPeeringResource>
     {
         private readonly ClientDiagnostics _virtualRouterPeeringClientDiagnostics;

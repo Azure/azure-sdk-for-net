@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of DiskAccess and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DiskAccessResource" /> and their operations.
+    /// Each <see cref="DiskAccessResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DiskAccessCollection" /> instance call the GetDiskAccesses method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DiskAccessCollection : ArmCollection, IEnumerable<DiskAccessResource>, IAsyncEnumerable<DiskAccessResource>
     {
         private readonly ClientDiagnostics _diskAccessClientDiagnostics;

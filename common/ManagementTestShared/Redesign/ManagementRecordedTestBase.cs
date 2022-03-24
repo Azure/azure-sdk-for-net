@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureChina.Endpoint)
                 return ArmEnvironment.AzureChina;
 
-            if (baseUri == ArmEnvironment.AzureGerman.Endpoint)
-                return ArmEnvironment.AzureGerman;
+            if (baseUri == ArmEnvironment.AzureGermany.Endpoint)
+                return ArmEnvironment.AzureGermany;
 
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;

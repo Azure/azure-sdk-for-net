@@ -24,7 +24,7 @@ namespace Azure.ResourceManager
         public static readonly ArmEnvironment AzureGovernment = new(new Uri("https://management.usgovcloudapi.net"), "https://management.usgovcloudapi.net");
 
         /// <summary> Azure German Cloud. </summary>
-        public static readonly ArmEnvironment AzureGerman = new(new Uri("https://management.microsoftazure.de"), "https://management.microsoftazure.de");
+        public static readonly ArmEnvironment AzureGermany = new(new Uri("https://management.microsoftazure.de"), "https://management.microsoftazure.de");
 
         /// <summary>
         /// Gets base URI of the management API endpoint.

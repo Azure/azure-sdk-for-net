@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerTrustGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerTrustGroupResource" /> and their operations.
+    /// Each <see cref="ServerTrustGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ServerTrustGroupCollection" /> instance call the GetServerTrustGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ServerTrustGroupCollection : ArmCollection, IEnumerable<ServerTrustGroupResource>, IAsyncEnumerable<ServerTrustGroupResource>
     {
         private readonly ClientDiagnostics _serverTrustGroupClientDiagnostics;

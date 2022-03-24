@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of IPAllocation and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="IPAllocationResource" /> and their operations.
+    /// Each <see cref="IPAllocationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="IPAllocationCollection" /> instance call the GetIPAllocations method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class IPAllocationCollection : ArmCollection, IEnumerable<IPAllocationResource>, IAsyncEnumerable<IPAllocationResource>
     {
         private readonly ClientDiagnostics _ipAllocationIpAllocationsClientDiagnostics;

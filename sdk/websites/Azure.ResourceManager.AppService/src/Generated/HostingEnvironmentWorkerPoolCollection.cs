@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HostingEnvironmentWorkerPool and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="HostingEnvironmentWorkerPoolResource" /> and their operations.
+    /// Each <see cref="HostingEnvironmentWorkerPoolResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
+    /// To get a <see cref="HostingEnvironmentWorkerPoolCollection" /> instance call the GetHostingEnvironmentWorkerPools method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// </summary>
     public partial class HostingEnvironmentWorkerPoolCollection : ArmCollection, IEnumerable<HostingEnvironmentWorkerPoolResource>, IAsyncEnumerable<HostingEnvironmentWorkerPoolResource>
     {
         private readonly ClientDiagnostics _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics;

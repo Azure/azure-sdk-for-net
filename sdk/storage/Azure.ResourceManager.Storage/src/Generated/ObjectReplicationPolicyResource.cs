@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A Class representing a ObjectReplicationPolicyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an ObjectReplicationPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ObjectReplicationPolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetObjectReplicationPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetObjectReplicationPolicy method.
+    /// </summary>
     public partial class ObjectReplicationPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ObjectReplicationPolicyResource"/> instance. </summary>

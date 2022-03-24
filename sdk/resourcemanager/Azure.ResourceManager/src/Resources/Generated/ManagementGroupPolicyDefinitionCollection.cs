@@ -20,7 +20,11 @@ using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of ManagementGroupPolicyDefinition and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagementGroupPolicyDefinitionResource" /> and their operations.
+    /// Each <see cref="ManagementGroupPolicyDefinitionResource" /> in the collection will belong to the same instance of <see cref="ManagementGroupResource" />.
+    /// To get a <see cref="ManagementGroupPolicyDefinitionCollection" /> instance call the GetManagementGroupPolicyDefinitions method from an instance of <see cref="ManagementGroupResource" />.
+    /// </summary>
     public partial class ManagementGroupPolicyDefinitionCollection : ArmCollection, IEnumerable<ManagementGroupPolicyDefinitionResource>, IAsyncEnumerable<ManagementGroupPolicyDefinitionResource>
     {
         private readonly ClientDiagnostics _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics;

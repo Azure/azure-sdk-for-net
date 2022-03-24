@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of VCenter and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VCenterResource" /> and their operations.
+    /// Each <see cref="VCenterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VCenterCollection" /> instance call the GetVCenters method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VCenterCollection : ArmCollection, IEnumerable<VCenterResource>, IAsyncEnumerable<VCenterResource>
     {
         private readonly ClientDiagnostics _vCenterClientDiagnostics;

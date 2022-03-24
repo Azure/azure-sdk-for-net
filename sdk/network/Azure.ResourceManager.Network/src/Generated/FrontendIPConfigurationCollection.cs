@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of FrontendIPConfiguration and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="FrontendIPConfigurationResource" /> and their operations.
+    /// Each <see cref="FrontendIPConfigurationResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get a <see cref="FrontendIPConfigurationCollection" /> instance call the GetFrontendIPConfigurations method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class FrontendIPConfigurationCollection : ArmCollection, IEnumerable<FrontendIPConfigurationResource>, IAsyncEnumerable<FrontendIPConfigurationResource>
     {
         private readonly ClientDiagnostics _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics;

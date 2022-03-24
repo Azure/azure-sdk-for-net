@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing collection of CommunicationService and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CommunicationServiceResource" /> and their operations.
+    /// Each <see cref="CommunicationServiceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CommunicationServiceCollection" /> instance call the GetCommunicationServices method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class CommunicationServiceCollection : ArmCollection, IEnumerable<CommunicationServiceResource>, IAsyncEnumerable<CommunicationServiceResource>
     {
         private readonly ClientDiagnostics _communicationServiceClientDiagnostics;

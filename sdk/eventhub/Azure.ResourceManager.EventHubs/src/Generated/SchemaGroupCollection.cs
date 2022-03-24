@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of SchemaGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SchemaGroupResource" /> and their operations.
+    /// Each <see cref="SchemaGroupResource" /> in the collection will belong to the same instance of <see cref="EventHubNamespaceResource" />.
+    /// To get a <see cref="SchemaGroupCollection" /> instance call the GetSchemaGroups method from an instance of <see cref="EventHubNamespaceResource" />.
+    /// </summary>
     public partial class SchemaGroupCollection : ArmCollection, IEnumerable<SchemaGroupResource>, IAsyncEnumerable<SchemaGroupResource>
     {
         private readonly ClientDiagnostics _schemaGroupSchemaRegistryClientDiagnostics;

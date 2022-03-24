@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ReplicationLinkResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ReplicationLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReplicationLinkResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetReplicationLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetReplicationLink method.
+    /// </summary>
     public partial class ReplicationLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReplicationLinkResource"/> instance. </summary>

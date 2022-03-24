@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of ServerfarmVirtualNetworkConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerfarmVirtualNetworkConnectionResource" /> and their operations.
+    /// Each <see cref="ServerfarmVirtualNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="AppServicePlanResource" />.
+    /// To get a <see cref="ServerfarmVirtualNetworkConnectionCollection" /> instance call the GetServerfarmVirtualNetworkConnections method from an instance of <see cref="AppServicePlanResource" />.
+    /// </summary>
     public partial class ServerfarmVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<ServerfarmVirtualNetworkConnectionResource>, IAsyncEnumerable<ServerfarmVirtualNetworkConnectionResource>
     {
         private readonly ClientDiagnostics _serverfarmVirtualNetworkConnectionAppServicePlansClientDiagnostics;

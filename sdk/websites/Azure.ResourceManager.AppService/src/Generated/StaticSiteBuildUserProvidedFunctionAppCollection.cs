@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of StaticSiteBuildUserProvidedFunctionApp and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> and their operations.
+    /// Each <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> in the collection will belong to the same instance of <see cref="StaticSiteBuildARMResource" />.
+    /// To get a <see cref="StaticSiteBuildUserProvidedFunctionAppCollection" /> instance call the GetStaticSiteBuildUserProvidedFunctionApps method from an instance of <see cref="StaticSiteBuildARMResource" />.
+    /// </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppCollection : ArmCollection, IEnumerable<StaticSiteBuildUserProvidedFunctionAppResource>, IAsyncEnumerable<StaticSiteBuildUserProvidedFunctionAppResource>
     {
         private readonly ClientDiagnostics _staticSiteBuildUserProvidedFunctionAppStaticSitesClientDiagnostics;

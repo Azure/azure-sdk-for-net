@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DatabaseSecurityAlertPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DatabaseSecurityAlertPolicyResource" /> and their operations.
+    /// Each <see cref="DatabaseSecurityAlertPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="DatabaseSecurityAlertPolicyCollection" /> instance call the GetDatabaseSecurityAlertPolicies method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class DatabaseSecurityAlertPolicyCollection : ArmCollection, IEnumerable<DatabaseSecurityAlertPolicyResource>, IAsyncEnumerable<DatabaseSecurityAlertPolicyResource>
     {
         private readonly ClientDiagnostics _databaseSecurityAlertPolicyClientDiagnostics;

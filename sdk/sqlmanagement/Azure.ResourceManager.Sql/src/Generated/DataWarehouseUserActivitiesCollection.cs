@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of DataWarehouseUserActivities and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DataWarehouseUserActivitiesResource" /> and their operations.
+    /// Each <see cref="DataWarehouseUserActivitiesResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="DataWarehouseUserActivitiesCollection" /> instance call the GetDataWarehouseUserActivities method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class DataWarehouseUserActivitiesCollection : ArmCollection, IEnumerable<DataWarehouseUserActivitiesResource>, IAsyncEnumerable<DataWarehouseUserActivitiesResource>
     {
         private readonly ClientDiagnostics _dataWarehouseUserActivitiesDataWarehouseUserActivitiesClientDiagnostics;

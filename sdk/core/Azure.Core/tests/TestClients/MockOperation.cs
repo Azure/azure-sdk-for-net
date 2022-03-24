@@ -10,16 +10,16 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Core.Tests
 {
-    internal class TestOperation : Operation, IOperation
+    internal class MockOperation : Operation, IOperation
     {
         private static ClientDiagnostics _clientDiagnostics = new(new TestClientOptions());
         private bool _exceptionOnWait;
 
-        protected TestOperation()
+        protected MockOperation()
         {
         }
 
-        public TestOperation(
+        public MockOperation(
             UpdateResult result,
             Func<MockResponse> responseFactory,
             string operationTypeName = null,
@@ -98,19 +98,19 @@ namespace Azure.Core.Tests
             return await MockOperationInternal.WaitForCompletionResponseAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
             MockOperationInternal.UpdateStatusCallCount++;
             MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
 
-            return new ValueTask<Response>(OnUpdateState(cancellationToken).RawResponse);
+            return await MockOperationInternal.UpdateStatusAsync(cancellationToken);
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
             MockOperationInternal.UpdateStatusCallCount++;
             MockOperationInternal.LastTokenReceivedByUpdateStatus = cancellationToken;
-            return OnUpdateState(cancellationToken).RawResponse;
+            return MockOperationInternal.UpdateStatus(cancellationToken);
         }
 
         public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)

@@ -17,7 +17,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedDatabaseRestoreDetailsResult and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedDatabaseRestoreDetailsResultResource" /> and their operations.
+    /// Each <see cref="ManagedDatabaseRestoreDetailsResultResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseResource" />.
+    /// To get a <see cref="ManagedDatabaseRestoreDetailsResultCollection" /> instance call the GetManagedDatabaseRestoreDetailsResults method from an instance of <see cref="ManagedDatabaseResource" />.
+    /// </summary>
     public partial class ManagedDatabaseRestoreDetailsResultCollection : ArmCollection
     {
         private readonly ClientDiagnostics _managedDatabaseRestoreDetailsResultManagedDatabaseRestoreDetailsClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualApplianceSite and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualApplianceSiteResource" /> and their operations.
+    /// Each <see cref="VirtualApplianceSiteResource" /> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource" />.
+    /// To get a <see cref="VirtualApplianceSiteCollection" /> instance call the GetVirtualApplianceSites method from an instance of <see cref="NetworkVirtualApplianceResource" />.
+    /// </summary>
     public partial class VirtualApplianceSiteCollection : ArmCollection, IEnumerable<VirtualApplianceSiteResource>, IAsyncEnumerable<VirtualApplianceSiteResource>
     {
         private readonly ClientDiagnostics _virtualApplianceSiteClientDiagnostics;

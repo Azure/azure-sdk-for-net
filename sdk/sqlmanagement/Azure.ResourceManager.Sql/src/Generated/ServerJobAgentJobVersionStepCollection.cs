@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerJobAgentJobVersionStep and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerJobAgentJobVersionStepResource" /> and their operations.
+    /// Each <see cref="ServerJobAgentJobVersionStepResource" /> in the collection will belong to the same instance of <see cref="JobVersionResource" />.
+    /// To get a <see cref="ServerJobAgentJobVersionStepCollection" /> instance call the GetServerJobAgentJobVersionSteps method from an instance of <see cref="JobVersionResource" />.
+    /// </summary>
     public partial class ServerJobAgentJobVersionStepCollection : ArmCollection, IEnumerable<ServerJobAgentJobVersionStepResource>, IAsyncEnumerable<ServerJobAgentJobVersionStepResource>
     {
         private readonly ClientDiagnostics _serverJobAgentJobVersionStepJobStepsClientDiagnostics;

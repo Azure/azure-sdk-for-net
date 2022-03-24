@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of ResourcePool and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ResourcePoolResource" /> and their operations.
+    /// Each <see cref="ResourcePoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ResourcePoolCollection" /> instance call the GetResourcePools method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ResourcePoolCollection : ArmCollection, IEnumerable<ResourcePoolResource>, IAsyncEnumerable<ResourcePoolResource>
     {
         private readonly ClientDiagnostics _resourcePoolClientDiagnostics;

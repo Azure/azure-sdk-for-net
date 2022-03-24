@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerKey and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerKeyResource" /> and their operations.
+    /// Each <see cref="ServerKeyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerKeyCollection" /> instance call the GetServerKeys method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServerKeyCollection : ArmCollection, IEnumerable<ServerKeyResource>, IAsyncEnumerable<ServerKeyResource>
     {
         private readonly ClientDiagnostics _serverKeyClientDiagnostics;

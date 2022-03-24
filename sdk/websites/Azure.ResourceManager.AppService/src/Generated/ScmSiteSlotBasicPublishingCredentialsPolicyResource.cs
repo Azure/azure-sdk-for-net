@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a ScmSiteSlotBasicPublishingCredentialsPolicyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ScmSiteSlotBasicPublishingCredentialsPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetScmSiteSlotBasicPublishingCredentialsPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetScmSiteSlotBasicPublishingCredentialsPolicy method.
+    /// </summary>
     public partial class ScmSiteSlotBasicPublishingCredentialsPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> instance. </summary>

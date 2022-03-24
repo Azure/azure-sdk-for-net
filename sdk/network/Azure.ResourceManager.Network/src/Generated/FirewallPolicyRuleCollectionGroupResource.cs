@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a FirewallPolicyRuleCollectionGroupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a FirewallPolicyRuleCollectionGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallPolicyRuleCollectionGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetFirewallPolicyRuleCollectionGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FirewallPolicyResource" /> using the GetFirewallPolicyRuleCollectionGroup method.
+    /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FirewallPolicyRuleCollectionGroupResource"/> instance. </summary>

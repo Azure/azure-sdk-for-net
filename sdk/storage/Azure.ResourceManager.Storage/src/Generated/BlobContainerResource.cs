@@ -17,7 +17,12 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A Class representing a BlobContainerResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a BlobContainer along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BlobContainerResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetBlobContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BlobServiceResource" /> using the GetBlobContainer method.
+    /// </summary>
     public partial class BlobContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BlobContainerResource"/> instance. </summary>

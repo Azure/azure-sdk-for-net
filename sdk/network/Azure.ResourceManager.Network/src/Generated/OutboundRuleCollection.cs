@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of OutboundRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OutboundRuleResource" /> and their operations.
+    /// Each <see cref="OutboundRuleResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get an <see cref="OutboundRuleCollection" /> instance call the GetOutboundRules method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class OutboundRuleCollection : ArmCollection, IEnumerable<OutboundRuleResource>, IAsyncEnumerable<OutboundRuleResource>
     {
         private readonly ClientDiagnostics _outboundRuleLoadBalancerOutboundRulesClientDiagnostics;

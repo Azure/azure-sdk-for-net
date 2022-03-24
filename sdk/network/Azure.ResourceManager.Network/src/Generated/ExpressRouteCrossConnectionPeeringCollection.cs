@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRouteCrossConnectionPeering and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRouteCrossConnectionPeeringResource" /> and their operations.
+    /// Each <see cref="ExpressRouteCrossConnectionPeeringResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteCrossConnectionResource" />.
+    /// To get an <see cref="ExpressRouteCrossConnectionPeeringCollection" /> instance call the GetExpressRouteCrossConnectionPeerings method from an instance of <see cref="ExpressRouteCrossConnectionResource" />.
+    /// </summary>
     public partial class ExpressRouteCrossConnectionPeeringCollection : ArmCollection, IEnumerable<ExpressRouteCrossConnectionPeeringResource>, IAsyncEnumerable<ExpressRouteCrossConnectionPeeringResource>
     {
         private readonly ClientDiagnostics _expressRouteCrossConnectionPeeringClientDiagnostics;

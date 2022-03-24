@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of RestorableDroppedDatabase and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource" /> and their operations.
+    /// Each <see cref="RestorableDroppedDatabaseResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="RestorableDroppedDatabaseCollection" /> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class RestorableDroppedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedDatabaseResource>, IAsyncEnumerable<RestorableDroppedDatabaseResource>
     {
         private readonly ClientDiagnostics _restorableDroppedDatabaseClientDiagnostics;

@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a PolicyExemptionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a PolicyExemption along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyExemptionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPolicyExemptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyExemption method.
+    /// </summary>
     public partial class PolicyExemptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyExemptionResource"/> instance. </summary>

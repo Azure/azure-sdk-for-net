@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of BackendAddressPool and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BackendAddressPoolResource" /> and their operations.
+    /// Each <see cref="BackendAddressPoolResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get a <see cref="BackendAddressPoolCollection" /> instance call the GetBackendAddressPools method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class BackendAddressPoolCollection : ArmCollection, IEnumerable<BackendAddressPoolResource>, IAsyncEnumerable<BackendAddressPoolResource>
     {
         private readonly ClientDiagnostics _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics;

@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSlotDeploymentResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSlotDeployment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSlotDeploymentResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDeploymentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotResource" /> using the GetSiteSlotDeployment method.
+    /// </summary>
     public partial class SiteSlotDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotDeploymentResource"/> instance. </summary>

@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing collection of AddressResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="AddressResource" /> and their operations.
+    /// Each <see cref="AddressResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AddressResourceCollection" /> instance call the GetAddressResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class AddressResourceCollection : ArmCollection, IEnumerable<AddressResource>, IAsyncEnumerable<AddressResource>
     {
         private readonly ClientDiagnostics _addressResourceClientDiagnostics;

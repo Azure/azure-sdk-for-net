@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of PrivateDnsZoneGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PrivateDnsZoneGroupResource" /> and their operations.
+    /// Each <see cref="PrivateDnsZoneGroupResource" /> in the collection will belong to the same instance of <see cref="PrivateEndpointResource" />.
+    /// To get a <see cref="PrivateDnsZoneGroupCollection" /> instance call the GetPrivateDnsZoneGroups method from an instance of <see cref="PrivateEndpointResource" />.
+    /// </summary>
     public partial class PrivateDnsZoneGroupCollection : ArmCollection, IEnumerable<PrivateDnsZoneGroupResource>, IAsyncEnumerable<PrivateDnsZoneGroupResource>
     {
         private readonly ClientDiagnostics _privateDnsZoneGroupClientDiagnostics;

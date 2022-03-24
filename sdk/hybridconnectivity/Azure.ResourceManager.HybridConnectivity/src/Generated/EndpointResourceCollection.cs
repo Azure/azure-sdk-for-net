@@ -18,7 +18,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary> A class representing collection of EndpointResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="EndpointResource" /> and their operations.
+    /// Each <see cref="EndpointResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get an <see cref="EndpointResourceCollection" /> instance call the GetEndpointResources method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class EndpointResourceCollection : ArmCollection, IEnumerable<EndpointResource>, IAsyncEnumerable<EndpointResource>
     {
         private readonly ClientDiagnostics _endpointResourceEndpointsClientDiagnostics;

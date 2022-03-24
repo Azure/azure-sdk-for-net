@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of DiskRestorePoint and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DiskRestorePointResource" /> and their operations.
+    /// Each <see cref="DiskRestorePointResource" /> in the collection will belong to the same instance of <see cref="RestorePointResource" />.
+    /// To get a <see cref="DiskRestorePointCollection" /> instance call the GetDiskRestorePoints method from an instance of <see cref="RestorePointResource" />.
+    /// </summary>
     public partial class DiskRestorePointCollection : ArmCollection, IEnumerable<DiskRestorePointResource>, IAsyncEnumerable<DiskRestorePointResource>
     {
         private readonly ClientDiagnostics _diskRestorePointClientDiagnostics;

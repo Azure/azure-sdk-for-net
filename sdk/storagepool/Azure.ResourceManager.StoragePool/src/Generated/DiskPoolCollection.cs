@@ -21,7 +21,11 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing collection of DiskPool and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DiskPoolResource" /> and their operations.
+    /// Each <see cref="DiskPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DiskPoolCollection" /> instance call the GetDiskPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DiskPoolCollection : ArmCollection, IEnumerable<DiskPoolResource>, IAsyncEnumerable<DiskPoolResource>
     {
         private readonly ClientDiagnostics _diskPoolClientDiagnostics;

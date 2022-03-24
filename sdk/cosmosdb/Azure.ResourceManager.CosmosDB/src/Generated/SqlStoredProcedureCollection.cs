@@ -20,7 +20,11 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of SqlStoredProcedure and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SqlStoredProcedureResource" /> and their operations.
+    /// Each <see cref="SqlStoredProcedureResource" /> in the collection will belong to the same instance of <see cref="SqlContainerResource" />.
+    /// To get a <see cref="SqlStoredProcedureCollection" /> instance call the GetSqlStoredProcedures method from an instance of <see cref="SqlContainerResource" />.
+    /// </summary>
     public partial class SqlStoredProcedureCollection : ArmCollection, IEnumerable<SqlStoredProcedureResource>, IAsyncEnumerable<SqlStoredProcedureResource>
     {
         private readonly ClientDiagnostics _sqlStoredProcedureSqlResourcesClientDiagnostics;

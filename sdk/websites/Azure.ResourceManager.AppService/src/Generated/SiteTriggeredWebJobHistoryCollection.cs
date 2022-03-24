@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteTriggeredWebJobHistory and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteTriggeredWebJobHistoryResource" /> and their operations.
+    /// Each <see cref="SiteTriggeredWebJobHistoryResource" /> in the collection will belong to the same instance of <see cref="SiteTriggeredwebJobResource" />.
+    /// To get a <see cref="SiteTriggeredWebJobHistoryCollection" /> instance call the GetSiteTriggeredWebJobHistories method from an instance of <see cref="SiteTriggeredwebJobResource" />.
+    /// </summary>
     public partial class SiteTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<SiteTriggeredWebJobHistoryResource>, IAsyncEnumerable<SiteTriggeredWebJobHistoryResource>
     {
         private readonly ClientDiagnostics _siteTriggeredWebJobHistoryWebAppsClientDiagnostics;

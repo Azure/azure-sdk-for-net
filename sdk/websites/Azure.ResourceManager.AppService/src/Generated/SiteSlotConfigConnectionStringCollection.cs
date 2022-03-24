@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotConfigConnectionString and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotConfigConnectionStringResource" /> and their operations.
+    /// Each <see cref="SiteSlotConfigConnectionStringResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotConfigConnectionStringCollection" /> instance call the GetSiteSlotConfigConnectionStrings method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class SiteSlotConfigConnectionStringCollection : ArmCollection, IEnumerable<SiteSlotConfigConnectionStringResource>, IAsyncEnumerable<SiteSlotConfigConnectionStringResource>
     {
         private readonly ClientDiagnostics _siteSlotConfigConnectionStringWebAppsClientDiagnostics;

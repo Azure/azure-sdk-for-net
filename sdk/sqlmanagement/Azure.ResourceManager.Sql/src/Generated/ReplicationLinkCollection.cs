@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ReplicationLink and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ReplicationLinkResource" /> and their operations.
+    /// Each <see cref="ReplicationLinkResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="ReplicationLinkCollection" /> instance call the GetReplicationLinks method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class ReplicationLinkCollection : ArmCollection, IEnumerable<ReplicationLinkResource>, IAsyncEnumerable<ReplicationLinkResource>
     {
         private readonly ClientDiagnostics _replicationLinkClientDiagnostics;

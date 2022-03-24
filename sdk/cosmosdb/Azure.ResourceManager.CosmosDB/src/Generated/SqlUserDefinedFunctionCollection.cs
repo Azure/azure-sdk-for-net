@@ -20,7 +20,11 @@ using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of SqlUserDefinedFunction and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SqlUserDefinedFunctionResource" /> and their operations.
+    /// Each <see cref="SqlUserDefinedFunctionResource" /> in the collection will belong to the same instance of <see cref="SqlContainerResource" />.
+    /// To get a <see cref="SqlUserDefinedFunctionCollection" /> instance call the GetSqlUserDefinedFunctions method from an instance of <see cref="SqlContainerResource" />.
+    /// </summary>
     public partial class SqlUserDefinedFunctionCollection : ArmCollection, IEnumerable<SqlUserDefinedFunctionResource>, IAsyncEnumerable<SqlUserDefinedFunctionResource>
     {
         private readonly ClientDiagnostics _sqlUserDefinedFunctionSqlResourcesClientDiagnostics;

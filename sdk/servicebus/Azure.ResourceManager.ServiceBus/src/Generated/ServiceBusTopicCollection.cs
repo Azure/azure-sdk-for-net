@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of ServiceBusTopic and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServiceBusTopicResource" /> and their operations.
+    /// Each <see cref="ServiceBusTopicResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
+    /// To get a <see cref="ServiceBusTopicCollection" /> instance call the GetServiceBusTopics method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// </summary>
     public partial class ServiceBusTopicCollection : ArmCollection, IEnumerable<ServiceBusTopicResource>, IAsyncEnumerable<ServiceBusTopicResource>
     {
         private readonly ClientDiagnostics _serviceBusTopicTopicsClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteConfigAppsetting and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteConfigAppsettingResource" /> and their operations.
+    /// Each <see cref="SiteConfigAppsettingResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteConfigAppsettingCollection" /> instance call the GetSiteConfigAppsettings method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteConfigAppsettingCollection : ArmCollection, IEnumerable<SiteConfigAppsettingResource>, IAsyncEnumerable<SiteConfigAppsettingResource>
     {
         private readonly ClientDiagnostics _siteConfigAppsettingWebAppsClientDiagnostics;

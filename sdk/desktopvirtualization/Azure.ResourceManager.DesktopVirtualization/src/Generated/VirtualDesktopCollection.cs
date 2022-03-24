@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of VirtualDesktop and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualDesktopResource" /> and their operations.
+    /// Each <see cref="VirtualDesktopResource" /> in the collection will belong to the same instance of <see cref="VirtualApplicationGroupResource" />.
+    /// To get a <see cref="VirtualDesktopCollection" /> instance call the GetVirtualDesktops method from an instance of <see cref="VirtualApplicationGroupResource" />.
+    /// </summary>
     public partial class VirtualDesktopCollection : ArmCollection, IEnumerable<VirtualDesktopResource>, IAsyncEnumerable<VirtualDesktopResource>
     {
         private readonly ClientDiagnostics _virtualDesktopDesktopsClientDiagnostics;

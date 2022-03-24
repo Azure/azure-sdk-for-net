@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotProcess and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotProcessResource" /> and their operations.
+    /// Each <see cref="SiteSlotProcessResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotProcessCollection" /> instance call the GetSiteSlotProcesses method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class SiteSlotProcessCollection : ArmCollection, IEnumerable<SiteSlotProcessResource>, IAsyncEnumerable<SiteSlotProcessResource>
     {
         private readonly ClientDiagnostics _siteSlotProcessWebAppsClientDiagnostics;

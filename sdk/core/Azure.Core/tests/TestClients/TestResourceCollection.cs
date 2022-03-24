@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.Core.Tests
 {
-    public class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
+    internal class TestResourceCollection : ArmCollection, IEnumerable<TestResource>, IAsyncEnumerable<TestResource>
     {
         private DiagnosticScopeFactory _diagnostic = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 

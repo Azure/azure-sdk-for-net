@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of DataPolicyManifest and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DataPolicyManifestResource" /> and their operations.
+    /// Each <see cref="DataPolicyManifestResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="DataPolicyManifestCollection" /> instance call the GetDataPolicyManifests method from an instance of <see cref="TenantResource" />.
+    /// </summary>
     public partial class DataPolicyManifestCollection : ArmCollection, IEnumerable<DataPolicyManifestResource>, IAsyncEnumerable<DataPolicyManifestResource>
     {
         private readonly ClientDiagnostics _dataPolicyManifestClientDiagnostics;

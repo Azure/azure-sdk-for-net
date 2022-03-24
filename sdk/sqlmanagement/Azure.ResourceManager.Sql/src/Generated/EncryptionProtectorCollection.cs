@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of EncryptionProtector and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="EncryptionProtectorResource" /> and their operations.
+    /// Each <see cref="EncryptionProtectorResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get an <see cref="EncryptionProtectorCollection" /> instance call the GetEncryptionProtectors method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class EncryptionProtectorCollection : ArmCollection, IEnumerable<EncryptionProtectorResource>, IAsyncEnumerable<EncryptionProtectorResource>
     {
         private readonly ClientDiagnostics _encryptionProtectorClientDiagnostics;

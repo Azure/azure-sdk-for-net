@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of SyncMember and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SyncMemberResource" /> and their operations.
+    /// Each <see cref="SyncMemberResource" /> in the collection will belong to the same instance of <see cref="SyncGroupResource" />.
+    /// To get a <see cref="SyncMemberCollection" /> instance call the GetSyncMembers method from an instance of <see cref="SyncGroupResource" />.
+    /// </summary>
     public partial class SyncMemberCollection : ArmCollection, IEnumerable<SyncMemberResource>, IAsyncEnumerable<SyncMemberResource>
     {
         private readonly ClientDiagnostics _syncMemberClientDiagnostics;

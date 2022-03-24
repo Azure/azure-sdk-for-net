@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of NamespaceQueueAuthorizationRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NamespaceQueueAuthorizationRuleResource" /> and their operations.
+    /// Each <see cref="NamespaceQueueAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="ServiceBusQueueResource" />.
+    /// To get a <see cref="NamespaceQueueAuthorizationRuleCollection" /> instance call the GetNamespaceQueueAuthorizationRules method from an instance of <see cref="ServiceBusQueueResource" />.
+    /// </summary>
     public partial class NamespaceQueueAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceQueueAuthorizationRuleResource>, IAsyncEnumerable<NamespaceQueueAuthorizationRuleResource>
     {
         private readonly ClientDiagnostics _namespaceQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics;

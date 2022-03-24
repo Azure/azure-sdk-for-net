@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of GuestAgent and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="GuestAgentResource" /> and their operations.
+    /// Each <see cref="GuestAgentResource" /> in the collection will belong to the same instance of <see cref="VirtualMachineResource" />.
+    /// To get a <see cref="GuestAgentCollection" /> instance call the GetGuestAgents method from an instance of <see cref="VirtualMachineResource" />.
+    /// </summary>
     public partial class GuestAgentCollection : ArmCollection, IEnumerable<GuestAgentResource>, IAsyncEnumerable<GuestAgentResource>
     {
         private readonly ClientDiagnostics _guestAgentClientDiagnostics;

@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of DdosProtectionPlan and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DdosProtectionPlanResource" /> and their operations.
+    /// Each <see cref="DdosProtectionPlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DdosProtectionPlanCollection" /> instance call the GetDdosProtectionPlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DdosProtectionPlanCollection : ArmCollection, IEnumerable<DdosProtectionPlanResource>, IAsyncEnumerable<DdosProtectionPlanResource>
     {
         private readonly ClientDiagnostics _ddosProtectionPlanClientDiagnostics;

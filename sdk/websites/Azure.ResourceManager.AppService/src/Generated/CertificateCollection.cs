@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of Certificate and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CertificateResource" /> and their operations.
+    /// Each <see cref="CertificateResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="CertificateCollection" /> instance call the GetCertificates method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class CertificateCollection : ArmCollection, IEnumerable<CertificateResource>, IAsyncEnumerable<CertificateResource>
     {
         private readonly ClientDiagnostics _certificateClientDiagnostics;

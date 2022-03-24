@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of OSFamily and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OSFamilyResource" /> and their operations.
+    /// Each <see cref="OSFamilyResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
+    /// To get an <see cref="OSFamilyCollection" /> instance call the GetOSFamilies method from an instance of <see cref="SubscriptionResource" />.
+    /// </summary>
     public partial class OSFamilyCollection : ArmCollection, IEnumerable<OSFamilyResource>, IAsyncEnumerable<OSFamilyResource>
     {
         private readonly ClientDiagnostics _osFamilyCloudServiceOperatingSystemsClientDiagnostics;

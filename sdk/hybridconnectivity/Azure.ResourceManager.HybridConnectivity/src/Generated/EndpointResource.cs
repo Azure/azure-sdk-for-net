@@ -17,7 +17,12 @@ using Azure.ResourceManager.HybridConnectivity.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary> A Class representing a EndpointResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an EndpointResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EndpointResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetEndpointResource method.
+    /// </summary>
     public partial class EndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>

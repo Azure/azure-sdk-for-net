@@ -21,7 +21,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Management
 {
-    /// <summary> A class representing collection of ManagementGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagementGroupResource" /> and their operations.
+    /// Each <see cref="ManagementGroupResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="ManagementGroupCollection" /> instance call the GetManagementGroups method from an instance of <see cref="TenantResource" />.
+    /// </summary>
     public partial class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroupResource>, IAsyncEnumerable<ManagementGroupResource>
     {
         private readonly ClientDiagnostics _managementGroupClientDiagnostics;

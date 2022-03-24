@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of AvailabilitySet and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="AvailabilitySetResource" /> and their operations.
+    /// Each <see cref="AvailabilitySetResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="AvailabilitySetCollection" /> instance call the GetAvailabilitySets method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class AvailabilitySetCollection : ArmCollection, IEnumerable<AvailabilitySetResource>, IAsyncEnumerable<AvailabilitySetResource>
     {
         private readonly ClientDiagnostics _availabilitySetClientDiagnostics;

@@ -17,7 +17,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A Class representing a ResourceProviderResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ResourceProvider along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceProviderResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetResourceProviderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceProvider method.
+    /// </summary>
     public partial class ResourceProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceProviderResource"/> instance. </summary>

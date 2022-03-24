@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ServerDnsAliasResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ServerDnsAlias along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServerDnsAliasResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetServerDnsAliasResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetServerDnsAlias method.
+    /// </summary>
     public partial class ServerDnsAliasResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServerDnsAliasResource"/> instance. </summary>

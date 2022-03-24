@@ -20,7 +20,11 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of MigrationConfigProperties and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="MigrationConfigPropertiesResource" /> and their operations.
+    /// Each <see cref="MigrationConfigPropertiesResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
+    /// To get a <see cref="MigrationConfigPropertiesCollection" /> instance call the GetMigrationConfigProperties method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// </summary>
     public partial class MigrationConfigPropertiesCollection : ArmCollection, IEnumerable<MigrationConfigPropertiesResource>, IAsyncEnumerable<MigrationConfigPropertiesResource>
     {
         private readonly ClientDiagnostics _migrationConfigPropertiesMigrationConfigsClientDiagnostics;

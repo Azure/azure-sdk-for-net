@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of DiskEncryptionSet and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DiskEncryptionSetResource" /> and their operations.
+    /// Each <see cref="DiskEncryptionSetResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="DiskEncryptionSetCollection" /> instance call the GetDiskEncryptionSets method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class DiskEncryptionSetCollection : ArmCollection, IEnumerable<DiskEncryptionSetResource>, IAsyncEnumerable<DiskEncryptionSetResource>
     {
         private readonly ClientDiagnostics _diskEncryptionSetClientDiagnostics;

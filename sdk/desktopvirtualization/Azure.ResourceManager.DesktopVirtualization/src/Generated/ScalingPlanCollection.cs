@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of ScalingPlan and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ScalingPlanResource" /> and their operations.
+    /// Each <see cref="ScalingPlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="ScalingPlanCollection" /> instance call the GetScalingPlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ScalingPlanCollection : ArmCollection, IEnumerable<ScalingPlanResource>, IAsyncEnumerable<ScalingPlanResource>
     {
         private readonly ClientDiagnostics _scalingPlanClientDiagnostics;

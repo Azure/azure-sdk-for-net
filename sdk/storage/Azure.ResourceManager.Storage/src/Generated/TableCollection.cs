@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of Table and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="TableResource" /> and their operations.
+    /// Each <see cref="TableResource" /> in the collection will belong to the same instance of <see cref="TableServiceResource" />.
+    /// To get a <see cref="TableCollection" /> instance call the GetTables method from an instance of <see cref="TableServiceResource" />.
+    /// </summary>
     public partial class TableCollection : ArmCollection, IEnumerable<TableResource>, IAsyncEnumerable<TableResource>
     {
         private readonly ClientDiagnostics _tableClientDiagnostics;

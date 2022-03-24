@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of SecurityPartnerProvider and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SecurityPartnerProviderResource" /> and their operations.
+    /// Each <see cref="SecurityPartnerProviderResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="SecurityPartnerProviderCollection" /> instance call the GetSecurityPartnerProviders method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class SecurityPartnerProviderCollection : ArmCollection, IEnumerable<SecurityPartnerProviderResource>, IAsyncEnumerable<SecurityPartnerProviderResource>
     {
         private readonly ClientDiagnostics _securityPartnerProviderClientDiagnostics;

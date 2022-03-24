@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRouteCircuitPeering and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRouteCircuitPeeringResource" /> and their operations.
+    /// Each <see cref="ExpressRouteCircuitPeeringResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitResource" />.
+    /// To get an <see cref="ExpressRouteCircuitPeeringCollection" /> instance call the GetExpressRouteCircuitPeerings method from an instance of <see cref="ExpressRouteCircuitResource" />.
+    /// </summary>
     public partial class ExpressRouteCircuitPeeringCollection : ArmCollection, IEnumerable<ExpressRouteCircuitPeeringResource>, IAsyncEnumerable<ExpressRouteCircuitPeeringResource>
     {
         private readonly ClientDiagnostics _expressRouteCircuitPeeringClientDiagnostics;

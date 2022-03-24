@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing collection of NamespaceDisasterRecoveryAuthorizationRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> and their operations.
+    /// Each <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="DisasterRecoveryResource" />.
+    /// To get a <see cref="NamespaceDisasterRecoveryAuthorizationRuleCollection" /> instance call the GetNamespaceDisasterRecoveryAuthorizationRules method from an instance of <see cref="DisasterRecoveryResource" />.
+    /// </summary>
     public partial class NamespaceDisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<NamespaceDisasterRecoveryAuthorizationRuleResource>, IAsyncEnumerable<NamespaceDisasterRecoveryAuthorizationRuleResource>
     {
         private readonly ClientDiagnostics _namespaceDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics;

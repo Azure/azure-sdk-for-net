@@ -20,7 +20,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ExtendedServerBlobAuditingPolicy and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExtendedServerBlobAuditingPolicyResource" /> and their operations.
+    /// Each <see cref="ExtendedServerBlobAuditingPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get an <see cref="ExtendedServerBlobAuditingPolicyCollection" /> instance call the GetExtendedServerBlobAuditingPolicies method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ExtendedServerBlobAuditingPolicyCollection : ArmCollection, IEnumerable<ExtendedServerBlobAuditingPolicyResource>, IAsyncEnumerable<ExtendedServerBlobAuditingPolicyResource>
     {
         private readonly ClientDiagnostics _extendedServerBlobAuditingPolicyClientDiagnostics;

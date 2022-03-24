@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of WorkloadClassifier and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="WorkloadClassifierResource" /> and their operations.
+    /// Each <see cref="WorkloadClassifierResource" /> in the collection will belong to the same instance of <see cref="WorkloadGroupResource" />.
+    /// To get a <see cref="WorkloadClassifierCollection" /> instance call the GetWorkloadClassifiers method from an instance of <see cref="WorkloadGroupResource" />.
+    /// </summary>
     public partial class WorkloadClassifierCollection : ArmCollection, IEnumerable<WorkloadClassifierResource>, IAsyncEnumerable<WorkloadClassifierResource>
     {
         private readonly ClientDiagnostics _workloadClassifierClientDiagnostics;

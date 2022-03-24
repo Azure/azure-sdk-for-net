@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of VirtualMachineRunCommand and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualMachineRunCommandResource" /> and their operations.
+    /// Each <see cref="VirtualMachineRunCommandResource" /> in the collection will belong to the same instance of <see cref="VirtualMachineResource" />.
+    /// To get a <see cref="VirtualMachineRunCommandCollection" /> instance call the GetVirtualMachineRunCommands method from an instance of <see cref="VirtualMachineResource" />.
+    /// </summary>
     public partial class VirtualMachineRunCommandCollection : ArmCollection, IEnumerable<VirtualMachineRunCommandResource>, IAsyncEnumerable<VirtualMachineRunCommandResource>
     {
         private readonly ClientDiagnostics _virtualMachineRunCommandClientDiagnostics;

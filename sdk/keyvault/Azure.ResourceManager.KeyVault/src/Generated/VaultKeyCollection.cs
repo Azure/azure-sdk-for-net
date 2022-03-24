@@ -20,7 +20,11 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of VaultKey and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VaultKeyResource" /> and their operations.
+    /// Each <see cref="VaultKeyResource" /> in the collection will belong to the same instance of <see cref="VaultResource" />.
+    /// To get a <see cref="VaultKeyCollection" /> instance call the GetVaultKeys method from an instance of <see cref="VaultResource" />.
+    /// </summary>
     public partial class VaultKeyCollection : ArmCollection, IEnumerable<VaultKeyResource>, IAsyncEnumerable<VaultKeyResource>
     {
         private readonly ClientDiagnostics _vaultKeyKeysClientDiagnostics;

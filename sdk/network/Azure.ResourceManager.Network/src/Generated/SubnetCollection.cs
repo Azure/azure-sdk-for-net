@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of Subnet and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SubnetResource" /> and their operations.
+    /// Each <see cref="SubnetResource" /> in the collection will belong to the same instance of <see cref="VirtualNetworkResource" />.
+    /// To get a <see cref="SubnetCollection" /> instance call the GetSubnets method from an instance of <see cref="VirtualNetworkResource" />.
+    /// </summary>
     public partial class SubnetCollection : ArmCollection, IEnumerable<SubnetResource>, IAsyncEnumerable<SubnetResource>
     {
         private readonly ClientDiagnostics _subnetClientDiagnostics;

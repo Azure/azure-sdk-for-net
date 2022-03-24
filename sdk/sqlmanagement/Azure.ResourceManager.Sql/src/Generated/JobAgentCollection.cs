@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of JobAgent and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="JobAgentResource" /> and their operations.
+    /// Each <see cref="JobAgentResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="JobAgentCollection" /> instance call the GetJobAgents method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class JobAgentCollection : ArmCollection, IEnumerable<JobAgentResource>, IAsyncEnumerable<JobAgentResource>
     {
         private readonly ClientDiagnostics _jobAgentClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of Application and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ApplicationResource" /> and their operations.
+    /// Each <see cref="ApplicationResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="ApplicationCollection" /> instance call the GetApplications method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class ApplicationCollection : ArmCollection, IEnumerable<ApplicationResource>, IAsyncEnumerable<ApplicationResource>
     {
         private readonly ClientDiagnostics _applicationClientDiagnostics;

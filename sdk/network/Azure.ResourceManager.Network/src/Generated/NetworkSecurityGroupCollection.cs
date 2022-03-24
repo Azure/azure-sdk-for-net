@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of NetworkSecurityGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NetworkSecurityGroupResource" /> and their operations.
+    /// Each <see cref="NetworkSecurityGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="NetworkSecurityGroupCollection" /> instance call the GetNetworkSecurityGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class NetworkSecurityGroupCollection : ArmCollection, IEnumerable<NetworkSecurityGroupResource>, IAsyncEnumerable<NetworkSecurityGroupResource>
     {
         private readonly ClientDiagnostics _networkSecurityGroupClientDiagnostics;

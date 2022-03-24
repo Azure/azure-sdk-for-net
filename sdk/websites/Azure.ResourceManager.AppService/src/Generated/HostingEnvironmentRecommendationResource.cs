@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a HostingEnvironmentRecommendationResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a HostingEnvironmentRecommendation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HostingEnvironmentRecommendationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetHostingEnvironmentRecommendationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource" /> using the GetHostingEnvironmentRecommendation method.
+    /// </summary>
     public partial class HostingEnvironmentRecommendationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HostingEnvironmentRecommendationResource"/> instance. </summary>

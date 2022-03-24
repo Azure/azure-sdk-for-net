@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ExpressRouteConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ExpressRouteConnectionResource" /> and their operations.
+    /// Each <see cref="ExpressRouteConnectionResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteGatewayResource" />.
+    /// To get an <see cref="ExpressRouteConnectionCollection" /> instance call the GetExpressRouteConnections method from an instance of <see cref="ExpressRouteGatewayResource" />.
+    /// </summary>
     public partial class ExpressRouteConnectionCollection : ArmCollection, IEnumerable<ExpressRouteConnectionResource>, IAsyncEnumerable<ExpressRouteConnectionResource>
     {
         private readonly ClientDiagnostics _expressRouteConnectionClientDiagnostics;

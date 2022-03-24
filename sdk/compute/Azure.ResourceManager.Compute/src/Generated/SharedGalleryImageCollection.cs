@@ -20,7 +20,11 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing collection of SharedGalleryImage and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SharedGalleryImageResource" /> and their operations.
+    /// Each <see cref="SharedGalleryImageResource" /> in the collection will belong to the same instance of <see cref="SharedGalleryResource" />.
+    /// To get a <see cref="SharedGalleryImageCollection" /> instance call the GetSharedGalleryImages method from an instance of <see cref="SharedGalleryResource" />.
+    /// </summary>
     public partial class SharedGalleryImageCollection : ArmCollection, IEnumerable<SharedGalleryImageResource>, IAsyncEnumerable<SharedGalleryImageResource>
     {
         private readonly ClientDiagnostics _sharedGalleryImageClientDiagnostics;

@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a StaticSiteBuildUserProvidedFunctionAppResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a StaticSiteBuildUserProvidedFunctionApp along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteBuildUserProvidedFunctionAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildARMResource" /> using the GetStaticSiteBuildUserProvidedFunctionApp method.
+    /// </summary>
     public partial class StaticSiteBuildUserProvidedFunctionAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> instance. </summary>

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of OutboundFirewallRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OutboundFirewallRuleResource" /> and their operations.
+    /// Each <see cref="OutboundFirewallRuleResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get an <see cref="OutboundFirewallRuleCollection" /> instance call the GetOutboundFirewallRules method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class OutboundFirewallRuleCollection : ArmCollection, IEnumerable<OutboundFirewallRuleResource>, IAsyncEnumerable<OutboundFirewallRuleResource>
     {
         private readonly ClientDiagnostics _outboundFirewallRuleClientDiagnostics;
