@@ -377,7 +377,9 @@ try {
         $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
         Log "Generated base name '$BaseName' for CI build"
     } elseif (!$BaseName) {
-        $BaseName = "$UserName$ServiceDirectory"
+        # Handle service directories in nested directories, e.g. `data/aztables`
+        $serviceDirectorySafeName = $ServiceDirectory -replace '[/\\]', ''
+        $BaseName = "$UserName$serviceDirectorySafeName"
         Log "BaseName was not set. Using default base name '$BaseName'"
     }
 
