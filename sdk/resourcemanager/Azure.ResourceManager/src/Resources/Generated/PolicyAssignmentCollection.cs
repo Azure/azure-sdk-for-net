@@ -15,13 +15,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of PolicyAssignment and their operations over its parent. </summary>
-    public partial class PolicyAssignmentCollection : ArmCollection, IEnumerable<PolicyAssignment>, IAsyncEnumerable<PolicyAssignment>
+    public partial class PolicyAssignmentCollection : ArmCollection, IEnumerable<PolicyAssignmentResource>, IAsyncEnumerable<PolicyAssignmentResource>
     {
         private readonly ClientDiagnostics _policyAssignmentClientDiagnostics;
         private readonly PolicyAssignmentsRestOperations _policyAssignmentRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal PolicyAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignment.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(PolicyAssignment.ResourceType, out string policyAssignmentApiVersion);
-            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, policyAssignmentApiVersion);
+            _policyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", PolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PolicyAssignmentResource.ResourceType, out string policyAssignmentApiVersion);
+            _policyAssignmentRestClient = new PolicyAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyAssignmentApiVersion);
         }
 
         /// <summary>
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<PolicyAssignment>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _policyAssignmentRestClient.CreateAsync(Id, policyAssignmentName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<PolicyAssignment>(Response.FromValue(new PolicyAssignment(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<PolicyAssignment> CreateOrUpdate(WaitUntil waitUntil, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string policyAssignmentName, PolicyAssignmentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _policyAssignmentRestClient.Create(Id, policyAssignmentName, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<PolicyAssignment>(Response.FromValue(new PolicyAssignment(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<PolicyAssignmentResource>(Response.FromValue(new PolicyAssignmentResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<PolicyAssignment>> GetAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignmentResource>> GetAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual Response<PolicyAssignment> Get(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAssignmentResource> Get(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,19 +178,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos;, &apos;atExactScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atScope() is provided, the returned list only includes all policy assignments that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the given scope. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAssignment> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyAssignmentResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroup.ResourceType)
+            if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -199,14 +198,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                async Task<Page<PolicyAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -216,16 +215,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ManagementGroup.ResourceType)
+            else if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
-                async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListForManagementGroupAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -233,14 +232,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                async Task<Page<PolicyAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListForManagementGroupNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -250,16 +249,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == Subscription.ResourceType)
+            else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -267,14 +266,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                async Task<Page<PolicyAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -286,14 +285,14 @@ namespace Azure.ResourceManager.Resources
             }
             else
             {
-                async Task<Page<PolicyAssignment>> FirstPageFunc(int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -301,14 +300,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                async Task<Page<PolicyAssignment>> NextPageFunc(string nextLink, int? pageSizeHint)
+                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = await _policyAssignmentRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -334,19 +333,19 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: &apos;atScope()&apos;, &apos;atExactScope()&apos; or &apos;policyDefinitionId eq &apos;{value}&apos;&apos;. If $filter is not provided, no filtering is performed. If $filter=atScope() is provided, the returned list only includes all policy assignments that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the given scope. If $filter=policyDefinitionId eq &apos;{value}&apos; is provided, the returned list includes all policy assignments of the policy definition whose id is {value}. </param>
         /// <param name="top"> Maximum number of records to return. When the $top filter is not provided, it will return 500 records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAssignment> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicyAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyAssignmentResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (Id.ResourceType == ResourceGroup.ResourceType)
+            if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                Page<PolicyAssignment> FirstPageFunc(int? pageSizeHint)
+                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -354,14 +353,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                Page<PolicyAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -371,16 +370,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == ManagementGroup.ResourceType)
+            else if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
-                Page<PolicyAssignment> FirstPageFunc(int? pageSizeHint)
+                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListForManagementGroup(Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -388,14 +387,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                Page<PolicyAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListForManagementGroupNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -405,16 +404,16 @@ namespace Azure.ResourceManager.Resources
                 }
                 return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
             }
-            else if (Id.ResourceType == Subscription.ResourceType)
+            else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                Page<PolicyAssignment> FirstPageFunc(int? pageSizeHint)
+                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -422,14 +421,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                Page<PolicyAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -441,14 +440,14 @@ namespace Azure.ResourceManager.Resources
             }
             else
             {
-                Page<PolicyAssignment> FirstPageFunc(int? pageSizeHint)
+                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -456,14 +455,14 @@ namespace Azure.ResourceManager.Resources
                         throw;
                     }
                 }
-                Page<PolicyAssignment> NextPageFunc(string nextLink, int? pageSizeHint)
+                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
                     using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
                     scope.Start();
                     try
                     {
                         var response = _policyAssignmentRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignment(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                     }
                     catch (Exception e)
                     {
@@ -538,7 +537,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual async Task<Response<PolicyAssignment>> GetIfExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAssignmentResource>> GetIfExistsAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -548,8 +547,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _policyAssignmentRestClient.GetAsync(Id, policyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<PolicyAssignment>(null, response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<PolicyAssignmentResource>(null, response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -567,7 +566,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        public virtual Response<PolicyAssignment> GetIfExists(string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAssignmentResource> GetIfExists(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
 
@@ -577,8 +576,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _policyAssignmentRestClient.Get(Id, policyAssignmentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<PolicyAssignment>(null, response.GetRawResponse());
-                return Response.FromValue(new PolicyAssignment(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<PolicyAssignmentResource>(null, response.GetRawResponse());
+                return Response.FromValue(new PolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -587,7 +586,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<PolicyAssignment> IEnumerable<PolicyAssignment>.GetEnumerator()
+        IEnumerator<PolicyAssignmentResource> IEnumerable<PolicyAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -597,7 +596,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<PolicyAssignment> IAsyncEnumerable<PolicyAssignment>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PolicyAssignmentResource> IAsyncEnumerable<PolicyAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

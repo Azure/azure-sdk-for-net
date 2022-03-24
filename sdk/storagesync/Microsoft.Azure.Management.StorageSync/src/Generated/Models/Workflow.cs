@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="type">The type of the resource. E.g.
         /// "Microsoft.Compute/virtualMachines" or
         /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="lastStepName">last step name</param>
         /// <param name="status">workflow status. Possible values include:
         /// 'active', 'expired', 'succeeded', 'aborted', 'failed'</param>
@@ -50,8 +52,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="createdTimestamp">workflow created timestamp.</param>
         /// <param name="lastStatusTimestamp">workflow last status
         /// timestamp.</param>
-        public Workflow(string id = default(string), string name = default(string), string type = default(string), string lastStepName = default(string), string status = default(string), string operation = default(string), string steps = default(string), string lastOperationId = default(string), string commandName = default(string), System.DateTime? createdTimestamp = default(System.DateTime?), System.DateTime? lastStatusTimestamp = default(System.DateTime?))
-            : base(id, name, type)
+        public Workflow(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string lastStepName = default(string), string status = default(string), string operation = default(string), string steps = default(string), string lastOperationId = default(string), string commandName = default(string), System.DateTime? createdTimestamp = default(System.DateTime?), System.DateTime? lastStatusTimestamp = default(System.DateTime?))
+            : base(id, name, type, systemData)
         {
             LastStepName = lastStepName;
             Status = status;

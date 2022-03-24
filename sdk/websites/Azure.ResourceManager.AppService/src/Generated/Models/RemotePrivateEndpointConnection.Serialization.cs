@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState");
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses");
                 writer.WriteStartArray();
-                foreach (var item in IpAddresses)
+                foreach (var item in IPAddresses)
                 {
                     writer.WriteStringValue(item);
                 }

@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
         /// For example,
         /// /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000</param>
         /// <param name="type">The type of the resource. For example,
-        /// /providers/Microsoft.Management/managementGroups</param>
+        /// Microsoft.Management/managementGroups</param>
         /// <param name="name">The name of the management group. For example,
         /// 00000000-0000-0000-0000-000000000000</param>
         /// <param name="tenantId">The AAD Tenant ID associated with the
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ManagementGroups.Models
 
         /// <summary>
         /// Gets the type of the resource. For example,
-        /// /providers/Microsoft.Management/managementGroups
+        /// Microsoft.Management/managementGroups
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }

@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary> A class representing collection of SiteInstanceProcessModule and their operations over its parent. </summary>
-    public partial class SiteInstanceProcessModuleCollection : ArmCollection, IEnumerable<SiteInstanceProcessModule>, IAsyncEnumerable<SiteInstanceProcessModule>
+    public partial class SiteInstanceProcessModuleCollection : ArmCollection, IEnumerable<SiteInstanceProcessModuleResource>, IAsyncEnumerable<SiteInstanceProcessModuleResource>
     {
         private readonly ClientDiagnostics _siteInstanceProcessModuleWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteInstanceProcessModuleWebAppsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteInstanceProcessModuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModule.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteInstanceProcessModule.ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
-            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
+            _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteInstanceProcessModuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteInstanceProcessModuleResource.ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
+            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteInstanceProcessModuleWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteInstanceProcess.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteInstanceProcess.ResourceType), nameof(id));
+            if (id.ResourceType != SiteInstanceProcessResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteInstanceProcessResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual async Task<Response<SiteInstanceProcessModule>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceProcessModuleResource>> GetAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual Response<SiteInstanceProcessModule> Get(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual Response<SiteInstanceProcessModuleResource> Get(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListInstanceProcessModules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteInstanceProcessModule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SiteInstanceProcessModule> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SiteInstanceProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SiteInstanceProcessModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteInstanceProcessModule>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SiteInstanceProcessModuleResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<SiteInstanceProcessModule>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SiteInstanceProcessModuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _siteInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_ListInstanceProcessModules
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteInstanceProcessModule" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SiteInstanceProcessModule> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SiteInstanceProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SiteInstanceProcessModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteInstanceProcessModule> FirstPageFunc(int? pageSizeHint)
+            Page<SiteInstanceProcessModuleResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModules(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +173,14 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<SiteInstanceProcessModule> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SiteInstanceProcessModuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _siteInstanceProcessModuleWebAppsRestClient.ListInstanceProcessModulesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModule(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new SiteInstanceProcessModuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual async Task<Response<SiteInstanceProcessModule>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceProcessModuleResource>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
@@ -265,8 +264,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteInstanceProcessModule>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteInstanceProcessModuleResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
-        public virtual Response<SiteInstanceProcessModule> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
+        public virtual Response<SiteInstanceProcessModuleResource> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
 
@@ -294,8 +293,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteInstanceProcessModule>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteInstanceProcessModuleResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        IEnumerator<SiteInstanceProcessModule> IEnumerable<SiteInstanceProcessModule>.GetEnumerator()
+        IEnumerator<SiteInstanceProcessModuleResource> IEnumerable<SiteInstanceProcessModuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SiteInstanceProcessModule> IAsyncEnumerable<SiteInstanceProcessModule>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SiteInstanceProcessModuleResource> IAsyncEnumerable<SiteInstanceProcessModuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

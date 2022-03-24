@@ -16,13 +16,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedDatabaseSecurityAlertPolicy and their operations over its parent. </summary>
-    public partial class ManagedDatabaseSecurityAlertPolicyCollection : ArmCollection, IEnumerable<ManagedDatabaseSecurityAlertPolicy>, IAsyncEnumerable<ManagedDatabaseSecurityAlertPolicy>
+    public partial class ManagedDatabaseSecurityAlertPolicyCollection : ArmCollection, IEnumerable<ManagedDatabaseSecurityAlertPolicyResource>, IAsyncEnumerable<ManagedDatabaseSecurityAlertPolicyResource>
     {
         private readonly ClientDiagnostics _managedDatabaseSecurityAlertPolicyClientDiagnostics;
         private readonly ManagedDatabaseSecurityAlertPoliciesRestOperations _managedDatabaseSecurityAlertPolicyRestClient;
@@ -37,9 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedDatabaseSecurityAlertPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedDatabaseSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSecurityAlertPolicy.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ManagedDatabaseSecurityAlertPolicy.ResourceType, out string managedDatabaseSecurityAlertPolicyApiVersion);
-            _managedDatabaseSecurityAlertPolicyRestClient = new ManagedDatabaseSecurityAlertPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedDatabaseSecurityAlertPolicyApiVersion);
+            _managedDatabaseSecurityAlertPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSecurityAlertPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedDatabaseSecurityAlertPolicyResource.ResourceType, out string managedDatabaseSecurityAlertPolicyApiVersion);
+            _managedDatabaseSecurityAlertPolicyRestClient = new ManagedDatabaseSecurityAlertPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSecurityAlertPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +46,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedDatabase.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabase.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedDatabaseResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedDatabaseSecurityAlertPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, SecurityAlertPolicyName securityAlertPolicyName, ManagedDatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedDatabaseSecurityAlertPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SecurityAlertPolicyName securityAlertPolicyName, ManagedDatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedDatabaseSecurityAlertPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicy>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicy(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicyResource>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The database security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagedDatabaseSecurityAlertPolicy> CreateOrUpdate(WaitUntil waitUntil, SecurityAlertPolicyName securityAlertPolicyName, ManagedDatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedDatabaseSecurityAlertPolicyResource> CreateOrUpdate(WaitUntil waitUntil, SecurityAlertPolicyName securityAlertPolicyName, ManagedDatabaseSecurityAlertPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedDatabaseSecurityAlertPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicy>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicy(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<ManagedDatabaseSecurityAlertPolicyResource>(Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicy>> GetAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.Get");
             scope.Start();
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedDatabaseSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseSecurityAlertPolicy> Get(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> Get(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.Get");
             scope.Start();
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedDatabaseSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicy(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -169,17 +168,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseSecurityAlertPolicies_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedDatabaseSecurityAlertPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseSecurityAlertPolicy> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedDatabaseSecurityAlertPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseSecurityAlertPolicy>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedDatabaseSecurityAlertPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedDatabaseSecurityAlertPolicyRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,14 +186,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedDatabaseSecurityAlertPolicy>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedDatabaseSecurityAlertPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedDatabaseSecurityAlertPolicyRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +210,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseSecurityAlertPolicies_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDatabaseSecurityAlertPolicy" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseSecurityAlertPolicy> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedDatabaseSecurityAlertPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseSecurityAlertPolicy> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedDatabaseSecurityAlertPolicyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedDatabaseSecurityAlertPolicyRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +228,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedDatabaseSecurityAlertPolicy> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedDatabaseSecurityAlertPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedDatabaseSecurityAlertPolicyRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicy(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSecurityAlertPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicy>> GetIfExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetIfExistsAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.GetIfExists");
             scope.Start();
@@ -308,8 +307,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedDatabaseSecurityAlertPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedDatabaseSecurityAlertPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedDatabaseSecurityAlertPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseSecurityAlertPolicy> GetIfExists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> GetIfExists(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _managedDatabaseSecurityAlertPolicyClientDiagnostics.CreateScope("ManagedDatabaseSecurityAlertPolicyCollection.GetIfExists");
             scope.Start();
@@ -333,8 +332,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedDatabaseSecurityAlertPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedDatabaseSecurityAlertPolicy>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicy(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedDatabaseSecurityAlertPolicyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedDatabaseSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ManagedDatabaseSecurityAlertPolicy> IEnumerable<ManagedDatabaseSecurityAlertPolicy>.GetEnumerator()
+        IEnumerator<ManagedDatabaseSecurityAlertPolicyResource> IEnumerable<ManagedDatabaseSecurityAlertPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -353,7 +352,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedDatabaseSecurityAlertPolicy> IAsyncEnumerable<ManagedDatabaseSecurityAlertPolicy>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedDatabaseSecurityAlertPolicyResource> IAsyncEnumerable<ManagedDatabaseSecurityAlertPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

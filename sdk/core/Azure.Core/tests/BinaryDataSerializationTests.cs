@@ -17,12 +17,73 @@ namespace Azure.Core.Tests
     public class BinaryDataSerializationTests
     {
         [Test]
+        public void DeserializeModelWithDictionaryOfBinaryData()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringDictOfBinaryData.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryDataInDictionary.DeserializeModelWithBinaryDataInDictionary(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual("1", data.Details["strValue"].ToObjectFromJson<string>());
+            Assert.IsTrue(data.Details["strValue"].ToObjectFromJson() is string);
+            Assert.AreEqual(1, data.Details["intValue"].ToObjectFromJson<int>());
+            Assert.IsTrue(data.Details["intValue"].ToObjectFromJson() is int);
+            Assert.AreEqual(1.1, data.Details["doubleValue"].ToObjectFromJson<double>());
+            Assert.IsTrue(data.Details["doubleValue"].ToObjectFromJson() is double);
+
+            var toObjectWithT = data.Details["innerProperties"].ToObjectFromJson<Dictionary<string, object>>();
+            var jsonElementObject = data.Details["innerProperties"].ToObjectFromJson<object>();
+            Assert.IsTrue(jsonElementObject is JsonElement);
+            var jsonDictionary = data.Details["innerProperties"].ToObjectFromJson();
+            Assert.IsTrue(jsonDictionary is Dictionary<string, object>);
+            Assert.IsTrue(toObjectWithT["strValue"] is JsonElement);
+
+            var dict = data.Details["innerProperties"].ToObjectFromJson() as Dictionary<string, object>;
+            Assert.AreEqual("2", (string)dict["strValue"]);
+            Assert.AreEqual(2, (int)dict["intValue"]);
+            Assert.AreEqual(2.2, (double)dict["doubleValue"]);
+        }
+
+        [Test]
+        public void CanConvertInt()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringInt.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual(1, data.Properties.ToObjectFromJson<int>());
+        }
+
+        [Test]
+        public void CanConvertDouble()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringDouble.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual(1.1, data.Properties.ToObjectFromJson<double>());
+        }
+
+        [Test]
+        public void CanConvertString()
+        {
+            using var fs = File.Open(GetFileName("JsonFormattedStringString.json"), FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var document = JsonDocument.Parse(fs);
+            var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
+
+            Assert.AreEqual("a.value", data.A);
+            Assert.AreEqual("1", data.Properties.ToObjectFromJson<string>());
+        }
+
+        [Test]
         public void CanConvertDifferentValueTypes()
         {
             var expected = File.ReadAllText(GetFileName("PropertiesWithDifferentValueTypes.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
 
-            var properties = model.ToDictionaryFromJson();
+            var properties = model.ToObjectFromJson() as Dictionary<string, object>;
             Assert.AreEqual(typeof(string), properties["stringValue"].GetType());
             Assert.AreEqual(typeof(string), properties["dateTimeValue"].GetType());
             Assert.AreEqual(typeof(int), properties["intValue"].GetType());
@@ -41,7 +102,7 @@ namespace Azure.Core.Tests
             var expected = File.ReadAllText(GetFileName("PropertiesWithArrays.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
 
-            var properties = model.ToDictionaryFromJson();
+            var properties = model.ToObjectFromJson() as Dictionary<string, object>;
             Assert.IsTrue(AllValuesAreType(typeof(string), properties["stringArray"]));
             Assert.IsTrue(AllValuesAreType(typeof(string), properties["dateTimeArray"]));
             Assert.IsTrue(AllValuesAreType(typeof(int), properties["intArray"]));
@@ -72,7 +133,7 @@ namespace Azure.Core.Tests
         {
             var expected = File.ReadAllText(GetFileName("PropertiesWithArraysOfObjects.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
-            var properties = model.ToDictionaryFromJson();
+            var properties = model.ToObjectFromJson() as Dictionary<string, object>;
             var objArray = properties["objectArray"] as object[];
             for (int i = 0; i < 3; i++)
             {
@@ -91,7 +152,7 @@ namespace Azure.Core.Tests
         {
             var expected = File.ReadAllText(GetFileName("PropertiesWithArraysOfArrays.json")).TrimEnd();
             var model = BinaryData.FromString(expected);
-            var properties = model.ToDictionaryFromJson();
+            var properties = model.ToObjectFromJson() as Dictionary<string, object>;
             var arrayArray = properties["arrayArray"] as object[];
             Assert.IsNotNull(arrayArray);
             for (int i = 0; i < 2; i++)
@@ -141,7 +202,7 @@ namespace Azure.Core.Tests
                 var data = ModelWithBinaryData.DeserializeModelWithBinaryData(document.RootElement);
                 Assert.AreEqual("a.value", data.A);
 
-                var properties = data.Properties.ToDictionaryFromJson();
+                var properties = data.Properties.ToObjectFromJson() as Dictionary<string, object>;
                 Assert.AreEqual("properties.a.value", properties["a"]);
                 var innerProperties = properties["innerProperties"] as IDictionary<string, object>;
                 Assert.AreEqual("properties.innerProperties.a.value", innerProperties["a"]);
@@ -172,6 +233,34 @@ namespace Azure.Core.Tests
 
             var payload = new ModelWithBinaryData { A = "a.value" };
             payload.Properties = BinaryData.FromString(File.ReadAllText(GetFileName("Properties.json")).TrimEnd());
+
+            string actual = GetSerializedString(payload);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void SerailizeUsingJsonFormattedStringForDictOfBinaryData()
+        {
+#if NET461
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringDictOfBinaryDataNet461.json")).TrimEnd();
+#else
+            var expected = File.ReadAllText(GetFileName("JsonFormattedStringDictOfBinaryData.json")).TrimEnd();
+#endif
+
+            var payload = new ModelWithBinaryDataInDictionary { A = "a.value" };
+
+            var details = new Dictionary<string, BinaryData>();
+            details["strValue"] = BinaryData.FromObjectAsJson("1");
+            details["intValue"] = BinaryData.FromObjectAsJson(1);
+            details["doubleValue"] = BinaryData.FromObjectAsJson(1.1);
+
+            var innerProperties = new Dictionary<string, object>();
+            innerProperties["strValue"] = "2";
+            innerProperties["intValue"] = 2;
+            innerProperties["doubleValue"] = 2.2;
+
+            details["innerProperties"] = BinaryData.FromObjectAsJson(innerProperties);
+            payload.Details = details;
 
             string actual = GetSerializedString(payload);
             Assert.AreEqual(expected, actual);

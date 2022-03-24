@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -33,9 +32,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SiteSlotPremierAddOnCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotPremierAddOnWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPremierAddOn.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(SiteSlotPremierAddOn.ResourceType, out string siteSlotPremierAddOnWebAppsApiVersion);
-            _siteSlotPremierAddOnWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPremierAddOnWebAppsApiVersion);
+            _siteSlotPremierAddOnWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPremierAddOnResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SiteSlotPremierAddOnResource.ResourceType, out string siteSlotPremierAddOnWebAppsApiVersion);
+            _siteSlotPremierAddOnWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotPremierAddOnWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -43,8 +42,8 @@ namespace Azure.ResourceManager.AppService
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteSlot.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlot.ResourceType), nameof(id));
+            if (id.ResourceType != SiteSlotResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteSlotPremierAddOn>> CreateOrUpdateAsync(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotPremierAddOnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotPremierAddOnWebAppsRestClient.AddPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, premierAddOn, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotPremierAddOn>(Response.FromValue(new SiteSlotPremierAddOn(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteSlotPremierAddOnResource>(Response.FromValue(new SiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="premierAddOn"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotPremierAddOn> CreateOrUpdate(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotPremierAddOnResource> CreateOrUpdate(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotPremierAddOnWebAppsRestClient.AddPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, premierAddOn, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotPremierAddOn>(Response.FromValue(new SiteSlotPremierAddOn(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SiteSlotPremierAddOnResource>(Response.FromValue(new SiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotPremierAddOn>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotPremierAddOnResource>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.AppService
                 var response = await _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPremierAddOn(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual Response<SiteSlotPremierAddOn> Get(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotPremierAddOnResource> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.AppService
                 var response = _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPremierAddOn(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotPremierAddOn>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotPremierAddOnResource>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
@@ -244,8 +243,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotPremierAddOn>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPremierAddOn(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotPremierAddOnResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="premierAddOnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
-        public virtual Response<SiteSlotPremierAddOn> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteSlotPremierAddOnResource> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
@@ -273,8 +272,8 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotPremierAddOnWebAppsRestClient.GetPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<SiteSlotPremierAddOn>(null, response.GetRawResponse());
-                return Response.FromValue(new SiteSlotPremierAddOn(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<SiteSlotPremierAddOnResource>(null, response.GetRawResponse());
+                return Response.FromValue(new SiteSlotPremierAddOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

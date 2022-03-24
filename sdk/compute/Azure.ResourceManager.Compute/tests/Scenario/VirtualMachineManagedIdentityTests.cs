@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(virtualMachine.Data.Identity.UserAssignedIdentities);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.Null(virtualMachine.Data.Identity);
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(updatedVM.Data.Identity.UserAssignedIdentities);
             Assert.NotNull(updatedVM.Data.Identity.PrincipalId);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.Null(virtualMachine.Data.Identity);
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.Null(updatedVM.Data.Identity.PrincipalId);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.Null(virtualMachine.Data.Identity);
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.NotNull(updatedVM.Data.Identity.PrincipalId);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(virtualMachine.Data.Identity.UserAssignedIdentities);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.Null(updatedVM.Data.Identity);
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(virtualMachine.Data.Identity.UserAssignedIdentities);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.Null(updatedVM.Data.Identity.PrincipalId);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var input = ResourceDataHelper.GetBasicLinuxVirtualMachineData(DefaultLocation, vmName, nic.Id);
             input.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(virtualMachine.Data.Identity.UserAssignedIdentities);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.NotNull(updatedVM.Data.Identity.PrincipalId);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.Null(updatedVM.Data.Identity);
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(updatedVM.Data.Identity.UserAssignedIdentities);
             Assert.NotNull(updatedVM.Data.Identity.PrincipalId);
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.NotNull(updatedVM.Data.Identity.PrincipalId);
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity2
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 2);
             Assert.Null(updatedVM.Data.Identity.PrincipalId);
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.Null(updatedVM.Data.Identity);
         }
 
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity2 = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity2.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 2);
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.Null(updatedVM.Data.Identity.PrincipalId);
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = identity
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.Null(updatedVM.Data.Identity);
         }
 
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.IsEmpty(updatedVM.Data.Identity.UserAssignedIdentities);
             Assert.NotNull(updatedVM.Data.Identity.PrincipalId);
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             input.Identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, input);
-            VirtualMachine virtualMachine = lro.Value;
+            VirtualMachineResource virtualMachine = lro.Value;
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, virtualMachine.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(virtualMachine.Data.Identity.UserAssignedIdentities.Count, 1);
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };
             lro = await virtualMachine.UpdateAsync(WaitUntil.Completed, updateOptions);
-            VirtualMachine updatedVM = lro.Value;
+            VirtualMachineResource updatedVM = lro.Value;
             Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, updatedVM.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(updatedVM.Data.Identity.UserAssignedIdentities.Count, 1);
             Assert.Null(updatedVM.Data.Identity.PrincipalId);

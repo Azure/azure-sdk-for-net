@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndArray();
             writer.WritePropertyName("databaseAccountOfferType");
             writer.WriteStringValue(DatabaseAccountOfferType);
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules");
                 writer.WriteStartArray();
-                foreach (var item in IpRules)
+                foreach (var item in IPRules)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ConsistencyPolicy> consistencyPolicy = default;
             IList<DatabaseAccountLocation> locations = default;
             string databaseAccountOfferType = default;
-            Optional<IList<IpAddressOrRange>> ipRules = default;
+            Optional<IList<IPAddressOrRange>> ipRules = default;
             Optional<bool> isVirtualNetworkFilterEnabled = default;
             Optional<bool> enableAutomaticFailover = default;
             Optional<IList<DatabaseAccountCapability>> capabilities = default;
@@ -340,10 +340,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IpAddressOrRange> array = new List<IpAddressOrRange>();
+                            List<IPAddressOrRange> array = new List<IPAddressOrRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IpAddressOrRange.DeserializeIpAddressOrRange(item));
+                                array.Add(IPAddressOrRange.DeserializeIPAddressOrRange(item));
                             }
                             ipRules = array;
                             continue;

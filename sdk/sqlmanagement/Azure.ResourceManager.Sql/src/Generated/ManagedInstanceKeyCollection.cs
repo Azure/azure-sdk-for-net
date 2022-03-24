@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of ManagedInstanceKey and their operations over its parent. </summary>
-    public partial class ManagedInstanceKeyCollection : ArmCollection, IEnumerable<ManagedInstanceKey>, IAsyncEnumerable<ManagedInstanceKey>
+    public partial class ManagedInstanceKeyCollection : ArmCollection, IEnumerable<ManagedInstanceKeyResource>, IAsyncEnumerable<ManagedInstanceKeyResource>
     {
         private readonly ClientDiagnostics _managedInstanceKeyClientDiagnostics;
         private readonly ManagedInstanceKeysRestOperations _managedInstanceKeyRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedInstanceKeyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceKey.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ManagedInstanceKey.ResourceType, out string managedInstanceKeyApiVersion);
-            _managedInstanceKeyRestClient = new ManagedInstanceKeysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, managedInstanceKeyApiVersion);
+            _managedInstanceKeyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceKeyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagedInstanceKeyResource.ResourceType, out string managedInstanceKeyApiVersion);
+            _managedInstanceKeyRestClient = new ManagedInstanceKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceKeyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstance.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstance.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedInstanceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedInstanceKey>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedInstanceKeyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceKeyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceKey>(new ManagedInstanceKeyOperationSource(Client), _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceKeyResource>(new ManagedInstanceKeyOperationSource(Client), _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ManagedInstanceKey> CreateOrUpdate(WaitUntil waitUntil, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedInstanceKeyResource> CreateOrUpdate(WaitUntil waitUntil, string keyName, ManagedInstanceKeyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceKeyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceKey>(new ManagedInstanceKeyOperationSource(Client), _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
+                var operation = new SqlArmOperation<ManagedInstanceKeyResource>(new ManagedInstanceKeyOperationSource(Client), _managedInstanceKeyClientDiagnostics, Pipeline, _managedInstanceKeyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, parameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual async Task<Response<ManagedInstanceKey>> GetAsync(string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceKeyResource>> GetAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _managedInstanceKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceKey(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<ManagedInstanceKey> Get(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceKeyResource> Get(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _managedInstanceKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceKey(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,17 +180,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceKey> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceKeyResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceKey>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceKeyResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceKeyRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -199,14 +198,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstanceKey>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceKeyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _managedInstanceKeyRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -224,17 +223,17 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceKey" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceKey> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceKeyResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceKeyResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceKey> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceKeyResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceKeyRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -242,14 +241,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceKey> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceKeyResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _managedInstanceKeyClientDiagnostics.CreateScope("ManagedInstanceKeyCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _managedInstanceKeyRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKey(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceKeyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -323,7 +322,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual async Task<Response<ManagedInstanceKey>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceKeyResource>> GetIfExistsAsync(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -333,8 +332,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _managedInstanceKeyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceKey(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedInstanceKeyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -352,7 +351,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
-        public virtual Response<ManagedInstanceKey> GetIfExists(string keyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceKeyResource> GetIfExists(string keyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
 
@@ -362,8 +361,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceKeyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ManagedInstanceKey>(null, response.GetRawResponse());
-                return Response.FromValue(new ManagedInstanceKey(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ManagedInstanceKeyResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<ManagedInstanceKey> IEnumerable<ManagedInstanceKey>.GetEnumerator()
+        IEnumerator<ManagedInstanceKeyResource> IEnumerable<ManagedInstanceKeyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -382,7 +381,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ManagedInstanceKey> IAsyncEnumerable<ManagedInstanceKey>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagedInstanceKeyResource> IAsyncEnumerable<ManagedInstanceKeyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

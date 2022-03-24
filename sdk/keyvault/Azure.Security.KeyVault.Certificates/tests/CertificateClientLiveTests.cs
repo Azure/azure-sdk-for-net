@@ -41,6 +41,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            CompareBodies = false;
         }
 
         [SetUp]
@@ -467,11 +469,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public async Task VerifyImportCertificatePemWithoutIssuer()
         {
             string certificateName = Recording.GenerateId();
-            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 
             #region Snippet:CertificateClientLiveTests_VerifyImportCertificatePem
 #if SNIPPET
             byte[] certificateBytes = File.ReadAllBytes("certificate.pem");
+#else
+            byte[] certificateBytes = Encoding.ASCII.GetBytes(PemCertificateWithV3Extensions);
 #endif
 
             ImportCertificateOptions options = new ImportCertificateOptions(certificateName, certificateBytes)

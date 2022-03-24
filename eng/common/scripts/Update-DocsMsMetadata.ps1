@@ -4,10 +4,10 @@ Updates package README.md for publishing to docs.microsoft.com
 
 .DESCRIPTION
 Given a PackageInfo .json file, format the package README.md file with metadata
-and other information needed to release reference docs: 
+and other information needed to release reference docs:
 
 * Adjust README.md content to include metadata
-* Insert the package verison number in the README.md title 
+* Insert the package verison number in the README.md title
 * Copy file to the appropriate location in the documentation repository
 * Copy PackageInfo .json file to the metadata location in the reference docs
   repository. This enables the Docs CI build to onboard packages which have not
@@ -18,7 +18,7 @@ List of locations of the artifact information .json file. This is usually stored
 in build artifacts under packages/PackageInfo/<package-name>.json. Can also be
 a single item.
 
-.PARAMETER DocRepoLocation 
+.PARAMETER DocRepoLocation
 Location of the root of the docs.microsoft.com reference doc location. Further
 path information is provided by $GetDocsMsMetadataForPackageFn
 
@@ -47,7 +47,7 @@ param(
   [array]$PackageInfoJsonLocations,
 
   [Parameter(Mandatory = $true)]
-  [string]$DocRepoLocation, 
+  [string]$DocRepoLocation,
 
   [Parameter(Mandatory = $true)]
   [string]$Language,
@@ -104,12 +104,12 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $replacementPattern = "`${1}$tag"
     $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
   }
-  
+
   # Get the first code owners of the package.
   Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
-  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath 
+  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath
   if (!$author) {
-    $author = "ramya-rao-a" 
+    $author = "ramya-rao-a"
     $msauthor = "ramyar"
   }
   else {
@@ -148,10 +148,10 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
   if ($packageInfo.DevVersion) {
-    # If the package is of a dev version there may be language-specific needs to 
-    # specify the appropriate version. For example, in the case of JS, the dev 
+    # If the package is of a dev version there may be language-specific needs to
+    # specify the appropriate version. For example, in the case of JS, the dev
     # version is always 'dev' when interacting with NPM.
-    if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) { 
+    if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
       $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo
     } else {
       # Default: use the dev version from package info as the version for
@@ -162,16 +162,16 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
   return $packageInfo
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) { 
+function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) {
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
   if ($packageInfo.Group) {
     $packageMetadataArray = ($packageMetadataArray).Where({$_.GroupId -eq $packageInfo.Group})
   }
-  if ($packageMetadataArray.Count -eq 0) { 
+  if ($packageMetadataArray.Count -eq 0) {
     LogWarning "Could not retrieve metadata for $($packageInfo.Name) from metadata CSV. Using best effort defaults."
     $packageMetadata = $null
-  } elseif ($packageMetadataArray.Count -gt 1) { 
+  } elseif ($packageMetadataArray.Count -gt 1) {
     LogWarning "Multiple metadata entries for $($packageInfo.Name) in metadata CSV. Using first entry."
     $packageMetadata = $packageMetadataArray[0]
   } else {
@@ -199,10 +199,10 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation, $packageInfo) 
     Write-Warning "$($packageInfo.Name) does not have Readme file. Skipping update readme."
     return
   }
-  
+
   $readmeContent = Get-Content $packageInfo.ReadMePath -Raw
-  $outputReadmeContent = "" 
-  if ($readmeContent) { 
+  $outputReadmeContent = ""
+  if ($readmeContent) {
     $outputReadmeContent = GetAdjustedReadmeContent $readmeContent $packageInfo $packageMetadata
   }
 

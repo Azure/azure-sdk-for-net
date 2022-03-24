@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing collection of ResourceGroup and their operations over its parent. </summary>
-    public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroup>, IAsyncEnumerable<ResourceGroup>
+    public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroupResource>, IAsyncEnumerable<ResourceGroupResource>
     {
         private readonly ClientDiagnostics _resourceGroupClientDiagnostics;
         private readonly ResourceGroupsRestOperations _resourceGroupRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ResourceGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceGroup.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(ResourceGroup.ResourceType, out string resourceGroupApiVersion);
-            _resourceGroupRestClient = new ResourceGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, resourceGroupApiVersion);
+            _resourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceGroupResource.ResourceType, out string resourceGroupApiVersion);
+            _resourceGroupRestClient = new ResourceGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Resources
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != Subscription.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, Subscription.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ResourceGroup>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _resourceGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ResourceGroup>(Response.FromValue(new ResourceGroup(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<ResourceGroupResource>(Response.FromValue(new ResourceGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ResourceGroup> CreateOrUpdate(WaitUntil waitUntil, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceGroupResource> CreateOrUpdate(WaitUntil waitUntil, string resourceGroupName, ResourceGroupData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _resourceGroupRestClient.CreateOrUpdate(Id.SubscriptionId, resourceGroupName, parameters, cancellationToken);
-                var operation = new ResourcesArmOperation<ResourceGroup>(Response.FromValue(new ResourceGroup(Client, response), response.GetRawResponse()));
+                var operation = new ResourcesArmOperation<ResourceGroupResource>(Response.FromValue(new ResourceGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroup>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupResource>> GetAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Resources
                 var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupResource> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Resources
                 var response = _resourceGroupRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -182,17 +181,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroup> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ResourceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceGroup>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ResourceGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _resourceGroupRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -200,14 +199,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            async Task<Page<ResourceGroup>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ResourceGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _resourceGroupRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -226,17 +225,17 @@ namespace Azure.ResourceManager.Resources
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq &apos;tag1&apos; and tagValue eq &apos;Value1&apos;. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroup" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroup> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceGroup> FirstPageFunc(int? pageSizeHint)
+            Page<ResourceGroupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _resourceGroupRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,14 +243,14 @@ namespace Azure.ResourceManager.Resources
                     throw;
                 }
             }
-            Page<ResourceGroup> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ResourceGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _resourceGroupRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroup(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroup>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupResource>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
@@ -335,8 +334,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<ResourceGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ResourceGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -354,7 +353,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public virtual Response<ResourceGroup> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupResource> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
@@ -364,8 +363,8 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceGroupRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<ResourceGroup>(null, response.GetRawResponse());
-                return Response.FromValue(new ResourceGroup(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<ResourceGroupResource>(null, response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -374,7 +373,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        IEnumerator<ResourceGroup> IEnumerable<ResourceGroup>.GetEnumerator()
+        IEnumerator<ResourceGroupResource> IEnumerable<ResourceGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -384,7 +383,7 @@ namespace Azure.ResourceManager.Resources
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ResourceGroup> IAsyncEnumerable<ResourceGroup>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceGroupResource> IAsyncEnumerable<ResourceGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

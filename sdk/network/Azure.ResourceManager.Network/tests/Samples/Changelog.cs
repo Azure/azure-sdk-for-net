@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         {
 #endif
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ResourceGroup resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+            ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
             VirtualNetworkCollection virtualNetworkContainer = resourceGroup.GetVirtualNetworks();
 
             // Create VNet
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Network.Tests.Samples
                 AddressPrefix = "10.0.0.0/24",
             });
 
-            ArmOperation<VirtualNetwork> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
-            VirtualNetwork virtualNetwork = vnetOperation.Value;
+            ArmOperation<VirtualNetworkResource> vnetOperation = await virtualNetworkContainer.CreateOrUpdateAsync(WaitUntil.Completed, "_vent", vnet);
+            VirtualNetworkResource virtualNetwork = vnetOperation.Value;
             #endregion
         }
 

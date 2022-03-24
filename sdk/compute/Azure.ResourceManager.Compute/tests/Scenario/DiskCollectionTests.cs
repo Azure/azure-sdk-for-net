@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
-            Disk disk = lro.Value;
+            DiskResource disk = lro.Value;
             Assert.AreEqual(diskName, disk.Data.Name);
         }
 
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
-            Disk disk1 = lro.Value;
-            Disk disk2 = await collection.GetAsync(diskName);
+            DiskResource disk1 = lro.Value;
+            DiskResource disk2 = await collection.GetAsync(diskName);
             ResourceDataHelper.AssertDisk(disk1.Data, disk2.Data);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var diskName = Recording.GenerateAssetName("testDisk-");
             var input = ResourceDataHelper.GetEmptyDiskData(DefaultLocation, new Dictionary<string, string>() { { "key", "value" } });
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
-            Disk disk = lro.Value;
+            DiskResource disk = lro.Value;
             Assert.IsTrue(await collection.ExistsAsync(diskName));
             Assert.IsFalse(await collection.ExistsAsync(diskName + "1"));
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Tests
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName1, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diskName2, input);
 
-            Disk disk1 = null, disk2 = null;
+            DiskResource disk1 = null, disk2 = null;
             await foreach (var disk in DefaultSubscription.GetDisksAsync())
             {
                 if (disk.Data.Name == diskName1)

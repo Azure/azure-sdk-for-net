@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class representing collection of RecommendedAction and their operations over its parent. </summary>
-    public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedAction>, IAsyncEnumerable<RecommendedAction>
+    public partial class RecommendedActionCollection : ArmCollection, IEnumerable<RecommendedActionResource>, IAsyncEnumerable<RecommendedActionResource>
     {
         private readonly ClientDiagnostics _recommendedActionDatabaseRecommendedActionsClientDiagnostics;
         private readonly DatabaseRecommendedActionsRestOperations _recommendedActionDatabaseRecommendedActionsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RecommendedActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedAction.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(RecommendedAction.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
-            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recommendedActionDatabaseRecommendedActionsApiVersion);
+            _recommendedActionDatabaseRecommendedActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecommendedActionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RecommendedActionResource.ResourceType, out string recommendedActionDatabaseRecommendedActionsApiVersion);
+            _recommendedActionDatabaseRecommendedActionsRestClient = new DatabaseRecommendedActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recommendedActionDatabaseRecommendedActionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServerDatabaseAdvisor.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseAdvisor.ResourceType), nameof(id));
+            if (id.ResourceType != ServerDatabaseAdvisorResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerDatabaseAdvisorResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual async Task<Response<RecommendedAction>> GetAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecommendedActionResource>> GetAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<RecommendedAction> Get(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual Response<RecommendedActionResource> Get(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                 var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseRecommendedActions_ListByDatabaseAdvisor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecommendedAction> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RecommendedActionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecommendedActionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecommendedAction>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RecommendedActionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _recommendedActionDatabaseRecommendedActionsRestClient.ListByDatabaseAdvisorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new RecommendedActionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -141,17 +140,17 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseRecommendedActions_ListByDatabaseAdvisor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecommendedAction" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecommendedAction> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RecommendedActionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecommendedActionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RecommendedAction> FirstPageFunc(int? pageSizeHint)
+            Page<RecommendedActionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _recommendedActionDatabaseRecommendedActionsClientDiagnostics.CreateScope("RecommendedActionCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _recommendedActionDatabaseRecommendedActionsRestClient.ListByDatabaseAdvisor(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new RecommendedAction(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => new RecommendedActionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,7 +224,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual async Task<Response<RecommendedAction>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecommendedActionResource>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
@@ -235,8 +234,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _recommendedActionDatabaseRecommendedActionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<RecommendedActionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
-        public virtual Response<RecommendedAction> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
+        public virtual Response<RecommendedActionResource> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
 
@@ -264,8 +263,8 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _recommendedActionDatabaseRecommendedActionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, recommendedActionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<RecommendedAction>(null, response.GetRawResponse());
-                return Response.FromValue(new RecommendedAction(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<RecommendedActionResource>(null, response.GetRawResponse());
+                return Response.FromValue(new RecommendedActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -274,7 +273,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        IEnumerator<RecommendedAction> IEnumerable<RecommendedAction>.GetEnumerator()
+        IEnumerator<RecommendedActionResource> IEnumerable<RecommendedActionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RecommendedAction> IAsyncEnumerable<RecommendedAction>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RecommendedActionResource> IAsyncEnumerable<RecommendedActionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

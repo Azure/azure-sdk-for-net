@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A class representing the Application data model. </summary>
-    public partial class ApplicationData : ApplicationResource
+    public partial class ApplicationData : Models.ApplicationResource
     {
         /// <summary> Initializes a new instance of ApplicationData. </summary>
         /// <param name="location"> The location. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ArmPlan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, object parameters, object outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal ApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ArmPlan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, BinaryData parameters, BinaryData outputs, ProvisioningState? provisioningState, ApplicationBillingDetailsDefinition billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The fully qualified path of managed application definition Id. </summary>
         public string ApplicationDefinitionId { get; set; }
         /// <summary> Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string. </summary>
-        public object Parameters { get; set; }
+        public BinaryData Parameters { get; set; }
         /// <summary> Name and value pairs that define the managed application outputs. </summary>
-        public object Outputs { get; }
+        public BinaryData Outputs { get; }
         /// <summary> The managed application provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The managed application billing details. </summary>

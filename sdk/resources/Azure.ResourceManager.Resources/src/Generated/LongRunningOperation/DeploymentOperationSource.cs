@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    internal class DeploymentOperationSource : IOperationSource<Deployment>
+    internal class DeploymentOperationSource : IOperationSource<DeploymentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.Resources
             _client = client;
         }
 
-        Deployment IOperationSource<Deployment>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeploymentResource IOperationSource<DeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeploymentData.DeserializeDeploymentData(document.RootElement);
-            return new Deployment(_client, data);
+            return new DeploymentResource(_client, data);
         }
 
-        async ValueTask<Deployment> IOperationSource<Deployment>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeploymentResource> IOperationSource<DeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeploymentData.DeserializeDeploymentData(document.RootElement);
-            return new Deployment(_client, data);
+            return new DeploymentResource(_client, data);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class VirtualMachineTestBase : ComputeTestBase
     {
-        protected ResourceGroup _resourceGroup;
+        protected ResourceGroupResource _resourceGroup;
         protected GenericResourceCollection _genericResourceCollection;
 
         public VirtualMachineTestBase(bool isAsync) : base(isAsync)
@@ -51,11 +52,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var subnets = new List<object>() { subnet };
             var input = new GenericResourceData(DefaultLocation)
             {
-                Properties = new Dictionary<string, object>()
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "addressSpace", addressSpaces },
                     { "subnets", subnets }
-                }
+                })
             };
             var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
             return operation.Value;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         protected ResourceIdentifier GetSubnetId(GenericResource vnet)
         {
-            var properties = vnet.Data.Properties as IDictionary<string, object>;
+            var properties = vnet.Data.Properties.ToObjectFromJson() as Dictionary<string, object>;
             var subnets = properties["subnets"] as IEnumerable<object>;
             var subnet = subnets.First() as IDictionary<string, object>;
             return new ResourceIdentifier(subnet["id"] as string);
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.Compute.Tests
             ResourceIdentifier subnetId = new ResourceIdentifier($"{vnetId}/subnets/{subnetName}");
             var input = new GenericResourceData(DefaultLocation)
             {
-                Properties = new Dictionary<string, object>()
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "addressPrefixes", new List<string>() { "10.0.2.0/24" } }
-                }
+                })
             };
             var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetId, input);
             return operation.Value;
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Tests
             ResourceIdentifier nicId = new ResourceIdentifier($"{_resourceGroup.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}");
             var input = new GenericResourceData(DefaultLocation)
             {
-                Properties = new Dictionary<string, object>()
+                Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                     { "ipConfigurations", new List<object>()
                         {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Tests
                             }
                         }
                     }
-                }
+                })
             };
             var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicId, input);
             return operation.Value;
@@ -116,12 +117,12 @@ namespace Azure.ResourceManager.Compute.Tests
         protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineAsync()
         {
             var vnet = await CreateVirtualNetwork();
-            //var subnet = await CreateSubnet(vnet.Id as ResourceGroupResourceIdentifier);
+            //var subnet = await CreateSubnet(vnet.Id as ResourceGroupIdentifier);
             var nic = await CreateNetworkInterface(GetSubnetId(vnet));
             return nic;
         }
 
-        protected async Task<VirtualMachine> CreateVirtualMachineAsync(string vmName)
+        protected async Task<VirtualMachineResource> CreateVirtualMachineAsync(string vmName)
         {
             var collection = await GetVirtualMachineCollectionAsync();
             var nic = await CreateBasicDependenciesOfVirtualMachineAsync();

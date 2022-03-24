@@ -16,12 +16,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Core;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary> A class representing collection of FrontendIPConfiguration and their operations over its parent. </summary>
-    public partial class FrontendIPConfigurationCollection : ArmCollection, IEnumerable<FrontendIPConfiguration>, IAsyncEnumerable<FrontendIPConfiguration>
+    public partial class FrontendIPConfigurationCollection : ArmCollection, IEnumerable<FrontendIPConfigurationResource>, IAsyncEnumerable<FrontendIPConfigurationResource>
     {
         private readonly ClientDiagnostics _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics;
         private readonly LoadBalancerFrontendIPConfigurationsRestOperations _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient;
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontendIPConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FrontendIPConfiguration.ResourceType.Namespace, DiagnosticOptions);
-            TryGetApiVersion(FrontendIPConfiguration.ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
-            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
+            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FrontendIPConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontendIPConfigurationResource.ResourceType, out string frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
+            _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontendIPConfigurationLoadBalancerFrontendIPConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != LoadBalancer.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancer.ResourceType), nameof(id));
+            if (id.ResourceType != LoadBalancerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual async Task<Response<FrontendIPConfiguration>> GetAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontendIPConfigurationResource>> GetAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Network
                 var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfiguration(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual Response<FrontendIPConfiguration> Get(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontendIPConfigurationResource> Get(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Network
                 var response = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfiguration(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,17 +113,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: LoadBalancerFrontendIPConfigurations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontendIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FrontendIPConfiguration> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FrontendIPConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FrontendIPConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontendIPConfiguration>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<FrontendIPConfigurationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -132,14 +131,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            async Task<Page<FrontendIPConfiguration>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<FrontendIPConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -156,17 +155,17 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: LoadBalancerFrontendIPConfigurations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontendIPConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FrontendIPConfiguration> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FrontendIPConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FrontendIPConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontendIPConfiguration> FirstPageFunc(int? pageSizeHint)
+            Page<FrontendIPConfigurationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -174,14 +173,14 @@ namespace Azure.ResourceManager.Network
                     throw;
                 }
             }
-            Page<FrontendIPConfiguration> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<FrontendIPConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfiguration(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new FrontendIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual async Task<Response<FrontendIPConfiguration>> GetIfExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FrontendIPConfigurationResource>> GetIfExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
@@ -265,8 +264,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfiguration(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<FrontendIPConfigurationResource>(null, response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
-        public virtual Response<FrontendIPConfiguration> GetIfExists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<FrontendIPConfigurationResource> GetIfExists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
@@ -294,8 +293,8 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendIPConfigurationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return Response.FromValue<FrontendIPConfiguration>(null, response.GetRawResponse());
-                return Response.FromValue(new FrontendIPConfiguration(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue<FrontendIPConfigurationResource>(null, response.GetRawResponse());
+                return Response.FromValue(new FrontendIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<FrontendIPConfiguration> IEnumerable<FrontendIPConfiguration>.GetEnumerator()
+        IEnumerator<FrontendIPConfigurationResource> IEnumerable<FrontendIPConfigurationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<FrontendIPConfiguration> IAsyncEnumerable<FrontendIPConfiguration>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<FrontendIPConfigurationResource> IAsyncEnumerable<FrontendIPConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
