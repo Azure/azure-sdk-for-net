@@ -59,10 +59,10 @@ namespace Azure.Core.TestFramework
             var method = genericMethod.MakeGenericMethod(GetOperationOfT(targetType).GetGenericArguments());
 
             var methodParams = method.GetParameters();
-            var updateStatus = Delegate.CreateDelegate(methodParams[0].ParameterType, target, target.GetType().GetMethod("UpdateStatusAsync"));
-            var hasCompleted = Delegate.CreateDelegate(methodParams[1].ParameterType, target, target.GetType().GetMethod("get_HasCompleted"));
-            var value = Delegate.CreateDelegate(methodParams[2].ParameterType, target, target.GetType().GetMethod("get_Value"));
-            var getResponse = Delegate.CreateDelegate(methodParams[3].ParameterType, target, target.GetType().GetMethod("GetRawResponse"));
+            var updateStatus = Delegate.CreateDelegate(methodParams[0].ParameterType, target, targetType.GetMethod("UpdateStatusAsync"));
+            var hasCompleted = Delegate.CreateDelegate(methodParams[1].ParameterType, target, targetType.GetMethod("get_HasCompleted"));
+            var value = Delegate.CreateDelegate(methodParams[2].ParameterType, target, targetType.GetMethod("get_Value"));
+            var getResponse = Delegate.CreateDelegate(methodParams[3].ParameterType, target, targetType.GetMethod("GetRawResponse"));
             //need to call the method that takes in the delegates so we used the runtime versions which allows mocking
             //public virtual async ValueTask<Response<T>> WaitForCompletionAsync<T>(UpdateStatusAsync updateStatusAsync, HasCompleted hasCompleted, Value<T> value, GetRawResponse getRawResponse, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
             return method.Invoke(poller, new object[] { updateStatus, hasCompleted, value, getResponse, null, cancellationToken});
