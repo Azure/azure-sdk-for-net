@@ -594,8 +594,12 @@ directive:
     where: $.definitions.CheckNameAvailabilityResult.properties.reason
     transform: >
       $['x-ms-enum'] = {
-        name: "NameUnavailableReason"
+        name: "ManagementGroupNameUnavailableReason"
       }
+  - from: management.json
+    where: $.definitions.CheckNameAvailabilityResult
+    transform: >
+      $['x-ms-client-name'] = "ManagementGroupNameAvailabilityResult"
   - from: management.json
     where: $.parameters.SearchParameter
     transform: >
