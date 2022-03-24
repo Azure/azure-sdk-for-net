@@ -623,4 +623,8 @@ directive:
     reason: omit operation group does not clean this enum parameter, rename it and then suppress with codegen attribute.
   - remove-model: EntityHierarchyItem
   - remove-model: EntityHierarchyItemProperties
+  - from: management.json
+    where: $.definitions.CreateManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```
