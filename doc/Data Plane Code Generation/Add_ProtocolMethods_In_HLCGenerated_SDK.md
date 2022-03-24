@@ -4,7 +4,7 @@ In this tutorial, we will show how to add protocol methods to Data Plane Generat
 
 ## Prerequisites
 
-You should have HLC SDK generated in `azure-sdk-for-net/sdk/<service name>/<package name>/src/Generated` folder.
+You should have a service RestClient generated in `azure-sdk-for-net/sdk/<service name>/<package name>/src/Generated` folder.
 
 ## Add protocol methods in generated RestClient
 
