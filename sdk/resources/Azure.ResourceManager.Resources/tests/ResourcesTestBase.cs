@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Tests
             Client = GetArmClient();
         }
 
-        protected static ApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ApplicationDefinitionData(AzureLocation.WestUS2, ApplicationLockLevel.None)
+        protected static ArmApplicationDefinitionData CreateApplicationDefinitionData(string displayName) => new ArmApplicationDefinitionData(AzureLocation.WestUS2, ArmApplicationLockLevel.None)
         {
             DisplayName = displayName,
             Description = $"{displayName} description",

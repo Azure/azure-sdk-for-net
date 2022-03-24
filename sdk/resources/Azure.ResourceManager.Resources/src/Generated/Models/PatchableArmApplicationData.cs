@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about managed application. </summary>
-    public partial class PatchableArmApplicationData : ApplicationResource
+    public partial class PatchableArmApplicationData : ArmApplicationResource
     {
         /// <summary> Initializes a new instance of PatchableArmApplicationData. </summary>
         /// <param name="location"> The location. </param>
         public PatchableArmApplicationData(AzureLocation location) : base(location)
         {
-            Authorizations = new ChangeTrackingList<ApplicationAuthorization>();
-            Artifacts = new ChangeTrackingList<ApplicationArtifact>();
+            Authorizations = new ChangeTrackingList<ArmApplicationAuthorization>();
+            Artifacts = new ChangeTrackingList<ArmApplicationArtifact>();
         }
 
         /// <summary> Initializes a new instance of PatchableArmApplicationData. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ApplicationSku sku, ArmPlan plan, string kind, ApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ApplicationBillingDetails billingDetails, ApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ApplicationAuthorization> authorizations, ApplicationManagementMode? managementMode, ApplicationPackageContact customerSupport, ApplicationPackageSupportUrls supportUrls, IReadOnlyList<ApplicationArtifact> artifacts, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUrls supportUrls, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationClientDetails createdBy, ArmApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </summary>
         public string Kind { get; set; }
         /// <summary> The identity of the resource. </summary>
-        public ApplicationManagedIdentity Identity { get; set; }
+        public ArmApplicationManagedIdentity Identity { get; set; }
         /// <summary> The managed resource group Id. </summary>
         public string ManagedResourceGroupId { get; set; }
         /// <summary> The fully qualified path of managed application definition Id. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application provisioning state. </summary>
         public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The managed application billing details. </summary>
-        internal ApplicationBillingDetails BillingDetails { get; }
+        internal ArmApplicationBillingDetails BillingDetails { get; }
         /// <summary> The managed application resource usage Id. </summary>
         public string BillingDetailsResourceUsageId
         {
@@ -97,22 +97,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application Jit access policy. </summary>
-        public ApplicationJitAccessPolicy JitAccessPolicy { get; set; }
+        public ArmApplicationJitAccessPolicy JitAccessPolicy { get; set; }
         /// <summary> The publisher tenant Id. </summary>
         public string PublisherTenantId { get; }
         /// <summary> The  read-only authorizations property that is retrieved from the application package. </summary>
-        public IReadOnlyList<ApplicationAuthorization> Authorizations { get; }
+        public IReadOnlyList<ArmApplicationAuthorization> Authorizations { get; }
         /// <summary> The managed application management mode. </summary>
-        public ApplicationManagementMode? ManagementMode { get; }
+        public ArmApplicationManagementMode? ManagementMode { get; }
         /// <summary> The read-only customer support property that is retrieved from the application package. </summary>
-        public ApplicationPackageContact CustomerSupport { get; }
+        public ArmApplicationPackageContact CustomerSupport { get; }
         /// <summary> The read-only support URLs property that is retrieved from the application package. </summary>
-        public ApplicationPackageSupportUrls SupportUrls { get; }
+        public ArmApplicationPackageSupportUrls SupportUrls { get; }
         /// <summary> The collection of managed application artifacts. </summary>
-        public IReadOnlyList<ApplicationArtifact> Artifacts { get; }
+        public IReadOnlyList<ArmApplicationArtifact> Artifacts { get; }
         /// <summary> The client entity that created the JIT request. </summary>
-        public ApplicationClientDetails CreatedBy { get; }
+        public ArmApplicationClientDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
-        public ApplicationClientDetails UpdatedBy { get; }
+        public ArmApplicationClientDetails UpdatedBy { get; }
     }
 }

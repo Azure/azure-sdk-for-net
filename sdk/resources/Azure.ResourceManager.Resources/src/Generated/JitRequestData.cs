@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ApplicationClientDetails createdBy, ApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location)
+        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ArmApplicationClientDetails createdBy, ArmApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The JIT request state. </summary>
         public JitRequestState? JitRequestState { get; }
         /// <summary> The client entity that created the JIT request. </summary>
-        public ApplicationClientDetails CreatedBy { get; }
+        public ArmApplicationClientDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
-        public ApplicationClientDetails UpdatedBy { get; }
+        public ArmApplicationClientDetails UpdatedBy { get; }
     }
 }

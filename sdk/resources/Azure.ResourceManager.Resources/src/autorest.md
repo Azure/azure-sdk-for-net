@@ -152,18 +152,18 @@ directive:
   - from: managedapplications.json
     where: $.definitions.Identity
     transform: >
-      $["x-ms-client-name"] = "ApplicationManagedIdentity";
-      $["properties"]["type"]["x-ms-enum"]["name"] = "ApplicationManagedIdentityType";
+      $["x-ms-client-name"] = "ArmApplicationManagedIdentity";
+      $["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
   - from: managedapplications.json
     where: $.definitions
     transform: >
-      $["GenericResource"]["x-ms-client-name"] = "ApplicationResource";
-      $["Resource"]["x-ms-client-name"] = "ApplicationResourceBase";
-      $["Plan"]["x-ms-client-name"] = "ApplicationPlan";
-      $["Sku"]["x-ms-client-name"] = "ApplicationSku";
-      $["ErrorResponse"]["x-ms-client-name"] = "ApplicationErrorResponse";
-      $["OperationListResult"]["x-ms-client-name"] = "ApplicationOperationListResult";
-      $["Operation"]["x-ms-client-name"] = "ApplicationOperation";
+      $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResource";
+      $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
+      $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
+      $["Sku"]["x-ms-client-name"] = "ArmApplicationSku";
+      $["ErrorResponse"]["x-ms-client-name"] = "ArmApplicationErrorResponse";
+      $["OperationListResult"]["x-ms-client-name"] = "ArmApplicationOperationListResult";
+      $["Operation"]["x-ms-client-name"] = "ArmApplicationOperation";
       $["Operation"]["properties"]["displayOfApplication"] = $["Operation"]["properties"]["display"];
       $["Operation"]["properties"]["display"] = undefined;
       $["JitRequestDefinition"]["x-ms-client-name"] = "JitRequest";
@@ -172,7 +172,35 @@ directive:
       $["ApplicationPackageLockingPolicyDefinition"]["x-ms-client-name"] = "ApplicationPackageLockingPolicy";
       $["ApplicationBillingDetailsDefinition"]["x-ms-client-name"] = "ApplicationBillingDetails";
       $["JitApproverDefinition"]["x-ms-client-name"] = "JitApprover";
-      $["DeploymentMode"]["x-ms-enum"]["name"] = "ApplicationDeploymentMode";
+      $["DeploymentMode"]["x-ms-enum"]["name"] = "ArmApplicationDeploymentMode";
+      $.Application['x-ms-client-name'] = 'ArmApplication';
+      $.ApplicationDefinition['x-ms-client-name'] = 'ArmApplicationDefinition';
+      $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ArmApplicationPackageLockingPolicy';
+      $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ArmApplicationBillingDetails';
+      $.ApplicationArtifact['x-ms-client-name'] = 'ArmApplicationArtifact';
+      $.ApplicationAuthorization['x-ms-client-name'] = 'ArmApplicationAuthorization';
+      $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationClientDetails';
+      $.ApplicationDefinitionArtifact['x-ms-client-name'] = 'ArmApplicationDefinitionArtifact';
+      $.ApplicationDefinitionListResult['x-ms-client-name'] = 'ArmApplicationDefinitionListResult';
+      $.ApplicationDeploymentPolicy['x-ms-client-name'] = 'ArmApplicationDeploymentPolicy';
+      $.ApplicationJitAccessPolicy['x-ms-client-name'] = 'ArmApplicationJitAccessPolicy';
+      $.ApplicationListResult['x-ms-client-name'] = 'ArmApplicationListResult';
+      $.ApplicationManagementPolicy['x-ms-client-name'] = 'ArmApplicationManagementPolicy';
+      $.ApplicationNotificationEndpoint['x-ms-client-name'] = 'ArmApplicationNotificationEndpoint';
+      $.ApplicationNotificationPolicy['x-ms-client-name'] = 'ArmApplicationNotificationPolicy';
+      $.ApplicationPackageContact['x-ms-client-name'] = 'ArmApplicationPackageContact';
+      $.ApplicationPackageSupportUrls['x-ms-client-name'] = 'ArmApplicationPackageSupportUrls';
+      $.ApplicationPolicy['x-ms-client-name'] = 'ArmApplicationPolicy';
+      $.ApplicationPropertiesPatchable['x-ms-client-name'] = 'ArmApplicationPropertiesPatchable';
+      $.ApplicationArtifactName['x-ms-enum'].name = 'ArmApplicationArtifactName';
+      $.ApplicationArtifactType['x-ms-enum'].name = 'ArmApplicationArtifactType';
+      $.ApplicationDefinitionArtifactName['x-ms-enum'].name = 'ArmApplicationDefinitionArtifactName';
+      $.ApplicationLockLevel['x-ms-enum'].name = 'ArmApplicationLockLevel';
+      $.ApplicationManagementMode['x-ms-enum'].name = 'ArmApplicationManagementMode';
+      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
+      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
+      $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
+      $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
   - from: resources.json
     where: $.definitions
     transform: >
@@ -192,7 +220,6 @@ directive:
       $.DeploymentWhatIfProperties['x-ms-client-name'] = 'ArmDeploymentWhatIfProperties';
       $.DeploymentProperties['x-ms-client-name'] = 'ArmDeploymentProperties';
       $.DeploymentPropertiesExtended['x-ms-client-name'] = 'ArmDeploymentPropertiesExtended';
-
       $.Dependency["x-ms-client-name"] = "ArmDependency";
       $.DeploymentPropertiesExtended.properties.provisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.DeploymentPropertiesExtended.properties.duration["format"] = "duration";
@@ -206,16 +233,6 @@ directive:
   - from: resources.json
     where: $.definitions.DeploymentWhatIf.properties.location
     transform: $['description'] = 'The location to store the deployment data, only required at the tenant and management group scope.'
-  - from: managedapplications.json
-    where: $.definitions
-    transform: >
-      $.Application['x-ms-client-name'] = 'ArmApplication';
-      $.ApplicationPackageLockingPolicyDefinition['x-ms-client-name'] = 'ApplicationPackageLockingPolicy';
-      $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ApplicationBillingDetails';
-      $.ApplicationJitAccessPolicy.properties.maximumJitAccessDuration["format"] = "duration";
-      $.JitSchedulingPolicy.properties.duration["format"] = "duration";
-      $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
-      $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
   - from: resources.json
     where: $.definitions.Alias
     transform:

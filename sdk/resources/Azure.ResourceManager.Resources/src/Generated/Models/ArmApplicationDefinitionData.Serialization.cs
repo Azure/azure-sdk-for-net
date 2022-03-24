@@ -10,29 +10,15 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources
 {
-    public partial class PatchableArmApplicationData : IUtf8JsonSerializable
+    public partial class ArmApplicationDefinitionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plan))
-            {
-                writer.WritePropertyName("plan");
-                JsonSerializer.Serialize(writer, Plan);
-            }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind");
-                writer.WriteStringValue(Kind);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
-            }
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy");
@@ -55,39 +41,102 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedResourceGroupId))
+            writer.WritePropertyName("lockLevel");
+            writer.WriteStringValue(LockLevel.ToSerialString());
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("managedResourceGroupId");
-                writer.WriteStringValue(ManagedResourceGroupId);
+                writer.WritePropertyName("displayName");
+                writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ApplicationDefinitionId))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("applicationDefinitionId");
-                writer.WriteStringValue(ApplicationDefinitionId);
+                writer.WritePropertyName("isEnabled");
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsCollectionDefined(Authorizations))
             {
-                writer.WritePropertyName("parameters");
+                writer.WritePropertyName("authorizations");
+                writer.WriteStartArray();
+                foreach (var item in Authorizations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Artifacts))
+            {
+                writer.WritePropertyName("artifacts");
+                writer.WriteStartArray();
+                foreach (var item in Artifacts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(PackageFileUri))
+            {
+                writer.WritePropertyName("packageFileUri");
+                writer.WriteStringValue(PackageFileUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(MainTemplate))
+            {
+                writer.WritePropertyName("mainTemplate");
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Parameters);
+				writer.WriteRawValue(MainTemplate);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MainTemplate.ToString()).RootElement);
 #endif
             }
-            if (Optional.IsDefined(JitAccessPolicy))
+            if (Optional.IsDefined(CreateUiDefinition))
             {
-                writer.WritePropertyName("jitAccessPolicy");
-                writer.WriteObjectValue(JitAccessPolicy);
+                writer.WritePropertyName("createUiDefinition");
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CreateUiDefinition);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CreateUiDefinition.ToString()).RootElement);
+#endif
+            }
+            if (Optional.IsDefined(NotificationPolicy))
+            {
+                writer.WritePropertyName("notificationPolicy");
+                writer.WriteObjectValue(NotificationPolicy);
+            }
+            if (Optional.IsDefined(LockingPolicy))
+            {
+                writer.WritePropertyName("lockingPolicy");
+                writer.WriteObjectValue(LockingPolicy);
+            }
+            if (Optional.IsDefined(DeploymentPolicy))
+            {
+                writer.WritePropertyName("deploymentPolicy");
+                writer.WriteObjectValue(DeploymentPolicy);
+            }
+            if (Optional.IsDefined(ManagementPolicy))
+            {
+                writer.WritePropertyName("managementPolicy");
+                writer.WriteObjectValue(ManagementPolicy);
+            }
+            if (Optional.IsCollectionDefined(Policies))
+            {
+                writer.WritePropertyName("policies");
+                writer.WriteStartArray();
+                foreach (var item in Policies)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static PatchableArmApplicationData DeserializePatchableArmApplicationData(JsonElement element)
+        internal static ArmApplicationDefinitionData DeserializeArmApplicationDefinitionData(JsonElement element)
         {
-            Optional<ArmPlan> plan = default;
-            Optional<string> kind = default;
-            Optional<ArmApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
             IDictionary<string, string> tags = default;
@@ -96,48 +145,22 @@ namespace Azure.ResourceManager.Resources.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> managedResourceGroupId = default;
-            Optional<string> applicationDefinitionId = default;
-            Optional<BinaryData> parameters = default;
-            Optional<BinaryData> outputs = default;
-            Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<ArmApplicationBillingDetails> billingDetails = default;
-            Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
-            Optional<string> publisherTenantId = default;
-            Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
-            Optional<ArmApplicationManagementMode> managementMode = default;
-            Optional<ArmApplicationPackageContact> customerSupport = default;
-            Optional<ArmApplicationPackageSupportUrls> supportUrls = default;
-            Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
-            Optional<ArmApplicationClientDetails> createdBy = default;
-            Optional<ArmApplicationClientDetails> updatedBy = default;
+            ArmApplicationLockLevel lockLevel = default;
+            Optional<string> displayName = default;
+            Optional<bool> isEnabled = default;
+            Optional<IList<ArmApplicationAuthorization>> authorizations = default;
+            Optional<IList<ArmApplicationDefinitionArtifact>> artifacts = default;
+            Optional<string> description = default;
+            Optional<Uri> packageFileUri = default;
+            Optional<BinaryData> mainTemplate = default;
+            Optional<BinaryData> createUiDefinition = default;
+            Optional<ArmApplicationNotificationPolicy> notificationPolicy = default;
+            Optional<ArmApplicationPackageLockingPolicy> lockingPolicy = default;
+            Optional<ArmApplicationDeploymentPolicy> deploymentPolicy = default;
+            Optional<ArmApplicationManagementPolicy> managementPolicy = default;
+            Optional<IList<ArmApplicationPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("plan"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
-                    continue;
-                }
-                if (property.NameEquals("kind"))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identity"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("managedBy"))
                 {
                     managedBy = property.Value.GetString();
@@ -197,69 +220,24 @@ namespace Azure.ResourceManager.Resources.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("managedResourceGroupId"))
+                        if (property0.NameEquals("lockLevel"))
                         {
-                            managedResourceGroupId = property0.Value.GetString();
+                            lockLevel = property0.Value.GetString().ToArmApplicationLockLevel();
                             continue;
                         }
-                        if (property0.NameEquals("applicationDefinitionId"))
+                        if (property0.NameEquals("displayName"))
                         {
-                            applicationDefinitionId = property0.Value.GetString();
+                            displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("parameters"))
+                        if (property0.NameEquals("isEnabled"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            parameters = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("outputs"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            outputs = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("billingDetails"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("jitAccessPolicy"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("publisherTenantId"))
-                        {
-                            publisherTenantId = property0.Value.GetString();
+                            isEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("authorizations"))
@@ -277,36 +255,6 @@ namespace Azure.ResourceManager.Resources.Models
                             authorizations = array;
                             continue;
                         }
-                        if (property0.NameEquals("managementMode"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            managementMode = new ArmApplicationManagementMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("customerSupport"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("supportUrls"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            supportUrls = ArmApplicationPackageSupportUrls.DeserializeArmApplicationPackageSupportUrls(property0.Value);
-                            continue;
-                        }
                         if (property0.NameEquals("artifacts"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -314,39 +262,109 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ArmApplicationArtifact> array = new List<ArmApplicationArtifact>();
+                            List<ArmApplicationDefinitionArtifact> array = new List<ArmApplicationDefinitionArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item));
+                                array.Add(ArmApplicationDefinitionArtifact.DeserializeArmApplicationDefinitionArtifact(item));
                             }
                             artifacts = array;
                             continue;
                         }
-                        if (property0.NameEquals("createdBy"))
+                        if (property0.NameEquals("description"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            createdBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
+                            description = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("updatedBy"))
+                        if (property0.NameEquals("packageFileUri"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
+                            packageFileUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("mainTemplate"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            mainTemplate = BinaryData.FromString(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("createUiDefinition"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            createUiDefinition = BinaryData.FromString(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("notificationPolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            notificationPolicy = ArmApplicationNotificationPolicy.DeserializeArmApplicationNotificationPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("lockingPolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lockingPolicy = ArmApplicationPackageLockingPolicy.DeserializeArmApplicationPackageLockingPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("deploymentPolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            deploymentPolicy = ArmApplicationDeploymentPolicy.DeserializeArmApplicationDeploymentPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("managementPolicy"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            managementPolicy = ArmApplicationManagementPolicy.DeserializeArmApplicationManagementPolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("policies"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<ArmApplicationPolicy> array = new List<ArmApplicationPolicy>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ArmApplicationPolicy.DeserializeArmApplicationPolicy(item));
+                            }
+                            policies = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PatchableArmApplicationData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, publisherTenantId.Value, Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUrls.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationDefinitionData(id, name, type, systemData, tags, location, managedBy.Value, sku.Value, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToList(authorizations), Optional.ToList(artifacts), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, Optional.ToList(policies));
         }
     }
 }

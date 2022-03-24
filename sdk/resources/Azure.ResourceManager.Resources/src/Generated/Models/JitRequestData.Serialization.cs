@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Resources
             Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
             Optional<ResourcesProvisioningState> provisioningState = default;
             Optional<JitRequestState> jitRequestState = default;
-            Optional<ApplicationClientDetails> createdBy = default;
-            Optional<ApplicationClientDetails> updatedBy = default;
+            Optional<ArmApplicationClientDetails> createdBy = default;
+            Optional<ArmApplicationClientDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            createdBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            updatedBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
                             continue;
                         }
                     }

@@ -336,12 +336,12 @@ namespace Azure.ResourceManager.Resources
             return resourceGroupResource.GetArmApplications().Get(applicationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationDefinitionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ArmApplicationDefinitionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ApplicationDefinitionResources and their operations over a ApplicationDefinitionResource. </returns>
-        public static ApplicationDefinitionCollection GetApplicationDefinitions(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ArmApplicationDefinitionResources and their operations over a ArmApplicationDefinitionResource. </returns>
+        public static ArmApplicationDefinitionCollection GetArmApplicationDefinitions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetApplicationDefinitions();
+            return GetExtensionClient(resourceGroupResource).GetArmApplicationDefinitions();
         }
 
         /// <summary>
@@ -354,9 +354,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public static async Task<Response<ApplicationDefinitionResource>> GetApplicationDefinitionAsync(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ArmApplicationDefinitionResource>> GetArmApplicationDefinitionAsync(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApplicationDefinitions().GetAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetArmApplicationDefinitions().GetAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -369,9 +369,9 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="applicationDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
-        public static Response<ApplicationDefinitionResource> GetApplicationDefinition(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
+        public static Response<ArmApplicationDefinitionResource> GetArmApplicationDefinition(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApplicationDefinitions().Get(applicationDefinitionName, cancellationToken);
+            return resourceGroupResource.GetArmApplicationDefinitions().Get(applicationDefinitionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of JitRequestResources in the ResourceGroupResource. </summary>
@@ -575,20 +575,20 @@ namespace Azure.ResourceManager.Resources
         }
         #endregion
 
-        #region ApplicationDefinitionResource
+        #region ArmApplicationDefinitionResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApplicationDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArmApplicationDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmApplicationDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationDefinitionResource" /> object. </returns>
-        public static ApplicationDefinitionResource GetApplicationDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ArmApplicationDefinitionResource" /> object. </returns>
+        public static ArmApplicationDefinitionResource GetArmApplicationDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApplicationDefinitionResource.ValidateResourceId(id);
-                return new ApplicationDefinitionResource(client, id);
+                ArmApplicationDefinitionResource.ValidateResourceId(id);
+                return new ArmApplicationDefinitionResource(client, id);
             }
             );
         }

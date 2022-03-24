@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Resources
         {
             Optional<ArmPlan> plan = default;
             string kind = default;
-            Optional<ApplicationManagedIdentity> identity = default;
+            Optional<ArmApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
-            Optional<ApplicationSku> sku = default;
+            Optional<ArmApplicationSku> sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.Resources
             Optional<BinaryData> parameters = default;
             Optional<BinaryData> outputs = default;
             Optional<ResourcesProvisioningState> provisioningState = default;
-            Optional<ApplicationBillingDetails> billingDetails = default;
-            Optional<ApplicationJitAccessPolicy> jitAccessPolicy = default;
+            Optional<ArmApplicationBillingDetails> billingDetails = default;
+            Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<string> publisherTenantId = default;
-            Optional<IReadOnlyList<ApplicationAuthorization>> authorizations = default;
-            Optional<ApplicationManagementMode> managementMode = default;
-            Optional<ApplicationPackageContact> customerSupport = default;
-            Optional<ApplicationPackageSupportUrls> supportUrls = default;
-            Optional<IReadOnlyList<ApplicationArtifact>> artifacts = default;
-            Optional<ApplicationClientDetails> createdBy = default;
-            Optional<ApplicationClientDetails> updatedBy = default;
+            Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
+            Optional<ArmApplicationManagementMode> managementMode = default;
+            Optional<ArmApplicationPackageContact> customerSupport = default;
+            Optional<ArmApplicationPackageSupportUrls> supportUrls = default;
+            Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
+            Optional<ArmApplicationClientDetails> createdBy = default;
+            Optional<ArmApplicationClientDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ApplicationManagedIdentity.DeserializeApplicationManagedIdentity(property.Value);
+                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedBy"))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ApplicationSku.DeserializeApplicationSku(property.Value);
+                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            billingDetails = ApplicationBillingDetails.DeserializeApplicationBillingDetails(property0.Value);
+                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            jitAccessPolicy = ApplicationJitAccessPolicy.DeserializeApplicationJitAccessPolicy(property0.Value);
+                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publisherTenantId"))
@@ -267,10 +267,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ApplicationAuthorization> array = new List<ApplicationAuthorization>();
+                            List<ArmApplicationAuthorization> array = new List<ArmApplicationAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationAuthorization.DeserializeApplicationAuthorization(item));
+                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
                             }
                             authorizations = array;
                             continue;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            managementMode = new ApplicationManagementMode(property0.Value.GetString());
+                            managementMode = new ArmApplicationManagementMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("customerSupport"))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customerSupport = ApplicationPackageContact.DeserializeApplicationPackageContact(property0.Value);
+                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("supportUrls"))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportUrls = ApplicationPackageSupportUrls.DeserializeApplicationPackageSupportUrls(property0.Value);
+                            supportUrls = ArmApplicationPackageSupportUrls.DeserializeArmApplicationPackageSupportUrls(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("artifacts"))
@@ -312,10 +312,10 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ApplicationArtifact> array = new List<ApplicationArtifact>();
+                            List<ArmApplicationArtifact> array = new List<ArmApplicationArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationArtifact.DeserializeApplicationArtifact(item));
+                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item));
                             }
                             artifacts = array;
                             continue;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            createdBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedBy = ApplicationClientDetails.DeserializeApplicationClientDetails(property0.Value);
+                            updatedBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
                             continue;
                         }
                     }

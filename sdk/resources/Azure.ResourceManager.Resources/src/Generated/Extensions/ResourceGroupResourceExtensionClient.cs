@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Resources
             return GetCachedClient(Client => new ArmApplicationCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ApplicationDefinitionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ApplicationDefinitionResources and their operations over a ApplicationDefinitionResource. </returns>
-        public virtual ApplicationDefinitionCollection GetApplicationDefinitions()
+        /// <summary> Gets a collection of ArmApplicationDefinitionResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmApplicationDefinitionResources and their operations over a ArmApplicationDefinitionResource. </returns>
+        public virtual ArmApplicationDefinitionCollection GetArmApplicationDefinitions()
         {
-            return GetCachedClient(Client => new ApplicationDefinitionCollection(Client, Id));
+            return GetCachedClient(Client => new ArmApplicationDefinitionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of JitRequestResources in the ResourceGroupResource. </summary>
