@@ -238,6 +238,8 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 All credentials can be configured with diagnostic options, in the same way as other clients in the SDK.
 
+> CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
+
 ``` c#
 DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 {
@@ -250,7 +252,20 @@ DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
 };
 ```
 
-> CAUTION: Requests and responses in the Azure Identity library contain sensitive information. Precaution must be taken to protect logs when customizing the output to avoid compromising account security.
+Additionally, when troubleshooting authentication issues, it may be desireable not to enable `IsLoggingContentEnabled`, which logs sensitive information, but to only log details about the account that was used to attempt authentication and authorization. To log these details, set `IsAccountIdentifierLoggingEnabled` to true.
+
+```c#
+DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions()
+{
+    Diagnostics =
+    {
+        LoggedHeaderNames = { "x-ms-request-id" },
+        LoggedQueryParameters = { "api-version" },
+        IsAccountIdentifierLoggingEnabled = true 
+    }
+};
+```
+
 
 ### Thread safety
 We guarantee that all credential instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)).
