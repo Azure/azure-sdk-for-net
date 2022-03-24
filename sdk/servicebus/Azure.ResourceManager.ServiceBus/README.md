@@ -29,7 +29,7 @@ The default option to create an authenticated client is to use `DefaultAzureCred
 To authenticate to Azure and create an `ArmClient`, do the following:
 
 ```C# Snippet:Managing_ServiceBus_AuthClient
-using Azure.Identity;
+// using Azure.Identity
 
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
@@ -156,4 +156,4 @@ more information see the Code of Conduct FAQ or contact
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.ResourceManager.ServiceBus%2FREADME.png)
