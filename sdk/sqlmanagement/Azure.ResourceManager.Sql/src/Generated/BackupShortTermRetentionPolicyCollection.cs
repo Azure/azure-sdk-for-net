@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             _backupShortTermRetentionPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", BackupShortTermRetentionPolicy.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(BackupShortTermRetentionPolicy.ResourceType, out string backupShortTermRetentionPolicyApiVersion);
-            _backupShortTermRetentionPolicyRestClient = new BackupShortTermRetentionPoliciesRestOperations(_backupShortTermRetentionPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backupShortTermRetentionPolicyApiVersion);
+            _backupShortTermRetentionPolicyRestClient = new BackupShortTermRetentionPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backupShortTermRetentionPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
         /// Operation Id: BackupShortTermRetentionPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<BackupShortTermRetentionPolicy>> CreateOrUpdateAsync(bool waitForCompletion, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupShortTermRetentionPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _backupShortTermRetentionPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<BackupShortTermRetentionPolicy>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/backupShortTermRetentionPolicies/{policyName}
         /// Operation Id: BackupShortTermRetentionPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="parameters"> The short term retention policy info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<BackupShortTermRetentionPolicy> CreateOrUpdate(bool waitForCompletion, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupShortTermRetentionPolicy> CreateOrUpdate(WaitUntil waitUntil, ShortTermRetentionPolicyName policyName, BackupShortTermRetentionPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _backupShortTermRetentionPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters, cancellationToken);
                 var operation = new SqlArmOperation<BackupShortTermRetentionPolicy>(new BackupShortTermRetentionPolicyOperationSource(Client), _backupShortTermRetentionPolicyClientDiagnostics, Pipeline, _backupShortTermRetentionPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<BackupShortTermRetentionPolicy>> GetAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupShortTermRetentionPolicy>> GetAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.Get");
             scope.Start();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _backupShortTermRetentionPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _backupShortTermRetentionPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BackupShortTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _backupShortTermRetentionPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, policyName, cancellationToken);
                 if (response.Value == null)
-                    throw _backupShortTermRetentionPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BackupShortTermRetentionPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.Exists");
             scope.Start();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="policyName"> The policy name. Should always be &quot;default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<BackupShortTermRetentionPolicy>> GetIfExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupShortTermRetentionPolicy>> GetIfExistsAsync(ShortTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             using var scope = _backupShortTermRetentionPolicyClientDiagnostics.CreateScope("BackupShortTermRetentionPolicyCollection.GetIfExists");
             scope.Start();

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _sqlAgentConfigurationSqlAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sqlAgentConfigurationSqlAgentApiVersion);
-            _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(_sqlAgentConfigurationSqlAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlAgentConfigurationSqlAgentApiVersion);
+            _sqlAgentConfigurationSqlAgentRestClient = new SqlAgentRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlAgentConfigurationSqlAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SqlAgent_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SqlAgentConfiguration>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlAgentConfiguration>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateScope("SqlAgentConfiguration.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlAgentConfigurationSqlAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlAgentConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlAgentConfigurationSqlAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlAgentConfigurationSqlAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlAgentConfiguration(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
         /// Operation Id: SqlAgent_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlAgentConfiguration>> CreateOrUpdateAsync(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlAgentConfiguration>> CreateOrUpdateAsync(WaitUntil waitUntil, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<SqlAgentConfiguration>(Response.FromValue(new SqlAgentConfiguration(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current
         /// Operation Id: SqlAgent_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The SqlAgentConfiguration to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<SqlAgentConfiguration> CreateOrUpdate(bool waitForCompletion, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlAgentConfiguration> CreateOrUpdate(WaitUntil waitUntil, SqlAgentConfigurationData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlAgentConfigurationSqlAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
                 var operation = new SqlArmOperation<SqlAgentConfiguration>(Response.FromValue(new SqlAgentConfiguration(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

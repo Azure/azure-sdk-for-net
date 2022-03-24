@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _restorableDatabaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableDatabaseAccount.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(RestorableDatabaseAccount.ResourceType, out string restorableDatabaseAccountApiVersion);
-            _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(_restorableDatabaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDatabaseAccountApiVersion);
+            _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDatabaseAccountApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public async virtual Task<Response<RestorableDatabaseAccount>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableDatabaseAccount>> GetAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _restorableDatabaseAccountRestClient.GetByLocationAsync(Id.SubscriptionId, Id.Name, instanceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _restorableDatabaseAccountClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _restorableDatabaseAccountRestClient.GetByLocation(Id.SubscriptionId, Id.Name, instanceId, cancellationToken);
                 if (response.Value == null)
-                    throw _restorableDatabaseAccountClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceId"/> is null. </exception>
-        public async virtual Task<Response<RestorableDatabaseAccount>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableDatabaseAccount>> GetIfExistsAsync(string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 

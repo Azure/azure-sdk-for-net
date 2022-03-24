@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A list of private link resources. </summary>
-    public partial class MhsmPrivateLinkResourceListResult
+    internal partial class MhsmPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of MhsmPrivateLinkResourceListResult. </summary>
         internal MhsmPrivateLinkResourceListResult()

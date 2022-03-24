@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstancePrivateLinkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
-        internal ManagedInstancePrivateLinkData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, ManagedInstancePrivateLinkProperties properties) : base(id, name, type, systemData)
+        internal ManagedInstancePrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstancePrivateLinkProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

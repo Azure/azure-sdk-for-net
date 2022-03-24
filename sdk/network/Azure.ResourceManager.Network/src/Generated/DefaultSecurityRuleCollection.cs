@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             _defaultSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", DefaultSecurityRule.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DefaultSecurityRule.ResourceType, out string defaultSecurityRuleApiVersion);
-            _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(_defaultSecurityRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
+            _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, defaultSecurityRuleApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
-        public async virtual Task<Response<DefaultSecurityRule>> GetAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultSecurityRule>> GetAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _defaultSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultSecurityRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _defaultSecurityRuleClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DefaultSecurityRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _defaultSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultSecurityRuleName, cancellationToken);
                 if (response.Value == null)
-                    throw _defaultSecurityRuleClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DefaultSecurityRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
-        public async virtual Task<Response<DefaultSecurityRule>> GetIfExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultSecurityRule>> GetIfExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 

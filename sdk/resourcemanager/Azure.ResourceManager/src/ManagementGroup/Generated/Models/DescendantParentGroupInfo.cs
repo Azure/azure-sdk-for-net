@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> The ID of the parent management group. </summary>
-    internal partial class DescendantParentGroupInfo
+    public partial class DescendantParentGroupInfo
     {
         /// <summary> Initializes a new instance of DescendantParentGroupInfo. </summary>
         internal DescendantParentGroupInfo()

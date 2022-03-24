@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteUserInvitationResponseResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="expiresOn"> The expiration time of the invitation. </param>
         /// <param name="invitationUrl"> The url for the invitation link. </param>
-        internal StaticSiteUserInvitationResponseResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, DateTimeOffset? expiresOn, string invitationUrl) : base(id, name, type, systemData, kind)
+        internal StaticSiteUserInvitationResponseResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? expiresOn, string invitationUrl) : base(id, name, resourceType, systemData, kind)
         {
             ExpiresOn = expiresOn;
             InvitationUrl = invitationUrl;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
         internal static void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options = default)
         {
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, model.Type, options);
+            JsonSerializer.Serialize(writer, model.ManagedServiceIdentityType, options);
             if (Optional.IsCollectionDefined(model.UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities");
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Models
             Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
             ManagedServiceIdentityType type = default;
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<ResourceIdentifier, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                    Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value));
+                        dictionary.Add(new ResourceIdentifier(property0.Name), UserAssignedIdentity.DeserializeUserAssignedIdentity(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;

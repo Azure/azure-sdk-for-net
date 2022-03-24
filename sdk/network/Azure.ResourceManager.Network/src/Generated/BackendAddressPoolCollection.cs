@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         {
             _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", BackendAddressPool.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(BackendAddressPool.ResourceType, out string backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
-            _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPoolsRestOperations(_backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
+            _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient = new LoadBalancerBackendAddressPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, backendAddressPoolLoadBalancerBackendAddressPoolsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}
         /// Operation Id: LoadBalancerBackendAddressPools_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<BackendAddressPool>> CreateOrUpdateAsync(bool waitForCompletion, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackendAddressPool>> CreateOrUpdateAsync(WaitUntil waitUntil, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new NetworkArmOperation<BackendAddressPool>(new BackendAddressPoolOperationSource(Client), _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}
         /// Operation Id: LoadBalancerBackendAddressPools_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="parameters"> Parameters supplied to the create or update load balancer backend address pool operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<BackendAddressPool> CreateOrUpdate(bool waitForCompletion, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackendAddressPool> CreateOrUpdate(WaitUntil waitUntil, string backendAddressPoolName, BackendAddressPoolData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters, cancellationToken);
                 var operation = new NetworkArmOperation<BackendAddressPool>(new BackendAddressPoolOperationSource(Client), _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics, Pipeline, _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
-        public async virtual Task<Response<BackendAddressPool>> GetAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackendAddressPool>> GetAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BackendAddressPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _backendAddressPoolLoadBalancerBackendAddressPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backendAddressPoolName, cancellationToken);
                 if (response.Value == null)
-                    throw _backendAddressPoolLoadBalancerBackendAddressPoolsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BackendAddressPool(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
-        public async virtual Task<Response<BackendAddressPool>> GetIfExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackendAddressPool>> GetIfExistsAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backendAddressPoolName, nameof(backendAddressPoolName));
 

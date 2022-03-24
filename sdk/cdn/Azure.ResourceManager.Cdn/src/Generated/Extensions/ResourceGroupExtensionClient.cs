@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of Profiles and their operations over a Profile. </returns>
         public virtual ProfileCollection GetProfiles()
         {
-            return new ProfileCollection(Client, Id);
+            return GetCachedClient(Client => new ProfileCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of CdnWebApplicationFirewallPolicies in the CdnWebApplicationFirewallPolicy. </summary>
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicies and their operations over a CdnWebApplicationFirewallPolicy. </returns>
         public virtual CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies()
         {
-            return new CdnWebApplicationFirewallPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new CdnWebApplicationFirewallPolicyCollection(Client, Id));
         }
     }
 }

@@ -124,7 +124,7 @@ ArmClient client = new ArmClient(new DefaultAzureCredential());
             {
                 //previously we would have to take the resourceGroupName and the vmName from the vm object
                 //and pass those into the powerOff method as well as we would need to execute that on a separate compute client
-                await virtualMachine.PowerOffAsync(true);
+                await virtualMachine.PowerOffAsync(WaitUntil.Completed);
             }
             #endregion Snippet:Readme_LoopVms
         }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteResourceHealthMetadataResourceHealthMetadataApiVersion);
-            _siteResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(_siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteResourceHealthMetadataResourceHealthMetadataApiVersion);
+            _siteResourceHealthMetadataResourceHealthMetadataRestClient = new ResourceHealthMetadataRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteResourceHealthMetadataResourceHealthMetadataApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: ResourceHealthMetadata_GetBySite
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteResourceHealthMetadata>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteResourceHealthMetadata>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateScope("SiteResourceHealthMetadata.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteResourceHealthMetadataResourceHealthMetadataRestClient.GetBySiteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteResourceHealthMetadata(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteResourceHealthMetadataResourceHealthMetadataRestClient.GetBySite(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteResourceHealthMetadataResourceHealthMetadataClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteResourceHealthMetadata(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.Network
         }
 
         private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableResourceGroupDelegationsRestOperations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegationsRestOperations(AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableResourceGroupDelegationsRestOperations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(AvailableServiceAliasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(PrivateLinkServicesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -60,301 +60,301 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ApplicationGateways and their operations over a ApplicationGateway. </returns>
         public virtual ApplicationGatewayCollection GetApplicationGateways()
         {
-            return new ApplicationGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new ApplicationGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ApplicationSecurityGroups in the ApplicationSecurityGroup. </summary>
         /// <returns> An object representing collection of ApplicationSecurityGroups and their operations over a ApplicationSecurityGroup. </returns>
         public virtual ApplicationSecurityGroupCollection GetApplicationSecurityGroups()
         {
-            return new ApplicationSecurityGroupCollection(Client, Id);
+            return GetCachedClient(Client => new ApplicationSecurityGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of AzureFirewalls in the AzureFirewall. </summary>
         /// <returns> An object representing collection of AzureFirewalls and their operations over a AzureFirewall. </returns>
         public virtual AzureFirewallCollection GetAzureFirewalls()
         {
-            return new AzureFirewallCollection(Client, Id);
+            return GetCachedClient(Client => new AzureFirewallCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of BastionHosts in the BastionHost. </summary>
         /// <returns> An object representing collection of BastionHosts and their operations over a BastionHost. </returns>
         public virtual BastionHostCollection GetBastionHosts()
         {
-            return new BastionHostCollection(Client, Id);
+            return GetCachedClient(Client => new BastionHostCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of CustomIPPrefixes in the CustomIPPrefix. </summary>
         /// <returns> An object representing collection of CustomIPPrefixes and their operations over a CustomIPPrefix. </returns>
         public virtual CustomIPPrefixCollection GetCustomIPPrefixes()
         {
-            return new CustomIPPrefixCollection(Client, Id);
+            return GetCachedClient(Client => new CustomIPPrefixCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the DdosCustomPolicy. </summary>
         /// <returns> An object representing collection of DdosCustomPolicies and their operations over a DdosCustomPolicy. </returns>
         public virtual DdosCustomPolicyCollection GetDdosCustomPolicies()
         {
-            return new DdosCustomPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new DdosCustomPolicyCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DdosProtectionPlans in the DdosProtectionPlan. </summary>
         /// <returns> An object representing collection of DdosProtectionPlans and their operations over a DdosProtectionPlan. </returns>
         public virtual DdosProtectionPlanCollection GetDdosProtectionPlans()
         {
-            return new DdosProtectionPlanCollection(Client, Id);
+            return GetCachedClient(Client => new DdosProtectionPlanCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DscpConfigurations in the DscpConfiguration. </summary>
         /// <returns> An object representing collection of DscpConfigurations and their operations over a DscpConfiguration. </returns>
         public virtual DscpConfigurationCollection GetDscpConfigurations()
         {
-            return new DscpConfigurationCollection(Client, Id);
+            return GetCachedClient(Client => new DscpConfigurationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ExpressRouteCircuits in the ExpressRouteCircuit. </summary>
         /// <returns> An object representing collection of ExpressRouteCircuits and their operations over a ExpressRouteCircuit. </returns>
         public virtual ExpressRouteCircuitCollection GetExpressRouteCircuits()
         {
-            return new ExpressRouteCircuitCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCircuitCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ExpressRouteCrossConnections in the ExpressRouteCrossConnection. </summary>
         /// <returns> An object representing collection of ExpressRouteCrossConnections and their operations over a ExpressRouteCrossConnection. </returns>
         public virtual ExpressRouteCrossConnectionCollection GetExpressRouteCrossConnections()
         {
-            return new ExpressRouteCrossConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteCrossConnectionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ExpressRoutePorts in the ExpressRoutePort. </summary>
         /// <returns> An object representing collection of ExpressRoutePorts and their operations over a ExpressRoutePort. </returns>
         public virtual ExpressRoutePortCollection GetExpressRoutePorts()
         {
-            return new ExpressRoutePortCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRoutePortCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of FirewallPolicies in the FirewallPolicy. </summary>
         /// <returns> An object representing collection of FirewallPolicies and their operations over a FirewallPolicy. </returns>
         public virtual FirewallPolicyCollection GetFirewallPolicies()
         {
-            return new FirewallPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new FirewallPolicyCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of IPAllocations in the IPAllocation. </summary>
         /// <returns> An object representing collection of IPAllocations and their operations over a IPAllocation. </returns>
         public virtual IPAllocationCollection GetIPAllocations()
         {
-            return new IPAllocationCollection(Client, Id);
+            return GetCachedClient(Client => new IPAllocationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of IPGroups in the IPGroup. </summary>
         /// <returns> An object representing collection of IPGroups and their operations over a IPGroup. </returns>
         public virtual IPGroupCollection GetIPGroups()
         {
-            return new IPGroupCollection(Client, Id);
+            return GetCachedClient(Client => new IPGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of LoadBalancers in the LoadBalancer. </summary>
         /// <returns> An object representing collection of LoadBalancers and their operations over a LoadBalancer. </returns>
         public virtual LoadBalancerCollection GetLoadBalancers()
         {
-            return new LoadBalancerCollection(Client, Id);
+            return GetCachedClient(Client => new LoadBalancerCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NatGateways in the NatGateway. </summary>
         /// <returns> An object representing collection of NatGateways and their operations over a NatGateway. </returns>
         public virtual NatGatewayCollection GetNatGateways()
         {
-            return new NatGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new NatGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkInterfaces in the NetworkInterface. </summary>
         /// <returns> An object representing collection of NetworkInterfaces and their operations over a NetworkInterface. </returns>
         public virtual NetworkInterfaceCollection GetNetworkInterfaces()
         {
-            return new NetworkInterfaceCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkInterfaceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkProfiles in the NetworkProfile. </summary>
         /// <returns> An object representing collection of NetworkProfiles and their operations over a NetworkProfile. </returns>
         public virtual NetworkProfileCollection GetNetworkProfiles()
         {
-            return new NetworkProfileCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkProfileCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkSecurityGroups in the NetworkSecurityGroup. </summary>
         /// <returns> An object representing collection of NetworkSecurityGroups and their operations over a NetworkSecurityGroup. </returns>
         public virtual NetworkSecurityGroupCollection GetNetworkSecurityGroups()
         {
-            return new NetworkSecurityGroupCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkSecurityGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkVirtualAppliances in the NetworkVirtualAppliance. </summary>
         /// <returns> An object representing collection of NetworkVirtualAppliances and their operations over a NetworkVirtualAppliance. </returns>
         public virtual NetworkVirtualApplianceCollection GetNetworkVirtualAppliances()
         {
-            return new NetworkVirtualApplianceCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkVirtualApplianceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkWatchers in the NetworkWatcher. </summary>
         /// <returns> An object representing collection of NetworkWatchers and their operations over a NetworkWatcher. </returns>
         public virtual NetworkWatcherCollection GetNetworkWatchers()
         {
-            return new NetworkWatcherCollection(Client, Id);
+            return GetCachedClient(Client => new NetworkWatcherCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of PrivateEndpoints in the PrivateEndpoint. </summary>
         /// <returns> An object representing collection of PrivateEndpoints and their operations over a PrivateEndpoint. </returns>
         public virtual PrivateEndpointCollection GetPrivateEndpoints()
         {
-            return new PrivateEndpointCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of PrivateLinkServices in the PrivateLinkService. </summary>
         /// <returns> An object representing collection of PrivateLinkServices and their operations over a PrivateLinkService. </returns>
         public virtual PrivateLinkServiceCollection GetPrivateLinkServices()
         {
-            return new PrivateLinkServiceCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateLinkServiceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of PublicIPAddresses in the PublicIPAddress. </summary>
         /// <returns> An object representing collection of PublicIPAddresses and their operations over a PublicIPAddress. </returns>
         public virtual PublicIPAddressCollection GetPublicIPAddresses()
         {
-            return new PublicIPAddressCollection(Client, Id);
+            return GetCachedClient(Client => new PublicIPAddressCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of PublicIPPrefixes in the PublicIPPrefix. </summary>
         /// <returns> An object representing collection of PublicIPPrefixes and their operations over a PublicIPPrefix. </returns>
         public virtual PublicIPPrefixCollection GetPublicIPPrefixes()
         {
-            return new PublicIPPrefixCollection(Client, Id);
+            return GetCachedClient(Client => new PublicIPPrefixCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RouteFilters in the RouteFilter. </summary>
         /// <returns> An object representing collection of RouteFilters and their operations over a RouteFilter. </returns>
         public virtual RouteFilterCollection GetRouteFilters()
         {
-            return new RouteFilterCollection(Client, Id);
+            return GetCachedClient(Client => new RouteFilterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of RouteTables in the RouteTable. </summary>
         /// <returns> An object representing collection of RouteTables and their operations over a RouteTable. </returns>
         public virtual RouteTableCollection GetRouteTables()
         {
-            return new RouteTableCollection(Client, Id);
+            return GetCachedClient(Client => new RouteTableCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of SecurityPartnerProviders in the SecurityPartnerProvider. </summary>
         /// <returns> An object representing collection of SecurityPartnerProviders and their operations over a SecurityPartnerProvider. </returns>
         public virtual SecurityPartnerProviderCollection GetSecurityPartnerProviders()
         {
-            return new SecurityPartnerProviderCollection(Client, Id);
+            return GetCachedClient(Client => new SecurityPartnerProviderCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ServiceEndpointPolicies in the ServiceEndpointPolicy. </summary>
         /// <returns> An object representing collection of ServiceEndpointPolicies and their operations over a ServiceEndpointPolicy. </returns>
         public virtual ServiceEndpointPolicyCollection GetServiceEndpointPolicies()
         {
-            return new ServiceEndpointPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceEndpointPolicyCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualNetworks in the VirtualNetwork. </summary>
         /// <returns> An object representing collection of VirtualNetworks and their operations over a VirtualNetwork. </returns>
         public virtual VirtualNetworkCollection GetVirtualNetworks()
         {
-            return new VirtualNetworkCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualNetworkGateways in the VirtualNetworkGateway. </summary>
         /// <returns> An object representing collection of VirtualNetworkGateways and their operations over a VirtualNetworkGateway. </returns>
         public virtual VirtualNetworkGatewayCollection GetVirtualNetworkGateways()
         {
-            return new VirtualNetworkGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualNetworkGatewayConnections in the VirtualNetworkGatewayConnection. </summary>
         /// <returns> An object representing collection of VirtualNetworkGatewayConnections and their operations over a VirtualNetworkGatewayConnection. </returns>
         public virtual VirtualNetworkGatewayConnectionCollection GetVirtualNetworkGatewayConnections()
         {
-            return new VirtualNetworkGatewayConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkGatewayConnectionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of LocalNetworkGateways in the LocalNetworkGateway. </summary>
         /// <returns> An object representing collection of LocalNetworkGateways and their operations over a LocalNetworkGateway. </returns>
         public virtual LocalNetworkGatewayCollection GetLocalNetworkGateways()
         {
-            return new LocalNetworkGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new LocalNetworkGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualNetworkTaps in the VirtualNetworkTap. </summary>
         /// <returns> An object representing collection of VirtualNetworkTaps and their operations over a VirtualNetworkTap. </returns>
         public virtual VirtualNetworkTapCollection GetVirtualNetworkTaps()
         {
-            return new VirtualNetworkTapCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkTapCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualRouters in the VirtualRouter. </summary>
         /// <returns> An object representing collection of VirtualRouters and their operations over a VirtualRouter. </returns>
         public virtual VirtualRouterCollection GetVirtualRouters()
         {
-            return new VirtualRouterCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualRouterCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualWans in the VirtualWan. </summary>
         /// <returns> An object representing collection of VirtualWans and their operations over a VirtualWan. </returns>
         public virtual VirtualWanCollection GetVirtualWans()
         {
-            return new VirtualWanCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualWanCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VpnSites in the VpnSite. </summary>
         /// <returns> An object representing collection of VpnSites and their operations over a VpnSite. </returns>
         public virtual VpnSiteCollection GetVpnSites()
         {
-            return new VpnSiteCollection(Client, Id);
+            return GetCachedClient(Client => new VpnSiteCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VpnServerConfigurations in the VpnServerConfiguration. </summary>
         /// <returns> An object representing collection of VpnServerConfigurations and their operations over a VpnServerConfiguration. </returns>
         public virtual VpnServerConfigurationCollection GetVpnServerConfigurations()
         {
-            return new VpnServerConfigurationCollection(Client, Id);
+            return GetCachedClient(Client => new VpnServerConfigurationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualHubs in the VirtualHub. </summary>
         /// <returns> An object representing collection of VirtualHubs and their operations over a VirtualHub. </returns>
         public virtual VirtualHubCollection GetVirtualHubs()
         {
-            return new VirtualHubCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualHubCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VpnGateways in the VpnGateway. </summary>
         /// <returns> An object representing collection of VpnGateways and their operations over a VpnGateway. </returns>
         public virtual VpnGatewayCollection GetVpnGateways()
         {
-            return new VpnGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new VpnGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of P2SVpnGateways in the P2SVpnGateway. </summary>
         /// <returns> An object representing collection of P2SVpnGateways and their operations over a P2SVpnGateway. </returns>
         public virtual P2SVpnGatewayCollection GetP2SVpnGateways()
         {
-            return new P2SVpnGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new P2SVpnGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ExpressRouteGateways in the ExpressRouteGateway. </summary>
         /// <returns> An object representing collection of ExpressRouteGateways and their operations over a ExpressRouteGateway. </returns>
         public virtual ExpressRouteGatewayCollection GetExpressRouteGateways()
         {
-            return new ExpressRouteGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new ExpressRouteGatewayCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of WebApplicationFirewallPolicies in the WebApplicationFirewallPolicy. </summary>
         /// <returns> An object representing collection of WebApplicationFirewallPolicies and their operations over a WebApplicationFirewallPolicy. </returns>
         public virtual WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies()
         {
-            return new WebApplicationFirewallPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new WebApplicationFirewallPolicyCollection(Client, Id));
         }
 
         /// <summary>
@@ -620,11 +620,11 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
         /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("ResourceGroupExtensionClient.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService");
             scope.Start();
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -648,11 +648,11 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility
         /// Operation Id: PrivateLinkServices_CheckPrivateLinkServiceVisibilityByResourceGroup
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="parameters"> The request body of CheckPrivateLinkService API call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(bool waitForCompletion, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest parameters, CancellationToken cancellationToken = default)
         {
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("ResourceGroupExtensionClient.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService");
             scope.Start();
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, parameters, cancellationToken);
                 var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

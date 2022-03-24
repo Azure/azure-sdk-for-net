@@ -12,7 +12,7 @@ using Azure.ResourceManager.DesktopVirtualization;
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> List of Desktop definitions. </summary>
-    public partial class DesktopList
+    internal partial class DesktopList
     {
         /// <summary> Initializes a new instance of DesktopList. </summary>
         internal DesktopList()

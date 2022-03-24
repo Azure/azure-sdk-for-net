@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         private ClientDiagnostics CertificateRegistrationProviderClientDiagnostics => _certificateRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private CertificateRegistrationProviderRestOperations CertificateRegistrationProviderRestClient => _certificateRegistrationProviderRestClient ??= new CertificateRegistrationProviderRestOperations(CertificateRegistrationProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private CertificateRegistrationProviderRestOperations CertificateRegistrationProviderRestClient => _certificateRegistrationProviderRestClient ??= new CertificateRegistrationProviderRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics DomainRegistrationProviderClientDiagnostics => _domainRegistrationProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private DomainRegistrationProviderRestOperations DomainRegistrationProviderRestClient => _domainRegistrationProviderRestClient ??= new DomainRegistrationProviderRestOperations(DomainRegistrationProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private DomainRegistrationProviderRestOperations DomainRegistrationProviderRestClient => _domainRegistrationProviderRestClient ??= new DomainRegistrationProviderRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
         private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(ProviderClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SourceControls and their operations over a SourceControl. </returns>
         public virtual SourceControlCollection GetSourceControls()
         {
-            return new SourceControlCollection(Client, Id);
+            return GetCachedClient(Client => new SourceControlCollection(Client, Id));
         }
 
         /// <summary>

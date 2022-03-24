@@ -78,6 +78,11 @@ directive:
   - remove-operation: "ApplicationGateways_ListAvailableSslOptions"
   - remove-operation: "ApplicationGateways_ListAvailableSslPredefinedPolicies"
   - remove-operation: "ApplicationGateways_GetSslPredefinedPolicy"
+  - from: virtualNetworkGateway.json
+    where: $.definitions.BgpPeerStatus.properties.connectedDuration
+    transform: >
+      $["format"] = "duration";
+      $["x-ms-format"] = "duration-constant";
 ```
 
 ### Tag: package-track2-preview

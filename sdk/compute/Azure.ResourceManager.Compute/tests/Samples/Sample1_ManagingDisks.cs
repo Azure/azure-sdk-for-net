@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 CreationData = new CreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 1,
             };
-            ArmOperation<Disk> lro = await diskCollection.CreateOrUpdateAsync(true, diskName, input);
+            ArmOperation<Disk> lro = await diskCollection.CreateOrUpdateAsync(WaitUntil.Completed, diskName, input);
             Disk disk = lro.Value;
             #endregion Snippet:Managing_Disks_CreateADisk
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             DiskCollection diskCollection = resourceGroup.GetDisks();
             string diskName = "myDisk";
             Disk disk = await diskCollection.GetAsync(diskName);
-            await disk.DeleteAsync(true);
+            await disk.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Disks_DeleteDisk
         }
     }

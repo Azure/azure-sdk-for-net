@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 if (w.Data.Location == TestEnvironment.Location)
                 {
-                    await w.DeleteAsync(true);
+                    await w.DeleteAsync(WaitUntil.Completed);
                 }
             }
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Tests
             var networkWatcherCollection = await GetCollection();
             var location = TestEnvironment.Location;
             var properties = new NetworkWatcherData { Location = location };
-            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(true, networkWatcherName, properties);
+            var createResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, createResponse.Value.Data.Name);
             Assert.AreEqual(location, createResponse.Value.Data.Location);
             Assert.IsEmpty(createResponse.Value.Data.Tags);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(getResponse.Value.Data.Tags);
 
             properties.Tags.Add("test", "test");
-            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(true, networkWatcherName, properties);
+            var updateResponse = await networkWatcherCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkWatcherName, properties);
             Assert.AreEqual(networkWatcherName, updateResponse.Value.Data.Name);
             Assert.AreEqual(location, updateResponse.Value.Data.Location);
             Has.One.Equals(updateResponse.Value.Data.Tags);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await getResponse.Value.GetNetworkConfigurationDiagnosticAsync();
 
             //Delete Network Watcher
-            await getResponse.Value.DeleteAsync(true);
+            await getResponse.Value.DeleteAsync(WaitUntil.Completed);
 
             //Get all Network Watchers in the subscription
             List<NetworkWatcher> listAllAfterDeletingResponse = await subscription.GetNetworkWatchersAsync().ToEnumerableAsync();

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceRecommendation. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="creationTime"> Timestamp when this instance was created. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="extensionName"> Extension name of the portal if exists. </param>
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
-        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, DateTimeOffset? creationTime, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startTime, DateTimeOffset? endTime, DateTimeOffset? nextNotificationTime, DateTimeOffset? notificationExpirationTime, DateTimeOffset? notifiedTime, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, type, systemData, kind)
+        internal AppServiceRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, DateTimeOffset? creationTime, Guid? recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startTime, DateTimeOffset? endTime, DateTimeOffset? nextNotificationTime, DateTimeOffset? notificationExpirationTime, DateTimeOffset? notifiedTime, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink) : base(id, name, resourceType, systemData, kind)
         {
             CreationTime = creationTime;
             RecommendationId = recommendationId;

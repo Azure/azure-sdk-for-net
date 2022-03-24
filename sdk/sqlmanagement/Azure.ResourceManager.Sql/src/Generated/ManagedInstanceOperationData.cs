@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of ManagedInstanceOperationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="managedInstanceName"> The name of the managed instance the operation is being performed on. </param>
         /// <param name="operation"> The name of operation. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="operationParameters"> The operation parameters. </param>
         /// <param name="operationSteps"> The operation steps. </param>
-        internal ManagedInstanceOperationData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string managedInstanceName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable, ManagedInstanceOperationParametersPair operationParameters, ManagedInstanceOperationSteps operationSteps) : base(id, name, type, systemData)
+        internal ManagedInstanceOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startTime, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionTime, string description, bool? isCancellable, ManagedInstanceOperationParametersPair operationParameters, ManagedInstanceOperationSteps operationSteps) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             Operation = operation;

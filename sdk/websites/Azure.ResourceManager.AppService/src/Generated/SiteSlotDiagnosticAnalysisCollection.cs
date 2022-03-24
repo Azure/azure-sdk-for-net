@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticAnalysis.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlotDiagnosticAnalysis.ResourceType, out string siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
-            _siteSlotDiagnosticAnalysisDiagnosticsRestClient = new DiagnosticsRestOperations(_siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
+            _siteSlotDiagnosticAnalysisDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotDiagnosticAnalysis>> GetAsync(string analysisName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticAnalysis>> GetAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotDiagnosticAnalysis(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotDiagnosticAnalysis(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotDiagnosticAnalysis>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticAnalysis>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 

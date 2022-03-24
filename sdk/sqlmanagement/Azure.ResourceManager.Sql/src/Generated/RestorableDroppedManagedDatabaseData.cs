@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of RestorableDroppedManagedDatabaseData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="creationDate"> The creation date of the database (ISO8601 format). </param>
         /// <param name="deletionDate"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreDate"> The earliest restore date of the database (ISO8601 format). </param>
-        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate) : base(id, name, type, systemData, tags, location)
+        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? creationDate, DateTimeOffset? deletionDate, DateTimeOffset? earliestRestoreDate) : base(id, name, resourceType, systemData, tags, location)
         {
             DatabaseName = databaseName;
             CreationDate = creationDate;

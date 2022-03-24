@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+- The models that are not directly referenced by public API now are internal.
+- Rename some body parameter type name from `XXXOptions` to `XXXData`
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
 
         protected async Task<ResourceGroup> CreateResourceGroup(string name)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(true,name, new ResourceGroupData(TestEnvironment.Location))).Value;
+            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
 
         protected async Task<ResourceGroup> CreateResourceGroup(string name, string location)
         {
-            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(true,name, new ResourceGroupData(location))).Value;
+            return (await Subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
         }
 
         protected async Task<WebPubSub> CreateDefaultWebPubSub(string webPubSubName, AzureLocation location, ResourceGroup resourceGroup)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             };
 
             // Create WebPubSub
-            var webPubSub = await (await resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(true, webPubSubName, data)).WaitForCompletionAsync();
+            var webPubSub = await (await resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(WaitUntil.Completed, webPubSubName, data)).WaitForCompletionAsync();
 
             return webPubSub.Value;
         }

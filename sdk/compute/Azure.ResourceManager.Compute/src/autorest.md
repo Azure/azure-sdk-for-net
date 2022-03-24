@@ -94,4 +94,13 @@ directive:
   - from: swagger-document
     where: $.definitions.DiskSecurityType["x-ms-enum"].values[3]
     transform: $["name"] = "ConfidentialVmDiskEncryptedWithCustomerKey"
+  - from: compute.json
+    where: $.definitions.VirtualMachineInstallPatchesParameters.properties.maximumDuration
+    transform: $["format"] = "duration"
+  - from: compute.json
+    where: $.definitions.VirtualMachineExtensionUpdateProperties.properties.type
+    transform: $["x-ms-client-name"] = "VirtualMachineExtensionType"
+  - from: communityGallery.json
+    where: $.definitions.PirCommunityGalleryResource.properties.type
+    transform: $["x-ms-client-name"] = "ResourceType"
 ```

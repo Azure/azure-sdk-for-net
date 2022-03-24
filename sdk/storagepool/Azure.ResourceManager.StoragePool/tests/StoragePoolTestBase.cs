@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StoragePool.Tests
         protected async Task<ResourceGroup> CreateResourceGroupAsync(string resourceGroupName)
         {
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                true,
+                WaitUntil.Completed,
                 resourceGroupName,
                 new ResourceGroupData(DefaultLocation)
                 {

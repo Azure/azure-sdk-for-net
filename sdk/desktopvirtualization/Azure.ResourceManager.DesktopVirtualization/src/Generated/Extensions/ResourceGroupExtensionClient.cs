@@ -36,28 +36,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of VirtualWorkspaces and their operations over a VirtualWorkspace. </returns>
         public virtual VirtualWorkspaceCollection GetVirtualWorkspaces()
         {
-            return new VirtualWorkspaceCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualWorkspaceCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ScalingPlans in the ScalingPlan. </summary>
         /// <returns> An object representing collection of ScalingPlans and their operations over a ScalingPlan. </returns>
         public virtual ScalingPlanCollection GetScalingPlans()
         {
-            return new ScalingPlanCollection(Client, Id);
+            return GetCachedClient(Client => new ScalingPlanCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VirtualApplicationGroups in the VirtualApplicationGroup. </summary>
         /// <returns> An object representing collection of VirtualApplicationGroups and their operations over a VirtualApplicationGroup. </returns>
         public virtual VirtualApplicationGroupCollection GetVirtualApplicationGroups()
         {
-            return new VirtualApplicationGroupCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualApplicationGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of HostPools in the HostPool. </summary>
         /// <returns> An object representing collection of HostPools and their operations over a HostPool. </returns>
         public virtual HostPoolCollection GetHostPools()
         {
-            return new HostPoolCollection(Client, Id);
+            return GetCachedClient(Client => new HostPoolCollection(Client, Id));
         }
     }
 }

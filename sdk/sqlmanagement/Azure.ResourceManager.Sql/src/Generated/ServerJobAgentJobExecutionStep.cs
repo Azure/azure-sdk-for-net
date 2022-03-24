@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
-            _serverJobAgentJobExecutionStepJobStepExecutionsRestClient = new JobStepExecutionsRestOperations(_serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
+            _serverJobAgentJobExecutionStepJobStepExecutionsRestClient = new JobStepExecutionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobExecutionStepJobStepExecutionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -86,7 +86,31 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerJobAgentJobExecutionStepTargets and their operations over a ServerJobAgentJobExecutionStepTarget. </returns>
         public virtual ServerJobAgentJobExecutionStepTargetCollection GetServerJobAgentJobExecutionStepTargets()
         {
-            return new ServerJobAgentJobExecutionStepTargetCollection(Client, Id);
+            return GetCachedClient(Client => new ServerJobAgentJobExecutionStepTargetCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a target execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
+        /// Operation Id: JobTargetExecutions_Get
+        /// </summary>
+        /// <param name="targetId"> The target id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerJobAgentJobExecutionStepTarget>> GetServerJobAgentJobExecutionStepTargetAsync(Guid targetId, CancellationToken cancellationToken = default)
+        {
+            return await GetServerJobAgentJobExecutionStepTargets().GetAsync(targetId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a target execution.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}
+        /// Operation Id: JobTargetExecutions_Get
+        /// </summary>
+        /// <param name="targetId"> The target id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerJobAgentJobExecutionStepTarget> GetServerJobAgentJobExecutionStepTarget(Guid targetId, CancellationToken cancellationToken = default)
+        {
+            return GetServerJobAgentJobExecutionStepTargets().Get(targetId, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobStepExecutions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerJobAgentJobExecutionStep>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobExecutionStep>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("ServerJobAgentJobExecutionStep.Get");
             scope.Start();
@@ -103,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobExecutionStepJobStepExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobExecutionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +151,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobExecutionStepJobStepExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Guid.Parse(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serverJobAgentJobExecutionStepJobStepExecutionsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobExecutionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

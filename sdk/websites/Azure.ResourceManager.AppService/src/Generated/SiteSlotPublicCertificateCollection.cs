@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotPublicCertificateWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotPublicCertificate.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteSlotPublicCertificate.ResourceType, out string siteSlotPublicCertificateWebAppsApiVersion);
-            _siteSlotPublicCertificateWebAppsRestClient = new WebAppsRestOperations(_siteSlotPublicCertificateWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPublicCertificateWebAppsApiVersion);
+            _siteSlotPublicCertificateWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotPublicCertificateWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_CreateOrUpdatePublicCertificateSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotPublicCertificate>> CreateOrUpdateAsync(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotPublicCertificate>> CreateOrUpdateAsync(WaitUntil waitUntil, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
             Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotPublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, publicCertificate, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<SiteSlotPublicCertificate>(Response.FromValue(new SiteSlotPublicCertificate(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_CreateOrUpdatePublicCertificateSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="publicCertificateName"> Public certificate name. </param>
         /// <param name="publicCertificate"> Public certificate details. This is the JSON representation of a PublicCertificate object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> or <paramref name="publicCertificate"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotPublicCertificate> CreateOrUpdate(bool waitForCompletion, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotPublicCertificate> CreateOrUpdate(WaitUntil waitUntil, string publicCertificateName, PublicCertificateData publicCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
             Argument.AssertNotNull(publicCertificate, nameof(publicCertificate));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotPublicCertificateWebAppsRestClient.CreateOrUpdatePublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, publicCertificate, cancellationToken);
                 var operation = new AppServiceArmOperation<SiteSlotPublicCertificate>(Response.FromValue(new SiteSlotPublicCertificate(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotPublicCertificate>> GetAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotPublicCertificate>> GetAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotPublicCertificateWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotPublicCertificate(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotPublicCertificateWebAppsRestClient.GetPublicCertificateSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, publicCertificateName, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotPublicCertificateWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotPublicCertificate(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="publicCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertificateName"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotPublicCertificate>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotPublicCertificate>> GetIfExistsAsync(string publicCertificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicCertificateName, nameof(publicCertificateName));
 

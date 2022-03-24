@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _webApplicationFirewallPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicy.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(WebApplicationFirewallPolicy.ResourceType, out string webApplicationFirewallPolicyApiVersion);
-            _webApplicationFirewallPolicyRestClient = new WebApplicationFirewallPoliciesRestOperations(_webApplicationFirewallPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webApplicationFirewallPolicyApiVersion);
+            _webApplicationFirewallPolicyRestClient = new WebApplicationFirewallPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, webApplicationFirewallPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: WebApplicationFirewallPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<WebApplicationFirewallPolicy>> CreateOrUpdateAsync(bool waitForCompletion, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebApplicationFirewallPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _webApplicationFirewallPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new NetworkArmOperation<WebApplicationFirewallPolicy>(Response.FromValue(new WebApplicationFirewallPolicy(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/{policyName}
         /// Operation Id: WebApplicationFirewallPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="policyName"> The name of the policy. </param>
         /// <param name="parameters"> Policy to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<WebApplicationFirewallPolicy> CreateOrUpdate(bool waitForCompletion, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebApplicationFirewallPolicy> CreateOrUpdate(WaitUntil waitUntil, string policyName, WebApplicationFirewallPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _webApplicationFirewallPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, policyName, parameters, cancellationToken);
                 var operation = new NetworkArmOperation<WebApplicationFirewallPolicy>(Response.FromValue(new WebApplicationFirewallPolicy(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public async virtual Task<Response<WebApplicationFirewallPolicy>> GetAsync(string policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebApplicationFirewallPolicy>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _webApplicationFirewallPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _webApplicationFirewallPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebApplicationFirewallPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _webApplicationFirewallPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, policyName, cancellationToken);
                 if (response.Value == null)
-                    throw _webApplicationFirewallPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebApplicationFirewallPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
-        public async virtual Task<Response<WebApplicationFirewallPolicy>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebApplicationFirewallPolicy>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
-            _siteSlotTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(_siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
+            _siteSlotTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotTriggeredWebJobHistoryWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetTriggeredWebJobHistory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotTriggeredWebJobHistory>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotTriggeredWebJobHistory>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("SiteSlotTriggeredWebJobHistory.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

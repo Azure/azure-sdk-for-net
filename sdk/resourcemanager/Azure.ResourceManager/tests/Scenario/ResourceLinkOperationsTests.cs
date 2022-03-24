@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Tests
             GenericResource vn2 = await CreateGenericVirtualNetwork(subscription, rg, vnName2);
             string resourceLinkName = Recording.GenerateAssetName("link-");
             ResourceLink resourceLink = await CreateResourceLink(tenant, vn1, vn2, resourceLinkName);
-            await resourceLink.DeleteAsync(true);
+            await resourceLink.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await resourceLink.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

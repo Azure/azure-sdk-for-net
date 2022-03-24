@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         {
             _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", Tenant.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Tenant.ResourceType, out string tenantApiVersion);
-            _tenantRestClient = new TenantsRestOperations(_tenantClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
+            _tenantRestClient = new TenantsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, tenantApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif

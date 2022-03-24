@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _logsSiteSlotConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string logsSiteSlotConfigWebAppsApiVersion);
-            _logsSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(_logsSiteSlotConfigWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logsSiteSlotConfigWebAppsApiVersion);
+            _logsSiteSlotConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, logsSiteSlotConfigWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetDiagnosticLogsConfigurationSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<LogsSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsSiteSlotConfig>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfig.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _logsSiteSlotConfigWebAppsRestClient.GetDiagnosticLogsConfigurationSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _logsSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LogsSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _logsSiteSlotConfigWebAppsRestClient.GetDiagnosticLogsConfigurationSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _logsSiteSlotConfigWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new LogsSiteSlotConfig(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs
         /// Operation Id: WebApps_UpdateDiagnosticLogsConfigSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public async virtual Task<ArmOperation<LogsSiteSlotConfig>> CreateOrUpdateAsync(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogsSiteSlotConfig>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _logsSiteSlotConfigWebAppsRestClient.UpdateDiagnosticLogsConfigSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<LogsSiteSlotConfig>(Response.FromValue(new LogsSiteSlotConfig(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs
         /// Operation Id: WebApps_UpdateDiagnosticLogsConfigSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteLogsConfig"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteLogsConfig"/> is null. </exception>
-        public virtual ArmOperation<LogsSiteSlotConfig> CreateOrUpdate(bool waitForCompletion, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogsSiteSlotConfig> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData siteLogsConfig, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteLogsConfig, nameof(siteLogsConfig));
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _logsSiteSlotConfigWebAppsRestClient.UpdateDiagnosticLogsConfigSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteLogsConfig, cancellationToken);
                 var operation = new AppServiceArmOperation<LogsSiteSlotConfig>(Response.FromValue(new LogsSiteSlotConfig(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

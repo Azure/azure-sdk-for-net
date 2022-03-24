@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteVirtualNetworkConnectionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteVirtualNetworkConnectionWebAppsApiVersion);
-            _siteVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(_siteVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteVirtualNetworkConnectionWebAppsApiVersion);
+            _siteVirtualNetworkConnectionWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteVirtualNetworkConnectionWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -86,7 +86,35 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteVirtualNetworkConnectionGateways and their operations over a SiteVirtualNetworkConnectionGateway. </returns>
         public virtual SiteVirtualNetworkConnectionGatewayCollection GetSiteVirtualNetworkConnectionGateways()
         {
-            return new SiteVirtualNetworkConnectionGatewayCollection(Client, Id);
+            return GetCachedClient(Client => new SiteVirtualNetworkConnectionGatewayCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// </summary>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        public virtual async Task<Response<SiteVirtualNetworkConnectionGateway>> GetSiteVirtualNetworkConnectionGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            return await GetSiteVirtualNetworkConnectionGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// </summary>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        public virtual Response<SiteVirtualNetworkConnectionGateway> GetSiteVirtualNetworkConnectionGateway(string gatewayName, CancellationToken cancellationToken = default)
+        {
+            return GetSiteVirtualNetworkConnectionGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetVnetConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteVirtualNetworkConnection>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteVirtualNetworkConnection>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnection.Get");
             scope.Start();
@@ -103,7 +131,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +155,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteVirtualNetworkConnectionWebAppsRestClient.GetVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteVirtualNetworkConnection(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,9 +170,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_DeleteVnetConnection
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnection.Delete");
             scope.Start();
@@ -152,7 +180,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteVirtualNetworkConnectionWebAppsRestClient.DeleteVnetConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -168,9 +196,9 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: WebApps_DeleteVnetConnection
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _siteVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnection.Delete");
             scope.Start();
@@ -178,7 +206,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteVirtualNetworkConnectionWebAppsRestClient.DeleteVnetConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -197,7 +225,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="connectionEnvelope"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionEnvelope"/> is null. </exception>
-        public async virtual Task<Response<SiteVirtualNetworkConnection>> UpdateAsync(VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteVirtualNetworkConnection>> UpdateAsync(VnetInfoResourceData connectionEnvelope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(connectionEnvelope, nameof(connectionEnvelope));
 

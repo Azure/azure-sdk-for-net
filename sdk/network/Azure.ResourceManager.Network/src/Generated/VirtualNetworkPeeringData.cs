@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="allowVirtualNetworkAccess"> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </param>
         /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
         /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        internal VirtualNetworkPeeringData(string id, string name, string etag, string type, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid) : base(id)
+        internal VirtualNetworkPeeringData(string id, string name, string etag, string resourceType, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, WritableSubResource remoteVirtualNetwork, AddressSpace remoteAddressSpace, AddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, ProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, string resourceGuid) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;
             AllowGatewayTransit = allowGatewayTransit;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Resource type. </summary>
-        public string Type { get; set; }
+        public string ResourceType { get; set; }
         /// <summary> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </summary>
         public bool? AllowVirtualNetworkAccess { get; set; }
         /// <summary> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </summary>

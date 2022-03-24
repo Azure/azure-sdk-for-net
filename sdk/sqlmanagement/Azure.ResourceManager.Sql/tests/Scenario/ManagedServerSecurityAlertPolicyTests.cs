@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         [OneTimeSetUp]
         public async Task GlobalSetUp()
         {
-            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("Sql-RG-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             await StopSessionRecordingAsync();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 EmailAccountAdmins = false,
                 RetentionDays = 0,
             };
-            var securityAlertPolicie = await collection.CreateOrUpdateAsync(true, securityAlertPoliciesName, data);
+            var securityAlertPolicie = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPoliciesName, data);
             Assert.IsNotNull(securityAlertPolicie.Value.Data);
             Assert.AreEqual(securityAlertPoliciesName, securityAlertPolicie.Value.Data.Name);
             Assert.AreEqual("Enabled", securityAlertPolicie.Value.Data.State.ToString());

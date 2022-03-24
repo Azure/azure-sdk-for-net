@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                     }
                 }
             });
-            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 },
                 Parameters = parameters
             });
-            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 Template = File.ReadAllText("storage-template.json"),
                 Parameters = File.ReadAllText("storage-parameters.json")
             });
-            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+            ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             Deployment deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // Now we can get the deployment with GetAsync()
             Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
             // With DeleteAsync(), we can delete the deployment
-            await deployment.DeleteAsync(true);
+            await deployment.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Deployments_DeleteADeployment
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             // With the collection, we can create a new resource group with an specific name
             string rgName = "myRgName";
             AzureLocation location = AzureLocation.WestUS2;
-            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
             ResourceGroup resourceGroup = lro.Value;
 
             this.resourceGroup = resourceGroup;

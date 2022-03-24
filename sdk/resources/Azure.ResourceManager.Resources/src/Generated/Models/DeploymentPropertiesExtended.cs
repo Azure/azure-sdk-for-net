@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
-        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, string duration, object outputs, IReadOnlyList<ProviderData> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, object parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
+        internal DeploymentPropertiesExtended(ProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ProviderData> providers, IReadOnlyList<Dependency> dependencies, TemplateLink templateLink, BinaryData parameters, ParametersLink parametersLink, DeploymentMode? mode, DebugSetting debugSetting, OnErrorDeploymentExtended onErrorDeployment, string templateHash, IReadOnlyList<SubResource> outputResources, IReadOnlyList<SubResource> validatedResources, ErrorDetail error)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The timestamp of the template deployment. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> The duration of the template deployment. </summary>
-        public string Duration { get; }
+        public TimeSpan? Duration { get; }
         /// <summary> Key/value pairs that represent deployment output. </summary>
-        public object Outputs { get; }
+        public BinaryData Outputs { get; }
         /// <summary> The list of resource providers needed for the deployment. </summary>
         public IReadOnlyList<ProviderData> Providers { get; }
         /// <summary> The list of deployment dependencies. </summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The URI referencing the template. </summary>
         public TemplateLink TemplateLink { get; }
         /// <summary> Deployment parameters. </summary>
-        public object Parameters { get; }
+        public BinaryData Parameters { get; }
         /// <summary> The URI referencing the parameters. </summary>
         public ParametersLink ParametersLink { get; }
         /// <summary> The deployment mode. Possible values are Incremental and Complete. </summary>

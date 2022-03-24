@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of DeploymentScriptData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
-        internal DeploymentScriptData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, DeploymentScriptManagedIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind) : base(id, name, type, systemData)
+        internal DeploymentScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeploymentScriptManagedIdentity identity, string location, IDictionary<string, string> tags, ScriptType kind) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             Location = location;

@@ -37,6 +37,14 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// Initializes a new instance of the ThreatIntelligenceIndicatorModel
         /// class.
         /// </summary>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="systemData">Azure Resource Manager metadata containing
+        /// createdBy and modifiedBy information.</param>
         /// <param name="etag">Etag of the azure resource</param>
         /// <param name="additionalData">A bag of custom fields that should be
         /// part of the entity and will be presented to the user.</param>
@@ -84,8 +92,8 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
         /// <param name="created">Created by</param>
         /// <param name="modified">Modified by</param>
         /// <param name="extensions">Extensions map</param>
-        public ThreatIntelligenceIndicatorModel(string etag = default(string), IDictionary<string, object> additionalData = default(IDictionary<string, object>), string friendlyName = default(string), IList<string> threatIntelligenceTags = default(IList<string>), string lastUpdatedTimeUtc = default(string), string source = default(string), string displayName = default(string), string description = default(string), IList<string> indicatorTypes = default(IList<string>), string pattern = default(string), string patternType = default(string), string patternVersion = default(string), IList<ThreatIntelligenceKillChainPhase> killChainPhases = default(IList<ThreatIntelligenceKillChainPhase>), IList<ThreatIntelligenceParsedPattern> parsedPattern = default(IList<ThreatIntelligenceParsedPattern>), string externalId = default(string), string createdByRef = default(string), bool? defanged = default(bool?), string externalLastUpdatedTimeUtc = default(string), IList<ThreatIntelligenceExternalReference> externalReferences = default(IList<ThreatIntelligenceExternalReference>), IList<ThreatIntelligenceGranularMarkingModel> granularMarkings = default(IList<ThreatIntelligenceGranularMarkingModel>), IList<string> labels = default(IList<string>), bool? revoked = default(bool?), int? confidence = default(int?), IList<string> objectMarkingRefs = default(IList<string>), string language = default(string), IList<string> threatTypes = default(IList<string>), string validFrom = default(string), string validUntil = default(string), string created = default(string), string modified = default(string), IDictionary<string, object> extensions = default(IDictionary<string, object>))
-            : base(etag)
+        public ThreatIntelligenceIndicatorModel(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string etag = default(string), IDictionary<string, object> additionalData = default(IDictionary<string, object>), string friendlyName = default(string), IList<string> threatIntelligenceTags = default(IList<string>), string lastUpdatedTimeUtc = default(string), string source = default(string), string displayName = default(string), string description = default(string), IList<string> indicatorTypes = default(IList<string>), string pattern = default(string), string patternType = default(string), string patternVersion = default(string), IList<ThreatIntelligenceKillChainPhase> killChainPhases = default(IList<ThreatIntelligenceKillChainPhase>), IList<ThreatIntelligenceParsedPattern> parsedPattern = default(IList<ThreatIntelligenceParsedPattern>), string externalId = default(string), string createdByRef = default(string), bool? defanged = default(bool?), string externalLastUpdatedTimeUtc = default(string), IList<ThreatIntelligenceExternalReference> externalReferences = default(IList<ThreatIntelligenceExternalReference>), IList<ThreatIntelligenceGranularMarkingModel> granularMarkings = default(IList<ThreatIntelligenceGranularMarkingModel>), IList<string> labels = default(IList<string>), bool? revoked = default(bool?), int? confidence = default(int?), IList<string> objectMarkingRefs = default(IList<string>), string language = default(string), IList<string> threatTypes = default(IList<string>), string validFrom = default(string), string validUntil = default(string), string created = default(string), string modified = default(string), IDictionary<string, object> extensions = default(IDictionary<string, object>))
+            : base(id, name, type, systemData, etag)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

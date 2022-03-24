@@ -1,7 +1,12 @@
 # Release History
 
-## 12.11.0-beta.4 (Unreleased)
+## 12.12.0-beta.1 (Unreleased)
+- Added support for service version 2021-06-08.
+- Added pageable versions of PageBlobClient.GetPageRanges() and .GetPageRangesAsync().
+- Added ability to copy source blob tags for BlobBaseClient.SyncCopyFromUri() and .SyncCopyFromUriAsync().
 
+## 12.11.0 (2022-03-10)
+- Includes all features from 12.11.0-beta.1, 12.11.0-beta.2, and 12.11.0-beta.3 except SDK-calculated transactional checksums on data transfer.
 - Added support for progress reporting with DownloadToAsync().
 - Fixed a bug where BlobBaseClient.DownloadTo() would result in an ObjectDisposedException on .NET Framework in certain network conditions.
 - Added nullable version of `BlobProperties.CopyStatus` called `BlobCopyStatus`, allowing a null value when Storage doesn't return a value.

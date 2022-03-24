@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected PrivateLinkResourceCollection PrivateLinkResourceCollection { get => _databaseAccount.GetPrivateLinkResources(); }
+        protected PrivateLinkResourceCollection PrivateLinkResourceCollection => _databaseAccount.GetPrivateLinkResources();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             if (_databaseAccountIdentifier != null)
             {
-                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(true);
+                ArmClient.GetDatabaseAccount(_databaseAccountIdentifier).Delete(WaitUntil.Completed);
             }
         }
 

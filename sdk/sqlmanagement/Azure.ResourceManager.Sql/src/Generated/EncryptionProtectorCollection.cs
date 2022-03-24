@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             _encryptionProtectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", EncryptionProtector.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(EncryptionProtector.ResourceType, out string encryptionProtectorApiVersion);
-            _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(_encryptionProtectorClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionProtectorApiVersion);
+            _encryptionProtectorRestClient = new EncryptionProtectorsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, encryptionProtectorApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}
         /// Operation Id: EncryptionProtectors_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
         /// <param name="parameters"> The requested encryption protector resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<EncryptionProtector>> CreateOrUpdateAsync(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EncryptionProtector>> CreateOrUpdateAsync(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _encryptionProtectorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<EncryptionProtector>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}
         /// Operation Id: EncryptionProtectors_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
         /// <param name="parameters"> The requested encryption protector resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<EncryptionProtector> CreateOrUpdate(bool waitForCompletion, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EncryptionProtector> CreateOrUpdate(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, EncryptionProtectorData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _encryptionProtectorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters, cancellationToken);
                 var operation = new SqlArmOperation<EncryptionProtector>(new EncryptionProtectorOperationSource(Client), _encryptionProtectorClientDiagnostics, Pipeline, _encryptionProtectorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<EncryptionProtector>> GetAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EncryptionProtector>> GetAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.Get");
             scope.Start();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _encryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _encryptionProtectorClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EncryptionProtector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _encryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken);
                 if (response.Value == null)
-                    throw _encryptionProtectorClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new EncryptionProtector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.Exists");
             scope.Start();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<EncryptionProtector>> GetIfExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EncryptionProtector>> GetIfExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _encryptionProtectorClientDiagnostics.CreateScope("EncryptionProtectorCollection.GetIfExists");
             scope.Start();

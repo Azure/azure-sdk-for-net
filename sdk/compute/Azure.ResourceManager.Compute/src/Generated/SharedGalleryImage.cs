@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         {
             _sharedGalleryImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sharedGalleryImageApiVersion);
-            _sharedGalleryImageRestClient = new SharedGalleryImagesRestOperations(_sharedGalleryImageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryImageApiVersion);
+            _sharedGalleryImageRestClient = new SharedGalleryImagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sharedGalleryImageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -86,7 +86,35 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of SharedGalleryImageVersions and their operations over a SharedGalleryImageVersion. </returns>
         public virtual SharedGalleryImageVersionCollection GetSharedGalleryImageVersions()
         {
-            return new SharedGalleryImageVersionCollection(Client, Id);
+            return GetCachedClient(Client => new SharedGalleryImageVersionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a shared gallery image version by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: SharedGalleryImageVersions_Get
+        /// </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual async Task<Response<SharedGalleryImageVersion>> GetSharedGalleryImageVersionAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            return await GetSharedGalleryImageVersions().GetAsync(galleryImageVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a shared gallery image version by subscription id or tenant id.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}
+        /// Operation Id: SharedGalleryImageVersions_Get
+        /// </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual Response<SharedGalleryImageVersion> GetSharedGalleryImageVersion(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            return GetSharedGalleryImageVersions().Get(galleryImageVersionName, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +123,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: SharedGalleryImages_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SharedGalleryImage>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedGalleryImage>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sharedGalleryImageClientDiagnostics.CreateScope("SharedGalleryImage.Get");
             scope.Start();
@@ -103,7 +131,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _sharedGalleryImageRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sharedGalleryImageClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 return Response.FromValue(new SharedGalleryImage(Client, response.Value), response.GetRawResponse());
             }
@@ -128,7 +156,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _sharedGalleryImageRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sharedGalleryImageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 return Response.FromValue(new SharedGalleryImage(Client, response.Value), response.GetRawResponse());
             }

@@ -67,22 +67,22 @@ namespace Azure.ResourceManager.Sql
         {
             _sqlServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sqlServerServersApiVersion);
-            _sqlServerServersRestClient = new ServersRestOperations(_sqlServerServersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
+            _sqlServerServersRestClient = new ServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlServerServersApiVersion);
             _sqlDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabase.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SqlDatabase.ResourceType, out string sqlDatabaseDatabasesApiVersion);
-            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(_sqlDatabaseDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
+            _sqlDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sqlDatabaseDatabasesApiVersion);
             _replicationLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ReplicationLink.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ReplicationLink.ResourceType, out string replicationLinkApiVersion);
-            _replicationLinkRestClient = new ReplicationLinksRestOperations(_replicationLinkClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
+            _replicationLinkRestClient = new ReplicationLinksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, replicationLinkApiVersion);
             _serverUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _serverUsagesRestClient = new ServerUsagesRestOperations(_serverUsagesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _serverUsagesRestClient = new ServerUsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _firewallRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", FirewallRule.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(FirewallRule.ResourceType, out string firewallRuleApiVersion);
-            _firewallRuleRestClient = new FirewallRulesRestOperations(_firewallRuleClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
+            _firewallRuleRestClient = new FirewallRulesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, firewallRuleApiVersion);
             _serverOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _serverOperationsRestClient = new ServerRestOperations(_serverOperationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _serverOperationsRestClient = new ServerRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(_tdeCertificatesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _tdeCertificatesRestClient = new TdeCertificatesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -116,98 +116,478 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RecoverableDatabases and their operations over a RecoverableDatabase. </returns>
         public virtual RecoverableDatabaseCollection GetRecoverableDatabases()
         {
-            return new RecoverableDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new RecoverableDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database&apos;s geo backup
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
+        /// Operation Id: RecoverableDatabases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<Response<RecoverableDatabase>> GetRecoverableDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetRecoverableDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database&apos;s geo backup
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}
+        /// Operation Id: RecoverableDatabases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual Response<RecoverableDatabase> GetRecoverableDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return GetRecoverableDatabases().Get(databaseName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlDatabases in the SqlDatabase. </summary>
         /// <returns> An object representing collection of SqlDatabases and their operations over a SqlDatabase. </returns>
         public virtual SqlDatabaseCollection GetSqlDatabases()
         {
-            return new SqlDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new SqlDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<Response<SqlDatabase>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlDatabases().GetAsync(databaseName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}
+        /// Operation Id: Databases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual Response<SqlDatabase> GetSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlDatabases().Get(databaseName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ElasticPools in the ElasticPool. </summary>
         /// <returns> An object representing collection of ElasticPools and their operations over a ElasticPool. </returns>
         public virtual ElasticPoolCollection GetElasticPools()
         {
-            return new ElasticPoolCollection(Client, Id);
+            return GetCachedClient(Client => new ElasticPoolCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_Get
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        public virtual async Task<Response<ElasticPool>> GetElasticPoolAsync(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            return await GetElasticPools().GetAsync(elasticPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an elastic pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/elasticPools/{elasticPoolName}
+        /// Operation Id: ElasticPools_Get
+        /// </summary>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
+        public virtual Response<ElasticPool> GetElasticPool(string elasticPoolName, CancellationToken cancellationToken = default)
+        {
+            return GetElasticPools().Get(elasticPoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerCommunicationLinks in the ServerCommunicationLink. </summary>
         /// <returns> An object representing collection of ServerCommunicationLinks and their operations over a ServerCommunicationLink. </returns>
         public virtual ServerCommunicationLinkCollection GetServerCommunicationLinks()
         {
-            return new ServerCommunicationLinkCollection(Client, Id);
+            return GetCachedClient(Client => new ServerCommunicationLinkCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Returns a server communication link.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}
+        /// Operation Id: ServerCommunicationLinks_Get
+        /// </summary>
+        /// <param name="communicationLinkName"> The name of the server communication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
+        public virtual async Task<Response<ServerCommunicationLink>> GetServerCommunicationLinkAsync(string communicationLinkName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerCommunicationLinks().GetAsync(communicationLinkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns a server communication link.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/communicationLinks/{communicationLinkName}
+        /// Operation Id: ServerCommunicationLinks_Get
+        /// </summary>
+        /// <param name="communicationLinkName"> The name of the server communication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="communicationLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
+        public virtual Response<ServerCommunicationLink> GetServerCommunicationLink(string communicationLinkName, CancellationToken cancellationToken = default)
+        {
+            return GetServerCommunicationLinks().Get(communicationLinkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceObjectives in the ServiceObjective. </summary>
         /// <returns> An object representing collection of ServiceObjectives and their operations over a ServiceObjective. </returns>
         public virtual ServiceObjectiveCollection GetServiceObjectives()
         {
-            return new ServiceObjectiveCollection(Client, Id);
+            return GetCachedClient(Client => new ServiceObjectiveCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a database service objective.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
+        /// Operation Id: ServiceObjectives_Get
+        /// </summary>
+        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
+        public virtual async Task<Response<ServiceObjective>> GetServiceObjectiveAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceObjectives().GetAsync(serviceObjectiveName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a database service objective.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/serviceObjectives/{serviceObjectiveName}
+        /// Operation Id: ServiceObjectives_Get
+        /// </summary>
+        /// <param name="serviceObjectiveName"> The name of the service objective to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serviceObjectiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
+        public virtual Response<ServiceObjective> GetServiceObjective(string serviceObjectiveName, CancellationToken cancellationToken = default)
+        {
+            return GetServiceObjectives().Get(serviceObjectiveName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicies in the ExtendedServerBlobAuditingPolicy. </summary>
         /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a ExtendedServerBlobAuditingPolicy. </returns>
         public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
         {
-            return new ExtendedServerBlobAuditingPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ExtendedServerBlobAuditingPolicyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an extended server&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedServerBlobAuditingPolicies_Get
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExtendedServerBlobAuditingPolicy>> GetExtendedServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetExtendedServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an extended server&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/extendedAuditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ExtendedServerBlobAuditingPolicies_Get
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExtendedServerBlobAuditingPolicy> GetExtendedServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetExtendedServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerBlobAuditingPolicies in the ServerBlobAuditingPolicy. </summary>
         /// <returns> An object representing collection of ServerBlobAuditingPolicies and their operations over a ServerBlobAuditingPolicy. </returns>
         public virtual ServerBlobAuditingPolicyCollection GetServerBlobAuditingPolicies()
         {
-            return new ServerBlobAuditingPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerBlobAuditingPolicyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ServerBlobAuditingPolicies_Get
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerBlobAuditingPolicy>> GetServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server&apos;s blob auditing policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/auditingSettings/{blobAuditingPolicyName}
+        /// Operation Id: ServerBlobAuditingPolicies_Get
+        /// </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerBlobAuditingPolicy> GetServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerAdvisors in the ServerAdvisor. </summary>
         /// <returns> An object representing collection of ServerAdvisors and their operations over a ServerAdvisor. </returns>
         public virtual ServerAdvisorCollection GetServerAdvisors()
         {
-            return new ServerAdvisorCollection(Client, Id);
+            return GetCachedClient(Client => new ServerAdvisorCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server advisor.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}
+        /// Operation Id: ServerAdvisors_Get
+        /// </summary>
+        /// <param name="advisorName"> The name of the Server Advisor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        public virtual async Task<Response<ServerAdvisor>> GetServerAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerAdvisors().GetAsync(advisorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server advisor.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}
+        /// Operation Id: ServerAdvisors_Get
+        /// </summary>
+        /// <param name="advisorName"> The name of the Server Advisor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        public virtual Response<ServerAdvisor> GetServerAdvisor(string advisorName, CancellationToken cancellationToken = default)
+        {
+            return GetServerAdvisors().Get(advisorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EncryptionProtectors in the EncryptionProtector. </summary>
         /// <returns> An object representing collection of EncryptionProtectors and their operations over a EncryptionProtector. </returns>
         public virtual EncryptionProtectorCollection GetEncryptionProtectors()
         {
-            return new EncryptionProtectorCollection(Client, Id);
+            return GetCachedClient(Client => new EncryptionProtectorCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server encryption protector.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}
+        /// Operation Id: EncryptionProtectors_Get
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<EncryptionProtector>> GetEncryptionProtectorAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetEncryptionProtectors().GetAsync(encryptionProtectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server encryption protector.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/encryptionProtector/{encryptionProtectorName}
+        /// Operation Id: EncryptionProtectors_Get
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<EncryptionProtector> GetEncryptionProtector(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            return GetEncryptionProtectors().Get(encryptionProtectorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FailoverGroups in the FailoverGroup. </summary>
         /// <returns> An object representing collection of FailoverGroups and their operations over a FailoverGroup. </returns>
         public virtual FailoverGroupCollection GetFailoverGroups()
         {
-            return new FailoverGroupCollection(Client, Id);
+            return GetCachedClient(Client => new FailoverGroupCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}
+        /// Operation Id: FailoverGroups_Get
+        /// </summary>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
+        public virtual async Task<Response<FailoverGroup>> GetFailoverGroupAsync(string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return await GetFailoverGroups().GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/failoverGroups/{failoverGroupName}
+        /// Operation Id: FailoverGroups_Get
+        /// </summary>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
+        public virtual Response<FailoverGroup> GetFailoverGroup(string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return GetFailoverGroups().Get(failoverGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FirewallRules in the FirewallRule. </summary>
         /// <returns> An object representing collection of FirewallRules and their operations over a FirewallRule. </returns>
         public virtual FirewallRuleCollection GetFirewallRules()
         {
-            return new FirewallRuleCollection(Client, Id);
+            return GetCachedClient(Client => new FirewallRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a firewall rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules/{firewallRuleName}
+        /// Operation Id: FirewallRules_Get
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        public virtual async Task<Response<FirewallRule>> GetFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a firewall rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/firewallRules/{firewallRuleName}
+        /// Operation Id: FirewallRules_Get
+        /// </summary>
+        /// <param name="firewallRuleName"> The name of the firewall rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        public virtual Response<FirewallRule> GetFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of JobAgents in the JobAgent. </summary>
         /// <returns> An object representing collection of JobAgents and their operations over a JobAgent. </returns>
         public virtual JobAgentCollection GetJobAgents()
         {
-            return new JobAgentCollection(Client, Id);
+            return GetCachedClient(Client => new JobAgentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a job agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
+        /// Operation Id: JobAgents_Get
+        /// </summary>
+        /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
+        public virtual async Task<Response<JobAgent>> GetJobAgentAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        {
+            return await GetJobAgents().GetAsync(jobAgentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a job agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
+        /// Operation Id: JobAgents_Get
+        /// </summary>
+        /// <param name="jobAgentName"> The name of the job agent to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
+        public virtual Response<JobAgent> GetJobAgent(string jobAgentName, CancellationToken cancellationToken = default)
+        {
+            return GetJobAgents().Get(jobAgentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the PrivateEndpointConnection. </summary>
         /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnection. </returns>
         public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
         {
-            return new PrivateEndpointConnectionCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateEndpointConnectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a private endpoint connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual async Task<Response<PrivateEndpointConnection>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a private endpoint connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateEndpointConnections/{privateEndpointConnectionName}
+        /// Operation Id: PrivateEndpointConnections_Get
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        public virtual Response<PrivateEndpointConnection> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateLinkResources in the PrivateLinkResource. </summary>
         /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
         public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
         {
-            return new PrivateLinkResourceCollection(Client, Id);
+            return GetCachedClient(Client => new PrivateLinkResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a private link resource for SQL server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
+        {
+            return await GetPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a private link resource for SQL server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}
+        /// Operation Id: PrivateLinkResources_Get
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        {
+            return GetPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a ServerAutomaticTuning along with the instance operations that can be performed on it in the SqlServer. </summary>
@@ -221,84 +601,400 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ServerAzureADAdministrators and their operations over a ServerAzureADAdministrator. </returns>
         public virtual ServerAzureADAdministratorCollection GetServerAzureADAdministrators()
         {
-            return new ServerAzureADAdministratorCollection(Client, Id);
+            return GetCachedClient(Client => new ServerAzureADAdministratorCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Azure Active Directory administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}
+        /// Operation Id: ServerAzureADAdministrators_Get
+        /// </summary>
+        /// <param name="administratorName"> The name of server active directory administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerAzureADAdministrator>> GetServerAzureADAdministratorAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerAzureADAdministrators().GetAsync(administratorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Azure Active Directory administrator.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}
+        /// Operation Id: ServerAzureADAdministrators_Get
+        /// </summary>
+        /// <param name="administratorName"> The name of server active directory administrator. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerAzureADAdministrator> GetServerAzureADAdministrator(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        {
+            return GetServerAzureADAdministrators().Get(administratorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerAzureADOnlyAuthentications in the ServerAzureADOnlyAuthentication. </summary>
         /// <returns> An object representing collection of ServerAzureADOnlyAuthentications and their operations over a ServerAzureADOnlyAuthentication. </returns>
         public virtual ServerAzureADOnlyAuthenticationCollection GetServerAzureADOnlyAuthentications()
         {
-            return new ServerAzureADOnlyAuthenticationCollection(Client, Id);
+            return GetCachedClient(Client => new ServerAzureADOnlyAuthenticationCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a specific Azure Active Directory only authentication property.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ServerAzureADOnlyAuthentications_Get
+        /// </summary>
+        /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerAzureADOnlyAuthentication>> GetServerAzureADOnlyAuthenticationAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerAzureADOnlyAuthentications().GetAsync(authenticationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific Azure Active Directory only authentication property.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}
+        /// Operation Id: ServerAzureADOnlyAuthentications_Get
+        /// </summary>
+        /// <param name="authenticationName"> The name of server azure active directory only authentication. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerAzureADOnlyAuthentication> GetServerAzureADOnlyAuthentication(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
+        {
+            return GetServerAzureADOnlyAuthentications().Get(authenticationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerDevOpsAuditingSettings in the ServerDevOpsAuditingSettings. </summary>
         /// <returns> An object representing collection of ServerDevOpsAuditingSettings and their operations over a ServerDevOpsAuditingSettings. </returns>
         public virtual ServerDevOpsAuditingSettingsCollection GetServerDevOpsAuditingSettings()
         {
-            return new ServerDevOpsAuditingSettingsCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDevOpsAuditingSettingsCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server&apos;s DevOps audit settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}
+        /// Operation Id: ServerDevOpsAuditSettings_Get
+        /// </summary>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
+        public virtual async Task<Response<ServerDevOpsAuditingSettings>> GetServerDevOpsAuditingSettingsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerDevOpsAuditingSettings().GetAsync(devOpsAuditingSettingsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server&apos;s DevOps audit settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}
+        /// Operation Id: ServerDevOpsAuditSettings_Get
+        /// </summary>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be &apos;default&apos;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
+        public virtual Response<ServerDevOpsAuditingSettings> GetServerDevOpsAuditingSettings(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        {
+            return GetServerDevOpsAuditingSettings().Get(devOpsAuditingSettingsName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerDnsAliases in the ServerDnsAlias. </summary>
         /// <returns> An object representing collection of ServerDnsAliases and their operations over a ServerDnsAlias. </returns>
         public virtual ServerDnsAliasCollection GetServerDnsAliases()
         {
-            return new ServerDnsAliasCollection(Client, Id);
+            return GetCachedClient(Client => new ServerDnsAliasCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        public virtual async Task<Response<ServerDnsAlias>> GetServerDnsAliasAsync(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerDnsAliases().GetAsync(dnsAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server DNS alias.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}
+        /// Operation Id: ServerDnsAliases_Get
+        /// </summary>
+        /// <param name="dnsAliasName"> The name of the server dns alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        public virtual Response<ServerDnsAlias> GetServerDnsAlias(string dnsAliasName, CancellationToken cancellationToken = default)
+        {
+            return GetServerDnsAliases().Get(dnsAliasName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerKeys in the ServerKey. </summary>
         /// <returns> An object representing collection of ServerKeys and their operations over a ServerKey. </returns>
         public virtual ServerKeyCollection GetServerKeys()
         {
-            return new ServerKeyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerKeyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
+        /// <param name="keyName"> The name of the server key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        public virtual async Task<Response<ServerKey>> GetServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerKeys().GetAsync(keyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server key.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/keys/{keyName}
+        /// Operation Id: ServerKeys_Get
+        /// </summary>
+        /// <param name="keyName"> The name of the server key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        public virtual Response<ServerKey> GetServerKey(string keyName, CancellationToken cancellationToken = default)
+        {
+            return GetServerKeys().Get(keyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerSecurityAlertPolicies in the ServerSecurityAlertPolicy. </summary>
         /// <returns> An object representing collection of ServerSecurityAlertPolicies and their operations over a ServerSecurityAlertPolicy. </returns>
         public virtual ServerSecurityAlertPolicyCollection GetServerSecurityAlertPolicies()
         {
-            return new ServerSecurityAlertPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerSecurityAlertPolicyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a server&apos;s security alert policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}
+        /// Operation Id: ServerSecurityAlertPolicies_Get
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerSecurityAlertPolicy>> GetServerSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a server&apos;s security alert policy.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}
+        /// Operation Id: ServerSecurityAlertPolicies_Get
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerSecurityAlertPolicy> GetServerSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetServerSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerVulnerabilityAssessments in the ServerVulnerabilityAssessment. </summary>
         /// <returns> An object representing collection of ServerVulnerabilityAssessments and their operations over a ServerVulnerabilityAssessment. </returns>
         public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments()
         {
-            return new ServerVulnerabilityAssessmentCollection(Client, Id);
+            return GetCachedClient(Client => new ServerVulnerabilityAssessmentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the server&apos;s vulnerability assessment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
+        /// Operation Id: ServerVulnerabilityAssessments_Get
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerVulnerabilityAssessment>> GetServerVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the server&apos;s vulnerability assessment.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}
+        /// Operation Id: ServerVulnerabilityAssessments_Get
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerVulnerabilityAssessment> GetServerVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return GetServerVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SyncAgents in the SyncAgent. </summary>
         /// <returns> An object representing collection of SyncAgents and their operations over a SyncAgent. </returns>
         public virtual SyncAgentCollection GetSyncAgents()
         {
-            return new SyncAgentCollection(Client, Id);
+            return GetCachedClient(Client => new SyncAgentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a sync agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
+        /// <param name="syncAgentName"> The name of the sync agent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        public virtual async Task<Response<SyncAgent>> GetSyncAgentAsync(string syncAgentName, CancellationToken cancellationToken = default)
+        {
+            return await GetSyncAgents().GetAsync(syncAgentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a sync agent.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
+        /// Operation Id: SyncAgents_Get
+        /// </summary>
+        /// <param name="syncAgentName"> The name of the sync agent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="syncAgentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
+        public virtual Response<SyncAgent> GetSyncAgent(string syncAgentName, CancellationToken cancellationToken = default)
+        {
+            return GetSyncAgents().Get(syncAgentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkRules in the VirtualNetworkRule. </summary>
         /// <returns> An object representing collection of VirtualNetworkRules and their operations over a VirtualNetworkRule. </returns>
         public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
         {
-            return new VirtualNetworkRuleCollection(Client, Id);
+            return GetCachedClient(Client => new VirtualNetworkRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
+        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public virtual async Task<Response<VirtualNetworkRule>> GetVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
+        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        public virtual Response<VirtualNetworkRule> GetVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of OutboundFirewallRules in the OutboundFirewallRule. </summary>
         /// <returns> An object representing collection of OutboundFirewallRules and their operations over a OutboundFirewallRule. </returns>
         public virtual OutboundFirewallRuleCollection GetOutboundFirewallRules()
         {
-            return new OutboundFirewallRuleCollection(Client, Id);
+            return GetCachedClient(Client => new OutboundFirewallRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an outbound firewall rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}
+        /// Operation Id: OutboundFirewallRules_Get
+        /// </summary>
+        /// <param name="outboundRuleFqdn"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
+        public virtual async Task<Response<OutboundFirewallRule>> GetOutboundFirewallRuleAsync(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        {
+            return await GetOutboundFirewallRules().GetAsync(outboundRuleFqdn, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an outbound firewall rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/outboundFirewallRules/{outboundRuleFqdn}
+        /// Operation Id: OutboundFirewallRules_Get
+        /// </summary>
+        /// <param name="outboundRuleFqdn"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleFqdn"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleFqdn"/> is null. </exception>
+        public virtual Response<OutboundFirewallRule> GetOutboundFirewallRule(string outboundRuleFqdn, CancellationToken cancellationToken = default)
+        {
+            return GetOutboundFirewallRules().Get(outboundRuleFqdn, cancellationToken);
         }
 
         /// <summary> Gets a collection of RestorableDroppedDatabases in the RestorableDroppedDatabase. </summary>
         /// <returns> An object representing collection of RestorableDroppedDatabases and their operations over a RestorableDroppedDatabase. </returns>
         public virtual RestorableDroppedDatabaseCollection GetRestorableDroppedDatabases()
         {
-            return new RestorableDroppedDatabaseCollection(Client, Id);
+            return GetCachedClient(Client => new RestorableDroppedDatabaseCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a restorable dropped database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
+        /// Operation Id: RestorableDroppedDatabases_Get
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        public virtual async Task<Response<RestorableDroppedDatabase>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        {
+            return await GetRestorableDroppedDatabases().GetAsync(restorableDroppedDatabaseId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a restorable dropped database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}
+        /// Operation Id: RestorableDroppedDatabases_Get
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        public virtual Response<RestorableDroppedDatabase> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken = default)
+        {
+            return GetRestorableDroppedDatabases().Get(restorableDroppedDatabaseId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerConnectionPolicies in the ServerConnectionPolicy. </summary>
         /// <returns> An object representing collection of ServerConnectionPolicies and their operations over a ServerConnectionPolicy. </returns>
         public virtual ServerConnectionPolicyCollection GetServerConnectionPolicies()
         {
-            return new ServerConnectionPolicyCollection(Client, Id);
+            return GetCachedClient(Client => new ServerConnectionPolicyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a server connection policy
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
+        /// Operation Id: ServerConnectionPolicies_Get
+        /// </summary>
+        /// <param name="connectionPolicyName"> The name of the connection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServerConnectionPolicy>> GetServerConnectionPolicyAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerConnectionPolicies().GetAsync(connectionPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server connection policy
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/connectionPolicies/{connectionPolicyName}
+        /// Operation Id: ServerConnectionPolicies_Get
+        /// </summary>
+        /// <param name="connectionPolicyName"> The name of the connection policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServerConnectionPolicy> GetServerConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetServerConnectionPolicies().Get(connectionPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +1004,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SqlServer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Get");
             scope.Start();
@@ -316,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sqlServerServersClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,7 +1037,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _sqlServerServersClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,9 +1052,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// Operation Id: Servers_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Delete");
             scope.Start();
@@ -366,7 +1062,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlServerServersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -382,9 +1078,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// Operation Id: Servers_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Delete");
             scope.Start();
@@ -392,7 +1088,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerServersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new SqlArmOperation(_sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -408,21 +1104,21 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// Operation Id: Servers_Update
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> The requested server resource state. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public async virtual Task<ArmOperation<SqlServer>> UpdateAsync(bool waitForCompletion, SqlServerUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SqlServer>> UpdateAsync(WaitUntil waitUntil, PatchableSqlServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Update");
             scope.Start();
             try
             {
-                var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = await _sqlServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -438,21 +1134,21 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
         /// Operation Id: Servers_Update
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
-        /// <param name="options"> The requested server resource state. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The requested server resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual ArmOperation<SqlServer> Update(bool waitForCompletion, SqlServerUpdateOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SqlServer> Update(WaitUntil waitUntil, PatchableSqlServerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServer.Update");
             scope.Start();
             try
             {
-                var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options, cancellationToken);
-                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                var response = _sqlServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new SqlArmOperation<SqlServer>(new SqlServerOperationSource(Client), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -693,7 +1389,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="parameters"> The FirewallRuleList to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<Response<FirewallRule>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FirewallRule>> ReplaceFirewallRuleAsync(FirewallRuleList parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -826,11 +1522,11 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates
         /// Operation Id: TdeCertificates_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation> CreateTdeCertificateAsync(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -840,7 +1536,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _tdeCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -856,11 +1552,11 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/tdeCertificates
         /// Operation Id: TdeCertificates_Create
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation CreateTdeCertificate(bool waitForCompletion, TdeCertificate parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateTdeCertificate(WaitUntil waitUntil, TdeCertificate parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -870,7 +1566,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _tdeCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 var operation = new SqlArmOperation(_tdeCertificatesClientDiagnostics, Pipeline, _tdeCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -886,11 +1582,11 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import
         /// Operation Id: Servers_ImportDatabase
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(bool waitForCompletion, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -900,7 +1596,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _sqlServerServersRestClient.ImportDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -916,11 +1612,11 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/import
         /// Operation Id: Servers_ImportDatabase
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The database import request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(bool waitForCompletion, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, ImportNewDatabaseDefinition parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -930,7 +1626,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerServersRestClient.ImportDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters, cancellationToken);
                 var operation = new SqlArmOperation<ImportExportOperationResult>(new ImportExportOperationResultOperationSource(), _sqlServerServersClientDiagnostics, Pipeline, _sqlServerServersRestClient.CreateImportDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -950,7 +1646,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -961,7 +1657,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -992,7 +1688,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -1011,7 +1707,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -1019,10 +1715,10 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -1049,10 +1745,10 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -1071,7 +1767,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServer>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -1081,7 +1777,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -1110,7 +1806,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return Response.FromValue(new SqlServer(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

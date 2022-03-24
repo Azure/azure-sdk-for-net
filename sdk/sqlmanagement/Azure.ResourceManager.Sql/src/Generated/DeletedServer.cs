@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _deletedServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string deletedServerApiVersion);
-            _deletedServerRestClient = new DeletedServersRestOperations(_deletedServerClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
+            _deletedServerRestClient = new DeletedServersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedServerApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DeletedServers_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeletedServer>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedServer>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServer.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _deletedServerRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deletedServerClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _deletedServerRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _deletedServerClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedServer(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}/recover
         /// Operation Id: DeletedServers_Recover
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation<DeletedServer>> RecoverAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DeletedServer>> RecoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServer.Recover");
             scope.Start();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _deletedServerRestClient.RecoverAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<DeletedServer>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -161,9 +161,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}/recover
         /// Operation Id: DeletedServers_Recover
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DeletedServer> Recover(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DeletedServer> Recover(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _deletedServerClientDiagnostics.CreateScope("DeletedServer.Recover");
             scope.Start();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _deletedServerRestClient.Recover(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SqlArmOperation<DeletedServer>(new DeletedServerOperationSource(Client), _deletedServerClientDiagnostics, Pipeline, _deletedServerRestClient.CreateRecoverRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

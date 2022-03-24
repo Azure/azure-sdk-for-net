@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the private endpoint connection on an application gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private endpoint connection resource. </param>
         /// <param name="linkIdentifier"> The consumer link id. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string type, PrivateEndpointData privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
+        internal ApplicationGatewayPrivateEndpointConnectionData(string id, string name, string etag, string resourceType, PrivateEndpointData privateEndpoint, PrivateLinkServiceConnectionState privateLinkServiceConnectionState, ProvisioningState? provisioningState, string linkIdentifier) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The resource of private end point. </summary>
         public PrivateEndpointData PrivateEndpoint { get; }
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>

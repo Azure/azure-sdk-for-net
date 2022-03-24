@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusSubscriptionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="messageCount"> Number of messages. </param>
         /// <param name="createdAt"> Exact time the message was created. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, long? messageCount, DateTimeOffset? createdAt, DateTimeOffset? accessedAt, DateTimeOffset? updatedAt, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, type, systemData)
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdAt, DateTimeOffset? accessedAt, DateTimeOffset? updatedAt, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, EntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties) : base(id, name, resourceType, systemData)
         {
             MessageCount = messageCount;
             CreatedAt = createdAt;

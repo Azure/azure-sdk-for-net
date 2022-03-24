@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute
         {
             _diskClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", Disk.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(Disk.ResourceType, out string diskApiVersion);
-            _diskRestClient = new DisksRestOperations(_diskClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskApiVersion);
+            _diskRestClient = new DisksRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, diskApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
         /// Operation Id: Disks_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public async virtual Task<ArmOperation<Disk>> CreateOrUpdateAsync(bool waitForCompletion, string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<Disk>> CreateOrUpdateAsync(WaitUntil waitUntil, string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
             Argument.AssertNotNull(disk, nameof(disk));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _diskRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk, cancellationToken).ConfigureAwait(false);
                 var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}
         /// Operation Id: Disks_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="diskName"> The name of the managed disk that is being created. The name can&apos;t be changed after the disk is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
         /// <param name="disk"> Disk object supplied in the body of the Put disk operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> or <paramref name="disk"/> is null. </exception>
-        public virtual ArmOperation<Disk> CreateOrUpdate(bool waitForCompletion, string diskName, DiskData disk, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Disk> CreateOrUpdate(WaitUntil waitUntil, string diskName, DiskData disk, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
             Argument.AssertNotNull(disk, nameof(disk));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _diskRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk, cancellationToken);
                 var operation = new ComputeArmOperation<Disk>(new DiskOperationSource(Client), _diskClientDiagnostics, Pipeline, _diskRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, disk).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<Disk>> GetAsync(string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Disk>> GetAsync(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _diskRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _diskClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Disk(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _diskRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, diskName, cancellationToken);
                 if (response.Value == null)
-                    throw _diskClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new Disk(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="diskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskName"/> is null. </exception>
-        public async virtual Task<Response<Disk>> GetIfExistsAsync(string diskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Disk>> GetIfExistsAsync(string diskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
 

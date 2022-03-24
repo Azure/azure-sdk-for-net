@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ExtendedLocation
         /// <returns> An object representing collection of CustomLocations and their operations over a CustomLocation. </returns>
         public virtual CustomLocationCollection GetCustomLocations()
         {
-            return new CustomLocationCollection(Client, Id);
+            return GetCachedClient(Client => new CustomLocationCollection(Client, Id));
         }
     }
 }

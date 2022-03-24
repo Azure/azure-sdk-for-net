@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _vaultKeyKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string vaultKeyKeysApiVersion);
-            _vaultKeyKeysRestClient = new KeysRestOperations(_vaultKeyKeysClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyKeysApiVersion);
+            _vaultKeyKeysRestClient = new KeysRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, vaultKeyKeysApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,7 +87,35 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An object representing collection of VaultKeyVersions and their operations over a VaultKeyVersion. </returns>
         public virtual VaultKeyVersionCollection GetVaultKeyVersions()
         {
-            return new VaultKeyVersionCollection(Client, Id);
+            return GetCachedClient(Client => new VaultKeyVersionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified version of the specified key in the specified key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// Operation Id: Keys_GetVersion
+        /// </summary>
+        /// <param name="keyVersion"> The version of the key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
+        public virtual async Task<Response<VaultKeyVersion>> GetVaultKeyVersionAsync(string keyVersion, CancellationToken cancellationToken = default)
+        {
+            return await GetVaultKeyVersions().GetAsync(keyVersion, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified version of the specified key in the specified key vault.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/keys/{keyName}/versions/{keyVersion}
+        /// Operation Id: Keys_GetVersion
+        /// </summary>
+        /// <param name="keyVersion"> The version of the key to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="keyVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVersion"/> is null. </exception>
+        public virtual Response<VaultKeyVersion> GetVaultKeyVersion(string keyVersion, CancellationToken cancellationToken = default)
+        {
+            return GetVaultKeyVersions().Get(keyVersion, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault
         /// Operation Id: Keys_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<VaultKey>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKey>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _vaultKeyKeysClientDiagnostics.CreateScope("VaultKey.Get");
             scope.Start();
@@ -104,7 +132,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _vaultKeyKeysClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VaultKey(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +156,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _vaultKeyKeysClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new VaultKey(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public async virtual Task<Response<VaultKey>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKey>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -158,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues[key] = value;
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VaultKey(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -189,7 +217,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues[key] = value;
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new VaultKey(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -208,7 +236,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public async virtual Task<Response<VaultKey>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKey>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
@@ -216,10 +244,10 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                await TagResource.DeleteAsync(true, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VaultKey(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -246,10 +274,10 @@ namespace Azure.ResourceManager.KeyVault
             scope.Start();
             try
             {
-                TagResource.Delete(true, cancellationToken: cancellationToken);
+                TagResource.Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new VaultKey(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -268,7 +296,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public async virtual Task<Response<VaultKey>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VaultKey>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -278,7 +306,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var originalTags = await TagResource.GetAsync(cancellationToken).ConfigureAwait(false);
                 originalTags.Value.Data.TagValues.Remove(key);
-                await TagResource.CreateOrUpdateAsync(true, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await TagResource.CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
                 var originalResponse = await _vaultKeyKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VaultKey(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }
@@ -307,7 +335,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var originalTags = TagResource.Get(cancellationToken);
                 originalTags.Value.Data.TagValues.Remove(key);
-                TagResource.CreateOrUpdate(true, originalTags.Value.Data, cancellationToken: cancellationToken);
+                TagResource.CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 var originalResponse = _vaultKeyKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new VaultKey(Client, originalResponse.Value), originalResponse.GetRawResponse());
             }

@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Create the loadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            LoadBalancer loadBalancer = (await loadBalancerCollection.CreateOrUpdateAsync(true, lbName, loadBalancerData)).Value;
+            LoadBalancer loadBalancer = (await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, loadBalancerData)).Value;
 
             // Associate the nic with LB
             //nic1.GetNetworkInterfaceIPConfigurations().List().First().`
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put Nics
             var networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
-            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic1name, nic1.Data);
+            var createOrUpdateOperation1 = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic1name, nic1.Data);
             await createOrUpdateOperation1.WaitForCompletionAsync();
 
-            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic2name, nic2.Data);
+            var createOrUpdateOperation2 = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic2name, nic2.Data);
             await createOrUpdateOperation2.WaitForCompletionAsync();
 
-            var createOrUpdateOperation3 = await networkInterfaceCollection.CreateOrUpdateAsync(true, nic3name, nic3.Data);
+            var createOrUpdateOperation3 = await networkInterfaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nic3name, nic3.Data);
             await createOrUpdateOperation3.WaitForCompletionAsync();
 
             // Get Nics
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network.Tests
             //Assert.NotNull(publicip.Value.Data.IpConfiguration.Etag);
 
             // Delete LoadBalancer
-            Operation deleteOperation = await (await loadBalancerCollection.GetAsync(lbName)).Value.DeleteAsync(true);
+            Operation deleteOperation = await (await loadBalancerCollection.GetAsync(lbName)).Value.DeleteAsync(WaitUntil.Completed);
             await deleteOperation.WaitForCompletionResponseAsync();
 
             // Verify Delete
@@ -298,12 +298,12 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.IsEmpty(listLoadBalancer);
 
             // Delete all NetworkInterfaces
-            await (await networkInterfaceCollection.GetAsync(nic1name)).Value.DeleteAsync(true);
-            await (await networkInterfaceCollection.GetAsync(nic2name)).Value.DeleteAsync(true);
-            await (await networkInterfaceCollection.GetAsync(nic3name)).Value.DeleteAsync(true);
+            await (await networkInterfaceCollection.GetAsync(nic1name)).Value.DeleteAsync(WaitUntil.Completed);
+            await (await networkInterfaceCollection.GetAsync(nic2name)).Value.DeleteAsync(WaitUntil.Completed);
+            await (await networkInterfaceCollection.GetAsync(nic3name)).Value.DeleteAsync(WaitUntil.Completed);
 
             // Delete all PublicIPAddresses
-            await (await resourceGroup.GetPublicIPAddresses().GetAsync(lbPublicIpName)).Value.DeleteAsync(true);
+            await (await resourceGroup.GetPublicIPAddresses().GetAsync(lbPublicIpName)).Value.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task<BackendAddressPool> GetFirstPoolAsync(LoadBalancer loadBalancer)

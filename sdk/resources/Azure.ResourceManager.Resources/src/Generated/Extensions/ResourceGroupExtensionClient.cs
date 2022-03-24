@@ -36,42 +36,42 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
         public virtual DeploymentCollection GetDeployments()
         {
-            return new DeploymentCollection(Client, Id);
+            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of Applications in the Application. </summary>
         /// <returns> An object representing collection of Applications and their operations over a Application. </returns>
         public virtual ApplicationCollection GetApplications()
         {
-            return new ApplicationCollection(Client, Id);
+            return GetCachedClient(Client => new ApplicationCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ApplicationDefinitions in the ApplicationDefinition. </summary>
         /// <returns> An object representing collection of ApplicationDefinitions and their operations over a ApplicationDefinition. </returns>
         public virtual ApplicationDefinitionCollection GetApplicationDefinitions()
         {
-            return new ApplicationDefinitionCollection(Client, Id);
+            return GetCachedClient(Client => new ApplicationDefinitionCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of JitRequests in the JitRequest. </summary>
         /// <returns> An object representing collection of JitRequests and their operations over a JitRequest. </returns>
         public virtual JitRequestCollection GetJitRequests()
         {
-            return new JitRequestCollection(Client, Id);
+            return GetCachedClient(Client => new JitRequestCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DeploymentScripts in the DeploymentScript. </summary>
         /// <returns> An object representing collection of DeploymentScripts and their operations over a DeploymentScript. </returns>
         public virtual DeploymentScriptCollection GetDeploymentScripts()
         {
-            return new DeploymentScriptCollection(Client, Id);
+            return GetCachedClient(Client => new DeploymentScriptCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of TemplateSpecs in the TemplateSpec. </summary>
         /// <returns> An object representing collection of TemplateSpecs and their operations over a TemplateSpec. </returns>
         public virtual TemplateSpecCollection GetTemplateSpecs()
         {
-            return new TemplateSpecCollection(Client, Id);
+            return GetCachedClient(Client => new TemplateSpecCollection(Client, Id));
         }
     }
 }

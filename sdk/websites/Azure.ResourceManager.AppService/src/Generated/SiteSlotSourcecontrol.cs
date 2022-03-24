@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotSourcecontrolWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotSourcecontrolWebAppsApiVersion);
-            _siteSlotSourcecontrolWebAppsRestClient = new WebAppsRestOperations(_siteSlotSourcecontrolWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSourcecontrolWebAppsApiVersion);
+            _siteSlotSourcecontrolWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotSourcecontrolWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSourceControlSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotSourcecontrol>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSourcecontrol>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotSourcecontrolWebAppsRestClient.GetSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotSourcecontrol(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotSourcecontrolWebAppsRestClient.GetSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotSourcecontrol(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControlSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, string additionalFlags = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.Delete");
             scope.Start();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotSourcecontrolWebAppsRestClient.DeleteSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControlSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, string additionalFlags = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotSourcecontrolWebAppsClientDiagnostics.CreateScope("SiteSlotSourcecontrol.Delete");
             scope.Start();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotSourcecontrolWebAppsRestClient.DeleteSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, additionalFlags, cancellationToken);
                 var operation = new AppServiceArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public async virtual Task<Response<SiteSlotSourcecontrol>> UpdateAsync(SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotSourcecontrol>> UpdateAsync(SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControlSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public async virtual Task<ArmOperation<SiteSlotSourcecontrol>> CreateOrUpdateAsync(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteSlotSourcecontrol>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotSourcecontrolWebAppsRestClient.CreateOrUpdateSourceControlSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl, cancellationToken).ConfigureAwait(false);
                 var operation = new AppServiceArmOperation<SiteSlotSourcecontrol>(new SiteSlotSourcecontrolOperationSource(Client), _siteSlotSourcecontrolWebAppsClientDiagnostics, Pipeline, _siteSlotSourcecontrolWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControlSlot
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="siteSourceControl"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteSourceControl"/> is null. </exception>
-        public virtual ArmOperation<SiteSlotSourcecontrol> CreateOrUpdate(bool waitForCompletion, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteSlotSourcecontrol> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData siteSourceControl, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(siteSourceControl, nameof(siteSourceControl));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotSourcecontrolWebAppsRestClient.CreateOrUpdateSourceControlSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl, cancellationToken);
                 var operation = new AppServiceArmOperation<SiteSlotSourcecontrol>(new SiteSlotSourcecontrolOperationSource(Client), _siteSlotSourcecontrolWebAppsClientDiagnostics, Pipeline, _siteSlotSourcecontrolWebAppsRestClient.CreateCreateOrUpdateSourceControlSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, siteSourceControl).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

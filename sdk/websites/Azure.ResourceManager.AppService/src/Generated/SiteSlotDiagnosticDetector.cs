@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteSlotDiagnosticDetectorDiagnosticsApiVersion);
-            _siteSlotDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(_siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticDetectorDiagnosticsApiVersion);
+            _siteSlotDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteSlotDiagnosticDetectorDiagnosticsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteSlotDiagnosticDetector>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteSlotDiagnosticDetector>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetector.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotDiagnosticDetector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteSlotDiagnosticDetector(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DiagnosticDetectorResponse>> ExecuteSiteDetectorSlotAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticDetectorResponse>> ExecuteSiteDetectorSlotAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
             using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetector.ExecuteSiteDetectorSlot");
             scope.Start();

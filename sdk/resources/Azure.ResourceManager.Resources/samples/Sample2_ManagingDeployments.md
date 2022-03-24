@@ -30,7 +30,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -58,7 +58,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
         }
     }
 });
-ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -75,7 +75,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
     Template = File.ReadAllText("storage-template.json"),
     Parameters = File.ReadAllText("storage-parameters.json")
 });
-ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -99,7 +99,7 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
     },
     Parameters = parameters
 });
-ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(true, deploymentName, input);
+ArmOperation<Deployment> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
 Deployment deployment = lro.Value;
 ```
 
@@ -124,7 +124,7 @@ DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
 // Now we can get the deployment with GetAsync()
 Deployment deployment = await deploymentCollection.GetAsync("myDeployment");
 // With DeleteAsync(), we can delete the deployment
-await deployment.DeleteAsync(true);
+await deployment.DeleteAsync(WaitUntil.Completed);
 ```
 
 

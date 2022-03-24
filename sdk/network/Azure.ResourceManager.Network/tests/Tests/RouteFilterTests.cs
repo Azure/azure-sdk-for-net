@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Update route filter
             filterRule.Data.Access = Access.Deny;
-            var operation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(true, ruleName, filterRule.Data));
+            var operation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, filterRule.Data));
             await operation.WaitForCompletionAsync();
             Assert.AreEqual(ruleName, filterRule.Data.Name);
             Assert.AreEqual(Access.Deny, filterRule.Data.Access);
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(ruleName, filter.Data.Rules[0].Name);
 
             // Delete fileter rule
-            await filterRule.DeleteAsync(true);
+            await filterRule.DeleteAsync(WaitUntil.Completed);
 
             var rules = await filter.GetRouteFilterRules().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(rules);
 
             // Delete filter
-            await filter.DeleteAsync(true);
+            await filter.DeleteAsync(WaitUntil.Completed);
             allFilters = await subscription.GetRouteFiltersAsync().ToEnumerableAsync();
             Assert.False(allFilters.Any(f => filter.Id == f.Id));
         }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Put route filter
-            Operation<RouteFilter> filterOperation = InstrumentOperation(await filterCollection.CreateOrUpdateAsync(true, filterName, filter));
+            Operation<RouteFilter> filterOperation = InstrumentOperation(await filterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, filter));
             return await filterOperation.WaitForCompletionAsync();
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
 
             // Put route filter rule
-            Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(true, ruleName, rule);
+            Operation<RouteFilterRule> ruleOperation = await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, rule);
             Response<RouteFilterRule> ruleResponse = await ruleOperation.WaitForCompletionAsync();
             return ruleResponse;
         }

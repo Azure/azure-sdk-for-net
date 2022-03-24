@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         {
             _databaseBlobAuditingPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", DatabaseBlobAuditingPolicy.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DatabaseBlobAuditingPolicy.ResourceType, out string databaseBlobAuditingPolicyApiVersion);
-            _databaseBlobAuditingPolicyRestClient = new DatabaseBlobAuditingPoliciesRestOperations(_databaseBlobAuditingPolicyClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseBlobAuditingPolicyApiVersion);
+            _databaseBlobAuditingPolicyRestClient = new DatabaseBlobAuditingPoliciesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, databaseBlobAuditingPolicyApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/{blobAuditingPolicyName}
         /// Operation Id: DatabaseBlobAuditingPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="parameters"> The database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<DatabaseBlobAuditingPolicy>> CreateOrUpdateAsync(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatabaseBlobAuditingPolicy>> CreateOrUpdateAsync(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _databaseBlobAuditingPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<DatabaseBlobAuditingPolicy>(Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/auditingSettings/{blobAuditingPolicyName}
         /// Operation Id: DatabaseBlobAuditingPolicies_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="parameters"> The database blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<DatabaseBlobAuditingPolicy> CreateOrUpdate(bool waitForCompletion, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatabaseBlobAuditingPolicy> CreateOrUpdate(WaitUntil waitUntil, BlobAuditingPolicyName blobAuditingPolicyName, DatabaseBlobAuditingPolicyData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _databaseBlobAuditingPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, parameters, cancellationToken);
                 var operation = new SqlArmOperation<DatabaseBlobAuditingPolicy>(Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseBlobAuditingPolicy>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseBlobAuditingPolicy>> GetAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseBlobAuditingPolicyClientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.Get");
             scope.Start();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _databaseBlobAuditingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _databaseBlobAuditingPolicyClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _databaseBlobAuditingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, blobAuditingPolicyName, cancellationToken);
                 if (response.Value == null)
-                    throw _databaseBlobAuditingPolicyClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseBlobAuditingPolicy(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseBlobAuditingPolicyClientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.Exists");
             scope.Start();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DatabaseBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseBlobAuditingPolicy>> GetIfExistsAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _databaseBlobAuditingPolicyClientDiagnostics.CreateScope("DatabaseBlobAuditingPolicyCollection.GetIfExists");
             scope.Start();

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             string hostName = "customdomaintest-1.azuretest.net";
             CdnCustomDomain cdnCustomDomain = await CreateCdnCustomDomain(cdnEndpoint, cdnCustomDomainName, hostName);
             Assert.AreEqual(cdnCustomDomainName, cdnCustomDomain.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnCustomDomains().CreateOrUpdateAsync(true, cdnCustomDomainName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await cdnEndpoint.GetCdnCustomDomains().CreateOrUpdateAsync(WaitUntil.Completed, cdnCustomDomainName, null));
         }
 
         [TestCase]

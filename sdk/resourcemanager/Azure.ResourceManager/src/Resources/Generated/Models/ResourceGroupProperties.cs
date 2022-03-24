@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource group properties. </summary>
-    internal partial class ResourceGroupProperties
+    public partial class ResourceGroupProperties
     {
         /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
         public ResourceGroupProperties()

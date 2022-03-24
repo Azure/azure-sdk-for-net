@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -39,12 +40,74 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(resourceGroup).GetInstanceFailoverGroups(locationName);
         }
 
+        /// <summary>
+        /// Gets a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
+        public static async Task<Response<InstanceFailoverGroup>> GetInstanceFailoverGroupAsync(this ResourceGroup resourceGroup, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetInstanceFailoverGroups(locationName).GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a failover group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}
+        /// Operation Id: InstanceFailoverGroups_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="failoverGroupName"> The name of the failover group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="failoverGroupName"/> is null. </exception>
+        public static Response<InstanceFailoverGroup> GetInstanceFailoverGroup(this ResourceGroup resourceGroup, string locationName, string failoverGroupName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetInstanceFailoverGroups(locationName).Get(failoverGroupName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of InstancePools in the InstancePool. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of InstancePools and their operations over a InstancePool. </returns>
         public static InstancePoolCollection GetInstancePools(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetInstancePools();
+        }
+
+        /// <summary>
+        /// Gets an instance pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
+        /// Operation Id: InstancePools_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        public static async Task<Response<InstancePool>> GetInstancePoolAsync(this ResourceGroup resourceGroup, string instancePoolName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetInstancePools().GetAsync(instancePoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an instance pool.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}
+        /// Operation Id: InstancePools_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="instancePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instancePoolName"/> is null. </exception>
+        public static Response<InstancePool> GetInstancePool(this ResourceGroup resourceGroup, string instancePoolName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetInstancePools().Get(instancePoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackups in the ResourceGroupLongTermRetentionBackup. </summary>
@@ -64,6 +127,42 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(resourceGroup).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
+        /// <summary>
+        /// Gets a long term retention backup.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
+        /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
+        public static async Task<Response<ResourceGroupLongTermRetentionBackup>> GetResourceGroupLongTermRetentionBackupAsync(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
+        /// Operation Id: LongTermRetentionBackups_GetByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="longTermRetentionDatabaseName"> The name of the database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="longTermRetentionServerName"/>, <paramref name="longTermRetentionDatabaseName"/> or <paramref name="backupName"/> is null. </exception>
+        public static Response<ResourceGroupLongTermRetentionBackup> GetResourceGroupLongTermRetentionBackup(this ResourceGroup resourceGroup, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackups in the ResourceGroupLongTermRetentionManagedInstanceBackup. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <param name="locationName"> The location of the database. </param>
@@ -81,12 +180,80 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(resourceGroup).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
+        /// <summary>
+        /// Gets a long term retention backup for a managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
+        /// Operation Id: LongTermRetentionManagedInstanceBackups_GetByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
+        public static async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackup>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a long term retention backup for a managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}
+        /// Operation Id: LongTermRetentionManagedInstanceBackups_GetByResourceGroup
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the managed database. </param>
+        /// <param name="backupName"> The backup name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/>, <paramref name="managedInstanceName"/>, <paramref name="databaseName"/> or <paramref name="backupName"/> is null. </exception>
+        public static Response<ResourceGroupLongTermRetentionManagedInstanceBackup> GetResourceGroupLongTermRetentionManagedInstanceBackup(this ResourceGroup resourceGroup, string locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ManagedInstances in the ManagedInstance. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedInstances and their operations over a ManagedInstance. </returns>
         public static ManagedInstanceCollection GetManagedInstances(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetManagedInstances();
+        }
+
+        /// <summary>
+        /// Gets a managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// Operation Id: ManagedInstances_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
+        public static async Task<Response<ManagedInstance>> GetManagedInstanceAsync(this ResourceGroup resourceGroup, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetManagedInstances().GetAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed instance.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}
+        /// Operation Id: ManagedInstances_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
+        public static Response<ManagedInstance> GetManagedInstance(this ResourceGroup resourceGroup, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServerTrustGroups in the ServerTrustGroup. </summary>
@@ -102,6 +269,38 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(resourceGroup).GetServerTrustGroups(locationName);
         }
 
+        /// <summary>
+        /// Gets a server trust group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}
+        /// Operation Id: ServerTrustGroups_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
+        public static async Task<Response<ServerTrustGroup>> GetServerTrustGroupAsync(this ResourceGroup resourceGroup, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetServerTrustGroups(locationName).GetAsync(serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server trust group.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}
+        /// Operation Id: ServerTrustGroups_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <param name="serverTrustGroupName"> The name of the server trust group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="serverTrustGroupName"/> is null. </exception>
+        public static Response<ServerTrustGroup> GetServerTrustGroup(this ResourceGroup resourceGroup, string locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of VirtualClusters in the VirtualCluster. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualClusters and their operations over a VirtualCluster. </returns>
@@ -110,12 +309,74 @@ namespace Azure.ResourceManager.Sql
             return GetExtensionClient(resourceGroup).GetVirtualClusters();
         }
 
+        /// <summary>
+        /// Gets a virtual cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
+        /// Operation Id: VirtualClusters_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        public static async Task<Response<VirtualCluster>> GetVirtualClusterAsync(this ResourceGroup resourceGroup, string virtualClusterName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetVirtualClusters().GetAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a virtual cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/virtualClusters/{virtualClusterName}
+        /// Operation Id: VirtualClusters_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
+        public static Response<VirtualCluster> GetVirtualCluster(this ResourceGroup resourceGroup, string virtualClusterName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetVirtualClusters().Get(virtualClusterName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of SqlServers in the SqlServer. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SqlServers and their operations over a SqlServer. </returns>
         public static SqlServerCollection GetSqlServers(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetSqlServers();
+        }
+
+        /// <summary>
+        /// Gets a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// Operation Id: Servers_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        public static async Task<Response<SqlServer>> GetSqlServerAsync(this ResourceGroup resourceGroup, string serverName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetSqlServers().GetAsync(serverName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a server.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}
+        /// Operation Id: Servers_Get
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        public static Response<SqlServer> GetSqlServer(this ResourceGroup resourceGroup, string serverName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetSqlServers().Get(serverName, expand, cancellationToken);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    internal partial class DescendantParentGroupInfo
+    public partial class DescendantParentGroupInfo
     {
         internal static DescendantParentGroupInfo DeserializeDescendantParentGroupInfo(JsonElement element)
         {

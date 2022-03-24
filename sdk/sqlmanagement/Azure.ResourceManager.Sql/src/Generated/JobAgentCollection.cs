@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _jobAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", JobAgent.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(JobAgent.ResourceType, out string jobAgentApiVersion);
-            _jobAgentRestClient = new JobAgentsRestOperations(_jobAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobAgentApiVersion);
+            _jobAgentRestClient = new JobAgentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, jobAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
         /// Operation Id: JobAgents_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobAgentName"> The name of the job agent to be created or updated. </param>
         /// <param name="parameters"> The requested job agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<JobAgent>> CreateOrUpdateAsync(bool waitForCompletion, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<JobAgent>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _jobAgentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation<JobAgent>(new JobAgentOperationSource(Client), _jobAgentClientDiagnostics, Pipeline, _jobAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}
         /// Operation Id: JobAgents_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobAgentName"> The name of the job agent to be created or updated. </param>
         /// <param name="parameters"> The requested job agent resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<JobAgent> CreateOrUpdate(bool waitForCompletion, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<JobAgent> CreateOrUpdate(WaitUntil waitUntil, string jobAgentName, JobAgentData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _jobAgentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters, cancellationToken);
                 var operation = new SqlArmOperation<JobAgent>(new JobAgentOperationSource(Client), _jobAgentClientDiagnostics, Pipeline, _jobAgentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
-        public async virtual Task<Response<JobAgent>> GetAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobAgent>> GetAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _jobAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _jobAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JobAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _jobAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobAgentName, cancellationToken);
                 if (response.Value == null)
-                    throw _jobAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new JobAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
-        public async virtual Task<Response<JobAgent>> GetIfExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobAgent>> GetIfExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 

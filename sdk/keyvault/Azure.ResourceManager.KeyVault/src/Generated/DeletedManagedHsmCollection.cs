@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             _deletedManagedHsmManagedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", DeletedManagedHsm.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(DeletedManagedHsm.ResourceType, out string deletedManagedHsmManagedHsmsApiVersion);
-            _deletedManagedHsmManagedHsmsRestClient = new ManagedHsmsRestOperations(_deletedManagedHsmManagedHsmsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedManagedHsmManagedHsmsApiVersion);
+            _deletedManagedHsmManagedHsmsRestClient = new ManagedHsmsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedManagedHsmManagedHsmsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<DeletedManagedHsm>> GetAsync(string location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedManagedHsm>> GetAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = await _deletedManagedHsmManagedHsmsRestClient.GetDeletedAsync(Id.SubscriptionId, location, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deletedManagedHsmManagedHsmsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedManagedHsm(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 var response = _deletedManagedHsmManagedHsmsRestClient.GetDeleted(Id.SubscriptionId, location, name, cancellationToken);
                 if (response.Value == null)
-                    throw _deletedManagedHsmManagedHsmsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedManagedHsm(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<DeletedManagedHsm>> GetIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedManagedHsm>> GetIfExistsAsync(string location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(name, nameof(name));

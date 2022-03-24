@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Tests
             ResourceGroup rg = rgOp.Value;
             var aset = await CreateGenericAvailabilitySetAsync(rg.Id);
 
-            Assert.DoesNotThrowAsync(async () => await aset.DeleteAsync(true));
+            Assert.DoesNotThrowAsync(async () => await aset.DeleteAsync(WaitUntil.Completed));
 
             var fakeId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/foo-1";
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await CreateGenericAvailabilitySetAsync(new ResourceIdentifier(fakeId)));
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Tests
 
             Assert.DoesNotThrowAsync(async () =>
             {
-                var deleteOp = await aset.DeleteAsync(false);
+                var deleteOp = await aset.DeleteAsync(WaitUntil.Started);
                 _ = await deleteOp.WaitForCompletionResponseAsync();
             });
 
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.Tests
 
             var data = ConstructGenericAvailabilitySet();
             data.Tags.Add("key", "value");
-            var asetOp = await aset.UpdateAsync(true, data);
+            var asetOp = await aset.UpdateAsync(WaitUntil.Completed, data);
             aset = asetOp.Value;
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(true, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(WaitUntil.Completed, null));
         }
 
         [TestCase]
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Tests
 
             var data = ConstructGenericAvailabilitySet();
             data.Tags.Add("key", "value");
-            var updateOp = await aset.UpdateAsync(false, data);
+            var updateOp = await aset.UpdateAsync(WaitUntil.Started, data);
             aset = await updateOp.WaitForCompletionAsync();
 
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                var updateOp = await aset.UpdateAsync(false, null);
+                var updateOp = await aset.UpdateAsync(WaitUntil.Started, null);
                 _ = await updateOp.WaitForCompletionAsync();
             });
         }

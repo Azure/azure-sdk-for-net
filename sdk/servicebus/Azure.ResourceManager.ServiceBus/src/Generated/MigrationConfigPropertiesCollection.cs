@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _migrationConfigPropertiesMigrationConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", MigrationConfigProperties.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(MigrationConfigProperties.ResourceType, out string migrationConfigPropertiesMigrationConfigsApiVersion);
-            _migrationConfigPropertiesMigrationConfigsRestClient = new MigrationConfigsRestOperations(_migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrationConfigPropertiesMigrationConfigsApiVersion);
+            _migrationConfigPropertiesMigrationConfigsRestClient = new MigrationConfigsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, migrationConfigPropertiesMigrationConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
         /// Operation Id: MigrationConfigs_CreateAndStartMigration
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="parameters"> Parameters required to create Migration Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<MigrationConfigProperties>> CreateOrUpdateAsync(bool waitForCompletion, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MigrationConfigProperties>> CreateOrUpdateAsync(WaitUntil waitUntil, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _migrationConfigPropertiesMigrationConfigsRestClient.CreateAndStartMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new ServiceBusArmOperation<MigrationConfigProperties>(new MigrationConfigPropertiesOperationSource(Client), _migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigPropertiesMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}
         /// Operation Id: MigrationConfigs_CreateAndStartMigration
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="parameters"> Parameters required to create Migration Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<MigrationConfigProperties> CreateOrUpdate(bool waitForCompletion, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MigrationConfigProperties> CreateOrUpdate(WaitUntil waitUntil, MigrationConfigurationName configName, MigrationConfigPropertiesData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _migrationConfigPropertiesMigrationConfigsRestClient.CreateAndStartMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters, cancellationToken);
                 var operation = new ServiceBusArmOperation<MigrationConfigProperties>(new MigrationConfigPropertiesOperationSource(Client), _migrationConfigPropertiesMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigPropertiesMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, parameters).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MigrationConfigProperties>> GetAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationConfigProperties>> GetAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
             using var scope = _migrationConfigPropertiesMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.Get");
             scope.Start();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _migrationConfigPropertiesMigrationConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _migrationConfigPropertiesMigrationConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MigrationConfigProperties(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _migrationConfigPropertiesMigrationConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken);
                 if (response.Value == null)
-                    throw _migrationConfigPropertiesMigrationConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new MigrationConfigProperties(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<bool>> ExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
             using var scope = _migrationConfigPropertiesMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.Exists");
             scope.Start();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<MigrationConfigProperties>> GetIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MigrationConfigProperties>> GetIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
             using var scope = _migrationConfigPropertiesMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigPropertiesCollection.GetIfExists");
             scope.Start();

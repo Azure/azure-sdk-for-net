@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         {
             _deletedSiteGlobalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string deletedSiteGlobalApiVersion);
-            _deletedSiteGlobalRestClient = new GlobalRestOperations(_deletedSiteGlobalClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
+            _deletedSiteGlobalRestClient = new GlobalRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, deletedSiteGlobalApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Global_GetDeletedWebApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DeletedSite>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeletedSite>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _deletedSiteGlobalClientDiagnostics.CreateScope("DeletedSite.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _deletedSiteGlobalRestClient.GetDeletedWebAppAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _deletedSiteGlobalClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _deletedSiteGlobalRestClient.GetDeletedWebApp(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _deletedSiteGlobalClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedSite(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

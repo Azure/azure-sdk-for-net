@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         {
             _syncAgentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string syncAgentApiVersion);
-            _syncAgentRestClient = new SyncAgentsRestOperations(_syncAgentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
+            _syncAgentRestClient = new SyncAgentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, syncAgentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SyncAgents_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SyncAgent>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncAgent>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgent.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _syncAgentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _syncAgentClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _syncAgentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _syncAgentClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SyncAgent(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
         /// Operation Id: SyncAgents_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgent.Delete");
             scope.Start();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _syncAgentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SqlArmOperation(_syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/syncAgents/{syncAgentName}
         /// Operation Id: SyncAgents_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgent.Delete");
             scope.Start();
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _syncAgentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SqlArmOperation(_syncAgentClientDiagnostics, Pipeline, _syncAgentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SyncAgents_GenerateKey
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SyncAgentKeyProperties>> GenerateKeyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SyncAgentKeyProperties>> GenerateKeyAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgent.GenerateKey");
             scope.Start();

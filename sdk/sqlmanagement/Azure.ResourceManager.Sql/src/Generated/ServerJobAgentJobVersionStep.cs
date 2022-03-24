@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverJobAgentJobVersionStepJobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
-            _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(_serverJobAgentJobVersionStepJobStepsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
+            _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: JobSteps_GetByVersion
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<ServerJobAgentJobVersionStep>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobVersionStep>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateScope("ServerJobAgentJobVersionStep.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, int.Parse(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, int.Parse(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

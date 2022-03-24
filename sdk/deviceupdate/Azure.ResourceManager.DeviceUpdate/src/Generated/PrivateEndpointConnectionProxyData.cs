@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="eTag"> ETag from NRP. </param>
         /// <param name="remotePrivateEndpoint"> Remote private endpoint details. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection proxy resource. </param>
         /// <param name="status"> Operation status. </param>
-        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string status) : base(id, name, type, systemData)
+        internal PrivateEndpointConnectionProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTag, RemotePrivateEndpoint remotePrivateEndpoint, PrivateEndpointConnectionProxyProvisioningState? provisioningState, string status) : base(id, name, resourceType, systemData)
         {
             ETag = eTag;
             RemotePrivateEndpoint = remotePrivateEndpoint;

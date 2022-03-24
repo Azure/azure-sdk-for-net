@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         private ClientDiagnostics DeploymentClientDiagnostics => _deploymentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", Deployment.ResourceType.Namespace, DiagnosticOptions);
-        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(DeploymentClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Deployment.ResourceType));
+        private DeploymentsRestOperations DeploymentRestClient => _deploymentRestClient ??= new DeploymentsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(Deployment.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
         public virtual DeploymentCollection GetDeployments()
         {
-            return new DeploymentCollection(Client, Id);
+            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<TemplateHashResult>> CalculateTemplateHashDeploymentAsync(object template, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
         {
-            using var scope = DeploymentClientDiagnostics.CreateScope("TenantExtensionClient.CalculateTemplateHashDeployment");
+            using var scope = DeploymentClientDiagnostics.CreateScope("TenantExtensionClient.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TemplateHashResult> CalculateTemplateHashDeployment(object template, CancellationToken cancellationToken = default)
+        public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
         {
-            using var scope = DeploymentClientDiagnostics.CreateScope("TenantExtensionClient.CalculateTemplateHashDeployment");
+            using var scope = DeploymentClientDiagnostics.CreateScope("TenantExtensionClient.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {

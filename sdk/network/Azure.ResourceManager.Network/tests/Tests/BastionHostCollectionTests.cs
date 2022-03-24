@@ -33,25 +33,25 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task GlobalSetUp()
         {
             Subscription subscription = await GlobalClient.GetDefaultSubscriptionAsync();
-            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(AzureLocation.WestUS2));
+            var rgLro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("bastionrg-"), new ResourceGroupData(AzureLocation.WestUS2));
             ResourceGroup rg = rgLro.Value;
             _resourceGroupIdentifier = rg.Id;
             VirtualNetworkData vnetData = new VirtualNetworkData();
             vnetData.Location = AzureLocation.WestUS2;
             vnetData.AddressSpace = new AddressSpace();
             vnetData.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
-            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("vnet-"), vnetData);
+            var vnetLro = await rg.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("vnet-"), vnetData);
             VirtualNetwork vnet = vnetLro.Value;
             SubnetData subnetData = new SubnetData();
             subnetData.AddressPrefix = "10.0.0.0/24";
-            var subnetLro = await vnet.GetSubnets().CreateOrUpdateAsync(true, "AzureBastionSubnet", subnetData);
+            var subnetLro = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, "AzureBastionSubnet", subnetData);
             _subnetIdentifier = subnetLro.Value.Id;
             PublicIPAddressData ipData = new PublicIPAddressData();
             ipData.Location = AzureLocation.WestUS2;
             ipData.PublicIPAllocationMethod = IPAllocationMethod.Static;
             ipData.Sku = new PublicIPAddressSku();
             ipData.Sku.Name = PublicIPAddressSkuName.Standard;
-            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(true, SessionRecording.GenerateAssetName("ip-"), ipData);
+            var ipLro = await rg.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("ip-"), ipData);
             _publicIPAddressIdentifier = ipLro.Value.Id;
             _bastionName = SessionRecording.GenerateAssetName("bastion-");
             await StopSessionRecordingAsync();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (await _resourceGroup.GetBastionHosts().ExistsAsync(_bastionName))
             {
                 BastionHost bastion = await _resourceGroup.GetBastionHosts().GetAsync(_bastionName);
-                await bastion.DeleteAsync(true);
+                await bastion.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Tests
             ipConfig.PublicIPAddress = new WritableSubResource();
             ipConfig.PublicIPAddress.Id = _publicIPAddress.Id;
             data.IPConfigurations.Add(ipConfig);
-            var bastionLro = await _resourceGroup.GetBastionHosts().CreateOrUpdateAsync(true, bastionName, data);
+            var bastionLro = await _resourceGroup.GetBastionHosts().CreateOrUpdateAsync(WaitUntil.Completed, bastionName, data);
             return bastionLro.Value;
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task Delete()
         {
             BastionHost bastionHost = await CreateBastionHost(_bastionName);
-            await bastionHost.DeleteAsync(true);
+            await bastionHost.DeleteAsync(WaitUntil.Completed);
             List<BastionHost> bastionList = await _resourceGroup.GetBastionHosts().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(bastionList);
         }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
         }
 
-        protected SqlContainerCollection SqlContainerCollection { get => _sqlDatabase.GetSqlContainers(); }
+        protected SqlContainerCollection SqlContainerCollection => _sqlDatabase.GetSqlContainers();
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            _sqlDatabase.Delete(true);
-            _databaseAccount.Delete(true);
+            _sqlDatabase.Delete(WaitUntil.Completed);
+            _databaseAccount.Delete(WaitUntil.Completed);
         }
 
         [SetUp]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             SqlContainer container = await SqlContainerCollection.GetIfExistsAsync(_containerName);
             if (container != null)
             {
-                await container.DeleteAsync(true);
+                await container.DeleteAsync(WaitUntil.Completed);
             }
         }
 
@@ -78,11 +78,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifySqlContainers(container, container2);
 
-            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
+            // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
+            SqlContainerCreateUpdateData updateOptions = new SqlContainerCreateUpdateData(AzureLocation.WestUS, container.Data.Resource)
+            {
+                Options = new CreateUpdateOptions { Throughput = TestThroughput2 }
+            };
 
-            container = (await SqlContainerCollection.CreateOrUpdateAsync(true, _containerName, updateOptions)).Value;
+            container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             Assert.AreEqual(_containerName, container.Data.Resource.Id);
             container2 = await SqlContainerCollection.GetAsync(_containerName);
             VerifySqlContainers(container, container2);
@@ -110,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
-            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(true, new ThroughputSettingsUpdateOptions(AzureLocation.WestUS,
+            DatabaseAccountSqlDatabaseContainerThroughputSetting throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResource(TestThroughput2, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseContainerThroughputSetting throughput = await container.GetDatabaseAccountSqlDatabaseContainerThroughputSetting().GetAsync();
             AssertManualThroughput(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToAutoscaleAsync(WaitUntil.Completed)).Value.Data;
             AssertAutoscale(throughputData);
         }
 
@@ -140,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             DatabaseAccountSqlDatabaseContainerThroughputSetting throughput = await container.GetDatabaseAccountSqlDatabaseContainerThroughputSetting().GetAsync();
             AssertAutoscale(throughput.Data);
 
-            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(true)).Value.Data;
+            ThroughputSettingsData throughputData = (await throughput.MigrateSqlContainerToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             AssertManualThroughput(throughputData);
         }
 
@@ -150,16 +152,16 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var container = await CreateSqlContainer(null);
 
-            BackupInformation backupInfo = (await container.RetrieveContinuousBackupInformationAsync(true, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
+            BackupInformation backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
             long restoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
-            SqlContainerCreateUpdateOptions updateOptions = new SqlContainerCreateUpdateOptions(container.Id, _containerName, container.Data.Type, null,
+            SqlContainerCreateUpdateData updateOptions = new SqlContainerCreateUpdateData(container.Id, _containerName, container.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
                 AzureLocation.WestUS, container.Data.Resource, new CreateUpdateOptions { Throughput = TestThroughput2 });
 
-            container = (await SqlContainerCollection.CreateOrUpdateAsync(true, _containerName, updateOptions)).Value;
-            backupInfo = (await container.RetrieveContinuousBackupInformationAsync(true, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
+            container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
+            backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
             long latestRestoreTime = DateTimeOffset.Parse(backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp).ToUnixTimeMilliseconds();
             Assert.True(latestRestoreTime > 0);
             Assert.True(latestRestoreTime > restoreTime);
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task SqlContainerDelete()
         {
             var container = await CreateSqlContainer(null);
-            await container.DeleteAsync(true);
+            await container.DeleteAsync(WaitUntil.Completed);
 
             container = await SqlContainerCollection.GetIfExistsAsync(_containerName);
             Assert.Null(container);
@@ -183,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
         internal static async Task<SqlContainer> CreateSqlContainer(string name, AutoscaleSettings autoscale, SqlContainerCollection sqlContainerCollection)
         {
-            SqlContainerCreateUpdateOptions sqlDatabaseCreateUpdateOptions = new SqlContainerCreateUpdateOptions(AzureLocation.WestUS,
+            SqlContainerCreateUpdateData sqlDatabaseCreateUpdateOptions = new SqlContainerCreateUpdateData(AzureLocation.WestUS,
                 new SqlContainerResource(name)
                 {
                     PartitionKey = new ContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false)
@@ -225,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
-            var sqlContainerLro = await sqlContainerCollection.CreateOrUpdateAsync(true, name, sqlDatabaseCreateUpdateOptions);
+            var sqlContainerLro = await sqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, sqlDatabaseCreateUpdateOptions);
             return sqlContainerLro.Value;
         }
 
@@ -246,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 new DatabaseAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
             };
 
-            var createOptions = new DatabaseAccountCreateUpdateOptions(AzureLocation.WestUS, locations)
+            var createOptions = new DatabaseAccountCreateUpdateData(AzureLocation.WestUS, locations)
             {
                 Kind = DatabaseAccountKind.GlobalDocumentDB,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
@@ -258,7 +260,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 BackupPolicy = new ContinuousModeBackupPolicy(), // Point in time restore feature
             };
             _databaseAccountName = name;
-            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(true, _databaseAccountName, createOptions);
+            var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseAccountName, createOptions);
             return accountLro.Value;
         }
     }

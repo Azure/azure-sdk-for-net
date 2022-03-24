@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBLocation.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(CosmosDBLocation.ResourceType, out string cosmosDBLocationLocationsApiVersion);
-            _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(_cosmosDBLocationLocationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
+            _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, cosmosDBLocationLocationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async virtual Task<Response<CosmosDBLocation>> GetAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBLocation>> GetAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, location, cancellationToken);
                 if (response.Value == null)
-                    throw _cosmosDBLocationLocationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public async virtual Task<Response<CosmosDBLocation>> GetIfExistsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBLocation>> GetIfExistsAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 

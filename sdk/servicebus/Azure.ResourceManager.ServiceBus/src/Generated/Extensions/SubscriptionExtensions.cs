@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async static Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this Subscription subscription, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 

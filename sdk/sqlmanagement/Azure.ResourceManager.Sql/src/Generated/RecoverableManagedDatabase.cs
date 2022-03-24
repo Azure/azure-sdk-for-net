@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _recoverableManagedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string recoverableManagedDatabaseApiVersion);
-            _recoverableManagedDatabaseRestClient = new RecoverableManagedDatabasesRestOperations(_recoverableManagedDatabaseClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableManagedDatabaseApiVersion);
+            _recoverableManagedDatabaseRestClient = new RecoverableManagedDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, recoverableManagedDatabaseApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: RecoverableManagedDatabases_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RecoverableManagedDatabase>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecoverableManagedDatabase>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabase.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _recoverableManagedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _recoverableManagedDatabaseClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoverableManagedDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _recoverableManagedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _recoverableManagedDatabaseClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RecoverableManagedDatabase(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

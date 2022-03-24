@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteInstanceProcessModuleWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string siteInstanceProcessModuleWebAppsApiVersion);
-            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(_siteInstanceProcessModuleWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
+            _siteInstanceProcessModuleWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteInstanceProcessModuleWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetInstanceProcessModule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SiteInstanceProcessModule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteInstanceProcessModule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModule.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteInstanceProcessModule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

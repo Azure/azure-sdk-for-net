@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteResetPropertiesARMResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="repositoryToken"> The token which proves admin privileges to the repository. </param>
         /// <param name="shouldUpdateRepository"> Determines whether the repository should be updated with the new properties. </param>
-        internal StaticSiteResetPropertiesARMResource(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, string kind, string repositoryToken, bool? shouldUpdateRepository) : base(id, name, type, systemData, kind)
+        internal StaticSiteResetPropertiesARMResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string repositoryToken, bool? shouldUpdateRepository) : base(id, name, resourceType, systemData, kind)
         {
             RepositoryToken = repositoryToken;
             ShouldUpdateRepository = shouldUpdateRepository;

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             _siteTriggeredWebJobHistoryWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteTriggeredWebJobHistory.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(SiteTriggeredWebJobHistory.ResourceType, out string siteTriggeredWebJobHistoryWebAppsApiVersion);
-            _siteTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(_siteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteTriggeredWebJobHistoryWebAppsApiVersion);
+            _siteTriggeredWebJobHistoryWebAppsRestClient = new WebAppsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, siteTriggeredWebJobHistoryWebAppsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<SiteTriggeredWebJobHistory>> GetAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteTriggeredWebJobHistory>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _siteTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _siteTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken);
                 if (response.Value == null)
-                    throw _siteTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SiteTriggeredWebJobHistory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public async virtual Task<Response<SiteTriggeredWebJobHistory>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteTriggeredWebJobHistory>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 

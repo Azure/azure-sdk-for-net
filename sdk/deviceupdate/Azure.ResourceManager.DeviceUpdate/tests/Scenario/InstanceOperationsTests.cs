@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             DeviceUpdateAccount account = await CreateAccount(rg, accountName);
             string instanceName = Recording.GenerateAssetName("Instance-");
             DeviceUpdateInstance instance = await CreateInstance(account, instanceName);
-            await instance.DeleteAsync(true);
+            await instance.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await instance.GetAsync());
             Assert.AreEqual(404, ex.Status);
         }

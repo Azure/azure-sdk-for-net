@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the private link configuration that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="type"> Type of the resource. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="ipConfigurations"> An array of application gateway private link ip configurations. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link configuration. </param>
-        internal ApplicationGatewayPrivateLinkConfiguration(string id, string name, string etag, string type, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayPrivateLinkConfiguration(string id, string name, string etag, string resourceType, IList<ApplicationGatewayPrivateLinkIPConfiguration> ipConfigurations, ProvisioningState? provisioningState) : base(id)
         {
             Name = name;
             Etag = etag;
-            Type = type;
+            ResourceType = resourceType;
             IPConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public string Etag { get; }
         /// <summary> Type of the resource. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> An array of application gateway private link ip configurations. </summary>
         public IList<ApplicationGatewayPrivateLinkIPConfiguration> IPConfigurations { get; }
         /// <summary> The provisioning state of the application gateway private link configuration. </summary>

@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.Tests
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             SubscriptionPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtSubscription(subscription, policyDefinitionName);
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, null, policyDefinition.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, null));
-            await policyDefinition.DeleteAsync(true);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetSubscriptionPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
+            await policyDefinition.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Tests
             string policyDefinitionName = Recording.GenerateAssetName("polDef-");
             ManagementGroupPolicyDefinition policyDefinition = await CreatePolicyDefinitionAtMgmtGroup(mgmtGroup, policyDefinitionName);
             Assert.AreEqual(policyDefinitionName, policyDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, null, policyDefinition.Data));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(true, policyDefinitionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, policyDefinition.Data));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await mgmtGroup.GetManagementGroupPolicyDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, null));
         }
 
         [TestCase]
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.PolicyType, getResult.Data.PolicyType);
             Assert.AreEqual(model.Data.Mode, getResult.Data.Mode);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.Description, getResult.Data.Description);
-            Assert.AreEqual(model.Data.PolicyRule, getResult.Data.PolicyRule);
-            Assert.AreEqual(model.Data.Metadata, getResult.Data.Metadata);
+            Assert.AreEqual(model.Data.PolicyRule.ToArray(), getResult.Data.PolicyRule.ToArray());
+            Assert.AreEqual(model.Data.Metadata.ToArray(), getResult.Data.Metadata.ToArray());
             if(model.Data.Parameters != null || getResult.Data.Parameters != null)
             {
                 Assert.NotNull(model.Data.Parameters);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Tests
                 {
                     Assert.AreEqual(getResult.Data.Parameters.ContainsKey(kvp.Key), true);
                     ParameterDefinitionsValue getParameterDefinitionsValue = getResult.Data.Parameters[kvp.Key];
-                    Assert.AreEqual(kvp.Value.Type, getParameterDefinitionsValue.Type);
+                    Assert.AreEqual(kvp.Value.ParameterType, getParameterDefinitionsValue.ParameterType);
                     if (kvp.Value.AllowedValues != null || getParameterDefinitionsValue.AllowedValues != null)
                     {
                         Assert.NotNull(kvp.Value.AllowedValues);

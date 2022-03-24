@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> correlationId = default;
             Optional<DateTimeOffset> timestamp = default;
-            Optional<string> duration = default;
-            Optional<object> outputs = default;
+            Optional<TimeSpan> duration = default;
+            Optional<BinaryData> outputs = default;
             Optional<IReadOnlyList<ProviderData>> providers = default;
             Optional<IReadOnlyList<Dependency>> dependencies = default;
             Optional<TemplateLink> templateLink = default;
-            Optional<object> parameters = default;
+            Optional<BinaryData> parameters = default;
             Optional<ParametersLink> parametersLink = default;
             Optional<DeploymentMode> mode = default;
             Optional<DebugSetting> debugSetting = default;
@@ -64,7 +64,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("duration"))
                 {
-                    duration = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    duration = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("outputs"))
@@ -74,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    outputs = property.Value.GetObject();
+                    outputs = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("providers"))
@@ -124,7 +129,7 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parameters = property.Value.GetObject();
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parametersLink"))
@@ -213,7 +218,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), duration.Value, outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error);
+            return new DeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error);
         }
     }
 }

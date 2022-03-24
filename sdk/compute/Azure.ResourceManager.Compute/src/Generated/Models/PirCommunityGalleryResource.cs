@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of PirCommunityGalleryResource. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        internal PirCommunityGalleryResource(string name, string location, string type, string uniqueId)
+        internal PirCommunityGalleryResource(string name, string location, string resourceType, string uniqueId)
         {
             Name = name;
             Location = location;
-            Type = type;
+            ResourceType = resourceType;
             UniqueId = uniqueId;
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Resource location. </summary>
         public string Location { get; }
         /// <summary> Resource type. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
         /// <summary> The unique id of this community gallery. </summary>
         public string UniqueId { get; }
     }

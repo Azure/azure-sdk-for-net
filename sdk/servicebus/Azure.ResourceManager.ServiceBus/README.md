@@ -62,7 +62,7 @@ Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
 ```C# Snippet:Managing_ServiceBusNamespaces_CreateResourceGroup
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> operation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = operation.Value;
 ```
 
@@ -72,7 +72,7 @@ Then we can create a namespace inside this resource group.
 string namespaceName = "myNamespace";
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
 AzureLocation location = AzureLocation.EastUS2;
-ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(true, namespaceName, new ServiceBusNamespaceData(location))).Value;
+ServiceBusNamespace serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(location))).Value;
 ```
 
 ### Get all namespaces in a resource group
@@ -113,7 +113,7 @@ if (await namespaceCollection.ExistsAsync("bar"))
 ```C# Snippet:Managing_ServiceBusNamespaces_DeleteNamespace
 ServiceBusNamespaceCollection namespaceCollection = resourceGroup.GetServiceBusNamespaces();
 ServiceBusNamespace serviceBusNamespace = await namespaceCollection.GetAsync("myNamespace");
-await serviceBusNamespace.DeleteAsync(true);
+await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
 ```
 
 

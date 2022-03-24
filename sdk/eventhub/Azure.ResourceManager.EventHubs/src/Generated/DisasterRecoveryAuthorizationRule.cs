@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
-            _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_GetAuthorizationRule
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DisasterRecoveryAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DisasterRecoveryAuthorizationRule>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.Get");
             scope.Start();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = await _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecoveryAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecoveryAuthorizationRule(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: DisasterRecoveryConfigs_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecoveryAuthorizationRule.GetKeys");
             scope.Start();

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of Deployments and their operations over a Deployment. </returns>
         public virtual DeploymentCollection GetDeployments()
         {
-            return new DeploymentCollection(Client, Id);
+            return GetCachedClient(Client => new DeploymentCollection(Client, Id));
         }
     }
 }

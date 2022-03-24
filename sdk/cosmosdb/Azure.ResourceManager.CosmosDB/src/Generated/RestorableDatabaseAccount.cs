@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _restorableDatabaseAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string restorableDatabaseAccountApiVersion);
-            _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(_restorableDatabaseAccountClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDatabaseAccountApiVersion);
+            _restorableDatabaseAccountRestClient = new RestorableDatabaseAccountsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, restorableDatabaseAccountApiVersion);
             _restorableSqlDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(_restorableSqlDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableSqlDatabasesRestClient = new RestorableSqlDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _restorableSqlContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(_restorableSqlContainersClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableSqlContainersRestClient = new RestorableSqlContainersRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _restorableSqlResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(_restorableSqlResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableSqlResourcesRestClient = new RestorableSqlResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _restorableMongodbDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(_restorableMongodbDatabasesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableMongodbDatabasesRestClient = new RestorableMongodbDatabasesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _restorableMongodbCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(_restorableMongodbCollectionsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableMongodbCollectionsRestClient = new RestorableMongodbCollectionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
             _restorableMongodbResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, DiagnosticOptions);
-            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(_restorableMongodbResourcesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
+            _restorableMongodbResourcesRestClient = new RestorableMongodbResourcesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// Operation Id: RestorableDatabaseAccounts_GetByLocation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<RestorableDatabaseAccount>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorableDatabaseAccount>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _restorableDatabaseAccountClientDiagnostics.CreateScope("RestorableDatabaseAccount.Get");
             scope.Start();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = await _restorableDatabaseAccountRestClient.GetByLocationAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _restorableDatabaseAccountClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _restorableDatabaseAccountRestClient.GetByLocation(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _restorableDatabaseAccountClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorableDatabaseAccount(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSession.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(UserSession.ResourceType, out string userSessionApiVersion);
-            _userSessionRestClient = new UserSessionsRestOperations(_userSessionClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userSessionApiVersion);
+            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, userSessionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public async virtual Task<Response<UserSession>> GetAsync(string userSessionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserSession>> GetAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _userSessionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _userSessionClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new UserSession(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _userSessionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, userSessionId, cancellationToken);
                 if (response.Value == null)
-                    throw _userSessionClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new UserSession(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
-        public async virtual Task<Response<UserSession>> GetIfExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserSession>> GetIfExistsAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userSessionId, nameof(userSessionId));
 

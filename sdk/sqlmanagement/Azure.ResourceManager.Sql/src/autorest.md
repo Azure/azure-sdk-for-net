@@ -127,4 +127,13 @@ directive:
       where: $.definitions.MaintenanceWindowTimeRange.properties.dayOfWeek['x-ms-enum']
       transform: >
           $['name'] = "SqlDayOfWeek"
+    - from: swagger-document #DatabaseRecommendedActions.json, DatabaseAdvisors.json, ServerAdvisors.json
+      where: $.definitions.RecommendedActionProperties.properties
+      transform: >
+          $.executeActionDuration.format = "duration";
+          $.revertActionDuration.format = "duration";
+    - from: swagger-document #MaintenanceWindows.json, MaintenanceWindowOptions.json
+      where: $.definitions.MaintenanceWindowTimeRange.properties.duration
+      transform: >
+          $.format = "duration";
 ```

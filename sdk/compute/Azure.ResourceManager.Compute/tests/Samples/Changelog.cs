@@ -11,6 +11,7 @@
             using Azure.ResourceManager.Resources.Models;
             using System.Linq;
             using Azure.Core;
+using System;
 
 #if !SNIPPET
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             var location = AzureLocation.WestUS;
             // Create ResourceGroup
             Subscription subscription = await armClient.GetDefaultSubscriptionAsync();
-            ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, "myResourceGroup", new ResourceGroupData(location));
+            ArmOperation<ResourceGroup> rgOperation = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, "myResourceGroup", new ResourceGroupData(location));
             ResourceGroup resourceGroup = rgOperation.Value;
 
             // Create AvailabilitySet
@@ -38,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             {
                 PlatformUpdateDomainCount = 5,
                 PlatformFaultDomainCount = 2,
-                Sku = new Compute.Models.Sku() { Name = "Aligned" }
+                Sku = new ComputeSku() { Name = "Aligned" }
             };
-            ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(true, "myAvailabilitySet", availabilitySetData);
+            ArmOperation<AvailabilitySet> asetOperation = await resourceGroup.GetAvailabilitySets().CreateOrUpdateAsync(WaitUntil.Completed, "myAvailabilitySet", availabilitySetData);
             AvailabilitySet availabilitySet = asetOperation.Value;
 
             // Create VNet
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 },
             };
             vnetData.AddressPrefixes.Add("10.0.0.0/16");
-            ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(true, "myVirtualNetwork", vnetData);
+            ArmOperation<VirtualNetwork> vnetOperation = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualNetwork", vnetData);
             VirtualNetwork vnet = vnetOperation.Value;
 
             // Create Network interface
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                     }
                 }
             };
-            ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(true, "myNetworkInterface", nicData);
+            ArmOperation<NetworkInterface> nicOperation = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, "myNetworkInterface", nicData);
             NetworkInterface nic = nicOperation.Value;
 
             var vmData = new VirtualMachineData(location)
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 },
                 HardwareProfile = new HardwareProfile() { VmSize = VirtualMachineSizeTypes.StandardB1Ms },
             };
-            ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(true, "myVirtualMachine", vmData);
+            ArmOperation<VirtualMachine> vmOperation = await resourceGroup.GetVirtualMachines().CreateOrUpdateAsync(WaitUntil.Completed, "myVirtualMachine", vmData);
             VirtualMachine vm = vmOperation.Value;
             #endregion
         }
@@ -119,8 +120,8 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 ForceUpdateTag = "RerunExtension",
-                Settings = "{}",
-                ProtectedSettings = "{}"
+                Settings = BinaryData.FromObjectAsJson(new { }),
+                ProtectedSettings = BinaryData.FromObjectAsJson(new { })
             };
             #endregion
         }

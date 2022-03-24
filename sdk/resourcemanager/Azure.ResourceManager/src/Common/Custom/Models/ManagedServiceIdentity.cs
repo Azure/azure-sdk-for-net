@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Models
     public partial class ManagedServiceIdentity
     {
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
-        /// <param name="type"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
         [InitializationConstructor]
-        public ManagedServiceIdentity(ManagedServiceIdentityType type)
+        public ManagedServiceIdentity(ManagedServiceIdentityType managedServiceIdentityType)
         {
-            Type = type;
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            ManagedServiceIdentityType = managedServiceIdentityType;
+            UserAssignedIdentities = new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         [SerializationConstructor]
-        internal ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities)
+        internal ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType managedServiceIdentityType, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
-            Type = type;
+            ManagedServiceIdentityType = managedServiceIdentityType;
             UserAssignedIdentities = userAssignedIdentities;
         }
 
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Models
         /// <summary> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>
         public Guid? TenantId { get; }
         /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
-        public ManagedServiceIdentityType Type { get; set; }
+        public ManagedServiceIdentityType ManagedServiceIdentityType { get; set; }
         /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
-        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
+        public IDictionary<ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

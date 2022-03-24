@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         private ClientDiagnostics VirtualWorkspaceWorkspacesClientDiagnostics => _virtualWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspace.ResourceType.Namespace, DiagnosticOptions);
-        private WorkspacesRestOperations VirtualWorkspaceWorkspacesRestClient => _virtualWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWorkspace.ResourceType));
+        private WorkspacesRestOperations VirtualWorkspaceWorkspacesRestClient => _virtualWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualWorkspace.ResourceType));
         private ClientDiagnostics ScalingPlanClientDiagnostics => _scalingPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlan.ResourceType.Namespace, DiagnosticOptions);
-        private ScalingPlansRestOperations ScalingPlanRestClient => _scalingPlanRestClient ??= new ScalingPlansRestOperations(ScalingPlanClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ScalingPlan.ResourceType));
+        private ScalingPlansRestOperations ScalingPlanRestClient => _scalingPlanRestClient ??= new ScalingPlansRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(ScalingPlan.ResourceType));
         private ClientDiagnostics VirtualApplicationGroupApplicationGroupsClientDiagnostics => _virtualApplicationGroupApplicationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroup.ResourceType.Namespace, DiagnosticOptions);
-        private ApplicationGroupsRestOperations VirtualApplicationGroupApplicationGroupsRestClient => _virtualApplicationGroupApplicationGroupsRestClient ??= new ApplicationGroupsRestOperations(VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualApplicationGroup.ResourceType));
+        private ApplicationGroupsRestOperations VirtualApplicationGroupApplicationGroupsRestClient => _virtualApplicationGroupApplicationGroupsRestClient ??= new ApplicationGroupsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(VirtualApplicationGroup.ResourceType));
         private ClientDiagnostics HostPoolClientDiagnostics => _hostPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", HostPool.ResourceType.Namespace, DiagnosticOptions);
-        private HostPoolsRestOperations HostPoolRestClient => _hostPoolRestClient ??= new HostPoolsRestOperations(HostPoolClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HostPool.ResourceType));
+        private HostPoolsRestOperations HostPoolRestClient => _hostPoolRestClient ??= new HostPoolsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, GetApiVersionOrNull(HostPool.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {

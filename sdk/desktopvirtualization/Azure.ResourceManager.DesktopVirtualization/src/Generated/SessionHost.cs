@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _sessionHostClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string sessionHostApiVersion);
-            _sessionHostRestClient = new SessionHostsRestOperations(_sessionHostClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sessionHostApiVersion);
+            _sessionHostRestClient = new SessionHostsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, sessionHostApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,7 +87,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of UserSessions and their operations over a UserSession. </returns>
         public virtual UserSessionCollection GetUserSessions()
         {
-            return new UserSessionCollection(Client, Id);
+            return GetCachedClient(Client => new UserSessionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a userSession.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}
+        /// Operation Id: UserSessions_Get
+        /// </summary>
+        /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        public virtual async Task<Response<UserSession>> GetUserSessionAsync(string userSessionId, CancellationToken cancellationToken = default)
+        {
+            return await GetUserSessions().GetAsync(userSessionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a userSession.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}
+        /// Operation Id: UserSessions_Get
+        /// </summary>
+        /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        public virtual Response<UserSession> GetUserSession(string userSessionId, CancellationToken cancellationToken = default)
+        {
+            return GetUserSessions().Get(userSessionId, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Operation Id: SessionHosts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SessionHost>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHost>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Get");
             scope.Start();
@@ -104,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _sessionHostClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +156,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _sessionHostClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,10 +171,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
         /// Operation Id: SessionHosts_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Force flag to force sessionHost deletion even when userSession exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Delete");
             scope.Start();
@@ -154,7 +182,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = await _sessionHostRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
                 var operation = new DesktopVirtualizationArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -170,10 +198,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
         /// Operation Id: SessionHosts_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Force flag to force sessionHost deletion even when userSession exists. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Delete");
             scope.Start();
@@ -181,7 +209,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _sessionHostRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, force, cancellationToken);
                 var operation = new DesktopVirtualizationArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -197,15 +225,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
         /// Operation Id: SessionHosts_Update
         /// </summary>
-        /// <param name="options"> Object containing SessionHost definitions. </param>
+        /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SessionHost>> UpdateAsync(SessionHostUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<SessionHost>> UpdateAsync(PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Update");
             scope.Start();
             try
             {
-                var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken).ConfigureAwait(false);
+                var response = await _sessionHostRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -220,15 +251,18 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}
         /// Operation Id: SessionHosts_Update
         /// </summary>
-        /// <param name="options"> Object containing SessionHost definitions. </param>
+        /// <param name="data"> Object containing SessionHost definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SessionHost> Update(SessionHostUpdateOptions options = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<SessionHost> Update(PatchableSessionHostData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHost.Update");
             scope.Start();
             try
             {
-                var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options, cancellationToken);
+                var response = _sessionHostRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
                 return Response.FromValue(new SessionHost(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         {
             _serverJobAgentJobVersionStepJobStepsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ServerJobAgentJobVersionStep.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ServerJobAgentJobVersionStep.ResourceType, out string serverJobAgentJobVersionStepJobStepsApiVersion);
-            _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(_serverJobAgentJobVersionStepJobStepsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
+            _serverJobAgentJobVersionStepJobStepsRestClient = new JobStepsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, serverJobAgentJobVersionStepJobStepsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<ServerJobAgentJobVersionStep>> GetAsync(string stepName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobVersionStep>> GetAsync(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _serverJobAgentJobVersionStepJobStepsRestClient.GetByVersion(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name), stepName, cancellationToken);
                 if (response.Value == null)
-                    throw _serverJobAgentJobVersionStepJobStepsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerJobAgentJobVersionStep(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
-        public async virtual Task<Response<ServerJobAgentJobVersionStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServerJobAgentJobVersionStep>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 

@@ -29,7 +29,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(false, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
+ResourceGroup resourceGroup = await rgCollection.CreateOrUpdate(WaitUntil.Started, rgName, new ResourceGroupData(location)).WaitForCompletionAsync();
 ```
 
 Now that we have the resource group created, we can manage the network interfaces inside this resource group.
@@ -48,7 +48,7 @@ PublicIPAddressData publicIPInput = new PublicIPAddressData()
         DomainNameLabel = "myDomain"
     }
 };
-PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(true, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
+PublicIPAddress publicIPAddress = await publicIPAddressCollection.CreateOrUpdate(WaitUntil.Completed, publicIPAddressName, publicIPInput).WaitForCompletionAsync();
 
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 string networkInterfaceName = "myNetworkInterface";
@@ -72,7 +72,7 @@ NetworkInterfaceData networkInterfaceInput = new NetworkInterfaceData()
         }
     }
 };
-NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(true, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
+NetworkInterface networkInterface = await networkInterfaceCollection.CreateOrUpdate(WaitUntil.Completed, networkInterfaceName, networkInterfaceInput).WaitForCompletionAsync();
 ```
 
 ***List all network interfaces***
@@ -119,5 +119,5 @@ if (await networkInterfaceCollection.ExistsAsync("bar"))
 NetworkInterfaceCollection networkInterfaceCollection = resourceGroup.GetNetworkInterfaces();
 
 NetworkInterface virtualNetwork = await networkInterfaceCollection.GetAsync("myVnet");
-await virtualNetwork.DeleteAsync(true);
+await virtualNetwork.DeleteAsync(WaitUntil.Completed);
 ```

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string disasterRecoveryDisasterRecoveryConfigsApiVersion);
-            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(_disasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
+            _disasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, disasterRecoveryDisasterRecoveryConfigsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -87,7 +87,35 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of NamespaceDisasterRecoveryAuthorizationRules and their operations over a NamespaceDisasterRecoveryAuthorizationRule. </returns>
         public virtual NamespaceDisasterRecoveryAuthorizationRuleCollection GetNamespaceDisasterRecoveryAuthorizationRules()
         {
-            return new NamespaceDisasterRecoveryAuthorizationRuleCollection(Client, Id);
+            return GetCachedClient(Client => new NamespaceDisasterRecoveryAuthorizationRuleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets an authorization rule for a namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: DisasterRecoveryAuthorizationRules_Get
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual async Task<Response<NamespaceDisasterRecoveryAuthorizationRule>> GetNamespaceDisasterRecoveryAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetNamespaceDisasterRecoveryAuthorizationRules().GetAsync(authorizationRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an authorization rule for a namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: DisasterRecoveryAuthorizationRules_Get
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual Response<NamespaceDisasterRecoveryAuthorizationRule> GetNamespaceDisasterRecoveryAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetNamespaceDisasterRecoveryAuthorizationRules().Get(authorizationRuleName, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: DisasterRecoveryConfigs_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<DisasterRecovery>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DisasterRecovery>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.Get");
             scope.Start();
@@ -104,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -128,7 +156,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DisasterRecovery(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,9 +171,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
         /// Operation Id: DisasterRecoveryConfigs_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<ArmOperation> DeleteAsync(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();
@@ -153,7 +181,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = await _disasterRecoveryDisasterRecoveryConfigsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new ServiceBusArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -169,9 +197,9 @@ namespace Azure.ResourceManager.ServiceBus
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}
         /// Operation Id: DisasterRecoveryConfigs_Delete
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(bool waitForCompletion, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.Delete");
             scope.Start();
@@ -179,7 +207,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _disasterRecoveryDisasterRecoveryConfigsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new ServiceBusArmOperation(response);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
@@ -196,7 +224,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: DisasterRecoveryConfigs_BreakPairing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> BreakPairingAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.BreakPairing");
             scope.Start();
@@ -241,7 +269,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="parameters"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response> FailOverAsync(FailoverProperties parameters = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> FailOverAsync(FailoverProperties parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _disasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("DisasterRecovery.FailOver");
             scope.Start();

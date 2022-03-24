@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             Name = name;
-            Type = "Microsoft.Storage/storageAccounts";
+            ResourceType = "Microsoft.Storage/storageAccounts";
         }
 
         /// <summary> The storage account name. </summary>
         public string Name { get; }
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
-        public string Type { get; }
+        public string ResourceType { get; }
     }
 }

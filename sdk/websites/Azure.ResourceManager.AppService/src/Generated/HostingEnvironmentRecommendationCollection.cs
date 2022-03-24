@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         {
             _hostingEnvironmentRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", HostingEnvironmentRecommendation.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(HostingEnvironmentRecommendation.ResourceType, out string hostingEnvironmentRecommendationRecommendationsApiVersion);
-            _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(_hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
+            _hostingEnvironmentRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, hostingEnvironmentRecommendationRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<HostingEnvironmentRecommendation>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentRecommendation>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = await _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostingEnvironmentRecommendation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _hostingEnvironmentRecommendationRecommendationsRestClient.GetRuleDetailsByHostingEnvironment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
                 if (response.Value == null)
-                    throw _hostingEnvironmentRecommendationRecommendationsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HostingEnvironmentRecommendation(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<HostingEnvironmentRecommendation>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentRecommendation>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

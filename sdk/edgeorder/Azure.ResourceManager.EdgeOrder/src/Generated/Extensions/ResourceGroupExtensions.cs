@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.ResourceManager.Resources;
 
@@ -31,6 +33,36 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(resourceGroup).GetAddressResources();
         }
 
+        /// <summary>
+        /// Gets information about the specified address.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// Operation Id: GetAddressByName
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public static async Task<Response<AddressResource>> GetAddressResourceAsync(this ResourceGroup resourceGroup, string addressName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetAddressResources().GetAsync(addressName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified address.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addresses/{addressName}
+        /// Operation Id: GetAddressByName
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressName"/> is null. </exception>
+        public static Response<AddressResource> GetAddressResource(this ResourceGroup resourceGroup, string addressName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetAddressResources().Get(addressName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of OrderResources in the OrderResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrderResources and their operations over a OrderResource. </returns>
@@ -39,12 +71,76 @@ namespace Azure.ResourceManager.EdgeOrder
             return GetExtensionClient(resourceGroup).GetOrderResources();
         }
 
+        /// <summary>
+        /// Gets an order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
+        /// Operation Id: GetOrderByName
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="orderName"> The name of the order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
+        public static async Task<Response<OrderResource>> GetOrderResourceAsync(this ResourceGroup resourceGroup, string location, string orderName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetOrderResources().GetAsync(location, orderName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an order.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}
+        /// Operation Id: GetOrderByName
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="orderName"> The name of the order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="orderName"/> is null. </exception>
+        public static Response<OrderResource> GetOrderResource(this ResourceGroup resourceGroup, string location, string orderName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetOrderResources().Get(location, orderName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of OrderItemResources in the OrderItemResource. </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrderItemResources and their operations over a OrderItemResource. </returns>
         public static OrderItemResourceCollection GetOrderItemResources(this ResourceGroup resourceGroup)
         {
             return GetExtensionClient(resourceGroup).GetOrderItemResources();
+        }
+
+        /// <summary>
+        /// Gets an order item.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
+        public static async Task<Response<OrderItemResource>> GetOrderItemResourceAsync(this ResourceGroup resourceGroup, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroup.GetOrderItemResources().GetAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an order item.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems/{orderItemName}
+        /// Operation Id: GetOrderItemByName
+        /// </summary>
+        /// <param name="resourceGroup"> The <see cref="ResourceGroup" /> instance the method will execute against. </param>
+        /// <param name="orderItemName"> The name of the order item. </param>
+        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
+        public static Response<OrderItemResource> GetOrderItemResource(this ResourceGroup resourceGroup, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            return resourceGroup.GetOrderItemResources().Get(orderItemName, expand, cancellationToken);
         }
 
         /// <summary>

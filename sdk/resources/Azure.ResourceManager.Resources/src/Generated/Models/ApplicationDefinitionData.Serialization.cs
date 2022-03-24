@@ -86,12 +86,20 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(MainTemplate))
             {
                 writer.WritePropertyName("mainTemplate");
-                writer.WriteObjectValue(MainTemplate);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(MainTemplate);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(MainTemplate.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(CreateUiDefinition))
             {
                 writer.WritePropertyName("createUiDefinition");
-                writer.WriteObjectValue(CreateUiDefinition);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(CreateUiDefinition);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(CreateUiDefinition.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(NotificationPolicy))
             {
@@ -144,8 +152,8 @@ namespace Azure.ResourceManager.Resources
             Optional<IList<ApplicationDefinitionArtifact>> artifacts = default;
             Optional<string> description = default;
             Optional<Uri> packageFileUri = default;
-            Optional<object> mainTemplate = default;
-            Optional<object> createUiDefinition = default;
+            Optional<BinaryData> mainTemplate = default;
+            Optional<BinaryData> createUiDefinition = default;
             Optional<ApplicationNotificationPolicy> notificationPolicy = default;
             Optional<ApplicationPackageLockingPolicyDefinition> lockingPolicy = default;
             Optional<ApplicationDeploymentPolicy> deploymentPolicy = default;
@@ -284,7 +292,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            mainTemplate = property0.Value.GetObject();
+                            mainTemplate = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("createUiDefinition"))
@@ -294,7 +302,7 @@ namespace Azure.ResourceManager.Resources
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createUiDefinition = property0.Value.GetObject();
+                            createUiDefinition = BinaryData.FromString(property.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("notificationPolicy"))

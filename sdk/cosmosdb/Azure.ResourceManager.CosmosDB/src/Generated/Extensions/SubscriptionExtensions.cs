@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.ResourceManager.Resources;
 
@@ -29,6 +31,36 @@ namespace Azure.ResourceManager.CosmosDB
         public static CosmosDBLocationCollection GetCosmosDBLocations(this Subscription subscription)
         {
             return GetExtensionClient(subscription).GetCosmosDBLocations();
+        }
+
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static async Task<Response<CosmosDBLocation>> GetCosmosDBLocationAsync(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        {
+            return await subscription.GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}
+        /// Operation Id: Locations_Get
+        /// </summary>
+        /// <param name="subscription"> The <see cref="Subscription" /> instance the method will execute against. </param>
+        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public static Response<CosmosDBLocation> GetCosmosDBLocation(this Subscription subscription, string location, CancellationToken cancellationToken = default)
+        {
+            return subscription.GetCosmosDBLocations().Get(location, cancellationToken);
         }
 
         /// <summary>

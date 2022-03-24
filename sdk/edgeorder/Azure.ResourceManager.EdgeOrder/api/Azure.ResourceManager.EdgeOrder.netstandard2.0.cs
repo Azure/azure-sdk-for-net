@@ -9,22 +9,22 @@ namespace Azure.ResourceManager.EdgeOrder
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string addressName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource> Update(bool waitForCompletion, Azure.ResourceManager.EdgeOrder.Models.AddressResourceUpdateOptions options, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.EdgeOrder.Models.AddressResourceUpdateOptions options, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeOrder.Models.PatchableAddressResourceData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeOrder.Models.PatchableAddressResourceData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AddressResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeOrder.AddressResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.AddressResource>, System.Collections.IEnumerable
     {
         protected AddressResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource> CreateOrUpdate(bool waitForCompletion, string addressName, Azure.ResourceManager.EdgeOrder.AddressResourceData addressResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource>> CreateOrUpdateAsync(bool waitForCompletion, string addressName, Azure.ResourceManager.EdgeOrder.AddressResourceData addressResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string addressName, Azure.ResourceManager.EdgeOrder.AddressResourceData addressResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.AddressResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string addressName, Azure.ResourceManager.EdgeOrder.AddressResourceData addressResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> Get(string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.EdgeOrder
         public virtual Azure.Response CancelOrderItem(Azure.ResourceManager.EdgeOrder.Models.CancellationReason cancellationReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CancelOrderItemAsync(Azure.ResourceManager.EdgeOrder.Models.CancellationReason cancellationReason, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string orderItemName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(bool waitForCompletion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ReturnOrderItem(bool waitForCompletion, Azure.ResourceManager.EdgeOrder.Models.ReturnOrderItemDetails returnOrderItemDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReturnOrderItemAsync(bool waitForCompletion, Azure.ResourceManager.EdgeOrder.Models.ReturnOrderItemDetails returnOrderItemDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ReturnOrderItem(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeOrder.Models.ReturnOrderItemDetails returnOrderItemDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReturnOrderItemAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeOrder.Models.ReturnOrderItemDetails returnOrderItemDetails, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource> Update(bool waitForCompletion, Azure.ResourceManager.EdgeOrder.Models.OrderItemResourceUpdateOptions options, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource>> UpdateAsync(bool waitForCompletion, Azure.ResourceManager.EdgeOrder.Models.OrderItemResourceUpdateOptions options, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeOrder.Models.PatchableOrderItemResourceData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EdgeOrder.Models.PatchableOrderItemResourceData data, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class OrderItemResourceCollection : Azure.ResourceManager.Core.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EdgeOrder.OrderItemResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EdgeOrder.OrderItemResource>, System.Collections.IEnumerable
     {
         protected OrderItemResourceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource> CreateOrUpdate(bool waitForCompletion, string orderItemName, Azure.ResourceManager.EdgeOrder.OrderItemResourceData orderItemResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource>> CreateOrUpdateAsync(bool waitForCompletion, string orderItemName, Azure.ResourceManager.EdgeOrder.OrderItemResourceData orderItemResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string orderItemName, Azure.ResourceManager.EdgeOrder.OrderItemResourceData orderItemResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EdgeOrder.OrderItemResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string orderItemName, Azure.ResourceManager.EdgeOrder.OrderItemResourceData orderItemResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> Get(string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -128,8 +128,14 @@ namespace Azure.ResourceManager.EdgeOrder
     }
     public static partial class ResourceGroupExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource> GetAddressResource(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.AddressResource>> GetAddressResourceAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.AddressResourceCollection GetAddressResources(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource> GetOrderItemResource(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderItemResource>> GetOrderItemResourceAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string orderItemName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.OrderItemResourceCollection GetOrderItemResources(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource> GetOrderResource(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.OrderResource>> GetOrderResourceAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EdgeOrder.OrderResourceCollection GetOrderResources(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.EdgeOrder.OrderResource> GetOrderResources(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.EdgeOrder.OrderResource> GetOrderResourcesAsync(this Azure.ResourceManager.Resources.ResourceGroup resourceGroup, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -182,13 +188,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.AddressValidationStatus? AddressValidationStatus { get { throw null; } }
         public Azure.ResourceManager.EdgeOrder.Models.ContactDetails ContactDetails { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.ShippingAddress ShippingAddress { get { throw null; } set { } }
-    }
-    public partial class AddressResourceUpdateOptions
-    {
-        public AddressResourceUpdateOptions() { }
-        public Azure.ResourceManager.EdgeOrder.Models.ContactDetails ContactDetails { get { throw null; } set { } }
-        public Azure.ResourceManager.EdgeOrder.Models.ShippingAddress ShippingAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AddressType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.AddressType>
@@ -265,24 +264,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public Azure.ResourceManager.EdgeOrder.Models.MeteringType? MeteringType { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BillingType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.BillingType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BillingType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.BillingType Pav2 { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.BillingType Purchase { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.BillingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.BillingType left, Azure.ResourceManager.EdgeOrder.Models.BillingType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.BillingType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.BillingType left, Azure.ResourceManager.EdgeOrder.Models.BillingType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CancellationReason
     {
         public CancellationReason(string reason) { }
@@ -332,26 +313,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         internal CostInformation() { }
         public string BillingInfoUrl { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EdgeOrder.Models.BillingMeterDetails> BillingMeterDetails { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CreatedByType : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.CreatedByType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CreatedByType(string value) { throw null; }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType Application { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType Key { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.EdgeOrder.Models.CreatedByType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EdgeOrder.Models.CreatedByType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EdgeOrder.Models.CreatedByType left, Azure.ResourceManager.EdgeOrder.Models.CreatedByType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EdgeOrder.Models.CreatedByType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.CreatedByType left, Azure.ResourceManager.EdgeOrder.Models.CreatedByType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class CustomerSubscriptionDetails
     {
@@ -452,9 +413,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     }
     public partial class FilterableProperty
     {
-        public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes type, System.Collections.Generic.IEnumerable<string> supportedValues) { }
+        public FilterableProperty(Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes supportedFilterType, System.Collections.Generic.IEnumerable<string> supportedValues) { }
+        public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes SupportedFilterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SupportedValues { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.SupportedFilterTypes Type { get { throw null; } set { } }
     }
     public partial class ForwardShippingDetails
     {
@@ -633,14 +594,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public string PreferredManagementResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.EdgeOrder.Models.TransportShipmentTypes TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
     }
-    public partial class OrderItemResourceUpdateOptions
-    {
-        public OrderItemResourceUpdateOptions() { }
-        public Azure.ResourceManager.EdgeOrder.Models.AddressProperties ForwardAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> NotificationEmailList { get { throw null; } }
-        public Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences Preferences { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OrderItemReturnEnum : System.IEquatable<Azure.ResourceManager.EdgeOrder.Models.OrderItemReturnEnum>
     {
@@ -677,6 +630,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static implicit operator Azure.ResourceManager.EdgeOrder.Models.OrderItemType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EdgeOrder.Models.OrderItemType left, Azure.ResourceManager.EdgeOrder.Models.OrderItemType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class PatchableAddressResourceData
+    {
+        public PatchableAddressResourceData() { }
+        public Azure.ResourceManager.EdgeOrder.Models.ContactDetails ContactDetails { get { throw null; } set { } }
+        public Azure.ResourceManager.EdgeOrder.Models.ShippingAddress ShippingAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class PatchableOrderItemResourceData
+    {
+        public PatchableOrderItemResourceData() { }
+        public Azure.ResourceManager.EdgeOrder.Models.AddressProperties ForwardAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> NotificationEmailList { get { throw null; } }
+        public Azure.ResourceManager.EdgeOrder.Models.OrderItemPreferences Preferences { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class Pav2MeterDetails : Azure.ResourceManager.EdgeOrder.Models.MeterDetails
     {

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         {
             _osFamilyCloudServiceOperatingSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string osFamilyCloudServiceOperatingSystemsApiVersion);
-            _osFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(_osFamilyCloudServiceOperatingSystemsClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osFamilyCloudServiceOperatingSystemsApiVersion);
+            _osFamilyCloudServiceOperatingSystemsRestClient = new CloudServiceOperatingSystemsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, osFamilyCloudServiceOperatingSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// Operation Id: CloudServiceOperatingSystems_GetOSFamily
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<OSFamily>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OSFamily>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateScope("OSFamily.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = await _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamilyAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSFamily(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _osFamilyCloudServiceOperatingSystemsRestClient.GetOSFamily(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _osFamilyCloudServiceOperatingSystemsClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OSFamily(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _azureWebCategoryWebCategoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureWebCategory.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(AzureWebCategory.ResourceType, out string azureWebCategoryWebCategoriesApiVersion);
-            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(_azureWebCategoryWebCategoriesClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureWebCategoryWebCategoriesApiVersion);
+            _azureWebCategoryWebCategoriesRestClient = new WebCategoriesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, azureWebCategoryWebCategoriesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<AzureWebCategory>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureWebCategory>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _azureWebCategoryWebCategoriesRestClient.GetAsync(Id.SubscriptionId, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _azureWebCategoryWebCategoriesClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AzureWebCategory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _azureWebCategoryWebCategoriesRestClient.Get(Id.SubscriptionId, name, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _azureWebCategoryWebCategoriesClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AzureWebCategory(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async virtual Task<Response<AzureWebCategory>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureWebCategory>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

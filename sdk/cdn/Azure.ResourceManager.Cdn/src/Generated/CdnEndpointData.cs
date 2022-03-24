@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
         /// <param name="resourceState"> Resource status of the endpoint. </param>
         /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType type, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, EndpointResourceState? resourceState, string provisioningState) : base(id, name, type, systemData, tags, location)
+        internal CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IList<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IList<GeoFilter> geoFilters, EndpointPropertiesUpdateParametersDefaultOriginGroup defaultOriginGroup, IList<UrlSigningKey> urlSigningKeys, EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy, EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, string hostName, IList<DeepCreatedOrigin> origins, IList<DeepCreatedOriginGroup> originGroups, EndpointResourceState? resourceState, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;

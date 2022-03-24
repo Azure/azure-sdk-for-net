@@ -16,9 +16,6 @@
   </PropertyGroup>
 
   <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
@@ -28,14 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

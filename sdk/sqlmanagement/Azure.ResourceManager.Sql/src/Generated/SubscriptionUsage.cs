@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
         {
             _subscriptionUsageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string subscriptionUsageApiVersion);
-            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(_subscriptionUsageClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
+            _subscriptionUsageRestClient = new SubscriptionUsagesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, subscriptionUsageApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SubscriptionUsages_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<SubscriptionUsage>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionUsage>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsage.Get");
             scope.Start();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _subscriptionUsageClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _subscriptionUsageClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionUsage(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

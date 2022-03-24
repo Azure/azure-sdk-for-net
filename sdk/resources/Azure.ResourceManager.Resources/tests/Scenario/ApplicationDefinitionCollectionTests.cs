@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-1-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-C-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData)).Value;
+            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
             Assert.AreEqual(applicationDefinitionName, applicationDefinition.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, null, applicationDefinitionData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationDefinitionData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, null));
         }
 
         [TestCase]
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-2-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-L-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData);
+            _ = await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData);
             int count = 0;
             await foreach (var tempApplicationDefinition in rg.GetApplicationDefinitions().GetAllAsync())
             {
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Resources.Tests
             Subscription subscription = await Client.GetDefaultSubscriptionAsync();
             string rgName = Recording.GenerateAssetName("testRg-3-");
             ResourceGroupData rgData = new ResourceGroupData(AzureLocation.WestUS2);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(true, rgName, rgData);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, rgData);
             ResourceGroup rg = lro.Value;
             string applicationDefinitionName = Recording.GenerateAssetName("appDef-G-");
             ApplicationDefinitionData applicationDefinitionData = CreateApplicationDefinitionData(applicationDefinitionName);
-            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(true, applicationDefinitionName, applicationDefinitionData)).Value;
+            ApplicationDefinition applicationDefinition = (await rg.GetApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, applicationDefinitionName, applicationDefinitionData)).Value;
             ApplicationDefinition getApplicationDefinition = await rg.GetApplicationDefinitions().GetAsync(applicationDefinitionName);
             AssertValidApplicationDefinition(applicationDefinition, getApplicationDefinition);
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
-            Assert.AreEqual(model.Data.Type, getResult.Data.Type);
+            Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
             Assert.AreEqual(model.Data.LockLevel, getResult.Data.LockLevel);
             Assert.AreEqual(model.Data.DisplayName, getResult.Data.DisplayName);
             Assert.AreEqual(model.Data.IsEnabled, getResult.Data.IsEnabled);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Tests
         {
             Assert.AreEqual(model.Name, getResult.Name);
             Assert.AreEqual(model.Uri, getResult.Uri);
-            Assert.AreEqual(model.Type, getResult.Type);
+            Assert.AreEqual(model.ApplicationArtifactType, getResult.ApplicationArtifactType);
         }
 
         private static void AssertValidPolicy(ApplicationPolicy model, ApplicationPolicy getResult)

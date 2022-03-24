@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         {
             _fileServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(ResourceType, out string fileServiceApiVersion);
-            _fileServiceRestClient = new FileServicesRestOperations(_fileServiceClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileServiceApiVersion);
+            _fileServiceRestClient = new FileServicesRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, fileServiceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -86,7 +86,39 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of FileShares and their operations over a FileShare. </returns>
         public virtual FileShareCollection GetFileShares()
         {
-            return new FileShareCollection(Client, Id);
+            return GetCachedClient(Client => new FileShareCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets properties of a specified share.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}
+        /// Operation Id: FileShares_Get
+        /// </summary>
+        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: stats. Should be passed as a string with delimiter &apos;,&apos;. </param>
+        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual async Task<Response<FileShare>> GetFileShareAsync(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        {
+            return await GetFileShares().GetAsync(shareName, expand, xMsSnapshot, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a specified share.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares/{shareName}
+        /// Operation Id: FileShares_Get
+        /// </summary>
+        /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
+        /// <param name="expand"> Optional, used to expand the properties within share&apos;s properties. Valid values are: stats. Should be passed as a string with delimiter &apos;,&apos;. </param>
+        /// <param name="xMsSnapshot"> Optional, used to retrieve properties of a snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual Response<FileShare> GetFileShare(string shareName, string expand = null, string xMsSnapshot = null, CancellationToken cancellationToken = default)
+        {
+            return GetFileShares().Get(shareName, expand, xMsSnapshot, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +127,7 @@ namespace Azure.ResourceManager.Storage
         /// Operation Id: FileServices_GetServiceProperties
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async virtual Task<Response<FileService>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileService>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _fileServiceClientDiagnostics.CreateScope("FileService.Get");
             scope.Start();
@@ -103,7 +135,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _fileServiceRestClient.GetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _fileServiceClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,7 +159,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _fileServiceRestClient.GetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                    throw _fileServiceClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FileService(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,11 +174,11 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default
         /// Operation Id: FileServices_SetServiceProperties
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<FileService>> CreateOrUpdateAsync(bool waitForCompletion, FileServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FileService>> CreateOrUpdateAsync(WaitUntil waitUntil, FileServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -156,7 +188,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = await _fileServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new StorageArmOperation<FileService>(Response.FromValue(new FileService(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -172,11 +204,11 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default
         /// Operation Id: FileServices_SetServiceProperties
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="parameters"> The properties of file services in storage accounts, including CORS (Cross-Origin Resource Sharing) rules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<FileService> CreateOrUpdate(bool waitForCompletion, FileServiceData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FileService> CreateOrUpdate(WaitUntil waitUntil, FileServiceData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(parameters, nameof(parameters));
 
@@ -186,7 +218,7 @@ namespace Azure.ResourceManager.Storage
             {
                 var response = _fileServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, parameters, cancellationToken);
                 var operation = new StorageArmOperation<FileService>(Response.FromValue(new FileService(Client, response), response.GetRawResponse()));
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }

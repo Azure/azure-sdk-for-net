@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
         {
             _privateEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpoint.ResourceType.Namespace, DiagnosticOptions);
             TryGetApiVersion(PrivateEndpoint.ResourceType, out string privateEndpointApiVersion);
-            _privateEndpointRestClient = new PrivateEndpointsRestOperations(_privateEndpointClientDiagnostics, Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointApiVersion);
+            _privateEndpointRestClient = new PrivateEndpointsRestOperations(Pipeline, DiagnosticOptions.ApplicationId, BaseUri, privateEndpointApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
         /// Operation Id: PrivateEndpoints_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private endpoint operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public async virtual Task<ArmOperation<PrivateEndpoint>> CreateOrUpdateAsync(bool waitForCompletion, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateEndpoint>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _privateEndpointRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken).ConfigureAwait(false);
                 var operation = new NetworkArmOperation<PrivateEndpoint>(new PrivateEndpointOperationSource(Client), _privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.Network
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}
         /// Operation Id: PrivateEndpoints_CreateOrUpdate
         /// </summary>
-        /// <param name="waitForCompletion"> Waits for the completion of the long running operations. </param>
+        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="parameters"> Parameters supplied to the create or update private endpoint operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> or <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<PrivateEndpoint> CreateOrUpdate(bool waitForCompletion, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateEndpoint> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointName, PrivateEndpointData parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
             Argument.AssertNotNull(parameters, nameof(parameters));
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _privateEndpointRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, parameters, cancellationToken);
                 var operation = new NetworkArmOperation<PrivateEndpoint>(new PrivateEndpointOperationSource(Client), _privateEndpointClientDiagnostics, Pipeline, _privateEndpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, parameters).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitForCompletion)
+                if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public async virtual Task<Response<PrivateEndpoint>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpoint>> GetAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = await _privateEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    throw await _privateEndpointClientDiagnostics.CreateRequestFailedExceptionAsync(response.GetRawResponse()).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _privateEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, privateEndpointName, expand, cancellationToken);
                 if (response.Value == null)
-                    throw _privateEndpointClientDiagnostics.CreateRequestFailedException(response.GetRawResponse());
+                    throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateEndpoint(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public async virtual Task<Response<bool>> ExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        public async virtual Task<Response<PrivateEndpoint>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpoint>> GetIfExistsAsync(string privateEndpointName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
 

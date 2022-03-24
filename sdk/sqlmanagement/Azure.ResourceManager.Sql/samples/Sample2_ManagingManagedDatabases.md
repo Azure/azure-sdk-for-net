@@ -33,7 +33,7 @@ ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
 // With the collection, we can create a new resource group with an specific name
 string rgName = "myRgName";
 AzureLocation location = AzureLocation.WestUS2;
-ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(true, rgName, new ResourceGroupData(location));
+ArmOperation<ResourceGroup> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
 ResourceGroup resourceGroup = lro.Value;
 ```
 
@@ -50,7 +50,7 @@ ManagedDatabaseData data = new ManagedDatabaseData(AzureLocation.WestUS2)
 {
 };
 string databaseName = "myDatabase";
-var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(true, databaseName, data);
+var managedDatabaseLro = await managedDatabaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
 ManagedDatabase managedDatabase = managedDatabaseLro.Value;
 ```
 
@@ -98,5 +98,5 @@ if (await managedDatabaseCollection.ExistsAsync("bar"))
 ManagedDatabaseCollection managedDatabaseCollection = managedInstance.GetManagedDatabases();
 
 ManagedDatabase managedDatabase = await managedDatabaseCollection.GetAsync("myManagedInstance");
-await managedDatabase.DeleteAsync(true);
+await managedDatabase.DeleteAsync(WaitUntil.Completed);
 ```
