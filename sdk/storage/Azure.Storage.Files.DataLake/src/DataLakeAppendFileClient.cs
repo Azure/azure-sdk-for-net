@@ -658,14 +658,7 @@ namespace Azure.Storage.Files.DataLake
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Append)}");
-
-            try
-            {
-                scope.Start();
-
-                return AppendInternal(
+            => AppendInternal(
                     content,
                     createIfNotExists,
                     contentHash,
@@ -673,17 +666,6 @@ namespace Azure.Storage.Files.DataLake
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
 
         /// <summary>
         /// The <see cref="AppendAsync"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
@@ -726,14 +708,7 @@ namespace Azure.Storage.Files.DataLake
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeAppendFileClient)}.{nameof(Append)}");
-
-            try
-            {
-                scope.Start();
-
-                return await AppendInternal(
+            => await AppendInternal(
                     content,
                     createIfNotExists,
                     contentHash,
@@ -741,17 +716,6 @@ namespace Azure.Storage.Files.DataLake
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
 
         /// <summary>
         /// The <see cref="AppendInternal"/> operation uploads data to be appended to a file.  Data can only be appended to a file.
