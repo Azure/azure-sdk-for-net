@@ -1,6 +1,6 @@
 # Add Protocol Methods In HLC Generated SDK
 
-In this tutorial, we will step through the process of generating protocol methods in HLC SDK. Protocol methods will be generated in internal RestClient based on the `protocol-method-list` config.
+In this tutorial, we will show how to add protocol methods to Data Plane Generation 1 Convenience Clients (HLCs) built on internal generated RestClients.  This is accomplished by adding generated protocol methods to the inner RestClient, and then manually adding them to the outer Convenience Client API.
 
 ## Prerequisites
 
