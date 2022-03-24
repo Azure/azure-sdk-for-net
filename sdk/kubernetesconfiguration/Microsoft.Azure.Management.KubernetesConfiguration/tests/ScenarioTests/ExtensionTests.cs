@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.ScenarioTests
     using System.Linq;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
-    using Microsoft.Azure.Management.KubernetesConfiguration.Extensions.Models;
+    using Microsoft.Azure.Management.KubernetesConfiguration.Models;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport;
 
     public class ExtensionInstanceTest

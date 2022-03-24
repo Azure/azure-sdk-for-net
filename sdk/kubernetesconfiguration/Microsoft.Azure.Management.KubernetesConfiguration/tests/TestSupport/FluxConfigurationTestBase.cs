@@ -5,85 +5,83 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Tests.TestSupport
 {
     using System;
     using Microsoft.Azure.Management.KubernetesConfiguration.Tests.Helpers;
-    using Microsoft.Azure.Management.KubernetesConfiguration;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Microsoft.Azure.Management.KubernetesConfiguration;
     using Microsoft.Azure.Management.KubernetesConfiguration.Models;
 
     /// <summary>
     /// Base class for tests of SourceControlConfiguration resource type
     /// </summary>
-    public class ExtensionTestBase : TestBase, IDisposable
+    public class FluxConfigurationTestBase : TestBase, IDisposable
     {
         public SourceControlConfigurationClient SourceControlConfigurationClient { get; set; }
 
-        public Extension Extension { get; set; }
+        public FluxConfiguration FluxConfiguration { get; set; }
 
         public const string ApiVersion = "2022-03-01";
-        public const string ConfigurationType = "Extensions";
+        public const string ConfigurationType = "FluxConfiguration";
 
         public ClusterInfo Cluster { get; set; }
 
-        public ExtensionTestBase(MockContext context)
+        public FluxConfigurationTestBase(MockContext context)
         {
             var handler = new RecordedDelegatingHandler();
             SourceControlConfigurationClient = context.GetServiceClient<SourceControlConfigurationClient>(false, handler);
         }
 
         /// <summary>
-        /// Creates an Extension
+        /// Creates or Updates a FluxConfiguration
         /// </summary>
-        /// <returns>The Extension object that was created.</returns>
-        public Extension CreateExtension()
+        /// <returns>The FluxConfiguration object that was created or updated.</returns>
+        public FluxConfiguration CreateFluxConfiguration()
         {
-            return SourceControlConfigurationClient.Extensions.Create(
+            return SourceControlConfigurationClient.FluxConfigurations.CreateOrUpdate(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                extensionName: Extension.Name,
-                extension: Extension
-            );
+                fluxConfigurationName: FluxConfiguration.Name,
+                fluxConfiguration: FluxConfiguration);
         }
 
         /// <summary>
-        /// Get an Extension
+        /// Get a FluxConfiguration
         /// </summary>
-        /// <returns>The Extension object.</returns>
-        public Extension GetExtension()
+        /// <returns>The FluxConfiguration object.</returns>
+        public FluxConfiguration GetFluxConfiguration()
         {
-            return SourceControlConfigurationClient.Extensions.Get(
+            return SourceControlConfigurationClient.FluxConfigurations.Get(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                extensionName: Extension.Name
+                fluxConfigurationName: FluxConfiguration.Name
             );
         }
 
         /// <summary>
-        /// Delete an Extension
+        /// Delete a FluxConfiguration
         /// </summary>
-        public void DeleteExtension()
+        public void DeleteFluxConfiguration()
         {
-            SourceControlConfigurationClient.Extensions.Delete(
+            SourceControlConfigurationClient.FluxConfigurations.Delete(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
                 clusterName: Cluster.Name,
-                extensionName: Extension.Name,
-                forceDelete: true
+                fluxConfigurationName: FluxConfiguration.Name
             );
         }
 
         /// <summary>
-        /// List Extensions in a cluster
+        /// List FluxConfigurations in a cluster
         /// </summary>
         /// <returns></returns>
-        public IPage<Extension> ListExtensions()
+        public IPage<FluxConfiguration> ListSourceControlConfigurations()
         {
-            return SourceControlConfigurationClient.Extensions.List(
+            return SourceControlConfigurationClient.FluxConfigurations.List(
                 resourceGroupName: Cluster.ResourceGroup,
                 clusterRp: Cluster.RpName,
                 clusterResourceName: Cluster.Type,
