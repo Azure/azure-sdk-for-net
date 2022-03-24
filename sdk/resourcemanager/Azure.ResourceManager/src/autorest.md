@@ -500,6 +500,10 @@ directive:
     transform: >
       $["x-ms-client-name"] = "ResourceType";
       $["type"] = "string";
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataEffect
+    transform: >
+      $["x-ms-client-name"] = "DataPolicyManifestEffect";
 ```
 
 ### Tag: package-management

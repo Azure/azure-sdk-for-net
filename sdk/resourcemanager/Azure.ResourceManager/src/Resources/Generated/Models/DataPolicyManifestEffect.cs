@@ -10,17 +10,17 @@ using System;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The data effect definition. </summary>
-    public partial class DataEffect
+    public partial class DataPolicyManifestEffect
     {
-        /// <summary> Initializes a new instance of DataEffect. </summary>
-        internal DataEffect()
+        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        internal DataPolicyManifestEffect()
         {
         }
 
-        /// <summary> Initializes a new instance of DataEffect. </summary>
+        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
-        internal DataEffect(string name, BinaryData detailsSchema)
+        internal DataPolicyManifestEffect(string name, BinaryData detailsSchema)
         {
             Name = name;
             DetailsSchema = detailsSchema;
