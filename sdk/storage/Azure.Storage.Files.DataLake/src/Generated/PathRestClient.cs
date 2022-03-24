@@ -1469,7 +1469,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateConcurrentAppendRequest(Stream body, int? timeout, AppendMode? appendMode, long? contentLength, byte[] transactionalContentHash)
+        internal HttpMessage CreateConcurrentAppendRequest(Stream body, int? timeout, AppendMode? appendMode, long? contentLength, byte[] transactionalContentHash, string fastPathSessionData)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1487,6 +1487,10 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
+            if (fastPathSessionData != null)
+            {
+                request.Headers.Add("x-ms-fastpath-session-data", fastPathSessionData);
+            }
             request.Headers.Add("Accept", "application/json");
             if (contentLength != null)
             {
@@ -1507,16 +1511,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="appendMode"> Optional.  Indicates concurrent append mode. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="fastPathSessionData"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PathConcurrentAppendHeaders>> ConcurrentAppendAsync(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathConcurrentAppendHeaders>> ConcurrentAppendAsync(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, string fastPathSessionData = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash);
+            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash, fastPathSessionData);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathConcurrentAppendHeaders(message.Response);
             switch (message.Response.Status)
@@ -1534,16 +1539,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="appendMode"> Optional.  Indicates concurrent append mode. </param>
         /// <param name="contentLength"> Required for &quot;Append Data&quot; and &quot;Flush Data&quot;.  Must be 0 for &quot;Flush Data&quot;.  Must be the length of the request content in bytes for &quot;Append Data&quot;. </param>
         /// <param name="transactionalContentHash"> Specify the transactional md5 for the body, to be validated by the service. </param>
+        /// <param name="fastPathSessionData"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PathConcurrentAppendHeaders> ConcurrentAppend(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathConcurrentAppendHeaders> ConcurrentAppend(Stream body, int? timeout = null, AppendMode? appendMode = null, long? contentLength = null, byte[] transactionalContentHash = null, string fastPathSessionData = null, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash);
+            using var message = CreateConcurrentAppendRequest(body, timeout, appendMode, contentLength, transactionalContentHash, fastPathSessionData);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathConcurrentAppendHeaders(message.Response);
             switch (message.Response.Status)
