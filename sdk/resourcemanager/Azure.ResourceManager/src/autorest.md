@@ -659,4 +659,8 @@ directive:
     where: $.definitions.ParentGroupInfo
     transform: >
       $["x-ms-client-name"] = "ParentManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```
