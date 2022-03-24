@@ -461,6 +461,19 @@ namespace Azure.Messaging.EventHubs.Primitives
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
+    public abstract partial class PluggableCheckpointStoreEventProcessor<TPartition> : Azure.Messaging.EventHubs.Primitives.EventProcessor<TPartition> where TPartition : Azure.Messaging.EventHubs.Primitives.EventProcessorPartition, new()
+    {
+        protected PluggableCheckpointStoreEventProcessor() { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected PluggableCheckpointStoreEventProcessor(Azure.Messaging.EventHubs.Primitives.CheckpointStore checkpointStore, int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Messaging.EventHubs.Primitives.EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ListOwnershipAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task UpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
 }
 namespace Azure.Messaging.EventHubs.Processor
 {
