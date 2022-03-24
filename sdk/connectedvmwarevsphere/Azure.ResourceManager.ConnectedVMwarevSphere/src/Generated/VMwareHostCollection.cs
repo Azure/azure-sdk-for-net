@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of VMwareHost and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VMwareHostResource" /> and their operations.
+    /// Each <see cref="VMwareHostResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VMwareHostCollection" /> instance call the GetVMwareHosts method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VMwareHostCollection : ArmCollection, IEnumerable<VMwareHostResource>, IAsyncEnumerable<VMwareHostResource>
     {
         private readonly ClientDiagnostics _vMwareHostHostsClientDiagnostics;

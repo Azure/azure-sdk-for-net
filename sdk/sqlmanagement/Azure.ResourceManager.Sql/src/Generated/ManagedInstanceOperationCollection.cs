@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedInstanceOperation and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedInstanceOperationResource" /> and their operations.
+    /// Each <see cref="ManagedInstanceOperationResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedInstanceOperationCollection" /> instance call the GetManagedInstanceOperations method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedInstanceOperationCollection : ArmCollection, IEnumerable<ManagedInstanceOperationResource>, IAsyncEnumerable<ManagedInstanceOperationResource>
     {
         private readonly ClientDiagnostics _managedInstanceOperationClientDiagnostics;

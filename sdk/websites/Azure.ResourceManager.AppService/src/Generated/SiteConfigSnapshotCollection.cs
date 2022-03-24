@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteConfigSnapshot and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteConfigSnapshotResource" /> and their operations.
+    /// Each <see cref="SiteConfigSnapshotResource" /> in the collection will belong to the same instance of <see cref="WebSiteConfigResource" />.
+    /// To get a <see cref="SiteConfigSnapshotCollection" /> instance call the GetSiteConfigSnapshots method from an instance of <see cref="WebSiteConfigResource" />.
+    /// </summary>
     public partial class SiteConfigSnapshotCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteConfigSnapshotWebAppsClientDiagnostics;

@@ -21,7 +21,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of StorageAccount and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="StorageAccountResource" /> and their operations.
+    /// Each <see cref="StorageAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="StorageAccountCollection" /> instance call the GetStorageAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class StorageAccountCollection : ArmCollection, IEnumerable<StorageAccountResource>, IAsyncEnumerable<StorageAccountResource>
     {
         private readonly ClientDiagnostics _storageAccountClientDiagnostics;

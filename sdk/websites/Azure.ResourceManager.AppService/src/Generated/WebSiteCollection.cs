@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of WebSite and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="WebSiteResource" /> and their operations.
+    /// Each <see cref="WebSiteResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="WebSiteCollection" /> instance call the GetWebSites method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class WebSiteCollection : ArmCollection, IEnumerable<WebSiteResource>, IAsyncEnumerable<WebSiteResource>
     {
         private readonly ClientDiagnostics _webSiteWebAppsClientDiagnostics;

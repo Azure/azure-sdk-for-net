@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class representing collection of OrderItemResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="OrderItemResource" /> and their operations.
+    /// Each <see cref="OrderItemResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="OrderItemResourceCollection" /> instance call the GetOrderItemResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class OrderItemResourceCollection : ArmCollection, IEnumerable<OrderItemResource>, IAsyncEnumerable<OrderItemResource>
     {
         private readonly ClientDiagnostics _orderItemResourceClientDiagnostics;

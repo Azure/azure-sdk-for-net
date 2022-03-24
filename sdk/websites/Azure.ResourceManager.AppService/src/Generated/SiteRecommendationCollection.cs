@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteRecommendation and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteRecommendationResource" /> and their operations.
+    /// Each <see cref="SiteRecommendationResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteRecommendationCollection" /> instance call the GetSiteRecommendations method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
         private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;

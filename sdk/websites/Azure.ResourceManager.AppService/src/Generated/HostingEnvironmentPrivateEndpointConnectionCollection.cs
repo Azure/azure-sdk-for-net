@@ -20,7 +20,11 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of HostingEnvironmentPrivateEndpointConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> and their operations.
+    /// Each <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
+    /// To get a <see cref="HostingEnvironmentPrivateEndpointConnectionCollection" /> instance call the GetHostingEnvironmentPrivateEndpointConnections method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// </summary>
     public partial class HostingEnvironmentPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HostingEnvironmentPrivateEndpointConnectionResource>, IAsyncEnumerable<HostingEnvironmentPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _hostingEnvironmentPrivateEndpointConnectionAppServiceEnvironmentsClientDiagnostics;

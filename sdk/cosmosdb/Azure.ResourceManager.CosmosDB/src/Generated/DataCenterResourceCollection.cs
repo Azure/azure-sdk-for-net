@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing collection of DataCenterResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DataCenterResource" /> and their operations.
+    /// Each <see cref="DataCenterResource" /> in the collection will belong to the same instance of <see cref="ClusterResource" />.
+    /// To get a <see cref="DataCenterResourceCollection" /> instance call the GetDataCenterResources method from an instance of <see cref="ClusterResource" />.
+    /// </summary>
     public partial class DataCenterResourceCollection : ArmCollection, IEnumerable<DataCenterResource>, IAsyncEnumerable<DataCenterResource>
     {
         private readonly ClientDiagnostics _dataCenterResourceCassandraDataCentersClientDiagnostics;

@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a InstanceFailoverGroupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an InstanceFailoverGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="InstanceFailoverGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetInstanceFailoverGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetInstanceFailoverGroup method.
+    /// </summary>
     public partial class InstanceFailoverGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="InstanceFailoverGroupResource"/> instance. </summary>

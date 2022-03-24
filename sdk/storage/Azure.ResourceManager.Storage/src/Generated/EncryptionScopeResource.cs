@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A Class representing a EncryptionScopeResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an EncryptionScope along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EncryptionScopeResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetEncryptionScopeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource" /> using the GetEncryptionScope method.
+    /// </summary>
     public partial class EncryptionScopeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EncryptionScopeResource"/> instance. </summary>

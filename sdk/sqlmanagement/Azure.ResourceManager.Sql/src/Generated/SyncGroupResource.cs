@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a SyncGroupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SyncGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SyncGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSyncGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetSyncGroup method.
+    /// </summary>
     public partial class SyncGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SyncGroupResource"/> instance. </summary>

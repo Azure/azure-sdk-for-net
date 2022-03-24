@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a SubscriptionLongTermRetentionManagedInstanceBackupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SubscriptionLongTermRetentionManagedInstanceBackup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionLongTermRetentionManagedInstanceBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionLongTermRetentionManagedInstanceBackup method.
+    /// </summary>
     public partial class SubscriptionLongTermRetentionManagedInstanceBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/> instance. </summary>

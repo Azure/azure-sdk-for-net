@@ -19,7 +19,11 @@ using Azure.ResourceManager.Management;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of PolicyExemption and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="PolicyExemptionResource" /> and their operations.
+    /// Each <see cref="PolicyExemptionResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="PolicyExemptionCollection" /> instance call the GetPolicyExemptions method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class PolicyExemptionCollection : ArmCollection, IEnumerable<PolicyExemptionResource>, IAsyncEnumerable<PolicyExemptionResource>
     {
         private readonly ClientDiagnostics _policyExemptionClientDiagnostics;

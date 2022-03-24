@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ManagedDatabase and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagedDatabaseResource" /> and their operations.
+    /// Each <see cref="ManagedDatabaseResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
+    /// To get a <see cref="ManagedDatabaseCollection" /> instance call the GetManagedDatabases method from an instance of <see cref="ManagedInstanceResource" />.
+    /// </summary>
     public partial class ManagedDatabaseCollection : ArmCollection, IEnumerable<ManagedDatabaseResource>, IAsyncEnumerable<ManagedDatabaseResource>
     {
         private readonly ClientDiagnostics _managedDatabaseClientDiagnostics;

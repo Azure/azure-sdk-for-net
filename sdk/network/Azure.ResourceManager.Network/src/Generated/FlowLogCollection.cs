@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of FlowLog and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="FlowLogResource" /> and their operations.
+    /// Each <see cref="FlowLogResource" /> in the collection will belong to the same instance of <see cref="NetworkWatcherResource" />.
+    /// To get a <see cref="FlowLogCollection" /> instance call the GetFlowLogs method from an instance of <see cref="NetworkWatcherResource" />.
+    /// </summary>
     public partial class FlowLogCollection : ArmCollection, IEnumerable<FlowLogResource>, IAsyncEnumerable<FlowLogResource>
     {
         private readonly ClientDiagnostics _flowLogClientDiagnostics;

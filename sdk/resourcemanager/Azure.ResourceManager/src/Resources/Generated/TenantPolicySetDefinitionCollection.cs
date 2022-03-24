@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of TenantPolicySetDefinition and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="TenantPolicySetDefinitionResource" /> and their operations.
+    /// Each <see cref="TenantPolicySetDefinitionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="TenantPolicySetDefinitionCollection" /> instance call the GetTenantPolicySetDefinitions method from an instance of <see cref="TenantResource" />.
+    /// </summary>
     public partial class TenantPolicySetDefinitionCollection : ArmCollection, IEnumerable<TenantPolicySetDefinitionResource>, IAsyncEnumerable<TenantPolicySetDefinitionResource>
     {
         private readonly ClientDiagnostics _tenantPolicySetDefinitionPolicySetDefinitionsClientDiagnostics;

@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A Class representing a DeletedVaultResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a DeletedVault along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedVaultResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetDeletedVaultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedVault method.
+    /// </summary>
     public partial class DeletedVaultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedVaultResource"/> instance. </summary>

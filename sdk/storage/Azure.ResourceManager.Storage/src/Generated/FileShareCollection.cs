@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of FileShare and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="FileShareResource" /> and their operations.
+    /// Each <see cref="FileShareResource" /> in the collection will belong to the same instance of <see cref="FileServiceResource" />.
+    /// To get a <see cref="FileShareCollection" /> instance call the GetFileShares method from an instance of <see cref="FileServiceResource" />.
+    /// </summary>
     public partial class FileShareCollection : ArmCollection, IEnumerable<FileShareResource>, IAsyncEnumerable<FileShareResource>
     {
         private readonly ClientDiagnostics _fileShareClientDiagnostics;

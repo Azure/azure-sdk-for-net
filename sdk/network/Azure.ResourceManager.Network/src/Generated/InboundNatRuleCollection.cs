@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of InboundNatRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="InboundNatRuleResource" /> and their operations.
+    /// Each <see cref="InboundNatRuleResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
+    /// To get an <see cref="InboundNatRuleCollection" /> instance call the GetInboundNatRules method from an instance of <see cref="LoadBalancerResource" />.
+    /// </summary>
     public partial class InboundNatRuleCollection : ArmCollection, IEnumerable<InboundNatRuleResource>, IAsyncEnumerable<InboundNatRuleResource>
     {
         private readonly ClientDiagnostics _inboundNatRuleClientDiagnostics;

@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing collection of VirtualWorkspace and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualWorkspaceResource" /> and their operations.
+    /// Each <see cref="VirtualWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualWorkspaceCollection" /> instance call the GetVirtualWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualWorkspaceCollection : ArmCollection, IEnumerable<VirtualWorkspaceResource>, IAsyncEnumerable<VirtualWorkspaceResource>
     {
         private readonly ClientDiagnostics _virtualWorkspaceWorkspacesClientDiagnostics;

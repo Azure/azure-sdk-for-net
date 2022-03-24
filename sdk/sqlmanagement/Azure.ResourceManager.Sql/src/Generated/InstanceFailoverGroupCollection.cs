@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of InstanceFailoverGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="InstanceFailoverGroupResource" /> and their operations.
+    /// Each <see cref="InstanceFailoverGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get an <see cref="InstanceFailoverGroupCollection" /> instance call the GetInstanceFailoverGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class InstanceFailoverGroupCollection : ArmCollection, IEnumerable<InstanceFailoverGroupResource>, IAsyncEnumerable<InstanceFailoverGroupResource>
     {
         private readonly ClientDiagnostics _instanceFailoverGroupClientDiagnostics;

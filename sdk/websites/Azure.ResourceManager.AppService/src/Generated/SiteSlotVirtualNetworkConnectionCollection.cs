@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteSlotVirtualNetworkConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteSlotVirtualNetworkConnectionResource" /> and their operations.
+    /// Each <see cref="SiteSlotVirtualNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="SiteSlotVirtualNetworkConnectionCollection" /> instance call the GetSiteSlotVirtualNetworkConnections method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class SiteSlotVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteSlotVirtualNetworkConnectionResource>, IAsyncEnumerable<SiteSlotVirtualNetworkConnectionResource>
     {
         private readonly ClientDiagnostics _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics;

@@ -17,7 +17,12 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A Class representing a UserSessionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an UserSession along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="UserSessionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetUserSessionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SessionHostResource" /> using the GetUserSession method.
+    /// </summary>
     public partial class UserSessionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="UserSessionResource"/> instance. </summary>

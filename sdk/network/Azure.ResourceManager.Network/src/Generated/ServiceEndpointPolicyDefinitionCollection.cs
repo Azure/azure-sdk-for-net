@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of ServiceEndpointPolicyDefinition and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServiceEndpointPolicyDefinitionResource" /> and their operations.
+    /// Each <see cref="ServiceEndpointPolicyDefinitionResource" /> in the collection will belong to the same instance of <see cref="ServiceEndpointPolicyResource" />.
+    /// To get a <see cref="ServiceEndpointPolicyDefinitionCollection" /> instance call the GetServiceEndpointPolicyDefinitions method from an instance of <see cref="ServiceEndpointPolicyResource" />.
+    /// </summary>
     public partial class ServiceEndpointPolicyDefinitionCollection : ArmCollection, IEnumerable<ServiceEndpointPolicyDefinitionResource>, IAsyncEnumerable<ServiceEndpointPolicyDefinitionResource>
     {
         private readonly ClientDiagnostics _serviceEndpointPolicyDefinitionClientDiagnostics;

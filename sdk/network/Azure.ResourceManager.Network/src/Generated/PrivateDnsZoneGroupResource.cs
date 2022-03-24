@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a PrivateDnsZoneGroupResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a PrivateDnsZoneGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateDnsZoneGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateDnsZoneGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateEndpointResource" /> using the GetPrivateDnsZoneGroup method.
+    /// </summary>
     public partial class PrivateDnsZoneGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateDnsZoneGroupResource"/> instance. </summary>

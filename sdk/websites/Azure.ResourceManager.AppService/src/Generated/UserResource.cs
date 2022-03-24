@@ -13,10 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a UserResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing an User along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="UserResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetUserResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetUser method.
+    /// </summary>
     public partial class UserResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="UserResource"/> instance. </summary>

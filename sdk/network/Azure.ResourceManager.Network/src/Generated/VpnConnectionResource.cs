@@ -17,7 +17,12 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A Class representing a VpnConnectionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a VpnConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VpnConnectionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetVpnConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VpnGatewayResource" /> using the GetVpnConnection method.
+    /// </summary>
     public partial class VpnConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VpnConnectionResource"/> instance. </summary>

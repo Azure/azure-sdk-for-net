@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerDatabaseSchema and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerDatabaseSchemaResource" /> and their operations.
+    /// Each <see cref="ServerDatabaseSchemaResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
+    /// To get a <see cref="ServerDatabaseSchemaCollection" /> instance call the GetServerDatabaseSchemas method from an instance of <see cref="SqlDatabaseResource" />.
+    /// </summary>
     public partial class ServerDatabaseSchemaCollection : ArmCollection, IEnumerable<ServerDatabaseSchemaResource>, IAsyncEnumerable<ServerDatabaseSchemaResource>
     {
         private readonly ClientDiagnostics _serverDatabaseSchemaDatabaseSchemasClientDiagnostics;

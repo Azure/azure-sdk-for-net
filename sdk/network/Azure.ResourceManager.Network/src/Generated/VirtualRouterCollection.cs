@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualRouter and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualRouterResource" /> and their operations.
+    /// Each <see cref="VirtualRouterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualRouterCollection" /> instance call the GetVirtualRouters method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualRouterCollection : ArmCollection, IEnumerable<VirtualRouterResource>, IAsyncEnumerable<VirtualRouterResource>
     {
         private readonly ClientDiagnostics _virtualRouterClientDiagnostics;

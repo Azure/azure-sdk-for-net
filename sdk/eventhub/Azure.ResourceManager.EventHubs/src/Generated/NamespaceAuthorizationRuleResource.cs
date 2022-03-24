@@ -17,7 +17,12 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A Class representing a NamespaceAuthorizationRuleResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a NamespaceAuthorizationRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NamespaceAuthorizationRuleResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetNamespaceAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubNamespaceResource" /> using the GetNamespaceAuthorizationRule method.
+    /// </summary>
     public partial class NamespaceAuthorizationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NamespaceAuthorizationRuleResource"/> instance. </summary>

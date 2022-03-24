@@ -17,7 +17,12 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A Class representing a SessionHostResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SessionHost along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SessionHostResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSessionHostResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HostPoolResource" /> using the GetSessionHost method.
+    /// </summary>
     public partial class SessionHostResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SessionHostResource"/> instance. </summary>

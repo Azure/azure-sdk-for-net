@@ -16,7 +16,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A Class representing a SiteSiteextensionResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a SiteSiteextension along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteSiteextensionResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSiteSiteextensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteSiteextension method.
+    /// </summary>
     public partial class SiteSiteextensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSiteextensionResource"/> instance. </summary>

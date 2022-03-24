@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of AppServiceCertificateResource and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="AppServiceCertificateResource" /> and their operations.
+    /// Each <see cref="AppServiceCertificateResource" /> in the collection will belong to the same instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// To get an <see cref="AppServiceCertificateResourceCollection" /> instance call the GetAppServiceCertificateResources method from an instance of <see cref="AppServiceCertificateOrderResource" />.
+    /// </summary>
     public partial class AppServiceCertificateResourceCollection : ArmCollection, IEnumerable<AppServiceCertificateResource>, IAsyncEnumerable<AppServiceCertificateResource>
     {
         private readonly ClientDiagnostics _appServiceCertificateResourceAppServiceCertificateOrdersClientDiagnostics;

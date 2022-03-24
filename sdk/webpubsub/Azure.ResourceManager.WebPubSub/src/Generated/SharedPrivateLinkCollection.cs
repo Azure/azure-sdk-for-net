@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing collection of SharedPrivateLink and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SharedPrivateLinkResource" /> and their operations.
+    /// Each <see cref="SharedPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="WebPubSubResource" />.
+    /// To get a <see cref="SharedPrivateLinkCollection" /> instance call the GetSharedPrivateLinks method from an instance of <see cref="WebPubSubResource" />.
+    /// </summary>
     public partial class SharedPrivateLinkCollection : ArmCollection, IEnumerable<SharedPrivateLinkResource>, IAsyncEnumerable<SharedPrivateLinkResource>
     {
         private readonly ClientDiagnostics _sharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics;

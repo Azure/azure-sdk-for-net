@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteDeployment and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteDeploymentResource" /> and their operations.
+    /// Each <see cref="SiteDeploymentResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteDeploymentCollection" /> instance call the GetSiteDeployments method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteDeploymentCollection : ArmCollection, IEnumerable<SiteDeploymentResource>, IAsyncEnumerable<SiteDeploymentResource>
     {
         private readonly ClientDiagnostics _siteDeploymentWebAppsClientDiagnostics;

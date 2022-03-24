@@ -18,7 +18,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of ManagementLock and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ManagementLockResource" /> and their operations.
+    /// Each <see cref="ManagementLockResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="ManagementLockCollection" /> instance call the GetManagementLocks method from an instance of <see cref="ArmResource" />.
+    /// </summary>
     public partial class ManagementLockCollection : ArmCollection, IEnumerable<ManagementLockResource>, IAsyncEnumerable<ManagementLockResource>
     {
         private readonly ClientDiagnostics _managementLockClientDiagnostics;

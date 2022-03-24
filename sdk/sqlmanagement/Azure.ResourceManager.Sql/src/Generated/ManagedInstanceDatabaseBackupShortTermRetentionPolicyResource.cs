@@ -17,7 +17,12 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A Class representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource along with the instance operations that can be performed on it. </summary>
+    /// <summary>
+    /// A Class representing a ManagedInstanceDatabaseBackupShortTermRetentionPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceDatabaseBackupShortTermRetentionPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedInstanceDatabaseBackupShortTermRetentionPolicy method.
+    /// </summary>
     public partial class ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceDatabaseBackupShortTermRetentionPolicyResource"/> instance. </summary>

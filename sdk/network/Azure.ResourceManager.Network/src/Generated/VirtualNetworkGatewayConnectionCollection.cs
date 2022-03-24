@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualNetworkGatewayConnection and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkGatewayConnectionResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkGatewayConnectionResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualNetworkGatewayConnectionCollection" /> instance call the GetVirtualNetworkGatewayConnections method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualNetworkGatewayConnectionCollection : ArmCollection, IEnumerable<VirtualNetworkGatewayConnectionResource>, IAsyncEnumerable<VirtualNetworkGatewayConnectionResource>
     {
         private readonly ClientDiagnostics _virtualNetworkGatewayConnectionClientDiagnostics;

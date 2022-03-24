@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing collection of CdnOriginGroup and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="CdnOriginGroupResource" /> and their operations.
+    /// Each <see cref="CdnOriginGroupResource" /> in the collection will belong to the same instance of <see cref="CdnEndpointResource" />.
+    /// To get a <see cref="CdnOriginGroupCollection" /> instance call the GetCdnOriginGroups method from an instance of <see cref="CdnEndpointResource" />.
+    /// </summary>
     public partial class CdnOriginGroupCollection : ArmCollection, IEnumerable<CdnOriginGroupResource>, IAsyncEnumerable<CdnOriginGroupResource>
     {
         private readonly ClientDiagnostics _cdnOriginGroupClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing collection of VaultKeyVersion and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VaultKeyVersionResource" /> and their operations.
+    /// Each <see cref="VaultKeyVersionResource" /> in the collection will belong to the same instance of <see cref="VaultKeyResource" />.
+    /// To get a <see cref="VaultKeyVersionCollection" /> instance call the GetVaultKeyVersions method from an instance of <see cref="VaultKeyResource" />.
+    /// </summary>
     public partial class VaultKeyVersionCollection : ArmCollection, IEnumerable<VaultKeyVersionResource>, IAsyncEnumerable<VaultKeyVersionResource>
     {
         private readonly ClientDiagnostics _vaultKeyVersionKeysClientDiagnostics;

@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing collection of DisasterRecoveryAuthorizationRule and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="DisasterRecoveryAuthorizationRuleResource" /> and their operations.
+    /// Each <see cref="DisasterRecoveryAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="DisasterRecoveryResource" />.
+    /// To get a <see cref="DisasterRecoveryAuthorizationRuleCollection" /> instance call the GetDisasterRecoveryAuthorizationRules method from an instance of <see cref="DisasterRecoveryResource" />.
+    /// </summary>
     public partial class DisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<DisasterRecoveryAuthorizationRuleResource>, IAsyncEnumerable<DisasterRecoveryAuthorizationRuleResource>
     {
         private readonly ClientDiagnostics _disasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics;

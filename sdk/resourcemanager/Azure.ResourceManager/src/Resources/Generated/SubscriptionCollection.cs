@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing collection of Subscription and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SubscriptionResource" /> and their operations.
+    /// Each <see cref="SubscriptionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
+    /// To get a <see cref="SubscriptionCollection" /> instance call the GetSubscriptions method from an instance of <see cref="TenantResource" />.
+    /// </summary>
     public partial class SubscriptionCollection : ArmCollection, IEnumerable<SubscriptionResource>, IAsyncEnumerable<SubscriptionResource>
     {
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;

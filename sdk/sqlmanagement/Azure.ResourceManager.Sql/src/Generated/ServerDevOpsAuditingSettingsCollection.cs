@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing collection of ServerDevOpsAuditingSettings and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ServerDevOpsAuditingSettingsResource" /> and their operations.
+    /// Each <see cref="ServerDevOpsAuditingSettingsResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
+    /// To get a <see cref="ServerDevOpsAuditingSettingsCollection" /> instance call the GetServerDevOpsAuditingSettings method from an instance of <see cref="SqlServerResource" />.
+    /// </summary>
     public partial class ServerDevOpsAuditingSettingsCollection : ArmCollection, IEnumerable<ServerDevOpsAuditingSettingsResource>, IAsyncEnumerable<ServerDevOpsAuditingSettingsResource>
     {
         private readonly ClientDiagnostics _serverDevOpsAuditingSettingsServerDevOpsAuditSettingsClientDiagnostics;

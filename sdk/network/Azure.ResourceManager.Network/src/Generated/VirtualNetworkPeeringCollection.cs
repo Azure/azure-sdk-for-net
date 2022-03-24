@@ -20,7 +20,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing collection of VirtualNetworkPeering and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualNetworkPeeringResource" /> and their operations.
+    /// Each <see cref="VirtualNetworkPeeringResource" /> in the collection will belong to the same instance of <see cref="VirtualNetworkResource" />.
+    /// To get a <see cref="VirtualNetworkPeeringCollection" /> instance call the GetVirtualNetworkPeerings method from an instance of <see cref="VirtualNetworkResource" />.
+    /// </summary>
     public partial class VirtualNetworkPeeringCollection : ArmCollection, IEnumerable<VirtualNetworkPeeringResource>, IAsyncEnumerable<VirtualNetworkPeeringResource>
     {
         private readonly ClientDiagnostics _virtualNetworkPeeringClientDiagnostics;

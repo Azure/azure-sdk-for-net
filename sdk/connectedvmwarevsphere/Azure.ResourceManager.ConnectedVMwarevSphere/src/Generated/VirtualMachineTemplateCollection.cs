@@ -20,7 +20,11 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing collection of VirtualMachineTemplate and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="VirtualMachineTemplateResource" /> and their operations.
+    /// Each <see cref="VirtualMachineTemplateResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="VirtualMachineTemplateCollection" /> instance call the GetVirtualMachineTemplates method from an instance of <see cref="ResourceGroupResource" />.
+    /// </summary>
     public partial class VirtualMachineTemplateCollection : ArmCollection, IEnumerable<VirtualMachineTemplateResource>, IAsyncEnumerable<VirtualMachineTemplateResource>
     {
         private readonly ClientDiagnostics _virtualMachineTemplateClientDiagnostics;

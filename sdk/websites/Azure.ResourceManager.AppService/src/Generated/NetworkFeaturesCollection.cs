@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of NetworkFeatures and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="NetworkFeaturesResource" /> and their operations.
+    /// Each <see cref="NetworkFeaturesResource" /> in the collection will belong to the same instance of <see cref="SiteSlotResource" />.
+    /// To get a <see cref="NetworkFeaturesCollection" /> instance call the GetNetworkFeatures method from an instance of <see cref="SiteSlotResource" />.
+    /// </summary>
     public partial class NetworkFeaturesCollection : ArmCollection
     {
         private readonly ClientDiagnostics _networkFeaturesWebAppsClientDiagnostics;

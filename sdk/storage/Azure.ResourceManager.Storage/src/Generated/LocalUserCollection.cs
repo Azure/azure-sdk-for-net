@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing collection of LocalUser and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="LocalUserResource" /> and their operations.
+    /// Each <see cref="LocalUserResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
+    /// To get a <see cref="LocalUserCollection" /> instance call the GetLocalUsers method from an instance of <see cref="StorageAccountResource" />.
+    /// </summary>
     public partial class LocalUserCollection : ArmCollection, IEnumerable<LocalUserResource>, IAsyncEnumerable<LocalUserResource>
     {
         private readonly ClientDiagnostics _localUserClientDiagnostics;

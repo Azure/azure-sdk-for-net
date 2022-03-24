@@ -19,7 +19,11 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing collection of SiteDetector and their operations over its parent. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="SiteDetectorResource" /> and their operations.
+    /// Each <see cref="SiteDetectorResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
+    /// To get a <see cref="SiteDetectorCollection" /> instance call the GetSiteDetectors method from an instance of <see cref="WebSiteResource" />.
+    /// </summary>
     public partial class SiteDetectorCollection : ArmCollection, IEnumerable<SiteDetectorResource>, IAsyncEnumerable<SiteDetectorResource>
     {
         private readonly ClientDiagnostics _siteDetectorDiagnosticsClientDiagnostics;
