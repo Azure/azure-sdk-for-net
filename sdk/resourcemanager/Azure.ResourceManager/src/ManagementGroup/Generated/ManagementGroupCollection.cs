@@ -297,11 +297,11 @@ namespace Azure.ResourceManager.Management
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckManagementGroupNameAvailabilityAsync(ManagementGroupNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckManagementGroupNameAvailability");
             scope.Start();
             try
             {
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.Management
         /// <param name="checkNameAvailabilityRequest"> Management group name availability check parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="checkNameAvailabilityRequest"/> is null. </exception>
-        public virtual Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(CheckNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupNameAvailabilityResult> CheckManagementGroupNameAvailability(ManagementGroupNameAvailabilityOptions checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(checkNameAvailabilityRequest, nameof(checkNameAvailabilityRequest));
 
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckManagementGroupNameAvailability");
             scope.Start();
             try
             {
