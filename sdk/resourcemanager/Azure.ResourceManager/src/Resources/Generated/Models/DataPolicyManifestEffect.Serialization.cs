@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DataEffect
+    public partial class DataPolicyManifestEffect
     {
-        internal static DataEffect DeserializeDataEffect(JsonElement element)
+        internal static DataPolicyManifestEffect DeserializeDataPolicyManifestEffect(JsonElement element)
         {
             Optional<string> name = default;
             Optional<BinaryData> detailsSchema = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new DataEffect(name.Value, detailsSchema.Value);
+            return new DataPolicyManifestEffect(name.Value, detailsSchema.Value);
         }
     }
 }

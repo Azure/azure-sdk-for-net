@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Management.Models
 {
     /// <summary> The ID of the parent management group. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Management.Models
 
         /// <summary> Initializes a new instance of DescendantParentGroupInfo. </summary>
         /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
-        internal DescendantParentGroupInfo(string id)
+        internal DescendantParentGroupInfo(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
     }
 }

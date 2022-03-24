@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Management.Models
 {
-    public partial class ManagementGroupDetails
+    public partial class ManagementGroupInfo
     {
-        internal static ManagementGroupDetails DeserializeManagementGroupDetails(JsonElement element)
+        internal static ManagementGroupInfo DeserializeManagementGroupInfo(JsonElement element)
         {
             Optional<int> version = default;
             Optional<DateTimeOffset> updatedTime = default;
             Optional<string> updatedBy = default;
-            Optional<ParentGroupInfo> parent = default;
+            Optional<ParentManagementGroupInfo> parent = default;
             Optional<IReadOnlyList<ManagementGroupPathElement>> path = default;
             Optional<IReadOnlyList<string>> managementGroupAncestors = default;
             Optional<IReadOnlyList<ManagementGroupPathElement>> managementGroupAncestorsChain = default;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Management.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    parent = ParentGroupInfo.DeserializeParentGroupInfo(property.Value);
+                    parent = ParentManagementGroupInfo.DeserializeParentManagementGroupInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Management.Models
                     continue;
                 }
             }
-            return new ManagementGroupDetails(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
+            return new ManagementGroupInfo(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, Optional.ToList(path), Optional.ToList(managementGroupAncestors), Optional.ToList(managementGroupAncestorsChain));
         }
     }
 }

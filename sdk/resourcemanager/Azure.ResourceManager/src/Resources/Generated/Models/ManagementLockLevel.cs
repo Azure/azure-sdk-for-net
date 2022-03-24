@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can&apos;t modify or delete it. </summary>
-    public readonly partial struct LockLevel : IEquatable<LockLevel>
+    public readonly partial struct ManagementLockLevel : IEquatable<ManagementLockLevel>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="LockLevel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockLevel"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LockLevel(string value)
+        public ManagementLockLevel(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.Resources.Models
         private const string ReadOnlyValue = "ReadOnly";
 
         /// <summary> NotSpecified. </summary>
-        public static LockLevel NotSpecified { get; } = new LockLevel(NotSpecifiedValue);
+        public static ManagementLockLevel NotSpecified { get; } = new ManagementLockLevel(NotSpecifiedValue);
         /// <summary> CanNotDelete. </summary>
-        public static LockLevel CanNotDelete { get; } = new LockLevel(CanNotDeleteValue);
+        public static ManagementLockLevel CanNotDelete { get; } = new ManagementLockLevel(CanNotDeleteValue);
         /// <summary> ReadOnly. </summary>
-        public static LockLevel ReadOnly { get; } = new LockLevel(ReadOnlyValue);
-        /// <summary> Determines if two <see cref="LockLevel"/> values are the same. </summary>
-        public static bool operator ==(LockLevel left, LockLevel right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="LockLevel"/> values are not the same. </summary>
-        public static bool operator !=(LockLevel left, LockLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LockLevel"/>. </summary>
-        public static implicit operator LockLevel(string value) => new LockLevel(value);
+        public static ManagementLockLevel ReadOnly { get; } = new ManagementLockLevel(ReadOnlyValue);
+        /// <summary> Determines if two <see cref="ManagementLockLevel"/> values are the same. </summary>
+        public static bool operator ==(ManagementLockLevel left, ManagementLockLevel right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ManagementLockLevel"/> values are not the same. </summary>
+        public static bool operator !=(ManagementLockLevel left, ManagementLockLevel right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ManagementLockLevel"/>. </summary>
+        public static implicit operator ManagementLockLevel(string value) => new ManagementLockLevel(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LockLevel other && Equals(other);
+        public override bool Equals(object obj) => obj is ManagementLockLevel other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(LockLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ManagementLockLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
