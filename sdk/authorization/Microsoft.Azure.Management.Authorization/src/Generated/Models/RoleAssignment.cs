@@ -136,10 +136,11 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the conditions on the role assignment. This limits the
-        /// resources it can be assigned to. e.g.:
+        /// Gets or sets the conditions on the role assignment. An Azure role assignment condition is an additional check that you can optionally add to your role assignment to provide more fine-grained access control.
+        /// For example, you can add a condition that requires an object to have a specific tag to read the object. This limits the resources it can be assigned to. e.g.:
         /// @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName]
         /// StringEqualsIgnoreCase 'foo_storage_container'
+        /// Please refer to <see href="https://docs.microsoft.com/en-us/azure/role-based-access-control/conditions-format">this example</see> for a sample condition format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.condition")]
         public string Condition { get; set; }
