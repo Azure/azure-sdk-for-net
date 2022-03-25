@@ -194,10 +194,30 @@
 
 # PRLabel: %Communication
 /sdk/communication/                                     @acsdevx-msft
-/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
-/sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
-/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Calling Server
+/sdk/communication/Azure.Communication.CallingServer/   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Common
 /sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Identity
+/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Network Traversal
+/sdk/communication/Azure.Communication.NetworkTraversal/ @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - Phone Numbers
+/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
+
+# PRLabel: %Communication - Short Codes
+/sdk/communication/Azure.Communication.ShortCodes/      @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+
+# PRLabel: %Communication - SMS
+/sdk/communication/Azure.Communication.Sms/             @RoyHerrod @arifibrahim4
+
+# PRLabel: %Communication - Resource Manager
+/sdk/communication/Azure.ResourceManager.Communication/
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
