@@ -27,7 +27,7 @@
 /sdk/extensions/                                @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                  @chidozieononiwu @weshaggard @benbp
+/sdk/template/                                  @chidozieononiwu @weshaggard @benbp @heaths
 
 # Smoke tests
 /common/SmokeTests/                             @AlexGhiondea @schaabs @heaths @tg-msft @jsquire
