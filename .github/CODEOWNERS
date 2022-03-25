@@ -192,9 +192,6 @@
 # ServiceLabel: %Commerce %Service Attention
 #/<NotInRepo>/            @ms-premp @qiaozha
 
-# PRLabel: %Communication
-/sdk/communication/                                     @acsdevx-msft
-
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
 
@@ -221,6 +218,9 @@
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/
+
+# PRLabel: %Communication
+/sdk/communication/                                     @acsdevx-msft
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
