@@ -524,6 +524,10 @@ directive:
     where: $.definitions.ManagedByTenant.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: resources.json
+    where: $.definitions.ResourcesMoveInfo.properties.resources.items
+    transform: >
+      $["x-ms-format"] = "arm-id"
 ```
 
 ### Tag: package-management
