@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Initializes a new instance of ArmApplicationPackageSupportUrls. </summary>
-        /// <param name="publicAzure"> The public azure support URL. </param>
-        /// <param name="governmentCloud"> The government cloud support URL. </param>
-        internal ArmApplicationPackageSupportUrls(string publicAzure, string governmentCloud)
+        /// <param name="azurePublicCloud"> The public azure support URL. </param>
+        /// <param name="azureGovernment"> The government cloud support URL. </param>
+        internal ArmApplicationPackageSupportUrls(string azurePublicCloud, string azureGovernment)
         {
-            PublicAzure = publicAzure;
-            GovernmentCloud = governmentCloud;
+            AzurePublicCloud = azurePublicCloud;
+            AzureGovernment = azureGovernment;
         }
 
         /// <summary> The public azure support URL. </summary>
-        public string PublicAzure { get; }
+        public string AzurePublicCloud { get; }
         /// <summary> The government cloud support URL. </summary>
-        public string GovernmentCloud { get; }
+        public string AzureGovernment { get; }
     }
 }

@@ -150,13 +150,16 @@ directive:
       $.DeploymentScript['x-ms-client-name'] = 'ArmDeploymentScript';
       $.DeploymentScriptListResult['x-ms-client-name'] = 'ArmDeploymentScriptListResult';
   - from: managedapplications.json
-    where: $.definitions.Identity
+    where: $.definitions
     transform: >
-      $["x-ms-client-name"] = "ArmApplicationManagedIdentity";
-      $["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
+      
   - from: managedapplications.json
     where: $.definitions
     transform: >
+      $["Identity"]["x-ms-client-name"] = "ArmApplicationManagedIdentity";
+      $["Identity"]["properties"]["type"]["x-ms-enum"]["name"] = "ArmApplicationManagedIdentityType";
+      $["Identity"]["properties"]["principalId"]["format"] = "uuid";
+      $["Identity"]["properties"]["tenantId"]["format"] = "uuid";
       $["GenericResource"]["x-ms-client-name"] = "ArmApplicationResource";
       $["Resource"]["x-ms-client-name"] = "ArmApplicationResourceBase";
       $["Plan"]["x-ms-client-name"] = "ArmApplicationPlan";
@@ -179,7 +182,9 @@ directive:
       $.ApplicationBillingDetailsDefinition['x-ms-client-name'] = 'ArmApplicationBillingDetails';
       $.ApplicationArtifact['x-ms-client-name'] = 'ArmApplicationArtifact';
       $.ApplicationAuthorization['x-ms-client-name'] = 'ArmApplicationAuthorization';
-      $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationClientDetails';
+      $.ApplicationClientDetails['x-ms-client-name'] = 'ArmApplicationDetails';
+      $.ApplicationClientDetails.properties.oid.format = 'uuid';
+      $.ApplicationClientDetails.properties.applicationId.format = 'uuid';
       $.ApplicationDefinitionArtifact['x-ms-client-name'] = 'ArmApplicationDefinitionArtifact';
       $.ApplicationDefinitionListResult['x-ms-client-name'] = 'ArmApplicationDefinitionListResult';
       $.ApplicationDeploymentPolicy['x-ms-client-name'] = 'ArmApplicationDeploymentPolicy';
@@ -190,6 +195,8 @@ directive:
       $.ApplicationNotificationPolicy['x-ms-client-name'] = 'ArmApplicationNotificationPolicy';
       $.ApplicationPackageContact['x-ms-client-name'] = 'ArmApplicationPackageContact';
       $.ApplicationPackageSupportUrls['x-ms-client-name'] = 'ArmApplicationPackageSupportUrls';
+      $.ApplicationPackageSupportUrls.properties.governmentCloud['x-ms-client-name'] = 'AzureGovernment';
+      $.ApplicationPackageSupportUrls.properties.publicAzure['x-ms-client-name'] = 'AzurePublicCloud';
       $.ApplicationPolicy['x-ms-client-name'] = 'ArmApplicationPolicy';
       $.ApplicationPropertiesPatchable['x-ms-client-name'] = 'ArmApplicationPropertiesPatchable';
       $.ApplicationArtifactName['x-ms-enum'].name = 'ArmApplicationArtifactName';
@@ -201,6 +208,11 @@ directive:
       $.JitSchedulingPolicy.properties.duration["format"] = "duration";
       $.ProvisioningState["x-ms-enum"].name = "ResourcesProvisioningState";
       $.ProvisioningState["x-ms-client-name"] = "ResourcesProvisioningState";
+      $.userAssignedResourceIdentity.properties.principalId.format = "uuid";
+      $.userAssignedResourceIdentity.properties.tenantId.format = "uuid";
+      $.userAssignedResourceIdentity["x-ms-client-name"] = "ArmApplicationUserAssignedIdentity";
+      $.ApplicationProperties.properties.applicationDefinitionId["x-ms-format"] = "arm-id";
+      $.ApplicationProperties.properties.managedResourceGroupId["x-ms-format"] = "arm-id";
   - from: resources.json
     where: $.definitions
     transform: >

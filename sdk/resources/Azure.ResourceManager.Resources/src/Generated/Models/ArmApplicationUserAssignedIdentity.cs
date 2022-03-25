@@ -5,28 +5,30 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Represents the user assigned identity that is contained within the UserAssignedIdentities dictionary on ResourceIdentity. </summary>
-    public partial class UserAssignedResourceIdentity
+    public partial class ArmApplicationUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of UserAssignedResourceIdentity. </summary>
-        public UserAssignedResourceIdentity()
+        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
+        public ArmApplicationUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedResourceIdentity. </summary>
+        /// <summary> Initializes a new instance of ArmApplicationUserAssignedIdentity. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="tenantId"> The tenant id of user assigned identity. </param>
-        internal UserAssignedResourceIdentity(string principalId, string tenantId)
+        internal ArmApplicationUserAssignedIdentity(Guid? principalId, Guid? tenantId)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
         }
 
         /// <summary> The principal id of user assigned identity. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> The tenant id of user assigned identity. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
     }
 }

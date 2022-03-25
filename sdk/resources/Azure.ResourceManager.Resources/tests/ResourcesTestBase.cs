@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Resources.Tests
             PackageFileUri = new Uri("https://raw.githubusercontent.com/Azure/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-managed-storage-account/managedstorage.zip")
         };
 
-        protected static ArmApplicationData CreateApplicationData(string applicationDefinitionId, string managedResourceGroupId, string storageAccountPrefix) => new ArmApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
+        protected static ArmApplicationData CreateApplicationData(ResourceIdentifier applicationDefinitionId, ResourceIdentifier managedResourceGroupId, string storageAccountPrefix) => new ArmApplicationData(AzureLocation.WestUS2, "ServiceCatalog")
         {
             ApplicationDefinitionId = applicationDefinitionId,
             ManagedResourceGroupId = managedResourceGroupId,

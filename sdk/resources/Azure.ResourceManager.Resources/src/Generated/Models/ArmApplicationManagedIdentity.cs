@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
         public ArmApplicationManagedIdentity()
         {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedResourceIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, ArmApplicationUserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="armApplicationManagedIdentityType"> The identity type. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </param>
-        internal ArmApplicationManagedIdentity(string principalId, string tenantId, ArmApplicationManagedIdentityType? armApplicationManagedIdentityType, IDictionary<string, UserAssignedResourceIdentity> userAssignedIdentities)
+        internal ArmApplicationManagedIdentity(Guid? principalId, Guid? tenantId, ArmApplicationManagedIdentityType? armApplicationManagedIdentityType, IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -33,12 +34,12 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The principal ID of resource identity. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
         /// <summary> The tenant ID of resource. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
         /// <summary> The identity type. </summary>
         public ArmApplicationManagedIdentityType? ArmApplicationManagedIdentityType { get; set; }
         /// <summary> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
-        public IDictionary<string, UserAssignedResourceIdentity> UserAssignedIdentities { get; }
+        public IDictionary<string, ArmApplicationUserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

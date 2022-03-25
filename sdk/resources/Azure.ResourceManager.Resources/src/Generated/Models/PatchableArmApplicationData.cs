@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, string managedResourceGroupId, string applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUrls supportUrls, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationClientDetails createdBy, ArmApplicationClientDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal PatchableArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, string publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUrls supportUrls, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
             Plan = plan;
             Kind = kind;
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The identity of the resource. </summary>
         public ArmApplicationManagedIdentity Identity { get; set; }
         /// <summary> The managed resource group Id. </summary>
-        public string ManagedResourceGroupId { get; set; }
+        public ResourceIdentifier ManagedResourceGroupId { get; set; }
         /// <summary> The fully qualified path of managed application definition Id. </summary>
-        public string ApplicationDefinitionId { get; set; }
+        public ResourceIdentifier ApplicationDefinitionId { get; set; }
         /// <summary> Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string. </summary>
         public BinaryData Parameters { get; set; }
         /// <summary> Name and value pairs that define the managed application outputs. </summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The collection of managed application artifacts. </summary>
         public IReadOnlyList<ArmApplicationArtifact> Artifacts { get; }
         /// <summary> The client entity that created the JIT request. </summary>
-        public ArmApplicationClientDetails CreatedBy { get; }
+        public ArmApplicationDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
-        public ArmApplicationClientDetails UpdatedBy { get; }
+        public ArmApplicationDetails UpdatedBy { get; }
     }
 }

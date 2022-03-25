@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Resources.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> managedResourceGroupId = default;
-            Optional<string> applicationDefinitionId = default;
+            Optional<ResourceIdentifier> managedResourceGroupId = default;
+            Optional<ResourceIdentifier> applicationDefinitionId = default;
             Optional<BinaryData> parameters = default;
             Optional<BinaryData> outputs = default;
             Optional<ResourcesProvisioningState> provisioningState = default;
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ArmApplicationPackageContact> customerSupport = default;
             Optional<ArmApplicationPackageSupportUrls> supportUrls = default;
             Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
-            Optional<ArmApplicationClientDetails> createdBy = default;
-            Optional<ArmApplicationClientDetails> updatedBy = default;
+            Optional<ArmApplicationDetails> createdBy = default;
+            Optional<ArmApplicationDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"))
@@ -199,12 +199,22 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         if (property0.NameEquals("managedResourceGroupId"))
                         {
-                            managedResourceGroupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            managedResourceGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("applicationDefinitionId"))
                         {
-                            applicationDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            applicationDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parameters"))
@@ -329,7 +339,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"))
@@ -339,7 +349,7 @@ namespace Azure.ResourceManager.Resources.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            updatedBy = ArmApplicationClientDetails.DeserializeArmApplicationClientDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
                             continue;
                         }
                     }

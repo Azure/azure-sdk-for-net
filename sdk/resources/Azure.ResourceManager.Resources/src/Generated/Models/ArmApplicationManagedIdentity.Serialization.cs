@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -37,20 +38,30 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationManagedIdentity DeserializeArmApplicationManagedIdentity(JsonElement element)
         {
-            Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> tenantId = default;
             Optional<ArmApplicationManagedIdentityType> type = default;
-            Optional<IDictionary<string, UserAssignedResourceIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<string, ArmApplicationUserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
                 {
-                    tenantId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -70,16 +81,16 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, UserAssignedResourceIdentity> dictionary = new Dictionary<string, UserAssignedResourceIdentity>();
+                    Dictionary<string, ArmApplicationUserAssignedIdentity> dictionary = new Dictionary<string, ArmApplicationUserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, UserAssignedResourceIdentity.DeserializeUserAssignedResourceIdentity(property0.Value));
+                        dictionary.Add(property0.Name, ArmApplicationUserAssignedIdentity.DeserializeArmApplicationUserAssignedIdentity(property0.Value));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
                 }
             }
-            return new ArmApplicationManagedIdentity(principalId.Value, tenantId.Value, Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
+            return new ArmApplicationManagedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

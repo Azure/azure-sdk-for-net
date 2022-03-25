@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ArmApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ArmApplicationDefinitionResource appDef = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-C-");
-            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-"), Recording.GenerateAssetName("s1"));
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, new ResourceIdentifier(subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-1-")), Recording.GenerateAssetName("s1"));
             ArmApplicationResource application = (await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
             Assert.AreEqual(appName, application.Data.Name);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, null, applicationData));
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ArmApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ArmApplicationDefinitionResource appDef = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-L-");
-            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-2-"), Recording.GenerateAssetName("s2"));
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, new ResourceIdentifier(subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-2-")), Recording.GenerateAssetName("s2"));
             _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData);
             int count = 0;
             await foreach (var tempApplication in rg.GetArmApplications().GetAllAsync())
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ArmApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ArmApplicationDefinitionResource appDef = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-L-");
-            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-3-"), Recording.GenerateAssetName("s3"));
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, new ResourceIdentifier(subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-3-")), Recording.GenerateAssetName("s3"));
             _ = await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData);
             int count = 0;
             await foreach (var tempApplication in subscription.GetArmApplicationsAsync())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Tests
             ArmApplicationDefinitionData appDefData = CreateApplicationDefinitionData(appDefName);
             ArmApplicationDefinitionResource appDef = (await rg.GetArmApplicationDefinitions().CreateOrUpdateAsync(WaitUntil.Completed, appDefName, appDefData)).Value;
             string appName = Recording.GenerateAssetName("application-G-");
-            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-4-"), Recording.GenerateAssetName("s4"));
+            ArmApplicationData applicationData = CreateApplicationData(appDef.Id, new ResourceIdentifier(subscription.Id + Recording.GenerateAssetName("/resourceGroups/managed-4-")), Recording.GenerateAssetName("s4"));
             ArmApplicationResource application = (await rg.GetArmApplications().CreateOrUpdateAsync(WaitUntil.Completed, appName, applicationData)).Value;
             ArmApplicationResource getApplication = await rg.GetArmApplications().GetAsync(appName);
             AssertValidApplication(application, getApplication);
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Resources.Tests
             {
                 Assert.NotNull(model.Data.SupportUrls);
                 Assert.NotNull(getResult.Data.SupportUrls);
-                Assert.AreEqual(model.Data.SupportUrls.GovernmentCloud, getResult.Data.SupportUrls.GovernmentCloud);
-                Assert.AreEqual(model.Data.SupportUrls.PublicAzure, getResult.Data.SupportUrls.PublicAzure);
+                Assert.AreEqual(model.Data.SupportUrls.AzureGovernment, getResult.Data.SupportUrls.AzureGovernment);
+                Assert.AreEqual(model.Data.SupportUrls.AzurePublicCloud, getResult.Data.SupportUrls.AzurePublicCloud);
             }
             if (model.Data.Artifacts != null || getResult.Data.Artifacts != null)
             {
