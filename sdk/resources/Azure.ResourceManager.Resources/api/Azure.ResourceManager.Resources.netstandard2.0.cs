@@ -664,13 +664,13 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class ArmDeploymentProperties
     {
         public ArmDeploymentProperties(Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode) { }
-        public string DebugDetailLevel { get { throw null; } set { } }
-        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType? ExpressionEvaluationScope { get { throw null; } set { } }
+        public string DebugSettingDetailLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.ExpressionEvaluationOptionsScopeType? ExpressionEvaluationOptionsScope { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentMode Mode { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.OnErrorDeployment OnErrorDeployment { get { throw null; } set { } }
-        public object Parameters { get { throw null; } set { } }
+        public System.BinaryData Parameters { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ParametersLink ParametersLink { get { throw null; } set { } }
-        public object Template { get { throw null; } set { } }
+        public System.BinaryData Template { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.TemplateLink TemplateLink { get { throw null; } set { } }
     }
     public partial class ArmDeploymentPropertiesExtended
