@@ -520,6 +520,10 @@ directive:
     where: $.definitions.Tenant.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.ManagedByTenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```
 
 ### Tag: package-management
