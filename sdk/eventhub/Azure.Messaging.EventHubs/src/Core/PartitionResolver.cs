@@ -4,6 +4,8 @@
 using System;
 using System.Buffers;
 using System.Buffers.Binary;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Azure.Messaging.EventHubs.Primitives;
@@ -146,9 +148,9 @@ namespace Azure.Messaging.EventHubs.Core
             int index = 0, size = data.Length;
             while (size > 12)
             {
-                a += BitConverterExtensions.ToUInt32(data.Slice(index) );
-                b += BitConverterExtensions.ToUInt32(data.Slice(index + 4));
-                c += BitConverterExtensions.ToUInt32(data.Slice(index + 8));
+                a += ReadUInt32Unaligned(data.Slice(index) );
+                b += ReadUInt32Unaligned(data.Slice(index + 4));
+                c += ReadUInt32Unaligned(data.Slice(index + 8));
 
                 a -= c;
                 a ^= (c << 4) | (c >> 28);
@@ -181,9 +183,9 @@ namespace Azure.Messaging.EventHubs.Core
             switch (size)
             {
                 case 12:
-                    a += BitConverterExtensions.ToUInt32(data.Slice(index));
-                    b += BitConverterExtensions.ToUInt32(data.Slice(index + 4));
-                    c += BitConverterExtensions.ToUInt32(data.Slice(index + 8));
+                    a += ReadUInt32Unaligned(data.Slice(index));
+                    b += ReadUInt32Unaligned(data.Slice(index + 4));
+                    c += ReadUInt32Unaligned(data.Slice(index + 8));
                     break;
                 case 11:
                     c += ((uint)data[index + 10]) << 16;
@@ -195,8 +197,8 @@ namespace Azure.Messaging.EventHubs.Core
                     c += (uint)data[index + 8];
                     goto case 8;
                 case 8:
-                    b += BitConverterExtensions.ToUInt32(data.Slice(index + 4));
-                    a += BitConverterExtensions.ToUInt32(data.Slice(index));
+                    b += ReadUInt32Unaligned(data.Slice(index + 4));
+                    a += ReadUInt32Unaligned(data.Slice(index));
                     break;
                 case 7:
                     b += ((uint)data[index + 6]) << 16;
@@ -208,7 +210,7 @@ namespace Azure.Messaging.EventHubs.Core
                     b += (uint)data[index + 4];
                     goto case 4;
                 case 4:
-                    a += BitConverterExtensions.ToUInt32(data.Slice(index));
+                    a += ReadUInt32Unaligned(data.Slice(index));
                     break;
                 case 3:
                     a += ((uint)data[index + 2]) << 16;
@@ -249,5 +251,8 @@ namespace Azure.Messaging.EventHubs.Core
             hash1 = c;
             hash2 = b;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static uint ReadUInt32Unaligned(ReadOnlySpan<byte> bytes) => Unsafe.ReadUnaligned<uint>(ref MemoryMarshal.GetReference(bytes));
     }
 }
