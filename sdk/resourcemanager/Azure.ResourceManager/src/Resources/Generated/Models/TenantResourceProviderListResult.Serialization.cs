@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ProviderInfoListResult
+    internal partial class TenantResourceProviderListResult
     {
-        internal static ProviderInfoListResult DeserializeProviderInfoListResult(JsonElement element)
+        internal static TenantResourceProviderListResult DeserializeTenantResourceProviderListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ProviderInfo>> value = default;
+            Optional<IReadOnlyList<TenantResourceProvider>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Resources.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProviderInfo> array = new List<ProviderInfo>();
+                    List<TenantResourceProvider> array = new List<TenantResourceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderInfo.DeserializeProviderInfo(item));
+                        array.Add(TenantResourceProvider.DeserializeTenantResourceProvider(item));
                     }
                     value = array;
                     continue;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderInfoListResult(Optional.ToList(value), nextLink.Value);
+            return new TenantResourceProviderListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

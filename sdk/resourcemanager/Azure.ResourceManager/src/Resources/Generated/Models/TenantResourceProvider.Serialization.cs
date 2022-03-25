@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderInfo
+    public partial class TenantResourceProvider
     {
-        internal static ProviderInfo DeserializeProviderInfo(JsonElement element)
+        internal static TenantResourceProvider DeserializeTenantResourceProvider(JsonElement element)
         {
             Optional<string> @namespace = default;
             Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderInfo(@namespace.Value, Optional.ToList(resourceTypes));
+            return new TenantResourceProvider(@namespace.Value, Optional.ToList(resourceTypes));
         }
     }
 }

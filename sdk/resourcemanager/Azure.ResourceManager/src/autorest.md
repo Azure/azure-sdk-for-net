@@ -408,7 +408,7 @@ directive:
   - from: resources.json
     where: $.definitions
     transform: >
-      $["ProviderInfo"] = {
+      $["TenantResourceProvider"] = {
         "properties": {
           "namespace": {
             "type": "string",
@@ -429,12 +429,12 @@ directive:
   - from: resources.json
     where: $.definitions
     transform: >
-      $["ProviderInfoListResult"] = {
+      $["TenantResourceProviderListResult"] = {
         "properties": {
           "value": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ProviderInfo"
+              "$ref": "#/definitions/TenantResourceProvider"
             },
             "description": "An array of resource providers."
           },
@@ -447,14 +447,14 @@ directive:
         "description": "List of resource providers."
       }
   - from: resources.json
-    where: $.definitions.ProviderInfoListResult.properties.value.items["$ref"]
-    transform: return "#/definitions/ProviderInfo"
+    where: $.definitions.TenantResourceProviderListResult.properties.value.items["$ref"]
+    transform: return "#/definitions/TenantResourceProvider"
   - from: resources.json
     where: $.paths["/providers"].get.responses["200"].schema["$ref"]
-    transform: return "#/definitions/ProviderInfoListResult"
+    transform: return "#/definitions/TenantResourceProviderListResult"
   - from: resources.json
     where: $.paths["/providers/{resourceProviderNamespace}"].get.responses["200"].schema["$ref"]
-    transform: return "#/definitions/ProviderInfo"
+    transform: return "#/definitions/TenantResourceProvider"
 
   - from: resources.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
