@@ -512,6 +512,18 @@ directive:
     where: $.definitions.ManagementLockProperties.properties.level["x-ms-enum"]
     transform: >
       $["name"] = "ManagementLockLevel"
+  - from: subscriptions.json
+    where: $.definitions.Subscription.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.Tenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
+  - from: subscriptions.json
+    where: $.definitions.ManagedByTenant.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```
 
 ### Tag: package-management
@@ -659,4 +671,8 @@ directive:
     where: $.definitions.ParentGroupInfo
     transform: >
       $["x-ms-client-name"] = "ParentManagementGroupInfo"
+  - from: management.json
+    where: $.definitions.ManagementGroupProperties.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```

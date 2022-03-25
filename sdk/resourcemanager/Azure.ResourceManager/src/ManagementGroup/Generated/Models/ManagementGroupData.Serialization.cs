@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Management
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Optional<string> tenantId = default;
+            Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
             Optional<ManagementGroupInfo> details = default;
             Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
@@ -58,7 +59,12 @@ namespace Azure.ResourceManager.Management
                     {
                         if (property0.NameEquals("tenantId"))
                         {
-                            tenantId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.Management
                     continue;
                 }
             }
-            return new ManagementGroupData(id, name, type, systemData, tenantId.Value, displayName.Value, details.Value, Optional.ToList(children));
+            return new ManagementGroupData(id, name, type, systemData, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children));
         }
     }
 }
