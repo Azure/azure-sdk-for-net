@@ -532,6 +532,14 @@ directive:
     where: $.definitions.RoleDefinition
     transform: >
       $["x-ms-client-name"] = "AzureRoleDefinition";
+  - from: resources.json
+    where: $.definitions.TagPatchResource.properties.operation["x-ms-enum"]
+    transform: >
+      $["name"] = "TagPatchMode"
+  - from: resources.json
+    where: $.definitions.TagPatchResource.properties.operation
+    transform: >
+      $["x-ms-client-name"] = "PatchMode"
 ```
 
 ### Tag: package-management

@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class PatchableTagResourceData
     {
         public PatchableTagResourceData() { }
-        public Azure.ResourceManager.Resources.Models.TagsPatchOperation? Operation { get { throw null; } set { } }
+        public Azure.ResourceManager.Resources.Models.TagPatchMode? PatchMode { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
     }
     public partial class Permission
@@ -1783,22 +1783,22 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IDictionary<string, string> TagValues { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TagsPatchOperation : System.IEquatable<Azure.ResourceManager.Resources.Models.TagsPatchOperation>
+    public readonly partial struct TagPatchMode : System.IEquatable<Azure.ResourceManager.Resources.Models.TagPatchMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TagsPatchOperation(string value) { throw null; }
-        public static Azure.ResourceManager.Resources.Models.TagsPatchOperation Delete { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.TagsPatchOperation Merge { get { throw null; } }
-        public static Azure.ResourceManager.Resources.Models.TagsPatchOperation Replace { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Resources.Models.TagsPatchOperation other) { throw null; }
+        public TagPatchMode(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.TagPatchMode Delete { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.TagPatchMode Merge { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.TagPatchMode Replace { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.TagPatchMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Resources.Models.TagsPatchOperation left, Azure.ResourceManager.Resources.Models.TagsPatchOperation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Resources.Models.TagsPatchOperation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Resources.Models.TagsPatchOperation left, Azure.ResourceManager.Resources.Models.TagsPatchOperation right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.TagPatchMode left, Azure.ResourceManager.Resources.Models.TagPatchMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.TagPatchMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.TagPatchMode left, Azure.ResourceManager.Resources.Models.TagPatchMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public enum TenantCategory

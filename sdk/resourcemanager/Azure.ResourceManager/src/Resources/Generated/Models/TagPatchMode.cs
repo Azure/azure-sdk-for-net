@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The operation type for the patch API. </summary>
-    public readonly partial struct TagsPatchOperation : IEquatable<TagsPatchOperation>
+    public readonly partial struct TagPatchMode : IEquatable<TagPatchMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="TagsPatchOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagPatchMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TagsPatchOperation(string value)
+        public TagPatchMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.Resources.Models
         private const string DeleteValue = "Delete";
 
         /// <summary> The &apos;replace&apos; option replaces the entire set of existing tags with a new set. </summary>
-        public static TagsPatchOperation Replace { get; } = new TagsPatchOperation(ReplaceValue);
+        public static TagPatchMode Replace { get; } = new TagPatchMode(ReplaceValue);
         /// <summary> The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. </summary>
-        public static TagsPatchOperation Merge { get; } = new TagsPatchOperation(MergeValue);
+        public static TagPatchMode Merge { get; } = new TagPatchMode(MergeValue);
         /// <summary> The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
-        public static TagsPatchOperation Delete { get; } = new TagsPatchOperation(DeleteValue);
-        /// <summary> Determines if two <see cref="TagsPatchOperation"/> values are the same. </summary>
-        public static bool operator ==(TagsPatchOperation left, TagsPatchOperation right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="TagsPatchOperation"/> values are not the same. </summary>
-        public static bool operator !=(TagsPatchOperation left, TagsPatchOperation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TagsPatchOperation"/>. </summary>
-        public static implicit operator TagsPatchOperation(string value) => new TagsPatchOperation(value);
+        public static TagPatchMode Delete { get; } = new TagPatchMode(DeleteValue);
+        /// <summary> Determines if two <see cref="TagPatchMode"/> values are the same. </summary>
+        public static bool operator ==(TagPatchMode left, TagPatchMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TagPatchMode"/> values are not the same. </summary>
+        public static bool operator !=(TagPatchMode left, TagPatchMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="TagPatchMode"/>. </summary>
+        public static implicit operator TagPatchMode(string value) => new TagPatchMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TagsPatchOperation other && Equals(other);
+        public override bool Equals(object obj) => obj is TagPatchMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(TagsPatchOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TagPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
