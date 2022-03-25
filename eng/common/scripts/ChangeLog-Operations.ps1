@@ -168,7 +168,7 @@ function Confirm-ChangeLogEntry {
   if ($ForRelease -eq $True)
   {
     LogDebug "Verifying like it's a release build because ForRelease parameter is set to true"
-    return Confirm-LikeForRelease -changeLogEntry $changeLogEntry -changeLogFileDateHistory $changeLogEntries.Values.ReleaseStatus
+    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries
   }
 
   # If the release status is a valid date then verify like its about to be released
@@ -176,7 +176,7 @@ function Confirm-ChangeLogEntry {
   if ($status -as [DateTime])
   {
     LogDebug "Verifying like it's a release build because the changelog entry has a valid date."
-    return Confirm-LikeForRelease -changeLogEntry $changeLogEntry -changeLogFileDateHistory $changeLogEntries.Values.ReleaseStatus
+    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries
   }
 
   return $true
@@ -250,15 +250,7 @@ function Set-ChangeLogContent {
   $changeLogContent += "$($ChangeLogEntries.InitialAtxHeader) Release History"
   $changeLogContent += ""
 
-  try
-  {
-    $ChangeLogEntries = $ChangeLogEntries.Values | Sort-Object -Descending -Property ReleaseStatus, `
-      @{e = {[AzureEngSemanticVersion]::new($_.ReleaseVersion)}}
-  }
-  catch {
-    LogError "Problem sorting version in ChangeLogEntries"
-    return
-  }
+  $ChangeLogEntries = Sort-ChangeLogEntries -changeLogEntries $ChangeLogEntries
 
   foreach ($changeLogEntry in $ChangeLogEntries) {
     $changeLogContent += $changeLogEntry.ReleaseTitle
@@ -323,13 +315,33 @@ function  Get-LatestReleaseDateFromChangeLog
   return ($latestVersion -as [DateTime])
 }
 
-function Confirm-LikeForRelease {
+function Sort-ChangeLogEntries {
+  param (
+    [Parameter(Mandatory = $true)]
+    $changeLogEntries
+  )
+
+  try
+  {
+    $changeLogEntries = $ChangeLogEntries.Values | Sort-Object -Descending -Property ReleaseStatus, `
+      @{e = {[AzureEngSemanticVersion]::new($_.ReleaseVersion)}}
+  }
+  catch {
+    LogError "Problem sorting version in ChangeLogEntries"
+    exit(1)
+  }
+  return $changeLogEntries
+}
+
+function Confirm-ChangeLogForRelease {
   param (
     [Parameter(Mandatory = $true)]
     $changeLogEntry,
     [Parameter(Mandatory = $true)]
-    $changeLogFileDateHistory
+    $changeLogEntries
   )
+
+  $entries = Sort-ChangeLogEntries -changeLogEntries $changeLogEntries
 
   $isValid = $true
   if ($changeLogEntry.ReleaseStatus -eq $CHANGELOG_UNRELEASED_STATUS) {
@@ -346,7 +358,7 @@ function Confirm-LikeForRelease {
         $isValid = $false
       }
 
-      $dateHistory = $changeLogFileDateHistory | ForEach-Object { $_.Trim("()") } | Sort-Object -Descending
+      $dateHistory = $entries.ReleaseStatus | ForEach-Object { $_.Trim().Trim("()") }
       if (@($dateHistory)[0] -ne $status)
       {
         LogError "Invalid date [ $status ]. The date for the changelog being released must be the latest in the file."
