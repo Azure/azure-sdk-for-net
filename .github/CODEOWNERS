@@ -707,7 +707,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 # ######## DPG ########
 
 # Onboarding Documentation and Quickstarts
-/doc/Data%20Plane%20Code%20Generation           @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
+/doc/Data\%20Plane\%20Code\%20Generation           @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
 
 # Client generation tooling
 /eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe @annelo-msft
