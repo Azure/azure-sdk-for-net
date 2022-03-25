@@ -512,6 +512,10 @@ directive:
     where: $.definitions.ManagementLockProperties.properties.level["x-ms-enum"]
     transform: >
       $["name"] = "ManagementLockLevel"
+  - from: subscriptions.json
+    where: $.definitions.Subscription.properties.tenantId
+    transform: >
+      $['format'] = "uuid"
 ```
 
 ### Tag: package-management
