@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_CreateADeployment
             // First we need to get the deployment collection from the resource group
-            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
-            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 TemplateLink = new TemplateLink()
                 {
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                     }
                 }
             });
-            ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-            DeploymentResource deployment = lro.Value;
+            ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+            ArmDeploymentResource deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
             // First we need to get the deployment collection from the resource group
-            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
             // Create a parameter object
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);
             var parameters = JsonDocument.Parse(parametersString).RootElement;
-            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 TemplateLink = new TemplateLink()
                 {
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
                 },
                 Parameters = parameters
             });
-            ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-            DeploymentResource deployment = lro.Value;
+            ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+            ArmDeploymentResource deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
 
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_CreateADeploymentUsingString
             // First we need to get the deployment collection from the resource group
-            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
             string deploymentName = "myDeployment";
             // Passing string to template and parameters
-            var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+            var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
                 Template = File.ReadAllText("storage-template.json"),
                 Parameters = File.ReadAllText("storage-parameters.json")
             });
-            ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-            DeploymentResource deployment = lro.Value;
+            ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+            ArmDeploymentResource deployment = lro.Value;
             #endregion Snippet:Managing_Deployments_CreateADeployment
         }
 
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_ListAllDeployments
             // First we need to get the deployment collection from the resource group
-            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // With GetAllAsync(), we can get a list of the deployments in the collection
-            AsyncPageable<DeploymentResource> response = deploymentCollection.GetAllAsync();
-            await foreach (DeploymentResource deployment in response)
+            AsyncPageable<ArmDeploymentResource> response = ArmDeploymentCollection.GetAllAsync();
+            await foreach (ArmDeploymentResource deployment in response)
             {
                 Console.WriteLine(deployment.Data.Name);
             }
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Resources.Tests.Samples
         {
             #region Snippet:Managing_Deployments_DeleteADeployment
             // First we need to get the deployment collection from the resource group
-            DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+            ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Now we can get the deployment with GetAsync()
-            DeploymentResource deployment = await deploymentCollection.GetAsync("myDeployment");
+            ArmDeploymentResource deployment = await ArmDeploymentCollection.GetAsync("myDeployment");
             // With DeleteAsync(), we can delete the deployment
             await deployment.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:Managing_Deployments_DeleteADeployment

@@ -40,10 +40,10 @@ Now that we have the resource group created, we can manage the deployments insid
 
 ```C# Snippet:Managing_Deployments_CreateADeployment
 // First we need to get the deployment collection from the resource group
-DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
 string deploymentName = "myDeployment";
-var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
     TemplateLink = new TemplateLink()
     {
@@ -58,32 +58,32 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
         }
     }
 });
-ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-DeploymentResource deployment = lro.Value;
+ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+ArmDeploymentResource deployment = lro.Value;
 ```
 
 ***Create a deployment using string***
 
 ```C# Snippet:Managing_Deployments_CreateADeploymentUsingString
 // First we need to get the deployment collection from the resource group
-DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
 string deploymentName = "myDeployment";
 // Passing string to template and parameters
-var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
     Template = File.ReadAllText("storage-template.json"),
     Parameters = File.ReadAllText("storage-parameters.json")
 });
-ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-DeploymentResource deployment = lro.Value;
+ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+ArmDeploymentResource deployment = lro.Value;
 ```
 
 ***Create a deployment using JsonElement***
 
 ```C# Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
 // First we need to get the deployment collection from the resource group
-DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
 string deploymentName = "myDeployment";
 // Create a parameter object
@@ -91,7 +91,7 @@ var parametersObject = new { storageAccountType = new { value = "Standard_GRS" }
 //convert this object to JsonElement
 var parametersString = JsonSerializer.Serialize(parametersObject);
 var parameters = JsonDocument.Parse(parametersString).RootElement;
-var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremental)
+var input = new ArmDeploymentInput(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
 {
     TemplateLink = new TemplateLink()
     {
@@ -99,18 +99,18 @@ var input = new DeploymentInput(new DeploymentProperties(DeploymentMode.Incremen
     },
     Parameters = parameters
 });
-ArmOperation<DeploymentResource> lro = await deploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
-DeploymentResource deployment = lro.Value;
+ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
+ArmDeploymentResource deployment = lro.Value;
 ```
 
 ***List all deployments***
 
 ```C# Snippet:Managing_Deployments_ListAllDeployments
 // First we need to get the deployment collection from the resource group
-DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // With GetAllAsync(), we can get a list of the deployments in the collection
-AsyncPageable<DeploymentResource> response = deploymentCollection.GetAllAsync();
-await foreach (DeploymentResource deployment in response)
+AsyncPageable<ArmDeploymentResource> response = ArmDeploymentCollection.GetAllAsync();
+await foreach (ArmDeploymentResource deployment in response)
 {
     Console.WriteLine(deployment.Data.Name);
 }
@@ -120,9 +120,9 @@ await foreach (DeploymentResource deployment in response)
 
 ```C# Snippet:Managing_Deployments_DeleteADeployment
 // First we need to get the deployment collection from the resource group
-DeploymentCollection deploymentCollection = resourceGroup.GetDeployments();
+ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Now we can get the deployment with GetAsync()
-DeploymentResource deployment = await deploymentCollection.GetAsync("myDeployment");
+ArmDeploymentResource deployment = await ArmDeploymentCollection.GetAsync("myDeployment");
 // With DeleteAsync(), we can delete the deployment
 await deployment.DeleteAsync(WaitUntil.Completed);
 ```
