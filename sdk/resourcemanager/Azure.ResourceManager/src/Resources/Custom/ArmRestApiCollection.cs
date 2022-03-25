@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources
         {
             return _restClient ??= new RestOperations(
                 _nameSpace,
-                _providerCollection.GetApiVersionForNamespace(_nameSpace, cancellationToken),
+                _providerCollection.GetApiVersion(new ResourceType($"{_nameSpace}/operations"), cancellationToken),
                 _clientDiagnostics,
                 Pipeline,
                 Diagnostics.ApplicationId,
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         {
             return _restClient ??= new RestOperations(
                 _nameSpace,
-                await _providerCollection.GetApiVersionForNamespaceAsync(_nameSpace, cancellationToken).ConfigureAwait(false),
+                await _providerCollection.GetApiVersionAsync(new ResourceType($"{_nameSpace}/operations"), cancellationToken).ConfigureAwait(false),
                 _clientDiagnostics,
                 Pipeline,
                 Diagnostics.ApplicationId,
