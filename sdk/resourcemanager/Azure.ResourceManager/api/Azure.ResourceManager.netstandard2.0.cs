@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Resources
     public partial class DataPolicyManifestData : Azure.ResourceManager.Models.ResourceData
     {
         internal DataPolicyManifestData() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> Custom { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> CustomDefinitions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect> Effects { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FieldValues { get { throw null; } }
         public bool? IsBuiltInOnly { get { throw null; } }

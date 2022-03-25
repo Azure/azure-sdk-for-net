@@ -540,6 +540,10 @@ directive:
     where: $.definitions.TagPatchResource.properties.operation
     transform: >
       $["x-ms-client-name"] = "PatchMode"
+  - from: dataPolicyManifests.json
+    where: $.definitions.DataManifestResourceFunctionsDefinition.properties.custom
+    transform: >
+      $["x-ms-client-name"] = "CustomDefinitions"
 ```
 
 ### Tag: package-management
