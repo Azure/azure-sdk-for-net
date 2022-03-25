@@ -8,6 +8,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Template.Models;
 
+// Test Diff
+
 namespace Azure.Template
 {
     /// <summary>
